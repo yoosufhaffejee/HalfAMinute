@@ -55,6 +55,11 @@ function initializeMenu() {
 
     document.querySelectorAll(".pointsBtn").forEach(button => {
         button.addEventListener("click", () => {
+            // Disable all buttons when any one is clicked
+            document.querySelectorAll(".pointsBtn").forEach(button => {
+                button.disabled = true;
+            });
+            button.style.background = "green";
             const points = parseInt(button.dataset.points);
             updatePoints(points);
         });
@@ -73,7 +78,6 @@ function startGame() {
         return;
     }
 
-    debugger;
     if (selectedTheme) {
         selectedWords = themes[selectedTheme].filter(word => word.difficulty === calculateDifficulty(difficulty)).map(_ => _.word);
     } else {
@@ -114,9 +118,10 @@ function quickStart() {
 function startRound() {
     displayCurrentWords();
     document.getElementById("startRoundBtn").classList.add("hidden");
-    startCountdown(30, () => {
+    startCountdown(2, () => {
         document.getElementById("pointsScoredContainer").classList.remove("hidden");
         document.querySelectorAll(".pointsBtn").forEach(button => {
+            button.style.background = null;
             button.disabled = false;
         });
     });
@@ -125,6 +130,7 @@ function startRound() {
 function nextRound() {
     document.getElementById("pointsScoredContainer").classList.add("hidden");
     document.getElementById("nextRoundBtn").classList.add("hidden");
+    clearWords();
 
     currentTeam = (currentTeam + 1) % teams.length;
     currentRound++;
@@ -152,6 +158,11 @@ function displayCurrentWords() {
     selectedWords = selectedWords.slice(5);
 }
 
+function clearWords() {
+    const wordsContainer = document.getElementById("currentWords");
+    wordsContainer.innerHTML = "";
+}
+
 function startCountdown(duration, callback) {
     let timeRemaining = duration;
     const timer = document.getElementById("timer");
@@ -171,10 +182,6 @@ function startCountdown(duration, callback) {
 function updatePoints(points) {
     teams[currentTeam].points += points;
     document.getElementById("nextRoundBtn").classList.remove("hidden");
-
-    document.querySelectorAll(".pointsBtn").forEach(button => {
-        button.disabled = true;
-    });
 
     updateBoard();
 }
