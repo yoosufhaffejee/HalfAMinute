@@ -4,53 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>30 Seconds Game</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="menu">
         <h1>30 Seconds Game</h1>
-        <label for="difficulty">Select Difficulty:</label>
-        <select id="difficulty">
-            <option value="easy">Easy</option>
-            <option value="normal">Normal</option>
-            <option value="hard">Hard</option>
-        </select>
-
-        <label for="categories">Select Categories:</label>
-        <select id="categories" multiple>
-            <!-- Options will be populated dynamically -->
-        </select>
-
-        <label for="themes">Select Theme:</label>
-        <select id="themes">
-            <option value="">None</option>
-            <!-- Options will be populated dynamically -->
-        </select>
-
-        <label for="teams">Number of Teams:</label>
-        <input type="number" id="teams" value="2" min="2">
-
-        <label for="pointsToWin">Points to Win:</label>
-        <input type="number" id="pointsToWin" value="20" min="1">
-
-        <button id="startGame">Start Game</button>
-        <button id="quickStart">Quick Start</button>
+        <div class="menu-section">
+            <label for="difficulty">Select Difficulty:</label>
+            <select id="difficulty">
+                <option value="easy">Easy</option>
+                <option value="normal" selected>Normal</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="menu-section">
+            <label>Select Categories or Theme:</label>
+            <button id="selectCategoriesBtn">Select Categories</button>
+            <button id="selectThemeBtn">Select Theme</button>
+            <select id="categories" multiple></select>
+            <select id="themes"></select>
+        </div>
+        <div class="menu-section">
+            <label for="numTeams">Number of Teams:</label>
+            <input type="number" id="numTeams" value="2" min="2">
+        </div>
+        <div class="menu-section">
+            <label for="pointsToWin">Points to Win:</label>
+            <input type="number" id="pointsToWin" value="20" min="1">
+        </div>
+        <div class="menu-section">
+            <button id="startGameBtn">Start Game</button>
+            <button id="quickStartBtn">Quick Start</button>
+        </div>
     </div>
 
     <div id="game" class="hidden">
-        <div id="board">
-            <!-- Game board will be generated dynamically -->
-        </div>
-        <div id="currentWords">
-            <!-- Current words/phrases will be displayed here -->
-        </div>
-        <div id="scoreInput">
+        <h1>30 Seconds Game</h1>
+        <div id="board" class="board"></div>
+        <div id="currentWords" class="current-words"></div>
+        <div id="timer" class="timer">30</div>
+        <div id="pointsScoredContainer" class="hidden">
             <label for="pointsScored">Points Scored:</label>
-            <input type="number" id="pointsScored" value="0" min="0">
-            <button id="endRound">End Round</button>
+            <div id="pointsButtons">
+                <button class="pointsBtn" data-points="1">1</button>
+                <button class="pointsBtn" data-points="2">2</button>
+                <button class="pointsBtn" data-points="3">3</button>
+                <button class="pointsBtn" data-points="4">4</button>
+                <button class="pointsBtn" data-points="5">5</button>
+            </div>
         </div>
+        <button id="startRoundBtn">Start Round</button>
+        <button id="nextRoundBtn" class="hidden">Next Round</button>
+        <button id="endGameBtn" class="hidden">End Game</button>
     </div>
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
