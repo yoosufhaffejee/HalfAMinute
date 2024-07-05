@@ -75,7 +75,7 @@ function startGame() {
 
     debugger;
     if (selectedTheme) {
-        selectedWords = themes[selectedTheme].filter(word => word.difficulty === difficulty);
+        selectedWords = themes[selectedTheme].filter(word => word.difficulty === calculateDifficulty(difficulty)).map(_ => _.word);
     } else {
         selectedWords = selectedCategories.flatMap(category => categories[category].filter(word => word.difficulty === calculateDifficulty(difficulty))).map(_ => _.word);
     }
@@ -116,6 +116,9 @@ function startRound() {
     document.getElementById("startRoundBtn").classList.add("hidden");
     startCountdown(30, () => {
         document.getElementById("pointsScoredContainer").classList.remove("hidden");
+        document.querySelectorAll(".pointsBtn").forEach(button => {
+            button.disabled = false;
+        });
     });
 }
 
