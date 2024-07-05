@@ -118,7 +118,7 @@ function quickStart() {
 function startRound() {
     displayCurrentWords();
     document.getElementById("startRoundBtn").classList.add("hidden");
-    startCountdown(2, () => {
+    startCountdown(30, () => {
         document.getElementById("pointsScoredContainer").classList.remove("hidden");
         document.querySelectorAll(".pointsBtn").forEach(button => {
             button.style.background = null;
