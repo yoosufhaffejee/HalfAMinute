@@ -3,61 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30 Seconds Game</title>
+    <title>Half A Minute</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="menu">
-        <h1>30 Seconds Game</h1>
-        <div class="menu-section">
-            <label for="difficulty">Select Difficulty:</label>
-            <select id="difficulty">
-                <option value="easy">Easy</option>
-                <option value="normal" selected>Normal</option>
-                <option value="hard">Hard</option>
-            </select>
-        </div>
-        <div class="menu-section">
-            <label>Select Categories or Theme:</label>
-            <button id="selectCategoriesBtn">Select Categories</button>
-            <button id="selectThemeBtn">Select Theme</button>
-            <select id="categories" multiple></select>
-            <select id="themes"></select>
-        </div>
-        <div class="menu-section">
-            <label for="numTeams">Number of Teams:</label>
-            <input type="number" id="numTeams" value="2" min="2">
-        </div>
-        <div class="menu-section">
-            <label for="pointsToWin">Points to Win:</label>
-            <input type="number" id="pointsToWin" value="20" min="1">
-        </div>
-        <div class="menu-section">
-            <button id="startGameBtn">Start Game</button>
-            <button id="quickStartBtn">Quick Start</button>
-        </div>
-    </div>
-
-    <div id="game" class="hidden">
-        <h1>30 Seconds Game</h1>
-        <div id="board" class="board"></div>
-        <div id="currentWords" class="current-words"></div>
-        <div id="timer" class="timer">30</div>
-        <div id="pointsScoredContainer" class="hidden">
-            <label for="pointsScored">Points Scored:</label>
-            <div id="pointsButtons">
-                <button class="pointsBtn" data-points="1">1</button>
-                <button class="pointsBtn" data-points="2">2</button>
-                <button class="pointsBtn" data-points="3">3</button>
-                <button class="pointsBtn" data-points="4">4</button>
-                <button class="pointsBtn" data-points="5">5</button>
+    <div class="container">
+        <h1>Half A Minute</h1>
+        <div id="menu">
+            <div class="menu-section">
+                <label for="numTeams">Number of Teams:</label>
+                <input type="number" id="numTeams" min="2" max="4" value="2">
+            </div>
+            <div class="menu-section">
+                <button id="toggleAdvancedOptions">Show Advanced Options</button>
+                <div id="advancedOptions" class="hidden">
+                    <div class="menu-section">
+                        <label for="difficulty">Select Difficulty:</label>
+                        <select id="difficulty">
+                            <option value="easy">Easy</option>
+                            <option value="normal" selected>Normal</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="menu-section">
+                        <label for="pointsToWin">Points to Win:</label>
+                        <input type="number" id="pointsToWin" min="10" value="20">
+                    </div>
+                    <div class="menu-section">
+                        <button id="selectCategoriesBtn">Select Categories</button>
+                        <button id="selectThemeBtn">Select Theme</button>
+                    </div>
+                    <div id="categoriesSection" style="display:none;">
+                        <label for="categoriesSelect">Categories:</label>
+                        <select id="categoriesSelect" multiple></select>
+                    </div>
+                    <div id="themesSection" style="display:none;">
+                        <label for="themesSelect">Themes:</label>
+                        <select id="themesSelect">
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="menu-section">
+                <button id="startGameButton">Start Game</button>
             </div>
         </div>
-        <button id="startRoundBtn">Start Round</button>
-        <button id="nextRoundBtn" class="hidden">Next Round</button>
-        <button id="endGameBtn" class="hidden">End Game</button>
+        <div id="game" class="hidden">
+            <div id="currentTeamIndicator"></div>
+            <div id="timer"></div>
+            <div id="gameBoard"></div>
+            <div id="teamScores"></div>
+            <div id="currentWords"></div>
+            <div id="roundControls">
+                <button id="startRoundButton">Start Round</button>
+                <div id="scoreInput" class="hidden">
+                    <label for="pointsScored">Points Scored:</label>
+                    <div id="scoreButtons">
+                        <button class="scoreButton" data-score="1">1</button>
+                        <button class="scoreButton" data-score="2">2</button>
+                        <button class="scoreButton" data-score="3">3</button>
+                        <button class="scoreButton" data-score="4">4</button>
+                        <button class="scoreButton" data-score="5">5</button>
+                    </div>
+                </div>
+                <button id="nextRoundButton" class="hidden">Next Round</button>
+                <button id="endGameButton">End Game</button>
+            </div>
+        </div>
     </div>
-
     <script src="data.js"></script>
     <script src="script.js"></script>
 </body>

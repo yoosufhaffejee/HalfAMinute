@@ -1,66 +1,125 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     background-color: #f0f0f0;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
+}
+
+.container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    text-align: center;
 }
 
 h1 {
-    margin-top: 20px;
+    margin-top: 0;
 }
 
 .menu-section {
-    margin: 10px 0;
+    margin-bottom: 20px;
+}
+
+#advancedOptions {
+    margin-top: 20px;
+}
+
+#timer {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#gameBoard {
+    display: grid;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.board-cell {
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    padding: 10px;
+    text-align: center;
+}
+
+.team-score {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.word {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
 .hidden {
     display: none;
 }
 
-#board {
-    display: grid;
-    grid-gap: 5px;
-    justify-content: center;
-    margin: 20px auto;
-    max-width: 600px;
-}
-
-.board-cell {
-    background-color: #add8e6;
-    border: 1px solid #000;
-    padding: 20px;
-    text-align: center;
-    font-size: 1.5em;
-}
-
-.current-words {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
-}
-
-.word {
-    background-color: #fff;
-    border: 1px solid #000;
-    margin: 0 10px;
-    padding: 20px;
-    font-size: 1.2em;
-}
-
-.timer {
-    font-size: 2em;
-    margin: 20px 0;
-}
-
-.pointsBtn {
-    margin: 0 5px;
-    padding: 10px 20px;
-    font-size: 1em;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 1em;
+.scoreButton {
     margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+#currentTeamIndicator {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.menu-section {
+    margin-bottom: 20px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background-color: #f9f9f9;
+    margin-top: 20px;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.team-score {
+    margin: 20px 0;
+}
+
+.team-score span {
+    display: block;
+}
+
+#currentWords {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#scoreButtons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#endGameButton {
+    margin-top: 20px;
 }
