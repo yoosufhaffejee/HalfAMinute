@@ -6,10 +6,19 @@ let currentRound = 0;
 let countdownTimer;
 let pointsToWin;
 let gameMode;
+let numWords = 5;
+let numSeconds = 30;
 
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
 });
+
+// Get audio elements
+const startSound = document.getElementById('startSound');
+const countdownSound = document.getElementById('countdownSound');
+const tickSound = document.getElementById('tickSound');
+const warningSound = document.getElementById('warningSound');
+const endSound = document.getElementById('endSound');
 
 const categoriesSelect = document.getElementById("categoriesSelect");
 const themesSelect = document.getElementById("themesSelect");
@@ -61,7 +70,9 @@ function initializeMenu() {
     });
 }
 
-function startGame() {
+async function startGame() {
+    await playSound(startSound, () => false, 1.2);
+
     const difficulty = document.getElementById("difficulty").value.toLowerCase();
     const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
     const selectedTheme = themesSelect.value;
@@ -73,31 +84,7 @@ function startGame() {
         return;
     }
 
-    if (selectedTheme !== "None") {
-        selectedWords = themes[selectedTheme].map(wordObj => wordObj.word);
-        if (difficulty === "normal") {
-            selectedWords = themes[selectedTheme];
-        } else {
-            selectedWords = themes[selectedTheme].filter(wordObj => wordObj.difficulty === difficulty).map(wordObj => wordObj.word);
-        }
-    } else {
-        if (selectedCategories.length === 0) {
-            // Select all categories if none are selected
-            selectedCategories.push(...Object.keys(categories));
-        }
-
-        if (difficulty === "normal") {
-            selectedWords = selectedCategories.flatMap(category => categories[category]);
-        } else {
-            selectedWords = selectedCategories.flatMap(category => categories[category].filter(wordObj => wordObj.difficulty === difficulty));
-        }
-    }
-
-    if (difficulty === "normal") {
-        selectedWords = selectedWords.map(wordObj => wordObj.word);
-    }
-
-    selectedWords = shuffleArray(selectedWords);
+    selectWords(selectedTheme, selectedCategories, difficulty);
     teams = Array.from({ length: numTeams }, () => ({ points: 0 }));
 
     document.getElementById("menu").classList.add("hidden");
@@ -109,10 +96,41 @@ function startGame() {
     updateCurrentTeamIndicator();
 }
 
+function selectWords(selectedTheme, selectedCategories, difficulty = "normal") {
+    let selectedObjects;
+    if (selectedTheme !== "None") {
+        selectedObjects = themes[selectedTheme];
+        if (difficulty !== "normal") {
+            // Filter based on difficulty if not normal
+            selectedObjects = themes[selectedTheme].filter(wordObj => wordObj.difficulty === difficulty);
+        }
+    }
+    else {
+        if (selectedCategories.length === 0) {
+            // Select all categories if none are selected
+            selectedCategories.push(...Object.keys(categories));
+        }
+        
+        selectedObjects = selectedCategories.flatMap(category => categories[category]);
+
+        if (difficulty !== "normal") {
+            // Filter based on difficulty if not normal
+            selectedObjects = selectedCategories.flatMap(category => categories[category].filter(wordObj => wordObj.difficulty === difficulty));
+        }
+    }
+
+    // Map only the word field
+    selectedWords = selectedObjects.map(obj => obj.word)
+
+    // Shuffle selected words
+    selectedWords = shuffleArray(selectedWords);
+
+    return selectedWords;
+}
+
 function startRound() {
-    displayCurrentWords();
     document.getElementById("startRoundButton").classList.add("hidden");
-    startCountdown(30, () => {
+    startCountdown(numSeconds, () => {
         document.getElementById("scoreInput").classList.remove("hidden");
         document.querySelectorAll(".scoreButton").forEach(button => {
             button.style.background = null;
@@ -144,14 +162,22 @@ function endGame() {
 function displayCurrentWords() {
     const wordsContainer = document.getElementById("currentWords");
     wordsContainer.innerHTML = "";
-    selectedWords.slice(0, 5).forEach(word => {
+    
+    selectedWords.slice(0, numWords).forEach(word => {
         const wordDiv = document.createElement("div");
         wordDiv.className = "word";
         wordDiv.textContent = word;
         wordsContainer.appendChild(wordDiv);
     });
-    selectedWords = selectedWords.slice(5);
+
+    if (selectedWords.length <= numWords) {
+        alert("Words exhausted, selecting from other categories!");
+        selectedWords = selectWords('None', []);
+    }
+    
+    selectedWords = selectedWords.slice(numSeconds);
 }
+
 function clearWords() {
     const wordsContainer = document.getElementById("currentWords");
     wordsContainer.innerHTML = "";
@@ -164,17 +190,61 @@ function updatePoints(points) {
     document.getElementById("nextRoundButton").classList.remove("hidden");
 }
 
-function startCountdown(seconds, callback) {
+function playSound(audioElement, endCondition, playbackRate = 1.0) {
+    return new Promise((resolve) => {
+        audioElement.playbackRate = playbackRate;
+        audioElement.currentTime = 0;
+        audioElement.play();
+
+        const checkInterval = setInterval(() => {
+            if (endCondition()) {
+                audioElement.pause();
+                audioElement.currentTime = 0;
+                clearInterval(checkInterval);
+                resolve();
+            }
+        }, 100);
+
+        audioElement.onended = () => {
+            clearInterval(checkInterval);
+            resolve();
+        };
+    });
+}
+
+async function startCountdown(seconds, callback) {
+    // Wait for the countdown sound to finish playing for its duration
+    await playSound(countdownSound, () => false, 1.0);
+    displayCurrentWords();
+    
     const timerElement = document.getElementById("timer");
     let remainingTime = seconds;
     timerElement.textContent = remainingTime;
 
+    const warningTime = 5;
+    let tickPlaying = false;
+    let warningPlaying = false;
+    
     countdownTimer = setInterval(() => {
+        // Play the tick sound every second if not already playing
+        if (remainingTime > warningTime && !tickPlaying) {
+            tickPlaying = true;
+            playSound(tickSound, () => remainingTime <= warningTime, 1.0).then(() => tickPlaying = false);
+        }
+
         remainingTime--;
         timerElement.textContent = remainingTime;
 
+        // Play the warning sound 5 seconds before the end if not already playing
+        if (remainingTime <= warningTime && remainingTime > 0 && !warningPlaying) {
+            warningPlaying = true;
+            playSound(warningSound, () => remainingTime < 0, 1.1).then(() => warningPlaying = false);
+        }
+
         if (remainingTime <= 0) {
             clearInterval(countdownTimer);
+            // Play end sound when the timer ends
+            playSound(endSound, () => false, 1.0);
             callback();
         }
     }, 1000);
