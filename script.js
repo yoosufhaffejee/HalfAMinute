@@ -71,15 +71,20 @@ function initializeMenu() {
     document.getElementById("endGameButton").addEventListener("click", endGame);
     document.getElementById("endRoundButton").addEventListener("click", endRound);
 
+    let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
-        button.addEventListener("click", () => {
-            document.querySelectorAll(".scoreButton").forEach(button => {
-                button.disabled = true;
+        count++;
+        if (count <= numWords + 1)
+        {
+            button.addEventListener("click", () => {
+                document.querySelectorAll(".scoreButton").forEach(button => {
+                    button.disabled = true;
+                });
+                button.style.background = "grey";
+                const points = parseInt(button.dataset.score);
+                updatePoints(points);
             });
-            button.style.background = "grey";
-            const points = parseInt(button.dataset.score);
-            updatePoints(points);
-        });
+        }
     });
 }
 
@@ -151,16 +156,33 @@ function startRound() {
 
     startCountdown(numSeconds, () => {
         document.getElementById("scoreInput").classList.remove("hidden");
+        const scoreButtons = document.getElementsByClassName("scoreButton");
+        for (let index = 0; index < scoreButtons.length; index++) {
+            if (index <= numWords) {
+                const element = scoreButtons[index];
+                element.hidden = false;
+            }
+        }
         document.getElementById("endRoundButton").classList.add("hidden");
+        let count = 0;
         document.querySelectorAll(".scoreButton").forEach(button => {
-            button.style.background = null;
-            button.disabled = false;
+            count++;
+            if (count <= numWords + 1)
+            {
+                button.style.background = null;
+                button.disabled = false;
+            }
         });
     });
 }
 
 function nextRound() {
     document.getElementById("scoreInput").classList.add("hidden");
+    const scoreButtons = document.getElementsByClassName("scoreButton");
+    for (let index = 0; index < scoreButtons.length; index++) {
+        const element = scoreButtons[index];
+        element.hidden = true;
+    }
     document.getElementById("nextRoundButton").classList.add("hidden");
     document.getElementById("timer").classList.add("hidden");
     clearWords();
@@ -297,7 +319,12 @@ async function startCountdown(seconds, callback) {
 
 function generateBoard() {
     const boardSize = pointsToWin;
-    const columns = 5;
+
+    let columns = 5;
+    if (isMobileDevice()) 
+    {
+        columns = 4;
+    }
     const rows = Math.ceil(boardSize / columns);
     const gameBoard = document.getElementById("gameBoard");
     gameBoard.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
@@ -310,6 +337,12 @@ function generateBoard() {
     }
 }
 
+function isMobileDevice() {
+    const userAgent = navigator.userAgent;
+    const mobileKeywords = ['Android', 'webOS', 'iPhone', 'iPad', 'iPod', 'BlackBerry', 'Windows Phone'];
+    
+    return mobileKeywords.some(keyword => userAgent.includes(keyword));
+}
 
 function updateBoard() {
     const gameBoard = document.getElementById("gameBoard");
