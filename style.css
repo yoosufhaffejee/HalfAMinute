@@ -41,13 +41,26 @@ h1 {
     gap: 5px;
     margin-bottom: 20px;
 }
-
 .board-cell {
     background-color: #e0e0e0;
     border-radius: 4px;
     padding: 10px;
     text-align: center;
+    width: 50px; /* Example width */
+    height: 50px; /* Example height */
 }
+
+/* #gameBoard {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+}
+.board-cell {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    display: inline-block;
+} */
 
 .team-score {
     font-size: 18px;
@@ -105,6 +118,10 @@ h1 {
 
 .team-score span {
     display: block;
+}
+
+.round-controls {
+    gap: 5px;
 }
 
 #currentWords {

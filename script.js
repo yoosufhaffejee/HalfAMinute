@@ -8,6 +8,7 @@ let pointsToWin;
 let gameMode;
 let numWords = 5;
 let numSeconds = 30;
+let endRoundEarly = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
@@ -19,6 +20,7 @@ const countdownSound = document.getElementById('countdownSound');
 const tickSound = document.getElementById('tickSound');
 const warningSound = document.getElementById('warningSound');
 const endSound = document.getElementById('endSound');
+const endSoundAlt = document.getElementById('endSoundAlt');
 
 const categoriesSelect = document.getElementById("categoriesSelect");
 const themesSelect = document.getElementById("themesSelect");
@@ -48,8 +50,18 @@ function initializeMenu() {
         document.getElementById("themesSection").style.display = 'block';
     });
 
-    document.getElementById("toggleAdvancedOptions").addEventListener("click", () => {
+    const btnAdvancedOptions = document.getElementById("toggleAdvancedOptions");
+
+    btnAdvancedOptions.addEventListener("click", () => {
         const advancedOptions = document.getElementById("advancedOptions");
+
+        if (btnAdvancedOptions.textContent === "Show Advanced Options") {
+            btnAdvancedOptions.textContent = "Hide Advanced Options";
+        }
+        else {
+            btnAdvancedOptions.textContent = "Show Advanced Options";
+        }
+
         advancedOptions.classList.toggle("hidden");
     });
 
@@ -57,6 +69,7 @@ function initializeMenu() {
     document.getElementById("startRoundButton").addEventListener("click", startRound);
     document.getElementById("nextRoundButton").addEventListener("click", nextRound);
     document.getElementById("endGameButton").addEventListener("click", endGame);
+    document.getElementById("endRoundButton").addEventListener("click", endRound);
 
     document.querySelectorAll(".scoreButton").forEach(button => {
         button.addEventListener("click", () => {
@@ -78,6 +91,8 @@ async function startGame() {
     const selectedTheme = themesSelect.value;
     const numTeams = parseInt(document.getElementById("numTeams").value);
     pointsToWin = parseInt(document.getElementById("pointsToWin").value);
+    numWords = parseInt(document.getElementById("numWords").value);
+    numSeconds = parseInt(document.getElementById("numSeconds").value);
 
     if (selectedCategories.length > 0 && selectedTheme !== "None") {
         alert("Please select either categories or theme, not both.");
@@ -130,8 +145,13 @@ function selectWords(selectedTheme, selectedCategories, difficulty = "normal") {
 
 function startRound() {
     document.getElementById("startRoundButton").classList.add("hidden");
+    document.getElementById("endGameButton").classList.add("hidden");
+
+    endRoundEarly = false;
+
     startCountdown(numSeconds, () => {
         document.getElementById("scoreInput").classList.remove("hidden");
+        document.getElementById("endRoundButton").classList.add("hidden");
         document.querySelectorAll(".scoreButton").forEach(button => {
             button.style.background = null;
             button.disabled = false;
@@ -142,6 +162,7 @@ function startRound() {
 function nextRound() {
     document.getElementById("scoreInput").classList.add("hidden");
     document.getElementById("nextRoundButton").classList.add("hidden");
+    document.getElementById("timer").classList.add("hidden");
     clearWords();
 
     currentTeam = (currentTeam + 1) % teams.length;
@@ -150,6 +171,7 @@ function nextRound() {
         endGame();
     } else {
         document.getElementById("startRoundButton").classList.remove("hidden");
+        document.getElementById("endGameButton").classList.remove("hidden");
     }
     updateCurrentTeamIndicator();
 }
@@ -157,6 +179,11 @@ function nextRound() {
 function endGame() {
     alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
     location.reload();
+}
+
+function endRound() {
+    document.getElementById("endRoundButton").classList.add("hidden");
+    endRoundEarly = true;
 }
 
 function displayCurrentWords() {
@@ -187,6 +214,10 @@ function updatePoints(points) {
     teams[currentTeam].points += points;
     updateBoard();
     updateTeamScores();
+    if (teams[currentTeam].points >= pointsToWin)
+    {
+        document.getElementById("nextRoundButton").textContent = "EndGame";
+    }
     document.getElementById("nextRoundButton").classList.remove("hidden");
 }
 
@@ -214,10 +245,12 @@ function playSound(audioElement, endCondition, playbackRate = 1.0) {
 
 async function startCountdown(seconds, callback) {
     // Wait for the countdown sound to finish playing for its duration
-    await playSound(countdownSound, () => false, 1.0);
+    await playSound(countdownSound, () => false, 1.1);
+    document.getElementById("endRoundButton").classList.remove("hidden");
     displayCurrentWords();
     
     const timerElement = document.getElementById("timer");
+    timerElement.classList.remove("hidden");
     let remainingTime = seconds;
     timerElement.textContent = remainingTime;
 
@@ -229,22 +262,34 @@ async function startCountdown(seconds, callback) {
         // Play the tick sound every second if not already playing
         if (remainingTime > warningTime && !tickPlaying) {
             tickPlaying = true;
-            playSound(tickSound, () => remainingTime <= warningTime, 1.0).then(() => tickPlaying = false);
+            playSound(tickSound, () => remainingTime <= warningTime || endRoundEarly, 1.0).then(() => tickPlaying = false);
         }
 
         remainingTime--;
         timerElement.textContent = remainingTime;
+        if (remainingTime < 0)
+        {
+            timerElement.textContent = 0;
+        }
 
         // Play the warning sound 5 seconds before the end if not already playing
         if (remainingTime <= warningTime && remainingTime > 0 && !warningPlaying) {
             warningPlaying = true;
-            playSound(warningSound, () => remainingTime < 0, 1.1).then(() => warningPlaying = false);
+            playSound(warningSound, () => remainingTime < 0 || endRoundEarly, 1.2).then(() => warningPlaying = false);
         }
 
-        if (remainingTime <= 0) {
+        if (remainingTime < 0 ) {
+            remainingTime == 0;
             clearInterval(countdownTimer);
             // Play end sound when the timer ends
             playSound(endSound, () => false, 1.0);
+            callback();
+        }
+
+        if (endRoundEarly === true) {
+            clearInterval(countdownTimer);
+            // Play end sound when the timer ends
+            playSound(endSoundAlt, () => false, 1.0);
             callback();
         }
     }, 1000);
@@ -270,13 +315,42 @@ function updateBoard() {
     const gameBoard = document.getElementById("gameBoard");
     const boardCells = gameBoard.children;
 
+    // Clear previous state
     Array.from(boardCells).forEach(cell => {
-        cell.style.backgroundColor = "";
+        cell.innerHTML = '';  // Clear inner HTML to remove previous segments
+        cell.style.backgroundColor = ''; // Clear background color
     });
+
+    // Track team positions on the board
+    let cellTeams = new Array(boardCells.length).fill(null).map(() => []);
 
     teams.forEach((team, index) => {
         const position = Math.min(team.points, boardCells.length - 1);
-        boardCells[position].style.backgroundColor = getTeamColor(index);
+        cellTeams[position].push(index);
+    });
+
+    // Update board cells with team colors
+    cellTeams.forEach((teamIndexes, cellIndex) => {
+        if (teamIndexes.length === 0) return;
+
+        const cell = boardCells[cellIndex];
+        
+        // If there's only one team, just set the background color
+        if (teamIndexes.length === 1) {
+            cell.style.backgroundColor = getTeamColor(teamIndexes[0]);
+        } else {
+            const segmentWidth = 100 / teamIndexes.length;
+
+            teamIndexes.forEach((teamIndex, index) => {
+                const segment = document.createElement('div');
+                segment.style.width = `${segmentWidth}%`;
+                segment.style.height = '100%';
+                segment.style.float = 'left';
+                segment.style.backgroundColor = getTeamColor(teamIndex);
+                segment.style.borderRadius = '4px';  // Match the parent cell's border radius
+                cell.appendChild(segment);
+            });
+        }
     });
 
     updateTeamScores();
