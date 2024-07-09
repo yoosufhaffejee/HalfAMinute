@@ -1,4 +1,44 @@
 const categories = {
+    "History": [
+    ],
+    "Geography": [
+    ],
+    "Science & Technology": [
+    ],
+    "Literature": [
+    ],
+    "Art and Culture": [
+    ],
+    "Music": [
+    ],
+    "Sports": [
+    ],
+    "Movies and TV": [
+    ],
+    "Food and Drink": [
+    ],
+    "Nature and Wildlife": [
+    ],
+    "Languages": [
+    ],
+    "Famous Personalities": [
+    ],
+    "Current Events": [
+    ],
+    "Religion and Mythology": [
+    ],
+    "Space and Astronomy": [
+    ],
+    "Inventions and Discoveries": [
+    ],
+    "Health and Medicine": [
+    ],
+    "Games and Toys": [
+    ],
+    "Books and Authors": [
+    ],
+    "Video Games": [
+    ],
     "Geography": [
         { word: "Mountain", difficulty: "easy" },
         { word: "River", difficulty: "easy" },
