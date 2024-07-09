@@ -439,6 +439,78 @@ const categories = {
         { word: "Stardew Valley", difficulty: "hard" },
         { word: "The Last of Us", difficulty: "hard" }
       ],
+      "Philosophy": [
+        { word: "Socrates", difficulty: "hard" },
+        { word: "Plato", difficulty: "hard" },
+        { word: "Aristotle", difficulty: "hard" },
+        { word: "Confucius", difficulty: "hard" },
+        { word: "Albert Camus", difficulty: "hard" }
+        // Add more philosophy words here
+    ],
+    "Music": [
+        { word: "Beyoncé", difficulty: "easy" },
+        { word: "Freddie Mercury", difficulty: "hard" },
+        { word: "Adele", difficulty: "easy" },
+        { word: "Ed Sheeran", difficulty: "easy" },
+        { word: "Taylor Swift", difficulty: "easy" }
+        // Add more music-related words here
+    ],
+    "Movies & TV Shows": [
+        { word: "Leonardo DiCaprio", difficulty: "easy" },
+        { word: "Harry Potter", difficulty: "easy" },
+        { word: "Star Wars", difficulty: "easy" },
+        { word: "Game of Thrones", difficulty: "easy" },
+        { word: "The Godfather", difficulty: "easy" }
+        // Add more movies and TV shows here
+    ],
+    "History": [
+        { word: "Barack Obama", difficulty: "easy" },
+        { word: "World War II", difficulty: "hard" },
+        { word: "Nelson Mandela", difficulty: "hard" },
+        { word: "Cleopatra", difficulty: "hard" },
+        { word: "French Revolution", difficulty: "hard" }
+        // Add more history-related words here
+    ],
+    "Geography": [
+        { word: "Paris", difficulty: "easy" },
+        { word: "Great Wall of China", difficulty: "hard" },
+        { word: "Nile River", difficulty: "hard" },
+        { word: "Amazon River", difficulty: "hard" },
+        { word: "Mount Everest", difficulty: "hard" }
+        // Add more geography-related words here
+    ],
+    "Science": [
+        { word: "Gravity", difficulty: "easy" },
+        { word: "Relativity", difficulty: "hard" },
+        { word: "Evolution", difficulty: "hard" },
+        { word: "String Theory", difficulty: "hard" },
+        { word: "Hubble Space Telescope", difficulty: "hard" }
+        // Add more science-related words here
+    ],
+    "Sports": [
+        { word: "Lionel Messi", difficulty: "easy" },
+        { word: "Serena Williams", difficulty: "easy" },
+        { word: "Usain Bolt", difficulty: "easy" },
+        { word: "FIFA World Cup", difficulty: "hard" },
+        { word: "NBA Finals", difficulty: "hard" }
+        // Add more sports-related words here
+    ],
+    "Art & Culture": [
+        { word: "Mona Lisa", difficulty: "easy" },
+        { word: "Michelangelo", difficulty: "hard" },
+        { word: "Claude Monet", difficulty: "hard" },
+        { word: "Vincent van Gogh", difficulty: "hard" },
+        { word: "Sistine Chapel", difficulty: "hard" }
+        // Add more art and culture-related words here
+    ],
+    "Technology": [
+        { word: "Smartphone", difficulty: "easy" },
+        { word: "Artificial Intelligence", difficulty: "hard" },
+        { word: "Blockchain", difficulty: "hard" },
+        { word: "Virtual Reality headset", difficulty: "hard" },
+        { word: "Machine Learning", difficulty: "hard" }
+        // Add more technology-related words here
+    ],
 };
 
 const themes = {
