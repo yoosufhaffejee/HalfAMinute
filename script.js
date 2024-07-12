@@ -71,20 +71,10 @@ function initializeMenu() {
     document.getElementById("endGameButton").addEventListener("click", endGame);
     document.getElementById("endRoundButton").addEventListener("click", endRound);
 
-    let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
-        count++;
-        if (count <= numWords + 1)
-        {
-            button.addEventListener("click", () => {
-                document.querySelectorAll(".scoreButton").forEach(button => {
-                    button.disabled = true;
-                });
                 button.style.background = "grey";
                 const points = parseInt(button.dataset.score);
                 updatePoints(points);
-            });
-        }
     });
 }
 
@@ -164,15 +154,6 @@ function startRound() {
             }
         }
         document.getElementById("endRoundButton").classList.add("hidden");
-        let count = 0;
-        document.querySelectorAll(".scoreButton").forEach(button => {
-            count++;
-            if (count <= numWords + 1)
-            {
-                button.style.background = null;
-                button.disabled = false;
-            }
-        });
     });
 }
 
