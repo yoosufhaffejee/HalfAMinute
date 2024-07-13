@@ -10,8 +10,8 @@ let numWords = 5;
 let numSeconds = 30;
 let endRoundEarly = false;
 
-numWords = parseInt(document.getElementById("numWords").value);
-numSeconds = parseInt(document.getElementById("numSeconds").value);
+const txtWords = document.getElementById("txtWords");
+const txtSeconds = document.getElementById("txtSeconds");
 
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
@@ -73,6 +73,30 @@ function initializeMenu() {
     document.getElementById("nextRoundButton").addEventListener("click", nextRound);
     document.getElementById("endGameButton").addEventListener("click", endGame);
     document.getElementById("endRoundButton").addEventListener("click", endRound);
+}
+
+async function startGame() {
+    await playSound(startSound, () => false, 1.2);
+    
+    const difficulty = document.getElementById("difficulty").value.toLowerCase();
+    const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
+    const selectedTheme = themesSelect.value;
+    const numTeams = parseInt(document.getElementById("numTeams").value);
+    pointsToWin = parseInt(document.getElementById("pointsToWin").value);
+    
+    numWords = parseInt(txtWords.value);
+    numSeconds = parseInt(txtSeconds.value);
+
+    if (selectedCategories.length > 0 && selectedTheme !== "None") {
+        alert("Please select either categories or theme, not both.");
+        return;
+    }
+
+    selectWords(selectedTheme, selectedCategories, difficulty);
+    teams = Array.from({ length: numTeams }, () => ({ points: 0 }));
+
+    document.getElementById("menu").classList.add("hidden");
+    document.getElementById("game").classList.remove("hidden");
 
     let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
@@ -89,29 +113,6 @@ function initializeMenu() {
             });
         }
     });
-}
-
-async function startGame() {
-    await playSound(startSound, () => false, 1.2);
-    
-    const difficulty = document.getElementById("difficulty").value.toLowerCase();
-    const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
-    const selectedTheme = themesSelect.value;
-    const numTeams = parseInt(document.getElementById("numTeams").value);
-    pointsToWin = parseInt(document.getElementById("pointsToWin").value);
-    numWords = parseInt(document.getElementById("numWords").value);
-    numSeconds = parseInt(document.getElementById("numSeconds").value);
-
-    if (selectedCategories.length > 0 && selectedTheme !== "None") {
-        alert("Please select either categories or theme, not both.");
-        return;
-    }
-
-    selectWords(selectedTheme, selectedCategories, difficulty);
-    teams = Array.from({ length: numTeams }, () => ({ points: 0 }));
-
-    document.getElementById("menu").classList.add("hidden");
-    document.getElementById("game").classList.remove("hidden");
 
     generateBoard();
     updateBoard();
