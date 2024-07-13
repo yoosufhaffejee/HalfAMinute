@@ -10,6 +10,9 @@ let numWords = 5;
 let numSeconds = 30;
 let endRoundEarly = false;
 
+numWords = parseInt(document.getElementById("numWords").value);
+numSeconds = parseInt(document.getElementById("numSeconds").value);
+
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
 });
@@ -71,16 +74,26 @@ function initializeMenu() {
     document.getElementById("endGameButton").addEventListener("click", endGame);
     document.getElementById("endRoundButton").addEventListener("click", endRound);
 
+    let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
+        count++;
+        if (count <= numWords + 1)
+        {
+            button.addEventListener("click", () => {
+                document.querySelectorAll(".scoreButton").forEach(button => {
+                    button.disabled = true;
+                });
                 button.style.background = "grey";
                 const points = parseInt(button.dataset.score);
                 updatePoints(points);
+            });
+        }
     });
 }
 
 async function startGame() {
     await playSound(startSound, () => false, 1.2);
-
+    
     const difficulty = document.getElementById("difficulty").value.toLowerCase();
     const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
     const selectedTheme = themesSelect.value;
@@ -154,6 +167,15 @@ function startRound() {
             }
         }
         document.getElementById("endRoundButton").classList.add("hidden");
+        let count = 0;
+        document.querySelectorAll(".scoreButton").forEach(button => {
+            count++;
+            if (count <= numWords + 1)
+            {
+                button.style.background = null;
+                button.disabled = false;
+            }
+        });
     });
 }
 
