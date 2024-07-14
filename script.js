@@ -422,6 +422,7 @@ async function startCountdown(seconds, callback) {
             clearInterval(countdownTimer);
             // Play end sound when the timer ends
             playSound(endSound, () => false, 1.0);
+            selectedButtons = 0;
             callback();
         }
 
@@ -429,6 +430,7 @@ async function startCountdown(seconds, callback) {
             clearInterval(countdownTimer);
             // Play end sound when the timer ends
             await playSound(endSoundAlt, () => false, 1.0).then(() => {
+                selectedButtons = 0;
                 callback();
             });
         }
