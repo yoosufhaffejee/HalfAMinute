@@ -306,7 +306,6 @@ function displayCurrentWords() {
     btnAnswers.hidden = false;
     const wordButtons = document.getElementsByClassName("scoreButton");
     
-    debugger;
     // We need to evenly mix easy and hard to make the game fair
     if (difficulty.value === "normal")
     {
