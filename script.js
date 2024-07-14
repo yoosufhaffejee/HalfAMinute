@@ -1,5 +1,8 @@
-let selectedWords = [];
+// Game state variables
 let teams = [];
+let currentGameWords = [];
+let easyWords = [];
+let hardWords = [];
 let currentTeam = 0;
 let totalPoints = 0;
 let currentRound = 0;
@@ -9,15 +12,25 @@ let gameMode;
 let numWords = 5;
 let numSeconds = 30;
 let endRoundEarly = false;
+let selectedButtons = 0;
 
+// DOM elements
+const menu = document.getElementById("menu");
+const game = document.getElementById("game");
+const btnSettings = document.getElementById("settings");
+const btnHistory = document.getElementById("history");
 const txtWords = document.getElementById("txtWords");
 const txtSeconds = document.getElementById("txtSeconds");
+const categoriesSelect = document.getElementById("categoriesSelect");
+const themesSelect = document.getElementById("themesSelect");
+const btnStartRound = document.getElementById("startRoundButton");
+const btnNextRound = document.getElementById("nextRoundButton");
+const btnEndRound = document.getElementById("endRoundButton");
+const btnEndGame = document.getElementById("endGameButton");
+const btnAnswers = document.getElementById("scoreInput");
+const timer = document.getElementById("timer");
 
-document.addEventListener("DOMContentLoaded", () => {
-    initializeMenu();
-});
-
-// Get audio elements
+// Audio elements
 const startSound = document.getElementById('startSound');
 const countdownSound = document.getElementById('countdownSound');
 const tickSound = document.getElementById('tickSound');
@@ -25,10 +38,13 @@ const warningSound = document.getElementById('warningSound');
 const endSound = document.getElementById('endSound');
 const endSoundAlt = document.getElementById('endSoundAlt');
 
-const categoriesSelect = document.getElementById("categoriesSelect");
-const themesSelect = document.getElementById("themesSelect");
+// Load menu
+document.addEventListener("DOMContentLoaded", () => {
+    initializeMenu();
+});
 
 function initializeMenu() {
+    // Add categories to dropdown
     Object.keys(categories).forEach(category => {
         const option = document.createElement("option");
         option.value = category;
@@ -36,6 +52,7 @@ function initializeMenu() {
         categoriesSelect.appendChild(option);
     });
 
+    // Add themes to dropdown
     Object.keys(themes).forEach(theme => {
         const option = document.createElement("option");
         option.value = theme;
@@ -43,29 +60,35 @@ function initializeMenu() {
         themesSelect.appendChild(option);
     });
 
+    // Show categories dropdown
     document.getElementById("selectCategoriesBtn").addEventListener("click", () => {
         document.getElementById("categoriesSection").style.display = 'block';
         document.getElementById("themesSection").style.display = 'none';
     });
 
+    // Show themes dropdown
     document.getElementById("selectThemeBtn").addEventListener("click", () => {
         document.getElementById("categoriesSection").style.display = 'none';
         document.getElementById("themesSection").style.display = 'block';
     });
 
-    const btnAdvancedOptions = document.getElementById("toggleAdvancedOptions");
+    // Toggle modal display
+    btnSettings.addEventListener("click", () => {
+        $('#settingsModal').modal('show');
+    });
 
-    btnAdvancedOptions.addEventListener("click", () => {
-        const advancedOptions = document.getElementById("advancedOptions");
-
-        if (btnAdvancedOptions.textContent === "Show Advanced Options") {
-            btnAdvancedOptions.textContent = "Hide Advanced Options";
+    // Close modal on outside click
+    $('#settingsModal').on('click', function(event) {
+        if ($(event.target).hasClass('modal')) {
+            $(this).modal('hide');
         }
-        else {
-            btnAdvancedOptions.textContent = "Show Advanced Options";
-        }
+    });
 
-        advancedOptions.classList.toggle("hidden");
+    // Close modal on button click
+    $(document).ready(function() {
+        $('.modal-footer button[data-dismiss="modal"]').click(function() {
+            $(this).closest('.modal').modal('hide');
+        });
     });
 
     document.getElementById("startGameButton").addEventListener("click", startGame);
@@ -76,51 +99,97 @@ function initializeMenu() {
 }
 
 async function startGame() {
+    // Play game start sound
     await playSound(startSound, () => false, 1.2);
     
+    // Read game settings
     const difficulty = document.getElementById("difficulty").value.toLowerCase();
     const selectedCategories = Array.from(categoriesSelect.selectedOptions).map(option => option.value);
     const selectedTheme = themesSelect.value;
+
     const numTeams = parseInt(document.getElementById("numTeams").value);
+    teams = Array.from({ length: numTeams }, () => ({ points: 0 }));
+
     pointsToWin = parseInt(document.getElementById("pointsToWin").value);
-    
     numWords = parseInt(txtWords.value);
     numSeconds = parseInt(txtSeconds.value);
 
+    // Validate game settings
     if (selectedCategories.length > 0 && selectedTheme !== "None") {
         alert("Please select either categories or theme, not both.");
         return;
     }
 
-    selectWords(selectedTheme, selectedCategories, difficulty);
-    teams = Array.from({ length: numTeams }, () => ({ points: 0 }));
+    // Load game data
+    currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
 
-    document.getElementById("menu").classList.add("hidden");
-    document.getElementById("game").classList.remove("hidden");
+    // Show/Hide UI elements
+    menu.hidden = true;
+    game.hidden = false;
+    btnSettings.hidden = true;
+    btnHistory.hidden = false;
 
+    // Toggle modal display
+    btnHistory.addEventListener("click", () => {
+        $('#historyModal').modal('show');
+    });
+
+    // Close modal on outside click
+    $('#historyModal').on('click', function(event) {
+        if ($(event.target).hasClass('modal')) {
+            $(this).modal('hide');
+        }
+    });
+
+    // Close modal on button click
+    $(document).ready(function() {
+        $('.modal-footer button[data-dismiss="modal"]').click(function() {
+            $(this).closest('.modal').modal('hide');
+        });
+    });
+
+    // Handle answer button click logic
     let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
-        count++;
-        if (count <= numWords + 1)
+        if (count < numWords)
         {
             button.addEventListener("click", () => {
-                document.querySelectorAll(".scoreButton").forEach(button => {
-                    button.disabled = true;
-                });
-                button.style.background = "grey";
-                const points = parseInt(button.dataset.score);
-                updatePoints(points);
+                count++;
+                if (!btnNextRound.hidden === true)
+                {
+                    if (button.style.background == "grey") {
+                        selectedButtons--;
+                        button.style.background = null;
+                    }
+                    else {
+                        selectedButtons++;
+                        button.style.background = "grey";
+                    }
+                }
             });
         }
     });
 
+    // Set starting team
+    currentTeam = 1;
+    createTeamAuditTables(teams.length);
+    createTeamAuditColumns(getCurrentTeamIndex(currentTeam));
+    
     generateBoard();
     updateBoard();
     updateTeamScores();
     updateCurrentTeamIndicator();
 }
 
-function selectWords(selectedTheme, selectedCategories, difficulty = "normal") {
+function getEasyWords(selectedObjects) {
+    return selectedObjects.filter(_ => _.difficulty == "easy");
+}
+
+function getHardWords(selectedObjects) {
+    return selectedObjects.filter(_ => _.difficulty == "hard");
+}
+
+function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
     let selectedObjects;
     if (selectedTheme !== "None") {
         selectedObjects = themes[selectedTheme];
@@ -143,35 +212,30 @@ function selectWords(selectedTheme, selectedCategories, difficulty = "normal") {
         }
     }
 
+    // Shuffle selected objects
+    selectedObjects = shuffleArray(selectedObjects);
+
+    easyWords = getEasyWords(selectedObjects).map(obj => obj.word);
+    hardWords = getHardWords(selectedObjects).map(obj => obj.word);
+
     // Map only the word field
-    selectedWords = selectedObjects.map(obj => obj.word)
-
-    // Shuffle selected words
-    selectedWords = shuffleArray(selectedWords);
-
-    return selectedWords;
+    return selectedObjects.map(obj => obj.word);
 }
 
 function startRound() {
-    document.getElementById("startRoundButton").classList.add("hidden");
-    document.getElementById("endGameButton").classList.add("hidden");
+    btnStartRound.hidden = true;
+    btnEndGame.hidden = true;
 
     endRoundEarly = false;
 
     startCountdown(numSeconds, () => {
-        document.getElementById("scoreInput").classList.remove("hidden");
-        const scoreButtons = document.getElementsByClassName("scoreButton");
-        for (let index = 0; index < scoreButtons.length; index++) {
-            if (index <= numWords) {
-                const element = scoreButtons[index];
-                element.hidden = false;
-            }
-        }
-        document.getElementById("endRoundButton").classList.add("hidden");
+        btnEndRound.hidden = true;
+        btnNextRound.hidden = false;
+
         let count = 0;
         document.querySelectorAll(".scoreButton").forEach(button => {
             count++;
-            if (count <= numWords + 1)
+            if (count <= numWords)
             {
                 button.style.background = null;
                 button.disabled = false;
@@ -181,23 +245,40 @@ function startRound() {
 }
 
 function nextRound() {
-    document.getElementById("scoreInput").classList.add("hidden");
+    let correctAnswers = [];
+    document.querySelectorAll(".scoreButton").forEach(button => {
+        if (button.style.background == "grey")
+        {
+            correctAnswers.push(button.textContent);
+        }
+    });
+
+    updatePoints(selectedButtons);
+
+    currentTeam++;
+    if (currentTeam > teams.length)
+    {
+        currentTeam = 1;
+        currentRound++;
+    }
+    createTeamAuditColumns(getCurrentTeamIndex(currentTeam));
+    createTeamAuditRows(getCurrentTeamIndex(currentTeam), correctAnswers);
+
+    btnAnswers.hidden = true;
     const scoreButtons = document.getElementsByClassName("scoreButton");
     for (let index = 0; index < scoreButtons.length; index++) {
         const element = scoreButtons[index];
         element.hidden = true;
     }
-    document.getElementById("nextRoundButton").classList.add("hidden");
-    document.getElementById("timer").classList.add("hidden");
+    btnNextRound.hidden = true;
+    timer.hidden = true;
     clearWords();
 
-    currentTeam = (currentTeam + 1) % teams.length;
-    currentRound++;
     if (teams.some(team => team.points >= pointsToWin)) {
         endGame();
     } else {
-        document.getElementById("startRoundButton").classList.remove("hidden");
-        document.getElementById("endGameButton").classList.remove("hidden");
+        btnStartRound.hidden = false;
+        btnEndGame.hidden = false;
     }
     updateCurrentTeamIndicator();
 }
@@ -208,43 +289,77 @@ function endGame() {
 }
 
 function endRound() {
-    document.getElementById("endRoundButton").classList.add("hidden");
+    btnEndRound.hidden = true;
+    btnNextRound.hidden = false;
     endRoundEarly = true;
 }
 
 function displayCurrentWords() {
-    const wordsContainer = document.getElementById("currentWords");
-    wordsContainer.innerHTML = "";
-    
-    selectedWords.slice(0, numWords).forEach(word => {
-        const wordDiv = document.createElement("div");
-        wordDiv.className = "word";
-        wordDiv.textContent = word;
-        wordsContainer.appendChild(wordDiv);
-    });
-
-    if (selectedWords.length <= numWords) {
-        alert("Words exhausted, selecting from other categories!");
-        selectedWords = selectWords('None', []);
+    const scoreButtons = document.getElementsByClassName("scoreButton");
+    for (let index = 0; index < scoreButtons.length; index++) {
+        if (index < numWords) {
+            const element = scoreButtons[index];
+            element.hidden = false;
+        }
     }
+
+    btnAnswers.hidden = false;
+    const wordButtons = document.getElementsByClassName("scoreButton");
     
-    selectedWords = selectedWords.slice(numSeconds);
+    debugger;
+    // We need to evenly mix easy and hard to make the game fair
+    if (difficulty.value === "normal")
+    {
+        let numEasy = Math.ceil(numWords/2);
+        let numHard = numWords - numEasy;
+
+        if (easyWords.length < numEasy || hardWords.length < numHard) {
+            alert("Words exhausted, selecting from other categories!");
+            currentGameWords = loadWords('None', []);
+        }
+
+        let normalWords = [];
+        normalWords = easyWords.slice(0, numEasy).concat(hardWords.slice(0, numHard));
+        normalWords = shuffleArray(normalWords);
+
+        for (let i = 0; i <= normalWords.length; i++) {
+            wordButtons[i].textContent = normalWords[i];
+        }
+
+        easyWords = easyWords.slice(numEasy);
+        hardWords = hardWords.slice(numHard);
+    }
+    else
+    {
+        if (currentGameWords.length < numWords) {
+            alert("Words exhausted, selecting from other categories!");
+            currentGameWords = loadWords('None', []);
+        }
+
+        currentGameWords.slice(0, numWords).forEach((word, index) => {
+            wordButtons[index].textContent = word;
+        });
+
+        currentGameWords = currentGameWords.slice(numWords);
+    }
 }
 
 function clearWords() {
-    const wordsContainer = document.getElementById("currentWords");
-    wordsContainer.innerHTML = "";
+    document.querySelectorAll(".scoreButton").forEach(button => {
+        button.style.background = null;
+        selectedButtons = 0;
+    });
 }
 
 function updatePoints(points) {
-    teams[currentTeam].points += points;
+    teams[getCurrentTeamIndex(currentTeam)].points += points;
     updateBoard();
     updateTeamScores();
-    if (teams[currentTeam].points >= pointsToWin)
+    if (teams[getCurrentTeamIndex(currentTeam)].points >= pointsToWin)
     {
         document.getElementById("nextRoundButton").textContent = "EndGame";
     }
-    document.getElementById("nextRoundButton").classList.remove("hidden");
+    btnNextRound.hidden = false;
 }
 
 function playSound(audioElement, endCondition, playbackRate = 1.0) {
@@ -272,19 +387,18 @@ function playSound(audioElement, endCondition, playbackRate = 1.0) {
 async function startCountdown(seconds, callback) {
     // Wait for the countdown sound to finish playing for its duration
     await playSound(countdownSound, () => false, 1.1);
-    document.getElementById("endRoundButton").classList.remove("hidden");
+    btnEndRound.hidden = false;
     displayCurrentWords();
     
-    const timerElement = document.getElementById("timer");
-    timerElement.classList.remove("hidden");
+    timer.hidden = false;
     let remainingTime = seconds;
-    timerElement.textContent = remainingTime;
+    timer.textContent = remainingTime;
 
     const warningTime = 5;
     let tickPlaying = false;
     let warningPlaying = false;
     
-    countdownTimer = setInterval(() => {
+    countdownTimer = setInterval(async () => {
         // Play the tick sound every second if not already playing
         if (remainingTime > warningTime && !tickPlaying) {
             tickPlaying = true;
@@ -292,10 +406,10 @@ async function startCountdown(seconds, callback) {
         }
 
         remainingTime--;
-        timerElement.textContent = remainingTime;
+        timer.textContent = remainingTime;
         if (remainingTime < 0)
         {
-            timerElement.textContent = 0;
+            timer.textContent = 0;
         }
 
         // Play the warning sound 5 seconds before the end if not already playing
@@ -315,8 +429,9 @@ async function startCountdown(seconds, callback) {
         if (endRoundEarly === true) {
             clearInterval(countdownTimer);
             // Play end sound when the timer ends
-            playSound(endSoundAlt, () => false, 1.0);
-            callback();
+            await playSound(endSoundAlt, () => false, 1.0).then(() => {
+                callback();
+            });
         }
     }, 1000);
 }
@@ -433,11 +548,78 @@ function updateCurrentTeamIndicator() {
     if (!currentTeamIndicator) {
         const indicator = document.createElement("div");
         indicator.id = "currentTeamIndicator";
-        indicator.textContent = `Current Team: Team ${currentTeam + 1}`;
-        indicator.style.color = getTeamColor(currentTeam);
+        indicator.textContent = `Current Team: Team ${currentTeam}`;
+        indicator.style.color = getTeamColor(getCurrentTeamIndex(currentTeam));
         document.getElementById("game").prepend(indicator);
     } else {
-        currentTeamIndicator.textContent = `Current Team: Team ${currentTeam + 1}`;
-        currentTeamIndicator.style.color = getTeamColor(currentTeam);
+        currentTeamIndicator.textContent = `Current Team: Team ${currentTeam}`;
+        currentTeamIndicator.style.color = getTeamColor(getCurrentTeamIndex(currentTeam));
+    }
+}
+
+function createTeamAuditTables(numTeams) {
+    for (let i = 0; i < numTeams; i++) {
+        const tableContainer = document.getElementById('table-container');
+        const table = document.createElement('table');
+        table.id = `table${i}`;
+        const header = table.createTHead();
+        const headerRow = header.insertRow(0);
+
+        const th = document.createElement('th');
+        th.innerText = `Team ${i + 1}`;
+        headerRow.appendChild(th);
+
+        const tBody = table.createTBody();
+        tBody.insertRow(0);
+        tableContainer.appendChild(table);
+    }
+}
+
+function createTeamAuditColumns(tableIndex) {
+    const table = document.getElementById(`table${tableIndex}`);
+    if (table) {
+        const columnRow = table.children[1];
+        const th = document.createElement('th');
+        th.innerText = `Round ${currentRound + 1}`;
+        columnRow.appendChild(th);
+    } else {
+        console.error(`Table with index ${tableIndex} does not exist.`);
+    }
+}
+
+function createTeamAuditRows(tableIndex, correctAnswers) {
+    const table = document.getElementById(`table${tableIndex}`);
+    if (table) {
+        const tbody = table.tBodies[0];
+        for (let i = 0; i < correctAnswers.length; i++) {
+            const row = tbody.insertRow();
+            for (let j = 0; j < table.tHead.rows[0].cells.length; j++) {
+                const cell = row.insertCell();
+                const textNode = document.createTextNode(correctAnswers[i] || '');
+                cell.appendChild(textNode);
+            }
+        }
+    } else {
+        console.error(`Table with index ${tableIndex} does not exist.`);
+    }
+}
+
+// Helper methods
+function hideElement(element) {
+
+}
+
+function getCurrentTeamIndex (currentTeam) {
+    return currentTeam -1;
+}
+
+function enforceMinMax(el) {
+    if (el.value != "") {
+        if (parseInt(el.value) < parseInt(el.min)) {
+            el.value = el.min;
+        }
+        if (parseInt(el.value) > parseInt(el.max)) {
+            el.value = el.max;
+        }
     }
 }
