@@ -209,6 +209,7 @@ async function startGame() {
     game.hidden = false;
     btnSettings.hidden = true;
     btnHistory.hidden = false;
+    btnAI.hidden = true;
 
     // Toggle modal display
     btnHistory.addEventListener("click", () => {
