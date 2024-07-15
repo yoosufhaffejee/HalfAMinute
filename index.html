@@ -117,9 +117,11 @@
                         <br>
                         <label for="topic">Topic:</label>
                         <input type="text" id="topic" placeholder="Enter topic...">
-                        <button id="btnGenerate" class="btn btn-primary" onclick="generate()">Generate</button>
+                        <button id="btnGenerate" class="btn btn-primary">Generate</button>
                         <br>
-                        <button id="btnAiGame" class="btn btn-success" onclick="startAIGame()">Start Game</button>
+                        <button id="btnAiGame" disabled class="btn btn-success">Start Game</button>
+                        <br>
+                        <p id="aiWords"></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

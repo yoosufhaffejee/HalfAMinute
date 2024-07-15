@@ -52,18 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
 });
 
-async function run(topic) {
-    const prompt = `Generate a list of exactly 50 words related to the topic "${topic}". If the topic is football for example, include words like player names (e.g., Ronaldo, Messi), manager names (e.g., Klopp, Guardiola), club names (e.g., Manchester United, Real Madrid), competition names (e.g., World Cup, Premier League), places in relation to the topic (e.g., stadiums, countries), and other common general knowledge items. Ensure the list contains words of varying difficulty levels and covers a comprehensive overview of the topic. Only output the 50 words of the given topic, each on a new line.`;
-
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    console.log(text);
-
-    aiGameWords.push(text.join("\n"));
-    console.log(aiGameWords);
-}
-
 function initializeMenu() {
     // Add categories to dropdown
     Object.keys(categories).forEach(category => {
@@ -129,10 +117,44 @@ function initializeMenu() {
     document.getElementById("nextRoundButton").addEventListener("click", nextRound);
     document.getElementById("endGameButton").addEventListener("click", endGame);
     document.getElementById("endRoundButton").addEventListener("click", endRound);
+    document.getElementById("btnGenerate").addEventListener("click", generate);
+    document.getElementById("btnAiGame").addEventListener("click", startAIGame);
 }
 
 function generate() {
     run(document.getElementById("topic").value);
+}
+
+async function run(topic) {
+    const prompt = `Generate a list of exactly 50 words only related to the topic "${topic}". 
+
+    * **Include:**
+        * NB People (e.g., historical figures, artists, scientists, players, actors) - add multiple
+        * Places (e.g., countries, landmarks, geographical features)
+        * Events (e.g., historical events, cultural celebrations)
+        * Concepts (e.g., theories, movements, styles)
+        * Objects (e.g., tools, materials, symbols)
+        * Terminology (e.g., jargon, technical terms)
+        * Lesser-known aspects (to add depth)
+    
+    * **Vary difficulty:** Include a mix of well-known words and some lesser-known terms.
+    
+    * **Focus on context:** Consider subcategories and related fields within the topic and include relevant words.
+    
+    Only return the list of 50 words, each on a new line. Do not forget to include relevant people, places etc related to the topic and sub topics.`    
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    console.log(text);
+
+    aiGameWords = text.split("\n");
+    aiGameWords = shuffleArray(aiGameWords);
+
+    document.getElementById("btnAiGame").disabled = false;
+
+    let p = document.getElementById('aiWords');
+    p.textContent = aiGameWords.join(', ');
 }
 
 function startAIGame() {
@@ -167,6 +189,7 @@ async function startGame() {
     // Load game data
     currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
 
+    debugger;
     // Ai game
     if (isAiGame) {
         teams = Array.from({ length: 2 }, () => ({ points: 0 }));
@@ -364,6 +387,7 @@ function displayCurrentWords() {
     btnAnswers.hidden = false;
     const wordButtons = document.getElementsByClassName("scoreButton");
     
+    debugger;
     // We need to evenly mix easy and hard to make the game fair
     if (difficulty.value === "normal" && !isAiGame)
     {
