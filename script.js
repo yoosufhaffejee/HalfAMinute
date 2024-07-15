@@ -1,8 +1,8 @@
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
+// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 
-const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
-const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+// const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
+// const genAI = new GoogleGenerativeAI(API_KEY);
+// const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // Game state variables
 let teams = [];
@@ -19,11 +19,14 @@ let numWords = 5;
 let numSeconds = 30;
 let endRoundEarly = false;
 let selectedButtons = 0;
+let aiGameWords = [];
+let isAiGame = false;
 
 // DOM elements
 const menu = document.getElementById("menu");
 const game = document.getElementById("game");
 const btnSettings = document.getElementById("settings");
+const btnAI = document.getElementById("ai");
 const btnHistory = document.getElementById("history");
 const txtWords = document.getElementById("txtWords");
 const txtSeconds = document.getElementById("txtSeconds");
@@ -47,16 +50,18 @@ const endSoundAlt = document.getElementById('endSoundAlt');
 // Load menu
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
-    run("soccer");
 });
 
 async function run(topic) {
-    const prompt = `Generate a list of exactly 50 words related to the topic "${topic}". Include examples like player names (e.g., Ronaldo, Messi), manager names (e.g., Klopp, Guardiola), club names (e.g., Manchester United, Real Madrid), competition names (e.g., World Cup, Premier League), places in relation to the topic (e.g., stadiums, countries), and other common general knowledge items. Ensure the list contains words of varying difficulty levels and covers a comprehensive overview of the topic.`;
+    const prompt = `Generate a list of exactly 50 words related to the topic "${topic}". If the topic is football for example, include words like player names (e.g., Ronaldo, Messi), manager names (e.g., Klopp, Guardiola), club names (e.g., Manchester United, Real Madrid), competition names (e.g., World Cup, Premier League), places in relation to the topic (e.g., stadiums, countries), and other common general knowledge items. Ensure the list contains words of varying difficulty levels and covers a comprehensive overview of the topic. Only output the 50 words of the given topic, each on a new line.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
     console.log(text);
+
+    aiGameWords.push(text.join("\n"));
+    console.log(aiGameWords);
 }
 
 function initializeMenu() {
@@ -107,11 +112,34 @@ function initializeMenu() {
         });
     });
 
+    // Toggle AI modal display
+    btnAI.addEventListener("click", () => {
+        $('#aiModal').modal('show');
+    });
+
+    // Close AI modal on outside click
+    $('#aiModal').on('click', function(event) {
+        if ($(event.target).hasClass('modal')) {
+            $(this).modal('hide');
+        }
+    });
+
     document.getElementById("startGameButton").addEventListener("click", startGame);
     document.getElementById("startRoundButton").addEventListener("click", startRound);
     document.getElementById("nextRoundButton").addEventListener("click", nextRound);
     document.getElementById("endGameButton").addEventListener("click", endGame);
     document.getElementById("endRoundButton").addEventListener("click", endRound);
+}
+
+function generate() {
+    run(document.getElementById("topic").value);
+}
+
+function startAIGame() {
+    isAiGame = true;
+    startGame();
+    $('#aiModal').modal('hide');
+    btnAI.hidden = true;
 }
 
 async function startGame() {
@@ -138,6 +166,20 @@ async function startGame() {
 
     // Load game data
     currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
+
+    // Ai game
+    if (isAiGame) {
+        teams = Array.from({ length: 2 }, () => ({ points: 0 }));
+
+        if (isMobileDevice()) {
+            pointsToWin = 16;
+        }
+        else {
+            pointsToWin = 15;
+        }
+
+        currentGameWords = aiGameWords;
+    }
 
     // Show/Hide UI elements
     menu.hidden = true;
@@ -323,7 +365,7 @@ function displayCurrentWords() {
     const wordButtons = document.getElementsByClassName("scoreButton");
     
     // We need to evenly mix easy and hard to make the game fair
-    if (difficulty.value === "normal")
+    if (difficulty.value === "normal" && !isAiGame)
     {
         let numEasy = Math.ceil(numWords/2);
         let numHard = numWords - numEasy;

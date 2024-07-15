@@ -19,6 +19,9 @@
         <button title="history" class="btn btn-warning" id="history" hidden data-toggle="modal" data-target="#historyModal">
             <i class="fas fa-history"></i>
         </button>
+        <button title="AI Mode" class="btn btn-primary" id="ai" data-toggle="modal" data-target="#aiModal">
+            <i class="fas fa-robot"></i>
+        </button>
         <div id="menu">
             <div class="menu-section">
                 <label for="numTeams">Number of Teams:</label>
@@ -102,6 +105,29 @@
             </div>
         </div>
 
+        <!-- AI Mode Modal -->
+        <div class="modal fade" id="aiModal" tabindex="-1" role="dialog" aria-labelledby="aiModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="aiModalLabel">AI Mode</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Enter a topic and have AI generate the words to be used in game!</p>
+                        <br>
+                        <label for="topic">Topic:</label>
+                        <input type="text" id="topic" placeholder="Enter topic...">
+                        <button id="btnGenerate" class="btn btn-primary" onclick="generate()">Generate</button>
+                        <br>
+                        <button id="btnAiGame" class="btn btn-success" onclick="startAIGame()">Start Game</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="game" hidden>
             <div id="currentTeamIndicator"></div>
             <div id="timer"></div>
@@ -161,6 +187,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js" type="module"></script>
+    <script src="script.js" type=""></script>
 </body>
 </html>
