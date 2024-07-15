@@ -1,8 +1,8 @@
-// import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 
-// const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
-// const genAI = new GoogleGenerativeAI(API_KEY);
-// const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
+const genAI = new GoogleGenerativeAI(API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // Game state variables
 let teams = [];
