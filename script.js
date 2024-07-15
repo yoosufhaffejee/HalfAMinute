@@ -1,9 +1,7 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 
 // Fetch your API_KEY
 const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
-
-run();
 
 // Game state variables
 let teams = [];
@@ -50,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
 
     // Access your API key (see "Set up your API key" above)
-    const genAI = new GoogleGenerativeAI(API_KEY);
+    //const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     run("soccer");
     // fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk", {
