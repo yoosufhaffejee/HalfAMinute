@@ -1,3 +1,10 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// Fetch your API_KEY
+const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
+
+run();
+
 // Game state variables
 let teams = [];
 let currentGameWords = [];
@@ -41,7 +48,65 @@ const endSoundAlt = document.getElementById('endSoundAlt');
 // Load menu
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
+
+    // Access your API key (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    run("soccer");
+    // fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk", {
+    //     body: "{'contents':['hello']}",
+    //     headers: {
+    //         "Content-Type": "application/json"
+    //     },
+    //     method: "POST"
+    // })
 });
+
+async function run(topic) {
+    const prompt = `Generate a list of exactly 50 words related to the topic "${topic}". Include examples like player names (e.g., Ronaldo, Messi), manager names (e.g., Klopp, Guardiola), club names (e.g., Manchester United, Real Madrid), competition names (e.g., World Cup, Premier League), places in relation to the topic (e.g., stadiums, countries), and other common general knowledge items. Ensure the list contains words of varying difficulty levels and covers a comprehensive overview of the topic.`;
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+    console.log(text);
+}
+
+// Function to initialize Google API client library
+function initClient() {
+    gapi.client.init({
+      'apiKey': 'AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk',
+      'discoveryDocs': ['https://language.googleapis.com/$discovery/rest'],
+    }).then(function() {
+      console.log('Google API client initialized');
+      // Enable generate button once API is initialized
+      document.getElementById('generateButton').disabled = false;
+    }).catch(function(error) {
+      console.error('Error initializing Google API client:', error);
+    });
+  }
+  
+  // Function to generate text using Google Natural Language API
+  function generateText(topic) {
+    //const topic = document.getElementById('topicInput').value;
+    gapi.client.language.documents.annotateText({
+      parent: 'projects/gen-lang-client-0909197355', // Replace with your Google Cloud project ID
+      requestBody: {
+        document: {
+          type: 'PLAIN_TEXT',
+          content: `Generate a list of exactly 50 words related to the topic "${topic}". Include examples like player names (e.g., Ronaldo, Messi), manager names (e.g., Klopp, Guardiola), club names (e.g., Manchester United, Real Madrid), competition names (e.g., World Cup, Premier League), places in relation to the topic (e.g., stadiums, countries), and other common general knowledge items. Ensure the list contains words of varying difficulty levels and covers a comprehensive overview of the topic.`,
+        },
+        maxResults: 50,
+      },
+    }).then(function(response) {
+      console.log('Generated words:', response.result.entities.map(entity => entity.name));
+      // Handle response or update UI as needed
+    }).catch(function(error) {
+      console.error('Error:', error.message);
+    });
+  }
+  
+  // Load Google API client library
+  gapi.load('client', initClient);
 
 function initializeMenu() {
     // Add categories to dropdown
