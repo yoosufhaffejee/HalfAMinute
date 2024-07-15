@@ -1,5 +1,9 @@
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 
+const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
+const genAI = new GoogleGenerativeAI(API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
 // Game state variables
 let teams = [];
 let currentGameWords = [];
@@ -43,12 +47,6 @@ const endSoundAlt = document.getElementById('endSoundAlt');
 // Load menu
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
-
-    // Fetch your API_KEY
-    const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
-    // Access your API key (see "Set up your API key" above)
-    const genAI = new GoogleGenerativeAI(API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     run("soccer");
 });
 
