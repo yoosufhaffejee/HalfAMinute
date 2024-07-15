@@ -1,0 +1,163 @@
+{ word: "", difficulty: "easy", description: "" },
+
+Protea - National flower of South Africa.
+Mzansi - Slang term for South Africa.
+Apartheid Museum - Museum in Johannesburg that documents South Africa's apartheid history.
+Kwaito - South African music genre.
+Shosholoza - Traditional song associated with South African rail workers.
+Mangosuthu Buthelezi - Influential Zulu leader and politician.
+Desmond Tutu - Renowned archbishop and anti-apartheid activist.
+Kruger National Park - One of Africa's largest game reserves.
+SANRAL - South African National Roads Agency Limited.
+Durban Poison - A well-known strain of cannabis originating in South Africa.
+Bafana Bafana - Nickname for South Africa's national soccer team.
+Springboks - South Africa's national rugby team.
+FNB (First National Bank) - Major South African bank.
+Gold Reef City - Amusement park and historical gold mine in Johannesburg.
+Bo-Kaap - Colorful neighborhood in Cape Town known for its Cape Malay culture.
+Woolworths - High-end South African retail chain.
+Mr Price - Popular South African retail chain.
+Jacaranda Trees - Trees that bloom purple flowers, particularly famous in Pretoria.
+Drakensberg Mountains - Majestic mountain range in South Africa.
+Ladysmith Black Mambazo - World-renowned South African male choral group.
+Naspers - South African multinational internet and media group.
+Isibaya - Popular South African soap opera.
+Vuvuzela - Plastic horn popularized during the 2010 FIFA World Cup.
+Mzansi Magic - South African television channel.
+Klipdrift - Famous South African brandy.
+Castle of Good Hope - Historical fort in Cape Town.
+Hermanus - Town known for its whale watching.
+Steve Biko - Anti-apartheid activist and founder of the Black Consciousness Movement.
+
+District Six - Former inner-city residential area in Cape Town known for its diverse communities.
+Rand - The currency of South Africa.
+Kgalagadi Transfrontier Park - Large wildlife preserve spanning South Africa and Botswana.
+Minibus Taxis - Common mode of public transport.
+Cape Malay Cuisine - Unique culinary tradition combining Indonesian, Malaysian, and African influences.
+Braamfontein - Cultural precinct in Johannesburg.
+Samp and Beans - Traditional South African dish.
+Pep Stores - Large retail chain.
+Sasol - Leading integrated energy and chemical company.
+Sunfoil - Popular cooking oil brand.
+Eskom - South Africa's primary electricity supplier.
+Ratanga Junction - Former amusement park in Cape Town.
+Pilanesberg National Park - Game reserve located in North West Province.
+Sani Pass - Mountain pass connecting South Africa to Lesotho.
+Bidvest - South African services, trading, and distribution company.
+Mzansi Super League - South Africa's Twenty20 cricket league.
+Proteas - South Africa's national cricket team.
+Ndebele Art - Vibrant, colorful geometric patterns used in Ndebele culture.
+Witwatersrand - Rich gold mining area.
+Die Antwoord - Controversial South African hip hop group.
+Fanie Fourie's Lobola - South African romantic comedy film.
+Ster-Kinekor - Major cinema chain.
+Kirstenbosch Botanical Gardens - Famous botanical gardens in Cape Town.
+Hugenot Memorial Museum - Museum in Franschhoek.
+Gatsbys - Popular, large sandwich from Cape Town.
+Slap Chips - South African style of thick-cut, vinegar-drenched fries.
+SABC (South African Broadcasting Corporation) - Public broadcaster.
+Rhino Poaching Crisis - Critical conservation issue.
+Parys - Small town known for its charming atmosphere.
+UJ (University of Johannesburg) - One of South Africa's major universities.
+
+Gold Reef City - Amusement park and historical gold mine in Johannesburg.
+Boulders Beach - Famous for its colony of African penguins.
+Kruger National Park - One of Africa's largest game reserves.
+Table Mountain - Iconic flat-topped mountain in Cape Town.
+Robben Island - Island where Nelson Mandela was imprisoned.
+Cape Point - Scenic nature reserve near Cape Town.
+Garden Route - Popular scenic drive along the coast.
+Hluhluwe-Imfolozi Park - Oldest proclaimed nature reserve in Africa.
+uShaka Marine World - Theme park and aquarium in Durban.
+Cradle of Humankind - UNESCO World Heritage Site known for its fossil sites.
+
+Network Providers
+
+Vodacom - Major telecommunications company with a red colour.
+MTN - Another major telecommunications provider with a yellow colour.
+Cell C - South African mobile network operator, that is being acquired.
+Telkom - SA Telecommunications company providing mobile, fixed line, and internet services.
+
+Hospitals
+
+Groote Schuur Hospital - Major teaching hospital in Cape Town.
+Chris Hani Baragwanath Hospital - One of the largest hospitals in the world, located in Soweto.
+Netcare - Private healthcare group with numerous hospitals.
+Mediclinic - Private hospital group with facilities across South Africa.
+Life Healthcare - Another major private hospital group.
+
+Medical Aid Schemes
+
+Discovery Health - Leading medical aid provider.
+Bonitas - Major medical aid scheme.
+Momentum Health - Comprehensive medical aid provider.
+Medihelp - One of the largest open medical aid schemes.
+Fedhealth - Established medical aid scheme.
+
+Insurance Providers
+
+Sanlam - Leading financial services group.
+Old Mutual - Major insurance and financial services company.
+Liberty - Financial services group specializing in life insurance.
+Hollard - Insurance provider offering a range of products.
+Santam - South Africa's largest general insurer.
+
+Other Big Businesses
+
+Takealot - South Africa's largest online retailer.
+Shoprite - Largest food retailer in Africa.
+Pick n Pay - Major supermarket chain.
+Woolworths - High-end retail chain.
+Spar - International supermarket franchise with numerous outlets in South Africa.
+Massmart - Retail group that owns Game, Makro, and Builders Warehouse.
+Clicks - Leading pharmacy, health, and beauty retailer.
+Dis-Chem - Prominent pharmaceutical and health retailer.
+Pep Stores - Large retail chain.
+Foschini Group (TFG) - Retail group with numerous fashion brands.
+Bidvest - Diversified services, trading, and distribution company.
+
+Food and Drink
+
+Amarula - Cream liqueur made from the fruit of the African marula tree.
+Melktert - Traditional South African milk tart.
+Pap - Maize porridge, a staple in South African cuisine.
+Bobotie - Spiced minced meat baked with an egg-based topping.
+Vetkoek - Deep-fried dough balls often filled with savory or sweet fillings.
+Music and Culture
+Miriam Makeba - Iconic South African singer and civil rights activist.
+Johnny Clegg - South African musician known for blending Zulu and English lyrics.
+Gqom - South African electronic dance music genre originating in Durban.
+Indlamu - Traditional Zulu dance known for high-energy movements.
+Marimba Bands - Traditional music groups using wooden xylophones.
+
+Festivals and Events
+
+Cape Town Jazz Festival - Annual music festival showcasing local and international jazz artists.
+National Arts Festival - Major arts festival held annually in Grahamstown.
+Hermanus Whale Festival - Annual celebration of whale watching season.
+Oppikoppi - Popular music festival held in the Limpopo Province.
+Knysna Oyster Festival - Annual event celebrating oysters and seafood.
+
+Historic Sites and Landmarks
+
+Union Buildings - Official seat of the South African government in Pretoria.
+Freedom Park - Heritage site and memorial in Pretoria.
+Apartheid Museum - Museum documenting South Africa's apartheid history.
+Castle of Good Hope - Oldest surviving colonial building in South Africa.
+Nelson Mandela Capture Site - Historic site near Howick where Mandela was arrested in 1962.
+
+Wildlife and Nature
+
+Addo Elephant National Park - Park famous for its large elephant population.
+Blyde River Canyon - One of the largest canyons on Earth, located in Mpumalanga.
+Tsitsikamma National Park - Coastal reserve known for its dramatic scenery.
+Kirstenbosch Botanical Gardens - Famous botanical gardens in Cape Town.
+St. Lucia Estuary - Home to a large population of hippos and crocodiles.
+
+Traditional Crafts and Products
+
+Zulu Beadwork - Intricate bead designs used in traditional Zulu culture.
+Karoo Lamb - High-quality lamb meat from the Karoo region.
+Ostrich Leather - Luxury leather product from South African ostrich farms.
+Shweshwe Fabric - Traditional printed cotton fabric popular in South African fashion.
+Ndebele Art - Colorful geometric patterns used in Ndebele house paintings and crafts.
