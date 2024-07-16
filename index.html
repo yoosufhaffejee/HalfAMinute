@@ -62,6 +62,15 @@
             <div class="menu-section">
                 <button id="startGameButton">Start Game</button>
             </div>
+            <!-- Add these sections to your existing HTML structure -->
+            <div id="lobbyMenu">
+                <div class="menu-section">
+                    <button id="createLobbyButton">Create New Lobby</button>
+                    <label for="joinLobbyCode">Join Lobby:</label>
+                    <input type="text" id="joinLobbyCode" placeholder="Enter Lobby Code">
+                    <button id="joinLobbyButton">Join Lobby</button>
+                </div>
+            </div>
         </div>
         <div id="game" class="hidden">
             <div id="currentTeamIndicator"></div>
@@ -112,29 +121,9 @@
     <audio id="warningSound" src="warning.mp3"></audio>
     <audio id="endSound" src="beep.mp3"></audio>
     <audio id="endSoundAlt" src="end.mp3"></audio>
-
-    <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-    
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyDmT5EcRhLm28kSwU8dw8ft-X7WwgNmp0U",
-        authDomain: "halfaminute-01.firebaseapp.com",
-        projectId: "halfaminute-01",
-        storageBucket: "halfaminute-01.appspot.com",
-        messagingSenderId: "1004209997324",
-        appId: "1:1004209997324:web:1bca3f479b0d89538f5029"
-      };
-    
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-    </script>
     
     <script src="data.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 
 </html>

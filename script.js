@@ -1,3 +1,20 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getDatabase, onValue, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
+
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDmT5EcRhLm28kSwU8dw8ft-X7WwgNmp0U",
+    authDomain: "halfaminute-01.firebaseapp.com",
+    databaseURL: "https://halfaminute-01-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "halfaminute-01",
+    storageBucket: "halfaminute-01.appspot.com",
+    messagingSenderId: "1004209997324",
+    appId: "1:1004209997324:web:1bca3f479b0d89538f5029"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
 let selectedWords = [];
 let teams = [];
 let currentTeam = 0;
@@ -13,6 +30,21 @@ let endRoundEarly = false;
 document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
 });
+
+function firebaseWrite(path, data) {
+    set(ref(db, path), data);
+}
+
+function firebaseRead(path, callback) {
+    const dataRef = ref(db, path);
+    onValue(dataRef, (snapshot) => {
+        callback(snapshot.val());
+    });
+}
+
+function firebaseDelete(path) {
+    remove(ref(db, path));
+}
 
 // Get audio elements
 const startSound = document.getElementById('startSound');
@@ -38,6 +70,15 @@ function initializeMenu() {
         option.value = theme;
         option.textContent = theme;
         themesSelect.appendChild(option);
+    });
+
+    document.getElementById("createLobbyButton").addEventListener("click", () => {
+        createGameLobby(db);
+    });
+
+    document.getElementById("joinLobbyButton").addEventListener("click", () => {
+        const lobbyCode = document.getElementById("joinLobbyCode").value;
+        joinGameLobby(db, lobbyCode);
     });
 
     document.getElementById("selectCategoriesBtn").addEventListener("click", () => {
@@ -88,7 +129,56 @@ function initializeMenu() {
     });
 }
 
-async function startGame() {
+function createGameLobby() {
+    const pointsToWin = parseInt(document.getElementById('pointsToWin').value);
+    const difficulty = document.getElementById('difficulty').value;
+    const categories = Array.from(document.getElementById('categoriesSelect').selectedOptions).map(option => option.value);
+    const theme = document.getElementById('themesSelect').value;
+
+    const gameCode = generateGameCode();
+    const gameData = {
+        pointsToWin,
+        difficulty,
+        categories,
+        theme,
+        teams: Array.from({ length: numTeams }, (_, i) => ({
+            id: i + 1,
+            points: 0,
+            players: Array.from({ length: numPlayers }, (_, j) => ({ id: j + 1, isSpeaker: j === 0 }))
+        })),
+        currentTeam: 1,
+        currentRound: 0,
+        gameState: 'waiting' // possible states: waiting, inProgress, ended
+    };
+
+    firebaseWrite(`games/${gameCode}`, gameData);
+    startGame(gameCode);
+}
+
+function generateGameCode() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+function showJoinGameSection() {
+    document.getElementById('gameCodeSection').classList.remove('hidden');
+}
+
+function joinGameLobby() {
+    const gameCode = document.getElementById('gameCode').value;
+    firebaseRead(`games/${gameCode}`, (gameData) => {
+        if (gameData) {
+            startGame(gameCode);
+        } else {
+            alert('Invalid game code. Please try again.');
+        }
+    });
+}
+
+async function startGame(gameCode) {
+    // Hide lobby menu and show game menu
+    document.getElementById("lobbyMenu").classList.add("hidden");
+    document.getElementById("menu").classList.remove("hidden");
+    
     await playSound(startSound, () => false, 1.2);
 
     const difficulty = document.getElementById("difficulty").value.toLowerCase();
@@ -148,11 +238,23 @@ function selectWords(selectedTheme, selectedCategories, difficulty = "normal") {
     return selectedWords;
 }
 
+let currentSpeaker = 0;
+
 function startRound() {
     document.getElementById("startRoundButton").classList.add("hidden");
     document.getElementById("endGameButton").classList.add("hidden");
 
     endRoundEarly = false;
+
+    // Determine the current speaker for this round
+    const teamPlayers = teams[currentTeam].players;
+    const speaker = teamPlayers[currentSpeaker];
+
+    // Update UI to indicate current speaker
+    document.getElementById("currentSpeaker").textContent = `Speaker: ${speaker.name}`;
+    
+    // Rotate to the next speaker for the next round
+    currentSpeaker = (currentSpeaker + 1) % teamPlayers.length;
 
     startCountdown(numSeconds, () => {
         document.getElementById("scoreInput").classList.remove("hidden");
@@ -173,6 +275,23 @@ function startRound() {
                 button.disabled = false;
             }
         });
+    });
+}
+
+// Update Firebase to sync round information
+function syncRoundWithFirebase(db, lobbyCode, roundData) {
+    db.ref('lobbies/' + lobbyCode + '/currentRound').set(roundData);
+}
+
+// Add Firebase listeners to sync game state across players
+function addFirebaseListeners(db, lobbyCode) {
+    const roundRef = db.ref('lobbies/' + lobbyCode + '/currentRound');
+    roundRef.on('value', snapshot => {
+        if (snapshot.exists()) {
+            const roundData = snapshot.val();
+            // Update game state with roundData
+            updateRound(roundData);
+        }
     });
 }
 
