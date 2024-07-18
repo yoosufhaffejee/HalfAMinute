@@ -1,5 +1,22 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+import { getDatabase, onValue, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 
+// Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDmT5EcRhLm28kSwU8dw8ft-X7WwgNmp0U",
+    authDomain: "halfaminute-01.firebaseapp.com",
+    databaseURL: "https://halfaminute-01-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "halfaminute-01",
+    storageBucket: "halfaminute-01.appspot.com",
+    messagingSenderId: "1004209997324",
+    appId: "1:1004209997324:web:1bca3f479b0d89538f5029"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Initialize Google AI
 const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -119,6 +136,66 @@ function initializeMenu() {
     document.getElementById("endRoundButton").addEventListener("click", endRound);
     document.getElementById("btnGenerate").addEventListener("click", generate);
     document.getElementById("btnAiGame").addEventListener("click", startAIGame);
+}
+
+function firebaseWrite(path, data) {
+    set(ref(db, path), data);
+}
+
+function firebaseRead(path, callback) {
+    const dataRef = ref(db, path);
+    onValue(dataRef, (snapshot) => {
+        callback(snapshot.val());
+    });
+}
+
+function firebaseDelete(path) {
+    remove(ref(db, path));
+}
+
+function createGameLobby() {
+    const pointsToWin = parseInt(document.getElementById('pointsToWin').value);
+    const difficulty = document.getElementById('difficulty').value;
+    const categories = Array.from(document.getElementById('categoriesSelect').selectedOptions).map(option => option.value);
+    const theme = document.getElementById('themesSelect').value;
+
+    const gameCode = generateGameCode();
+    const gameData = {
+        pointsToWin,
+        difficulty,
+        categories,
+        theme,
+        teams: Array.from({ length: numTeams }, (_, i) => ({
+            id: i + 1,
+            points: 0,
+            players: Array.from({ length: numPlayers }, (_, j) => ({ id: j + 1, isSpeaker: j === 0 }))
+        })),
+        currentTeam: 1,
+        currentRound: 0,
+        gameState: 'waiting' // possible states: waiting, inProgress, ended
+    };
+
+    firebaseWrite(`games/${gameCode}`, gameData);
+    startGame(gameCode);
+}
+
+function generateGameCode() {
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+function showJoinGameSection() {
+    document.getElementById('gameCodeSection').classList.remove('hidden');
+}
+
+function joinGameLobby() {
+    const gameCode = document.getElementById('gameCode').value;
+    firebaseRead(`games/${gameCode}`, (gameData) => {
+        if (gameData) {
+            startGame(gameCode);
+        } else {
+            alert('Invalid game code. Please try again.');
+        }
+    });
 }
 
 function generate() {
