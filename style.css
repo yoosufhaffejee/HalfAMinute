@@ -130,6 +130,11 @@ h1 {
     margin-top: 20px;
 }
 
+#startOnlineGame {
+    margin-top: 20px;
+}
+
+
 .table-container {
     margin: 20px;
 }
@@ -165,6 +170,18 @@ th, td {
     position: absolute;
     bottom: 10px;
     left: 10px;
+}
+
+#online {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+#rules {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
 
 .container {

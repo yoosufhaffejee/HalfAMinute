@@ -20,13 +20,19 @@
         <button title="history" class="btn btn-warning" id="history" hidden data-toggle="modal" data-target="#historyModal">
             <i class="fas fa-history"></i>
         </button>
+        <button title="Play Online" class="btn btn-success" id="online" data-toggle="modal" data-target="#onlineModal">
+            <i class="fas fa-globe"></i>
+        </button>
         <button title="AI Mode" class="btn btn-primary" id="ai" data-toggle="modal" data-target="#aiModal">
             <i class="fas fa-robot"></i>
+        </button>
+        <button title="Game Rules" class="btn btn-warning" id="rules" data-toggle="modal" data-target="#rulesModal">
+            <i class="fas fa-book"></i>
         </button>
         <div id="menu">
             <div class="menu-section">
                 <label for="numTeams">Number of Teams:</label>
-                <input type="number" id="numTeams" min="2" max="4" value="2" onkeyup=enforceMinMax(this)>
+                <input type="number" id="numTeams" min="2" max="4" value="2">
             </div>
             <div class="menu-section">
                 <button class="btn btn-success" id="startGameButton">Start Game</button>
@@ -51,15 +57,15 @@
                         </div>
                         <div class="menu-section">
                             <label for="pointsToWin">Points to Win:</label>
-                            <input type="number" id="pointsToWin" min="10" max="60" value="20" onkeyup=enforceMinMax(this)>
+                            <input type="number" id="pointsToWin" min="10" max="60" value="20">
                         </div>
                         <div class="menu-section">
                             <label for="txtSeconds">Round Duration (Sec):</label>
-                            <input type="number" id="txtSeconds" min="5" min="300" value="30" onkeyup=enforceMinMax(this)>
+                            <input type="number" id="txtSeconds" min="5" max="300" value="30">
                         </div>
                         <div class="menu-section">
                             <label for="txtWords">Words per Round:</label>
-                            <input type="number" id="txtWords" min="1" max="15" value="5" onkeyup=enforceMinMax(this)>
+                            <input type="number" id="txtWords" min="1" max="15" value="5">
                         </div>
                         <div class="menu-section">
                             <label for="chkChaos">Chaos Mode:</label>
@@ -131,7 +137,107 @@
             </div>
         </div>
 
+        <!-- Online Mode Modal -->
+        <div class="modal fade" id="onlineModal" tabindex="-1" role="dialog" aria-labelledby="onlineModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="onlineModalLabel">Play Online</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div id="lobbyMenu"
+                            style="max-width: 400px; margin: auto; padding: 20px;">
+                            <div class="menu-section" style="margin-bottom: 20px;">
+                                <label for="playerName" style="display: block; margin-bottom: 8px;">Player Name:</label>
+                                <input type="text" id="playerName" placeholder="Enter Online Name"
+                                    style="width: 100%; padding: 8px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px;">
+                            </div>
+                        
+                            <div class="menu-section" style="margin-bottom: 20px;">
+                                <button id="createLobbyButton" class="btn btn-success"
+                                    style="width: 100%; padding: 10px; font-size: 16px;">Create New Lobby</button>
+                            </div>
+                        
+                            <div class="menu-section" style="margin-bottom: 20px;">
+                                <label for="joinLobbyCode" style="display: block; margin-bottom: 8px;">Join Lobby:</label>
+                                <input type="text" id="joinLobbyCode" placeholder="Enter Lobby Code"
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                                <button id="joinLobbyButton" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 16px;">Join
+                                    Lobby</button>
+                            </div>
+                        </div>
+                        <div id="lobbyPlayers" hidden>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Rules Modal -->
+        <div class="modal fade" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rulesModalLabel">Game Rules</h5>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Objective</h5>
+                        <ul style="text-align: left;">
+                            <li><strong>Goal</strong>: Score as many points as possible to reach the end of the board.</li>
+                            <li><strong>Scoring</strong>: Earn points by correctly identifying words described by teammates.</li>
+                        </ul>
+                    
+                        <h5>Teams</h5>
+                        <ul style="text-align: left;">
+                            <li><strong>Roles</strong>: Each player alternates between being a <strong>Speaker</strong> and a <strong>Listener</strong>.</li>
+                            <li><strong>Rotation</strong>: The speaker role must rotate among team members each turn.</li>
+                        </ul>
+                    
+                        <h5>Gameplay</h5>
+                        <ul style="text-align: left;">
+                            <li><strong>Turns</strong>: During a turn, the Speaker describes the provided words to the Listeners.</li>
+                            <li><strong>Time Limit</strong>: Describe as many words as possible before time runs out.</li>
+                            <li><strong>Points</strong>: Earn 1 point for each correct guess.</li>
+                            <li><strong>Guesses</strong>: Listeners have unlimited guesses until the timer ends.</li>
+                        </ul>
+                    
+                        <h5>Speaker Guidelines</h5>
+                        <strong><p style="text-align: left;">Allowed Actions:</p></strong>
+                        <ul style="text-align: left;">
+                            <li>Describe using explanations, humming, or gestures.</li>
+                            <li>Describe words in any order.</li>
+                            <li>Use "and" and "the" if they appear.</li>
+                        </ul>
+                        <strong><p style="text-align: left;">Prohibited Actions:</p></strong>
+                        <ul style="text-align: left;">
+                            <li><b>DO NOT</b> say the actual word or name.</li>
+                            <li><b>DO NOT</b> use words related to or derived from the name.</li>
+                            <li><b>DO NOT</b> employ "sounds-like" or "rhymes-with" tactics.</li>
+                            <li><b>DO NOT</b> refer to any letters of the alphabet.</li>
+                            <li><b>DO NOT</b> indicate starting or ending letters.</li>
+                            <li><b>DO NOT</b> use translations or other languages.</li>
+                            <li><b>DO NOT</b> point to objects in the room.</li>
+                            <li><b>DO NOT</b> use acronyms, forward or reverse.</li>
+                        </ul>
+                    
+                        <h5>Winning</h5>
+                        <ul style="text-align: left;">
+                            <li><strong>Victory</strong>: The first team to reach the end of the board wins the game.</li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="game" hidden>
+            <h5 id="lblGameCode" hidden>Game Code: </h5>
+            <h6 id="gameState" hidden>Status: Waiting for players!</h6>
             <div id="currentTeamIndicator"></div>
             <div id="timer"></div>
             <div id="gameBoard"></div>
@@ -141,7 +247,7 @@
             <div id="roundControls">
                 <button class="btn btn-success" id="startRoundButton">Start Round</button>
                 <div id="scoreInput" hidden>
-                    <label>Click correct answers:</label>
+                    <label id="answers">Click the correct answers:</label>
                     <div id="scoreButtons">
                         <button class="scoreButton" hidden></button>
                         <button class="scoreButton" hidden></button>
@@ -162,6 +268,7 @@
                     </div>
                 </div>
                 <div class="round-controls">
+                    <button class="btn btn-success" id="startOnlineGame" hidden>Start Game</button>
                     <button class="btn btn-primary" id="nextRoundButton" hidden>Next Round</button>
                     <button class="btn btn-warning" id="endRoundButton" hidden>End Round</button>
                     <button class="btn btn-danger" id="endGameButton">End Game</button>
