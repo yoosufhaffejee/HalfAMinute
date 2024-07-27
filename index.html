@@ -120,15 +120,20 @@
                         <h5 class="modal-title" id="aiModalLabel">AI Mode</h5>
                     </div>
                     <div class="modal-body">
-                        <p>Enter a topic and have AI generate the words to be used in game!</p>
+                        <h6>Enter a topic and have AI generate the words to be used in game!</h6>
+                        <p>Start with an '<b>!</b>' to use strict mode. This will ensure that the generated words will not include sub topics.</p>
                         <br>
                         <label for="topic">Topic:</label>
-                        <input type="text" id="topic" placeholder="Enter topic...">
+                        <input type="text" id="topic" placeholder="!Football Player Names">
                         <button id="btnGenerate" class="btn btn-primary">Generate</button>
                         <br>
                         <button title="Start Game" id="btnAiGame" disabled class="btn btn-success">Start Game</button>
                         <br>
-                        <p id="aiWords"></p>
+                        <br>
+                        <label for="showAIWords">Show words:</label>
+                        <input type="checkbox" id="showAIWords" value="false">
+                        <br>
+                        <textarea id="aiWords" rows="20" cols="40" hidden></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -231,6 +236,19 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Container -->
+        <div class="toast-container position-fixed top-0 end-0 p-3">
+            <div id="playerToast" class="toast" bg-primary role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <strong class="me-auto">Lobby Notification</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    <!-- Message will be inserted here -->
                 </div>
             </div>
         </div>

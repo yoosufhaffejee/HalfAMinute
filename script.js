@@ -122,9 +122,33 @@ function initializeMenu() {
         document.getElementById("themesSection").style.display = 'block';
     });
 
+    document.getElementById("showAIWords").addEventListener("click", function () {
+        const p = document.getElementById('aiWords');
+        if (p.hidden) {
+            p.hidden = false;
+        }
+        else {
+            p.hidden = true;
+        }
+    });
+
+    txtGameCode.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        txtGameCode.value = txtGameCode.value.toUpperCase();
+    });
+
+    txtPlayerName.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        const value = txtPlayerName.value;
+        if (value.length > 0) {
+            // Convert the first character to uppercase and keep the rest unchanged
+            txtPlayerName.value = value.charAt(0).toUpperCase() + value.slice(1);
+        }
+    });
+
     document.getElementById("createLobbyButton").addEventListener("click", () => {
         if (txtPlayerName.value) {
-            let confirmation = window.confirm(`Are you sure you want to create a lobby with ${txtTeams.value} teams, You will need a min of ${parseInt(txtTeams.value) * 2} players to play!`);
+            let confirmation = window.confirm(`Are you sure you want to create a lobby with ${txtTeams.value} teams?`);
             if (confirmation) {
                 createGameLobby(db);
             }
@@ -294,7 +318,7 @@ async function onLobbyJoined() {
     showElement(lblGameState);
 
     numPlayers++;
-    setNumPlayers();
+    await setNumPlayers();
 
     // Read the current teams, and add the new player
     readDataOnce(`games/${gameCode}/teams`).then(async teams => {
@@ -307,7 +331,7 @@ async function onLobbyJoined() {
             else {
                 alert("Player name is already in use!");
                 numPlayers--;
-                setNumPlayers();
+                await setNumPlayers();
                 location.reload();
                 return;
             }
@@ -318,16 +342,18 @@ async function onLobbyJoined() {
     let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
         if (count < numWords) {
-            button.addEventListener("click", () => {
-                count++;
+            count++;
+            button.addEventListener("click", async () => {
                 if (!btnNextRound.hidden === true) {
                     if (button.style.background == "grey") {
                         selectedButtons--;
                         button.style.background = null;
+                        await updateData(`games/${gameCode}`, { clickedButton: button.textContent });
                     }
                     else {
                         selectedButtons++;
                         button.style.background = "grey";
+                        await updateData(`games/${gameCode}`, { clickedButton: `!${button.textContent}` });
                     }
                 }
             });
@@ -338,8 +364,11 @@ async function onLobbyJoined() {
     currentTeam = 1;
     setCurrentTeam();
 
-    if (numPlayers >= numTeams * 2) {
+    if (isTeamsValid(numPlayers)) {
         updateData(`games/${gameCode}`, { gameState: "ready" });
+    }
+    else {
+        updateData(`games/${gameCode}`, { gameState: "waiting" });
     }
 
     // Add gameState listener to know when to start/update game
@@ -358,11 +387,24 @@ async function onLobbyJoined() {
             updateTeamScores();
             updateCurrentTeamIndicator();
         }
+        else if (state === "waiting") {
+            if (isHost) {
+                btnStartOnlineGame.disabled = true;
+            }
+
+            hideElement(btnStartRound);
+            lblGameState.textContent = "Status: Waiting for players!";
+        }
         else if (state === "ready") {
             if (isHost) {
                 btnStartOnlineGame.disabled = false;
             }
             lblGameState.textContent = "Status: Waiting for host to start game!";
+        }
+        else if (state === "resumed") {
+            if (isSpeaker) {
+                showElement(btnStartRound);
+            }
         }
         else if (state === "ended") {
             alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
@@ -370,12 +412,32 @@ async function onLobbyJoined() {
         }
     });
 
+    // Teams are updated when a player joins or leaves
     listenForChanges(`games/${gameCode}/teams`, (teamData) => {
+        debugger;
+        // Detect changes and notify
+        detectPlayerChanges(teams, teamData);
         teams = teamData;
+
+        // Set numPlayers to the total number of players
+        const numPlayers = teams.reduce((total, team) => total + (team.players ? team.players.length : 0), 0);
+        if (isTeamsValid(numPlayers)) {
+            if (isGameStarted) {
+                updateData(`games/${gameCode}`, { gameState: "resumed" });
+            }
+            else {
+                updateData(`games/${gameCode}`, { gameState: "ready" });
+            }
+        }
+        else {
+            updateData(`games/${gameCode}`, { gameState: "waiting" });
+        }
+
         // Update the player list UI
         updatePlayerListUI(teams);
         if (isGameStarted) {
             updateUI();
+            hideTimerAndAnswers();
         }
     });
 
@@ -409,25 +471,31 @@ async function onLobbyJoined() {
 
     listenForChanges(`games/${gameCode}/words`, (words) => {
         if (words && isGameStarted) {
-            // Show the words to players in other teams
-            if (getPlayerTeamIndex() != getCurrentTeamIndex(currentTeam))
-            {
-                lblAnswers.textContent = "Speaker is describing the following words:"
+            lblAnswers.textContent = "The 'Speaker' is describing the following words:";
 
-                const scoreButtons = document.getElementsByClassName("scoreButton");
-                for (let index = 0; index < scoreButtons.length; index++) {
-                    if (index < numWords) {
-                        const element = scoreButtons[index];
-                        element.hidden = false;
-                    }
+            const scoreButtons = document.getElementsByClassName("scoreButton");
+            for (let index = 0; index < scoreButtons.length; index++) {
+                if (index < numWords) {
+                    const element = scoreButtons[index];
+                    element.hidden = false;
                 }
+            }
 
+            const wordButtons = document.getElementsByClassName("scoreButton");
+
+            words.forEach((word, index) => {
+                wordButtons[index].textContent = word;
+            });
+
+            // For 2 or 3 player games, we do not show words to other players
+            if ((numTeams == 2 && numPlayers == 2) || (numTeams == 3 && numPlayers == 3)) {
+                if (!isSpeaker) {
+                    btnAnswers.hidden = true;
+                }
+            }
+            // Show the words to players in other teams
+            else if (getPlayerTeamIndex() != getCurrentTeamIndex(currentTeam)) {
                 btnAnswers.hidden = false;
-                const wordButtons = document.getElementsByClassName("scoreButton");
-
-                words.forEach((word, index) => {
-                    wordButtons[index].textContent = word;
-                });
             }
         }
     });
@@ -441,16 +509,8 @@ async function onLobbyJoined() {
                 timer.textContent = remainingTime;
 
                 if (remainingTime <= 0) {
-                    hideElement(btnAnswers);
-                     
-                    const scoreButtons = document.getElementsByClassName("scoreButton");
-                    for (let index = 0; index < scoreButtons.length; index++) {
-                        const element = scoreButtons[index];
-                        element.hidden = true;
-                    }
-
-                    hideElement(btnNextRound);
-                    hideElement(timer);
+                    lblAnswers.textContent = "The 'Speaker' is selecting the correct answers:";
+                    btnAnswers.hidden = false;
                     clearWords();
                 }
             }
@@ -461,28 +521,73 @@ async function onLobbyJoined() {
         if (endRoundEarly && isGameStarted) {
             // Hide stuff
             if (!isSpeaker) {
-                hideElement(btnAnswers);
-                     
-                const scoreButtons = document.getElementsByClassName("scoreButton");
-                for (let index = 0; index < scoreButtons.length; index++) {
-                    const element = scoreButtons[index];
-                    element.hidden = true;
-                }
-
-                hideElement(btnNextRound);
-                hideElement(timer);
+                lblAnswers.textContent = "The 'Speaker' has ended the round early and is now selecting the correct answers:";
+                btnAnswers.hidden = false;
                 clearWords();
             }
         }
     });
 
     listenForChanges(`games/${gameCode}/correctAnswers`, (correctAnswers) => {
-        debugger;
         if (isGameStarted) {
             createTeamAuditColumns(getCurrentTeamIndex(currentTeam));
             createTeamAuditRows(getCurrentTeamIndex(currentTeam), correctAnswers);
         }
     });
+
+    listenForChanges(`games/${gameCode}/newHost`, (newHost) => {
+        if (newHost) {
+            if (isSpeaker) {
+                isHost = true;
+            }
+        }
+    });
+
+    listenForChanges(`games/${gameCode}/clickedButton`, (clickedButton) => {
+        if (clickedButton && isGameStarted && !isSpeaker) {
+            const buttons = document.querySelectorAll('button.scoreButton');
+            // Loop through the buttons to find the one with the specified text
+            for (const button of buttons) {
+                let startsWithExclamation = clickedButton.startsWith("!");
+                if ((startsWithExclamation && clickedButton.slice(1) === button.textContent.trim()) || clickedButton === button.textContent.trim()) {
+                    if (button.style.background == "grey") {
+                        button.style.background = null;
+                    }
+                    else {
+                        button.style.background = "grey";
+                    }
+                }
+            }
+        }
+    });
+}
+
+function isTeamsValid (numPlayers) {
+    if (numTeams == 2 && numPlayers == 2) {
+        return true;
+    }
+    else if (numTeams == 3 && numPlayers == 3) {
+        return true;
+    }
+    else if (numPlayers >= numTeams * 2) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function hideTimerAndAnswers() {
+    hideElement(btnAnswers);
+
+    const scoreButtons = document.getElementsByClassName("scoreButton");
+    for (let index = 0; index < scoreButtons.length; index++) {
+        const element = scoreButtons[index];
+        element.hidden = true;
+    }
+
+    hideElement(btnNextRound);
+    hideElement(timer);
 }
 
 async function createGameLobby() {
@@ -519,6 +624,7 @@ async function createGameLobby() {
 
     // Gamedata
     const gameData = {
+        dateCreated: new Date(),
         settings: gameSettings,
         teams: Array.from({ length: gameSettings.numTeams }, (_, i) => ({
             id: i,
@@ -533,8 +639,21 @@ async function createGameLobby() {
         gameState: 'waiting'
     };
 
-    // Generate random game code
-    gameCode = generateGameCode();
+    let gameCodeExists = true;
+    // Find a code that is not taken
+    while (gameCodeExists) {
+        // Generate random game code
+        gameCode = generateGameCode();
+        await readDataOnce(`games/${gameCode}`).then(data => {
+            if (!data) {
+                gameCodeExists = false;
+            }
+            else if (data.dateCreated < new Date()) {
+                // Overwrite old game lobbies
+                gameCodeExists = false;
+            }
+        });
+    }
 
     // Write gameData to db
     firebaseWrite(`games/${gameCode}`, gameData)
@@ -626,7 +745,7 @@ function updateUI() {
     updatePoints(0);
     
     teams.forEach(team => {
-        team.players.forEach(player => {
+        team?.players?.forEach(player => {
             // Find my player by name
             if (playerName === player.playerName) {
                 if (player.isSpeaker) {
@@ -646,38 +765,68 @@ function updateUI() {
     if (!isHost) {
         hideElement(btnEndGame);
     }
+
+    document.querySelectorAll(".scoreButton").forEach(button => {
+        count++;
+        if (count <= numWords) {
+            button.style.background = null;
+        }
+    });
 }
 
-// async function setSpeaker(teams) {
-//     // Flatten the list of players from all teams into a single array
-//     const allPlayers = teams.flatMap(team => team.players);
+// Function to determine player changes and notify others
+function detectPlayerChanges(teams, teamsData) {
+    const oldPlayerNames = new Set();
+    const newPlayerNames = new Set();
+    const oldPlayersMap = new Map();
+    const newPlayersMap = new Map();
 
-//     // Find the index of the current speaker
-//     const currentSpeakerIndex = allPlayers.findIndex(player => player.isSpeaker);
+    // Collect all players from the old teams
+    teams.forEach((team, teamIndex) => {
+        if (team.players) {
+            team.players.forEach(player => {
+                const playerName = player.playerName;
+                oldPlayerNames.add(playerName);
+                oldPlayersMap.set(playerName, { player, teamNumber: teamIndex + 1 });
+            });
+        }
+    });
 
-//     // Determine the next speaker index
-//     const nextSpeakerIndex = (currentSpeakerIndex + 1) % allPlayers.length;
+    // Collect all players from the new teams
+    teamsData.forEach((team, teamIndex) => {
+        if (team.players) {
+            team.players.forEach(player => {
+                const playerName = player.playerName;
+                newPlayerNames.add(playerName);
+                newPlayersMap.set(playerName, { player, teamNumber: teamIndex + 1 });
+            });
+        }
+    });
 
-//     // Set the current speaker's isSpeaker to false
-//     if (currentSpeakerIndex !== -1) {
-//         allPlayers[currentSpeakerIndex].isSpeaker = false;
-//     }
+    // Determine players who have joined
+    const joinedPlayers = Array.from(newPlayersMap.entries())
+        .filter(([playerName]) => !oldPlayerNames.has(playerName))
+        .map(([playerName, { player, teamNumber }]) => ({ player, teamNumber }));
 
-//     // Set the next speaker's isSpeaker to true
-//     allPlayers[nextSpeakerIndex].isSpeaker = true;
+    // Determine players who have left
+    const leftPlayers = Array.from(oldPlayersMap.entries())
+        .filter(([playerName]) => !newPlayerNames.has(playerName))
+        .map(([playerName, { player, teamNumber }]) => ({ player, teamNumber }));
 
-//     // Update the original teams structure with the new speaker status
-//     let playerIndex = 0;
-//     teams.forEach(team => {
-//         team.players.forEach(player => {
-//             player.isSpeaker = allPlayers[playerIndex].isSpeaker;
-//             playerIndex++;
-//         });
-//     });
+    // Notify about players who have joined
+    joinedPlayers.forEach(({ player, teamNumber }) => {
+        if (playerName !== "" && player.playerName !== playerName) {
+            showPlayerNotification(player, teamNumber, 5, true); // Pass the team number
+        }
+    });
 
-//     // Write updated speaker info to Firebase
-//     firebaseWrite(`games/${gameCode}/teams`, teams);
-// }
+    // Notify about players who have left
+    leftPlayers.forEach(({ player, teamNumber }) => {
+        if (playerName !== "" && player.playerName !== playerName) {
+            showPlayerNotification(player, teamNumber, 5, false); // Pass the team number
+        }
+    });
+}
 
 async function setSpeaker(teams) {
     // Find the current speaker and their team
@@ -741,7 +890,8 @@ async function addPlayerToTeam(playerName, teams) {
     const teamIndex = totalPlayers % numTeams;
 
     // Add the player to the determined team
-    teams[teamIndex].players.push({ id: teams[teamIndex].players.length, playerName: playerName, isSpeaker: isSpeaker });
+    const playerToAdd = { id: teams[teamIndex].players.length, playerName: playerName, isSpeaker: isSpeaker };
+    teams[teamIndex].players.push(playerToAdd);
 
     // Update the game state in Firebase
     await firebaseWrite(`games/${gameCode}/teams`, teams);
@@ -750,6 +900,7 @@ async function addPlayerToTeam(playerName, teams) {
     listenForChanges(`games/${gameCode}/teams/${teamIndex}/players/${teams[teamIndex].players.length - 1}`, (player) => {
         // Remove the player status when disconnected
         window.addEventListener('beforeunload', async () => {
+            debugger;
             removeData(`games/${gameCode}/teams/${teamIndex}/players/${teams[teamIndex].players.length - 1}`);
             numPlayers--;
 
@@ -758,9 +909,19 @@ async function addPlayerToTeam(playerName, teams) {
                 endGame();
             }
 
-            // If game is in progress and a speaker player leaves, we need to elect a new speaker
+            if (isHost) {
+                updateData(`games/${gameCode}`, { newHost: true });
+            }
+
+            // If game is in progress and a speaker player leaves, we need to progress game state
             if (isGameStarted && player.isSpeaker) {
-                setSpeaker(teams);
+                if (!btnEndRound.hidden) {
+                    endRound();
+                }
+
+                if (!btnNextRound.hidden) {
+                    nextRound();
+                }
             }
 
             if (numPlayers <= 0) {
@@ -771,6 +932,16 @@ async function addPlayerToTeam(playerName, teams) {
             }
         });
     });
+}
+
+// Function to show toast notification
+function showPlayerNotification(player, teamNumber, autoHideDuration = null, isJoining = true) {
+    const bgColorClass = isJoining ? 'bg-success' : 'bg-danger';
+    const textColorClass = 'text-white';
+    const headerText = isJoining ? 'Player Joined' : 'Player Left';
+    const bodyText = `${player.playerName} has ${isJoining ? 'joined' : 'left'} team ${teamNumber}.`;
+
+    showNotification(bgColorClass, textColorClass, headerText, bodyText, autoHideDuration);
 }
 
 // Update the UI based on new player data
@@ -806,37 +977,55 @@ function generate() {
 }
 
 async function run(topic) {
-    const prompt = `Generate a list of exactly 50 words only related to the topic "${topic}". 
+    let prompt = "";
+    if (topic.includes('!')) {
+        prompt = `Generate a list of 50 or more words only related to the topic "${topic}". 
 
-    * **Include:**
-        * NB People (e.g., historical figures, artists, scientists, players, actors) - add multiple
-        * Places (e.g., countries, landmarks, geographical features)
-        * Events (e.g., historical events, cultural celebrations)
-        * Concepts (e.g., theories, movements, styles)
-        * Objects (e.g., tools, materials, symbols)
-        * Terminology (e.g., jargon, technical terms)
-        * Lesser-known aspects (to add depth)
-    
-    * **Vary difficulty:** Include a mix of well-known words and some lesser-known terms.
-    
-    * **Focus on context:** Consider subcategories and related fields within the topic and include relevant words.
-    
-    Only return the list of 50 words, each on a new line. Do not forget to include relevant people, places etc related to the topic and sub topics.`
+        * **Possibly Include:**
+            * NB People (e.g., historical figures, artists, scientists, players, actors) - add multiple
+            * Places (e.g., countries, landmarks, geographical features)
+            * Events (e.g., historical events, cultural celebrations)
+            * Concepts (e.g., theories, movements, styles)
+            * Objects (e.g., tools, materials, symbols)
+            * Terminology (e.g., jargon, technical terms)
+            * Lesser-known aspects (to add depth)
+        
+        * **Vary difficulty:** Include a mix of well-known words and some lesser-known terms.
+        
+        * **Focus on context:** DO NOT expand on sub topics and categories. Strictly focus on the topic, even if you are unable to include the above (people, places etc).
+        
+        Only return the list of words, each on a new line. Do not forget to be strict with the topic.`
+    }
+    else {
+        prompt = `Generate a list of exactly 50 words only related to the topic "${topic}". 
+
+        * **Include:**
+            * NB People (e.g., historical figures, artists, scientists, players, actors) - add multiple
+            * Places (e.g., countries, landmarks, geographical features)
+            * Events (e.g., historical events, cultural celebrations)
+            * Concepts (e.g., theories, movements, styles)
+            * Objects (e.g., tools, materials, symbols)
+            * Terminology (e.g., jargon, technical terms)
+            * Lesser-known aspects (to add depth)
+        
+        * **Vary difficulty:** Include a mix of well-known words and some lesser-known terms.
+        
+        * **Focus on context:** Consider subcategories and related fields within the topic and include relevant words.
+        
+        Only return the list of 50 words, each on a new line. Do not forget to include relevant people, places etc related to the topic and sub topics.`
+    }
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text();
     console.log(text);
 
-    let aiGameWords = text.split("\n");
-    aiGameWords = shuffleArray(aiGameWords);
-
-    currentGameWords = aiGameWords;
-
-    document.getElementById("btnAiGame").disabled = false;
-
     let p = document.getElementById('aiWords');
-    p.textContent = aiGameWords.join(', ');
+    p.textContent = text;
+
+    // Shuffle cleaned array
+    currentGameWords = shuffleArray(p.textContent.split("\n").filter(item => item !== ''));
+    document.getElementById("btnAiGame").disabled = false;
 }
 
 function startAIGame() {
@@ -903,7 +1092,7 @@ async function startGame() {
         if (count < numWords) {
             button.addEventListener("click", () => {
                 count++;
-                if (!btnNextRound.hidden === true) {
+                if (!btnNextRound.hidden) {
                     if (button.style.background == "grey") {
                         selectedButtons--;
                         button.style.background = null;
@@ -1479,6 +1668,36 @@ function registerModal(modalButton, modalId) {
     });
 }
 
-function generateGameCode() {
-    return Math.random().toString(36).substring(2, 6).toUpperCase();
+function generateGameCode(length = 4, alphanumeric = false) {
+    const characters = alphanumeric ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let gameCode = '';
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        gameCode += characters[randomIndex];
+    }
+    return gameCode;
+}
+
+function showNotification(bgColorClass, textColorClass, headerText, bodyText, autoHideDuration = null) {
+    const toast = document.getElementById('playerToast');
+    const toastHeader = toast.querySelector('.toast-header');
+    const toastBody = toast.querySelector('.toast-body');
+
+    // Apply the color classes
+    toast.classList.remove(...toast.classList); // Remove all existing classes
+    toast.classList.add("toast", bgColorClass, textColorClass);
+
+    // Set the header and body text
+    const headerStrong = toastHeader.querySelector('strong');
+    headerStrong.textContent = headerText; // Update only the strong element in the header
+    toastBody.textContent = bodyText;
+
+    // Initialize and show the toast
+    const options = {};
+    if (autoHideDuration !== null) {
+        options.delay = autoHideDuration * 1000; // Convert seconds to milliseconds
+    }
+
+    const bsToast = new bootstrap.Toast(toast, options);
+    bsToast.show();
 }
