@@ -977,8 +977,10 @@ function generate() {
 }
 
 async function run(topic) {
+    document.getElementById("btnAiGame").disabled = true;
+
     let prompt = "";
-    if (topic.includes('!')) {
+    if (topic.startsWith('!')) {
         prompt = `Generate a list of 50 or more words only related to the topic "${topic}". 
 
         * **Possibly Include:**
@@ -994,7 +996,7 @@ async function run(topic) {
         
         * **Focus on context:** DO NOT expand on sub topics and categories. Strictly focus on the topic, even if you are unable to include the above (people, places etc).
         
-        Only return the list of words, each on a new line. Do not forget to be strict with the topic.`
+        Only return the list of words, each on a new line. Do not forget to be strict with the topic. Do not output any other languages besides english unless otherwise specified.`
     }
     else {
         prompt = `Generate a list of exactly 50 words only related to the topic "${topic}". 
@@ -1012,7 +1014,7 @@ async function run(topic) {
         
         * **Focus on context:** Consider subcategories and related fields within the topic and include relevant words.
         
-        Only return the list of 50 words, each on a new line. Do not forget to include relevant people, places etc related to the topic and sub topics.`
+        Only return the list of 50 words, each on a new line. Do not forget to include relevant people, places etc related to the topic and sub topics. Do not output any other languages besides english unless otherwise specified.`
     }
 
     const result = await model.generateContent(prompt);
@@ -1020,11 +1022,14 @@ async function run(topic) {
     const text = response.text();
     console.log(text);
 
-    let p = document.getElementById('aiWords');
-    p.textContent = text;
+    let textArea = document.getElementById('aiWords');
+    if (textArea) {
+        textArea.textContent = '';
+        textArea.textContent = text;
+    }
 
     // Shuffle cleaned array
-    currentGameWords = shuffleArray(p.textContent.split("\n").filter(item => item !== ''));
+    currentGameWords = shuffleArray(textArea.textContent.split("\n").filter(item => item !== ''));
     document.getElementById("btnAiGame").disabled = false;
 }
 
