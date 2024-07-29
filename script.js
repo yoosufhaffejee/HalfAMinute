@@ -39,6 +39,7 @@ let isOnlineGame = false;
 let isSpeaker = false;
 let playerName = "";
 let isGameStarted = false;
+let countdownSoundPlaying = false;
 
 // Game settings variables
 let isAiGame = false;
@@ -396,15 +397,17 @@ async function onLobbyJoined() {
             lblGameState.textContent = "Status: Waiting for players!";
         }
         else if (state === "ready") {
-            if (isHost) {
+            if (isHost || isSpeaker) {
                 btnStartOnlineGame.disabled = false;
             }
+            hideElement(btnStartRound);
             lblGameState.textContent = "Status: Waiting for host to start game!";
         }
         else if (state === "resumed") {
             if (isSpeaker) {
                 showElement(btnStartRound);
             }
+            lblGameState.hidden = true; 
         }
         else if (state === "ended") {
             alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
@@ -766,6 +769,7 @@ function updateUI() {
         hideElement(btnEndGame);
     }
 
+    let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
         count++;
         if (count <= numWords) {
@@ -901,7 +905,6 @@ async function addPlayerToTeam(playerName, teams) {
         // Remove the player status when disconnected
         window.addEventListener('beforeunload', async () => {
             debugger;
-            removeData(`games/${gameCode}/teams/${teamIndex}/players/${teams[teamIndex].players.length - 1}`);
             numPlayers--;
 
             // If host leaves, end game since nobody able to start it
@@ -922,6 +925,11 @@ async function addPlayerToTeam(playerName, teams) {
                 if (!btnNextRound.hidden) {
                     nextRound();
                 }
+
+                if (countdownSoundPlaying) {
+                    endRound();
+                    nextRound();
+                }
             }
 
             if (numPlayers <= 0) {
@@ -930,6 +938,8 @@ async function addPlayerToTeam(playerName, teams) {
             else {
                 await setNumPlayers();
             }
+
+            removeData(`games/${gameCode}/teams/${teamIndex}/players/${teams[teamIndex].players.length - 1}`);
         });
     });
 }
@@ -1035,6 +1045,8 @@ async function run(topic) {
 
 function startAIGame() {
     isAiGame = true;
+    // Read user added words on start
+    currentGameWords = shuffleArray(textArea.textContent.split("\n").filter(item => item !== ''));
     startGame();
     $('#aiModal').modal('hide');
     btnAI.hidden = true;
@@ -1374,8 +1386,11 @@ function playSound(audioElement, endCondition, playbackRate = 1.0) {
 }
 
 async function startCountdown(seconds, callback) {
+    countdownSoundPlaying = true;
     // Wait for the countdown sound to finish playing for its duration
     await playSound(countdownSound, () => false, 1.1);
+    countdownSoundPlaying = false;
+
     btnEndRound.hidden = false;
     displayCurrentWords();
 
