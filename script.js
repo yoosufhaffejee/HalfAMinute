@@ -1036,6 +1036,8 @@ async function run(topic) {
     if (textArea) {
         textArea.textContent = '';
         textArea.textContent = text;
+        textArea.value = '';
+        textArea.value = text;
     }
 
     // Shuffle cleaned array
@@ -1048,7 +1050,8 @@ function startAIGame() {
 
     // Read user added words on start
     let textArea = document.getElementById('aiWords');
-    currentGameWords = shuffleArray(textArea.textContent.split("\n").filter(item => item !== ''));
+    debugger;
+    currentGameWords = shuffleArray(textArea.value.split("\n").filter(item => item !== ''));
 
     startGame();
     
