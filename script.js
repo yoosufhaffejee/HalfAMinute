@@ -417,7 +417,6 @@ async function onLobbyJoined() {
 
     // Teams are updated when a player joins or leaves
     listenForChanges(`games/${gameCode}/teams`, (teamData) => {
-        debugger;
         // Detect changes and notify
         detectPlayerChanges(teams, teamData);
         teams = teamData;
@@ -904,7 +903,6 @@ async function addPlayerToTeam(playerName, teams) {
     listenForChanges(`games/${gameCode}/teams/${teamIndex}/players/${teams[teamIndex].players.length - 1}`, (player) => {
         // Remove the player status when disconnected
         window.addEventListener('beforeunload', async () => {
-            debugger;
             numPlayers--;
 
             // If host leaves, end game since nobody able to start it
@@ -1050,7 +1048,6 @@ function startAIGame() {
 
     // Read user added words on start
     let textArea = document.getElementById('aiWords');
-    debugger;
     currentGameWords = shuffleArray(textArea.value.split("\n").filter(item => item !== ''));
 
     startGame();
