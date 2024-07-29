@@ -1045,9 +1045,13 @@ async function run(topic) {
 
 function startAIGame() {
     isAiGame = true;
+
     // Read user added words on start
+    let textArea = document.getElementById('aiWords');
     currentGameWords = shuffleArray(textArea.textContent.split("\n").filter(item => item !== ''));
+
     startGame();
+    
     $('#aiModal').modal('hide');
     btnAI.hidden = true;
 }
