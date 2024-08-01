@@ -666,22 +666,20 @@ async function createGameLobby() {
 }
 
 function joinGameLobby() {
+    debugger;
     readDataOnce(`games/${txtGameCode.value}`).then(async gameData => {
+        debugger;
         if (gameData) {
-            if (gameData.gameState === "waiting") {
+            if (gameData.gameState !== "ended") {
                 gameCode = txtGameCode.value;
                 difficulty = gameData.settings.difficulty;
                 pointsToWin = gameData.settings.pointsToWin;
                 numWords = gameData.settings.numWords;
                 numSeconds = gameData.settings.numSeconds;
                 numPlayers = gameData.numPlayers;
+                debugger;
                 await onLobbyJoined(gameCode);
             }
-            else if (gameData.gameState === "started") {
-                // Logic to restrict joining games in progress
-                //alert("Cannot join, game in progress!")
-            }
-
         } else {
             alert('Invalid game code. Please try again.');
         }
