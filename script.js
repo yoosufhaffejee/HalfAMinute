@@ -666,7 +666,6 @@ async function createGameLobby() {
 }
 
 function joinGameLobby() {
-    debugger;
     readDataOnce(`games/${txtGameCode.value}`).then(async gameData => {
         if (gameData) {
             if (gameData.gameState !== "ended") {
