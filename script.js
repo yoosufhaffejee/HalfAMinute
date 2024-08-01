@@ -668,7 +668,6 @@ async function createGameLobby() {
 function joinGameLobby() {
     debugger;
     readDataOnce(`games/${txtGameCode.value}`).then(async gameData => {
-        debugger;
         if (gameData) {
             if (gameData.gameState !== "ended") {
                 gameCode = txtGameCode.value;
@@ -677,7 +676,6 @@ function joinGameLobby() {
                 numWords = gameData.settings.numWords;
                 numSeconds = gameData.settings.numSeconds;
                 numPlayers = gameData.numPlayers;
-                debugger;
                 await onLobbyJoined(gameCode);
             }
         } else {
