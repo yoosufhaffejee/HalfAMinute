@@ -342,7 +342,7 @@ async function onLobbyJoined() {
 
     readDataOnce(`games/${gameCode}/isGameStarted`).then(started => {
         if (started) {
-            isGameStarted = started;
+            isGameStarted = true;
         }
     });
 
