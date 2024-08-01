@@ -286,7 +286,6 @@ function doesPlayerExist(teams, playerName) {
 }
 
 async function onLobbyJoined() {
-    debugger;
     // Play game start sound
     await playSound(startSound, () => false, 1.2);
 
@@ -388,7 +387,6 @@ async function onLobbyJoined() {
 
     // Add gameState listener to know when to start/update game
     listenForChanges(`games/${gameCode}/gameState`, async (state) => {
-        debugger;
         if (state == "started") {
             isGameStarted = true;
             hideElement(lblGameState);
@@ -406,16 +404,9 @@ async function onLobbyJoined() {
         else if (state === "waiting") {
             if (isHost) {
                 btnStartOnlineGame.disabled = true;
-
-                // if (isGameStarted) {
-                //     btnStartOnlineGame.textContent = "Resume Game";
-                // }
-                // showElement(btnStartOnlineGame);
             }
 
             hideElement(btnStartRound);
-
-
             showElement(lblGameState);
             lblGameState.textContent = "Status: Waiting for players!";
         }
@@ -437,6 +428,17 @@ async function onLobbyJoined() {
             updateBoard();
             updateTeamScores();
             updateCurrentTeamIndicator();
+
+            // For 2 or 3 player games, we do not show words to other players
+            if ((numTeams == 2 && numPlayers == 2) || (numTeams == 3 && numPlayers == 3)) {
+                if (!isSpeaker) {
+                    btnAnswers.hidden = true;
+                }
+            }
+            // Show the words to players in other teams
+            else if (getPlayerTeamIndex() != getCurrentTeamIndex(currentTeam)) {
+                btnAnswers.hidden = false;
+            }
         }
         else if (state === "ended") {
             alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
@@ -722,7 +724,7 @@ async function startOnlineGame() {
     }
 
     if (isHost) {
-        updateData(`games/${gameCode}`, { gameState: "started", isGameStarted: isGameStarted });
+        updateData(`games/${gameCode}`, { gameState: "started", isGameStarted: true });
     }
 }
 
@@ -786,6 +788,7 @@ function updateUI() {
                 else {
                     isSpeaker = false;
                     hideElement(btnNextRound);
+                    debugger;
                     hideElement(btnStartRound);
                 }
             }
