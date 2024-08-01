@@ -286,6 +286,7 @@ function doesPlayerExist(teams, playerName) {
 }
 
 async function onLobbyJoined() {
+    debugger;
     // Play game start sound
     await playSound(startSound, () => false, 1.2);
 
@@ -339,6 +340,12 @@ async function onLobbyJoined() {
         }
     });
 
+    readDataOnce(`games/${gameCode}/isGameStarted`).then(started => {
+        if (started) {
+            isGameStarted = started;
+        }
+    });
+
     // Handle answer button click logic
     let count = 0;
     document.querySelectorAll(".scoreButton").forEach(button => {
@@ -361,9 +368,16 @@ async function onLobbyJoined() {
         }
     });
 
-    // Set starting team
-    currentTeam = 1;
-    setCurrentTeam();
+    await readDataOnce(`games/${gameCode}/currentTeam`).then(currentTeamNumber => {
+        if (currentTeamNumber) {
+            currentTeam = currentTeamNumber;
+        }
+        else {
+            // Set starting team
+            currentTeam = 1;
+            setCurrentTeam();
+        }
+    });
 
     if (isTeamsValid(numPlayers)) {
         updateData(`games/${gameCode}`, { gameState: "ready" });
@@ -374,6 +388,7 @@ async function onLobbyJoined() {
 
     // Add gameState listener to know when to start/update game
     listenForChanges(`games/${gameCode}/gameState`, async (state) => {
+        debugger;
         if (state == "started") {
             isGameStarted = true;
             hideElement(lblGameState);
@@ -391,9 +406,17 @@ async function onLobbyJoined() {
         else if (state === "waiting") {
             if (isHost) {
                 btnStartOnlineGame.disabled = true;
+
+                // if (isGameStarted) {
+                //     btnStartOnlineGame.textContent = "Resume Game";
+                // }
+                // showElement(btnStartOnlineGame);
             }
 
             hideElement(btnStartRound);
+
+
+            showElement(lblGameState);
             lblGameState.textContent = "Status: Waiting for players!";
         }
         else if (state === "ready") {
@@ -407,7 +430,13 @@ async function onLobbyJoined() {
             if (isSpeaker) {
                 showElement(btnStartRound);
             }
-            lblGameState.hidden = true; 
+            hideElement(lblGameState);
+
+            createTeamAuditTables(numTeams);
+            generateBoard();
+            updateBoard();
+            updateTeamScores();
+            updateCurrentTeamIndicator();
         }
         else if (state === "ended") {
             alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
@@ -421,6 +450,7 @@ async function onLobbyJoined() {
         detectPlayerChanges(teams, teamData);
         teams = teamData;
 
+        debugger;
         // Set numPlayers to the total number of players
         const numPlayers = teams.reduce((total, team) => total + (team.players ? team.players.length : 0), 0);
         if (isTeamsValid(numPlayers)) {
@@ -438,7 +468,9 @@ async function onLobbyJoined() {
         // Update the player list UI
         updatePlayerListUI(teams);
         if (isGameStarted) {
-            updateUI();
+            if (isTeamsValid(numPlayers)) {
+                updateUI();
+            }
             hideTimerAndAnswers();
         }
     });
@@ -690,7 +722,7 @@ async function startOnlineGame() {
     }
 
     if (isHost) {
-        updateData(`games/${gameCode}`, { gameState: "started" });
+        updateData(`games/${gameCode}`, { gameState: "started", isGameStarted: isGameStarted });
     }
 }
 
@@ -748,6 +780,7 @@ function updateUI() {
                 if (player.isSpeaker) {
                     isSpeaker = true;
                     hideElement(btnNextRound);
+                    debugger;
                     showElement(btnStartRound);
                 }
                 else {
@@ -856,10 +889,21 @@ async function setSpeaker(teams) {
     // If we've cycled back to the initial team, move to the next speaker within that team
     if (nextTeamIndex === 0 && currentTeamIndex === teams.length - 1) {
         nextSpeakerIndex = (currentSpeakerIndex + 1) % teams[nextTeamIndex].players.length;
+        // Only 1 player in current team
+        if (teams[currentTeamIndex].players.length === 1 && currentRound % 2 != 0) {
+            nextSpeakerIndex = 0;
+        }
     }
 
-    // Set the next speaker's isSpeaker to true
-    teams[nextTeamIndex].players[nextSpeakerIndex].isSpeaker = true;
+    if (teams[nextTeamIndex].players[nextSpeakerIndex]) {
+        // Set the next speaker's isSpeaker to true
+        teams[nextTeamIndex].players[nextSpeakerIndex].isSpeaker = true;
+    }
+    else {
+        // If the player does not exist, they probably left the game, so we move to the first player in the team
+        teams[nextTeamIndex].players[0].isSpeaker = true;
+    }
+    
 
     // Write updated speaker info to Firebase
     firebaseWrite(`games/${gameCode}/teams`, teams);
@@ -1599,8 +1643,9 @@ function getPlayerTeamIndex() {
 }
 
 function createTeamAuditTables(numTeams) {
+    const tableContainer = document.getElementById('table-container');
+    tableContainer.innerHTML = '';
     for (let i = 0; i < numTeams; i++) {
-        const tableContainer = document.getElementById('table-container');
         const table = document.createElement('table');
         table.id = `table${i}`;
         const header = table.createTHead();
