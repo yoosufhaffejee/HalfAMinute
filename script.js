@@ -452,7 +452,6 @@ async function onLobbyJoined() {
         detectPlayerChanges(teams, teamData);
         teams = teamData;
 
-        debugger;
         // Set numPlayers to the total number of players
         const numPlayers = teams.reduce((total, team) => total + (team.players ? team.players.length : 0), 0);
         if (isTeamsValid(numPlayers)) {
@@ -782,13 +781,11 @@ function updateUI() {
                 if (player.isSpeaker) {
                     isSpeaker = true;
                     hideElement(btnNextRound);
-                    debugger;
                     showElement(btnStartRound);
                 }
                 else {
                     isSpeaker = false;
                     hideElement(btnNextRound);
-                    debugger;
                     hideElement(btnStartRound);
                 }
             }
