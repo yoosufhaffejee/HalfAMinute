@@ -1095,7 +1095,7 @@ const categories = {
     {
       "word": "Everest",
       "difficulty": "easy",
-      "description": "Common name for Mount Everest, the highest peak in the world."
+      "description": "Common name for Mount, the highest peak in the world."
     },
     {
       "word": "Everest Base Camp",
@@ -2017,17 +2017,17 @@ const categories = {
     {
       "word": "Google",
       "difficulty": "easy",
-      "description": "Technology company known for its search engine, as well as products like Android, YouTube, and Google Cloud."
+      "description": "Technology company known for its search engine, as well as products like Android, YouTube, and Cloud."
     },
     {
       "word": "Microsoft",
       "difficulty": "easy",
-      "description": "Technology company known for its software products, including the Windows operating system and Microsoft Office suite."
+      "description": "Technology company known for its software products, including the Windows operating system and Office suite."
     },
     {
       "word": "Amazon",
       "difficulty": "easy",
-      "description": "E-commerce and cloud computing company known for its online retail platform and Amazon Web Services (AWS)."
+      "description": "E-commerce and cloud computing company known for its online retail platform and Web Services (AWS)."
     },
     {
       "word": "Vodacom",
@@ -2084,7 +2084,7 @@ const categories = {
     {
       "word": "Moby Dick",
       "difficulty": "easy",
-      "description": "A novel by Herman Melville that follows Captain Ahab's obsessive quest to hunt the elusive white whale, Moby Dick."
+      "description": "A novel by Herman Melville that follows Captain Ahab's obsessive quest to hunt the elusive white whale,."
     },
     {
       "word": "1984",
@@ -2104,7 +2104,7 @@ const categories = {
     {
       "word": "Hamlet",
       "difficulty": "easy",
-      "description": "A tragedy by William Shakespeare about Prince Hamlet's quest for revenge against his uncle, who has murdered Hamlet's father."
+      "description": "A tragedy by William Shakespeare about Prince 's quest for revenge against his uncle, who has murdered 's father."
     },
     {
       "word": "The Catcher in the Rye",
@@ -2144,7 +2144,7 @@ const categories = {
     {
       "word": "Dracula",
       "difficulty": "easy",
-      "description": "A Gothic horror novel by Bram Stoker about Count Dracula's attempt to move from Transylvania to England in order to spread the undead curse."
+      "description": "A Gothic horror novel by Bram Stoker about Count 's attempt to move from Transylvania to England in order to spread the undead curse."
     },
     {
       "word": "The Adventures of Huckleberry Finn",
@@ -2179,7 +2179,7 @@ const categories = {
     {
       "word": "Gulliver's Travels",
       "difficulty": "easy",
-      "description": "A satirical novel by Jonathan Swift detailing Lemuel Gulliver's travels to fantastical lands, including Lilliput and Brobdingnag."
+      "description": "A satirical novel by Jonathan Swift detailing Lemuel to fantastical lands, including Lilliput and Brobdingnag."
     },
     {
       "word": "Anna Karenina",
@@ -2299,7 +2299,7 @@ const categories = {
     {
       "word": "Middlemarch",
       "difficulty": "hard",
-      "description": "A novel by George Eliot (Mary Ann Evans) about the lives of residents in the fictional town of Middlemarch, exploring social and political issues."
+      "description": "A novel by George Eliot (Mary Ann Evans) about the lives of residents in the fictional town of, exploring social and political issues."
     },
     {
       "word": "Heart of Darkness",
@@ -2406,7 +2406,7 @@ const categories = {
     {
       "word": "Shakespeare",
       "difficulty": "easy",
-      "description": "William Shakespeare, an English playwright and poet, known for his influential plays and sonnets, including 'Hamlet' and 'Romeo and Juliet.'"
+      "description": "William, an English playwright and poet, known for his influential plays and sonnets, including 'Hamlet' and 'Romeo and Juliet.'."
     },
     {
       "word": "Frida Kahlo",
@@ -2501,7 +2501,7 @@ const categories = {
     {
       "word": "Hollywood",
       "difficulty": "easy",
-      "description": "The entertainment district in Los Angeles known for its film industry, including major studios, theaters, and the iconic Hollywood sign."
+      "description": "The entertainment district in Los Angeles known for its film industry, including major studios, theaters, and the iconic sign."
     },
     {
       "word": "Baroque Music",
@@ -2733,437 +2733,437 @@ const categories = {
     {
       "word": "Beethoven",
       "difficulty": "easy",
-      "description": "Beethoven is commonly used in Music themed clues."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "The Beatles",
       "difficulty": "easy",
-      "description": "The Beatles is a clueable term relevant to Music."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Rock and Roll",
       "difficulty": "easy",
-      "description": "Rock and Roll is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Mozart",
       "difficulty": "easy",
-      "description": "Mozart is a clueable term relevant to Music."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Jazz",
       "difficulty": "easy",
-      "description": "Jazz is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Hip Hop",
       "difficulty": "easy",
-      "description": "Hip Hop fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Opera",
       "difficulty": "easy",
-      "description": "Opera fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Elvis Presley",
       "difficulty": "easy",
-      "description": "Elvis Presley is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Piano",
       "difficulty": "easy",
-      "description": "Piano is a clueable term relevant to Music."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Violin",
       "difficulty": "easy",
-      "description": "Violin fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Michael Jackson",
       "difficulty": "easy",
-      "description": "Michael Jackson fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Blues",
       "difficulty": "easy",
-      "description": "Blues is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "The Rolling Stones",
       "difficulty": "easy",
-      "description": "The Rolling Stones is commonly used in Music themed clues."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Country Music",
       "difficulty": "easy",
-      "description": "Country Music is a clueable term relevant to Music."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Classical Music",
       "difficulty": "easy",
-      "description": "Classical Music fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Reggae",
       "difficulty": "easy",
-      "description": "Reggae is a clueable term relevant to Music."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Guitar",
       "difficulty": "easy",
-      "description": "Guitar is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Choir",
       "difficulty": "easy",
-      "description": "Choir fits the Music category for quick, descriptive gameplay."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Broadway Musical",
       "difficulty": "easy",
-      "description": "Broadway Musical is a useful Music reference for fast team guessing rounds."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Rap",
       "difficulty": "easy",
-      "description": "Rap fits the Music category for quick, descriptive gameplay."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Saxophone",
       "difficulty": "easy",
-      "description": "Saxophone is commonly used in Music themed clues."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Folk Music",
       "difficulty": "easy",
-      "description": "Folk Music fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Salsa",
       "difficulty": "easy",
-      "description": "Salsa is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "DJ",
       "difficulty": "easy",
-      "description": "DJ is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Chopin",
       "difficulty": "easy",
-      "description": "Chopin is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Acoustic Guitar",
       "difficulty": "easy",
-      "description": "Acoustic Guitar is a clueable term relevant to Music."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Heavy Metal",
       "difficulty": "easy",
-      "description": "Heavy Metal is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Electronic Music",
       "difficulty": "easy",
-      "description": "Electronic Music fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Opera Singer",
       "difficulty": "easy",
-      "description": "Opera Singer is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Woodstock",
       "difficulty": "easy",
-      "description": "Woodstock is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Concerto",
       "difficulty": "easy",
-      "description": "Concerto is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Drum Set",
       "difficulty": "easy",
-      "description": "Drum Set fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "R&B",
       "difficulty": "easy",
-      "description": "R&B is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Baroque Music",
       "difficulty": "easy",
-      "description": "Baroque Music is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Trumpet",
       "difficulty": "easy",
-      "description": "Trumpet is a clueable term relevant to Music."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Synthesizer",
       "difficulty": "easy",
-      "description": "Synthesizer fits the Music category for quick, descriptive gameplay."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Festival",
       "difficulty": "easy",
-      "description": "Festival fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Marching Band",
       "difficulty": "easy",
-      "description": "Marching Band is a useful Music reference for fast team guessing rounds."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Singer-Songwriter",
       "difficulty": "easy",
-      "description": "Singer-Songwriter is a useful Music reference for fast team guessing rounds."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Motown",
       "difficulty": "easy",
-      "description": "Motown is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Orchestra",
       "difficulty": "easy",
-      "description": "Orchestra is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Grammy Awards",
       "difficulty": "easy",
-      "description": "Grammy Awards is a useful Music reference for fast team guessing rounds."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Conducting",
       "difficulty": "easy",
-      "description": "Conducting is a useful Music reference for fast team guessing rounds."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Punk Rock",
       "difficulty": "easy",
-      "description": "Punk Rock is a useful Music reference for fast team guessing rounds."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Bass Guitar",
       "difficulty": "easy",
-      "description": "Bass Guitar fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Songwriting",
       "difficulty": "easy",
-      "description": "Songwriting is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Keyboard",
       "difficulty": "easy",
-      "description": "Keyboard is commonly used in Music themed clues."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Rhythm and Blues",
       "difficulty": "easy",
-      "description": "Rhythm and Blues is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Beyoncé",
       "difficulty": "easy",
-      "description": "Beyoncé is a useful Music reference for fast team guessing rounds."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Freddie Mercury",
       "difficulty": "hard",
-      "description": "Freddie Mercury is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Adele",
       "difficulty": "easy",
-      "description": "Adele fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Ed Sheeran",
       "difficulty": "easy",
-      "description": "Ed Sheeran is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Taylor Swift",
       "difficulty": "easy",
-      "description": "Taylor Swift fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Madonna",
       "difficulty": "easy",
-      "description": "Madonna fits the Music category for quick, descriptive gameplay."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Queen",
       "difficulty": "easy",
-      "description": "Queen is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Rolling Stones",
       "difficulty": "easy",
-      "description": "Rolling Stones is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Lady Gaga",
       "difficulty": "easy",
-      "description": "Lady Gaga is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Justin Bieber",
       "difficulty": "easy",
-      "description": "Justin Bieber is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Led Zeppelin",
       "difficulty": "hard",
-      "description": "Led Zeppelin fits the Music category for quick, descriptive gameplay."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Pink Floyd",
       "difficulty": "hard",
-      "description": "Pink Floyd is commonly used in Music themed clues."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Fleetwood Mac",
       "difficulty": "hard",
-      "description": "Fleetwood Mac is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Red Hot Chili Peppers",
       "difficulty": "hard",
-      "description": "Red Hot Chili Peppers is commonly used in Music themed clues."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Nine Inch Nails",
       "difficulty": "hard",
-      "description": "Nine Inch Nails is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "The Smashing Pumpkins",
       "difficulty": "hard",
-      "description": "The Smashing Pumpkins fits the Music category for quick, descriptive gameplay."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Rage Against the Machine",
       "difficulty": "hard",
-      "description": "Rage Against the Machine is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Radiohead",
       "difficulty": "hard",
-      "description": "Radiohead is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "The Cure",
       "difficulty": "hard",
-      "description": "The Cure fits the Music category for quick, descriptive gameplay."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Depeche Mode",
       "difficulty": "hard",
-      "description": "Depeche Mode is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Aretha Franklin",
       "difficulty": "easy",
-      "description": "Aretha Franklin is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Ariana Grande",
       "difficulty": "easy",
-      "description": "Ariana Grande is commonly used in Music themed clues."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Bob Dylan",
       "difficulty": "easy",
-      "description": "Bob Dylan fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Drake",
       "difficulty": "easy",
-      "description": "Drake is a clueable term relevant to Music."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Elton John",
       "difficulty": "easy",
-      "description": "Elton John fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "John Lennon",
       "difficulty": "easy",
-      "description": "John Lennon is a clueable term relevant to Music."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Paul McCartney",
       "difficulty": "easy",
-      "description": "Paul McCartney fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Rihanna",
       "difficulty": "easy",
-      "description": "Rihanna is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Whitney Houston",
       "difficulty": "easy",
-      "description": "Whitney Houston is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Rolling in the Deep",
       "difficulty": "hard",
-      "description": "Rolling in the Deep is a clueable term relevant to Music."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Shape of You",
       "difficulty": "easy",
-      "description": "Shape of You is a useful Music reference for fast team guessing rounds."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Blinding Lights",
       "difficulty": "hard",
-      "description": "Blinding Lights is a useful Music reference for fast team guessing rounds."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Hey Jude",
       "difficulty": "hard",
-      "description": "Hey Jude is a clueable term relevant to Music."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Someone Like You",
       "difficulty": "hard",
-      "description": "Someone Like You fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Uptown Funk",
       "difficulty": "hard",
-      "description": "Uptown Funk is commonly used in Music themed clues."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "U2",
       "difficulty": "hard",
-      "description": "U2 is a clueable term relevant to Music."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Coldplay",
       "difficulty": "easy",
-      "description": "Coldplay is a useful Music reference for fast team guessing rounds."
+      "description": "Song/artist clue; give mood, genre, and one standout association."
     },
     {
       "word": "Nirvana",
       "difficulty": "hard",
-      "description": "Nirvana fits the Music category for quick, descriptive gameplay."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "AC/DC",
       "difficulty": "easy",
-      "description": "AC/DC is a useful Music reference for fast team guessing rounds."
+      "description": "Music reference; start with instrument, style, or famous performance."
     },
     {
       "word": "Tyla",
@@ -3178,7 +3178,7 @@ const categories = {
     {
       "word": "Cassper Nyovest",
       "difficulty": "hard",
-      "description": "Cassper Nyovest fits the Music category for quick, descriptive gameplay."
+      "description": "Music clue; describe genre, era, and signature sound or hit."
     },
     {
       "word": "Black Coffee",
@@ -3205,1022 +3205,1022 @@ const categories = {
     {
       "word": "Football",
       "difficulty": "easy",
-      "description": "Football is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Basketball",
       "difficulty": "easy",
-      "description": "Basketball is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Soccer",
       "difficulty": "easy",
-      "description": "Soccer is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Tennis",
       "difficulty": "easy",
-      "description": "Tennis is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Golf",
       "difficulty": "easy",
-      "description": "Golf is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Baseball",
       "difficulty": "easy",
-      "description": "Baseball fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Swimming",
       "difficulty": "easy",
-      "description": "Swimming is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Boxing",
       "difficulty": "easy",
-      "description": "Boxing is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Cricket",
       "difficulty": "easy",
-      "description": "Cricket is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Rugby",
       "difficulty": "easy",
-      "description": "Rugby fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Running",
       "difficulty": "easy",
-      "description": "Running is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Volleyball",
       "difficulty": "easy",
-      "description": "Volleyball is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Ice Hockey",
       "difficulty": "easy",
-      "description": "Ice Hockey is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Table Tennis",
       "difficulty": "easy",
-      "description": "Table Tennis is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Athletics",
       "difficulty": "easy",
-      "description": "Athletics fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Cycling",
       "difficulty": "easy",
-      "description": "Cycling is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Wrestling",
       "difficulty": "easy",
-      "description": "Wrestling fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Badminton",
       "difficulty": "easy",
-      "description": "Badminton is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Formula 1",
       "difficulty": "easy",
-      "description": "Formula 1 is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Martial Arts",
       "difficulty": "easy",
-      "description": "Martial Arts is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Gymnastics",
       "difficulty": "easy",
-      "description": "Gymnastics is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Surfing",
       "difficulty": "easy",
-      "description": "Surfing is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Snowboarding",
       "difficulty": "easy",
-      "description": "Snowboarding is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Skateboarding",
       "difficulty": "easy",
-      "description": "Skateboarding is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Polo",
       "difficulty": "easy",
-      "description": "Polo is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Archery",
       "difficulty": "easy",
-      "description": "Archery is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Equestrian",
       "difficulty": "easy",
-      "description": "Equestrian is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Sailing",
       "difficulty": "easy",
-      "description": "Sailing is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Darts",
       "difficulty": "easy",
-      "description": "Darts is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Snooker",
       "difficulty": "easy",
-      "description": "Snooker is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Squash",
       "difficulty": "easy",
-      "description": "Squash is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Canoeing",
       "difficulty": "easy",
-      "description": "Canoeing fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Rowing",
       "difficulty": "easy",
-      "description": "Rowing is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Triathlon",
       "difficulty": "easy",
-      "description": "Triathlon is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Netball",
       "difficulty": "easy",
-      "description": "Netball is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Pentathlon",
       "difficulty": "easy",
-      "description": "Pentathlon fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Handball",
       "difficulty": "easy",
-      "description": "Handball is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Curling",
       "difficulty": "easy",
-      "description": "Curling fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Fencing",
       "difficulty": "easy",
-      "description": "Fencing is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Lacrosse",
       "difficulty": "easy",
-      "description": "Lacrosse is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Bobsleigh",
       "difficulty": "easy",
-      "description": "Bobsleigh is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Powerlifting",
       "difficulty": "easy",
-      "description": "Powerlifting fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Mountaineering",
       "difficulty": "easy",
-      "description": "Mountaineering is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Figure Skating",
       "difficulty": "easy",
-      "description": "Figure Skating fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Biathlon",
       "difficulty": "easy",
-      "description": "Biathlon fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Taekwondo",
       "difficulty": "easy",
-      "description": "Taekwondo fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Bowling",
       "difficulty": "easy",
-      "description": "Bowling is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Water Polo",
       "difficulty": "easy",
-      "description": "Water Polo is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Goal",
       "difficulty": "easy",
-      "description": "Goal is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Ball",
       "difficulty": "easy",
-      "description": "Ball is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Kick",
       "difficulty": "easy",
-      "description": "Kick is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Pass",
       "difficulty": "easy",
-      "description": "Pass fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Referee",
       "difficulty": "easy",
-      "description": "Referee fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Goalkeeper",
       "difficulty": "easy",
-      "description": "Goalkeeper is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Red Card",
       "difficulty": "easy",
-      "description": "Red Card is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Yellow Card",
       "difficulty": "easy",
-      "description": "Yellow Card is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Foul",
       "difficulty": "easy",
-      "description": "Foul is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Offside",
       "difficulty": "easy",
-      "description": "Offside is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Penalty Kick",
       "difficulty": "easy",
-      "description": "Penalty Kick is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Corner Kick",
       "difficulty": "easy",
-      "description": "Corner Kick is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Free Kick",
       "difficulty": "easy",
-      "description": "Free Kick is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Tackle",
       "difficulty": "easy",
-      "description": "Tackle fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Header",
       "difficulty": "easy",
-      "description": "Header is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Substitute",
       "difficulty": "easy",
-      "description": "Substitute is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Captain",
       "difficulty": "easy",
-      "description": "Captain is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "World Cup",
       "difficulty": "easy",
-      "description": "World Cup is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Champions League",
       "difficulty": "easy",
-      "description": "Champions League fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Premier League",
       "difficulty": "easy",
-      "description": "Premier League is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "La Liga",
       "difficulty": "easy",
-      "description": "La Liga fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Serie A",
       "difficulty": "easy",
-      "description": "Serie A is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Bundesliga",
       "difficulty": "easy",
-      "description": "Bundesliga is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Messi",
       "difficulty": "easy",
-      "description": "Messi is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Ronaldo",
       "difficulty": "easy",
-      "description": "Ronaldo is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Neymar",
       "difficulty": "easy",
-      "description": "Neymar is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Mbappe",
       "difficulty": "easy",
-      "description": "Mbappe is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Zidane",
       "difficulty": "easy",
-      "description": "Zidane is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Maradona",
       "difficulty": "easy",
-      "description": "Maradona is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Pele",
       "difficulty": "easy",
-      "description": "Pele is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Beckenbauer",
       "difficulty": "easy",
-      "description": "Beckenbauer is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Wembley Stadium",
       "difficulty": "easy",
-      "description": "Wembley Stadium is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Camp Nou",
       "difficulty": "easy",
-      "description": "Camp Nou is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Santiago Bernabeu",
       "difficulty": "easy",
-      "description": "Santiago Bernabeu is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Old Trafford",
       "difficulty": "easy",
-      "description": "Old Trafford is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Anfield",
       "difficulty": "easy",
-      "description": "Anfield is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Allianz Arena",
       "difficulty": "easy",
-      "description": "Allianz Arena is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "FIFA",
       "difficulty": "easy",
-      "description": "FIFA is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "UEFA",
       "difficulty": "easy",
-      "description": "UEFA is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Golden Boot",
       "difficulty": "easy",
-      "description": "Golden Boot is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Golden Ball",
       "difficulty": "easy",
-      "description": "Golden Ball is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Top Scorer",
       "difficulty": "easy",
-      "description": "Top Scorer fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Hat-Trick",
       "difficulty": "easy",
-      "description": "Hat-Trick is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Own Goal",
       "difficulty": "easy",
-      "description": "Own Goal fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Touchdown",
       "difficulty": "easy",
-      "description": "Touchdown is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Home Run",
       "difficulty": "easy",
-      "description": "Home Run fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Ace",
       "difficulty": "easy",
-      "description": "Ace fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Birdie",
       "difficulty": "easy",
-      "description": "Birdie is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Forehand",
       "difficulty": "easy",
-      "description": "Forehand fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Backhand",
       "difficulty": "easy",
-      "description": "Backhand is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Serve",
       "difficulty": "easy",
-      "description": "Serve fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Grand Slam",
       "difficulty": "easy",
-      "description": "Grand Slam is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Wimbledon",
       "difficulty": "easy",
-      "description": "Wimbledon is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Super Bowl",
       "difficulty": "easy",
-      "description": "Super Bowl is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "World Series",
       "difficulty": "easy",
-      "description": "World Series is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Olympics",
       "difficulty": "easy",
-      "description": "Olympics is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Tour de France",
       "difficulty": "easy",
-      "description": "Tour de France fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "MMA",
       "difficulty": "easy",
-      "description": "MMA is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Skiing",
       "difficulty": "easy",
-      "description": "Skiing is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "High Jump",
       "difficulty": "easy",
-      "description": "High Jump is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Long Jump",
       "difficulty": "easy",
-      "description": "Long Jump is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Pole Vault",
       "difficulty": "easy",
-      "description": "Pole Vault is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Javelin",
       "difficulty": "easy",
-      "description": "Javelin fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Shot Put",
       "difficulty": "easy",
-      "description": "Shot Put is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Hockey",
       "difficulty": "easy",
-      "description": "Hockey is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Karate",
       "difficulty": "easy",
-      "description": "Karate fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Diving",
       "difficulty": "easy",
-      "description": "Diving is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Michael Jordan",
       "difficulty": "easy",
-      "description": "Michael Jordan is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Serena Williams",
       "difficulty": "easy",
-      "description": "Serena Williams is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Usain Bolt",
       "difficulty": "easy",
-      "description": "Usain Bolt fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Muhammad Ali",
       "difficulty": "easy",
-      "description": "Muhammad Ali fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Cristiano Ronaldo",
       "difficulty": "easy",
-      "description": "Cristiano Ronaldo is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Lionel Messi",
       "difficulty": "easy",
-      "description": "Lionel Messi is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Roger Federer",
       "difficulty": "easy",
-      "description": "Roger Federer is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Tiger Woods",
       "difficulty": "easy",
-      "description": "Tiger Woods is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "LeBron James",
       "difficulty": "easy",
-      "description": "LeBron James fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Michael Phelps",
       "difficulty": "easy",
-      "description": "Michael Phelps is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Simone Biles",
       "difficulty": "easy",
-      "description": "Simone Biles is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Kobe Bryant",
       "difficulty": "easy",
-      "description": "Kobe Bryant is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Wayne Gretzky",
       "difficulty": "easy",
-      "description": "Wayne Gretzky is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Mia Hamm",
       "difficulty": "easy",
-      "description": "Mia Hamm fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Babe Ruth",
       "difficulty": "easy",
-      "description": "Babe Ruth is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Rafael Nadal",
       "difficulty": "easy",
-      "description": "Rafael Nadal fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Jackie Joyner-Kersee",
       "difficulty": "easy",
-      "description": "Jackie Joyner-Kersee is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Novak Djokovic",
       "difficulty": "easy",
-      "description": "Novak Djokovic fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Martina Navratilova",
       "difficulty": "easy",
-      "description": "Martina Navratilova is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Diego Maradona",
       "difficulty": "easy",
-      "description": "Diego Maradona is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Michael Schumacher",
       "difficulty": "easy",
-      "description": "Michael Schumacher is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Sachin Tendulkar",
       "difficulty": "easy",
-      "description": "Sachin Tendulkar is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Manny Pacquiao",
       "difficulty": "easy",
-      "description": "Manny Pacquiao fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Alex Morgan",
       "difficulty": "easy",
-      "description": "Alex Morgan fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "FIFA World Cup",
       "difficulty": "hard",
-      "description": "FIFA World Cup fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "NBA Finals",
       "difficulty": "hard",
-      "description": "NBA Finals is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Penalty",
       "difficulty": "easy",
-      "description": "Penalty fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Striker",
       "difficulty": "easy",
-      "description": "Striker is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Midfielder",
       "difficulty": "easy",
-      "description": "Midfielder is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Nutmeg",
       "difficulty": "hard",
-      "description": "Nutmeg fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Tiki-taka",
       "difficulty": "hard",
-      "description": "Tiki-taka fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "False nine",
       "difficulty": "hard",
-      "description": "False nine fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Sweeper",
       "difficulty": "hard",
-      "description": "Sweeper is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Counter-attack",
       "difficulty": "hard",
-      "description": "Counter-attack is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Libero",
       "difficulty": "hard",
-      "description": "Libero is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Man marking",
       "difficulty": "hard",
-      "description": "Man marking is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Zonal marking",
       "difficulty": "hard",
-      "description": "Zonal marking is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Through ball",
       "difficulty": "hard",
-      "description": "Through ball fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Decathlon",
       "difficulty": "hard",
-      "description": "Decathlon is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "The Olympic Games",
       "difficulty": "hard",
-      "description": "The Olympic Games is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Bobsledding",
       "difficulty": "hard",
-      "description": "Bobsledding is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Windsurfing",
       "difficulty": "hard",
-      "description": "Windsurfing is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Jesse Owens",
       "difficulty": "easy",
-      "description": "Jesse Owens is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Tom Brady",
       "difficulty": "easy",
-      "description": "Tom Brady fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Australian Open",
       "difficulty": "easy",
-      "description": "Australian Open fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Champions League Final",
       "difficulty": "easy",
-      "description": "Champions League Final is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Defensive Block",
       "difficulty": "hard",
-      "description": "Defensive Block is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "English Premier League Trophy",
       "difficulty": "hard",
-      "description": "English Premier League Trophy is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Formula 1 Grand Prix",
       "difficulty": "hard",
-      "description": "Formula 1 Grand Prix is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Formula 1 World Championship",
       "difficulty": "hard",
-      "description": "Formula 1 World Championship is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Free Kick Technique",
       "difficulty": "hard",
-      "description": "Free Kick Technique is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "French Open",
       "difficulty": "easy",
-      "description": "French Open is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Golf Masters",
       "difficulty": "easy",
-      "description": "Golf Masters fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Ligue 1",
       "difficulty": "easy",
-      "description": "Ligue 1 is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "MLB",
       "difficulty": "easy",
-      "description": "MLB fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "MVP",
       "difficulty": "easy",
-      "description": "MVP fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "NBA",
       "difficulty": "easy",
-      "description": "NBA is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "NFL",
       "difficulty": "easy",
-      "description": "NFL is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Olympic Gold Medal",
       "difficulty": "easy",
-      "description": "Olympic Gold Medal fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Penalty Shootout",
       "difficulty": "hard",
-      "description": "Penalty Shootout is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Roger Federer vs Rafael Nadal",
       "difficulty": "hard",
-      "description": "Roger Federer vs Rafael Nadal is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Summer Olympics Opening Ceremony",
       "difficulty": "hard",
-      "description": "Summer Olympics Opening Ceremony is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Super Bowl Halftime Show",
       "difficulty": "hard",
-      "description": "Super Bowl Halftime Show fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Super Bowl MVP Performance",
       "difficulty": "hard",
-      "description": "Super Bowl MVP Performance fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "US Open",
       "difficulty": "easy",
-      "description": "US Open is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Video Assistant Referee",
       "difficulty": "hard",
-      "description": "Video Assistant Referee is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Winter Olympics",
       "difficulty": "easy",
-      "description": "Winter Olympics is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Winter Olympics Opening Ceremony",
       "difficulty": "hard",
-      "description": "Winter Olympics Opening Ceremony is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "World Cup Final",
       "difficulty": "easy",
-      "description": "World Cup Final is a clueable term relevant to Sports."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Kylian Mbappé",
       "difficulty": "easy",
-      "description": "Kylian Mbappé is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Mohamed Salah",
       "difficulty": "easy",
-      "description": "Mohamed Salah is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Neymar Jr.",
       "difficulty": "easy",
-      "description": "Neymar Jr. is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Zlatan Ibrahimović",
       "difficulty": "easy",
-      "description": "Zlatan Ibrahimović is commonly used in Sports themed clues."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Nike",
       "difficulty": "easy",
-      "description": "Nike fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Manchester United",
       "difficulty": "easy",
-      "description": "Manchester United is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Adidas",
       "difficulty": "easy",
-      "description": "Adidas is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Real Madrid",
       "difficulty": "easy",
-      "description": "Real Madrid is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Barcelona",
       "difficulty": "easy",
-      "description": "Barcelona is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Bayern Munich",
       "difficulty": "easy",
-      "description": "Bayern Munich is a clueable term relevant to Sports."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Liverpool",
       "difficulty": "easy",
-      "description": "Liverpool fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Chelsea",
       "difficulty": "easy",
-      "description": "Chelsea is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Paris Saint-Germain",
       "difficulty": "easy",
-      "description": "Paris Saint-Germain is a useful Sports reference for fast team guessing rounds."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Juventus",
       "difficulty": "easy",
-      "description": "Juventus fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "AC Milan",
       "difficulty": "easy",
-      "description": "AC Milan is a clueable term relevant to Sports."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Arsenal",
       "difficulty": "easy",
-      "description": "Arsenal is commonly used in Sports themed clues."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Sir Alex Ferguson",
       "difficulty": "easy",
-      "description": "Sir Alex Ferguson is a useful Sports reference for fast team guessing rounds."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Pep Guardiola",
       "difficulty": "hard",
-      "description": "Pep Guardiola fits the Sports category for quick, descriptive gameplay."
+      "description": "Athletics reference; clue with team/event context and a famous moment."
     },
     {
       "word": "Jurgen Klopp",
       "difficulty": "hard",
-      "description": "Jurgen Klopp fits the Sports category for quick, descriptive gameplay."
+      "description": "Sports term; start with game type, then scoring or tournament context."
     },
     {
       "word": "Cole Palmer",
       "difficulty": "hard",
-      "description": "Cole Palmer is commonly used in Sports themed clues."
+      "description": "Sports clue; describe the sport, role, and a defining achievement."
     },
     {
       "word": "Bafana Bafana",
@@ -4247,562 +4247,562 @@ const categories = {
     {
       "word": "Star Wars",
       "difficulty": "easy",
-      "description": "Star Wars fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Matrix",
       "difficulty": "easy",
-      "description": "The Matrix is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Friends",
       "difficulty": "easy",
-      "description": "Friends is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "The Simpsons",
       "difficulty": "easy",
-      "description": "The Simpsons is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Breaking Bad",
       "difficulty": "easy",
-      "description": "Breaking Bad fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Game of Thrones",
       "difficulty": "easy",
-      "description": "Game of Thrones is a clueable term relevant to Movies and TV."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Harry Potter",
       "difficulty": "easy",
-      "description": "Harry Potter is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Godfather",
       "difficulty": "easy",
-      "description": "The Godfather fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "The Avengers",
       "difficulty": "easy",
-      "description": "The Avengers fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Avengers: Endgame",
       "difficulty": "hard",
-      "description": "Avengers: Endgame is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Lord of the Rings",
       "difficulty": "easy",
-      "description": "Lord of the Rings is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Jurassic Park",
       "difficulty": "easy",
-      "description": "Jurassic Park is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "The Shawshank Redemption",
       "difficulty": "easy",
-      "description": "The Shawshank Redemption is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Pulp Fiction",
       "difficulty": "easy",
-      "description": "Pulp Fiction fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Back to the Future",
       "difficulty": "easy",
-      "description": "Back to the Future is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Star Trek",
       "difficulty": "easy",
-      "description": "Star Trek is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "The Office",
       "difficulty": "easy",
-      "description": "The Office fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Avatar",
       "difficulty": "easy",
-      "description": "Avatar fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Titanic",
       "difficulty": "easy",
-      "description": "Titanic is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Inception",
       "difficulty": "easy",
-      "description": "Inception fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Stranger Things",
       "difficulty": "easy",
-      "description": "Stranger Things is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "The Lion King",
       "difficulty": "easy",
-      "description": "The Lion King is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Forrest Gump",
       "difficulty": "easy",
-      "description": "Forrest Gump is commonly used in Movies and TV themed clues."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "The Dark Knight",
       "difficulty": "easy",
-      "description": "The Dark Knight fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Toy Story",
       "difficulty": "easy",
-      "description": "Toy Story is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "The Walking Dead",
       "difficulty": "easy",
-      "description": "The Walking Dead is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Frozen",
       "difficulty": "easy",
-      "description": "Frozen is commonly used in Movies and TV themed clues."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "The Big Bang Theory",
       "difficulty": "easy",
-      "description": "The Big Bang Theory is commonly used in Movies and TV themed clues."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Indiana Jones",
       "difficulty": "easy",
-      "description": "Indiana Jones fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "The Sound of Music",
       "difficulty": "easy",
-      "description": "The Sound of Music is a clueable term relevant to Movies and TV."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Sopranos",
       "difficulty": "easy",
-      "description": "The Sopranos is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "The Terminator",
       "difficulty": "easy",
-      "description": "The Terminator is a clueable term relevant to Movies and TV."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Mulan",
       "difficulty": "easy",
-      "description": "Mulan fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Die Hard",
       "difficulty": "easy",
-      "description": "Die Hard is a clueable term relevant to Movies and TV."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Witcher",
       "difficulty": "easy",
-      "description": "The Witcher is a clueable term relevant to Movies and TV."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Hunger Games",
       "difficulty": "easy",
-      "description": "The Hunger Games is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Mad Men",
       "difficulty": "easy",
-      "description": "Mad Men fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Princess Bride",
       "difficulty": "easy",
-      "description": "The Princess Bride is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Mission: Impossible",
       "difficulty": "easy",
-      "description": "Mission: Impossible is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "The Twilight Zone",
       "difficulty": "easy",
-      "description": "The Twilight Zone is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "The Good Place",
       "difficulty": "easy",
-      "description": "The Good Place is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The X-Files",
       "difficulty": "easy",
-      "description": "The X-Files is commonly used in Movies and TV themed clues."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Avatar: The Last Airbender",
       "difficulty": "easy",
-      "description": "Avatar: The Last Airbender is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Crown",
       "difficulty": "easy",
-      "description": "The Crown is commonly used in Movies and TV themed clues."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Mandalorian",
       "difficulty": "easy",
-      "description": "The Mandalorian is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Leonardo DiCaprio",
       "difficulty": "easy",
-      "description": "Leonardo DiCaprio is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Actor",
       "difficulty": "easy",
-      "description": "Actor fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Director",
       "difficulty": "easy",
-      "description": "Director is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Oscar",
       "difficulty": "easy",
-      "description": "Oscar is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Red carpet",
       "difficulty": "easy",
-      "description": "Red carpet is commonly used in Movies and TV themed clues."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Blockbuster",
       "difficulty": "easy",
-      "description": "Blockbuster is a clueable term relevant to Movies and TV."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Movie",
       "difficulty": "easy",
-      "description": "Movie is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Premiere",
       "difficulty": "easy",
-      "description": "Premiere is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Screenwriter",
       "difficulty": "easy",
-      "description": "Screenwriter fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Studio",
       "difficulty": "easy",
-      "description": "Studio is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Sequel",
       "difficulty": "easy",
-      "description": "Sequel fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Cinematography",
       "difficulty": "hard",
-      "description": "Cinematography is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Method acting",
       "difficulty": "hard",
-      "description": "Method acting is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Film noir",
       "difficulty": "hard",
-      "description": "Film noir is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Biopic",
       "difficulty": "hard",
-      "description": "Biopic is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Cameo",
       "difficulty": "hard",
-      "description": "Cameo fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Auteur",
       "difficulty": "hard",
-      "description": "Auteur is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Casting couch",
       "difficulty": "hard",
-      "description": "Casting couch is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Stunt double",
       "difficulty": "hard",
-      "description": "Stunt double is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Box office",
       "difficulty": "hard",
-      "description": "Box office fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Green screen",
       "difficulty": "hard",
-      "description": "Green screen is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Grey's Anatomy",
       "difficulty": "easy",
-      "description": "Grey's Anatomy is a clueable term relevant to Movies and TV."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Seinfeld",
       "difficulty": "easy",
-      "description": "Seinfeld fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "How I Met Your Mother",
       "difficulty": "easy",
-      "description": "How I Met Your Mother is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Twin Peaks",
       "difficulty": "hard",
-      "description": "Twin Peaks is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Black Mirror",
       "difficulty": "hard",
-      "description": "Black Mirror is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "True Detective",
       "difficulty": "hard",
-      "description": "True Detective fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "The Handmaid's Tale",
       "difficulty": "hard",
-      "description": "The Handmaid's Tale is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Westworld",
       "difficulty": "hard",
-      "description": "Westworld is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Better Call Saul",
       "difficulty": "hard",
-      "description": "Better Call Saul is commonly used in Movies and TV themed clues."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Bradley Cooper",
       "difficulty": "easy",
-      "description": "Bradley Cooper fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Daniel Day-Lewis",
       "difficulty": "hard",
-      "description": "Daniel Day-Lewis is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Darth Vader",
       "difficulty": "easy",
-      "description": "Darth Vader is a clueable term relevant to Movies and TV."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Dumbledore",
       "difficulty": "easy",
-      "description": "Dumbledore is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Gandalf",
       "difficulty": "easy",
-      "description": "Gandalf is commonly used in Movies and TV themed clues."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "George Clooney",
       "difficulty": "easy",
-      "description": "George Clooney is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Hermione Granger",
       "difficulty": "easy",
-      "description": "Hermione Granger is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Jennifer Lawrence",
       "difficulty": "easy",
-      "description": "Jennifer Lawrence is a clueable term relevant to Movies and TV."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Johnny Depp",
       "difficulty": "easy",
-      "description": "Johnny Depp is commonly used in Movies and TV themed clues."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Katniss Everdeen",
       "difficulty": "easy",
-      "description": "Katniss Everdeen is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "La La Land",
       "difficulty": "easy",
-      "description": "La La Land fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Luke Skywalker",
       "difficulty": "easy",
-      "description": "Luke Skywalker fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Meryl Streep",
       "difficulty": "easy",
-      "description": "Meryl Streep is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Ryan Gosling",
       "difficulty": "easy",
-      "description": "Ryan Gosling fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Twilight",
       "difficulty": "easy",
-      "description": "Twilight is a clueable term relevant to Movies and TV."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Beam me up, Scotty",
       "difficulty": "hard",
-      "description": "Beam me up, Scotty is a clueable term relevant to Movies and TV."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Elementary, my dear Watson",
       "difficulty": "hard",
-      "description": "Elementary, my dear Watson is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Frankly, my dear, I don't give a damn",
       "difficulty": "hard",
-      "description": "Frankly, my dear, I don't give a damn is commonly used in Movies and TV themed clues."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Go ahead, make my day",
       "difficulty": "hard",
-      "description": "Go ahead, make my day fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Here's Johnny!",
       "difficulty": "hard",
-      "description": "Here's Johnny! is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Here's looking at you, kid",
       "difficulty": "hard",
-      "description": "Here's looking at you, kid fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "I'll be back",
       "difficulty": "easy",
-      "description": "I'll be back fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "May the Force be with you",
       "difficulty": "easy",
-      "description": "May the Force be with you is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "May the odds be ever in your favor",
       "difficulty": "hard",
-      "description": "May the odds be ever in your favor fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Resistance is futile",
       "difficulty": "hard",
-      "description": "Resistance is futile is commonly used in Movies and TV themed clues."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Say hello to my little friend",
       "difficulty": "hard",
-      "description": "Say hello to my little friend is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "To infinity and beyond",
       "difficulty": "easy",
-      "description": "To infinity and beyond is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Yippee-ki-yay, motherfucker!",
       "difficulty": "hard",
-      "description": "Yippee-ki-yay, motherfucker! is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "You can't handle the truth!",
       "difficulty": "hard",
-      "description": "You can't handle the truth! is commonly used in Movies and TV themed clues."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Harry Potter Wizarding World",
       "difficulty": "hard",
-      "description": "Harry Potter Wizarding World fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Disney Classics",
       "difficulty": "easy",
-      "description": "Disney Classics is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Disney Pixar Films",
       "difficulty": "easy",
-      "description": "Disney Pixar Films fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Disney Princesses",
       "difficulty": "easy",
-      "description": "Disney Princesses fits the Movies and TV category for quick, descriptive gameplay."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Marvel Cinematic Universe",
       "difficulty": "hard",
-      "description": "Marvel Cinematic Universe is a clueable term relevant to Movies and TV."
+      "description": "Movie/show reference; start with setting, then the central conflict."
     },
     {
       "word": "Pirates of the Caribbean",
       "difficulty": "easy",
-      "description": "Pirates of the Caribbean is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Film/TV clue; use genre, main character, and iconic scene or line."
     },
     {
       "word": "Pixar Movies",
       "difficulty": "easy",
-      "description": "Pixar Movies is commonly used in Movies and TV themed clues."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "The Godfather Trilogy",
       "difficulty": "easy",
-      "description": "The Godfather Trilogy is a useful Movies and TV reference for fast team guessing rounds."
+      "description": "Screen clue; describe plot setup, franchise, or actor association."
     },
     {
       "word": "Isibaya",
@@ -4934,322 +4934,322 @@ const categories = {
     {
       "word": "Pizza",
       "difficulty": "easy",
-      "description": "Pizza fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Chocolate",
       "difficulty": "easy",
-      "description": "Chocolate is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Burger",
       "difficulty": "easy",
-      "description": "Burger is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Coffee",
       "difficulty": "easy",
-      "description": "Coffee fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Sushi",
       "difficulty": "easy",
-      "description": "Sushi is a clueable term relevant to Food and Drink."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Ice Cream",
       "difficulty": "easy",
-      "description": "Ice Cream fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Pasta",
       "difficulty": "easy",
-      "description": "Pasta is commonly used in Food and Drink themed clues."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Wine",
       "difficulty": "easy",
-      "description": "Wine is a clueable term relevant to Food and Drink."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Beer",
       "difficulty": "easy",
-      "description": "Beer is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Steak",
       "difficulty": "easy",
-      "description": "Steak is a clueable term relevant to Food and Drink."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Salad",
       "difficulty": "easy",
-      "description": "Salad is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Sandwich",
       "difficulty": "easy",
-      "description": "Sandwich is a clueable term relevant to Food and Drink."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Cheese",
       "difficulty": "easy",
-      "description": "Cheese is commonly used in Food and Drink themed clues."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Cupcake",
       "difficulty": "easy",
-      "description": "Cupcake is a clueable term relevant to Food and Drink."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Tea",
       "difficulty": "easy",
-      "description": "Tea is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Cookie",
       "difficulty": "easy",
-      "description": "Cookie fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Tacos",
       "difficulty": "easy",
-      "description": "Tacos is a clueable term relevant to Food and Drink."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Whiskey",
       "difficulty": "easy",
-      "description": "Whiskey fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Bread",
       "difficulty": "easy",
-      "description": "Bread fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Cocktail",
       "difficulty": "easy",
-      "description": "Cocktail fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Smoothie",
       "difficulty": "easy",
-      "description": "Smoothie is a clueable term relevant to Food and Drink."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Donut",
       "difficulty": "easy",
-      "description": "Donut is a clueable term relevant to Food and Drink."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Soup",
       "difficulty": "easy",
-      "description": "Soup fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Cake",
       "difficulty": "easy",
-      "description": "Cake is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Barbecue",
       "difficulty": "easy",
-      "description": "Barbecue is a clueable term relevant to Food and Drink."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Pancakes",
       "difficulty": "easy",
-      "description": "Pancakes is commonly used in Food and Drink themed clues."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Ramen",
       "difficulty": "easy",
-      "description": "Ramen is commonly used in Food and Drink themed clues."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Lobster",
       "difficulty": "easy",
-      "description": "Lobster fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Curry",
       "difficulty": "easy",
-      "description": "Curry is commonly used in Food and Drink themed clues."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Gin",
       "difficulty": "easy",
-      "description": "Gin is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Vodka",
       "difficulty": "easy",
-      "description": "Vodka is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Caviar",
       "difficulty": "easy",
-      "description": "Caviar is a clueable term relevant to Food and Drink."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Macaron",
       "difficulty": "easy",
-      "description": "Macaron is a clueable term relevant to Food and Drink."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Paella",
       "difficulty": "easy",
-      "description": "Paella is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Hot Dog",
       "difficulty": "easy",
-      "description": "Hot Dog is commonly used in Food and Drink themed clues."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Dim Sum",
       "difficulty": "easy",
-      "description": "Dim Sum is commonly used in Food and Drink themed clues."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Champagne",
       "difficulty": "easy",
-      "description": "Champagne fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Margarita",
       "difficulty": "easy",
-      "description": "Margarita is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Gourmet",
       "difficulty": "easy",
-      "description": "Gourmet fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Milkshake",
       "difficulty": "easy",
-      "description": "Milkshake fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Risotto",
       "difficulty": "easy",
-      "description": "Risotto is a clueable term relevant to Food and Drink."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Pho",
       "difficulty": "easy",
-      "description": "Pho fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Nachos",
       "difficulty": "easy",
-      "description": "Nachos fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Cider",
       "difficulty": "easy",
-      "description": "Cider is commonly used in Food and Drink themed clues."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Fondue",
       "difficulty": "easy",
-      "description": "Fondue is commonly used in Food and Drink themed clues."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Poutine",
       "difficulty": "easy",
-      "description": "Poutine is commonly used in Food and Drink themed clues."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Tapas",
       "difficulty": "easy",
-      "description": "Tapas is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Biscuit",
       "difficulty": "easy",
-      "description": "Biscuit fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Eggs Benedict",
       "difficulty": "hard",
-      "description": "Eggs Benedict is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Beef Wellington",
       "difficulty": "hard",
-      "description": "Beef Wellington is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Lobster Bisque",
       "difficulty": "hard",
-      "description": "Lobster Bisque is commonly used in Food and Drink themed clues."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Croque Monsieur",
       "difficulty": "hard",
-      "description": "Croque Monsieur fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Chicken Parmesan",
       "difficulty": "hard",
-      "description": "Chicken Parmesan is a clueable term relevant to Food and Drink."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Tiramisu",
       "difficulty": "hard",
-      "description": "Tiramisu is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Coq au Vin",
       "difficulty": "hard",
-      "description": "Coq au Vin is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Crème Brûlée",
       "difficulty": "hard",
-      "description": "Crème Brûlée is commonly used in Food and Drink themed clues."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Spaghetti Carbonara",
       "difficulty": "hard",
-      "description": "Spaghetti Carbonara is a clueable term relevant to Food and Drink."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Banoffee Pie",
       "difficulty": "hard",
-      "description": "Banoffee Pie is commonly used in Food and Drink themed clues."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Cheeseburger",
       "difficulty": "hard",
-      "description": "Cheeseburger is a clueable term relevant to Food and Drink."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Coca-Cola",
       "difficulty": "easy",
-      "description": "Coca-Cola is a clueable term relevant to Food and Drink."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "KFC",
       "difficulty": "easy",
-      "description": "KFC is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Burger King",
       "difficulty": "easy",
-      "description": "Burger King fits the Food and Drink category for quick, descriptive gameplay."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Subway",
       "difficulty": "easy",
-      "description": "Subway is commonly used in Food and Drink themed clues."
+      "description": "Dish/drink clue; start with flavor profile, then origin or occasion."
     },
     {
       "word": "Taco Bell",
       "difficulty": "easy",
-      "description": "Taco Bell is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Culinary reference; use texture, preparation style, or meal type."
     },
     {
       "word": "Nandos",
@@ -5259,7 +5259,7 @@ const categories = {
     {
       "word": "Pizza Hut",
       "difficulty": "easy",
-      "description": "Pizza Hut is a useful Food and Drink reference for fast team guessing rounds."
+      "description": "Food clue; describe taste, ingredients, and how it is served."
     },
     {
       "word": "Biltong",
@@ -5366,312 +5366,312 @@ const categories = {
     {
       "word": "Elephant",
       "difficulty": "easy",
-      "description": "Elephant is a clueable term relevant to Nature and Wildlife."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Rainforest",
       "difficulty": "easy",
-      "description": "Rainforest is a clueable term relevant to Nature and Wildlife."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Penguin",
       "difficulty": "easy",
-      "description": "Penguin is a clueable term relevant to Nature and Wildlife."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Mountain",
       "difficulty": "easy",
-      "description": "Mountain is a clueable term relevant to Nature and Wildlife."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Whale",
       "difficulty": "easy",
-      "description": "Whale is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Sunset",
       "difficulty": "easy",
-      "description": "Sunset is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Tiger",
       "difficulty": "easy",
-      "description": "Tiger is commonly used in Nature and Wildlife themed clues."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Savannah",
       "difficulty": "easy",
-      "description": "Savannah fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Coral Reef",
       "difficulty": "easy",
-      "description": "Coral Reef fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Desert",
       "difficulty": "easy",
-      "description": "Desert fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Waterfall",
       "difficulty": "easy",
-      "description": "Waterfall is a clueable term relevant to Nature and Wildlife."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Polar Bear",
       "difficulty": "easy",
-      "description": "Polar Bear is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Orangutan",
       "difficulty": "easy",
-      "description": "Orangutan fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Volcano",
       "difficulty": "easy",
-      "description": "Volcano is commonly used in Nature and Wildlife themed clues."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Forest",
       "difficulty": "easy",
-      "description": "Forest fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Giraffe",
       "difficulty": "easy",
-      "description": "Giraffe is commonly used in Nature and Wildlife themed clues."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Lion",
       "difficulty": "easy",
-      "description": "Lion fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Dolphin",
       "difficulty": "easy",
-      "description": "Dolphin is commonly used in Nature and Wildlife themed clues."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Jungle",
       "difficulty": "easy",
-      "description": "Jungle fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Arctic",
       "difficulty": "easy",
-      "description": "Arctic is a clueable term relevant to Nature and Wildlife."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Humpback Whale",
       "difficulty": "easy",
-      "description": "Humpback Whale fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Cheetah",
       "difficulty": "easy",
-      "description": "Cheetah is commonly used in Nature and Wildlife themed clues."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Sunrise",
       "difficulty": "easy",
-      "description": "Sunrise is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Koala",
       "difficulty": "easy",
-      "description": "Koala is a clueable term relevant to Nature and Wildlife."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Cactus",
       "difficulty": "easy",
-      "description": "Cactus fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Ocean",
       "difficulty": "easy",
-      "description": "Ocean is a clueable term relevant to Nature and Wildlife."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Redwood Tree",
       "difficulty": "easy",
-      "description": "Redwood Tree is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Squirrel",
       "difficulty": "easy",
-      "description": "Squirrel is commonly used in Nature and Wildlife themed clues."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Oasis",
       "difficulty": "easy",
-      "description": "Oasis is commonly used in Nature and Wildlife themed clues."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Eagle",
       "difficulty": "easy",
-      "description": "Eagle fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Butterfly",
       "difficulty": "easy",
-      "description": "Butterfly is commonly used in Nature and Wildlife themed clues."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Moose",
       "difficulty": "easy",
-      "description": "Moose is commonly used in Nature and Wildlife themed clues."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Fjord",
       "difficulty": "easy",
-      "description": "Fjord is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Komodo Dragon",
       "difficulty": "easy",
-      "description": "Komodo Dragon is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Seal",
       "difficulty": "easy",
-      "description": "Seal is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Tropical Fish",
       "difficulty": "easy",
-      "description": "Tropical Fish is a clueable term relevant to Nature and Wildlife."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Monsoon",
       "difficulty": "easy",
-      "description": "Monsoon fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Lemur",
       "difficulty": "easy",
-      "description": "Lemur is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Bamboo Forest",
       "difficulty": "easy",
-      "description": "Bamboo Forest is a clueable term relevant to Nature and Wildlife."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Hummingbird",
       "difficulty": "easy",
-      "description": "Hummingbird is a clueable term relevant to Nature and Wildlife."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Glacier",
       "difficulty": "easy",
-      "description": "Glacier is a clueable term relevant to Nature and Wildlife."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Antarctica",
       "difficulty": "easy",
-      "description": "Antarctica is commonly used in Nature and Wildlife themed clues."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Chameleon",
       "difficulty": "easy",
-      "description": "Chameleon is commonly used in Nature and Wildlife themed clues."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Mangrove",
       "difficulty": "easy",
-      "description": "Mangrove fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Seahorse",
       "difficulty": "easy",
-      "description": "Seahorse is commonly used in Nature and Wildlife themed clues."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Aurora",
       "difficulty": "easy",
-      "description": "Aurora is a clueable term relevant to Nature and Wildlife."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Octopus",
       "difficulty": "easy",
-      "description": "Octopus is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Cat",
       "difficulty": "easy",
-      "description": "Cat is commonly used in Nature and Wildlife themed clues."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Dog",
       "difficulty": "easy",
-      "description": "Dog is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Kangaroo",
       "difficulty": "easy",
-      "description": "Kangaroo is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Shark",
       "difficulty": "easy",
-      "description": "Shark is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Axolotl",
       "difficulty": "hard",
-      "description": "Axolotl is commonly used in Nature and Wildlife themed clues."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Platypus",
       "difficulty": "hard",
-      "description": "Platypus is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Tasmanian Devil",
       "difficulty": "hard",
-      "description": "Tasmanian Devil fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Natural-world clue; start with ecosystem, then one unique feature."
     },
     {
       "word": "Electric Eel",
       "difficulty": "hard",
-      "description": "Electric Eel fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Narwhal",
       "difficulty": "hard",
-      "description": "Narwhal fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Emperor Penguin",
       "difficulty": "hard",
-      "description": "Emperor Penguin is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Snow Leopard",
       "difficulty": "hard",
-      "description": "Snow Leopard is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Wildlife reference; clue by region, diet, and standout trait."
     },
     {
       "word": "Great White Shark",
       "difficulty": "hard",
-      "description": "Great White Shark is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "African Grey Parrot",
       "difficulty": "hard",
-      "description": "African Grey Parrot is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Okavango Delta",
       "difficulty": "hard",
-      "description": "Okavango Delta is a useful Nature and Wildlife reference for fast team guessing rounds."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "The Amazon Rainforest",
       "difficulty": "hard",
-      "description": "The Amazon Rainforest fits the Nature and Wildlife category for quick, descriptive gameplay."
+      "description": "Nature clue; describe habitat, appearance, and behavior."
     },
     {
       "word": "Protea",
@@ -5683,242 +5683,242 @@ const categories = {
     {
       "word": "English",
       "difficulty": "easy",
-      "description": "English is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Spanish",
       "difficulty": "easy",
-      "description": "Spanish is a useful Languages reference for fast team guessing rounds."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "French",
       "difficulty": "easy",
-      "description": "French fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Mandarin",
       "difficulty": "easy",
-      "description": "Mandarin is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "German",
       "difficulty": "easy",
-      "description": "German fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Italian",
       "difficulty": "easy",
-      "description": "Italian is a useful Languages reference for fast team guessing rounds."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Japanese",
       "difficulty": "easy",
-      "description": "Japanese is a clueable term relevant to Languages."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Russian",
       "difficulty": "easy",
-      "description": "Russian is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Portuguese",
       "difficulty": "easy",
-      "description": "Portuguese is a useful Languages reference for fast team guessing rounds."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Arabic",
       "difficulty": "easy",
-      "description": "Arabic is a clueable term relevant to Languages."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Korean",
       "difficulty": "easy",
-      "description": "Korean is commonly used in Languages themed clues."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Dutch",
       "difficulty": "easy",
-      "description": "Dutch is a useful Languages reference for fast team guessing rounds."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Swedish",
       "difficulty": "easy",
-      "description": "Swedish fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Greek",
       "difficulty": "easy",
-      "description": "Greek is a useful Languages reference for fast team guessing rounds."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Turkish",
       "difficulty": "easy",
-      "description": "Turkish is a useful Languages reference for fast team guessing rounds."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Polish",
       "difficulty": "easy",
-      "description": "Polish fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Hindi",
       "difficulty": "easy",
-      "description": "Hindi is commonly used in Languages themed clues."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Thai",
       "difficulty": "easy",
-      "description": "Thai fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Finnish",
       "difficulty": "easy",
-      "description": "Finnish is a clueable term relevant to Languages."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Vietnamese",
       "difficulty": "easy",
-      "description": "Vietnamese is a useful Languages reference for fast team guessing rounds."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Indonesian",
       "difficulty": "easy",
-      "description": "Indonesian fits the Languages category for quick, descriptive gameplay."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Hebrew",
       "difficulty": "easy",
-      "description": "Hebrew is a useful Languages reference for fast team guessing rounds."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Czech",
       "difficulty": "easy",
-      "description": "Czech fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Hungarian",
       "difficulty": "easy",
-      "description": "Hungarian is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Romanian",
       "difficulty": "easy",
-      "description": "Romanian is a clueable term relevant to Languages."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Danish",
       "difficulty": "easy",
-      "description": "Danish is commonly used in Languages themed clues."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Norwegian",
       "difficulty": "easy",
-      "description": "Norwegian is a clueable term relevant to Languages."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Persian",
       "difficulty": "easy",
-      "description": "Persian is commonly used in Languages themed clues."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Swahili",
       "difficulty": "easy",
-      "description": "Swahili fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Tagalog",
       "difficulty": "easy",
-      "description": "Tagalog is a clueable term relevant to Languages."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Malay",
       "difficulty": "easy",
-      "description": "Malay is a useful Languages reference for fast team guessing rounds."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Bengali",
       "difficulty": "easy",
-      "description": "Bengali fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Slovak",
       "difficulty": "easy",
-      "description": "Slovak is a useful Languages reference for fast team guessing rounds."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Lithuanian",
       "difficulty": "easy",
-      "description": "Lithuanian is commonly used in Languages themed clues."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Latvian",
       "difficulty": "easy",
-      "description": "Latvian is a useful Languages reference for fast team guessing rounds."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Slovenian",
       "difficulty": "easy",
-      "description": "Slovenian is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Croatian",
       "difficulty": "easy",
-      "description": "Croatian is a useful Languages reference for fast team guessing rounds."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Ukrainian",
       "difficulty": "easy",
-      "description": "Ukrainian fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Estonian",
       "difficulty": "easy",
-      "description": "Estonian is a useful Languages reference for fast team guessing rounds."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Icelandic",
       "difficulty": "easy",
-      "description": "Icelandic is commonly used in Languages themed clues."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Basque",
       "difficulty": "easy",
-      "description": "Basque is commonly used in Languages themed clues."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Welsh",
       "difficulty": "easy",
-      "description": "Welsh fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Farsi",
       "difficulty": "easy",
-      "description": "Farsi is a clueable term relevant to Languages."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Yiddish",
       "difficulty": "easy",
-      "description": "Yiddish is a useful Languages reference for fast team guessing rounds."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Amharic",
       "difficulty": "easy",
-      "description": "Amharic fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Zulu",
       "difficulty": "easy",
-      "description": "Zulu fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Xhosa",
       "difficulty": "easy",
-      "description": "Xhosa is a clueable term relevant to Languages."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Kurdish",
       "difficulty": "easy",
-      "description": "Kurdish fits the Languages category for quick, descriptive gameplay."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Afrikaans",
@@ -5928,134 +5928,134 @@ const categories = {
     {
       "word": "Yoruba",
       "difficulty": "easy",
-      "description": "Yoruba is commonly used in Languages themed clues."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Igbo",
       "difficulty": "easy",
-      "description": "Igbo is commonly used in Languages themed clues."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Hausa",
       "difficulty": "easy",
-      "description": "Hausa is commonly used in Languages themed clues."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Somali",
       "difficulty": "hard",
-      "description": "Somali fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Shona",
       "difficulty": "easy",
-      "description": "Shona is a clueable term relevant to Languages."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Tswana",
       "difficulty": "easy",
-      "description": "Tswana is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Sesotho",
       "difficulty": "easy",
-      "description": "Sesotho is a clueable term relevant to Languages."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Kiswahili",
       "difficulty": "hard",
-      "description": "Kiswahili is a useful Languages reference for fast team guessing rounds."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Latin Alphabet",
       "difficulty": "easy",
-      "description": "Latin Alphabet is a useful Languages reference for fast team guessing rounds."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Cyrillic Script",
       "difficulty": "easy",
-      "description": "Cyrillic Script is a useful Languages reference for fast team guessing rounds."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Phonetics",
       "difficulty": "easy",
-      "description": "Phonetics is a clueable term relevant to Languages."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Dialect",
       "difficulty": "hard",
-      "description": "Dialect fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Accents",
       "difficulty": "easy",
-      "description": "Accents is a clueable term relevant to Languages."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Bilingual",
       "difficulty": "easy",
-      "description": "Bilingual is a useful Languages reference for fast team guessing rounds."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Interpreter",
       "difficulty": "easy",
-      "description": "Interpreter fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Translator",
       "difficulty": "hard",
-      "description": "Translator is a useful Languages reference for fast team guessing rounds."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Sign Language",
       "difficulty": "easy",
-      "description": "Sign Language is a useful Languages reference for fast team guessing rounds."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Morse Code",
       "difficulty": "easy",
-      "description": "Morse Code is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Loanword",
       "difficulty": "easy",
-      "description": "Loanword is a clueable term relevant to Languages."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Idiomatic Expression",
       "difficulty": "hard",
-      "description": "Idiomatic Expression is commonly used in Languages themed clues."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Tongue Twister",
       "difficulty": "easy",
-      "description": "Tongue Twister is a clueable term relevant to Languages."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Grammar Rule",
       "difficulty": "easy",
-      "description": "Grammar Rule fits the Languages category for quick, descriptive gameplay."
+      "description": "Language clue; describe region, script, and common usage context."
     },
     {
       "word": "Verb Conjugation",
       "difficulty": "easy",
-      "description": "Verb Conjugation fits the Languages category for quick, descriptive gameplay."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     },
     {
       "word": "Pronunciation",
       "difficulty": "hard",
-      "description": "Pronunciation fits the Languages category for quick, descriptive gameplay."
+      "description": "Linguistic reference; clue by where it is spoken and writing style."
     },
     {
       "word": "Mother Tongue",
       "difficulty": "easy",
-      "description": "Mother Tongue is a useful Languages reference for fast team guessing rounds."
+      "description": "Language term; start with geography and one defining grammar or script trait."
     }
   ],
   "Famous Personalities": [
     {
       "word": "Albert Einstein",
       "difficulty": "easy",
-      "description": "Albert Einstein fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Nelson Mandela",
@@ -6065,562 +6065,562 @@ const categories = {
     {
       "word": "William Shakespeare",
       "difficulty": "easy",
-      "description": "William Shakespeare is a clueable term relevant to Famous Personalities."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Mahatma Gandhi",
       "difficulty": "easy",
-      "description": "Mahatma Gandhi is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Mother Teresa",
       "difficulty": "easy",
-      "description": "Mother Teresa fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Martin Luther King Jr.",
       "difficulty": "easy",
-      "description": "Martin Luther King Jr. fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Marie Curie",
       "difficulty": "easy",
-      "description": "Marie Curie is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Elvis Presley",
       "difficulty": "easy",
-      "description": "Elvis Presley is a clueable term relevant to Famous Personalities."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Michael Jackson",
       "difficulty": "easy",
-      "description": "Michael Jackson fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Pablo Picasso",
       "difficulty": "easy",
-      "description": "Pablo Picasso is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Cleopatra",
       "difficulty": "easy",
-      "description": "Cleopatra is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Wolfgang Amadeus Mozart",
       "difficulty": "easy",
-      "description": "Wolfgang Amadeus Mozart fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Charles Darwin",
       "difficulty": "easy",
-      "description": "Charles Darwin is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Abraham Lincoln",
       "difficulty": "easy",
-      "description": "Abraham Lincoln is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Vincent van Gogh",
       "difficulty": "easy",
-      "description": "Vincent van Gogh is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Amelia Earhart",
       "difficulty": "easy",
-      "description": "Amelia Earhart fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Steve Jobs",
       "difficulty": "easy",
-      "description": "Steve Jobs is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Stephen Hawking",
       "difficulty": "easy",
-      "description": "Stephen Hawking is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Oprah Winfrey",
       "difficulty": "easy",
-      "description": "Oprah Winfrey fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Leonardo DiCaprio",
       "difficulty": "easy",
-      "description": "Leonardo DiCaprio is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Beethoven",
       "difficulty": "easy",
-      "description": "Beethoven is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Frida Kahlo",
       "difficulty": "easy",
-      "description": "Frida Kahlo fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Alexander the Great",
       "difficulty": "easy",
-      "description": "Alexander the Great is a clueable term relevant to Famous Personalities."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Jane Austen",
       "difficulty": "easy",
-      "description": "Jane Austen fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Walt Disney",
       "difficulty": "easy",
-      "description": "Walt Disney is commonly used in Famous Personalities themed clues."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Muhammad Ali",
       "difficulty": "easy",
-      "description": "Muhammad Ali is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Marlon Brando",
       "difficulty": "easy",
-      "description": "Marlon Brando fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Coco Chanel",
       "difficulty": "easy",
-      "description": "Coco Chanel is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Neil Armstrong",
       "difficulty": "easy",
-      "description": "Neil Armstrong is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Malala Yousafzai",
       "difficulty": "easy",
-      "description": "Malala Yousafzai is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "J.K. Rowling",
       "difficulty": "easy",
-      "description": "J.K. Rowling is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "David Bowie",
       "difficulty": "easy",
-      "description": "David Bowie is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Diana, Princess of Wales",
       "difficulty": "easy",
-      "description": "Diana, Princess of Wales is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Che Guevara",
       "difficulty": "easy",
-      "description": "Che Guevara is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Helen Keller",
       "difficulty": "easy",
-      "description": "Helen Keller fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Queen Elizabeth II",
       "difficulty": "easy",
-      "description": "Queen Elizabeth II is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Salvador Dalí",
       "difficulty": "easy",
-      "description": "Salvador Dalí is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Marie Antoinette",
       "difficulty": "easy",
-      "description": "Marie Antoinette fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Pele",
       "difficulty": "easy",
-      "description": "Pele is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Emily Dickinson",
       "difficulty": "easy",
-      "description": "Emily Dickinson fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Napoleon Bonaparte",
       "difficulty": "easy",
-      "description": "Napoleon Bonaparte is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Beyoncé",
       "difficulty": "easy",
-      "description": "Beyoncé is a clueable term relevant to Famous Personalities."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "George Orwell",
       "difficulty": "easy",
-      "description": "George Orwell is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Stephen Spielberg",
       "difficulty": "easy",
-      "description": "Stephen Spielberg is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Audrey Hepburn",
       "difficulty": "easy",
-      "description": "Audrey Hepburn fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Pope Francis",
       "difficulty": "easy",
-      "description": "Pope Francis is commonly used in Famous Personalities themed clues."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Brad Pitt",
       "difficulty": "easy",
-      "description": "Brad Pitt is a clueable term relevant to Famous Personalities."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Angelina Jolie",
       "difficulty": "easy",
-      "description": "Angelina Jolie is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Tom Cruise",
       "difficulty": "easy",
-      "description": "Tom Cruise is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Jennifer Aniston",
       "difficulty": "easy",
-      "description": "Jennifer Aniston is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Taylor Swift",
       "difficulty": "easy",
-      "description": "Taylor Swift fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Dwayne Johnson",
       "difficulty": "easy",
-      "description": "Dwayne Johnson fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Robert Downey Jr.",
       "difficulty": "easy",
-      "description": "Robert Downey Jr. is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Scarlett Johansson",
       "difficulty": "easy",
-      "description": "Scarlett Johansson fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Benedict Cumberbatch",
       "difficulty": "hard",
-      "description": "Benedict Cumberbatch is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Keanu Reeves",
       "difficulty": "hard",
-      "description": "Keanu Reeves is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Natalie Portman",
       "difficulty": "hard",
-      "description": "Natalie Portman is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Joaquin Phoenix",
       "difficulty": "hard",
-      "description": "Joaquin Phoenix is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Charlize Theron",
       "difficulty": "hard",
-      "description": "Charlize Theron fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Michael Fassbender",
       "difficulty": "hard",
-      "description": "Michael Fassbender fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Cate Blanchett",
       "difficulty": "hard",
-      "description": "Cate Blanchett is a clueable term relevant to Famous Personalities."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Tilda Swinton",
       "difficulty": "hard",
-      "description": "Tilda Swinton is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Christoph Waltz",
       "difficulty": "hard",
-      "description": "Christoph Waltz is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Saoirse Ronan",
       "difficulty": "hard",
-      "description": "Saoirse Ronan is commonly used in Famous Personalities themed clues."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Madame Curie",
       "difficulty": "easy",
-      "description": "Madame Curie is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Voltaire",
       "difficulty": "hard",
-      "description": "Voltaire is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Albert Schweitzer",
       "difficulty": "hard",
-      "description": "Albert Schweitzer fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Angela Merkel",
       "difficulty": "hard",
-      "description": "Angela Merkel fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Aretha Franklin",
       "difficulty": "hard",
-      "description": "Aretha Franklin is commonly used in Famous Personalities themed clues."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Ariana Grande",
       "difficulty": "easy",
-      "description": "Ariana Grande is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Bill Gates",
       "difficulty": "easy",
-      "description": "Bill Gates is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Bob Dylan",
       "difficulty": "hard",
-      "description": "Bob Dylan is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Bradley Cooper",
       "difficulty": "hard",
-      "description": "Bradley Cooper is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Daniel Day-Lewis",
       "difficulty": "hard",
-      "description": "Daniel Day-Lewis is a clueable term relevant to Famous Personalities."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Donald Trump",
       "difficulty": "easy",
-      "description": "Donald Trump is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Drake",
       "difficulty": "easy",
-      "description": "Drake is commonly used in Famous Personalities themed clues."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Eleanor Roosevelt",
       "difficulty": "easy",
-      "description": "Eleanor Roosevelt is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Elton John",
       "difficulty": "easy",
-      "description": "Elton John is commonly used in Famous Personalities themed clues."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "George Clooney",
       "difficulty": "easy",
-      "description": "George Clooney is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Hillary Clinton",
       "difficulty": "easy",
-      "description": "Hillary Clinton is a clueable term relevant to Famous Personalities."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Jacinda Ardern",
       "difficulty": "hard",
-      "description": "Jacinda Ardern is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Jennifer Lawrence",
       "difficulty": "easy",
-      "description": "Jennifer Lawrence is a clueable term relevant to Famous Personalities."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Jesse Owens",
       "difficulty": "hard",
-      "description": "Jesse Owens fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "John Lennon",
       "difficulty": "hard",
-      "description": "John Lennon fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Johnny Depp",
       "difficulty": "easy",
-      "description": "Johnny Depp is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Mark Zuckerberg",
       "difficulty": "easy",
-      "description": "Mark Zuckerberg is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Meryl Streep",
       "difficulty": "hard",
-      "description": "Meryl Streep is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Paul McCartney",
       "difficulty": "hard",
-      "description": "Paul McCartney fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Rihanna",
       "difficulty": "easy",
-      "description": "Rihanna is commonly used in Famous Personalities themed clues."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Ryan Gosling",
       "difficulty": "easy",
-      "description": "Ryan Gosling fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Satoshi Nakamoto",
       "difficulty": "hard",
-      "description": "Satoshi Nakamoto is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Simone Biles",
       "difficulty": "hard",
-      "description": "Simone Biles fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Tiger Woods",
       "difficulty": "easy",
-      "description": "Tiger Woods fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Tom Brady",
       "difficulty": "easy",
-      "description": "Tom Brady is a clueable term relevant to Famous Personalities."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Tom Hanks",
       "difficulty": "easy",
-      "description": "Tom Hanks is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Wayne Gretzky",
       "difficulty": "hard",
-      "description": "Wayne Gretzky fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Whitney Houston",
       "difficulty": "easy",
-      "description": "Whitney Houston is a clueable term relevant to Famous Personalities."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Winston Churchill",
       "difficulty": "easy",
-      "description": "Winston Churchill fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Bruno Mars",
       "difficulty": "easy",
-      "description": "Bruno Mars is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Celine Dion",
       "difficulty": "easy",
-      "description": "Celine Dion is a clueable term relevant to Famous Personalities."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Denzel Washington",
       "difficulty": "easy",
-      "description": "Denzel Washington is commonly used in Famous Personalities themed clues."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Emma Stone",
       "difficulty": "easy",
-      "description": "Emma Stone is a clueable term relevant to Famous Personalities."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Emma Watson",
       "difficulty": "easy",
-      "description": "Emma Watson fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Jennifer Lopez",
       "difficulty": "easy",
-      "description": "Jennifer Lopez is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Kate Winslet",
       "difficulty": "easy",
-      "description": "Kate Winslet fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Katy Perry",
       "difficulty": "easy",
-      "description": "Katy Perry is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Kylian Mbappé",
       "difficulty": "easy",
-      "description": "Kylian Mbappé is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Mohamed Salah",
       "difficulty": "easy",
-      "description": "Mohamed Salah is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Neymar Jr.",
       "difficulty": "easy",
-      "description": "Neymar Jr. fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Shakira",
       "difficulty": "easy",
-      "description": "Shakira is commonly used in Famous Personalities themed clues."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Zlatan Ibrahimović",
       "difficulty": "hard",
-      "description": "Zlatan Ibrahimović is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Public figure reference; start with profession, then a defining moment."
     },
     {
       "word": "Justin Trudeau",
       "difficulty": "hard",
-      "description": "Justin Trudeau fits the Famous Personalities category for quick, descriptive gameplay."
+      "description": "Personality clue; describe field, era, and most recognizable achievement."
     },
     {
       "word": "Joe Biden",
       "difficulty": "easy",
-      "description": "Joe Biden is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Emmanuel Macron",
       "difficulty": "hard",
-      "description": "Emmanuel Macron is a useful Famous Personalities reference for fast team guessing rounds."
+      "description": "Famous-person clue; use nationality, role, and legacy."
     },
     {
       "word": "Mangosuthu Buthelezi",
@@ -6632,252 +6632,252 @@ const categories = {
     {
       "word": "COVID-19 Pandemic",
       "difficulty": "easy",
-      "description": "COVID-19 Pandemic is a useful Current Events reference for fast team guessing rounds."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Climate Change",
       "difficulty": "easy",
-      "description": "Climate Change is a clueable term relevant to Current Events."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Space Exploration",
       "difficulty": "easy",
-      "description": "Space Exploration fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Olympic Games",
       "difficulty": "easy",
-      "description": "Olympic Games is a clueable term relevant to Current Events."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Presidential Election",
       "difficulty": "easy",
-      "description": "Presidential Election is a useful Current Events reference for fast team guessing rounds."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Global Warming",
       "difficulty": "easy",
-      "description": "Global Warming is a clueable term relevant to Current Events."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Brexit",
       "difficulty": "easy",
-      "description": "Brexit fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Cybersecurity",
       "difficulty": "easy",
-      "description": "Cybersecurity is commonly used in Current Events themed clues."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Artificial Intelligence",
       "difficulty": "easy",
-      "description": "Artificial Intelligence is a clueable term relevant to Current Events."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Social Media",
       "difficulty": "easy",
-      "description": "Social Media fits the Current Events category for quick, descriptive gameplay."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Electric Vehicles",
       "difficulty": "easy",
-      "description": "Electric Vehicles is commonly used in Current Events themed clues."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Mars Rover Mission",
       "difficulty": "easy",
-      "description": "Mars Rover Mission is a clueable term relevant to Current Events."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Protests",
       "difficulty": "easy",
-      "description": "Protests fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Vaccination Campaigns",
       "difficulty": "easy",
-      "description": "Vaccination Campaigns is a clueable term relevant to Current Events."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Trade Wars",
       "difficulty": "easy",
-      "description": "Trade Wars is commonly used in Current Events themed clues."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Wildfires",
       "difficulty": "easy",
-      "description": "Wildfires is a clueable term relevant to Current Events."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Refugee Crisis",
       "difficulty": "easy",
-      "description": "Refugee Crisis fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Terrorist Attacks",
       "difficulty": "easy",
-      "description": "Terrorist Attacks is a clueable term relevant to Current Events."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Space Tourism",
       "difficulty": "easy",
-      "description": "Space Tourism is a clueable term relevant to Current Events."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Cryptocurrency Boom",
       "difficulty": "easy",
-      "description": "Cryptocurrency Boom is commonly used in Current Events themed clues."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Healthcare Reform",
       "difficulty": "easy",
-      "description": "Healthcare Reform is commonly used in Current Events themed clues."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Artificial Meat",
       "difficulty": "easy",
-      "description": "Artificial Meat fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Pandemic Response",
       "difficulty": "easy",
-      "description": "Pandemic Response is a useful Current Events reference for fast team guessing rounds."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Environmental Policies",
       "difficulty": "easy",
-      "description": "Environmental Policies is a useful Current Events reference for fast team guessing rounds."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Gig Economy",
       "difficulty": "easy",
-      "description": "Gig Economy is a useful Current Events reference for fast team guessing rounds."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Student Protests",
       "difficulty": "easy",
-      "description": "Student Protests fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Rising Inflation",
       "difficulty": "easy",
-      "description": "Rising Inflation is a clueable term relevant to Current Events."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Homelessness Crisis",
       "difficulty": "easy",
-      "description": "Homelessness Crisis is a useful Current Events reference for fast team guessing rounds."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Online Education",
       "difficulty": "easy",
-      "description": "Online Education is a useful Current Events reference for fast team guessing rounds."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Political Scandals",
       "difficulty": "easy",
-      "description": "Political Scandals is a useful Current Events reference for fast team guessing rounds."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Social Justice Movements",
       "difficulty": "easy",
-      "description": "Social Justice Movements is a clueable term relevant to Current Events."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Space Race",
       "difficulty": "easy",
-      "description": "Space Race fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Economic Stimulus Packages",
       "difficulty": "easy",
-      "description": "Economic Stimulus Packages is commonly used in Current Events themed clues."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "AI Ethics Debate",
       "difficulty": "easy",
-      "description": "AI Ethics Debate fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Remote Work Trends",
       "difficulty": "easy",
-      "description": "Remote Work Trends is a clueable term relevant to Current Events."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Ransomware Attacks",
       "difficulty": "easy",
-      "description": "Ransomware Attacks is commonly used in Current Events themed clues."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Sustainable Development Goals",
       "difficulty": "easy",
-      "description": "Sustainable Development Goals is a clueable term relevant to Current Events."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Plastic Pollution",
       "difficulty": "easy",
-      "description": "Plastic Pollution is a clueable term relevant to Current Events."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Food Security",
       "difficulty": "easy",
-      "description": "Food Security is a clueable term relevant to Current Events."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Medical Breakthroughs",
       "difficulty": "easy",
-      "description": "Medical Breakthroughs fits the Current Events category for quick, descriptive gameplay."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Gender Equality Movements",
       "difficulty": "easy",
-      "description": "Gender Equality Movements is a clueable term relevant to Current Events."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Social Distancing",
       "difficulty": "easy",
-      "description": "Social Distancing is a clueable term relevant to Current Events."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Renewable Energy Initiatives",
       "difficulty": "easy",
-      "description": "Renewable Energy Initiatives is a useful Current Events reference for fast team guessing rounds."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Remote Voting",
       "difficulty": "easy",
-      "description": "Remote Voting is commonly used in Current Events themed clues."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Digital Privacy Issues",
       "difficulty": "easy",
-      "description": "Digital Privacy Issues is a useful Current Events reference for fast team guessing rounds."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Climate Activism",
       "difficulty": "easy",
-      "description": "Climate Activism is commonly used in Current Events themed clues."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Space Debris",
       "difficulty": "easy",
-      "description": "Space Debris is commonly used in Current Events themed clues."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Paris Fashion Week",
       "difficulty": "easy",
-      "description": "Paris Fashion Week is commonly used in Current Events themed clues."
+      "description": "Current-affairs clue; describe topic area, region, and recent impact."
     },
     {
       "word": "Coachella",
       "difficulty": "easy",
-      "description": "Coachella is a clueable term relevant to Current Events."
+      "description": "Current events reference; clue with timeline and policy or social effect."
     },
     {
       "word": "Dubai Shopping Festival",
       "difficulty": "easy",
-      "description": "Dubai Shopping Festival is a useful Current Events reference for fast team guessing rounds."
+      "description": "News-style clue; start with issue type, then who is affected."
     },
     {
       "word": "Rhino Poaching Crisis",
@@ -6889,1118 +6889,1118 @@ const categories = {
     {
       "word": "God",
       "difficulty": "easy",
-      "description": "God is commonly used in Religion and Mythology themed clues."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Buddha",
       "difficulty": "easy",
-      "description": "Buddha fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Jesus",
       "difficulty": "easy",
-      "description": "Jesus is commonly used in Religion and Mythology themed clues."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Hinduism",
       "difficulty": "easy",
-      "description": "Hinduism is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Egyptian Mythology",
       "difficulty": "easy",
-      "description": "Egyptian Mythology fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Greek Mythology",
       "difficulty": "easy",
-      "description": "Greek Mythology is a clueable term relevant to Religion and Mythology."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Christianity",
       "difficulty": "easy",
-      "description": "Christianity is commonly used in Religion and Mythology themed clues."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Islam",
       "difficulty": "easy",
-      "description": "Islam is commonly used in Religion and Mythology themed clues."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Shiva",
       "difficulty": "easy",
-      "description": "Shiva fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Bible",
       "difficulty": "easy",
-      "description": "Bible is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Vishnu",
       "difficulty": "easy",
-      "description": "Vishnu is commonly used in Religion and Mythology themed clues."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Odin",
       "difficulty": "easy",
-      "description": "Odin is a clueable term relevant to Religion and Mythology."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Mythology",
       "difficulty": "easy",
-      "description": "Mythology fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Paganism",
       "difficulty": "easy",
-      "description": "Paganism is commonly used in Religion and Mythology themed clues."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Taoism",
       "difficulty": "easy",
-      "description": "Taoism is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Myth",
       "difficulty": "easy",
-      "description": "Myth fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Ancient Greek Gods",
       "difficulty": "easy",
-      "description": "Ancient Greek Gods is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Norse Mythology",
       "difficulty": "easy",
-      "description": "Norse Mythology fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Theology",
       "difficulty": "easy",
-      "description": "Theology fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Creation Myth",
       "difficulty": "easy",
-      "description": "Creation Myth is a clueable term relevant to Religion and Mythology."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Divinity",
       "difficulty": "easy",
-      "description": "Divinity is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Pantheon",
       "difficulty": "easy",
-      "description": "Pantheon is a clueable term relevant to Religion and Mythology."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Deity",
       "difficulty": "easy",
-      "description": "Deity is a clueable term relevant to Religion and Mythology."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Ragnarok",
       "difficulty": "easy",
-      "description": "Ragnarok fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Monotheism",
       "difficulty": "easy",
-      "description": "Monotheism is a clueable term relevant to Religion and Mythology."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Polytheism",
       "difficulty": "easy",
-      "description": "Polytheism is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Hindu Gods",
       "difficulty": "easy",
-      "description": "Hindu Gods is commonly used in Religion and Mythology themed clues."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Greek Gods",
       "difficulty": "easy",
-      "description": "Greek Gods fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Roman Mythology",
       "difficulty": "easy",
-      "description": "Roman Mythology fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Norse Gods",
       "difficulty": "easy",
-      "description": "Norse Gods is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Holy",
       "difficulty": "easy",
-      "description": "Holy fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Sacred",
       "difficulty": "easy",
-      "description": "Sacred fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Religious Text",
       "difficulty": "easy",
-      "description": "Religious Text fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Angel",
       "difficulty": "easy",
-      "description": "Angel is a clueable term relevant to Religion and Mythology."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Demon",
       "difficulty": "easy",
-      "description": "Demon fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Pagan Gods",
       "difficulty": "easy",
-      "description": "Pagan Gods is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Heaven",
       "difficulty": "easy",
-      "description": "Heaven is commonly used in Religion and Mythology themed clues."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Hell",
       "difficulty": "easy",
-      "description": "Hell is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Mythical Creatures",
       "difficulty": "easy",
-      "description": "Mythical Creatures is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Religion",
       "difficulty": "easy",
-      "description": "Religion is commonly used in Religion and Mythology themed clues."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Mythological Beings",
       "difficulty": "easy",
-      "description": "Mythological Beings is commonly used in Religion and Mythology themed clues."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Holy Book",
       "difficulty": "easy",
-      "description": "Holy Book fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Prophet",
       "difficulty": "easy",
-      "description": "Prophet is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Goddess",
       "difficulty": "easy",
-      "description": "Goddess is a clueable term relevant to Religion and Mythology."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Ancient Gods",
       "difficulty": "easy",
-      "description": "Ancient Gods fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Divine",
       "difficulty": "easy",
-      "description": "Divine is commonly used in Religion and Mythology themed clues."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Zeus",
       "difficulty": "easy",
-      "description": "Zeus is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Hercules",
       "difficulty": "easy",
-      "description": "Hercules is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Thor",
       "difficulty": "easy",
-      "description": "Thor is commonly used in Religion and Mythology themed clues."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Medusa",
       "difficulty": "easy",
-      "description": "Medusa is commonly used in Religion and Mythology themed clues."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Minotaur",
       "difficulty": "easy",
-      "description": "Minotaur is commonly used in Religion and Mythology themed clues."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Poseidon",
       "difficulty": "easy",
-      "description": "Poseidon fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Apollo",
       "difficulty": "easy",
-      "description": "Apollo is commonly used in Religion and Mythology themed clues."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Athena",
       "difficulty": "easy",
-      "description": "Athena is commonly used in Religion and Mythology themed clues."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Hades",
       "difficulty": "easy",
-      "description": "Hades is a clueable term relevant to Religion and Mythology."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Pandora",
       "difficulty": "easy",
-      "description": "Pandora fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Prometheus",
       "difficulty": "hard",
-      "description": "Prometheus is a clueable term relevant to Religion and Mythology."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Persephone",
       "difficulty": "hard",
-      "description": "Persephone is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Charon",
       "difficulty": "hard",
-      "description": "Charon is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Belief-system reference; clue with origin, practices, and key narrative."
     },
     {
       "word": "Bifrost Bridge",
       "difficulty": "hard",
-      "description": "Bifrost Bridge is a clueable term relevant to Religion and Mythology."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Valkyrie",
       "difficulty": "hard",
-      "description": "Valkyrie is commonly used in Religion and Mythology themed clues."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Fenrir",
       "difficulty": "hard",
-      "description": "Fenrir fits the Religion and Mythology category for quick, descriptive gameplay."
+      "description": "Religion/myth clue; describe tradition, figure role, and core symbol or story."
     },
     {
       "word": "Chimera",
       "difficulty": "hard",
-      "description": "Chimera is a clueable term relevant to Religion and Mythology."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     },
     {
       "word": "Labyrinth of Crete",
       "difficulty": "hard",
-      "description": "Labyrinth of Crete is a useful Religion and Mythology reference for fast team guessing rounds."
+      "description": "Mythology clue; start with deity/hero role and associated legend."
     }
   ],
   "Space and Astronomy": [
     {
       "word": "Galaxy",
       "difficulty": "easy",
-      "description": "Galaxy is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Black Hole",
       "difficulty": "easy",
-      "description": "Black Hole is a clueable term relevant to Space and Astronomy."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Star",
       "difficulty": "easy",
-      "description": "Star is commonly used in Space and Astronomy themed clues."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Planet",
       "difficulty": "easy",
-      "description": "Planet is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "The Solar System",
       "difficulty": "easy",
-      "description": "The Solar System is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Moon",
       "difficulty": "easy",
-      "description": "Moon is a clueable term relevant to Space and Astronomy."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Comet",
       "difficulty": "easy",
-      "description": "Comet fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Asteroid",
       "difficulty": "easy",
-      "description": "Asteroid is commonly used in Space and Astronomy themed clues."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Constellation",
       "difficulty": "easy",
-      "description": "Constellation is commonly used in Space and Astronomy themed clues."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Milky Way",
       "difficulty": "easy",
-      "description": "Milky Way is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Nebula",
       "difficulty": "easy",
-      "description": "Nebula fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Space Station",
       "difficulty": "easy",
-      "description": "Space Station is a clueable term relevant to Space and Astronomy."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Supernova",
       "difficulty": "easy",
-      "description": "Supernova is a clueable term relevant to Space and Astronomy."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Telescope",
       "difficulty": "easy",
-      "description": "Telescope is commonly used in Space and Astronomy themed clues."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Mars",
       "difficulty": "easy",
-      "description": "Mars is a clueable term relevant to Space and Astronomy."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Satellite",
       "difficulty": "easy",
-      "description": "Satellite is commonly used in Space and Astronomy themed clues."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Exoplanet",
       "difficulty": "easy",
-      "description": "Exoplanet is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Big Bang",
       "difficulty": "easy",
-      "description": "Big Bang is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Cosmos",
       "difficulty": "easy",
-      "description": "Cosmos is commonly used in Space and Astronomy themed clues."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Hubble Space Telescope",
       "difficulty": "easy",
-      "description": "Hubble Space Telescope is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Orbit",
       "difficulty": "easy",
-      "description": "Orbit is a clueable term relevant to Space and Astronomy."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Spacecraft",
       "difficulty": "easy",
-      "description": "Spacecraft is a clueable term relevant to Space and Astronomy."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Rocket",
       "difficulty": "easy",
-      "description": "Rocket is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Interstellar",
       "difficulty": "easy",
-      "description": "Interstellar is commonly used in Space and Astronomy themed clues."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Gravity",
       "difficulty": "easy",
-      "description": "Gravity fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Galactic",
       "difficulty": "easy",
-      "description": "Galactic fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Lunar",
       "difficulty": "easy",
-      "description": "Lunar is a clueable term relevant to Space and Astronomy."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Milky Way Galaxy",
       "difficulty": "easy",
-      "description": "Milky Way Galaxy is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Outer Space",
       "difficulty": "easy",
-      "description": "Outer Space is commonly used in Space and Astronomy themed clues."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Astrobiology",
       "difficulty": "easy",
-      "description": "Astrobiology is commonly used in Space and Astronomy themed clues."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Black Holes",
       "difficulty": "easy",
-      "description": "Black Holes fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Dark Matter",
       "difficulty": "easy",
-      "description": "Dark Matter fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Planetary",
       "difficulty": "easy",
-      "description": "Planetary is a clueable term relevant to Space and Astronomy."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Space Travel",
       "difficulty": "easy",
-      "description": "Space Travel fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Astrophysics",
       "difficulty": "easy",
-      "description": "Astrophysics is commonly used in Space and Astronomy themed clues."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Neutron Star",
       "difficulty": "easy",
-      "description": "Neutron Star is a clueable term relevant to Space and Astronomy."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Cosmology",
       "difficulty": "easy",
-      "description": "Cosmology is commonly used in Space and Astronomy themed clues."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Meteor Shower",
       "difficulty": "easy",
-      "description": "Meteor Shower is commonly used in Space and Astronomy themed clues."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Space Telescope",
       "difficulty": "easy",
-      "description": "Space Telescope is a clueable term relevant to Space and Astronomy."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Astronaut",
       "difficulty": "easy",
-      "description": "Astronaut is commonly used in Space and Astronomy themed clues."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Solar Eclipse",
       "difficulty": "easy",
-      "description": "Solar Eclipse is a clueable term relevant to Space and Astronomy."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Orbital",
       "difficulty": "easy",
-      "description": "Orbital is commonly used in Space and Astronomy themed clues."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Stellar",
       "difficulty": "easy",
-      "description": "Stellar fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Space Mission",
       "difficulty": "easy",
-      "description": "Space Mission fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Astronomy",
       "difficulty": "easy",
-      "description": "Astronomy is a clueable term relevant to Space and Astronomy."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Space Race",
       "difficulty": "easy",
-      "description": "Space Race is commonly used in Space and Astronomy themed clues."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Earth",
       "difficulty": "easy",
-      "description": "Earth is a clueable term relevant to Space and Astronomy."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Sun",
       "difficulty": "easy",
-      "description": "Sun is a clueable term relevant to Space and Astronomy."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Stars",
       "difficulty": "easy",
-      "description": "Stars is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Meteor",
       "difficulty": "easy",
-      "description": "Meteor is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Light Year",
       "difficulty": "hard",
-      "description": "Light Year is commonly used in Space and Astronomy themed clues."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Red Giant",
       "difficulty": "hard",
-      "description": "Red Giant is a useful Space and Astronomy reference for fast team guessing rounds."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "White Dwarf",
       "difficulty": "hard",
-      "description": "White Dwarf is a clueable term relevant to Space and Astronomy."
+      "description": "Cosmic term; start with object class and one standout property."
     },
     {
       "word": "Event Horizon",
       "difficulty": "hard",
-      "description": "Event Horizon is a clueable term relevant to Space and Astronomy."
+      "description": "Astronomy reference; clue with size, orbit, or mission relevance."
     },
     {
       "word": "Cosmic Microwave Background",
       "difficulty": "hard",
-      "description": "Cosmic Microwave Background fits the Space and Astronomy category for quick, descriptive gameplay."
+      "description": "Space clue; describe celestial type, position, and notable characteristic."
     },
     {
       "word": "Gravitational Waves",
       "difficulty": "hard",
-      "description": "Gravitational Waves is commonly used in Space and Astronomy themed clues."
+      "description": "Cosmic term; start with object class and one standout property."
     }
   ],
   "Inventions and Discoveries": [
     {
       "word": "Electricity",
       "difficulty": "easy",
-      "description": "Electricity is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Telephone",
       "difficulty": "easy",
-      "description": "Telephone fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Internet",
       "difficulty": "easy",
-      "description": "Internet is commonly used in Inventions and Discoveries themed clues."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Computer",
       "difficulty": "easy",
-      "description": "Computer fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Printing Press",
       "difficulty": "easy",
-      "description": "Printing Press is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Penicillin",
       "difficulty": "easy",
-      "description": "Penicillin is commonly used in Inventions and Discoveries themed clues."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Vaccination",
       "difficulty": "easy",
-      "description": "Vaccination is a clueable term relevant to Inventions and Discoveries."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Airplane",
       "difficulty": "easy",
-      "description": "Airplane is commonly used in Inventions and Discoveries themed clues."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Radio",
       "difficulty": "easy",
-      "description": "Radio is a clueable term relevant to Inventions and Discoveries."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Television",
       "difficulty": "easy",
-      "description": "Television is commonly used in Inventions and Discoveries themed clues."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Steam Engine",
       "difficulty": "easy",
-      "description": "Steam Engine is a clueable term relevant to Inventions and Discoveries."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Light Bulb",
       "difficulty": "easy",
-      "description": "Light Bulb is a clueable term relevant to Inventions and Discoveries."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Photography",
       "difficulty": "easy",
-      "description": "Photography is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Microscope",
       "difficulty": "easy",
-      "description": "Microscope fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Antibiotics",
       "difficulty": "easy",
-      "description": "Antibiotics fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Theory of Relativity",
       "difficulty": "easy",
-      "description": "Theory of Relativity is commonly used in Inventions and Discoveries themed clues."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "DNA Double Helix",
       "difficulty": "easy",
-      "description": "DNA Double Helix is a clueable term relevant to Inventions and Discoveries."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Wheel",
       "difficulty": "easy",
-      "description": "Wheel is a clueable term relevant to Inventions and Discoveries."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Satellite",
       "difficulty": "easy",
-      "description": "Satellite is a clueable term relevant to Inventions and Discoveries."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Robotics",
       "difficulty": "easy",
-      "description": "Robotics fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Electric Light",
       "difficulty": "easy",
-      "description": "Electric Light is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Internet of Things",
       "difficulty": "easy",
-      "description": "Internet of Things fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Atomic Theory",
       "difficulty": "easy",
-      "description": "Atomic Theory is a clueable term relevant to Inventions and Discoveries."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Pen",
       "difficulty": "easy",
-      "description": "Pen is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Calculator",
       "difficulty": "easy",
-      "description": "Calculator is commonly used in Inventions and Discoveries themed clues."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Genetics",
       "difficulty": "easy",
-      "description": "Genetics is a clueable term relevant to Inventions and Discoveries."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "X-ray",
       "difficulty": "easy",
-      "description": "X-ray fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Helicopter",
       "difficulty": "easy",
-      "description": "Helicopter is a clueable term relevant to Inventions and Discoveries."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Plastic",
       "difficulty": "easy",
-      "description": "Plastic fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Submarine",
       "difficulty": "easy",
-      "description": "Submarine is a clueable term relevant to Inventions and Discoveries."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Fiber Optics",
       "difficulty": "easy",
-      "description": "Fiber Optics is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Refrigerator",
       "difficulty": "easy",
-      "description": "Refrigerator fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Laser",
       "difficulty": "easy",
-      "description": "Laser is a clueable term relevant to Inventions and Discoveries."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Printing",
       "difficulty": "easy",
-      "description": "Printing is a clueable term relevant to Inventions and Discoveries."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Photovoltaic Cell",
       "difficulty": "easy",
-      "description": "Photovoltaic Cell is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Nuclear Power",
       "difficulty": "easy",
-      "description": "Nuclear Power is a clueable term relevant to Inventions and Discoveries."
+      "description": "Invention/discovery clue; describe purpose, inventor era, and practical impact."
     },
     {
       "word": "Electric Motor",
       "difficulty": "easy",
-      "description": "Electric Motor fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Semiconductor",
       "difficulty": "easy",
-      "description": "Semiconductor is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Satnav",
       "difficulty": "easy",
-      "description": "Satnav is commonly used in Inventions and Discoveries themed clues."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Artificial Heart",
       "difficulty": "easy",
-      "description": "Artificial Heart fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Internet Protocol (IP)",
       "difficulty": "easy",
-      "description": "Internet Protocol (IP) is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Neutron Bomb",
       "difficulty": "easy",
-      "description": "Neutron Bomb is a clueable term relevant to Inventions and Discoveries."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "MRI",
       "difficulty": "easy",
-      "description": "MRI fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Quantum Theory",
       "difficulty": "easy",
-      "description": "Quantum Theory fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Nanotechnology",
       "difficulty": "easy",
-      "description": "Nanotechnology is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Car",
       "difficulty": "easy",
-      "description": "Car fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Camera",
       "difficulty": "easy",
-      "description": "Camera is commonly used in Inventions and Discoveries themed clues."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Microwave",
       "difficulty": "easy",
-      "description": "Microwave is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Thermometer",
       "difficulty": "hard",
-      "description": "Thermometer is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Stethoscope",
       "difficulty": "hard",
-      "description": "Stethoscope is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Typewriter",
       "difficulty": "hard",
-      "description": "Typewriter fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Sewing Machine",
       "difficulty": "hard",
-      "description": "Sewing Machine is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Solar Panel",
       "difficulty": "hard",
-      "description": "Solar Panel is a useful Inventions and Discoveries reference for fast team guessing rounds."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     },
     {
       "word": "Barcode",
       "difficulty": "hard",
-      "description": "Barcode is a clueable term relevant to Inventions and Discoveries."
+      "description": "Discovery clue; start with field and then its historical significance."
     },
     {
       "word": "Transistor",
       "difficulty": "hard",
-      "description": "Transistor fits the Inventions and Discoveries category for quick, descriptive gameplay."
+      "description": "Innovation reference; clue by what problem it solved and where it is used."
     }
   ],
   "Health and Medicine": [
     {
       "word": "Heart",
       "difficulty": "easy",
-      "description": "Heart is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Brain",
       "difficulty": "easy",
-      "description": "Brain is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "Lungs",
       "difficulty": "easy",
-      "description": "Lungs fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Bones",
       "difficulty": "easy",
-      "description": "Bones is a clueable term relevant to Health and Medicine."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Blood",
       "difficulty": "easy",
-      "description": "Blood is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "DNA",
       "difficulty": "easy",
-      "description": "DNA fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Virus",
       "difficulty": "easy",
-      "description": "Virus fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "Bacteria",
       "difficulty": "easy",
-      "description": "Bacteria fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Antibiotics",
       "difficulty": "easy",
-      "description": "Antibiotics is a clueable term relevant to Health and Medicine."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Vaccination",
       "difficulty": "easy",
-      "description": "Vaccination fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Cancer",
       "difficulty": "easy",
-      "description": "Cancer is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Diabetes",
       "difficulty": "easy",
-      "description": "Diabetes is a clueable term relevant to Health and Medicine."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Obesity",
       "difficulty": "easy",
-      "description": "Obesity fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Immune System",
       "difficulty": "easy",
-      "description": "Immune System fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Surgery",
       "difficulty": "easy",
-      "description": "Surgery is a clueable term relevant to Health and Medicine."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "Anatomy",
       "difficulty": "easy",
-      "description": "Anatomy is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Physiology",
       "difficulty": "easy",
-      "description": "Physiology fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Mental Health",
       "difficulty": "easy",
-      "description": "Mental Health is a clueable term relevant to Health and Medicine."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Pandemic",
       "difficulty": "easy",
-      "description": "Pandemic is commonly used in Health and Medicine themed clues."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Healthcare",
       "difficulty": "easy",
-      "description": "Healthcare is commonly used in Health and Medicine themed clues."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Stethoscope",
       "difficulty": "easy",
-      "description": "Stethoscope is a clueable term relevant to Health and Medicine."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "X-ray",
       "difficulty": "easy",
-      "description": "X-ray fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "MRI",
       "difficulty": "easy",
-      "description": "MRI is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Emergency Room",
       "difficulty": "easy",
-      "description": "Emergency Room is a clueable term relevant to Health and Medicine."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Pharmacy",
       "difficulty": "easy",
-      "description": "Pharmacy fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Medical Research",
       "difficulty": "easy",
-      "description": "Medical Research is a clueable term relevant to Health and Medicine."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Epidemic",
       "difficulty": "easy",
-      "description": "Epidemic is commonly used in Health and Medicine themed clues."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Public Health",
       "difficulty": "easy",
-      "description": "Public Health is a clueable term relevant to Health and Medicine."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Pulse",
       "difficulty": "easy",
-      "description": "Pulse fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Fever",
       "difficulty": "easy",
-      "description": "Fever is commonly used in Health and Medicine themed clues."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "Hygiene",
       "difficulty": "easy",
-      "description": "Hygiene is a clueable term relevant to Health and Medicine."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Cholesterol",
       "difficulty": "easy",
-      "description": "Cholesterol is a clueable term relevant to Health and Medicine."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Allergies",
       "difficulty": "easy",
-      "description": "Allergies is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Depression",
       "difficulty": "easy",
-      "description": "Depression is commonly used in Health and Medicine themed clues."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Pain",
       "difficulty": "easy",
-      "description": "Pain fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "Physical Therapy",
       "difficulty": "easy",
-      "description": "Physical Therapy fits the Health and Medicine category for quick, descriptive gameplay."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Health Insurance",
       "difficulty": "easy",
-      "description": "Health Insurance is commonly used in Health and Medicine themed clues."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Hospice Care",
       "difficulty": "easy",
-      "description": "Hospice Care is commonly used in Health and Medicine themed clues."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Medical Ethics",
       "difficulty": "easy",
-      "description": "Medical Ethics is commonly used in Health and Medicine themed clues."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Nutrition",
       "difficulty": "easy",
-      "description": "Nutrition is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Exercise",
       "difficulty": "easy",
-      "description": "Exercise is commonly used in Health and Medicine themed clues."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "Disease",
       "difficulty": "easy",
-      "description": "Disease is commonly used in Health and Medicine themed clues."
+      "description": "Medicine term; start with function, then professional or patient use."
     },
     {
       "word": "First Aid",
       "difficulty": "easy",
-      "description": "First Aid is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Therapy",
       "difficulty": "easy",
-      "description": "Therapy is a clueable term relevant to Health and Medicine."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Epidemiology",
       "difficulty": "easy",
-      "description": "Epidemiology is commonly used in Health and Medicine themed clues."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Anesthesia",
       "difficulty": "easy",
-      "description": "Anesthesia is a useful Health and Medicine reference for fast team guessing rounds."
+      "description": "Medical clue; describe body system, treatment use, or health outcome."
     },
     {
       "word": "Madame Curie",
       "difficulty": "easy",
-      "description": "Madame Curie is a clueable term relevant to Health and Medicine."
+      "description": "Health reference; clue with symptom area, prevention, or care context."
     },
     {
       "word": "Groote Schuur Hospital",
@@ -8057,1383 +8057,1383 @@ const categories = {
     {
       "word": "Chess",
       "difficulty": "easy",
-      "description": "Chess is commonly used in Games and Toys themed clues."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Monopoly",
       "difficulty": "easy",
-      "description": "Monopoly fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "LEGO",
       "difficulty": "easy",
-      "description": "LEGO is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Puzzle",
       "difficulty": "easy",
-      "description": "Puzzle is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Dolls",
       "difficulty": "easy",
-      "description": "Dolls is commonly used in Games and Toys themed clues."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Video Games",
       "difficulty": "easy",
-      "description": "Video Games fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Board Game",
       "difficulty": "easy",
-      "description": "Board Game is commonly used in Games and Toys themed clues."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Action Figures",
       "difficulty": "easy",
-      "description": "Action Figures is commonly used in Games and Toys themed clues."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Rubik's Cube",
       "difficulty": "easy",
-      "description": "Rubik's Cube is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Card Game",
       "difficulty": "easy",
-      "description": "Card Game fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Toy Cars",
       "difficulty": "easy",
-      "description": "Toy Cars fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Dungeons & Dragons",
       "difficulty": "easy",
-      "description": "Dungeons & Dragons fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Lego Bricks",
       "difficulty": "easy",
-      "description": "Lego Bricks is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Barbie",
       "difficulty": "easy",
-      "description": "Barbie is a clueable term relevant to Games and Toys."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Teddy Bear",
       "difficulty": "easy",
-      "description": "Teddy Bear is commonly used in Games and Toys themed clues."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Nintendo",
       "difficulty": "easy",
-      "description": "Nintendo is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "PlayStation",
       "difficulty": "easy",
-      "description": "PlayStation fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Xbox",
       "difficulty": "easy",
-      "description": "Xbox fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Dungeons and Dragons",
       "difficulty": "easy",
-      "description": "Dungeons and Dragons is commonly used in Games and Toys themed clues."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Checkers",
       "difficulty": "easy",
-      "description": "Checkers fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Jigsaw Puzzle",
       "difficulty": "easy",
-      "description": "Jigsaw Puzzle is commonly used in Games and Toys themed clues."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Yo-Yo",
       "difficulty": "easy",
-      "description": "Yo-Yo fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Trivial Pursuit",
       "difficulty": "easy",
-      "description": "Trivial Pursuit is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Hot Wheels",
       "difficulty": "easy",
-      "description": "Hot Wheels is commonly used in Games and Toys themed clues."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Transformer Toys",
       "difficulty": "easy",
-      "description": "Transformer Toys is commonly used in Games and Toys themed clues."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Barbie Dolls",
       "difficulty": "easy",
-      "description": "Barbie Dolls is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Nintendo Switch",
       "difficulty": "easy",
-      "description": "Nintendo Switch is commonly used in Games and Toys themed clues."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Play-Doh",
       "difficulty": "easy",
-      "description": "Play-Doh is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Fidget Spinner",
       "difficulty": "easy",
-      "description": "Fidget Spinner is a clueable term relevant to Games and Toys."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Legos",
       "difficulty": "easy",
-      "description": "Legos is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Remote Control Cars",
       "difficulty": "easy",
-      "description": "Remote Control Cars is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Rubik's Cubes",
       "difficulty": "easy",
-      "description": "Rubik's Cubes is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Magic: The Gathering",
       "difficulty": "easy",
-      "description": "Magic: The Gathering fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Candy Land",
       "difficulty": "easy",
-      "description": "Candy Land is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "G.I. Joe",
       "difficulty": "easy",
-      "description": "G.I. Joe is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Tamagotchi",
       "difficulty": "easy",
-      "description": "Tamagotchi is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Nerf Guns",
       "difficulty": "easy",
-      "description": "Nerf Guns is a clueable term relevant to Games and Toys."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Lincoln Logs",
       "difficulty": "easy",
-      "description": "Lincoln Logs is a clueable term relevant to Games and Toys."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Dollhouse",
       "difficulty": "easy",
-      "description": "Dollhouse is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Marbles",
       "difficulty": "easy",
-      "description": "Marbles is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Sudoku",
       "difficulty": "easy",
-      "description": "Sudoku is a clueable term relevant to Games and Toys."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Toy Story",
       "difficulty": "easy",
-      "description": "Toy Story is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Polly Pocket",
       "difficulty": "easy",
-      "description": "Polly Pocket is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Furby",
       "difficulty": "easy",
-      "description": "Furby is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Barbie Doll",
       "difficulty": "easy",
-      "description": "Barbie Doll is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Remote Control Car",
       "difficulty": "easy",
-      "description": "Remote Control Car is a clueable term relevant to Games and Toys."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Stuffed Animals",
       "difficulty": "easy",
-      "description": "Stuffed Animals fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Matchbox Cars",
       "difficulty": "easy",
-      "description": "Matchbox Cars is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Connect Four",
       "difficulty": "easy",
-      "description": "Connect Four is a clueable term relevant to Games and Toys."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Jenga",
       "difficulty": "easy",
-      "description": "Jenga fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Scrabble",
       "difficulty": "hard",
-      "description": "Scrabble is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Clue",
       "difficulty": "easy",
-      "description": "Clue is a clueable term relevant to Games and Toys."
+      "description": "Classic mystery board game about suspects, rooms, and solving a whodunit."
     },
     {
       "word": "Risk",
       "difficulty": "easy",
-      "description": "Risk fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "UNO",
       "difficulty": "easy",
-      "description": "UNO is commonly used in Games and Toys themed clues."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Twister",
       "difficulty": "hard",
-      "description": "Twister is a clueable term relevant to Games and Toys."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Operation",
       "difficulty": "easy",
-      "description": "Operation is a clueable term relevant to Games and Toys."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Nerf Blaster",
       "difficulty": "easy",
-      "description": "Nerf Blaster is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "RC Car",
       "difficulty": "easy",
-      "description": "RC Car fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Puzzle Box",
       "difficulty": "hard",
-      "description": "Puzzle Box is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Beyblade",
       "difficulty": "easy",
-      "description": "Beyblade is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Lego Minifigure",
       "difficulty": "hard",
-      "description": "Lego Minifigure is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Toy Drone",
       "difficulty": "easy",
-      "description": "Toy Drone is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Water Gun",
       "difficulty": "easy",
-      "description": "Water Gun is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Action Figure",
       "difficulty": "easy",
-      "description": "Action Figure is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Board Game Night",
       "difficulty": "hard",
-      "description": "Board Game Night fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Card Deck",
       "difficulty": "easy",
-      "description": "Card Deck is commonly used in Games and Toys themed clues."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Dice Tower",
       "difficulty": "easy",
-      "description": "Dice Tower is commonly used in Games and Toys themed clues."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Chess Clock",
       "difficulty": "easy",
-      "description": "Chess Clock is a clueable term relevant to Games and Toys."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Game Piece",
       "difficulty": "hard",
-      "description": "Game Piece is a clueable term relevant to Games and Toys."
+      "description": "Leisure reference; clue with age group, rules, and objective."
     },
     {
       "word": "Claw Machine",
       "difficulty": "easy",
-      "description": "Claw Machine fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     },
     {
       "word": "Bean Bag Toss",
       "difficulty": "easy",
-      "description": "Bean Bag Toss is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Foosball Table",
       "difficulty": "easy",
-      "description": "Foosball Table is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Air Hockey",
       "difficulty": "hard",
-      "description": "Air Hockey is a useful Games and Toys reference for fast team guessing rounds."
+      "description": "Play clue; start with player actions, then pieces or equipment."
     },
     {
       "word": "Pinball",
       "difficulty": "easy",
-      "description": "Pinball fits the Games and Toys category for quick, descriptive gameplay."
+      "description": "Game/toy clue; describe how it is played and what makes it recognizable."
     }
   ],
   "Books and Authors": [
     {
       "word": "William Shakespeare",
       "difficulty": "easy",
-      "description": "William Shakespeare is a clueable term relevant to Books and Authors."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Jane Austen",
       "difficulty": "easy",
-      "description": "Jane Austen fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "George Orwell",
       "difficulty": "easy",
-      "description": "George Orwell is a clueable term relevant to Books and Authors."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Charles Dickens",
       "difficulty": "easy",
-      "description": "Charles Dickens is a clueable term relevant to Books and Authors."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Mark Twain",
       "difficulty": "easy",
-      "description": "Mark Twain is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Agatha Christie",
       "difficulty": "easy",
-      "description": "Agatha Christie is commonly used in Books and Authors themed clues."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "Stephen King",
       "difficulty": "easy",
-      "description": "Stephen King is commonly used in Books and Authors themed clues."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "The Lord of the Rings",
       "difficulty": "easy",
-      "description": "The Lord of the Rings fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "To Kill a Mockingbird",
       "difficulty": "easy",
-      "description": "To Kill a Mockingbird is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "The Catcher in the Rye",
       "difficulty": "easy",
-      "description": "The Catcher in the Rye fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Alice's Adventures in Wonderland",
       "difficulty": "easy",
-      "description": "Alice's Adventures in Wonderland is a clueable term relevant to Books and Authors."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Bible",
       "difficulty": "easy",
-      "description": "The Bible is a clueable term relevant to Books and Authors."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "A Song of Ice and Fire",
       "difficulty": "easy",
-      "description": "A Song of Ice and Fire is commonly used in Books and Authors themed clues."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "The Odyssey",
       "difficulty": "easy",
-      "description": "The Odyssey is commonly used in Books and Authors themed clues."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Hobbit",
       "difficulty": "easy",
-      "description": "The Hobbit is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Lord of the Flies",
       "difficulty": "easy",
-      "description": "Lord of the Flies is a clueable term relevant to Books and Authors."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "Pride and Prejudice",
       "difficulty": "easy",
-      "description": "Pride and Prejudice fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "The Chronicles of Narnia",
       "difficulty": "easy",
-      "description": "The Chronicles of Narnia is a clueable term relevant to Books and Authors."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "Moby-Dick",
       "difficulty": "easy",
-      "description": "Moby-Dick is commonly used in Books and Authors themed clues."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "1984",
       "difficulty": "easy",
-      "description": "1984 is commonly used in Books and Authors themed clues."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Brave New World",
       "difficulty": "easy",
-      "description": "Brave New World is a clueable term relevant to Books and Authors."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "The Adventures of Huckleberry Finn",
       "difficulty": "easy",
-      "description": "The Adventures of Huckleberry Finn is a clueable term relevant to Books and Authors."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Wuthering Heights",
       "difficulty": "easy",
-      "description": "Wuthering Heights is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "The Grapes of Wrath",
       "difficulty": "easy",
-      "description": "The Grapes of Wrath fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Frankenstein",
       "difficulty": "easy",
-      "description": "Frankenstein fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Little Women",
       "difficulty": "easy",
-      "description": "Little Women is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "Gone with the Wind",
       "difficulty": "easy",
-      "description": "Gone with the Wind is commonly used in Books and Authors themed clues."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Count of Monte Cristo",
       "difficulty": "easy",
-      "description": "The Count of Monte Cristo fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Picture of Dorian Gray",
       "difficulty": "easy",
-      "description": "The Picture of Dorian Gray is commonly used in Books and Authors themed clues."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Dracula",
       "difficulty": "easy",
-      "description": "Dracula is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "One Hundred Years of Solitude",
       "difficulty": "easy",
-      "description": "One Hundred Years of Solitude fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Kite Runner",
       "difficulty": "easy",
-      "description": "The Kite Runner is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "The Girl with the Dragon Tattoo",
       "difficulty": "easy",
-      "description": "The Girl with the Dragon Tattoo fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "The Alchemist",
       "difficulty": "easy",
-      "description": "The Alchemist fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Hitchhiker's Guide to the Galaxy",
       "difficulty": "easy",
-      "description": "The Hitchhiker's Guide to the Galaxy fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Book Thief",
       "difficulty": "easy",
-      "description": "The Book Thief is a clueable term relevant to Books and Authors."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "War and Peace",
       "difficulty": "easy",
-      "description": "War and Peace fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "Les Misérables",
       "difficulty": "easy",
-      "description": "Les Misérables is a clueable term relevant to Books and Authors."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "The Shining",
       "difficulty": "easy",
-      "description": "The Shining fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Secret Garden",
       "difficulty": "easy",
-      "description": "The Secret Garden fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "The Silmarillion",
       "difficulty": "easy",
-      "description": "The Silmarillion is commonly used in Books and Authors themed clues."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Anna Karenina",
       "difficulty": "easy",
-      "description": "Anna Karenina is a clueable term relevant to Books and Authors."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "The Fault in Our Stars",
       "difficulty": "easy",
-      "description": "The Fault in Our Stars is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "The Road",
       "difficulty": "easy",
-      "description": "The Road is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Moby Dick",
       "difficulty": "easy",
-      "description": "Moby Dick is a clueable term relevant to Books and Authors."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "The Da Vinci Code",
       "difficulty": "easy",
-      "description": "The Da Vinci Code fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Lord of the Rings",
       "difficulty": "easy",
-      "description": "Lord of the Rings fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Crime and Punishment",
       "difficulty": "hard",
-      "description": "Crime and Punishment is a clueable term relevant to Books and Authors."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "The Brothers Karamazov",
       "difficulty": "hard",
-      "description": "The Brothers Karamazov fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Love in the Time of Cholera",
       "difficulty": "hard",
-      "description": "Love in the Time of Cholera fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "A Tale of Two Cities",
       "difficulty": "hard",
-      "description": "A Tale of Two Cities is commonly used in Books and Authors themed clues."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Midnight's Children",
       "difficulty": "hard",
-      "description": "Midnight's Children fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     },
     {
       "word": "Infinite Jest",
       "difficulty": "hard",
-      "description": "Infinite Jest is a useful Books and Authors reference for fast team guessing rounds."
+      "description": "Reading clue; start with genre, then title theme or character journey."
     },
     {
       "word": "Jean-Paul Sartre",
       "difficulty": "hard",
-      "description": "Jean-Paul Sartre is a clueable term relevant to Books and Authors."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "Walt Whitman",
       "difficulty": "hard",
-      "description": "Walt Whitman fits the Books and Authors category for quick, descriptive gameplay."
+      "description": "Literary reference; use writer identity and one famous plot point."
     },
     {
       "word": "DC Comics",
       "difficulty": "easy",
-      "description": "DC Comics is commonly used in Books and Authors themed clues."
+      "description": "Books/authors clue; describe author, storyline, and literary significance."
     }
   ],
   "Video Games": [
     {
       "word": "Mario",
       "difficulty": "easy",
-      "description": "Mario fits the Video Games category for quick, descriptive gameplay."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Pac-Man",
       "difficulty": "easy",
-      "description": "Pac-Man is a clueable term relevant to Video Games."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Fortnite",
       "difficulty": "easy",
-      "description": "Fortnite fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "The Legend of Zelda",
       "difficulty": "easy",
-      "description": "The Legend of Zelda is a clueable term relevant to Video Games."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Minecraft",
       "difficulty": "easy",
-      "description": "Minecraft is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Pokemon",
       "difficulty": "easy",
-      "description": "Pokemon is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Tetris",
       "difficulty": "easy",
-      "description": "Tetris is commonly used in Video Games themed clues."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Super Mario Bros.",
       "difficulty": "easy",
-      "description": "Super Mario Bros. fits the Video Games category for quick, descriptive gameplay."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Call of Duty",
       "difficulty": "easy",
-      "description": "Call of Duty is commonly used in Video Games themed clues."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Overwatch",
       "difficulty": "easy",
-      "description": "Overwatch is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "World of Warcraft",
       "difficulty": "easy",
-      "description": "World of Warcraft fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "FIFA",
       "difficulty": "easy",
-      "description": "FIFA fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "League of Legends",
       "difficulty": "easy",
-      "description": "League of Legends fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Grand Theft Auto",
       "difficulty": "easy",
-      "description": "Grand Theft Auto fits the Video Games category for quick, descriptive gameplay."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Counter-Strike",
       "difficulty": "easy",
-      "description": "Counter-Strike is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Sonic the Hedgehog",
       "difficulty": "easy",
-      "description": "Sonic the Hedgehog is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Final Fantasy",
       "difficulty": "easy",
-      "description": "Final Fantasy is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Street Fighter",
       "difficulty": "easy",
-      "description": "Street Fighter is commonly used in Video Games themed clues."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Halo",
       "difficulty": "easy",
-      "description": "Halo is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Doom",
       "difficulty": "easy",
-      "description": "Doom is commonly used in Video Games themed clues."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Assassin's Creed",
       "difficulty": "easy",
-      "description": "Assassin's Creed is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Mortal Kombat",
       "difficulty": "easy",
-      "description": "Mortal Kombat is a useful Video Games reference for fast team guessing rounds."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "The Sims",
       "difficulty": "easy",
-      "description": "The Sims fits the Video Games category for quick, descriptive gameplay."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "StarCraft",
       "difficulty": "easy",
-      "description": "StarCraft is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Half-Life",
       "difficulty": "easy",
-      "description": "Half-Life is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Gears of War",
       "difficulty": "easy",
-      "description": "Gears of War is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Portal",
       "difficulty": "easy",
-      "description": "Portal is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Civilization",
       "difficulty": "easy",
-      "description": "Civilization is commonly used in Video Games themed clues."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "The Witcher",
       "difficulty": "easy",
-      "description": "The Witcher is a useful Video Games reference for fast team guessing rounds."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Super Smash Bros.",
       "difficulty": "hard",
-      "description": "Super Smash Bros. fits the Video Games category for quick, descriptive gameplay."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Star Wars Battlefront",
       "difficulty": "hard",
-      "description": "Star Wars Battlefront is a useful Video Games reference for fast team guessing rounds."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "PUBG",
       "difficulty": "easy",
-      "description": "PUBG fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "PlayerUnknown's Battlegrounds",
       "difficulty": "hard",
-      "description": "PlayerUnknown's Battlegrounds is commonly used in Video Games themed clues."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "God of War",
       "difficulty": "easy",
-      "description": "God of War is a useful Video Games reference for fast team guessing rounds."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Rocket League",
       "difficulty": "easy",
-      "description": "Rocket League is commonly used in Video Games themed clues."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "World of Tanks",
       "difficulty": "hard",
-      "description": "World of Tanks is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Fortnite Save the World",
       "difficulty": "hard",
-      "description": "Fortnite Save the World fits the Video Games category for quick, descriptive gameplay."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Destiny",
       "difficulty": "easy",
-      "description": "Destiny fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Warframe",
       "difficulty": "easy",
-      "description": "Warframe is a clueable term relevant to Video Games."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Fortnite Battle Royale",
       "difficulty": "hard",
-      "description": "Fortnite Battle Royale fits the Video Games category for quick, descriptive gameplay."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Cyberpunk 2077",
       "difficulty": "easy",
-      "description": "Cyberpunk 2077 is a useful Video Games reference for fast team guessing rounds."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Candy Crush Saga",
       "difficulty": "easy",
-      "description": "Candy Crush Saga fits the Video Games category for quick, descriptive gameplay."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Far Cry",
       "difficulty": "easy",
-      "description": "Far Cry is commonly used in Video Games themed clues."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Animal Crossing",
       "difficulty": "easy",
-      "description": "Animal Crossing is commonly used in Video Games themed clues."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Borderlands",
       "difficulty": "easy",
-      "description": "Borderlands is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Zelda",
       "difficulty": "easy",
-      "description": "Zelda is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Sonic",
       "difficulty": "easy",
-      "description": "Sonic fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Pokémon",
       "difficulty": "easy",
-      "description": "Pokémon is a clueable term relevant to Video Games."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Red Dead Redemption",
       "difficulty": "hard",
-      "description": "Red Dead Redemption fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Dark Souls",
       "difficulty": "hard",
-      "description": "Dark Souls is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Bioshock",
       "difficulty": "hard",
-      "description": "Bioshock is a useful Video Games reference for fast team guessing rounds."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Mass Effect",
       "difficulty": "hard",
-      "description": "Mass Effect is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Deus Ex",
       "difficulty": "hard",
-      "description": "Deus Ex is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Stardew Valley",
       "difficulty": "hard",
-      "description": "Stardew Valley is a useful Video Games reference for fast team guessing rounds."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "The Last of Us",
       "difficulty": "hard",
-      "description": "The Last of Us is a clueable term relevant to Video Games."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Animal Crossing: New Horizons",
       "difficulty": "hard",
-      "description": "Animal Crossing: New Horizons is a useful Video Games reference for fast team guessing rounds."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Call of Duty: Warzone",
       "difficulty": "hard",
-      "description": "Call of Duty: Warzone fits the Video Games category for quick, descriptive gameplay."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Grand Theft Auto V",
       "difficulty": "easy",
-      "description": "Grand Theft Auto V fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Super Mario Odyssey",
       "difficulty": "hard",
-      "description": "Super Mario Odyssey is a clueable term relevant to Video Games."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "The Legend of Zelda: Breath of the Wild",
       "difficulty": "hard",
-      "description": "The Legend of Zelda: Breath of the Wild is commonly used in Video Games themed clues."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "The Witcher 3: Wild Hunt",
       "difficulty": "hard",
-      "description": "The Witcher 3: Wild Hunt is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "The Sims 4",
       "difficulty": "easy",
-      "description": "The Sims 4 is a useful Video Games reference for fast team guessing rounds."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Minecraft Dungeons",
       "difficulty": "easy",
-      "description": "Minecraft Dungeons is a useful Video Games reference for fast team guessing rounds."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Among Us",
       "difficulty": "easy",
-      "description": "Among Us is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Fall Guys",
       "difficulty": "easy",
-      "description": "Fall Guys is commonly used in Video Games themed clues."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Genshin Impact",
       "difficulty": "easy",
-      "description": "Genshin Impact is a useful Video Games reference for fast team guessing rounds."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Hades",
       "difficulty": "hard",
-      "description": "Hades is a useful Video Games reference for fast team guessing rounds."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Sekiro: Shadows Die Twice",
       "difficulty": "hard",
-      "description": "Sekiro: Shadows Die Twice fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Ghost of Tsushima",
       "difficulty": "hard",
-      "description": "Ghost of Tsushima fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "CyberConnect2",
       "difficulty": "hard",
-      "description": "CyberConnect2 is a useful Video Games reference for fast team guessing rounds."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Naughty Dog",
       "difficulty": "hard",
-      "description": "Naughty Dog is commonly used in Video Games themed clues."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Rockstar Games",
       "difficulty": "hard",
-      "description": "Rockstar Games is commonly used in Video Games themed clues."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Valve Corporation",
       "difficulty": "hard",
-      "description": "Valve Corporation is a clueable term relevant to Video Games."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Epic Games",
       "difficulty": "hard",
-      "description": "Epic Games fits the Video Games category for quick, descriptive gameplay."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Riot Games",
       "difficulty": "hard",
-      "description": "Riot Games is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Blizzard Entertainment",
       "difficulty": "hard",
-      "description": "Blizzard Entertainment fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Electronic Arts",
       "difficulty": "hard",
-      "description": "Electronic Arts fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     },
     {
       "word": "Activision",
       "difficulty": "hard",
-      "description": "Activision is commonly used in Video Games themed clues."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Bandai Namco Entertainment",
       "difficulty": "hard",
-      "description": "Bandai Namco Entertainment fits the Video Games category for quick, descriptive gameplay."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Capcom",
       "difficulty": "hard",
-      "description": "Capcom is a useful Video Games reference for fast team guessing rounds."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Konami",
       "difficulty": "hard",
-      "description": "Konami is a useful Video Games reference for fast team guessing rounds."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Sega",
       "difficulty": "hard",
-      "description": "Sega is a clueable term relevant to Video Games."
+      "description": "Video-game clue; describe platform, gameplay loop, and objective."
     },
     {
       "word": "Square Enix",
       "difficulty": "hard",
-      "description": "Square Enix is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Ubisoft",
       "difficulty": "hard",
-      "description": "Ubisoft is commonly used in Video Games themed clues."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Take-Two Interactive",
       "difficulty": "hard",
-      "description": "Take-Two Interactive is a clueable term relevant to Video Games."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "Warner Bros. Interactive Entertainment",
       "difficulty": "hard",
-      "description": "Warner Bros. Interactive Entertainment is commonly used in Video Games themed clues."
+      "description": "Gaming reference; start with genre and one iconic mechanic."
     },
     {
       "word": "ZeniMax Media",
       "difficulty": "hard",
-      "description": "ZeniMax Media fits the Video Games category for quick, descriptive gameplay."
+      "description": "Game title clue; use character, world setting, or mission style."
     }
   ],
   "Cars": [
     {
       "word": "Sedan",
       "difficulty": "easy",
-      "description": "Sedan is a clueable term relevant to Cars."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Convertible",
       "difficulty": "easy",
-      "description": "Convertible is commonly used in Cars themed clues."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "SUV",
       "difficulty": "easy",
-      "description": "SUV is a useful Cars reference for fast team guessing rounds."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Coupe",
       "difficulty": "easy",
-      "description": "Coupe is a useful Cars reference for fast team guessing rounds."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Hatchback",
       "difficulty": "easy",
-      "description": "Hatchback is a clueable term relevant to Cars."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Engine",
       "difficulty": "easy",
-      "description": "Engine fits the Cars category for quick, descriptive gameplay."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Transmission",
       "difficulty": "easy",
-      "description": "Transmission is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Headlights",
       "difficulty": "easy",
-      "description": "Headlights is commonly used in Cars themed clues."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Wheels",
       "difficulty": "easy",
-      "description": "Wheels is a clueable term relevant to Cars."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Steering wheel",
       "difficulty": "easy",
-      "description": "Steering wheel fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Differential",
       "difficulty": "hard",
-      "description": "Differential is a useful Cars reference for fast team guessing rounds."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Carburetor",
       "difficulty": "hard",
-      "description": "Carburetor fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Catalytic converter",
       "difficulty": "hard",
-      "description": "Catalytic converter is a clueable term relevant to Cars."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Torque",
       "difficulty": "hard",
-      "description": "Torque fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "RPM",
       "difficulty": "hard",
-      "description": "RPM fits the Cars category for quick, descriptive gameplay."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Drivetrain",
       "difficulty": "hard",
-      "description": "Drivetrain is a useful Cars reference for fast team guessing rounds."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Suspension",
       "difficulty": "easy",
-      "description": "Suspension fits the Cars category for quick, descriptive gameplay."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Chassis",
       "difficulty": "easy",
-      "description": "Chassis fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Fuel injection",
       "difficulty": "hard",
-      "description": "Fuel injection is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Turbocharger",
       "difficulty": "hard",
-      "description": "Turbocharger is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Aston Martin DB11",
       "difficulty": "hard",
-      "description": "Aston Martin DB11 is a clueable term relevant to Cars."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Audi Q7",
       "difficulty": "hard",
-      "description": "Audi Q7 is a clueable term relevant to Cars."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Audi R8",
       "difficulty": "easy",
-      "description": "Audi R8 is a clueable term relevant to Cars."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "BMW M3",
       "difficulty": "easy",
-      "description": "BMW M3 fits the Cars category for quick, descriptive gameplay."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Bugatti Chiron",
       "difficulty": "hard",
-      "description": "Bugatti Chiron is a clueable term relevant to Cars."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Bugatti Veyron",
       "difficulty": "easy",
-      "description": "Bugatti Veyron is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Chevrolet Camaro",
       "difficulty": "hard",
-      "description": "Chevrolet Camaro is a useful Cars reference for fast team guessing rounds."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Chevrolet Corvette",
       "difficulty": "hard",
-      "description": "Chevrolet Corvette is commonly used in Cars themed clues."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Ferrari",
       "difficulty": "easy",
-      "description": "Ferrari fits the Cars category for quick, descriptive gameplay."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Ferrari 458 Italia",
       "difficulty": "hard",
-      "description": "Ferrari 458 Italia is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Ford Focus RS",
       "difficulty": "hard",
-      "description": "Ford Focus RS fits the Cars category for quick, descriptive gameplay."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Ford Mustang",
       "difficulty": "easy",
-      "description": "Ford Mustang fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Ford Mustang GT",
       "difficulty": "hard",
-      "description": "Ford Mustang GT is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Honda Accord",
       "difficulty": "hard",
-      "description": "Honda Accord is a useful Cars reference for fast team guessing rounds."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Honda Civic",
       "difficulty": "easy",
-      "description": "Honda Civic fits the Cars category for quick, descriptive gameplay."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Hyundai Sonata",
       "difficulty": "hard",
-      "description": "Hyundai Sonata is a clueable term relevant to Cars."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Jeep Grand Cherokee",
       "difficulty": "hard",
-      "description": "Jeep Grand Cherokee is commonly used in Cars themed clues."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Jeep Wrangler",
       "difficulty": "hard",
-      "description": "Jeep Wrangler fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Lamborghini",
       "difficulty": "easy",
-      "description": "Lamborghini is a clueable term relevant to Cars."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Lamborghini Aventador",
       "difficulty": "hard",
-      "description": "Lamborghini Aventador is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Land Rover Discovery",
       "difficulty": "hard",
-      "description": "Land Rover Discovery fits the Cars category for quick, descriptive gameplay."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Lexus RX",
       "difficulty": "hard",
-      "description": "Lexus RX is a clueable term relevant to Cars."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Maserati GranTurismo",
       "difficulty": "hard",
-      "description": "Maserati GranTurismo is commonly used in Cars themed clues."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "McLaren",
       "difficulty": "easy",
-      "description": "McLaren is a clueable term relevant to Cars."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Mercedes-Benz",
       "difficulty": "easy",
-      "description": "Mercedes-Benz fits the Cars category for quick, descriptive gameplay."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Mercedes-Benz S-Class",
       "difficulty": "hard",
-      "description": "Mercedes-Benz S-Class fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Mercedes-Benz GLE",
       "difficulty": "hard",
-      "description": "Mercedes-Benz GLE is a useful Cars reference for fast team guessing rounds."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Nissan GT-R",
       "difficulty": "easy",
-      "description": "Nissan GT-R is commonly used in Cars themed clues."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Pagani Huayra",
       "difficulty": "hard",
-      "description": "Pagani Huayra is commonly used in Cars themed clues."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Porsche 911",
       "difficulty": "easy",
-      "description": "Porsche 911 is commonly used in Cars themed clues."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Range Rover Evoque",
       "difficulty": "hard",
-      "description": "Range Rover Evoque is a useful Cars reference for fast team guessing rounds."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Tesla Model S",
       "difficulty": "hard",
-      "description": "Tesla Model S is commonly used in Cars themed clues."
+      "description": "Automotive clue; describe brand, vehicle type, and performance trait."
     },
     {
       "word": "Tesla Model X",
       "difficulty": "hard",
-      "description": "Tesla Model X fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Tesla",
       "difficulty": "easy",
-      "description": "Tesla is a clueable term relevant to Cars."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Toyota",
       "difficulty": "easy",
-      "description": "Toyota fits the Cars category for quick, descriptive gameplay."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Toyota Supra",
       "difficulty": "hard",
-      "description": "Toyota Supra is a clueable term relevant to Cars."
+      "description": "Car clue; start with body style, then speed, utility, or luxury profile."
     },
     {
       "word": "Volkswagen Beetle",
       "difficulty": "hard",
-      "description": "Volkswagen Beetle is a useful Cars reference for fast team guessing rounds."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     },
     {
       "word": "Volvo XC60",
       "difficulty": "hard",
-      "description": "Volvo XC60 is a clueable term relevant to Cars."
+      "description": "Motor clue; use manufacturer context and standout design or engine feature."
     }
   ],
   "Fashion": [
@@ -9540,137 +9540,137 @@ const categories = {
     {
       "word": "Streetwear",
       "difficulty": "hard",
-      "description": "Streetwear is a clueable term relevant to Fashion."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Sneakerhead",
       "difficulty": "easy",
-      "description": "Sneakerhead is commonly used in Fashion themed clues."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Tailor",
       "difficulty": "easy",
-      "description": "Tailor is a clueable term relevant to Fashion."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Runway",
       "difficulty": "hard",
-      "description": "Runway is commonly used in Fashion themed clues."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Lookbook",
       "difficulty": "easy",
-      "description": "Lookbook fits the Fashion category for quick, descriptive gameplay."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Bomber Jacket",
       "difficulty": "hard",
-      "description": "Bomber Jacket is a useful Fashion reference for fast team guessing rounds."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Denim Jacket",
       "difficulty": "easy",
-      "description": "Denim Jacket is commonly used in Fashion themed clues."
+      "description": "Fashion clue; describe garment type, style context, and how it is worn."
     },
     {
       "word": "Polo Shirt",
       "difficulty": "easy",
-      "description": "Polo Shirt is a useful Fashion reference for fast team guessing rounds."
+      "description": "Fashion clue; describe garment type, style context, and how it is worn."
     },
     {
       "word": "Chinos",
       "difficulty": "easy",
-      "description": "Chinos is a useful Fashion reference for fast team guessing rounds."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Turtleneck",
       "difficulty": "hard",
-      "description": "Turtleneck is a clueable term relevant to Fashion."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Pleated Skirt",
       "difficulty": "easy",
-      "description": "Pleated Skirt is a useful Fashion reference for fast team guessing rounds."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Pencil Skirt",
       "difficulty": "easy",
-      "description": "Pencil Skirt is commonly used in Fashion themed clues."
+      "description": "Fashion clue; describe garment type, style context, and how it is worn."
     },
     {
       "word": "Maxi Dress",
       "difficulty": "easy",
-      "description": "Maxi Dress fits the Fashion category for quick, descriptive gameplay."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Cocktail Dress",
       "difficulty": "hard",
-      "description": "Cocktail Dress is a useful Fashion reference for fast team guessing rounds."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Jumpsuit",
       "difficulty": "easy",
-      "description": "Jumpsuit fits the Fashion category for quick, descriptive gameplay."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Blazer",
       "difficulty": "easy",
-      "description": "Blazer is commonly used in Fashion themed clues."
+      "description": "Fashion clue; describe garment type, style context, and how it is worn."
     },
     {
       "word": "Loafers",
       "difficulty": "easy",
-      "description": "Loafers is a useful Fashion reference for fast team guessing rounds."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Ankle Boots",
       "difficulty": "hard",
-      "description": "Ankle Boots is a useful Fashion reference for fast team guessing rounds."
+      "description": "Fashion clue; describe garment type, style context, and how it is worn."
     },
     {
       "word": "Stiletto",
       "difficulty": "easy",
-      "description": "Stiletto is a clueable term relevant to Fashion."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Crossbody Bag",
       "difficulty": "easy",
-      "description": "Crossbody Bag is commonly used in Fashion themed clues."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Tote Bag",
       "difficulty": "easy",
-      "description": "Tote Bag is commonly used in Fashion themed clues."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Clutch Bag",
       "difficulty": "hard",
-      "description": "Clutch Bag is a clueable term relevant to Fashion."
+      "description": "Style reference; start with look, occasion, and signature design details."
     },
     {
       "word": "Bucket Hat",
       "difficulty": "easy",
-      "description": "Bucket Hat is a clueable term relevant to Fashion."
+      "description": "Fashion clue; describe garment type, style context, and how it is worn."
     },
     {
       "word": "Beanie",
       "difficulty": "easy",
-      "description": "Beanie is commonly used in Fashion themed clues."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Silk Scarf",
       "difficulty": "easy",
-      "description": "Silk Scarf is a clueable term relevant to Fashion."
+      "description": "Fashion clue; describe garment type, style context, and how it is worn."
     },
     {
       "word": "Leather Jacket",
       "difficulty": "hard",
-      "description": "Leather Jacket fits the Fashion category for quick, descriptive gameplay."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     },
     {
       "word": "Seamstress",
       "difficulty": "easy",
-      "description": "Seamstress is a clueable term relevant to Fashion."
+      "description": "Clothing clue; use material, fit, and cultural trend association."
     }
   ],
   "Miscellaneous": [
@@ -9882,3748 +9882,3748 @@ const categories = {
     {
       "word": "Festival",
       "difficulty": "hard",
-      "description": "Festival is commonly used in Miscellaneous themed clues."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Ceremony",
       "difficulty": "easy",
-      "description": "Ceremony is commonly used in Miscellaneous themed clues."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Tradition",
       "difficulty": "easy",
-      "description": "Tradition fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Innovation",
       "difficulty": "easy",
-      "description": "Innovation is a clueable term relevant to Miscellaneous."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Debate",
       "difficulty": "hard",
-      "description": "Debate is commonly used in Miscellaneous themed clues."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Puzzle",
       "difficulty": "easy",
-      "description": "Puzzle fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Masterpiece",
       "difficulty": "easy",
-      "description": "Masterpiece is a clueable term relevant to Miscellaneous."
+      "description": "Mixed-category clue; use everyday context and distinguishing feature."
     },
     {
       "word": "Landmark",
       "difficulty": "easy",
-      "description": "Landmark is a clueable term relevant to Miscellaneous."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Milestone",
       "difficulty": "hard",
-      "description": "Milestone is a useful Miscellaneous reference for fast team guessing rounds."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Breakthrough",
       "difficulty": "easy",
-      "description": "Breakthrough fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Negotiation",
       "difficulty": "easy",
-      "description": "Negotiation fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Strategy",
       "difficulty": "easy",
-      "description": "Strategy is commonly used in Miscellaneous themed clues."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Blueprint",
       "difficulty": "hard",
-      "description": "Blueprint is a useful Miscellaneous reference for fast team guessing rounds."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Prototype",
       "difficulty": "easy",
-      "description": "Prototype is commonly used in Miscellaneous themed clues."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Headline",
       "difficulty": "easy",
-      "description": "Headline is a useful Miscellaneous reference for fast team guessing rounds."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Timeline",
       "difficulty": "easy",
-      "description": "Timeline is a useful Miscellaneous reference for fast team guessing rounds."
+      "description": "Mixed-category clue; use everyday context and distinguishing feature."
     },
     {
       "word": "Checklist",
       "difficulty": "hard",
-      "description": "Checklist fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "Mixed-category clue; use everyday context and distinguishing feature."
     },
     {
       "word": "Goalpost",
       "difficulty": "easy",
-      "description": "Goalpost is commonly used in Miscellaneous themed clues."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Backstory",
       "difficulty": "easy",
-      "description": "Backstory fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Wildcard",
       "difficulty": "easy",
-      "description": "Wildcard is a useful Miscellaneous reference for fast team guessing rounds."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Countdown",
       "difficulty": "hard",
-      "description": "Countdown is commonly used in Miscellaneous themed clues."
+      "description": "Mixed-category clue; use everyday context and distinguishing feature."
     },
     {
       "word": "Crowd",
       "difficulty": "easy",
-      "description": "Crowd fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Spotlight",
       "difficulty": "easy",
-      "description": "Spotlight is commonly used in Miscellaneous themed clues."
+      "description": "Mixed-category clue; use everyday context and distinguishing feature."
     },
     {
       "word": "Compass",
       "difficulty": "easy",
-      "description": "Compass fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "Mixed-category clue; use everyday context and distinguishing feature."
     },
     {
       "word": "Lifeline",
       "difficulty": "hard",
-      "description": "Lifeline is a clueable term relevant to Miscellaneous."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Mic Drop",
       "difficulty": "easy",
-      "description": "Mic Drop is a clueable term relevant to Miscellaneous."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Curveball",
       "difficulty": "easy",
-      "description": "Curveball fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "General clue; describe function, context, and one memorable trait."
     },
     {
       "word": "Highlight Reel",
       "difficulty": "easy",
-      "description": "Highlight Reel fits the Miscellaneous category for quick, descriptive gameplay."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Fast Track",
       "difficulty": "hard",
-      "description": "Fast Track is a clueable term relevant to Miscellaneous."
+      "description": "Broad-topic reference; start with category, then a practical use case."
     },
     {
       "word": "Home Stretch",
       "difficulty": "easy",
-      "description": "Home Stretch is a useful Miscellaneous reference for fast team guessing rounds."
+      "description": "Mixed-category clue; use everyday context and distinguishing feature."
     }
   ],
   "Business, Brands, and Companies": [
     {
       "word": "Apple",
       "difficulty": "hard",
-      "description": "Apple is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Microsoft",
       "difficulty": "easy",
-      "description": "Microsoft is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Google",
       "difficulty": "easy",
-      "description": "Google is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Amazon",
       "difficulty": "easy",
-      "description": "Amazon is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Meta",
       "difficulty": "hard",
-      "description": "Meta is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Tesla",
       "difficulty": "easy",
-      "description": "Tesla is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Samsung",
       "difficulty": "easy",
-      "description": "Samsung is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Sony",
       "difficulty": "easy",
-      "description": "Sony is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Intel",
       "difficulty": "hard",
-      "description": "Intel is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Nvidia",
       "difficulty": "easy",
-      "description": "Nvidia is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "IBM",
       "difficulty": "easy",
-      "description": "IBM is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "Oracle",
       "difficulty": "easy",
-      "description": "Oracle is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "Adobe",
       "difficulty": "hard",
-      "description": "Adobe is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Salesforce",
       "difficulty": "hard",
-      "description": "Salesforce is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Cisco",
       "difficulty": "hard",
-      "description": "Cisco is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Qualcomm",
       "difficulty": "hard",
-      "description": "Qualcomm is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "SpaceX",
       "difficulty": "hard",
-      "description": "SpaceX is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Business clue; describe industry, products/services, and market reputation."
     },
     {
       "word": "OpenAI",
       "difficulty": "hard",
-      "description": "OpenAI is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "Netflix",
       "difficulty": "easy",
-      "description": "Netflix is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Disney",
       "difficulty": "easy",
-      "description": "Disney is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Nike",
       "difficulty": "hard",
-      "description": "Nike is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Adidas",
       "difficulty": "easy",
-      "description": "Adidas is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Puma",
       "difficulty": "easy",
-      "description": "Puma is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Coca-Cola",
       "difficulty": "easy",
-      "description": "Coca-Cola is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Pepsi",
       "difficulty": "hard",
-      "description": "Pepsi is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Starbucks",
       "difficulty": "easy",
-      "description": "Starbucks is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "McDonald's",
       "difficulty": "easy",
-      "description": "McDonald's is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "KFC",
       "difficulty": "easy",
-      "description": "KFC is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "Burger King",
       "difficulty": "hard",
-      "description": "Burger King is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Subway",
       "difficulty": "easy",
-      "description": "Subway is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Domino's",
       "difficulty": "easy",
-      "description": "Domino's is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Pizza Hut",
       "difficulty": "easy",
-      "description": "Pizza Hut is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Uber",
       "difficulty": "hard",
-      "description": "Uber is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "Airbnb",
       "difficulty": "easy",
-      "description": "Airbnb is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "PayPal",
       "difficulty": "easy",
-      "description": "PayPal is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Visa",
       "difficulty": "easy",
-      "description": "Visa is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Mastercard",
       "difficulty": "hard",
-      "description": "Mastercard is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "American Express",
       "difficulty": "hard",
-      "description": "American Express is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "JPMorgan Chase",
       "difficulty": "hard",
-      "description": "JPMorgan Chase is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Business clue; describe industry, products/services, and market reputation."
     },
     {
       "word": "Goldman Sachs",
       "difficulty": "hard",
-      "description": "Goldman Sachs is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Morgan Stanley",
       "difficulty": "hard",
-      "description": "Morgan Stanley is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "HSBC",
       "difficulty": "hard",
-      "description": "HSBC is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Barclays",
       "difficulty": "hard",
-      "description": "Barclays is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Shell",
       "difficulty": "easy",
-      "description": "Shell is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Global energy company known for petrol stations and a yellow-red seashell logo."
     },
     {
       "word": "BP",
       "difficulty": "hard",
-      "description": "BP is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "ExxonMobil",
       "difficulty": "hard",
-      "description": "ExxonMobil is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Chevron",
       "difficulty": "easy",
-      "description": "Chevron is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "TotalEnergies",
       "difficulty": "hard",
-      "description": "TotalEnergies is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "Toyota",
       "difficulty": "hard",
-      "description": "Toyota is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "Volkswagen",
       "difficulty": "easy",
-      "description": "Volkswagen is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "BMW",
       "difficulty": "easy",
-      "description": "BMW is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "Mercedes-Benz",
       "difficulty": "easy",
-      "description": "Mercedes-Benz is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Audi",
       "difficulty": "hard",
-      "description": "Audi is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Ferrari",
       "difficulty": "easy",
-      "description": "Ferrari is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Porsche",
       "difficulty": "easy",
-      "description": "Porsche is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Business clue; describe industry, products/services, and market reputation."
     },
     {
       "word": "Ford",
       "difficulty": "easy",
-      "description": "Ford is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "General Motors",
       "difficulty": "hard",
-      "description": "General Motors is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Boeing",
       "difficulty": "easy",
-      "description": "Boeing is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "Airbus",
       "difficulty": "easy",
-      "description": "Airbus is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "Lockheed Martin",
       "difficulty": "hard",
-      "description": "Lockheed Martin is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Siemens",
       "difficulty": "hard",
-      "description": "Siemens is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Bosch",
       "difficulty": "easy",
-      "description": "Bosch is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "IKEA",
       "difficulty": "easy",
-      "description": "IKEA is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "Walmart",
       "difficulty": "easy",
-      "description": "Walmart is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Costco",
       "difficulty": "hard",
-      "description": "Costco is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Target",
       "difficulty": "easy",
-      "description": "Target is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "eBay",
       "difficulty": "easy",
-      "description": "eBay is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Alibaba",
       "difficulty": "easy",
-      "description": "Alibaba is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Tencent",
       "difficulty": "hard",
-      "description": "Tencent is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "ByteDance",
       "difficulty": "hard",
-      "description": "ByteDance is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "TSMC",
       "difficulty": "hard",
-      "description": "TSMC is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "ASML",
       "difficulty": "hard",
-      "description": "ASML is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Zara",
       "difficulty": "hard",
-      "description": "Zara is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "H&M",
       "difficulty": "easy",
-      "description": "H&M is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Uniqlo",
       "difficulty": "easy",
-      "description": "Uniqlo is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "LVMH",
       "difficulty": "hard",
-      "description": "LVMH is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Gucci",
       "difficulty": "hard",
-      "description": "Gucci is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Prada",
       "difficulty": "easy",
-      "description": "Prada is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Business clue; describe industry, products/services, and market reputation."
     },
     {
       "word": "Rolex",
       "difficulty": "easy",
-      "description": "Rolex is a recognizable company, brand, or market term used in business clues."
+      "description": "A recognizable company, brand, or market term used in business clues."
     },
     {
       "word": "Cartier",
       "difficulty": "easy",
-      "description": "Cartier is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     },
     {
       "word": "Samsung Electronics",
       "difficulty": "hard",
-      "description": "Samsung Electronics is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "Shopify",
       "difficulty": "hard",
-      "description": "Shopify is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Stripe",
       "difficulty": "hard",
-      "description": "Stripe is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "LinkedIn",
       "difficulty": "easy",
-      "description": "LinkedIn is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Brand/company reference; start with what it sells, then where it is recognized."
     },
     {
       "word": "YouTube",
       "difficulty": "hard",
-      "description": "YouTube is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "TikTok",
       "difficulty": "easy",
-      "description": "TikTok is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Business clue; describe industry, products/services, and market reputation."
     },
     {
       "word": "Spotify",
       "difficulty": "easy",
-      "description": "Spotify is commonly referenced in finance, tech, retail, or entrepreneurship clues."
+      "description": "Corporate clue; use sector, customer use case, and a signature association."
     },
     {
       "word": "Snapchat",
       "difficulty": "easy",
-      "description": "Snapchat is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Red Bull",
       "difficulty": "hard",
-      "description": "Red Bull is linked to global commerce, corporate strategy, or brand culture."
+      "description": "Linked to global commerce, corporate strategy, or brand culture."
     },
     {
       "word": "Nando's",
       "difficulty": "hard",
-      "description": "Nando's is a business-world clue often associated with products, services, or markets."
+      "description": "A business-world clue often associated with products, services, or markets."
     }
   ],
   "Politics and Government": [
     {
       "word": "Democracy",
       "difficulty": "hard",
-      "description": "Democracy appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Republic",
       "difficulty": "easy",
-      "description": "Republic is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Constitution",
       "difficulty": "easy",
-      "description": "Constitution is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Parliament",
       "difficulty": "easy",
-      "description": "Parliament is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Congress",
       "difficulty": "hard",
-      "description": "Congress is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Senate",
       "difficulty": "easy",
-      "description": "Senate appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Cabinet",
       "difficulty": "easy",
-      "description": "Cabinet is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Prime Minister",
       "difficulty": "easy",
-      "description": "Prime Minister is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "President",
       "difficulty": "hard",
-      "description": "President appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Vice President",
       "difficulty": "easy",
-      "description": "Vice President is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Election",
       "difficulty": "easy",
-      "description": "Election is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Ballot Box",
       "difficulty": "easy",
-      "description": "Ballot Box is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Referendum",
       "difficulty": "hard",
-      "description": "Referendum appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Coalition Government",
       "difficulty": "easy",
-      "description": "Coalition Government is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Opposition Party",
       "difficulty": "easy",
-      "description": "Opposition Party is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Campaign Trail",
       "difficulty": "easy",
-      "description": "Campaign Trail is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Manifesto",
       "difficulty": "hard",
-      "description": "Manifesto is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Term Limit",
       "difficulty": "easy",
-      "description": "Term Limit appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Supreme Court",
       "difficulty": "easy",
-      "description": "Supreme Court appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Separation of Powers",
       "difficulty": "hard",
-      "description": "Separation of Powers is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Checks and Balances",
       "difficulty": "hard",
-      "description": "Checks and Balances is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Federalism",
       "difficulty": "easy",
-      "description": "Federalism is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Monarchy",
       "difficulty": "easy",
-      "description": "Monarchy is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Dictatorship",
       "difficulty": "easy",
-      "description": "Dictatorship is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Sanctions",
       "difficulty": "hard",
-      "description": "Sanctions is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Embargo",
       "difficulty": "easy",
-      "description": "Embargo is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Diplomacy",
       "difficulty": "easy",
-      "description": "Diplomacy is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Ambassador",
       "difficulty": "easy",
-      "description": "Ambassador appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "United Nations",
       "difficulty": "hard",
-      "description": "United Nations is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Security Council",
       "difficulty": "easy",
-      "description": "Security Council appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "NATO",
       "difficulty": "easy",
-      "description": "NATO is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "African Union",
       "difficulty": "easy",
-      "description": "African Union appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "BRICS",
       "difficulty": "hard",
-      "description": "BRICS is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "G20",
       "difficulty": "easy",
-      "description": "G20 is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Summit",
       "difficulty": "easy",
-      "description": "Summit is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "State of the Nation",
       "difficulty": "hard",
-      "description": "State of the Nation is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Impeachment",
       "difficulty": "hard",
-      "description": "Impeachment appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Filibuster",
       "difficulty": "hard",
-      "description": "Filibuster is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Gerrymandering",
       "difficulty": "hard",
-      "description": "Gerrymandering is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Census",
       "difficulty": "easy",
-      "description": "Census is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Public Policy",
       "difficulty": "hard",
-      "description": "Public Policy appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Civil Service",
       "difficulty": "easy",
-      "description": "Civil Service is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Lobbying",
       "difficulty": "easy",
-      "description": "Lobbying is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Whip",
       "difficulty": "easy",
-      "description": "Whip is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Municipal Council",
       "difficulty": "hard",
-      "description": "Municipal Council is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Mayor",
       "difficulty": "easy",
-      "description": "Mayor is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Governor",
       "difficulty": "easy",
-      "description": "Governor is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Ministry of Finance",
       "difficulty": "easy",
-      "description": "Ministry of Finance appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Treasury",
       "difficulty": "hard",
-      "description": "Treasury appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Budget Speech",
       "difficulty": "easy",
-      "description": "Budget Speech is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Tax Reform",
       "difficulty": "easy",
-      "description": "Tax Reform is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Trade Agreement",
       "difficulty": "easy",
-      "description": "Trade Agreement appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Bilateral Talks",
       "difficulty": "hard",
-      "description": "Bilateral Talks is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Peace Treaty",
       "difficulty": "easy",
-      "description": "Peace Treaty appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Ceasefire",
       "difficulty": "easy",
-      "description": "Ceasefire appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Cabinet Reshuffle",
       "difficulty": "hard",
-      "description": "Cabinet Reshuffle is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Foreign Minister",
       "difficulty": "hard",
-      "description": "Foreign Minister is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Interior Minister",
       "difficulty": "easy",
-      "description": "Interior Minister is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Defense Minister",
       "difficulty": "easy",
-      "description": "Defense Minister appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Campaign Donation",
       "difficulty": "easy",
-      "description": "Campaign Donation appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Polling Station",
       "difficulty": "hard",
-      "description": "Polling Station is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Voter Registration",
       "difficulty": "easy",
-      "description": "Voter Registration is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Electoral Commission",
       "difficulty": "hard",
-      "description": "Electoral Commission appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Exit Poll",
       "difficulty": "easy",
-      "description": "Exit Poll is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "By-election",
       "difficulty": "hard",
-      "description": "By-election is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Coalition Talks",
       "difficulty": "hard",
-      "description": "Coalition Talks appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Minority Government",
       "difficulty": "hard",
-      "description": "Minority Government is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Recall Election",
       "difficulty": "hard",
-      "description": "Recall Election is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Martial Law",
       "difficulty": "hard",
-      "description": "Martial Law appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Human Rights Commission",
       "difficulty": "hard",
-      "description": "Human Rights Commission is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Ombudsman",
       "difficulty": "hard",
-      "description": "Ombudsman appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "White House",
       "difficulty": "easy",
-      "description": "White House appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Downing Street",
       "difficulty": "hard",
-      "description": "Downing Street is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "The Kremlin",
       "difficulty": "easy",
-      "description": "The Kremlin is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Union Buildings",
       "difficulty": "easy",
-      "description": "Union Buildings is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "National Assembly",
       "difficulty": "easy",
-      "description": "National Assembly is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "House of Commons",
       "difficulty": "hard",
-      "description": "House of Commons is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "European Parliament",
       "difficulty": "easy",
-      "description": "European Parliament appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Schengen Area",
       "difficulty": "hard",
-      "description": "Schengen Area is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Brexit",
       "difficulty": "easy",
-      "description": "Brexit is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Public Protector",
       "difficulty": "hard",
-      "description": "Public Protector appears in clues about political processes, civic structures, or diplomacy."
+      "description": "Appears in clues about political processes, civic structures, or diplomacy."
     },
     {
       "word": "Constitutional Court",
       "difficulty": "hard",
-      "description": "Constitutional Court is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "National Cabinet",
       "difficulty": "easy",
-      "description": "National Cabinet is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Speaker of Parliament",
       "difficulty": "easy",
-      "description": "Speaker of Parliament is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Motion of No Confidence",
       "difficulty": "hard",
-      "description": "Motion of No Confidence is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Party List",
       "difficulty": "easy",
-      "description": "Party List is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Electoral Roll",
       "difficulty": "hard",
-      "description": "Electoral Roll is a politics or government clue tied to elections, institutions, or power."
+      "description": "A politics or government clue tied to elections, institutions, or power."
     },
     {
       "word": "Border Policy",
       "difficulty": "easy",
-      "description": "Border Policy is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     },
     {
       "word": "Public Hearing",
       "difficulty": "hard",
-      "description": "Public Hearing is a governance-related clue linked to lawmaking, administration, or authority."
+      "description": "A governance-related clue linked to lawmaking, administration, or authority."
     },
     {
       "word": "Diplomatic Mission",
       "difficulty": "hard",
-      "description": "Diplomatic Mission is commonly used when describing public policy, leadership, or state systems."
+      "description": "Commonly used when describing public policy, leadership, or state systems."
     }
   ],
   "Household and Everyday Objects": [
     {
       "word": "Sofa",
       "difficulty": "hard",
-      "description": "Sofa is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Armchair",
       "difficulty": "easy",
-      "description": "Armchair is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Coffee Table",
       "difficulty": "easy",
-      "description": "Coffee Table is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Dining Table",
       "difficulty": "easy",
-      "description": "Dining Table is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Bedframe",
       "difficulty": "hard",
-      "description": "Bedframe is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Mattress",
       "difficulty": "easy",
-      "description": "Mattress is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Pillow",
       "difficulty": "easy",
-      "description": "Pillow is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Blanket",
       "difficulty": "easy",
-      "description": "Blanket is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Duvet",
       "difficulty": "hard",
-      "description": "Duvet is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Wardrobe",
       "difficulty": "hard",
-      "description": "Wardrobe is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Hanger",
       "difficulty": "easy",
-      "description": "Hanger is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Laundry Basket",
       "difficulty": "easy",
-      "description": "Laundry Basket is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Iron",
       "difficulty": "hard",
-      "description": "Iron is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Ironing Board",
       "difficulty": "hard",
-      "description": "Ironing Board is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Vacuum Cleaner",
       "difficulty": "easy",
-      "description": "Vacuum Cleaner is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Mop",
       "difficulty": "easy",
-      "description": "Mop is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Broom",
       "difficulty": "hard",
-      "description": "Broom is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Dustpan",
       "difficulty": "easy",
-      "description": "Dustpan is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Bucket",
       "difficulty": "easy",
-      "description": "Bucket is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Dishwasher",
       "difficulty": "easy",
-      "description": "Dishwasher is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Microwave",
       "difficulty": "hard",
-      "description": "Microwave is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Toaster",
       "difficulty": "easy",
-      "description": "Toaster is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Blender",
       "difficulty": "easy",
-      "description": "Blender is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Kettle",
       "difficulty": "easy",
-      "description": "Kettle is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Pressure Cooker",
       "difficulty": "hard",
-      "description": "Pressure Cooker is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Frying Pan",
       "difficulty": "easy",
-      "description": "Frying Pan is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Saucepan",
       "difficulty": "easy",
-      "description": "Saucepan is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Cutting Board",
       "difficulty": "easy",
-      "description": "Cutting Board is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Chef's Knife",
       "difficulty": "hard",
-      "description": "Chef's Knife is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Peeler",
       "difficulty": "easy",
-      "description": "Peeler is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Grater",
       "difficulty": "easy",
-      "description": "Grater is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Colander",
       "difficulty": "hard",
-      "description": "Colander is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Measuring Cup",
       "difficulty": "hard",
-      "description": "Measuring Cup is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Tupperware",
       "difficulty": "hard",
-      "description": "Tupperware is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Thermos",
       "difficulty": "hard",
-      "description": "Thermos is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Water Bottle",
       "difficulty": "easy",
-      "description": "Water Bottle is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Mug",
       "difficulty": "hard",
-      "description": "Mug is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Plate",
       "difficulty": "easy",
-      "description": "Plate is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Bowl",
       "difficulty": "easy",
-      "description": "Bowl is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Fork",
       "difficulty": "easy",
-      "description": "Fork is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Spoon",
       "difficulty": "hard",
-      "description": "Spoon is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Knife",
       "difficulty": "easy",
-      "description": "Knife is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Chopsticks",
       "difficulty": "easy",
-      "description": "Chopsticks is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Napkin",
       "difficulty": "easy",
-      "description": "Napkin is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Trash Can",
       "difficulty": "hard",
-      "description": "Trash Can is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Recycling Bin",
       "difficulty": "hard",
-      "description": "Recycling Bin is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Light Bulb",
       "difficulty": "easy",
-      "description": "Light Bulb is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Extension Cord",
       "difficulty": "hard",
-      "description": "Extension Cord is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Power Strip",
       "difficulty": "hard",
-      "description": "Power Strip is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Remote Control",
       "difficulty": "easy",
-      "description": "Remote Control is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Alarm Clock",
       "difficulty": "easy",
-      "description": "Alarm Clock is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Wall Clock",
       "difficulty": "easy",
-      "description": "Wall Clock is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Mirror",
       "difficulty": "hard",
-      "description": "Mirror is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Shower Curtain",
       "difficulty": "hard",
-      "description": "Shower Curtain is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Toothbrush",
       "difficulty": "easy",
-      "description": "Toothbrush is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Toothpaste",
       "difficulty": "easy",
-      "description": "Toothpaste is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Dental Floss",
       "difficulty": "hard",
-      "description": "Dental Floss is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Hair Dryer",
       "difficulty": "easy",
-      "description": "Hair Dryer is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Razor",
       "difficulty": "easy",
-      "description": "Razor is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Shampoo",
       "difficulty": "easy",
-      "description": "Shampoo is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Conditioner",
       "difficulty": "hard",
-      "description": "Conditioner is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Soap Bar",
       "difficulty": "easy",
-      "description": "Soap Bar is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Hand Sanitizer",
       "difficulty": "easy",
-      "description": "Hand Sanitizer is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "First Aid Kit",
       "difficulty": "easy",
-      "description": "First Aid Kit is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Bandage",
       "difficulty": "hard",
-      "description": "Bandage is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Tape Measure",
       "difficulty": "hard",
-      "description": "Tape Measure is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Screwdriver",
       "difficulty": "easy",
-      "description": "Screwdriver is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Hammer",
       "difficulty": "easy",
-      "description": "Hammer is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Pliers",
       "difficulty": "hard",
-      "description": "Pliers is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Wrench",
       "difficulty": "hard",
-      "description": "Wrench is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Drill",
       "difficulty": "hard",
-      "description": "Drill is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Nail",
       "difficulty": "easy",
-      "description": "Nail is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Screw",
       "difficulty": "hard",
-      "description": "Screw is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Tape",
       "difficulty": "easy",
-      "description": "Tape is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Glue Gun",
       "difficulty": "hard",
-      "description": "Glue Gun is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Scissors",
       "difficulty": "easy",
-      "description": "Scissors is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Stapler",
       "difficulty": "hard",
-      "description": "Stapler is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Paper Clip",
       "difficulty": "easy",
-      "description": "Paper Clip is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Notebook",
       "difficulty": "easy",
-      "description": "Notebook is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Pen",
       "difficulty": "easy",
-      "description": "Pen is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Pencil",
       "difficulty": "hard",
-      "description": "Pencil is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Eraser",
       "difficulty": "easy",
-      "description": "Eraser is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Highlighter",
       "difficulty": "hard",
-      "description": "Highlighter is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Backpack",
       "difficulty": "easy",
-      "description": "Backpack is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Umbrella",
       "difficulty": "hard",
-      "description": "Umbrella is an everyday home item used for cleaning, cooking, comfort, or routine tasks."
+      "description": "An everyday home item used for cleaning, cooking, comfort, or routine tasks."
     },
     {
       "word": "Keychain",
       "difficulty": "easy",
-      "description": "Keychain is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Wallet",
       "difficulty": "easy",
-      "description": "Wallet is a familiar object linked to daily life and household routines."
+      "description": "A familiar object linked to daily life and household routines."
     },
     {
       "word": "Sunglasses",
       "difficulty": "easy",
-      "description": "Sunglasses is a common household object people use regularly at home."
+      "description": "A common household object people use regularly at home."
     },
     {
       "word": "Reusable Bag",
       "difficulty": "hard",
-      "description": "Reusable Bag is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     },
     {
       "word": "Flashlight",
       "difficulty": "hard",
-      "description": "Flashlight is a practical everyday item found in many homes."
+      "description": "A practical everyday item found in many homes."
     }
   ],
   "Professions and Workplaces": [
     {
       "word": "Doctor",
       "difficulty": "hard",
-      "description": "Doctor is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Nurse",
       "difficulty": "easy",
-      "description": "Nurse is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Surgeon",
       "difficulty": "easy",
-      "description": "Surgeon is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Pharmacist",
       "difficulty": "easy",
-      "description": "Pharmacist is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Dentist",
       "difficulty": "hard",
-      "description": "Dentist is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Paramedic",
       "difficulty": "easy",
-      "description": "Paramedic is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Physiotherapist",
       "difficulty": "hard",
-      "description": "Physiotherapist is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Veterinarian",
       "difficulty": "easy",
-      "description": "Veterinarian is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Teacher",
       "difficulty": "hard",
-      "description": "Teacher is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Principal",
       "difficulty": "easy",
-      "description": "Principal is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Professor",
       "difficulty": "easy",
-      "description": "Professor is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Lecturer",
       "difficulty": "easy",
-      "description": "Lecturer is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Accountant",
       "difficulty": "hard",
-      "description": "Accountant is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Auditor",
       "difficulty": "easy",
-      "description": "Auditor is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Financial Analyst",
       "difficulty": "hard",
-      "description": "Financial Analyst is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Banker",
       "difficulty": "easy",
-      "description": "Banker is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Investment Broker",
       "difficulty": "hard",
-      "description": "Investment Broker is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Lawyer",
       "difficulty": "easy",
-      "description": "Lawyer is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Prosecutor",
       "difficulty": "easy",
-      "description": "Prosecutor is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Judge",
       "difficulty": "easy",
-      "description": "Judge is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Paralegal",
       "difficulty": "hard",
-      "description": "Paralegal is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Police Officer",
       "difficulty": "easy",
-      "description": "Police Officer is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Detective",
       "difficulty": "easy",
-      "description": "Detective is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Firefighter",
       "difficulty": "easy",
-      "description": "Firefighter is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Soldier",
       "difficulty": "hard",
-      "description": "Soldier is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Pilot",
       "difficulty": "easy",
-      "description": "Pilot is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Flight Attendant",
       "difficulty": "easy",
-      "description": "Flight Attendant is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Air Traffic Controller",
       "difficulty": "hard",
-      "description": "Air Traffic Controller is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Mechanic",
       "difficulty": "hard",
-      "description": "Mechanic is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Electrician",
       "difficulty": "easy",
-      "description": "Electrician is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Plumber",
       "difficulty": "easy",
-      "description": "Plumber is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Carpenter",
       "difficulty": "easy",
-      "description": "Carpenter is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Welder",
       "difficulty": "hard",
-      "description": "Welder is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Civil Engineer",
       "difficulty": "hard",
-      "description": "Civil Engineer is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Architect",
       "difficulty": "easy",
-      "description": "Architect is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Surveyor",
       "difficulty": "hard",
-      "description": "Surveyor is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Software Engineer",
       "difficulty": "hard",
-      "description": "Software Engineer is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Data Scientist",
       "difficulty": "easy",
-      "description": "Data Scientist is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Cybersecurity Analyst",
       "difficulty": "hard",
-      "description": "Cybersecurity Analyst is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "UX Designer",
       "difficulty": "hard",
-      "description": "UX Designer is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Graphic Designer",
       "difficulty": "hard",
-      "description": "Graphic Designer is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Photographer",
       "difficulty": "easy",
-      "description": "Photographer is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Journalist",
       "difficulty": "easy",
-      "description": "Journalist is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Editor",
       "difficulty": "easy",
-      "description": "Editor is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "News Anchor",
       "difficulty": "hard",
-      "description": "News Anchor is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Radio Host",
       "difficulty": "easy",
-      "description": "Radio Host is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Podcaster",
       "difficulty": "easy",
-      "description": "Podcaster is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Chef",
       "difficulty": "easy",
-      "description": "Chef is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Baker",
       "difficulty": "hard",
-      "description": "Baker is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Waiter",
       "difficulty": "easy",
-      "description": "Waiter is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Barista",
       "difficulty": "easy",
-      "description": "Barista is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Farmer",
       "difficulty": "easy",
-      "description": "Farmer is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Fisherman",
       "difficulty": "hard",
-      "description": "Fisherman is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Miner",
       "difficulty": "easy",
-      "description": "Miner is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Geologist",
       "difficulty": "hard",
-      "description": "Geologist is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Factory Worker",
       "difficulty": "easy",
-      "description": "Factory Worker is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Machine Operator",
       "difficulty": "hard",
-      "description": "Machine Operator is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Forklift Driver",
       "difficulty": "easy",
-      "description": "Forklift Driver is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Truck Driver",
       "difficulty": "easy",
-      "description": "Truck Driver is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Taxi Driver",
       "difficulty": "easy",
-      "description": "Taxi Driver is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Bus Driver",
       "difficulty": "hard",
-      "description": "Bus Driver is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Train Conductor",
       "difficulty": "easy",
-      "description": "Train Conductor is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Logistician",
       "difficulty": "hard",
-      "description": "Logistician is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Warehouse Manager",
       "difficulty": "hard",
-      "description": "Warehouse Manager is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Retail Cashier",
       "difficulty": "hard",
-      "description": "Retail Cashier is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Store Manager",
       "difficulty": "easy",
-      "description": "Store Manager is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Sales Representative",
       "difficulty": "easy",
-      "description": "Sales Representative is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Real Estate Agent",
       "difficulty": "easy",
-      "description": "Real Estate Agent is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Insurance Broker",
       "difficulty": "hard",
-      "description": "Insurance Broker is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Social Worker",
       "difficulty": "easy",
-      "description": "Social Worker is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Psychologist",
       "difficulty": "easy",
-      "description": "Psychologist is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Counsellor",
       "difficulty": "hard",
-      "description": "Counsellor is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Therapist",
       "difficulty": "hard",
-      "description": "Therapist is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Event Planner",
       "difficulty": "easy",
-      "description": "Event Planner is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Wedding Planner",
       "difficulty": "easy",
-      "description": "Wedding Planner is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Interior Designer",
       "difficulty": "easy",
-      "description": "Interior Designer is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Fashion Designer",
       "difficulty": "hard",
-      "description": "Fashion Designer is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Actor",
       "difficulty": "easy",
-      "description": "Actor is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     },
     {
       "word": "Music Producer",
       "difficulty": "easy",
-      "description": "Music Producer is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "DJ",
       "difficulty": "easy",
-      "description": "DJ is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Choreographer",
       "difficulty": "hard",
-      "description": "Choreographer is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Personal Trainer",
       "difficulty": "easy",
-      "description": "Personal Trainer is used in clues about careers, occupations, and workplace responsibilities."
+      "description": "Used in clues about careers, occupations, and workplace responsibilities."
     },
     {
       "word": "Coach",
       "difficulty": "easy",
-      "description": "Coach is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Referee",
       "difficulty": "hard",
-      "description": "Referee is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Scientist",
       "difficulty": "hard",
-      "description": "Scientist is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Lab Technician",
       "difficulty": "hard",
-      "description": "Lab Technician is a job-related clue tied to specific skills and work environments."
+      "description": "A job-related clue tied to specific skills and work environments."
     },
     {
       "word": "Researcher",
       "difficulty": "hard",
-      "description": "Researcher is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Museum Curator",
       "difficulty": "hard",
-      "description": "Museum Curator is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Librarian",
       "difficulty": "hard",
-      "description": "Librarian is a profession or workplace role often clued through duties, tools, or uniforms."
+      "description": "A profession or workplace role often clued through duties, tools, or uniforms."
     },
     {
       "word": "Park Ranger",
       "difficulty": "easy",
-      "description": "Park Ranger is a role people describe through what the worker does each day."
+      "description": "A role people describe through what the worker does each day."
     }
   ],
   "Travel, Transport, and Aviation": [
     {
       "word": "Passport",
       "difficulty": "hard",
-      "description": "Passport is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Visa",
       "difficulty": "easy",
-      "description": "Visa is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Boarding Pass",
       "difficulty": "easy",
-      "description": "Boarding Pass is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Check-in",
       "difficulty": "hard",
-      "description": "Check-in is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Carry-on",
       "difficulty": "hard",
-      "description": "Carry-on is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Suitcase",
       "difficulty": "easy",
-      "description": "Suitcase is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Transport reference; start with mode of movement and passenger/logistics use."
     },
     {
       "word": "Itinerary",
       "difficulty": "easy",
-      "description": "Itinerary is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Layover",
       "difficulty": "easy",
-      "description": "Layover is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Terminal",
       "difficulty": "hard",
-      "description": "Terminal appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Gate",
       "difficulty": "easy",
-      "description": "Gate is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Runway",
       "difficulty": "easy",
-      "description": "Runway appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Air Traffic Control",
       "difficulty": "easy",
-      "description": "Air Traffic Control is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Cockpit",
       "difficulty": "hard",
-      "description": "Cockpit is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Turbulence",
       "difficulty": "easy",
-      "description": "Turbulence is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Jet Lag",
       "difficulty": "easy",
-      "description": "Jet Lag is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Black Box",
       "difficulty": "easy",
-      "description": "Black Box is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Emergency Exit",
       "difficulty": "hard",
-      "description": "Emergency Exit appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Seatbelt Sign",
       "difficulty": "easy",
-      "description": "Seatbelt Sign is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Travel clue; describe where it appears in a journey and what function it serves."
     },
     {
       "word": "Economy Class",
       "difficulty": "easy",
-      "description": "Economy Class is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Business Class",
       "difficulty": "easy",
-      "description": "Business Class is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Travel clue; describe where it appears in a journey and what function it serves."
     },
     {
       "word": "First Class",
       "difficulty": "hard",
-      "description": "First Class is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Frequent Flyer",
       "difficulty": "hard",
-      "description": "Frequent Flyer is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Travel clue; describe where it appears in a journey and what function it serves."
     },
     {
       "word": "Customs",
       "difficulty": "easy",
-      "description": "Customs is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Immigration",
       "difficulty": "easy",
-      "description": "Immigration appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Duty Free",
       "difficulty": "hard",
-      "description": "Duty Free is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Car Rental",
       "difficulty": "easy",
-      "description": "Car Rental is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Road Trip",
       "difficulty": "easy",
-      "description": "Road Trip is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Toll Booth",
       "difficulty": "easy",
-      "description": "Toll Booth appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Roundabout",
       "difficulty": "hard",
-      "description": "Roundabout is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Traffic Jam",
       "difficulty": "easy",
-      "description": "Traffic Jam appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Carpool",
       "difficulty": "easy",
-      "description": "Carpool is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "GPS",
       "difficulty": "easy",
-      "description": "GPS appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Metro",
       "difficulty": "hard",
-      "description": "Metro is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Tram",
       "difficulty": "easy",
-      "description": "Tram is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "High-speed Rail",
       "difficulty": "hard",
-      "description": "High-speed Rail is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Bullet Train",
       "difficulty": "hard",
-      "description": "Bullet Train appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Platform",
       "difficulty": "easy",
-      "description": "Platform is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Ticket Inspector",
       "difficulty": "easy",
-      "description": "Ticket Inspector is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Travel clue; describe where it appears in a journey and what function it serves."
     },
     {
       "word": "Ferry",
       "difficulty": "easy",
-      "description": "Ferry is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Cruise Ship",
       "difficulty": "hard",
-      "description": "Cruise Ship is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Lifeboat",
       "difficulty": "easy",
-      "description": "Lifeboat is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Port",
       "difficulty": "easy",
-      "description": "Port is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Harbor",
       "difficulty": "easy",
-      "description": "Harbor appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Canal",
       "difficulty": "hard",
-      "description": "Canal is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Bridge",
       "difficulty": "easy",
-      "description": "Bridge is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Tunnel",
       "difficulty": "easy",
-      "description": "Tunnel appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Taxi Rank",
       "difficulty": "easy",
-      "description": "Taxi Rank is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Ride-share",
       "difficulty": "hard",
-      "description": "Ride-share is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "E-hailing",
       "difficulty": "hard",
-      "description": "E-hailing is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Bicycle Lane",
       "difficulty": "easy",
-      "description": "Bicycle Lane is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Helmet",
       "difficulty": "easy",
-      "description": "Helmet is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Scooter",
       "difficulty": "hard",
-      "description": "Scooter is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Motorbike",
       "difficulty": "easy",
-      "description": "Motorbike is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Caravan",
       "difficulty": "easy",
-      "description": "Caravan is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "RV",
       "difficulty": "easy",
-      "description": "RV is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Camping Site",
       "difficulty": "hard",
-      "description": "Camping Site is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Hostel",
       "difficulty": "easy",
-      "description": "Hostel is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Guesthouse",
       "difficulty": "easy",
-      "description": "Guesthouse is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Bed and Breakfast",
       "difficulty": "hard",
-      "description": "Bed and Breakfast appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Hotel Concierge",
       "difficulty": "hard",
-      "description": "Hotel Concierge is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Room Service",
       "difficulty": "easy",
-      "description": "Room Service is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Check-out",
       "difficulty": "easy",
-      "description": "Check-out is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Travel Insurance",
       "difficulty": "easy",
-      "description": "Travel Insurance appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Currency Exchange",
       "difficulty": "hard",
-      "description": "Currency Exchange appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Time Zone",
       "difficulty": "easy",
-      "description": "Time Zone appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Red-eye Flight",
       "difficulty": "hard",
-      "description": "Red-eye Flight is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Stopover",
       "difficulty": "easy",
-      "description": "Stopover is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Charter Flight",
       "difficulty": "hard",
-      "description": "Charter Flight is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     },
     {
       "word": "Seaplane",
       "difficulty": "hard",
-      "description": "Seaplane appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Helicopter",
       "difficulty": "easy",
-      "description": "Helicopter is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Hot Air Balloon",
       "difficulty": "easy",
-      "description": "Hot Air Balloon is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Travel clue; describe where it appears in a journey and what function it serves."
     },
     {
       "word": "Parachute",
       "difficulty": "hard",
-      "description": "Parachute is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Border Crossing",
       "difficulty": "easy",
-      "description": "Border Crossing is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Embarkation",
       "difficulty": "hard",
-      "description": "Embarkation is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Disembarkation",
       "difficulty": "hard",
-      "description": "Disembarkation appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Transit Lounge",
       "difficulty": "hard",
-      "description": "Transit Lounge is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Transport reference; start with mode of movement and passenger/logistics use."
     },
     {
       "word": "Window Seat",
       "difficulty": "easy",
-      "description": "Window Seat appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Aisle Seat",
       "difficulty": "hard",
-      "description": "Aisle Seat is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Overhead Bin",
       "difficulty": "hard",
-      "description": "Overhead Bin appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Baggage Claim",
       "difficulty": "hard",
-      "description": "Baggage Claim is a travel or transport clue linked to flights, roads, transit, or logistics."
+      "description": "A travel or transport clue linked to flights, roads, transit, or logistics."
     },
     {
       "word": "Lost Luggage",
       "difficulty": "hard",
-      "description": "Lost Luggage appears in clues about airports, journeys, tickets, or movement between places."
+      "description": "Appears in clues about airports, journeys, tickets, or movement between places."
     },
     {
       "word": "Travel Adapter",
       "difficulty": "hard",
-      "description": "Travel Adapter is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Power Bank",
       "difficulty": "easy",
-      "description": "Power Bank is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "City Pass",
       "difficulty": "hard",
-      "description": "City Pass is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Travel clue; describe where it appears in a journey and what function it serves."
     },
     {
       "word": "Tourist Trap",
       "difficulty": "hard",
-      "description": "Tourist Trap is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Souvenir Shop",
       "difficulty": "easy",
-      "description": "Souvenir Shop is a transport-related term used in travel and mobility contexts."
+      "description": "A transport-related term used in travel and mobility contexts."
     },
     {
       "word": "Travel Blog",
       "difficulty": "easy",
-      "description": "Travel Blog is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Travel clue; describe where it appears in a journey and what function it serves."
     },
     {
       "word": "Backpacker Trail",
       "difficulty": "hard",
-      "description": "Backpacker Trail is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Transport reference; start with mode of movement and passenger/logistics use."
     },
     {
       "word": "Safari Vehicle",
       "difficulty": "easy",
-      "description": "Safari Vehicle is a clueable term connected to tourism, commuting, or aviation."
+      "description": "Aviation/transit clue; use route context, ticketing, or onboard process."
     }
   ],
   "Internet Culture and Social Media": [
     {
       "word": "Meme",
       "difficulty": "hard",
-      "description": "Meme is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Viral Video",
       "difficulty": "easy",
-      "description": "Viral Video appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Hashtag",
       "difficulty": "easy",
-      "description": "Hashtag is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Trending Topic",
       "difficulty": "easy",
-      "description": "Trending Topic is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Influencer",
       "difficulty": "hard",
-      "description": "Influencer is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Content Creator",
       "difficulty": "easy",
-      "description": "Content Creator appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Livestream",
       "difficulty": "easy",
-      "description": "Livestream is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Reaction Video",
       "difficulty": "easy",
-      "description": "Reaction Video is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Podcast Clip",
       "difficulty": "hard",
-      "description": "Podcast Clip is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Short-form Video",
       "difficulty": "hard",
-      "description": "Short-form Video is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Reel",
       "difficulty": "easy",
-      "description": "Reel appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Story",
       "difficulty": "easy",
-      "description": "Story is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Thread",
       "difficulty": "hard",
-      "description": "Thread is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "DM",
       "difficulty": "easy",
-      "description": "DM appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Comment Section",
       "difficulty": "easy",
-      "description": "Comment Section is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Like Button",
       "difficulty": "easy",
-      "description": "Like Button is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Subscribe Button",
       "difficulty": "hard",
-      "description": "Subscribe Button is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Notification Bell",
       "difficulty": "easy",
-      "description": "Notification Bell is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Algorithm",
       "difficulty": "hard",
-      "description": "Algorithm is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "For You Page",
       "difficulty": "hard",
-      "description": "For You Page appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Ratioed",
       "difficulty": "hard",
-      "description": "Ratioed is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Screenshot",
       "difficulty": "easy",
-      "description": "Screenshot appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Screen Recording",
       "difficulty": "easy",
-      "description": "Screen Recording appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Clickbait",
       "difficulty": "easy",
-      "description": "Clickbait appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Thumbnail",
       "difficulty": "hard",
-      "description": "Thumbnail appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Unboxing",
       "difficulty": "easy",
-      "description": "Unboxing is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Challenge",
       "difficulty": "easy",
-      "description": "Challenge is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Dance Trend",
       "difficulty": "easy",
-      "description": "Dance Trend is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "POV",
       "difficulty": "hard",
-      "description": "POV is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Life Hack",
       "difficulty": "easy",
-      "description": "Life Hack is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Tutorial",
       "difficulty": "easy",
-      "description": "Tutorial is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Vlog",
       "difficulty": "easy",
-      "description": "Vlog appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "GRWM",
       "difficulty": "hard",
-      "description": "GRWM is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Duet",
       "difficulty": "easy",
-      "description": "Duet is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Stitch",
       "difficulty": "easy",
-      "description": "Stitch is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Filter",
       "difficulty": "easy",
-      "description": "Filter appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Face Swap",
       "difficulty": "hard",
-      "description": "Face Swap appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "AR Lens",
       "difficulty": "easy",
-      "description": "AR Lens is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "GIF",
       "difficulty": "easy",
-      "description": "GIF appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Emoji",
       "difficulty": "easy",
-      "description": "Emoji appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Sticker Pack",
       "difficulty": "hard",
-      "description": "Sticker Pack is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Discord Server",
       "difficulty": "easy",
-      "description": "Discord Server is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Subreddit",
       "difficulty": "hard",
-      "description": "Subreddit is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "AMA",
       "difficulty": "hard",
-      "description": "AMA is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Moderator",
       "difficulty": "hard",
-      "description": "Moderator is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Shadowban",
       "difficulty": "hard",
-      "description": "Shadowban is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Troll",
       "difficulty": "easy",
-      "description": "Troll is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Bot Account",
       "difficulty": "easy",
-      "description": "Bot Account is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Fact-check",
       "difficulty": "hard",
-      "description": "Fact-check is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Deepfake",
       "difficulty": "hard",
-      "description": "Deepfake is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Catfish",
       "difficulty": "hard",
-      "description": "Catfish is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Hot Take",
       "difficulty": "easy",
-      "description": "Hot Take is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Clapback",
       "difficulty": "hard",
-      "description": "Clapback is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Cancel Culture",
       "difficulty": "easy",
-      "description": "Cancel Culture is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Stan",
       "difficulty": "easy",
-      "description": "Stan appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Fandom",
       "difficulty": "hard",
-      "description": "Fandom is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Fan Edit",
       "difficulty": "hard",
-      "description": "Fan Edit appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Shipping",
       "difficulty": "easy",
-      "description": "Shipping appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Spoiler Alert",
       "difficulty": "easy",
-      "description": "Spoiler Alert is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Binge-watch",
       "difficulty": "easy",
-      "description": "Binge-watch is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Watch Party",
       "difficulty": "hard",
-      "description": "Watch Party appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Stream Sniping",
       "difficulty": "hard",
-      "description": "Stream Sniping is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Speedrun Clip",
       "difficulty": "easy",
-      "description": "Speedrun Clip is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Esports Highlight",
       "difficulty": "easy",
-      "description": "Esports Highlight is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Patch Notes",
       "difficulty": "hard",
-      "description": "Patch Notes appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "NFT Avatar",
       "difficulty": "hard",
-      "description": "NFT Avatar appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Blue Tick",
       "difficulty": "easy",
-      "description": "Blue Tick is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Verification Badge",
       "difficulty": "hard",
-      "description": "Verification Badge appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Creator Fund",
       "difficulty": "hard",
-      "description": "Creator Fund is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Monetization",
       "difficulty": "hard",
-      "description": "Monetization appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Paywall",
       "difficulty": "hard",
-      "description": "Paywall is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Newsletter",
       "difficulty": "easy",
-      "description": "Newsletter is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Crowdfunding",
       "difficulty": "hard",
-      "description": "Crowdfunding is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Patreon",
       "difficulty": "easy",
-      "description": "Patreon appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Ko-fi",
       "difficulty": "hard",
-      "description": "Ko-fi is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Link in Bio",
       "difficulty": "easy",
-      "description": "Link in Bio appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Swipe Up",
       "difficulty": "hard",
-      "description": "Swipe Up is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "QR Code",
       "difficulty": "easy",
-      "description": "QR Code is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Geotag",
       "difficulty": "easy",
-      "description": "Geotag is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Selfie",
       "difficulty": "easy",
-      "description": "Selfie is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Ring Light",
       "difficulty": "hard",
-      "description": "Ring Light is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Green Screen",
       "difficulty": "easy",
-      "description": "Green Screen is a modern online term often used in social media and creator spaces."
+      "description": "A modern online term often used in social media and creator spaces."
     },
     {
       "word": "Webcam",
       "difficulty": "easy",
-      "description": "Webcam appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Mic Check",
       "difficulty": "easy",
-      "description": "Mic Check is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Lag Spike",
       "difficulty": "hard",
-      "description": "Lag Spike is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Ping",
       "difficulty": "easy",
-      "description": "Ping appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     },
     {
       "word": "Cloud Backup",
       "difficulty": "easy",
-      "description": "Cloud Backup is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Password Manager",
       "difficulty": "easy",
-      "description": "Password Manager is an internet-culture clue tied to online trends, creators, or social platforms."
+      "description": "An internet-culture clue tied to online trends, creators, or social platforms."
     },
     {
       "word": "Community Guidelines",
       "difficulty": "hard",
-      "description": "Community Guidelines is a digital-culture clue linked to memes, streaming, or audience interaction."
+      "description": "A digital-culture clue linked to memes, streaming, or audience interaction."
     },
     {
       "word": "Mute Button",
       "difficulty": "easy",
-      "description": "Mute Button appears in clues about viral content, digital communities, or platform behavior."
+      "description": "Appears in clues about viral content, digital communities, or platform behavior."
     }
   ],
   "Crime, Law, and Justice": [
     {
       "word": "Fingerprint",
       "difficulty": "hard",
-      "description": "Fingerprint is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "DNA Evidence",
       "difficulty": "easy",
-      "description": "DNA Evidence is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Alibi",
       "difficulty": "easy",
-      "description": "Alibi appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Motive",
       "difficulty": "easy",
-      "description": "Motive is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Suspect",
       "difficulty": "hard",
-      "description": "Suspect appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Witness",
       "difficulty": "easy",
-      "description": "Witness appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Testimony",
       "difficulty": "easy",
-      "description": "Testimony is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Cross-examination",
       "difficulty": "easy",
-      "description": "Cross-examination appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Jury",
       "difficulty": "hard",
-      "description": "Jury appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Verdict",
       "difficulty": "easy",
-      "description": "Verdict is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Guilty",
       "difficulty": "easy",
-      "description": "Guilty is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Not Guilty",
       "difficulty": "easy",
-      "description": "Not Guilty appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Mistrial",
       "difficulty": "hard",
-      "description": "Mistrial is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Plea Bargain",
       "difficulty": "hard",
-      "description": "Plea Bargain is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Bail",
       "difficulty": "easy",
-      "description": "Bail appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Parole",
       "difficulty": "easy",
-      "description": "Parole appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Probation",
       "difficulty": "hard",
-      "description": "Probation is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Sentencing",
       "difficulty": "easy",
-      "description": "Sentencing is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Subpoena",
       "difficulty": "easy",
-      "description": "Subpoena is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Warrant",
       "difficulty": "easy",
-      "description": "Warrant appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Arrest",
       "difficulty": "hard",
-      "description": "Arrest is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Handcuffs",
       "difficulty": "easy",
-      "description": "Handcuffs is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Mugshot",
       "difficulty": "easy",
-      "description": "Mugshot appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Interrogation",
       "difficulty": "easy",
-      "description": "Interrogation is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Surveillance",
       "difficulty": "hard",
-      "description": "Surveillance is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Wiretap",
       "difficulty": "easy",
-      "description": "Wiretap is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Undercover",
       "difficulty": "easy",
-      "description": "Undercover is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Sting Operation",
       "difficulty": "easy",
-      "description": "Sting Operation appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Crime Scene",
       "difficulty": "hard",
-      "description": "Crime Scene appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Forensics",
       "difficulty": "easy",
-      "description": "Forensics appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Autopsy",
       "difficulty": "easy",
-      "description": "Autopsy is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Homicide",
       "difficulty": "easy",
-      "description": "Homicide is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Manslaughter",
       "difficulty": "hard",
-      "description": "Manslaughter is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Burglary",
       "difficulty": "easy",
-      "description": "Burglary is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Robbery",
       "difficulty": "easy",
-      "description": "Robbery appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Pickpocket",
       "difficulty": "easy",
-      "description": "Pickpocket is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Fraud",
       "difficulty": "hard",
-      "description": "Fraud is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Embezzlement",
       "difficulty": "easy",
-      "description": "Embezzlement is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Money Laundering",
       "difficulty": "hard",
-      "description": "Money Laundering is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Tax Evasion",
       "difficulty": "easy",
-      "description": "Tax Evasion appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Insider Trading",
       "difficulty": "hard",
-      "description": "Insider Trading appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Cybercrime",
       "difficulty": "easy",
-      "description": "Cybercrime is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Identity Theft",
       "difficulty": "easy",
-      "description": "Identity Theft is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Ransomware",
       "difficulty": "easy",
-      "description": "Ransomware is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Kidnapping",
       "difficulty": "hard",
-      "description": "Kidnapping is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Blackmail",
       "difficulty": "easy",
-      "description": "Blackmail appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Extortion",
       "difficulty": "easy",
-      "description": "Extortion is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Smuggling",
       "difficulty": "easy",
-      "description": "Smuggling appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Poaching",
       "difficulty": "hard",
-      "description": "Poaching is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Arson",
       "difficulty": "easy",
-      "description": "Arson appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Vandalism",
       "difficulty": "easy",
-      "description": "Vandalism appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Trespassing",
       "difficulty": "easy",
-      "description": "Trespassing is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Perjury",
       "difficulty": "hard",
-      "description": "Perjury is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Obstruction of Justice",
       "difficulty": "hard",
-      "description": "Obstruction of Justice is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Contempt of Court",
       "difficulty": "hard",
-      "description": "Contempt of Court is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Civil Case",
       "difficulty": "easy",
-      "description": "Civil Case appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Class Action",
       "difficulty": "hard",
-      "description": "Class Action is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Small Claims Court",
       "difficulty": "easy",
-      "description": "Small Claims Court is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Appeal",
       "difficulty": "easy",
-      "description": "Appeal appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Habeas Corpus",
       "difficulty": "hard",
-      "description": "Habeas Corpus appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Presumption of Innocence",
       "difficulty": "hard",
-      "description": "Presumption of Innocence is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Statute of Limitations",
       "difficulty": "hard",
-      "description": "Statute of Limitations is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Double Jeopardy",
       "difficulty": "hard",
-      "description": "Double Jeopardy is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Judicial Review",
       "difficulty": "hard",
-      "description": "Judicial Review is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Public Defender",
       "difficulty": "hard",
-      "description": "Public Defender is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "District Attorney",
       "difficulty": "hard",
-      "description": "District Attorney is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Defense Attorney",
       "difficulty": "hard",
-      "description": "Defense Attorney is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Court Clerk",
       "difficulty": "easy",
-      "description": "Court Clerk is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Bailiff",
       "difficulty": "hard",
-      "description": "Bailiff is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Prison Warden",
       "difficulty": "easy",
-      "description": "Prison Warden is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Solitary Confinement",
       "difficulty": "easy",
-      "description": "Solitary Confinement is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Community Service",
       "difficulty": "easy",
-      "description": "Community Service is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "House Arrest",
       "difficulty": "hard",
-      "description": "House Arrest appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Juvenile Court",
       "difficulty": "hard",
-      "description": "Juvenile Court is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Restraining Order",
       "difficulty": "easy",
-      "description": "Restraining Order is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Search and Seizure",
       "difficulty": "hard",
-      "description": "Search and Seizure appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Human Trafficking",
       "difficulty": "hard",
-      "description": "Human Trafficking is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Organized Crime",
       "difficulty": "easy",
-      "description": "Organized Crime is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Cartel",
       "difficulty": "easy",
-      "description": "Cartel appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Whistleblower",
       "difficulty": "hard",
-      "description": "Whistleblower is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Corruption",
       "difficulty": "hard",
-      "description": "Corruption is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Bribery",
       "difficulty": "easy",
-      "description": "Bribery is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Riot Police",
       "difficulty": "easy",
-      "description": "Riot Police appears in clues about crime, evidence, trials, or sentencing."
+      "description": "Appears in clues about crime, evidence, trials, or sentencing."
     },
     {
       "word": "Curfew",
       "difficulty": "easy",
-      "description": "Curfew is a legal or criminal-justice term used in courtroom and policing contexts."
+      "description": "A legal or criminal-justice term used in courtroom and policing contexts."
     },
     {
       "word": "Case Docket",
       "difficulty": "hard",
-      "description": "Case Docket is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Chain of Custody",
       "difficulty": "hard",
-      "description": "Chain of Custody is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     },
     {
       "word": "Cold Case",
       "difficulty": "easy",
-      "description": "Cold Case is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Evidence Locker",
       "difficulty": "easy",
-      "description": "Evidence Locker is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Acquittal",
       "difficulty": "hard",
-      "description": "Acquittal is a law-and-order clue linked to procedures, rights, or enforcement."
+      "description": "A law-and-order clue linked to procedures, rights, or enforcement."
     },
     {
       "word": "Conviction",
       "difficulty": "easy",
-      "description": "Conviction is a justice-system clue tied to investigations, courts, or legal outcomes."
+      "description": "A justice-system clue tied to investigations, courts, or legal outcomes."
     }
   ],
   "Africa: People, Places, and Events": [
     {
       "word": "Patrice Lumumba",
       "difficulty": "hard",
-      "description": "Patrice Lumumba is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Kwame Nkrumah",
       "difficulty": "easy",
-      "description": "Kwame Nkrumah is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Haile Selassie",
       "difficulty": "easy",
-      "description": "Haile Selassie is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Julius Nyerere",
       "difficulty": "easy",
-      "description": "Julius Nyerere is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Thomas Sankara",
       "difficulty": "hard",
-      "description": "Thomas Sankara is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Wangari Maathai",
       "difficulty": "easy",
-      "description": "Wangari Maathai is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Kofi Annan",
       "difficulty": "easy",
-      "description": "Kofi Annan is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Ellen Johnson Sirleaf",
       "difficulty": "easy",
-      "description": "Ellen Johnson Sirleaf appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Paul Kagame",
       "difficulty": "hard",
-      "description": "Paul Kagame is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Cyril Ramaphosa",
       "difficulty": "easy",
-      "description": "Cyril Ramaphosa is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Fela Kuti",
       "difficulty": "easy",
-      "description": "Fela Kuti appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Miriam Makeba",
       "difficulty": "easy",
-      "description": "Miriam Makeba is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Youssou Ndour",
       "difficulty": "hard",
-      "description": "Youssou Ndour appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Didier Drogba",
       "difficulty": "easy",
-      "description": "Didier Drogba is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Sadio Mane",
       "difficulty": "easy",
-      "description": "Sadio Mane is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Eliud Kipchoge",
       "difficulty": "hard",
-      "description": "Eliud Kipchoge is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Caster Semenya",
       "difficulty": "easy",
-      "description": "Caster Semenya is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Siya Kolisi",
       "difficulty": "easy",
-      "description": "Siya Kolisi is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Francois Pienaar",
       "difficulty": "easy",
-      "description": "Francois Pienaar appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Amina J Mohammed",
       "difficulty": "hard",
-      "description": "Amina J Mohammed is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Aliko Dangote",
       "difficulty": "easy",
-      "description": "Aliko Dangote appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Ngozi Okonjo-Iweala",
       "difficulty": "hard",
-      "description": "Ngozi Okonjo-Iweala is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Trevor Noah",
       "difficulty": "easy",
-      "description": "Trevor Noah is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Chinua Achebe",
       "difficulty": "hard",
-      "description": "Chinua Achebe is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Ngugi wa Thiongo",
       "difficulty": "hard",
-      "description": "Ngugi wa Thiongo is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Nadine Gordimer",
       "difficulty": "easy",
-      "description": "Nadine Gordimer appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Bessie Head",
       "difficulty": "hard",
-      "description": "Bessie Head appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Chimamanda Ngozi Adichie",
       "difficulty": "hard",
-      "description": "Chimamanda Ngozi Adichie is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Wole Soyinka",
       "difficulty": "easy",
-      "description": "Wole Soyinka appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Table Mountain",
       "difficulty": "easy",
-      "description": "Table Mountain appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Kruger National Park",
       "difficulty": "easy",
-      "description": "Kruger National Park is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Victoria Falls",
       "difficulty": "easy",
-      "description": "Victoria Falls appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Lake Tanganyika",
       "difficulty": "easy",
-      "description": "Lake Tanganyika is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Great Rift Valley",
       "difficulty": "easy",
-      "description": "Great Rift Valley is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Atlas Mountains",
       "difficulty": "hard",
-      "description": "Atlas Mountains appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Drakensberg",
       "difficulty": "easy",
-      "description": "Drakensberg is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Zanzibar",
       "difficulty": "easy",
-      "description": "Zanzibar appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Timbuktu",
       "difficulty": "easy",
-      "description": "Timbuktu is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Lagos",
       "difficulty": "hard",
-      "description": "Lagos is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Cairo",
       "difficulty": "easy",
-      "description": "Cairo is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Nairobi",
       "difficulty": "easy",
-      "description": "Nairobi appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Johannesburg",
       "difficulty": "easy",
-      "description": "Johannesburg is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Cape Town",
       "difficulty": "hard",
-      "description": "Cape Town is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Addis Ababa",
       "difficulty": "easy",
-      "description": "Addis Ababa is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Kigali",
       "difficulty": "easy",
-      "description": "Kigali appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Dakar",
       "difficulty": "easy",
-      "description": "Dakar appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Accra",
       "difficulty": "hard",
-      "description": "Accra is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Casablanca",
       "difficulty": "easy",
-      "description": "Casablanca is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Marrakesh",
       "difficulty": "easy",
-      "description": "Marrakesh is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Maputo",
       "difficulty": "easy",
-      "description": "Maputo is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Windhoek",
       "difficulty": "hard",
-      "description": "Windhoek is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Lusaka",
       "difficulty": "easy",
-      "description": "Lusaka appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Harare",
       "difficulty": "easy",
-      "description": "Harare is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Gaborone",
       "difficulty": "easy",
-      "description": "Gaborone is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Kampala",
       "difficulty": "hard",
-      "description": "Kampala is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Dar es Salaam",
       "difficulty": "easy",
-      "description": "Dar es Salaam is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Abuja",
       "difficulty": "easy",
-      "description": "Abuja appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Alexandria",
       "difficulty": "easy",
-      "description": "Alexandria appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Soweto Uprising",
       "difficulty": "hard",
-      "description": "Soweto Uprising is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Sharpeville Massacre",
       "difficulty": "hard",
-      "description": "Sharpeville Massacre is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "End of Apartheid",
       "difficulty": "easy",
-      "description": "End of Apartheid is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Mandela Release",
       "difficulty": "easy",
-      "description": "Mandela Release appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Rwandan Genocide",
       "difficulty": "hard",
-      "description": "Rwandan Genocide is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Battle of Isandlwana",
       "difficulty": "hard",
-      "description": "Battle of Isandlwana is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Africa Cup of Nations",
       "difficulty": "easy",
-      "description": "Africa Cup of Nations appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "2010 FIFA World Cup",
       "difficulty": "easy",
-      "description": "2010 FIFA World Cup is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Arab Spring Tunisia",
       "difficulty": "hard",
-      "description": "Arab Spring Tunisia is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "African Union Summit",
       "difficulty": "hard",
-      "description": "African Union Summit appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Great Zimbabwe",
       "difficulty": "hard",
-      "description": "Great Zimbabwe appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Benin Bronzes",
       "difficulty": "hard",
-      "description": "Benin Bronzes is an Africa-focused clue related to major people, places, or events."
+      "description": "An Africa-focused clue related to major people, places, or events."
     },
     {
       "word": "Mali Empire",
       "difficulty": "hard",
-      "description": "Mali Empire is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Songhai Empire",
       "difficulty": "hard",
-      "description": "Songhai Empire is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Kingdom of Axum",
       "difficulty": "hard",
-      "description": "Kingdom of Axum is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Ethiopian Highlands",
       "difficulty": "easy",
-      "description": "Ethiopian Highlands is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Namib Desert",
       "difficulty": "hard",
-      "description": "Namib Desert appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Kalahari Desert",
       "difficulty": "easy",
-      "description": "Kalahari Desert is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Nile Delta",
       "difficulty": "easy",
-      "description": "Nile Delta appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Congo Basin",
       "difficulty": "hard",
-      "description": "Congo Basin appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Lake Malawi",
       "difficulty": "hard",
-      "description": "Lake Malawi appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     },
     {
       "word": "Mount Kenya",
       "difficulty": "easy",
-      "description": "Mount Kenya is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Mount Elgon",
       "difficulty": "easy",
-      "description": "Mount Elgon is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Blyde River Canyon",
       "difficulty": "hard",
-      "description": "Blyde River Canyon is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Robben Island",
       "difficulty": "hard",
-      "description": "Robben Island is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Constitution Hill",
       "difficulty": "hard",
-      "description": "Constitution Hill is connected to African public life, landmarks, or important moments."
+      "description": "Connected to African public life, landmarks, or important moments."
     },
     {
       "word": "Sahara Trade Routes",
       "difficulty": "hard",
-      "description": "Sahara Trade Routes is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Swahili Coast",
       "difficulty": "hard",
-      "description": "Swahili Coast is a recognizable African reference often used in regional knowledge clues."
+      "description": "A recognizable African reference often used in regional knowledge clues."
     },
     {
       "word": "Blue Nile",
       "difficulty": "hard",
-      "description": "Blue Nile appears in clues about African history, geography, culture, or sport."
+      "description": "Appears in clues about African history, geography, culture, or sport."
     }
   ]
 };
@@ -13633,1813 +13633,1813 @@ const themes = {
     {
       "word": "Bride",
       "difficulty": "easy",
-      "description": "Bride is a clueable term relevant to Wedding Fever."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Groom",
       "difficulty": "easy",
-      "description": "Groom is a clueable term relevant to Wedding Fever."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Wedding Cake",
       "difficulty": "easy",
-      "description": "Wedding Cake fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Bouquet",
       "difficulty": "easy",
-      "description": "Bouquet fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Honeymoon",
       "difficulty": "easy",
-      "description": "Honeymoon fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Vows",
       "difficulty": "easy",
-      "description": "Vows is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Best Man",
       "difficulty": "easy",
-      "description": "Best Man is commonly used in Wedding Fever themed clues."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Maid of Honor",
       "difficulty": "easy",
-      "description": "Maid of Honor fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Wedding Ring",
       "difficulty": "easy",
-      "description": "Wedding Ring fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Reception",
       "difficulty": "easy",
-      "description": "Reception is a clueable term relevant to Wedding Fever."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "First Dance",
       "difficulty": "hard",
-      "description": "First Dance is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Wedding Bells",
       "difficulty": "hard",
-      "description": "Wedding Bells is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Unity Candle",
       "difficulty": "hard",
-      "description": "Unity Candle is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Wedding Planner",
       "difficulty": "hard",
-      "description": "Wedding Planner is commonly used in Wedding Fever themed clues."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Flower Girl",
       "difficulty": "hard",
-      "description": "Flower Girl is a clueable term relevant to Wedding Fever."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Ring Bearer",
       "difficulty": "hard",
-      "description": "Ring Bearer is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Tuxedo",
       "difficulty": "hard",
-      "description": "Tuxedo is commonly used in Wedding Fever themed clues."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Wedding March",
       "difficulty": "hard",
-      "description": "Wedding March fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Bridal Shower",
       "difficulty": "hard",
-      "description": "Bridal Shower is a clueable term relevant to Wedding Fever."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Bachelor Party",
       "difficulty": "hard",
-      "description": "Bachelor Party fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Bachelorette Party",
       "difficulty": "easy",
-      "description": "Bachelorette Party is commonly used in Wedding Fever themed clues."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Bridesmaid",
       "difficulty": "easy",
-      "description": "Bridesmaid is commonly used in Wedding Fever themed clues."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Engagement Ring",
       "difficulty": "easy",
-      "description": "Engagement Ring is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Floral Arrangement",
       "difficulty": "hard",
-      "description": "Floral Arrangement is a clueable term relevant to Wedding Fever."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Groomsmen",
       "difficulty": "easy",
-      "description": "Groomsmen is commonly used in Wedding Fever themed clues."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Marriage Certificate",
       "difficulty": "easy",
-      "description": "Marriage Certificate is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Marriage Vows",
       "difficulty": "hard",
-      "description": "Marriage Vows is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Wedding Dress",
       "difficulty": "easy",
-      "description": "Wedding Dress fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Wedding Venue",
       "difficulty": "easy",
-      "description": "Wedding Venue fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Wedding Vows",
       "difficulty": "easy",
-      "description": "Wedding Vows is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Aisle",
       "difficulty": "hard",
-      "description": "Aisle fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Confetti",
       "difficulty": "easy",
-      "description": "Confetti is a clueable term relevant to Wedding Fever."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Guest List",
       "difficulty": "easy",
-      "description": "Guest List is commonly used in Wedding Fever themed clues."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Wedding Toast",
       "difficulty": "easy",
-      "description": "Wedding Toast fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Reception Hall",
       "difficulty": "hard",
-      "description": "Reception Hall is commonly used in Wedding Fever themed clues."
+      "description": "Wedding reference; use celebration context and emotional significance."
     },
     {
       "word": "Photo Booth",
       "difficulty": "easy",
-      "description": "Photo Booth is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Wedding Favors",
       "difficulty": "easy",
-      "description": "Wedding Favors fits the Wedding Fever category for quick, descriptive gameplay."
+      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
     },
     {
       "word": "Bridal Veil",
       "difficulty": "easy",
-      "description": "Bridal Veil is commonly used in Wedding Fever themed clues."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Table Seating",
       "difficulty": "hard",
-      "description": "Table Seating is a useful Wedding Fever reference for fast team guessing rounds."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     },
     {
       "word": "Wedding Car",
       "difficulty": "easy",
-      "description": "Wedding Car is a clueable term relevant to Wedding Fever."
+      "description": "Marriage-themed clue; start with who uses it and when during the event."
     }
   ],
   "Holiday Time": [
     {
       "word": "Christmas tree",
       "difficulty": "easy",
-      "description": "Christmas tree fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Santa Claus",
       "difficulty": "easy",
-      "description": "Santa Claus is commonly used in Holiday Time themed clues."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Snowman",
       "difficulty": "easy",
-      "description": "Snowman fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Gifts",
       "difficulty": "easy",
-      "description": "Gifts is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Stockings",
       "difficulty": "easy",
-      "description": "Stockings is commonly used in Holiday Time themed clues."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Reindeer",
       "difficulty": "easy",
-      "description": "Reindeer is a clueable term relevant to Holiday Time."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Sleigh",
       "difficulty": "easy",
-      "description": "Sleigh is commonly used in Holiday Time themed clues."
+      "description": "Holiday term; use celebration context and recognizable custom."
     },
     {
       "word": "Caroling",
       "difficulty": "easy",
-      "description": "Caroling is commonly used in Holiday Time themed clues."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Fireplace",
       "difficulty": "easy",
-      "description": "Fireplace is a clueable term relevant to Holiday Time."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Gingerbread",
       "difficulty": "easy",
-      "description": "Gingerbread is a clueable term relevant to Holiday Time."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Ornament",
       "difficulty": "easy",
-      "description": "Ornament is commonly used in Holiday Time themed clues."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Mistletoe",
       "difficulty": "easy",
-      "description": "Mistletoe is a clueable term relevant to Holiday Time."
+      "description": "Holiday term; use celebration context and recognizable custom."
     },
     {
       "word": "Eggnog",
       "difficulty": "easy",
-      "description": "Eggnog is a clueable term relevant to Holiday Time."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "New Year's Eve",
       "difficulty": "easy",
-      "description": "New Year's Eve is commonly used in Holiday Time themed clues."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Hanukkah",
       "difficulty": "easy",
-      "description": "Hanukkah is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Advent calendar",
       "difficulty": "hard",
-      "description": "Advent calendar is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Kwanzaa",
       "difficulty": "hard",
-      "description": "Kwanzaa is commonly used in Holiday Time themed clues."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Yule log",
       "difficulty": "hard",
-      "description": "Yule log is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Boxing Day",
       "difficulty": "hard",
-      "description": "Boxing Day is a clueable term relevant to Holiday Time."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Epiphany",
       "difficulty": "hard",
-      "description": "Epiphany fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Holiday term; use celebration context and recognizable custom."
     },
     {
       "word": "Menorah",
       "difficulty": "hard",
-      "description": "Menorah is a clueable term relevant to Holiday Time."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Dreidel",
       "difficulty": "hard",
-      "description": "Dreidel fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Tinsel",
       "difficulty": "hard",
-      "description": "Tinsel is a clueable term relevant to Holiday Time."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Wassail",
       "difficulty": "hard",
-      "description": "Wassail is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Nutcracker",
       "difficulty": "hard",
-      "description": "Nutcracker is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Krampus",
       "difficulty": "hard",
-      "description": "Krampus is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Holiday term; use celebration context and recognizable custom."
     },
     {
       "word": "Solstice",
       "difficulty": "hard",
-      "description": "Solstice is commonly used in Holiday Time themed clues."
+      "description": "Holiday term; use celebration context and recognizable custom."
     },
     {
       "word": "Hogmanay",
       "difficulty": "hard",
-      "description": "Hogmanay is a clueable term relevant to Holiday Time."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Black Friday",
       "difficulty": "hard",
-      "description": "Black Friday fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Feast of Seven Fishes",
       "difficulty": "hard",
-      "description": "Feast of Seven Fishes is a clueable term relevant to Holiday Time."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Holiday Market",
       "difficulty": "hard",
-      "description": "Holiday Market fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Holiday term; use celebration context and recognizable custom."
     },
     {
       "word": "Secret Santa",
       "difficulty": "easy",
-      "description": "Secret Santa fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Family Feast",
       "difficulty": "easy",
-      "description": "Family Feast is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Holiday Lights",
       "difficulty": "easy",
-      "description": "Holiday Lights is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Winter Break",
       "difficulty": "hard",
-      "description": "Winter Break is a useful Holiday Time reference for fast team guessing rounds."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Gift Wrap",
       "difficulty": "easy",
-      "description": "Gift Wrap fits the Holiday Time category for quick, descriptive gameplay."
+      "description": "Festive reference; start with time of year and family or community use."
     },
     {
       "word": "Snow Globe",
       "difficulty": "easy",
-      "description": "Snow Globe is a clueable term relevant to Holiday Time."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Holiday Travel",
       "difficulty": "easy",
-      "description": "Holiday Travel is a clueable term relevant to Holiday Time."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Warm Cocoa",
       "difficulty": "hard",
-      "description": "Warm Cocoa is commonly used in Holiday Time themed clues."
+      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
     },
     {
       "word": "Festive Playlist",
       "difficulty": "easy",
-      "description": "Festive Playlist is commonly used in Holiday Time themed clues."
+      "description": "Holiday term; use celebration context and recognizable custom."
     }
   ],
   "Sports Event": [
     {
       "word": "Olympic Games",
       "difficulty": "easy",
-      "description": "Olympic Games fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "World Cup",
       "difficulty": "easy",
-      "description": "World Cup is commonly used in Sports Event themed clues."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "Super Bowl",
       "difficulty": "easy",
-      "description": "Super Bowl is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Wimbledon",
       "difficulty": "easy",
-      "description": "Wimbledon is commonly used in Sports Event themed clues."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Tour de France",
       "difficulty": "easy",
-      "description": "Tour de France is commonly used in Sports Event themed clues."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "NBA Finals",
       "difficulty": "easy",
-      "description": "NBA Finals fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Stanley Cup",
       "difficulty": "easy",
-      "description": "Stanley Cup is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Masters Tournament",
       "difficulty": "easy",
-      "description": "Masters Tournament is commonly used in Sports Event themed clues."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Ryder Cup",
       "difficulty": "easy",
-      "description": "Ryder Cup is commonly used in Sports Event themed clues."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "Kentucky Derby",
       "difficulty": "easy",
-      "description": "Kentucky Derby is a clueable term relevant to Sports Event."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "F1 Grand Prix",
       "difficulty": "easy",
-      "description": "F1 Grand Prix fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "Rugby World Cup",
       "difficulty": "easy",
-      "description": "Rugby World Cup is commonly used in Sports Event themed clues."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "MLB World Series",
       "difficulty": "easy",
-      "description": "MLB World Series fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "UFC Championship",
       "difficulty": "easy",
-      "description": "UFC Championship fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Cricket World Cup",
       "difficulty": "easy",
-      "description": "Cricket World Cup fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "Heisman Trophy",
       "difficulty": "hard",
-      "description": "Heisman Trophy is a clueable term relevant to Sports Event."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "The Ashes Series",
       "difficulty": "hard",
-      "description": "The Ashes Series is a clueable term relevant to Sports Event."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "UEFA Champions League",
       "difficulty": "hard",
-      "description": "UEFA Champions League is a clueable term relevant to Sports Event."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Copa America",
       "difficulty": "hard",
-      "description": "Copa America is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "La Liga Championship",
       "difficulty": "hard",
-      "description": "La Liga Championship is commonly used in Sports Event themed clues."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Indy 500",
       "difficulty": "hard",
-      "description": "Indy 500 is commonly used in Sports Event themed clues."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "PGA Championship",
       "difficulty": "hard",
-      "description": "PGA Championship is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "MotoGP",
       "difficulty": "hard",
-      "description": "MotoGP is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "Commonwealth Games",
       "difficulty": "hard",
-      "description": "Commonwealth Games is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Davis Cup",
       "difficulty": "hard",
-      "description": "Davis Cup fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "America's Cup",
       "difficulty": "hard",
-      "description": "America's Cup fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "FA Cup Final",
       "difficulty": "hard",
-      "description": "FA Cup Final is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Six Nations Championship",
       "difficulty": "hard",
-      "description": "Six Nations Championship is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Belmont Stakes",
       "difficulty": "hard",
-      "description": "Belmont Stakes is commonly used in Sports Event themed clues."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Opening Ceremony",
       "difficulty": "hard",
-      "description": "Opening Ceremony is a clueable term relevant to Sports Event."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "Penalty Shootout",
       "difficulty": "easy",
-      "description": "Penalty Shootout fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Photo Finish",
       "difficulty": "easy",
-      "description": "Photo Finish is commonly used in Sports Event themed clues."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Extra Time",
       "difficulty": "easy",
-      "description": "Extra Time is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Golden Medal",
       "difficulty": "hard",
-      "description": "Golden Medal is commonly used in Sports Event themed clues."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Team Captain",
       "difficulty": "easy",
-      "description": "Team Captain is a useful Sports Event reference for fast team guessing rounds."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Locker Room",
       "difficulty": "easy",
-      "description": "Locker Room is a clueable term relevant to Sports Event."
+      "description": "Big-match clue; use event scale, format, and audience context."
     },
     {
       "word": "Match Officials",
       "difficulty": "easy",
-      "description": "Match Officials is commonly used in Sports Event themed clues."
+      "description": "Sports-event clue; describe competition type, participants, and stakes."
     },
     {
       "word": "Crowd Roar",
       "difficulty": "hard",
-      "description": "Crowd Roar fits the Sports Event category for quick, descriptive gameplay."
+      "description": "Tournament reference; start with sport and what decides the winner."
     },
     {
       "word": "Victory Lap",
       "difficulty": "easy",
-      "description": "Victory Lap is commonly used in Sports Event themed clues."
+      "description": "Big-match clue; use event scale, format, and audience context."
     }
   ],
   "Summer Vacation": [
     {
       "word": "Beach",
       "difficulty": "easy",
-      "description": "Beach is a clueable term relevant to Summer Vacation."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Surfing",
       "difficulty": "easy",
-      "description": "Surfing is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Ice cream",
       "difficulty": "easy",
-      "description": "Ice cream fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Sandcastle",
       "difficulty": "easy",
-      "description": "Sandcastle is a clueable term relevant to Summer Vacation."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Sunbathing",
       "difficulty": "easy",
-      "description": "Sunbathing fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Pool party",
       "difficulty": "easy",
-      "description": "Pool party fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Barbecue",
       "difficulty": "easy",
-      "description": "Barbecue is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Camping",
       "difficulty": "easy",
-      "description": "Camping is commonly used in Summer Vacation themed clues."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Hiking",
       "difficulty": "easy",
-      "description": "Hiking is commonly used in Summer Vacation themed clues."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Road trip",
       "difficulty": "easy",
-      "description": "Road trip is commonly used in Summer Vacation themed clues."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Water park",
       "difficulty": "easy",
-      "description": "Water park is a clueable term relevant to Summer Vacation."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Fishing",
       "difficulty": "easy",
-      "description": "Fishing is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Snorkeling",
       "difficulty": "easy",
-      "description": "Snorkeling is a clueable term relevant to Summer Vacation."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Jet skiing",
       "difficulty": "easy",
-      "description": "Jet skiing is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Amusement park",
       "difficulty": "easy",
-      "description": "Amusement park is commonly used in Summer Vacation themed clues."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Bonfire Night",
       "difficulty": "hard",
-      "description": "Bonfire Night is commonly used in Summer Vacation themed clues."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Island Hopping",
       "difficulty": "hard",
-      "description": "Island Hopping is commonly used in Summer Vacation themed clues."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Deep-sea Fishing",
       "difficulty": "hard",
-      "description": "Deep-sea Fishing fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Scenic Route",
       "difficulty": "hard",
-      "description": "Scenic Route fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Guided Tour",
       "difficulty": "hard",
-      "description": "Guided Tour fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Outdoor Concert",
       "difficulty": "hard",
-      "description": "Outdoor Concert is commonly used in Summer Vacation themed clues."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Nature Trail",
       "difficulty": "hard",
-      "description": "Nature Trail is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Paddle Boarding",
       "difficulty": "hard",
-      "description": "Paddle Boarding is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Paragliding",
       "difficulty": "hard",
-      "description": "Paragliding is commonly used in Summer Vacation themed clues."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Cliff Diving",
       "difficulty": "hard",
-      "description": "Cliff Diving fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Kayaking",
       "difficulty": "hard",
-      "description": "Kayaking is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Wildlife Safari",
       "difficulty": "hard",
-      "description": "Wildlife Safari fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Scuba Diving",
       "difficulty": "hard",
-      "description": "Scuba Diving fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Mountain Biking",
       "difficulty": "hard",
-      "description": "Mountain Biking is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Hot Air Balloon Ride",
       "difficulty": "hard",
-      "description": "Hot Air Balloon Ride fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Sunblock",
       "difficulty": "hard",
-      "description": "Sunblock is commonly used in Summer Vacation themed clues."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Flip Flops",
       "difficulty": "easy",
-      "description": "Flip Flops is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Beach Umbrella",
       "difficulty": "easy",
-      "description": "Beach Umbrella is a useful Summer Vacation reference for fast team guessing rounds."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Resort",
       "difficulty": "easy",
-      "description": "Resort fits the Summer Vacation category for quick, descriptive gameplay."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Sightseeing",
       "difficulty": "hard",
-      "description": "Sightseeing is commonly used in Summer Vacation themed clues."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Travel Photos",
       "difficulty": "easy",
-      "description": "Travel Photos is a clueable term relevant to Summer Vacation."
+      "description": "Vacation clue; describe travel/leisure setting and what people do there."
     },
     {
       "word": "Day Trip",
       "difficulty": "easy",
-      "description": "Day Trip is commonly used in Summer Vacation themed clues."
+      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
     },
     {
       "word": "Boat Cruise",
       "difficulty": "easy",
-      "description": "Boat Cruise is commonly used in Summer Vacation themed clues."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Sunset Picnic",
       "difficulty": "hard",
-      "description": "Sunset Picnic is commonly used in Summer Vacation themed clues."
+      "description": "Summer activity reference; start with weather context and typical action."
     },
     {
       "word": "Seaside",
       "difficulty": "easy",
-      "description": "Seaside is a clueable term relevant to Summer Vacation."
+      "description": "Summer activity reference; start with weather context and typical action."
     }
   ],
   "Halloween Party": [
     {
       "word": "Pumpkin",
       "difficulty": "easy",
-      "description": "Pumpkin is a clueable term relevant to Halloween Party."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Ghost",
       "difficulty": "easy",
-      "description": "Ghost is a clueable term relevant to Halloween Party."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Witch",
       "difficulty": "easy",
-      "description": "Witch is a clueable term relevant to Halloween Party."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Costume",
       "difficulty": "easy",
-      "description": "Costume is a useful Halloween Party reference for fast team guessing rounds."
+      "description": "Outfit worn to dress up as a character for a themed party."
     },
     {
       "word": "Candy",
       "difficulty": "easy",
-      "description": "Candy fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Jack-o'-lantern",
       "difficulty": "easy",
-      "description": "Jack-o'-lantern is commonly used in Halloween Party themed clues."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Haunted house",
       "difficulty": "easy",
-      "description": "Haunted house is a clueable term relevant to Halloween Party."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Skeleton",
       "difficulty": "easy",
-      "description": "Skeleton is commonly used in Halloween Party themed clues."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Vampire",
       "difficulty": "easy",
-      "description": "Vampire is a clueable term relevant to Halloween Party."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Zombie",
       "difficulty": "easy",
-      "description": "Zombie is commonly used in Halloween Party themed clues."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Trick-or-treat",
       "difficulty": "easy",
-      "description": "Trick-or-treat is commonly used in Halloween Party themed clues."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Black cat",
       "difficulty": "easy",
-      "description": "Black cat is a useful Halloween Party reference for fast team guessing rounds."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Spider web",
       "difficulty": "easy",
-      "description": "Spider web is a clueable term relevant to Halloween Party."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Bat",
       "difficulty": "easy",
-      "description": "Bat is a clueable term relevant to Halloween Party."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Mask",
       "difficulty": "easy",
-      "description": "Mask is commonly used in Halloween Party themed clues."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Frankenstein's Monster",
       "difficulty": "hard",
-      "description": "Frankenstein's Monster fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Dracula's Castle",
       "difficulty": "hard",
-      "description": "Dracula's Castle is commonly used in Halloween Party themed clues."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Witch's Brew",
       "difficulty": "hard",
-      "description": "Witch's Brew fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Spooky Stories",
       "difficulty": "hard",
-      "description": "Spooky Stories is commonly used in Halloween Party themed clues."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Full Moon Night",
       "difficulty": "hard",
-      "description": "Full Moon Night fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Graveyard Shift",
       "difficulty": "hard",
-      "description": "Graveyard Shift fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Poltergeist",
       "difficulty": "hard",
-      "description": "Poltergeist fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Werewolf Transformation",
       "difficulty": "hard",
-      "description": "Werewolf Transformation fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Creepy Crawlies",
       "difficulty": "hard",
-      "description": "Creepy Crawlies is commonly used in Halloween Party themed clues."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Phantom of the Opera",
       "difficulty": "hard",
-      "description": "Phantom of the Opera fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Haunted Forest",
       "difficulty": "hard",
-      "description": "Haunted Forest is a useful Halloween Party reference for fast team guessing rounds."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Sleepy Hollow",
       "difficulty": "hard",
-      "description": "Sleepy Hollow fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Blood Moon",
       "difficulty": "hard",
-      "description": "Blood Moon is a clueable term relevant to Halloween Party."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Scarecrow",
       "difficulty": "hard",
-      "description": "Scarecrow is commonly used in Halloween Party themed clues."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Halloween Parade",
       "difficulty": "hard",
-      "description": "Halloween Parade is a useful Halloween Party reference for fast team guessing rounds."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Trick Bucket",
       "difficulty": "hard",
-      "description": "Trick Bucket is commonly used in Halloween Party themed clues."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Fog Machine",
       "difficulty": "easy",
-      "description": "Fog Machine is a clueable term relevant to Halloween Party."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Costume Contest",
       "difficulty": "easy",
-      "description": "Costume Contest is a clueable term relevant to Halloween Party."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Candy Corn",
       "difficulty": "easy",
-      "description": "Candy Corn is a useful Halloween Party reference for fast team guessing rounds."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Spooky Playlist",
       "difficulty": "hard",
-      "description": "Spooky Playlist fits the Halloween Party category for quick, descriptive gameplay."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Face Paint",
       "difficulty": "easy",
-      "description": "Face Paint is commonly used in Halloween Party themed clues."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Pumpkin Carving",
       "difficulty": "easy",
-      "description": "Pumpkin Carving is commonly used in Halloween Party themed clues."
+      "description": "October-themed clue; use decoration, character, or night-time celebration context."
     },
     {
       "word": "Haunted Maze",
       "difficulty": "easy",
-      "description": "Haunted Maze is a useful Halloween Party reference for fast team guessing rounds."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     },
     {
       "word": "Ghost Story",
       "difficulty": "hard",
-      "description": "Ghost Story is a clueable term relevant to Halloween Party."
+      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
     },
     {
       "word": "Midnight Party",
       "difficulty": "easy",
-      "description": "Midnight Party is a clueable term relevant to Halloween Party."
+      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
     }
   ],
   "Christmas Celebration": [
     {
       "word": "Santa Claus",
       "difficulty": "easy",
-      "description": "Santa Claus is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Christmas tree",
       "difficulty": "easy",
-      "description": "Christmas tree is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Snowman",
       "difficulty": "easy",
-      "description": "Snowman fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Gifts",
       "difficulty": "easy",
-      "description": "Gifts fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Stockings",
       "difficulty": "easy",
-      "description": "Stockings fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Reindeer",
       "difficulty": "easy",
-      "description": "Reindeer is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Sleigh",
       "difficulty": "easy",
-      "description": "Sleigh fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Caroling",
       "difficulty": "easy",
-      "description": "Caroling is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Fireplace",
       "difficulty": "easy",
-      "description": "Fireplace is commonly used in Christmas Celebration themed clues."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Gingerbread",
       "difficulty": "easy",
-      "description": "Gingerbread fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Ornament",
       "difficulty": "easy",
-      "description": "Ornament fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Mistletoe",
       "difficulty": "easy",
-      "description": "Mistletoe is commonly used in Christmas Celebration themed clues."
+      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
     },
     {
       "word": "Eggnog",
       "difficulty": "easy",
-      "description": "Eggnog is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "New Year's Eve",
       "difficulty": "easy",
-      "description": "New Year's Eve is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Hanukkah",
       "difficulty": "easy",
-      "description": "Hanukkah is commonly used in Christmas Celebration themed clues."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Advent Calendar",
       "difficulty": "hard",
-      "description": "Advent Calendar is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Kwanzaa",
       "difficulty": "hard",
-      "description": "Kwanzaa is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Yule Log",
       "difficulty": "hard",
-      "description": "Yule Log is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Boxing Day",
       "difficulty": "hard",
-      "description": "Boxing Day is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Epiphany",
       "difficulty": "hard",
-      "description": "Epiphany is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
     },
     {
       "word": "Menorah",
       "difficulty": "hard",
-      "description": "Menorah is commonly used in Christmas Celebration themed clues."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Dreidel",
       "difficulty": "hard",
-      "description": "Dreidel fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Tinsel",
       "difficulty": "hard",
-      "description": "Tinsel is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Wassail",
       "difficulty": "hard",
-      "description": "Wassail is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
     },
     {
       "word": "Nutcracker",
       "difficulty": "hard",
-      "description": "Nutcracker is a clueable term relevant to Christmas Celebration."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Krampus",
       "difficulty": "hard",
-      "description": "Krampus is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
     },
     {
       "word": "Solstice",
       "difficulty": "hard",
-      "description": "Solstice fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Hogmanay",
       "difficulty": "hard",
-      "description": "Hogmanay is commonly used in Christmas Celebration themed clues."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Black Friday",
       "difficulty": "hard",
-      "description": "Black Friday is a clueable term relevant to Christmas Celebration."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Feast of Seven Fishes",
       "difficulty": "hard",
-      "description": "Feast of Seven Fishes fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Nativity Scene",
       "difficulty": "hard",
-      "description": "Nativity Scene is a clueable term relevant to Christmas Celebration."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Christmas Choir",
       "difficulty": "easy",
-      "description": "Christmas Choir is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
     },
     {
       "word": "Candy Cane",
       "difficulty": "easy",
-      "description": "Candy Cane is a clueable term relevant to Christmas Celebration."
+      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
     },
     {
       "word": "Tree Topper",
       "difficulty": "easy",
-      "description": "Tree Topper fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Christmas Eve",
       "difficulty": "hard",
-      "description": "Christmas Eve is a useful Christmas Celebration reference for fast team guessing rounds."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Gift Exchange",
       "difficulty": "easy",
-      "description": "Gift Exchange fits the Christmas Celebration category for quick, descriptive gameplay."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Festive Sweater",
       "difficulty": "easy",
-      "description": "Festive Sweater is commonly used in Christmas Celebration themed clues."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Holiday Ham",
       "difficulty": "easy",
-      "description": "Holiday Ham is commonly used in Christmas Celebration themed clues."
+      "description": "Holiday celebration reference; start with family custom and seasonal timing."
     },
     {
       "word": "Snow Angel",
       "difficulty": "hard",
-      "description": "Snow Angel is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     },
     {
       "word": "Winter Garland",
       "difficulty": "easy",
-      "description": "Winter Garland is commonly used in Christmas Celebration themed clues."
+      "description": "Festive clue; use winter/December context and familiar ritual."
     }
   ],
   "Back to School": [
     {
       "word": "Homework",
       "difficulty": "easy",
-      "description": "Homework is a useful Back to School reference for fast team guessing rounds."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Backpack",
       "difficulty": "easy",
-      "description": "Backpack is a clueable term relevant to Back to School."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Teacher",
       "difficulty": "easy",
-      "description": "Teacher is commonly used in Back to School themed clues."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Classroom",
       "difficulty": "easy",
-      "description": "Classroom is a useful Back to School reference for fast team guessing rounds."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Desk",
       "difficulty": "easy",
-      "description": "Desk is a useful Back to School reference for fast team guessing rounds."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Notebook",
       "difficulty": "easy",
-      "description": "Notebook is a useful Back to School reference for fast team guessing rounds."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Pencil",
       "difficulty": "easy",
-      "description": "Pencil fits the Back to School category for quick, descriptive gameplay."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Textbook",
       "difficulty": "easy",
-      "description": "Textbook is a useful Back to School reference for fast team guessing rounds."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Lunchbox",
       "difficulty": "easy",
-      "description": "Lunchbox fits the Back to School category for quick, descriptive gameplay."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Bus",
       "difficulty": "easy",
-      "description": "Bus is commonly used in Back to School themed clues."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Recess",
       "difficulty": "easy",
-      "description": "Recess fits the Back to School category for quick, descriptive gameplay."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Blackboard",
       "difficulty": "easy",
-      "description": "Blackboard fits the Back to School category for quick, descriptive gameplay."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Calculator",
       "difficulty": "easy",
-      "description": "Calculator is commonly used in Back to School themed clues."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Ruler",
       "difficulty": "easy",
-      "description": "Ruler is a useful Back to School reference for fast team guessing rounds."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "School Bell",
       "difficulty": "easy",
-      "description": "School Bell is a clueable term relevant to Back to School."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Parent-Teacher Conference",
       "difficulty": "hard",
-      "description": "Parent-Teacher Conference is a useful Back to School reference for fast team guessing rounds."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Science Fair Project",
       "difficulty": "hard",
-      "description": "Science Fair Project is a clueable term relevant to Back to School."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Field Trip",
       "difficulty": "hard",
-      "description": "Field Trip is commonly used in Back to School themed clues."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Honor Roll",
       "difficulty": "hard",
-      "description": "Honor Roll is a clueable term relevant to Back to School."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Extracurricular Activities",
       "difficulty": "hard",
-      "description": "Extracurricular Activities is commonly used in Back to School themed clues."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Locker Combination",
       "difficulty": "hard",
-      "description": "Locker Combination is a useful Back to School reference for fast team guessing rounds."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Study Group",
       "difficulty": "hard",
-      "description": "Study Group is commonly used in Back to School themed clues."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Class President",
       "difficulty": "hard",
-      "description": "Class President is commonly used in Back to School themed clues."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Graduation Ceremony",
       "difficulty": "hard",
-      "description": "Graduation Ceremony is a clueable term relevant to Back to School."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Debate Club",
       "difficulty": "hard",
-      "description": "Debate Club is a clueable term relevant to Back to School."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "School Assembly",
       "difficulty": "hard",
-      "description": "School Assembly is a useful Back to School reference for fast team guessing rounds."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Art Class",
       "difficulty": "hard",
-      "description": "Art Class is a clueable term relevant to Back to School."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Gymnasium",
       "difficulty": "hard",
-      "description": "Gymnasium is a clueable term relevant to Back to School."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "History Lesson",
       "difficulty": "hard",
-      "description": "History Lesson is a useful Back to School reference for fast team guessing rounds."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Report Card",
       "difficulty": "hard",
-      "description": "Report Card fits the Back to School category for quick, descriptive gameplay."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "Syllabus",
       "difficulty": "hard",
-      "description": "Syllabus is commonly used in Back to School themed clues."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Homeroom",
       "difficulty": "easy",
-      "description": "Homeroom is commonly used in Back to School themed clues."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Attendance Register",
       "difficulty": "easy",
-      "description": "Attendance Register is a useful Back to School reference for fast team guessing rounds."
+      "description": "School clue; describe classroom use, student role, or academic routine."
     },
     {
       "word": "School Uniform",
       "difficulty": "easy",
-      "description": "School Uniform is commonly used in Back to School themed clues."
+      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
     },
     {
       "word": "Detention",
       "difficulty": "hard",
-      "description": "Detention is a useful Back to School reference for fast team guessing rounds."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "School Library",
       "difficulty": "easy",
-      "description": "School Library is commonly used in Back to School themed clues."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Exam Hall",
       "difficulty": "easy",
-      "description": "Exam Hall fits the Back to School category for quick, descriptive gameplay."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Pencil Case",
       "difficulty": "easy",
-      "description": "Pencil Case is a useful Back to School reference for fast team guessing rounds."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Study Timetable",
       "difficulty": "hard",
-      "description": "Study Timetable is a clueable term relevant to Back to School."
+      "description": "Education reference; start with learning context and where it appears in school life."
     },
     {
       "word": "Group Project",
       "difficulty": "easy",
-      "description": "Group Project is a clueable term relevant to Back to School."
+      "description": "Education reference; start with learning context and where it appears in school life."
     }
   ],
   "Music Festival": [
     {
       "word": "Stage",
       "difficulty": "easy",
-      "description": "Stage is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Band",
       "difficulty": "easy",
-      "description": "Band fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Concert-festival clue; use audience energy and production elements."
     },
     {
       "word": "Audience",
       "difficulty": "easy",
-      "description": "Audience fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Microphone",
       "difficulty": "easy",
-      "description": "Microphone is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Guitar",
       "difficulty": "easy",
-      "description": "Guitar is commonly used in Music Festival themed clues."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Drums",
       "difficulty": "easy",
-      "description": "Drums fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "DJ",
       "difficulty": "easy",
-      "description": "DJ is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Concert-festival clue; use audience energy and production elements."
     },
     {
       "word": "Dance",
       "difficulty": "easy",
-      "description": "Dance is a clueable term relevant to Music Festival."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Lights",
       "difficulty": "easy",
-      "description": "Lights is a clueable term relevant to Music Festival."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Ticket",
       "difficulty": "easy",
-      "description": "Ticket is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Concert-festival clue; use audience energy and production elements."
     },
     {
       "word": "Camping",
       "difficulty": "easy",
-      "description": "Camping fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Tent",
       "difficulty": "easy",
-      "description": "Tent is a clueable term relevant to Music Festival."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Soundcheck",
       "difficulty": "easy",
-      "description": "Soundcheck is commonly used in Music Festival themed clues."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Setlist",
       "difficulty": "easy",
-      "description": "Setlist is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Encore",
       "difficulty": "easy",
-      "description": "Encore is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Backstage Pass",
       "difficulty": "hard",
-      "description": "Backstage Pass is a clueable term relevant to Music Festival."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Crowd Surfing",
       "difficulty": "hard",
-      "description": "Crowd Surfing is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Headliner",
       "difficulty": "hard",
-      "description": "Headliner is a clueable term relevant to Music Festival."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Festival Wristband",
       "difficulty": "hard",
-      "description": "Festival Wristband is a clueable term relevant to Music Festival."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "VIP Area",
       "difficulty": "hard",
-      "description": "VIP Area fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Concert-festival clue; use audience energy and production elements."
     },
     {
       "word": "Acoustic Set",
       "difficulty": "hard",
-      "description": "Acoustic Set is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Concert-festival clue; use audience energy and production elements."
     },
     {
       "word": "Merchandise Stand",
       "difficulty": "hard",
-      "description": "Merchandise Stand is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Mosh Pit",
       "difficulty": "hard",
-      "description": "Mosh Pit is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Concert-festival clue; use audience energy and production elements."
     },
     {
       "word": "Opening Act",
       "difficulty": "hard",
-      "description": "Opening Act is a clueable term relevant to Music Festival."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Roadies",
       "difficulty": "hard",
-      "description": "Roadies fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Tour Bus",
       "difficulty": "hard",
-      "description": "Tour Bus is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Sound Engineer",
       "difficulty": "hard",
-      "description": "Sound Engineer is commonly used in Music Festival themed clues."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Festival Grounds",
       "difficulty": "hard",
-      "description": "Festival Grounds is commonly used in Music Festival themed clues."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Food Truck",
       "difficulty": "hard",
-      "description": "Food Truck is commonly used in Music Festival themed clues."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Festival Vibes",
       "difficulty": "hard",
-      "description": "Festival Vibes is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Main Stage",
       "difficulty": "hard",
-      "description": "Main Stage is commonly used in Music Festival themed clues."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Sound Booth",
       "difficulty": "easy",
-      "description": "Sound Booth is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Festival Lineup",
       "difficulty": "easy",
-      "description": "Festival Lineup fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Late Night Set",
       "difficulty": "easy",
-      "description": "Late Night Set fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Warm-up DJ",
       "difficulty": "hard",
-      "description": "Warm-up DJ is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Crowd Chant",
       "difficulty": "easy",
-      "description": "Crowd Chant is a useful Music Festival reference for fast team guessing rounds."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Festival Poster",
       "difficulty": "easy",
-      "description": "Festival Poster is a clueable term relevant to Music Festival."
+      "description": "Concert-festival clue; use audience energy and production elements."
     },
     {
       "word": "Bass Drop",
       "difficulty": "easy",
-      "description": "Bass Drop is a clueable term relevant to Music Festival."
+      "description": "Festival clue; describe live-performance setting and crowd experience."
     },
     {
       "word": "Live Mix",
       "difficulty": "hard",
-      "description": "Live Mix fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Music-event reference; start with stage, sound, or artist lineup context."
     },
     {
       "word": "Encore Song",
       "difficulty": "easy",
-      "description": "Encore Song fits the Music Festival category for quick, descriptive gameplay."
+      "description": "Concert-festival clue; use audience energy and production elements."
     }
   ],
   "Movie Night": [
     {
       "word": "Popcorn",
       "difficulty": "easy",
-      "description": "Popcorn is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Movie",
       "difficulty": "easy",
-      "description": "Movie fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Ticket",
       "difficulty": "easy",
-      "description": "Ticket fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Director",
       "difficulty": "easy",
-      "description": "Director is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Actor",
       "difficulty": "easy",
-      "description": "Actor is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Theater",
       "difficulty": "easy",
-      "description": "Theater is commonly used in Movie Night themed clues."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Screen",
       "difficulty": "easy",
-      "description": "Screen fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Trailer",
       "difficulty": "easy",
-      "description": "Trailer is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Snack",
       "difficulty": "easy",
-      "description": "Snack is a clueable term relevant to Movie Night."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Seat",
       "difficulty": "easy",
-      "description": "Seat is commonly used in Movie Night themed clues."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Projector",
       "difficulty": "easy",
-      "description": "Projector is a clueable term relevant to Movie Night."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Credits",
       "difficulty": "easy",
-      "description": "Credits is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Scene",
       "difficulty": "easy",
-      "description": "Scene fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Genre",
       "difficulty": "easy",
-      "description": "Genre is commonly used in Movie Night themed clues."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Plot",
       "difficulty": "easy",
-      "description": "Plot is commonly used in Movie Night themed clues."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Cinematic Experience",
       "difficulty": "hard",
-      "description": "Cinematic Experience is commonly used in Movie Night themed clues."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Red Carpet Event",
       "difficulty": "hard",
-      "description": "Red Carpet Event is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Independent Film",
       "difficulty": "hard",
-      "description": "Independent Film fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Blockbuster Hit",
       "difficulty": "hard",
-      "description": "Blockbuster Hit fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Special Effects",
       "difficulty": "hard",
-      "description": "Special Effects fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Box Office",
       "difficulty": "hard",
-      "description": "Box Office is commonly used in Movie Night themed clues."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Movie Marathon",
       "difficulty": "hard",
-      "description": "Movie Marathon fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Midnight Screening",
       "difficulty": "hard",
-      "description": "Midnight Screening is a clueable term relevant to Movie Night."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Dolby Surround Sound",
       "difficulty": "hard",
-      "description": "Dolby Surround Sound is commonly used in Movie Night themed clues."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Film Festival",
       "difficulty": "hard",
-      "description": "Film Festival is commonly used in Movie Night themed clues."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Cult Classic",
       "difficulty": "hard",
-      "description": "Cult Classic is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Behind the Scenes",
       "difficulty": "hard",
-      "description": "Behind the Scenes is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Movie Franchise",
       "difficulty": "hard",
-      "description": "Movie Franchise fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Character Development",
       "difficulty": "hard",
-      "description": "Character Development is a clueable term relevant to Movie Night."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Post-Credit Scene",
       "difficulty": "hard",
-      "description": "Post-Credit Scene fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Cinema Ticket",
       "difficulty": "hard",
-      "description": "Cinema Ticket is commonly used in Movie Night themed clues."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Box Office Hit",
       "difficulty": "easy",
-      "description": "Box Office Hit is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Director's Cut",
       "difficulty": "easy",
-      "description": "Director's Cut fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Opening Scene",
       "difficulty": "easy",
-      "description": "Opening Scene fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     },
     {
       "word": "Movie Quote",
       "difficulty": "hard",
-      "description": "Movie Quote is a clueable term relevant to Movie Night."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Film Score",
       "difficulty": "easy",
-      "description": "Film Score is a clueable term relevant to Movie Night."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Rom-com",
       "difficulty": "easy",
-      "description": "Rom-com is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Thriller",
       "difficulty": "easy",
-      "description": "Thriller is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Screen-time clue; use theater or streaming context and audience behavior."
     },
     {
       "word": "Mid-credit Scene",
       "difficulty": "hard",
-      "description": "Mid-credit Scene fits the Movie Night category for quick, descriptive gameplay."
+      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
     },
     {
       "word": "Sequel",
       "difficulty": "easy",
-      "description": "Sequel is a useful Movie Night reference for fast team guessing rounds."
+      "description": "Film reference; start with viewing setup, genre mood, or plot role."
     }
   ],
   "Adventure Trip": [
@@ -15596,52 +15596,52 @@ const themes = {
     {
       "word": "Trail Map",
       "difficulty": "hard",
-      "description": "Trail Map is a clueable term relevant to Adventure Trip."
+      "description": "Adventure clue; describe outdoor setting, risk level, and activity style."
     },
     {
       "word": "Compass",
       "difficulty": "easy",
-      "description": "Compass is commonly used in Adventure Trip themed clues."
+      "description": "Travel-adventure reference; start with terrain and the action people perform."
     },
     {
       "word": "Zipline",
       "difficulty": "easy",
-      "description": "Zipline fits the Adventure Trip category for quick, descriptive gameplay."
+      "description": "Travel-adventure reference; start with terrain and the action people perform."
     },
     {
       "word": "Canyon",
       "difficulty": "easy",
-      "description": "Canyon fits the Adventure Trip category for quick, descriptive gameplay."
+      "description": "Travel-adventure reference; start with terrain and the action people perform."
     },
     {
       "word": "Base Camp",
       "difficulty": "hard",
-      "description": "Base Camp is a useful Adventure Trip reference for fast team guessing rounds."
+      "description": "Expedition clue; use destination type, gear, and challenge context."
     },
     {
       "word": "Rope Bridge",
       "difficulty": "easy",
-      "description": "Rope Bridge is a useful Adventure Trip reference for fast team guessing rounds."
+      "description": "Expedition clue; use destination type, gear, and challenge context."
     },
     {
       "word": "Wild Camp",
       "difficulty": "easy",
-      "description": "Wild Camp fits the Adventure Trip category for quick, descriptive gameplay."
+      "description": "Adventure clue; describe outdoor setting, risk level, and activity style."
     },
     {
       "word": "Hiking Boots",
       "difficulty": "easy",
-      "description": "Hiking Boots fits the Adventure Trip category for quick, descriptive gameplay."
+      "description": "Expedition clue; use destination type, gear, and challenge context."
     },
     {
       "word": "Summit",
       "difficulty": "hard",
-      "description": "Summit is a useful Adventure Trip reference for fast team guessing rounds."
+      "description": "Adventure clue; describe outdoor setting, risk level, and activity style."
     },
     {
       "word": "Night Safari",
       "difficulty": "easy",
-      "description": "Night Safari is commonly used in Adventure Trip themed clues."
+      "description": "After-dark wildlife experience where visitors view animals on guided night tours."
     }
   ]
 };

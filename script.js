@@ -55,14 +55,16 @@ let activeSelectedTheme = "None";
 let activeSelectedCategories = [];
 let wordDescriptionLookup = new Map();
 let globalWordDescriptionLookup = null;
+let isRoundActive = false;
+let onlineGameState = "waiting";
 
 const RECENT_WORDS_STORAGE_KEY = "half_a_minute_recent_words_v1";
 const MAX_RECENT_WORDS = 600;
 
-const HEARTBEAT_INTERVAL_MS = 8000;
-const HOST_STALE_THRESHOLD_MS = 25000;
+const HEARTBEAT_INTERVAL_MS = 4000;
+const HOST_STALE_THRESHOLD_MS = 10000;
 const STALE_PLAYER_THRESHOLD_MS = 90000;
-const STALE_CLEANUP_INTERVAL_MS = 12000;
+const STALE_CLEANUP_INTERVAL_MS = 3000;
 const LOBBY_EXPIRY_MS = 12 * 60 * 60 * 1000;
 const JOIN_TRANSACTION_MAX_RETRIES = 3;
 const JOIN_RETRY_BASE_DELAY_MS = 220;
@@ -203,6 +205,9 @@ function initializeMenu() {
     registerModal(btnAI, "aiModal");
     registerModal(btnOnline, "onlineModal");
     registerModal(btnRules, "rulesModal");
+    btnOnline.addEventListener("click", () => {
+        void triggerOnlineHealthScan();
+    });
 
     document.getElementById("startGameButton").addEventListener("click", startGame);
     document.getElementById("startOnlineGame").addEventListener("click", startOnlineGame);
@@ -681,6 +686,17 @@ async function joinPlayerToLobby(playerNameToJoin) {
                 const canStart = isTeamsValidForTeamCount(configuredTeamCount, workingGameData.numPlayers);
                 workingGameData.gameState = canStart ? (workingGameData.isGameStarted ? "resumed" : "ready") : "waiting";
 
+                if (canStart && workingGameData.isGameStarted) {
+                    const hasSpeaker = workingGameData.teams.some(team =>
+                        Array.isArray(team.players) && team.players.some(player => player.isSpeaker)
+                    );
+
+                    if (!hasSpeaker) {
+                        const preferredTeamIndex = Math.max(0, (workingGameData.currentTeam || 1) - 1);
+                        assignFallbackSpeaker(workingGameData.teams, preferredTeamIndex);
+                    }
+                }
+
                 return workingGameData;
             }, { applyLocally: false });
 
@@ -778,6 +794,22 @@ async function leaveLobbyWithTransaction() {
                 gameData.hostName = getFirstAvailablePlayerName(gameData.teams);
             }
 
+            const configuredTeamCount = getConfiguredTeamCount(gameData);
+            const canContinue = isTeamsValidForTeamCount(configuredTeamCount, gameData.numPlayers);
+
+            if (!canContinue) {
+                clearAllSpeakers(gameData.teams);
+                gameData.roundActive = false;
+                gameData.words = [];
+                if (gameData.isGameStarted) {
+                    gameData.endRoundEarly = true;
+                    gameData.remainingTime = 0;
+                }
+
+                gameData.gameState = "waiting";
+                return gameData;
+            }
+
             const hasSpeaker = gameData.teams.some(team =>
                 team.players && team.players.some(player => player.isSpeaker)
             );
@@ -792,10 +824,9 @@ async function leaveLobbyWithTransaction() {
             if (removedPlayer.isSpeaker && gameData.isGameStarted) {
                 gameData.endRoundEarly = true;
                 gameData.remainingTime = 0;
+                gameData.roundActive = false;
             }
 
-            const configuredTeamCount = getConfiguredTeamCount(gameData);
-            const canContinue = isTeamsValidForTeamCount(configuredTeamCount, gameData.numPlayers);
             gameData.gameState = canContinue ? (gameData.isGameStarted ? "resumed" : "ready") : "waiting";
 
             return gameData;
@@ -859,6 +890,24 @@ function startLobbyHeartbeat() {
     }, HEARTBEAT_INTERVAL_MS);
 
     startStalePlayerCleanupLoop();
+}
+
+async function triggerOnlineHealthScan() {
+    if (!isOnlineGame || !gameCode) {
+        return;
+    }
+
+    await pruneStalePlayers();
+}
+
+function clearAllSpeakers(teamsData = []) {
+    teamsData.forEach(team => {
+        if (Array.isArray(team.players)) {
+            team.players.forEach(player => {
+                player.isSpeaker = false;
+            });
+        }
+    });
 }
 
 function buildGlobalWordDescriptionLookup() {
@@ -1059,6 +1108,22 @@ async function pruneStalePlayers() {
                 gameData.hostName = getFirstAvailablePlayerName(gameData.teams);
             }
 
+            const configuredTeamCount = getConfiguredTeamCount(gameData);
+            const canContinue = isTeamsValidForTeamCount(configuredTeamCount, gameData.numPlayers);
+
+            if (!canContinue) {
+                clearAllSpeakers(gameData.teams);
+                gameData.roundActive = false;
+                gameData.words = [];
+                if (gameData.isGameStarted) {
+                    gameData.endRoundEarly = true;
+                    gameData.remainingTime = 0;
+                }
+
+                gameData.gameState = "waiting";
+                return gameData;
+            }
+
             const hasSpeaker = gameData.teams.some(team =>
                 team.players && team.players.some(player => player.isSpeaker)
             );
@@ -1070,10 +1135,9 @@ async function pruneStalePlayers() {
             if ((speakerWasRemoved || !hasSpeaker) && gameData.isGameStarted) {
                 gameData.endRoundEarly = true;
                 gameData.remainingTime = 0;
+                gameData.roundActive = false;
             }
 
-            const configuredTeamCount = getConfiguredTeamCount(gameData);
-            const canContinue = isTeamsValidForTeamCount(configuredTeamCount, gameData.numPlayers);
             gameData.gameState = canContinue ? (gameData.isGameStarted ? "resumed" : "ready") : "waiting";
 
             return gameData;
@@ -1196,6 +1260,7 @@ async function onLobbyJoined() {
 
     // Add gameState listener to know when to start/update game
     listenForChanges(`games/${gameCode}/gameState`, async (state) => {
+        onlineGameState = state || "waiting";
         if (state == "started") {
             isGameStarted = true;
             hideElement(lblGameState);
@@ -1257,6 +1322,14 @@ async function onLobbyJoined() {
         }
     });
 
+    listenForChanges(`games/${gameCode}/roundActive`, (roundActive) => {
+        isRoundActive = Boolean(roundActive);
+        if (!isRoundActive && !isSpeaker) {
+            hideTimerAndAnswers();
+            clearWords();
+        }
+    });
+
     // Teams are updated when a player joins or leaves
     listenForChanges(`games/${gameCode}/teams`, (teamData) => {
         if (!teamData) {
@@ -1315,7 +1388,7 @@ async function onLobbyJoined() {
     });
 
     listenForChanges(`games/${gameCode}/words`, (words) => {
-        if (words && isGameStarted) {
+        if (words && isGameStarted && (isRoundActive || isSpeaker)) {
             lblAnswers.textContent = "The 'Speaker' is describing the following words:";
 
             const scoreButtons = document.getElementsByClassName("scoreButton");
@@ -1344,10 +1417,13 @@ async function onLobbyJoined() {
                 btnAnswers.hidden = false;
             }
         }
+        else if (!isSpeaker) {
+            hideTimerAndAnswers();
+        }
     });
 
     listenForChanges(`games/${gameCode}/remainingTime`, (seconds) => {
-        if (seconds !== null && seconds !== undefined && isGameStarted) {
+        if (seconds !== null && seconds !== undefined && isGameStarted && isRoundActive) {
             // Show timer to all players
             if (!isSpeaker) {
                 showElement(timer);
@@ -1403,8 +1479,13 @@ async function onLobbyJoined() {
         isHost = hostName === playerName;
         if (isHost) {
             showElement(btnEndGame);
-            showElement(btnStartOnlineGame);
-            btnStartOnlineGame.disabled = !isTeamsValid(numPlayers) || isGameStarted;
+            const canShowStartButton = !isGameStarted && (onlineGameState === "waiting" || onlineGameState === "ready");
+            if (canShowStartButton) {
+                showElement(btnStartOnlineGame);
+                btnStartOnlineGame.disabled = onlineGameState !== "ready" || !isTeamsValid(numPlayers);
+            } else {
+                hideElement(btnStartOnlineGame);
+            }
         }
         else {
             hideElement(btnEndGame);
@@ -1504,6 +1585,7 @@ async function createGameLobby() {
     currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
     currentTeam = 1;
     currentRound = 0;
+    isRoundActive = false;
 
     // Gamedata
     const gameData = {
@@ -1519,6 +1601,8 @@ async function createGameLobby() {
         numPlayers: 0,
         currentTeam,
         currentRound,
+        roundActive: false,
+        remainingTime: null,
         hostName: playerName,
         gameState: 'waiting',
         auditEvent: {
@@ -1587,6 +1671,7 @@ async function joinGameLobby() {
                 numSeconds = settings.numSeconds;
                 isTrainingMode = settings.trainingMode;
                 numPlayers = gameData.numPlayers ?? countPlayersInTeams(gameData.teams || []);
+                isRoundActive = Boolean(gameData.roundActive);
                 activeSelectedTheme = settings.selectedTheme;
                 activeSelectedCategories = [...settings.selectedCategories];
                 if (chkTraining) {
@@ -1629,6 +1714,7 @@ async function startOnlineGame() {
 
             gameData.gameState = "started";
             gameData.isGameStarted = true;
+            gameData.roundActive = false;
             return gameData;
         }, { applyLocally: false });
 
@@ -2107,9 +2193,14 @@ function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
 function startRound() {
     btnStartRound.hidden = true;
     btnEndGame.hidden = true;
+    isRoundActive = true;
 
     if (isOnlineGame) {
-        updateData(`games/${gameCode}`, { endRoundEarly: false });
+        updateData(`games/${gameCode}`, {
+            endRoundEarly: false,
+            roundActive: true,
+            remainingTime: numSeconds
+        });
     }
     endRoundEarly = false;
 
@@ -2118,6 +2209,11 @@ function startRound() {
         btnEndRound.hidden = true;
         btnNextRound.hidden = false;
         clearTrainingHints();
+        isRoundActive = false;
+
+        if (isOnlineGame && isSpeaker) {
+            updateData(`games/${gameCode}`, { roundActive: false });
+        }
 
         let count = 0;
         document.querySelectorAll(".scoreButton").forEach(button => {
@@ -2177,6 +2273,7 @@ async function nextRound() {
     timer.hidden = true;
     clearWords();
     clearTrainingHints();
+    isRoundActive = false;
 
     if (teams.some(team => team.points >= pointsToWin)) {
         endGame();
@@ -2198,6 +2295,10 @@ async function nextRound() {
             numPlayers: numPlayers,
             currentTeam: currentTeam,
             currentRound: currentRound,
+            words: [],
+            remainingTime: null,
+            roundActive: false,
+            endRoundEarly: false,
             gameState: 'resumed'
         });
     }
@@ -2223,9 +2324,13 @@ function endRound() {
     btnNextRound.hidden = false;
     endRoundEarly = true;
     clearTrainingHints();
+    isRoundActive = false;
 
     if (isOnlineGame) {
-        updateData(`games/${gameCode}`, { endRoundEarly: true });
+        updateData(`games/${gameCode}`, {
+            endRoundEarly: true,
+            roundActive: false
+        });
     }
 }
 
@@ -2524,20 +2629,19 @@ function shuffleArray(array) {
 
 function updateCurrentTeamIndicator() {
     const currentTeamIndicator = document.getElementById("currentTeamIndicator");
+    const speakerName = isOnlineGame ? getSpeakerName() : null;
+    const indicatorText = isOnlineGame
+        ? `Current Team: Team ${currentTeam}${speakerName ? ` (${speakerName})` : " (Waiting for player)"}`
+        : `Current Team: Team ${currentTeam}`;
+
     if (!currentTeamIndicator) {
         const indicator = document.createElement("div");
         indicator.id = "currentTeamIndicator";
-        indicator.textContent = `Current Team: Team ${currentTeam}`;
-        if (isOnlineGame) {
-            indicator.textContent = `Current Team: Team ${currentTeam} (${getSpeakerName()})`;
-        }
+        indicator.textContent = indicatorText;
         indicator.style.color = getTeamColor(getCurrentTeamIndex(currentTeam));
         document.getElementById("game").prepend(indicator);
     } else {
-        currentTeamIndicator.textContent = `Current Team: Team ${currentTeam}`;
-        if (isOnlineGame) {
-            currentTeamIndicator.textContent = `Current Team: Team ${currentTeam} (${getSpeakerName()})`;
-        }
+        currentTeamIndicator.textContent = indicatorText;
         currentTeamIndicator.style.color = getTeamColor(getCurrentTeamIndex(currentTeam));
     }
 }
