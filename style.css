@@ -5,8 +5,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100dvh;
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px 8px 20px;
     margin: 0;
+}
+
+body.layout-menu {
+    align-items: center;
+}
+
+body.layout-game {
+    align-items: flex-start;
 }
 
 .container {
@@ -14,7 +26,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    width: 80%;
+    width: min(100%, 800px);
     max-width: 600px;
     text-align: center;
 }
@@ -48,6 +60,64 @@ h1 {
     text-align: center;
     width: 50px; /* Example width */
     height: 50px; /* Example height */
+    position: relative;
+    overflow: hidden;
+}
+
+.board-cell-segments {
+    width: 100%;
+    height: 100%;
+}
+
+.board-team-segment {
+    box-sizing: border-box;
+}
+
+.board-powerup {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 4px 5px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 0.92);
+    color: #111;
+    z-index: 3;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.powerup-plus {
+    background: #d4f5dd;
+}
+
+.powerup-plus-rare {
+    background: #b7ebff;
+}
+
+.powerup-minus {
+    background: #ffe3cc;
+}
+
+.powerup-minus-rare {
+    background: #ffc8c8;
+}
+
+.powerup-bomb {
+    background: #2f2f2f;
+    color: #fff;
+}
+
+.powerup-shield {
+    background: #e6ddff;
+}
+
+.powerup-steal {
+    background: #ffe8f2;
 }
 
 .team-score {
@@ -106,6 +176,18 @@ h1 {
 
 .team-score span {
     display: block;
+}
+
+.shield-indicator {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1f4f2a;
+    background: rgba(222, 244, 228, 0.9);
+    border: 1px solid #9bc9a8;
+    border-radius: 999px;
+    padding: 2px 8px;
 }
 
 .round-controls {
@@ -212,4 +294,68 @@ th, td {
 
 .container {
     position: relative;
+}
+
+#game {
+    padding-top: 6px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 6px 4px 14px;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 10px;
+        padding: 12px 10px 16px;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 1.65rem;
+        margin-top: 44px;
+        margin-bottom: 12px;
+    }
+
+    #currentTeamIndicator {
+        font-size: 1.05rem;
+        margin-top: 2px;
+    }
+
+    #gameBoard {
+        gap: 4px;
+        justify-content: center;
+    }
+
+    .board-cell {
+        width: 46px;
+        height: 46px;
+        padding: 8px;
+    }
+
+    #settings,
+    #online {
+        top: 6px;
+    }
+
+    #settings {
+        right: 6px;
+    }
+
+    #online {
+        left: 6px;
+    }
+
+    #history,
+    #ai,
+    #rules {
+        bottom: 6px;
+    }
+
+    .scoreButton {
+        width: 100%;
+        max-width: 280px;
+    }
 }

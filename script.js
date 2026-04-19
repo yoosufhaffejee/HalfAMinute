@@ -19,7 +19,7 @@ const db = getDatabase(app);
 // Initialize Google AI
 const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
 // Game state variables
 let teams = [];
@@ -50,6 +50,7 @@ let pointsToWin = 20;
 let numWords = 5;
 let numSeconds = 30;
 let difficulty = 'normal';
+let isChaosMode = false;
 let isTrainingMode = false;
 let activeSelectedTheme = "None";
 let activeSelectedCategories = [];
@@ -57,6 +58,12 @@ let wordDescriptionLookup = new Map();
 let globalWordDescriptionLookup = null;
 let isRoundActive = false;
 let onlineGameState = "waiting";
+let roundPowerups = {};
+let powerupRevealVisible = false;
+let teamShields = [];
+let isResolvingChaosMove = false;
+let lastProcessedChaosResolutionId = 0;
+let lastProcessedChaosPendingId = 0;
 
 const RECENT_WORDS_STORAGE_KEY = "half_a_minute_recent_words_v1";
 const MAX_RECENT_WORDS = 600;
@@ -68,12 +75,25 @@ const STALE_CLEANUP_INTERVAL_MS = 3000;
 const LOBBY_EXPIRY_MS = 12 * 60 * 60 * 1000;
 const JOIN_TRANSACTION_MAX_RETRIES = 3;
 const JOIN_RETRY_BASE_DELAY_MS = 220;
+const CHAOS_MOVE_STEP_DELAY_MS = 420;
+const CHAOS_PREMOVE_REVEAL_MS = 3000;
+const CHAOS_CLEAR_PAUSE_MS = 450;
 let heartbeatIntervalId = null;
 let staleCleanupIntervalId = null;
 let isHeartbeatWriteInFlight = false;
 let lastProcessedAuditEventId = 0;
 
 const registeredModalHandlers = new Set();
+
+const CHAOS_POWERUP_TYPES = {
+    plus1: { label: "+1", weight: 34, cssClass: "powerup-plus" },
+    plus2: { label: "+2", weight: 7, cssClass: "powerup-plus-rare" },
+    minus1: { label: "-1", weight: 28, cssClass: "powerup-minus" },
+    minus2: { label: "-2", weight: 5, cssClass: "powerup-minus-rare" },
+    bomb: { label: "BOMB", weight: 2, cssClass: "powerup-bomb" },
+    shield: { label: "SHIELD", weight: 14, cssClass: "powerup-shield" },
+    steal1: { label: "STEAL 1", weight: 10, cssClass: "powerup-steal" }
+};
 
 // DOM elements
 const menu = document.getElementById("menu");
@@ -87,6 +107,7 @@ const txtWords = document.getElementById("txtWords");
 const txtSeconds = document.getElementById("txtSeconds");
 const categoriesSelect = document.getElementById("categoriesSelect");
 const themesSelect = document.getElementById("themesSelect");
+const chkChaos = document.getElementById("chkChaos");
 const chkTraining = document.getElementById("chkTraining");
 const btnStartRound = document.getElementById("startRoundButton");
 const btnNextRound = document.getElementById("nextRoundButton");
@@ -117,7 +138,13 @@ document.addEventListener("DOMContentLoaded", () => {
     initializeMenu();
 });
 
+function setLayoutMode(mode = "menu") {
+    document.body.classList.remove("layout-menu", "layout-game");
+    document.body.classList.add(mode === "game" ? "layout-game" : "layout-menu");
+}
+
 function initializeMenu() {
+    setLayoutMode("menu");
     // Add categories to dropdown
     Object.keys(categories).forEach(category => {
         const option = document.createElement("option");
@@ -239,6 +266,11 @@ function updateData(path, data) {
 function updateDataSilent(path, data) {
     return update(ref(db, path), data)
         .catch((error) => console.error(`Error updating data: ${error}`));
+}
+
+function setDataSilent(path, data) {
+    return set(ref(db, path), data)
+        .catch((error) => console.error(`Error setting data: ${error}`));
 }
 
 // Function to add data using push
@@ -373,6 +405,7 @@ function getSanitizedSettingsFromInputs() {
         pointsToWin: clampInt(document.getElementById("pointsToWin").value, 20, 10, 60),
         numWords: clampInt(txtWords.value, 5, 1, 15),
         numSeconds: clampInt(txtSeconds.value, 30, 5, 300),
+        chaosMode: Boolean(chkChaos?.checked),
         trainingMode: Boolean(chkTraining?.checked),
         selectedTheme: sanitizeSelectedTheme(themesSelect.value),
         selectedCategories: sanitizeSelectedCategories(Array.from(categoriesSelect.selectedOptions).map(option => option.value))
@@ -390,6 +423,7 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
         pointsToWin: clampInt(settings.pointsToWin, 20, 10, 60),
         numWords: clampInt(settings.numWords, 5, 1, 15),
         numSeconds: clampInt(settings.numSeconds, 30, 5, 300),
+        chaosMode: Boolean(settings.chaosMode),
         trainingMode: Boolean(settings.trainingMode),
         selectedTheme,
         selectedCategories
@@ -410,6 +444,260 @@ function isRetryableJoinError(error) {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function createSeededRandom(seed) {
+    let t = (Number(seed) || 0) >>> 0;
+    return () => {
+        t += 0x6D2B79F5;
+        let r = Math.imul(t ^ (t >>> 15), 1 | t);
+        r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
+        return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+    };
+}
+
+function createInitialTeamShields(teamCount = teams.length || numTeams || 2) {
+    return Array.from({ length: Math.max(1, teamCount) }, () => 0);
+}
+
+function ensureLocalChaosState(teamCount = teams.length || numTeams || 2) {
+    if (!Array.isArray(teamShields) || teamShields.length !== teamCount) {
+        const next = createInitialTeamShields(teamCount);
+        if (Array.isArray(teamShields)) {
+            for (let i = 0; i < Math.min(teamShields.length, teamCount); i++) {
+                next[i] = Number(teamShields[i]) > 0 ? 1 : 0;
+            }
+        }
+        teamShields = next;
+    } else {
+        teamShields = teamShields.map(value => (Number(value) > 0 ? 1 : 0));
+    }
+}
+
+function getBoardCellIndexForPoints(pointsValue, boardSize = pointsToWin) {
+    const size = Math.max(1, Number(boardSize) || 1);
+    const pointsInt = Number(pointsValue) || 0;
+    const clamped = Math.max(0, Math.min(pointsInt, size - 1));
+    return clamped;
+}
+
+function sanitizeChaosPowerupType(value) {
+    if (!value || typeof value !== "string") {
+        return null;
+    }
+
+    const trimmed = value.trim();
+    if (!trimmed) {
+        return null;
+    }
+
+    return CHAOS_POWERUP_TYPES[trimmed] ? trimmed : null;
+}
+
+function sanitizeRoundPowerups(powerups = {}, boardSize = pointsToWin) {
+    const sanitized = {};
+    const lastTileIndex = Math.max(0, boardSize - 1);
+    Object.entries(powerups || {}).forEach(([tile, powerupType]) => {
+        const tileIndex = Number.parseInt(tile, 10);
+        const type = sanitizeChaosPowerupType(powerupType);
+        if (!Number.isInteger(tileIndex) || tileIndex <= 0 || tileIndex >= lastTileIndex || !type) {
+            return;
+        }
+        sanitized[tileIndex] = type;
+    });
+    return sanitized;
+}
+
+function pickWeightedChaosPowerup(rng = Math.random) {
+    const entries = Object.entries(CHAOS_POWERUP_TYPES);
+    const totalWeight = entries.reduce((sum, [, config]) => sum + config.weight, 0);
+    let roll = (rng() * totalWeight);
+    for (const [type, config] of entries) {
+        roll -= config.weight;
+        if (roll <= 0) {
+            return type;
+        }
+    }
+    return entries[0]?.[0] || "plus1";
+}
+
+function generateRoundPowerupsMap(boardSize = pointsToWin, rng = Math.random) {
+    const size = Math.max(2, Number(boardSize) || 2);
+    const map = {};
+    const lastTileIndex = size - 1;
+
+    for (let tile = 1; tile < lastTileIndex; tile++) {
+        if (rng() < 0.60) {
+            continue;
+        }
+        map[tile] = pickWeightedChaosPowerup(rng);
+    }
+
+    return map;
+}
+
+function normalizeTeamShields(shields = [], teamCount = teams.length || numTeams || 2) {
+    const normalized = createInitialTeamShields(teamCount);
+    for (let i = 0; i < Math.min(shields.length, teamCount); i++) {
+        normalized[i] = Number(shields[i]) > 0 ? 1 : 0;
+    }
+    return normalized;
+}
+
+function getNormalizedChaosState(chaosState = {}, teamCount = teams.length || numTeams || 2, boardSize = pointsToWin) {
+    return {
+        roundId: Number(chaosState?.roundId) || 0,
+        powerups: sanitizeRoundPowerups(chaosState?.powerups || {}, boardSize),
+        reveal: Boolean(chaosState?.reveal),
+        teamShields: normalizeTeamShields(chaosState?.teamShields || [], teamCount),
+        resolutionId: Number(chaosState?.resolutionId) || 0,
+        pending: chaosState?.pending && typeof chaosState.pending === "object" ? chaosState.pending : null
+    };
+}
+
+function getLeadingOpponentIndexes(teamsData = [], actorTeamIndex = 0) {
+    let highest = Number.NEGATIVE_INFINITY;
+    const leaders = [];
+
+    teamsData.forEach((team, teamIndex) => {
+        if (teamIndex === actorTeamIndex) {
+            return;
+        }
+
+        const points = Number(team?.points) || 0;
+        if (points > highest) {
+            highest = points;
+            leaders.length = 0;
+            leaders.push(teamIndex);
+        } else if (points === highest) {
+            leaders.push(teamIndex);
+        }
+    });
+
+    return leaders;
+}
+
+function applyChaosPowerupToState({
+    teamsData = [],
+    shields = [],
+    actingTeamIndex = 0,
+    powerupType = null,
+    rng = Math.random
+}) {
+    const summary = {
+        type: powerupType,
+        blockedByShield: false,
+        consumedShield: false,
+        grantedShield: false,
+        actorDelta: 0,
+        victimTeamIndex: null,
+        victimDelta: 0
+    };
+
+    const actor = teamsData[actingTeamIndex];
+    if (!actor || !powerupType) {
+        return summary;
+    }
+
+    const hasShield = Number(shields[actingTeamIndex]) > 0;
+    const consumeShieldIfAvailable = () => {
+        if (hasShield) {
+            shields[actingTeamIndex] = 0;
+            summary.blockedByShield = true;
+            summary.consumedShield = true;
+            return true;
+        }
+        return false;
+    };
+
+    const moveActor = (delta) => {
+        if (!delta) {
+            return;
+        }
+        const next = Math.max(0, (Number(actor.points) || 0) + delta);
+        summary.actorDelta += (next - (Number(actor.points) || 0));
+        actor.points = next;
+    };
+
+    switch (powerupType) {
+        case "plus1":
+            moveActor(1);
+            break;
+        case "plus2":
+            moveActor(2);
+            break;
+        case "minus1":
+            if (!consumeShieldIfAvailable()) {
+                moveActor(-1);
+            }
+            break;
+        case "minus2":
+            if (!consumeShieldIfAvailable()) {
+                moveActor(-2);
+            }
+            break;
+        case "bomb":
+            if (!consumeShieldIfAvailable()) {
+                const currentPoints = Number(actor.points) || 0;
+                moveActor(-currentPoints);
+            }
+            break;
+        case "shield":
+            shields[actingTeamIndex] = 1;
+            summary.grantedShield = true;
+            break;
+        case "steal1": {
+            moveActor(1);
+            const leaders = getLeadingOpponentIndexes(teamsData, actingTeamIndex);
+            if (leaders.length > 0) {
+                const victimTeamIndex = leaders[Math.floor(rng() * leaders.length)];
+                const victim = teamsData[victimTeamIndex];
+                const before = Number(victim?.points) || 0;
+                const after = Math.max(0, before - 1);
+                victim.points = after;
+                summary.victimTeamIndex = victimTeamIndex;
+                summary.victimDelta = after - before;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    return summary;
+}
+
+function buildChaosPendingPayload({
+    resolutionId,
+    teamIndexForRound,
+    roundNumberForRound,
+    correctAnswers,
+    selectedPoints
+}) {
+    return {
+        id: Number(resolutionId),
+        submittedBy: playerName,
+        teamIndex: teamIndexForRound,
+        roundNumber: roundNumberForRound,
+        points: clampInt(selectedPoints, 0, 0, numWords),
+        correctAnswers: Array.isArray(correctAnswers) ? [...correctAnswers] : [],
+        easyWords: Array.isArray(easyWords) ? [...easyWords] : [],
+        hardWords: Array.isArray(hardWords) ? [...hardWords] : [],
+        currentGameWords: Array.isArray(currentGameWords) ? [...currentGameWords] : []
+    };
+}
+
+async function syncChaosVisualState(roundNumberForRound = currentRound + 1) {
+    if (!isOnlineGame || !isHost || !gameCode) {
+        return;
+    }
+
+    await updateDataSilent(`games/${gameCode}/chaos`, {
+        roundId: Number(roundNumberForRound) || 0,
+        powerups: { ...roundPowerups },
+        reveal: Boolean(powerupRevealVisible),
+        teamShields: [...teamShields]
+    });
 }
 
 function dedupeWordObjects(wordObjects = []) {
@@ -1161,6 +1449,7 @@ function startStalePlayerCleanupLoop() {
 async function onLobbyJoined() {
     // Play game start sound
     await playSound(startSound, () => false, 1.2);
+    setLayoutMode("game");
 
     isOnlineGame = true;
 
@@ -1220,6 +1509,7 @@ async function onLobbyJoined() {
     }
 
     lastProcessedAuditEventId = 0;
+    lastProcessedChaosPendingId = 0;
 
     registerLobbyExitHandlers();
     startLobbyHeartbeat();
@@ -1319,6 +1609,20 @@ async function onLobbyJoined() {
             stopStalePlayerCleanupLoop();
             alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
             location.reload();
+        }
+    });
+
+    listenForChanges(`games/${gameCode}/settings`, (settingsFromDb) => {
+        const sanitizedSettings = sanitizeGameSettingsFromDb(settingsFromDb || {}, numTeams);
+        isChaosMode = Boolean(sanitizedSettings.chaosMode);
+        if (!isChaosMode) {
+            roundPowerups = {};
+            powerupRevealVisible = false;
+            teamShields = createInitialTeamShields(teams.length || numTeams || 2);
+            updateBoard();
+        }
+        if (chkChaos) {
+            chkChaos.checked = isChaosMode;
         }
     });
 
@@ -1475,6 +1779,35 @@ async function onLobbyJoined() {
         createTeamAuditRows(teamIndex, roundNumber, auditEvent.correctAnswers);
     });
 
+    listenForChanges(`games/${gameCode}/chaos`, (chaosState) => {
+        const normalized = getNormalizedChaosState(chaosState || {}, teams.length || numTeams, pointsToWin);
+        roundPowerups = normalized.powerups;
+        powerupRevealVisible = normalized.reveal;
+        teamShields = normalized.teamShields;
+        lastProcessedChaosResolutionId = Math.max(lastProcessedChaosResolutionId, normalized.resolutionId);
+
+        if (!isGameStarted) {
+            return;
+        }
+
+        updateBoard();
+        updateTeamScores();
+    });
+
+    listenForChanges(`games/${gameCode}/chaos/pending`, (pendingState) => {
+        if (!isHost || !isOnlineGame || !isChaosMode || !isGameStarted || !pendingState || typeof pendingState !== "object") {
+            return;
+        }
+
+        const pendingId = Number(pendingState.id);
+        if (!Number.isFinite(pendingId) || pendingId <= 0 || pendingId <= lastProcessedChaosPendingId) {
+            return;
+        }
+
+        lastProcessedChaosPendingId = pendingId;
+        void resolveOnlineChaosPending(pendingState);
+    });
+
     listenForChanges(`games/${gameCode}/hostName`, (hostName) => {
         isHost = hostName === playerName;
         if (isHost) {
@@ -1550,6 +1883,7 @@ async function createGameLobby() {
     pointsToWin = sanitizedSettings.pointsToWin;
     numWords = sanitizedSettings.numWords;
     numSeconds = sanitizedSettings.numSeconds;
+    isChaosMode = sanitizedSettings.chaosMode;
     isTrainingMode = sanitizedSettings.trainingMode;
     const selectedCategories = [...sanitizedSettings.selectedCategories];
     const selectedTheme = sanitizedSettings.selectedTheme;
@@ -1562,6 +1896,7 @@ async function createGameLobby() {
         pointsToWin,
         numWords,
         numSeconds,
+        chaosMode: isChaosMode,
         trainingMode: isTrainingMode,
         selectedTheme,
         selectedCategories: [...selectedCategories]
@@ -1571,6 +1906,9 @@ async function createGameLobby() {
     document.getElementById("pointsToWin").value = String(pointsToWin);
     txtWords.value = String(numWords);
     txtSeconds.value = String(numSeconds);
+    if (chkChaos) {
+        chkChaos.checked = isChaosMode;
+    }
     if (chkTraining) {
         chkTraining.checked = isTrainingMode;
     }
@@ -1586,6 +1924,11 @@ async function createGameLobby() {
     currentTeam = 1;
     currentRound = 0;
     isRoundActive = false;
+    roundPowerups = {};
+    powerupRevealVisible = false;
+    teamShields = createInitialTeamShields(numTeams);
+    lastProcessedChaosResolutionId = 0;
+    lastProcessedChaosPendingId = 0;
 
     // Gamedata
     const gameData = {
@@ -1605,6 +1948,14 @@ async function createGameLobby() {
         remainingTime: null,
         hostName: playerName,
         gameState: 'waiting',
+        chaos: {
+            roundId: 0,
+            powerups: {},
+            reveal: false,
+            teamShields: [...teamShields],
+            resolutionId: 0,
+            pending: null
+        },
         auditEvent: {
             id: 0,
             teamIndex: 0,
@@ -1669,11 +2020,21 @@ async function joinGameLobby() {
                 pointsToWin = settings.pointsToWin;
                 numWords = settings.numWords;
                 numSeconds = settings.numSeconds;
+                isChaosMode = settings.chaosMode;
                 isTrainingMode = settings.trainingMode;
                 numPlayers = gameData.numPlayers ?? countPlayersInTeams(gameData.teams || []);
                 isRoundActive = Boolean(gameData.roundActive);
                 activeSelectedTheme = settings.selectedTheme;
                 activeSelectedCategories = [...settings.selectedCategories];
+                const normalizedChaos = getNormalizedChaosState(gameData.chaos || {}, numTeams, pointsToWin);
+                roundPowerups = normalizedChaos.powerups;
+                powerupRevealVisible = normalizedChaos.reveal;
+                teamShields = normalizedChaos.teamShields;
+                lastProcessedChaosResolutionId = normalizedChaos.resolutionId;
+                lastProcessedChaosPendingId = 0;
+                if (chkChaos) {
+                    chkChaos.checked = isChaosMode;
+                }
                 if (chkTraining) {
                     chkTraining.checked = isTrainingMode;
                 }
@@ -1715,6 +2076,14 @@ async function startOnlineGame() {
             gameData.gameState = "started";
             gameData.isGameStarted = true;
             gameData.roundActive = false;
+            const teamCount = gameData.teams.length;
+            const settings = sanitizeGameSettingsFromDb(gameData.settings || {}, teamCount);
+            const normalizedChaos = getNormalizedChaosState(gameData.chaos || {}, teamCount, settings.pointsToWin);
+            gameData.chaos = {
+                ...normalizedChaos,
+                reveal: false,
+                pending: null
+            };
             return gameData;
         }, { applyLocally: false });
 
@@ -1845,15 +2214,20 @@ function detectPlayerChanges(teams, teamsData) {
     });
 }
 
-async function setSpeaker(teams) {
+function rotateSpeakerForRound(teamsData = [], roundNumber = currentRound) {
+    const mutableTeams = Array.isArray(teamsData) ? teamsData : [];
+    if (mutableTeams.length === 0) {
+        return mutableTeams;
+    }
+
     // Find the current speaker and their team
     let currentTeamIndex = -1;
     let currentSpeakerIndex = -1;
 
     // Identify the current speaker
-    for (let i = 0; i < teams.length; i++) {
-        const team = teams[i];
-        const speakerIndex = team.players.findIndex(player => player.isSpeaker);
+    for (let i = 0; i < mutableTeams.length; i++) {
+        const team = mutableTeams[i];
+        const speakerIndex = (team.players || []).findIndex(player => player.isSpeaker);
         if (speakerIndex !== -1) {
             currentTeamIndex = i;
             currentSpeakerIndex = speakerIndex;
@@ -1863,35 +2237,38 @@ async function setSpeaker(teams) {
 
     // Set the current speaker's isSpeaker to false
     if (currentTeamIndex !== -1 && currentSpeakerIndex !== -1) {
-        teams[currentTeamIndex].players[currentSpeakerIndex].isSpeaker = false;
+        mutableTeams[currentTeamIndex].players[currentSpeakerIndex].isSpeaker = false;
     }
 
     // Calculate the next team index, cycling through teams
-    let nextTeamIndex = (currentTeamIndex + 1) % teams.length;
+    let nextTeamIndex = (currentTeamIndex + 1) % mutableTeams.length;
 
     // Calculate the next speaker index within the next team
     let nextSpeakerIndex = currentSpeakerIndex;
 
     // If we've cycled back to the initial team, move to the next speaker within that team
-    if (nextTeamIndex === 0 && currentTeamIndex === teams.length - 1) {
-        nextSpeakerIndex = (currentSpeakerIndex + 1) % teams[nextTeamIndex].players.length;
+    if (nextTeamIndex === 0 && currentTeamIndex === mutableTeams.length - 1) {
+        nextSpeakerIndex = (currentSpeakerIndex + 1) % mutableTeams[nextTeamIndex].players.length;
         // Only 1 player in current team
-        if (teams[currentTeamIndex].players.length === 1 && currentRound % 2 != 0) {
+        if (mutableTeams[currentTeamIndex].players.length === 1 && roundNumber % 2 != 0) {
             nextSpeakerIndex = 0;
         }
     }
 
-    if (teams[nextTeamIndex].players[nextSpeakerIndex]) {
+    if (mutableTeams[nextTeamIndex].players[nextSpeakerIndex]) {
         // Set the next speaker's isSpeaker to true
-        teams[nextTeamIndex].players[nextSpeakerIndex].isSpeaker = true;
+        mutableTeams[nextTeamIndex].players[nextSpeakerIndex].isSpeaker = true;
     }
     else {
         // If the player does not exist, they probably left the game, so we move to the first player in the team
-        teams[nextTeamIndex].players[0].isSpeaker = true;
+        mutableTeams[nextTeamIndex].players[0].isSpeaker = true;
     }
-    
 
-    return teams;
+    return mutableTeams;
+}
+
+function setSpeaker(teamsData) {
+    return rotateSpeakerForRound(teamsData, currentRound);
 }
 
 function displayGameCode(gameCode) {
@@ -2054,6 +2431,7 @@ function startAIGame() {
 async function startGame() {
     // Play game start sound
     await playSound(startSound, () => false, 1.2);
+    setLayoutMode("game");
     clearTrainingHints();
 
     // Read and sanitize game settings
@@ -2070,12 +2448,16 @@ async function startGame() {
     pointsToWin = sanitizedSettings.pointsToWin;
     numWords = sanitizedSettings.numWords;
     numSeconds = sanitizedSettings.numSeconds;
+    isChaosMode = sanitizedSettings.chaosMode;
     isTrainingMode = sanitizedSettings.trainingMode;
 
     txtTeams.value = String(numTeams);
     document.getElementById("pointsToWin").value = String(pointsToWin);
     txtWords.value = String(numWords);
     txtSeconds.value = String(numSeconds);
+    if (chkChaos) {
+        chkChaos.checked = isChaosMode;
+    }
     if (chkTraining) {
         chkTraining.checked = isTrainingMode;
     }
@@ -2103,6 +2485,12 @@ async function startGame() {
         // Load game data
         currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
     }
+
+    roundPowerups = {};
+    powerupRevealVisible = false;
+    teamShields = createInitialTeamShields(teams.length);
+    lastProcessedChaosResolutionId = 0;
+    lastProcessedChaosPendingId = 0;
 
     // Show/Hide UI elements
     hideElement(menu);
@@ -2194,6 +2582,9 @@ function startRound() {
     btnStartRound.hidden = true;
     btnEndGame.hidden = true;
     isRoundActive = true;
+    powerupRevealVisible = false;
+    updateBoard();
+    hideElement(lblGameState);
 
     if (isOnlineGame) {
         updateData(`games/${gameCode}`, {
@@ -2226,16 +2617,438 @@ function startRound() {
     });
 }
 
-async function nextRound() {
-    let correctAnswers = [];
+function getSelectedCorrectAnswers() {
+    const correctAnswers = [];
     document.querySelectorAll(".scoreButton").forEach(button => {
-        if (button.style.background == "grey") {
+        if (button.style.background === "grey") {
             correctAnswers.push(button.textContent);
         }
     });
+    return correctAnswers;
+}
+
+function hideRoundInputUI() {
+    btnAnswers.hidden = true;
+    const scoreButtons = document.getElementsByClassName("scoreButton");
+    for (let index = 0; index < scoreButtons.length; index++) {
+        scoreButtons[index].hidden = true;
+    }
+    btnNextRound.hidden = true;
+    timer.hidden = true;
+    clearWords();
+    clearTrainingHints();
+    isRoundActive = false;
+}
+
+function advanceRoundPointers() {
+    currentTeam++;
+    if (currentTeam > teams.length) {
+        currentTeam = 1;
+        currentRound++;
+    }
+}
+
+async function animateTeamMovement(teamIndex, delta, animate = true, syncToOnline = false) {
+    if (!Number.isInteger(teamIndex) || teamIndex < 0 || teamIndex >= teams.length || delta === 0) {
+        return;
+    }
+
+    const direction = delta > 0 ? 1 : -1;
+    const totalSteps = Math.abs(delta);
+    for (let step = 0; step < totalSteps; step++) {
+        const team = teams[teamIndex];
+        const currentPoints = Number(team?.points) || 0;
+        const nextPoints = Math.max(0, currentPoints + direction);
+        team.points = nextPoints;
+        updateBoard();
+        if (syncToOnline && isOnlineGame && isHost) {
+            await setDataSilent(`games/${gameCode}/teams`, teams);
+        }
+        if (animate) {
+            await sleep(CHAOS_MOVE_STEP_DELAY_MS);
+        }
+    }
+}
+
+function getChaosLandingPowerup(teamIndex) {
+    if (!isChaosMode || !teams[teamIndex]) {
+        return null;
+    }
+
+    const teamPoints = Number(teams[teamIndex].points) || 0;
+    if (teamPoints >= pointsToWin) {
+        return null;
+    }
+
+    const tileIndex = getBoardCellIndexForPoints(teamPoints, pointsToWin);
+    return sanitizeChaosPowerupType(roundPowerups[tileIndex]);
+}
+
+async function resolveChaosPowerupLocally(
+    teamIndex,
+    powerupType,
+    rng = Math.random,
+    animate = true,
+    syncToOnline = false,
+    roundNumberForRound = currentRound + 1
+) {
+    if (!powerupType) {
+        if (animate) {
+            await sleep(CHAOS_CLEAR_PAUSE_MS);
+        }
+        powerupRevealVisible = false;
+        updateBoard();
+        updateTeamScores();
+        if (syncToOnline) {
+            await syncChaosVisualState(roundNumberForRound);
+        }
+
+        return {
+            type: null
+        };
+    }
+
+    const tempTeams = teams.map(team => ({ points: Number(team?.points) || 0 }));
+    const tempShields = normalizeTeamShields(teamShields, teams.length);
+    const summary = applyChaosPowerupToState({
+        teamsData: tempTeams,
+        shields: tempShields,
+        actingTeamIndex: teamIndex,
+        powerupType,
+        rng
+    });
+
+    teamShields = tempShields;
+
+    // Keep indicators visible while applying the landed powerup.
+    updateTeamScores();
+
+    if (summary.actorDelta !== 0) {
+        await animateTeamMovement(teamIndex, summary.actorDelta, animate, syncToOnline);
+    } else {
+        updateBoard();
+    }
+
+    if (Number.isInteger(summary.victimTeamIndex) && summary.victimDelta !== 0) {
+        await animateTeamMovement(summary.victimTeamIndex, summary.victimDelta, animate, syncToOnline);
+    }
+
+    if (animate) {
+        await sleep(CHAOS_CLEAR_PAUSE_MS);
+    }
+
+    // Clear the map after powerup resolution is complete.
+    powerupRevealVisible = false;
+    updateBoard();
+    if (syncToOnline) {
+        await syncChaosVisualState(roundNumberForRound);
+    }
+
+    updateTeamScores();
+    return summary;
+}
+
+async function runChaosResolutionLocally({
+    teamIndexForRound,
+    selectedPoints,
+    roundNumberForRound,
+    powerupsForRound = null,
+    rng = Math.random,
+    animate = true,
+    syncToOnline = false
+}) {
+    ensureLocalChaosState(teams.length);
+    const safeSelectedPoints = clampInt(selectedPoints, 0, 0, numWords);
+    roundPowerups = sanitizeRoundPowerups(
+        powerupsForRound || generateRoundPowerupsMap(pointsToWin, rng),
+        pointsToWin
+    );
+
+    // Reveal full round map first, then begin movement.
+    powerupRevealVisible = true;
+    updateBoard();
+    updateTeamScores();
+    if (syncToOnline) {
+        await syncChaosVisualState(roundNumberForRound);
+    }
+    if (animate) {
+        await sleep(CHAOS_PREMOVE_REVEAL_MS);
+    }
+
+    await animateTeamMovement(teamIndexForRound, safeSelectedPoints, animate, syncToOnline);
+
+    const landedPowerup = getChaosLandingPowerup(teamIndexForRound);
+    const summary = await resolveChaosPowerupLocally(
+        teamIndexForRound,
+        landedPowerup,
+        rng,
+        animate,
+        syncToOnline,
+        roundNumberForRound
+    );
+
+    return {
+        roundId: roundNumberForRound,
+        powerups: { ...roundPowerups },
+        reveal: powerupRevealVisible,
+        resolutionSummary: summary
+    };
+}
+
+async function resolveOnlineChaosPending(pendingState) {
+    if (!isHost || !isOnlineGame || !isChaosMode || isResolvingChaosMove) {
+        return;
+    }
+
+    const pendingId = Number(pendingState?.id);
+    if (!Number.isFinite(pendingId) || pendingId <= 0 || pendingId <= lastProcessedChaosResolutionId) {
+        return;
+    }
+
+    isResolvingChaosMove = true;
+    try {
+        const gameData = await readDataOnce(`games/${gameCode}`);
+        if (!gameData || !Array.isArray(gameData.teams)) {
+            return;
+        }
+
+        const teamCount = gameData.teams.length;
+        const settings = sanitizeGameSettingsFromDb(gameData.settings || {}, teamCount);
+        if (!settings.chaosMode) {
+            return;
+        }
+
+        const normalizedChaos = getNormalizedChaosState(gameData.chaos || {}, teamCount, settings.pointsToWin);
+        if (pendingId <= normalizedChaos.resolutionId) {
+            return;
+        }
+
+        teams = Array.isArray(gameData.teams) ? gameData.teams : [];
+        ensureTeamsShape(teams);
+        numTeams = teams.length || numTeams;
+        pointsToWin = settings.pointsToWin;
+        numWords = settings.numWords;
+        easyWords = Array.isArray(pendingState.easyWords) ? [...pendingState.easyWords] : (Array.isArray(gameData.easyWords) ? [...gameData.easyWords] : []);
+        hardWords = Array.isArray(pendingState.hardWords) ? [...pendingState.hardWords] : (Array.isArray(gameData.hardWords) ? [...gameData.hardWords] : []);
+        currentGameWords = Array.isArray(pendingState.currentGameWords) ? [...pendingState.currentGameWords] : (Array.isArray(gameData.currentGameWords) ? [...gameData.currentGameWords] : []);
+        teamShields = normalizeTeamShields(normalizedChaos.teamShields, teams.length);
+        currentTeam = Number(gameData.currentTeam) || 1;
+        currentRound = Number(gameData.currentRound) || 0;
+
+        const actingTeamIndex = Number.isInteger(Number(pendingState.teamIndex))
+            ? Math.max(0, Math.min(teams.length - 1, Number(pendingState.teamIndex)))
+            : getCurrentTeamIndex(currentTeam);
+        const roundNumberForRound = Number.isInteger(Number(pendingState.roundNumber)) && Number(pendingState.roundNumber) > 0
+            ? Number(pendingState.roundNumber)
+            : currentRound + 1;
+        const selectedPoints = clampInt(pendingState.points, 0, 0, settings.numWords);
+        const correctAnswers = Array.isArray(pendingState.correctAnswers) ? [...pendingState.correctAnswers] : [];
+
+        const expectedTeamIndex = getCurrentTeamIndex(currentTeam);
+        const expectedRoundNumber = currentRound + 1;
+        if (actingTeamIndex !== expectedTeamIndex || roundNumberForRound !== expectedRoundNumber) {
+            console.warn(`[chaos] Ignoring stale pending resolution ${pendingId} for ${roundNumberForRound}-${actingTeamIndex + 1}; expected ${expectedRoundNumber}-${expectedTeamIndex + 1}`);
+            await updateData(`games/${gameCode}/chaos`, {
+                pending: null
+            });
+            return;
+        }
+
+        const seededRng = createSeededRandom(pendingId);
+        const chaosResolution = await runChaosResolutionLocally({
+            teamIndexForRound: actingTeamIndex,
+            selectedPoints,
+            roundNumberForRound,
+            powerupsForRound: generateRoundPowerupsMap(settings.pointsToWin, seededRng),
+            rng: seededRng,
+            animate: true,
+            syncToOnline: true
+        });
+
+        const auditEvent = {
+            id: pendingId,
+            teamIndex: actingTeamIndex,
+            roundNumber: roundNumberForRound,
+            correctAnswers: [...correctAnswers]
+        };
+
+        advanceRoundPointers();
+        teams = setSpeaker(teams);
+        const hasWinner = teams.some(team => (Number(team?.points) || 0) >= pointsToWin);
+        const nextGameState = hasWinner ? "ended" : "resumed";
+
+        await updateData(`games/${gameCode}`, {
+            teams: teams,
+            easyWords: easyWords,
+            hardWords: hardWords,
+            currentGameWords: currentGameWords,
+            numPlayers: countPlayersInTeams(teams),
+            currentTeam: currentTeam,
+            currentRound: currentRound,
+            words: [],
+            remainingTime: null,
+            roundActive: false,
+            endRoundEarly: false,
+            gameState: nextGameState,
+            correctAnswers: [...correctAnswers],
+            auditEvent,
+            chaos: {
+                roundId: chaosResolution.roundId,
+                powerups: { ...chaosResolution.powerups },
+                reveal: false,
+                teamShields: [...teamShields],
+                resolutionId: pendingId,
+                pending: null
+            }
+        });
+
+        hideRoundInputUI();
+        updateCurrentTeamIndicator();
+        updateTeamScores();
+
+        if (hasWinner) {
+            endGame();
+        }
+
+        lastProcessedChaosResolutionId = pendingId;
+    } catch (error) {
+        console.error("Failed to resolve chaos round:", error);
+    } finally {
+        isResolvingChaosMove = false;
+    }
+}
+
+async function nextRound() {
+    if (isResolvingChaosMove) {
+        return;
+    }
+
+    const correctAnswers = getSelectedCorrectAnswers();
 
     const teamIndexForRound = getCurrentTeamIndex(currentTeam);
     const roundNumberForRound = currentRound + 1;
+
+    if (isChaosMode) {
+        const resolutionId = Date.now() + Math.floor(Math.random() * 1000);
+        const selectedPointsForRound = selectedButtons;
+        if (isOnlineGame && !isHost) {
+            hideRoundInputUI();
+            await updateData(`games/${gameCode}/chaos`, {
+                pending: buildChaosPendingPayload({
+                    resolutionId,
+                    teamIndexForRound,
+                    roundNumberForRound,
+                    correctAnswers,
+                    selectedPoints: selectedPointsForRound
+                })
+            });
+            lblGameState.textContent = "Status: Host is resolving chaos turn...";
+            showElement(lblGameState);
+            return;
+        }
+
+        isResolvingChaosMove = true;
+        try {
+            const seededRng = createSeededRandom(resolutionId);
+            const chaosResolution = await runChaosResolutionLocally({
+                teamIndexForRound,
+                selectedPoints: selectedPointsForRound,
+                roundNumberForRound,
+                powerupsForRound: generateRoundPowerupsMap(pointsToWin, seededRng),
+                rng: seededRng,
+                animate: true,
+                syncToOnline: isOnlineGame && isHost
+            });
+
+            const auditEvent = {
+                id: resolutionId,
+                teamIndex: teamIndexForRound,
+                roundNumber: roundNumberForRound,
+                correctAnswers: [...correctAnswers]
+            };
+
+            if (!isOnlineGame) {
+                createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
+                createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers);
+            }
+
+            advanceRoundPointers();
+            hideRoundInputUI();
+
+            const hasWinner = teams.some(team => (Number(team?.points) || 0) >= pointsToWin);
+            if (hasWinner) {
+                if (isOnlineGame) {
+                    await updateData(`games/${gameCode}`, {
+                        teams: teams,
+                        easyWords: easyWords,
+                        hardWords: hardWords,
+                        currentGameWords: currentGameWords,
+                        numPlayers: numPlayers,
+                        currentTeam: currentTeam,
+                        currentRound: currentRound,
+                        words: [],
+                        remainingTime: null,
+                        roundActive: false,
+                        endRoundEarly: false,
+                        gameState: "ended",
+                        correctAnswers: [...correctAnswers],
+                        auditEvent,
+                        chaos: {
+                            roundId: chaosResolution.roundId,
+                            powerups: { ...chaosResolution.powerups },
+                            reveal: false,
+                            teamShields: [...teamShields],
+                            resolutionId,
+                            pending: null
+                        }
+                    });
+                }
+
+                updateCurrentTeamIndicator();
+                endGame();
+                return;
+            }
+
+            btnStartRound.hidden = false;
+            btnEndGame.hidden = false;
+            updateCurrentTeamIndicator();
+            updateTeamScores();
+
+            if (isOnlineGame) {
+                teams = setSpeaker(teams);
+                await updateData(`games/${gameCode}`, {
+                    teams: teams,
+                    easyWords: easyWords,
+                    hardWords: hardWords,
+                    currentGameWords: currentGameWords,
+                    numPlayers: numPlayers,
+                    currentTeam: currentTeam,
+                    currentRound: currentRound,
+                    words: [],
+                    remainingTime: null,
+                    roundActive: false,
+                    endRoundEarly: false,
+                    gameState: 'resumed',
+                    correctAnswers: [...correctAnswers],
+                    auditEvent,
+                    chaos: {
+                        roundId: chaosResolution.roundId,
+                        powerups: { ...chaosResolution.powerups },
+                        reveal: false,
+                        teamShields: [...teamShields],
+                        resolutionId,
+                        pending: null
+                    }
+                });
+            }
+
+            lastProcessedChaosResolutionId = resolutionId;
+            hideElement(lblGameState);
+        } finally {
+            isResolvingChaosMove = false;
+        }
+        return;
+    }
 
     updatePoints(selectedButtons);
 
@@ -2251,29 +3064,13 @@ async function nextRound() {
             correctAnswers: correctAnswers,
             auditEvent
         });
-    }
-    else {
+    } else {
         createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
         createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers);
     }
 
-    currentTeam++;
-    if (currentTeam > teams.length) {
-        currentTeam = 1;
-        currentRound++;
-    }
-
-    btnAnswers.hidden = true;
-    const scoreButtons = document.getElementsByClassName("scoreButton");
-    for (let index = 0; index < scoreButtons.length; index++) {
-        const element = scoreButtons[index];
-        element.hidden = true;
-    }
-    btnNextRound.hidden = true;
-    timer.hidden = true;
-    clearWords();
-    clearTrainingHints();
-    isRoundActive = false;
+    advanceRoundPointers();
+    hideRoundInputUI();
 
     if (teams.some(team => team.points >= pointsToWin)) {
         endGame();
@@ -2286,7 +3083,7 @@ async function nextRound() {
 
     if (isOnlineGame) {
         // Add logic for setting the current speaker
-        teams = await setSpeaker(teams);
+        teams = setSpeaker(teams);
         updateData(`games/${gameCode}`, {
             teams: teams,
             easyWords: easyWords,
@@ -2553,8 +3350,9 @@ function updateBoard() {
 
     // Clear previous state
     Array.from(boardCells).forEach(cell => {
-        cell.innerHTML = '';  // Clear inner HTML to remove previous segments
-        cell.style.backgroundColor = ''; // Clear background color
+        cell.innerHTML = "";
+        cell.style.backgroundColor = "";
+        cell.classList.remove("board-cell-powerup");
     });
 
     // Track team positions on the board
@@ -2576,16 +3374,31 @@ function updateBoard() {
             cell.style.backgroundColor = getTeamColor(teamIndexes[0]);
         } else {
             const segmentWidth = 100 / teamIndexes.length;
+            const segmentsContainer = document.createElement("div");
+            segmentsContainer.className = "board-cell-segments";
 
             teamIndexes.forEach((teamIndex, index) => {
-                const segment = document.createElement('div');
+                const segment = document.createElement("div");
+                segment.className = "board-team-segment";
                 segment.style.width = `${segmentWidth}%`;
-                segment.style.height = '100%';
-                segment.style.float = 'left';
+                segment.style.height = "100%";
+                segment.style.float = "left";
                 segment.style.backgroundColor = getTeamColor(teamIndex);
-                segment.style.borderRadius = '4px';  // Match the parent cell's border radius
-                cell.appendChild(segment);
+                segment.style.borderRadius = "4px";
+                segmentsContainer.appendChild(segment);
             });
+
+            cell.appendChild(segmentsContainer);
+        }
+
+        const powerupType = sanitizeChaosPowerupType(roundPowerups[cellIndex]);
+        if (isChaosMode && powerupRevealVisible && powerupType) {
+            const powerupConfig = CHAOS_POWERUP_TYPES[powerupType];
+            const badge = document.createElement("div");
+            badge.className = `board-powerup ${powerupConfig.cssClass}`;
+            badge.textContent = powerupConfig.label;
+            cell.classList.add("board-cell-powerup");
+            cell.appendChild(badge);
         }
     });
 
@@ -2595,10 +3408,17 @@ function updateBoard() {
 function updateTeamScores() {
     const teamScoresContainer = document.getElementById("teamScores");
     teamScoresContainer.innerHTML = "";
+    ensureLocalChaosState(teams.length || numTeams || 2);
     teams.forEach((team, index) => {
         const teamScoreDiv = document.createElement("div");
         teamScoreDiv.className = "team-score";
         teamScoreDiv.textContent = `Team ${index + 1}: ${team.points} points`;
+        if (isChaosMode && Number(teamShields[index]) > 0) {
+            const shieldBadge = document.createElement("span");
+            shieldBadge.className = "shield-indicator";
+            shieldBadge.textContent = "Shield: Ready";
+            teamScoreDiv.appendChild(shieldBadge);
+        }
         teamScoreDiv.style.color = getTeamColor(index);
         teamScoresContainer.appendChild(teamScoreDiv);
     });

@@ -2733,472 +2733,472 @@ const categories = {
     {
       "word": "Beethoven",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "German classical composer of famous symphonies like the Fifth and Ninth."
     },
     {
       "word": "The Beatles",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Legendary Liverpool band with John Lennon and Paul McCartney."
     },
     {
       "word": "Rock and Roll",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Energetic guitar-driven genre that rose to fame in the 1950s."
     },
     {
       "word": "Mozart",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Austrian child-prodigy composer from the classical era."
     },
     {
       "word": "Jazz",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Improvisational genre known for swing rhythms and brass solos."
     },
     {
       "word": "Hip Hop",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Music culture built around rap, beats, DJing, and street style."
     },
     {
       "word": "Opera",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Dramatic stage performance where most dialogue is sung."
     },
     {
       "word": "Elvis Presley",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "The King of Rock and Roll, known for his iconic stage moves."
     },
     {
       "word": "Piano",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Keyboard instrument with black and white keys."
     },
     {
       "word": "Violin",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Four-string instrument played with a bow under the chin."
     },
     {
       "word": "Michael Jackson",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "King of Pop known for Thriller and the moonwalk."
     },
     {
       "word": "Blues",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Soulful genre rooted in African American history and 12-bar patterns."
     },
     {
       "word": "The Rolling Stones",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Long-running British rock band led by Mick Jagger."
     },
     {
       "word": "Country Music",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Storytelling genre linked to Nashville, guitars, and rural themes."
     },
     {
       "word": "Classical Music",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Orchestral tradition featuring composers like Mozart and Beethoven."
     },
     {
       "word": "Reggae",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Jamaican genre with offbeat rhythm, strongly linked to Bob Marley."
     },
     {
       "word": "Guitar",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "String instrument usually played by strumming or picking."
     },
     {
       "word": "Choir",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Group of singers performing together in harmony."
     },
     {
       "word": "Broadway Musical",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Stage show that combines acting, songs, and choreography."
     },
     {
       "word": "Rap",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Rhythmic spoken lyrics performed over a beat."
     },
     {
       "word": "Saxophone",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Curved wind instrument often associated with jazz solos."
     },
     {
       "word": "Folk Music",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Traditional acoustic songs passed down through communities."
     },
     {
       "word": "Salsa",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Fast Latin dance music with strong percussion and brass."
     },
     {
       "word": "DJ",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Performer who mixes and plays recorded music for a crowd."
     },
     {
       "word": "Chopin",
-      "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "difficulty": "hard",
+      "description": "Polish composer famous for expressive solo piano works."
     },
     {
       "word": "Acoustic Guitar",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Non-electric guitar with a hollow wooden body."
     },
     {
       "word": "Heavy Metal",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Loud rock style with distorted guitars and intense drumming."
     },
     {
       "word": "Electronic Music",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Genre created mainly with synths, software, and drum machines."
     },
     {
       "word": "Opera Singer",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Classically trained vocalist who projects over an orchestra."
     },
     {
       "word": "Woodstock",
-      "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "difficulty": "hard",
+      "description": "Historic 1969 festival associated with the hippie era."
     },
     {
       "word": "Concerto",
-      "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "difficulty": "hard",
+      "description": "Classical piece featuring a solo instrument against orchestra."
     },
     {
       "word": "Drum Set",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Collection of drums and cymbals played by one drummer."
     },
     {
       "word": "R&B",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Rhythm and blues style mixing soulful vocals with groove."
     },
     {
       "word": "Baroque Music",
-      "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "difficulty": "hard",
+      "description": "Ornate classical period linked to composers like Bach and Handel."
     },
     {
       "word": "Trumpet",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Brass instrument with three valves and a bright tone."
     },
     {
       "word": "Synthesizer",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Electronic keyboard used to create synthetic sounds."
     },
     {
       "word": "Festival",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Large live event where many artists perform over one or more days."
     },
     {
       "word": "Marching Band",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Uniformed band that performs music while marching in formation."
     },
     {
       "word": "Singer-Songwriter",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Artist who writes their own songs and performs them."
     },
     {
       "word": "Motown",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Detroit record label and soul sound behind many classic hits."
     },
     {
       "word": "Orchestra",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Large ensemble of strings, brass, woodwinds, and percussion."
     },
     {
       "word": "Grammy Awards",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Major annual awards honoring music recording achievements."
     },
     {
       "word": "Conducting",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Leading musicians with baton cues for tempo and dynamics."
     },
     {
       "word": "Punk Rock",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Fast, raw rock genre known for rebellious energy."
     },
     {
       "word": "Bass Guitar",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Low-pitched guitar that anchors rhythm and groove."
     },
     {
       "word": "Songwriting",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Creating lyrics, melody, and structure for a song."
     },
     {
       "word": "Keyboard",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Electronic piano-style instrument with many built-in sounds."
     },
     {
       "word": "Rhythm and Blues",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Full name of R&B, a groove-focused vocal genre."
     },
     {
-      "word": "Beyoncé",
+      "word": "Beyonce",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Global pop and R&B star from Destiny's Child, known for Single Ladies."
     },
     {
       "word": "Freddie Mercury",
-      "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "difficulty": "easy",
+      "description": "Queen frontman known for powerful vocals and stage presence."
     },
     {
       "word": "Adele",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "British singer known for emotional ballads like Hello."
     },
     {
       "word": "Ed Sheeran",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "British singer-songwriter known for acoustic pop hits."
     },
     {
       "word": "Taylor Swift",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Singer-songwriter known for hit eras and autobiographical lyrics."
     },
     {
       "word": "Madonna",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Pop icon often called the Queen of Pop."
     },
     {
       "word": "Queen",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "British rock band behind Bohemian Rhapsody."
     },
     {
       "word": "Rolling Stones",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "British rock group famous for Satisfaction and decades of touring."
     },
     {
       "word": "Lady Gaga",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Pop star known for Poker Face and theatrical fashion."
     },
     {
       "word": "Justin Bieber",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Canadian pop singer first discovered through YouTube videos."
     },
     {
       "word": "Led Zeppelin",
       "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "British hard rock band known for Stairway to Heaven."
     },
     {
       "word": "Pink Floyd",
       "difficulty": "hard",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Progressive rock band behind The Dark Side of the Moon."
     },
     {
       "word": "Fleetwood Mac",
       "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Rock band known for Rumours and Go Your Own Way."
     },
     {
       "word": "Red Hot Chili Peppers",
       "difficulty": "hard",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "California band blending funk, rap, and alternative rock."
     },
     {
       "word": "Nine Inch Nails",
       "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Industrial rock act led by Trent Reznor."
     },
     {
       "word": "The Smashing Pumpkins",
       "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Alternative rock band fronted by Billy Corgan."
     },
     {
       "word": "Rage Against the Machine",
       "difficulty": "hard",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Rap-metal band known for political protest songs."
     },
     {
       "word": "Radiohead",
       "difficulty": "hard",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Alternative rock band known for Creep and OK Computer."
     },
     {
       "word": "The Cure",
       "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "British post-punk band with goth and new wave influences."
     },
     {
       "word": "Depeche Mode",
       "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Synth-pop band known for moody electronic anthems."
     },
     {
       "word": "Aretha Franklin",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Queen of Soul known for the song Respect."
     },
     {
       "word": "Ariana Grande",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Pop singer known for her high vocal range."
     },
     {
       "word": "Bob Dylan",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Influential folk-rock songwriter and Nobel Prize winner."
     },
     {
       "word": "Drake",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Canadian rapper and singer with many chart-topping hits."
     },
     {
       "word": "Elton John",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "British pianist and singer behind Rocket Man and Tiny Dancer."
     },
     {
       "word": "John Lennon",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Beatles member who later sang Imagine as a solo artist."
     },
     {
       "word": "Paul McCartney",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Beatles bassist and singer with a major solo career."
     },
     {
       "word": "Rihanna",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Barbadian pop star known for Umbrella and Diamonds."
     },
     {
       "word": "Whitney Houston",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "Powerhouse vocalist known for I Will Always Love You."
     },
     {
       "word": "Rolling in the Deep",
-      "difficulty": "hard",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "difficulty": "easy",
+      "description": "Adele hit song with a strong stomp-clap beat."
     },
     {
       "word": "Shape of You",
       "difficulty": "easy",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "Popular Ed Sheeran dance-pop single."
     },
     {
       "word": "Blinding Lights",
-      "difficulty": "hard",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "difficulty": "easy",
+      "description": "The Weeknd hit with an 80s-style synth sound."
     },
     {
       "word": "Hey Jude",
-      "difficulty": "hard",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "difficulty": "easy",
+      "description": "Beatles anthem famous for the na-na-na singalong ending."
     },
     {
       "word": "Someone Like You",
-      "difficulty": "hard",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "difficulty": "easy",
+      "description": "Adele piano ballad about heartbreak and moving on."
     },
     {
       "word": "Uptown Funk",
-      "difficulty": "hard",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "difficulty": "easy",
+      "description": "Bruno Mars and Mark Ronson funk-pop party hit."
     },
     {
       "word": "U2",
-      "difficulty": "hard",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "difficulty": "easy",
+      "description": "Irish rock band fronted by Bono."
     },
     {
       "word": "Coldplay",
       "difficulty": "easy",
-      "description": "Song/artist clue; give mood, genre, and one standout association."
+      "description": "British stadium rock band known for Yellow and Fix You."
     },
     {
       "word": "Nirvana",
-      "difficulty": "hard",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "difficulty": "easy",
+      "description": "Seattle grunge band fronted by Kurt Cobain."
     },
     {
       "word": "AC/DC",
       "difficulty": "easy",
-      "description": "Music reference; start with instrument, style, or famous performance."
+      "description": "Australian hard rock band known for Back in Black."
     },
     {
       "word": "Tyla",
       "difficulty": "easy",
-      "description": "Famous female South African singer known for her song Water"
+      "description": "South African singer known globally for the hit Water."
     },
     {
       "word": "Amapiano",
       "difficulty": "hard",
-      "description": "South African music genre taken from the word of a musical instrument"
+      "description": "South African house style with log drums and piano grooves."
     },
     {
       "word": "Cassper Nyovest",
       "difficulty": "hard",
-      "description": "Music clue; describe genre, era, and signature sound or hit."
+      "description": "South African rapper known for major local stadium shows."
     },
     {
       "word": "Black Coffee",
       "difficulty": "easy",
-      "description": "South African DJ, record producer and songwriter. Stage name is derived from a hot beverage."
+      "description": "South African DJ and producer with global house music success."
     },
     {
       "word": "AKA",
       "difficulty": "hard",
-      "description": "South African rapper, record producer, and businessman that was assasinated in 2023."
+      "description": "South African rapper known for Fela in Versace and All Eyes on Me."
     },
     {
       "word": "Cape Town Jazz Festival",
       "difficulty": "easy",
-      "description": "Annual music festival showcasing local and international jazz artists."
+      "description": "Major annual South African event featuring local and global jazz artists."
     },
     {
       "word": "Oppikoppi",
       "difficulty": "hard",
-      "description": "Popular music festival held in the Limpopo Province."
+      "description": "Iconic South African outdoor music festival in Limpopo."
     }
   ],
   "Sports": [
@@ -10033,453 +10033,453 @@ const categories = {
   "Business, Brands, and Companies": [
     {
       "word": "Apple",
-      "difficulty": "hard",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "difficulty": "easy",
+      "description": "Tech company behind the iPhone, Mac, and App Store ecosystem."
     },
     {
       "word": "Microsoft",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Software giant known for Windows, Office, Azure, and Xbox."
     },
     {
       "word": "Google",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Search-engine company behind Android, YouTube, and Gmail."
     },
     {
       "word": "Amazon",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "E-commerce giant also known for AWS cloud services."
     },
     {
       "word": "Meta",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "Parent company of Facebook, Instagram, WhatsApp, and Threads."
     },
     {
       "word": "Tesla",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Electric-car brand led by Elon Musk, known for Model S and Model 3."
     },
     {
       "word": "Samsung",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Electronics brand known for Galaxy phones, TVs, and appliances."
     },
     {
       "word": "Sony",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Japanese brand behind PlayStation, cameras, and entertainment studios."
     },
     {
       "word": "Intel",
-      "difficulty": "hard",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "difficulty": "easy",
+      "description": "Semiconductor company known for PC processors and 'Intel Inside'."
     },
     {
       "word": "Nvidia",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Chipmaker famous for GeForce GPUs and AI hardware."
     },
     {
       "word": "IBM",
       "difficulty": "easy",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "Enterprise-tech company nicknamed 'Big Blue'."
     },
     {
       "word": "Oracle",
       "difficulty": "easy",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "description": "Enterprise software company known for databases and cloud systems."
     },
     {
       "word": "Adobe",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "Software company behind Photoshop, Illustrator, and Acrobat PDF."
     },
     {
       "word": "Salesforce",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Cloud company known for CRM software used by sales teams."
     },
     {
       "word": "Cisco",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Networking company known for routers, switches, and enterprise infrastructure."
     },
     {
       "word": "Qualcomm",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Chip company known for Snapdragon mobile processors and wireless tech."
     },
     {
       "word": "SpaceX",
       "difficulty": "hard",
-      "description": "Business clue; describe industry, products/services, and market reputation."
+      "description": "Private aerospace company known for Falcon rockets and Starlink."
     },
     {
       "word": "OpenAI",
-      "difficulty": "hard",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "difficulty": "easy",
+      "description": "AI company behind ChatGPT and large language models."
     },
     {
       "word": "Netflix",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Streaming platform known for movies, series, and original content."
     },
     {
       "word": "Disney",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Entertainment company behind Disney, Pixar, Marvel, and Star Wars."
     },
     {
       "word": "Nike",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "Sportswear brand known for the Swoosh logo and Air Jordan line."
     },
     {
       "word": "Adidas",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Sportswear brand recognized by its three-stripe logo."
     },
     {
       "word": "Puma",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Sportswear brand named after a big cat, focused on footwear and apparel."
     },
     {
       "word": "Coca-Cola",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Global soft-drink company known for its flagship cola."
     },
     {
       "word": "Pepsi",
-      "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "difficulty": "easy",
+      "description": "Soft-drink brand that is Coca-Cola's longtime rival."
     },
     {
       "word": "Starbucks",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Coffeehouse chain known for espresso drinks and green mermaid logo."
     },
     {
       "word": "McDonald's",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Fast-food chain known for burgers, fries, and Golden Arches."
     },
     {
       "word": "KFC",
       "difficulty": "easy",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "description": "Fast-food chain known for fried chicken and Colonel Sanders."
     },
     {
       "word": "Burger King",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "Fast-food chain known for the Whopper burger."
     },
     {
       "word": "Subway",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Sandwich franchise where customers choose breads, fillings, and toppings."
     },
     {
       "word": "Domino's",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Pizza chain known for delivery-focused ordering and app deals."
     },
     {
       "word": "Pizza Hut",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Pizza chain known for pan pizzas and dine-in or delivery options."
     },
     {
       "word": "Uber",
-      "difficulty": "hard",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "difficulty": "easy",
+      "description": "Ride-hailing app used to book private transport by phone."
     },
     {
       "word": "Airbnb",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Platform for booking short-term stays in homes and apartments."
     },
     {
       "word": "PayPal",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Digital payments platform used for online purchases and transfers."
     },
     {
       "word": "Visa",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Global card-payment network used by banks and merchants."
     },
     {
       "word": "Mastercard",
       "difficulty": "hard",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "Global card-payment network and Visa competitor."
     },
     {
       "word": "American Express",
       "difficulty": "hard",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Payment-card company known for premium cards and rewards."
     },
     {
       "word": "JPMorgan Chase",
       "difficulty": "hard",
-      "description": "Business clue; describe industry, products/services, and market reputation."
+      "description": "Major US bank with investment banking and retail banking services."
     },
     {
       "word": "Goldman Sachs",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Investment bank known for trading, advisory, and asset management."
     },
     {
       "word": "Morgan Stanley",
       "difficulty": "hard",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "description": "Investment bank known for wealth management and capital markets."
     },
     {
       "word": "HSBC",
       "difficulty": "hard",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "International bank with major operations across Europe and Asia."
     },
     {
       "word": "Barclays",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "UK banking group known for retail and investment banking."
     },
     {
       "word": "Shell",
       "difficulty": "easy",
-      "description": "Global energy company known for petrol stations and a yellow-red seashell logo."
+      "description": "Global energy brand known for fuel stations and shell logo."
     },
     {
       "word": "BP",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Energy company formerly called British Petroleum, active in oil and gas."
     },
     {
       "word": "ExxonMobil",
       "difficulty": "hard",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Major US oil and gas company formed by Exxon and Mobil merger."
     },
     {
       "word": "Chevron",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "US energy company active in oil, gas, and fuel retail."
     },
     {
       "word": "TotalEnergies",
       "difficulty": "hard",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "French energy company expanding from oil into renewables."
     },
     {
       "word": "Toyota",
-      "difficulty": "hard",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "difficulty": "easy",
+      "description": "Japanese automaker known for Corolla, Hilux, and hybrid cars."
     },
     {
       "word": "Volkswagen",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "German automaker known for VW-branded passenger cars."
     },
     {
       "word": "BMW",
       "difficulty": "easy",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "description": "German luxury-car brand known for sporty sedans and SUVs."
     },
     {
       "word": "Mercedes-Benz",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "German luxury-car brand recognized by the three-pointed star."
     },
     {
       "word": "Audi",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "German premium-car brand recognized by four-ring logo."
     },
     {
       "word": "Ferrari",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "Italian supercar brand known for racing heritage and prancing horse."
     },
     {
       "word": "Porsche",
       "difficulty": "easy",
-      "description": "Business clue; describe industry, products/services, and market reputation."
+      "description": "German sports-car brand famous for the 911 model."
     },
     {
       "word": "Ford",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "US automaker known for the Mustang and F-Series trucks."
     },
     {
       "word": "General Motors",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "US auto group behind brands like Chevrolet and Cadillac."
     },
     {
       "word": "Boeing",
       "difficulty": "easy",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "Aerospace company that manufactures commercial and military aircraft."
     },
     {
       "word": "Airbus",
       "difficulty": "easy",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "European aircraft manufacturer and Boeing's main competitor."
     },
     {
       "word": "Lockheed Martin",
       "difficulty": "hard",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Defense contractor known for military aircraft and aerospace systems."
     },
     {
       "word": "Siemens",
       "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "German engineering company active in industry, energy, and transport tech."
     },
     {
       "word": "Bosch",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Engineering brand known for tools, appliances, and automotive parts."
     },
     {
       "word": "IKEA",
       "difficulty": "easy",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "Furniture retailer known for flat-pack products and self-assembly."
     },
     {
       "word": "Walmart",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Large retail chain known for discount pricing and huge stores."
     },
     {
       "word": "Costco",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "Membership warehouse retailer known for bulk buying."
     },
     {
       "word": "Target",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "US retail chain recognized by red bullseye branding."
     },
     {
       "word": "eBay",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Online marketplace known for auctions and second-hand listings."
     },
     {
       "word": "Alibaba",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Chinese e-commerce company serving retail and wholesale markets."
     },
     {
       "word": "Tencent",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Chinese tech giant known for WeChat, gaming, and digital services."
     },
     {
       "word": "ByteDance",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Tech company that owns TikTok and related content platforms."
     },
     {
       "word": "TSMC",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Taiwan semiconductor foundry that manufactures chips for many global brands."
     },
     {
       "word": "ASML",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Dutch company making advanced lithography machines for chip production."
     },
     {
       "word": "Zara",
-      "difficulty": "hard",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "difficulty": "easy",
+      "description": "Fast-fashion brand known for rapid design-to-store cycles."
     },
     {
       "word": "H&M",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Global fast-fashion retailer offering affordable seasonal clothing."
     },
     {
       "word": "Uniqlo",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Japanese clothing brand known for minimalist basics and Heattech."
     },
     {
       "word": "LVMH",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Luxury group owning brands like Louis Vuitton, Dior, and Moet."
     },
     {
       "word": "Gucci",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Italian luxury fashion brand known for handbags and monogram style."
     },
     {
       "word": "Prada",
       "difficulty": "easy",
-      "description": "Business clue; describe industry, products/services, and market reputation."
+      "description": "Italian luxury-fashion house known for premium bags and apparel."
     },
     {
       "word": "Rolex",
       "difficulty": "easy",
-      "description": "A recognizable company, brand, or market term used in business clues."
+      "description": "Swiss luxury watch brand associated with status and precision."
     },
     {
       "word": "Cartier",
       "difficulty": "easy",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "description": "French luxury brand known for jewelry and premium watches."
     },
     {
       "word": "Samsung Electronics",
       "difficulty": "hard",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "Core Samsung division making phones, TVs, chips, and devices."
     },
     {
       "word": "Shopify",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "E-commerce platform that helps businesses build online stores."
     },
     {
       "word": "Stripe",
       "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Payments infrastructure company used by apps and online businesses."
     },
     {
       "word": "LinkedIn",
       "difficulty": "easy",
-      "description": "Brand/company reference; start with what it sells, then where it is recognized."
+      "description": "Professional networking platform used for jobs and career profiles."
     },
     {
       "word": "YouTube",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "Video platform where users upload, watch, and monetize content."
     },
     {
       "word": "TikTok",
       "difficulty": "easy",
-      "description": "Business clue; describe industry, products/services, and market reputation."
+      "description": "Short-video social platform driven by viral trends and creators."
     },
     {
       "word": "Spotify",
       "difficulty": "easy",
-      "description": "Corporate clue; use sector, customer use case, and a signature association."
+      "description": "Music-streaming service with playlists, podcasts, and recommendations."
     },
     {
       "word": "Snapchat",
       "difficulty": "easy",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "description": "Social app known for disappearing messages and camera filters."
     },
     {
       "word": "Red Bull",
-      "difficulty": "hard",
-      "description": "Linked to global commerce, corporate strategy, or brand culture."
+      "difficulty": "easy",
+      "description": "Energy-drink brand heavily associated with extreme-sports sponsorships."
     },
     {
       "word": "Nando's",
-      "difficulty": "hard",
-      "description": "A business-world clue often associated with products, services, or markets."
+      "difficulty": "easy",
+      "description": "Restaurant chain famous for peri-peri flame-grilled chicken."
     }
   ],
   "Politics and Government": [
