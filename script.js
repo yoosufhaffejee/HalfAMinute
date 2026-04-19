@@ -19,7 +19,7 @@ const db = getDatabase(app);
 // Initialize Google AI
 const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
 // Game state variables
 let teams = [];
@@ -1026,11 +1026,14 @@ function generate() {
 async function run(topic) {
     document.getElementById("btnAiGame").disabled = true;
 
-    let prompt = "";
-    if (topic.startsWith('!')) {
-        prompt = `Generate a list of 50 or more words only related to the topic "${topic}". 
+    const cleanTopic = topic.trim();
+    const strictTopic = cleanTopic.startsWith('!') ? cleanTopic.slice(1).trim() : cleanTopic;
 
-        * **Possibly Include:**
+    let prompt = "";
+    if (cleanTopic.startsWith('!')) {
+        prompt = `Generate a list of 60 unique words only related to the topic "${strictTopic}" for a fast-paced charades-style party game.
+
+        * **Possibly Include (only when naturally relevant to the topic):**
             * NB People (e.g., historical figures, artists, scientists, players, actors) - add multiple
             * Places (e.g., countries, landmarks, geographical features)
             * Events (e.g., historical events, cultural celebrations)
@@ -1040,13 +1043,22 @@ async function run(topic) {
             * Lesser-known aspects (to add depth)
         
         * **Vary difficulty:** Include a mix of well-known words and some lesser-known terms.
+
+        * **Game quality:** Choose words that are fun to describe and guess quickly. Prefer concrete, clueable terms over abstract filler.
+        * **Avoid generic or repetitive items:** Do not output broad umbrella words, near-duplicates, spelling variants, singular/plural duplicates, or the same entity with tiny wording changes.
+        * **Lexical diversity:** Avoid repeating the same stems/prefixes and avoid obvious sequence lists.
         
-        * **Focus on context:** DO NOT expand on sub topics and categories. Strictly focus on the topic, even if you are unable to include the above (people, places etc).
+        * **Focus on context:** DO NOT expand on subtopics and categories. Strictly focus on "${strictTopic}", even if that limits some item types.
+        * **Length preference:** Most entries should be 1-4 words.
         
-        Only return the list of words, each on a new line. Do not forget to be strict with the topic. Do not output any other languages besides english unless otherwise specified.`
+        Output format rules:
+        1. Return only the list of words, each on a new line.
+        2. No numbering, bullets, headers, comments, or explanations.
+        3. No duplicates.
+        4. Do not output any language besides English unless otherwise specified.`
     }
     else {
-        prompt = `Generate a list of exactly 50 words only related to the topic "${topic}". 
+        prompt = `Generate a list of exactly 50 unique words related to the topic "${cleanTopic}" for a fast-paced charades-style party game.
 
         * **Include:**
             * NB People (e.g., historical figures, artists, scientists, players, actors) - add multiple
@@ -1058,10 +1070,18 @@ async function run(topic) {
             * Lesser-known aspects (to add depth)
         
         * **Vary difficulty:** Include a mix of well-known words and some lesser-known terms.
+        * **Game quality:** Prioritize words that are exciting, guessable, and good for short verbal clues.
+        * **Avoid generic or repetitive items:** Do not use vague umbrella terms, near-duplicates, singular/plural duplicates, or tiny rewordings of the same idea.
+        * **Lexical diversity:** Avoid repetitive word stems and avoid predictable sequence-like outputs.
         
-        * **Focus on context:** Consider subcategories and related fields within the topic and include relevant words.
+        * **Focus on context:** Consider subcategories and related fields within "${cleanTopic}" and include relevant words from those areas.
+        * **Length preference:** Most entries should be 1-4 words.
         
-        Only return the list of 50 words, each on a new line. Do not forget to include relevant people, places etc related to the topic and sub topics. Do not output any other languages besides english unless otherwise specified.`
+        Output format rules:
+        1. Return only the list of 50 words, each on a new line.
+        2. No numbering, bullets, headers, comments, or explanations.
+        3. No duplicates.
+        4. Do not output any language besides English unless otherwise specified.`
     }
 
     const result = await model.generateContent(prompt);
