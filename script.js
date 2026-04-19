@@ -50,13 +50,17 @@ let pointsToWin = 20;
 let numWords = 5;
 let numSeconds = 30;
 let difficulty = 'normal';
+let isTrainingMode = false;
 let activeSelectedTheme = "None";
 let activeSelectedCategories = [];
+let wordDescriptionLookup = new Map();
+let globalWordDescriptionLookup = null;
 
 const RECENT_WORDS_STORAGE_KEY = "half_a_minute_recent_words_v1";
 const MAX_RECENT_WORDS = 600;
 
 const HEARTBEAT_INTERVAL_MS = 8000;
+const HOST_STALE_THRESHOLD_MS = 25000;
 const STALE_PLAYER_THRESHOLD_MS = 90000;
 const STALE_CLEANUP_INTERVAL_MS = 12000;
 const LOBBY_EXPIRY_MS = 12 * 60 * 60 * 1000;
@@ -81,6 +85,7 @@ const txtWords = document.getElementById("txtWords");
 const txtSeconds = document.getElementById("txtSeconds");
 const categoriesSelect = document.getElementById("categoriesSelect");
 const themesSelect = document.getElementById("themesSelect");
+const chkTraining = document.getElementById("chkTraining");
 const btnStartRound = document.getElementById("startRoundButton");
 const btnNextRound = document.getElementById("nextRoundButton");
 const btnEndRound = document.getElementById("endRoundButton");
@@ -88,6 +93,7 @@ const btnEndGame = document.getElementById("endGameButton");
 const btnAnswers = document.getElementById("scoreInput");
 const timer = document.getElementById("timer");
 const lblAnswers = document.getElementById("answers");
+const currentWordsContainer = document.getElementById("currentWords");
 const txtPlayerName = document.getElementById("playerName");
 const txtGameCode = document.getElementById('joinLobbyCode');
 const txtLobbyMenu = document.getElementById('lobbyMenu');
@@ -362,6 +368,7 @@ function getSanitizedSettingsFromInputs() {
         pointsToWin: clampInt(document.getElementById("pointsToWin").value, 20, 10, 60),
         numWords: clampInt(txtWords.value, 5, 1, 15),
         numSeconds: clampInt(txtSeconds.value, 30, 5, 300),
+        trainingMode: Boolean(chkTraining?.checked),
         selectedTheme: sanitizeSelectedTheme(themesSelect.value),
         selectedCategories: sanitizeSelectedCategories(Array.from(categoriesSelect.selectedOptions).map(option => option.value))
     };
@@ -378,6 +385,7 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
         pointsToWin: clampInt(settings.pointsToWin, 20, 10, 60),
         numWords: clampInt(settings.numWords, 5, 1, 15),
         numSeconds: clampInt(settings.numSeconds, 30, 5, 300),
+        trainingMode: Boolean(settings.trainingMode),
         selectedTheme,
         selectedCategories
     };
@@ -850,9 +858,112 @@ function startLobbyHeartbeat() {
         void writeHeartbeat();
     }, HEARTBEAT_INTERVAL_MS);
 
-    if (isHost) {
-        startStalePlayerCleanupLoop();
+    startStalePlayerCleanupLoop();
+}
+
+function buildGlobalWordDescriptionLookup() {
+    if (globalWordDescriptionLookup) {
+        return globalWordDescriptionLookup;
     }
+
+    const map = new Map();
+    Object.values(categories || {}).forEach(entries => {
+        (entries || []).forEach(entry => {
+            const key = normalizeWord(entry?.word);
+            const description = String(entry?.description || "").trim();
+            if (key && description && !map.has(key)) {
+                map.set(key, description);
+            }
+        });
+    });
+
+    Object.values(themes || {}).forEach(entries => {
+        (entries || []).forEach(entry => {
+            const key = normalizeWord(entry?.word);
+            const description = String(entry?.description || "").trim();
+            if (key && description && !map.has(key)) {
+                map.set(key, description);
+            }
+        });
+    });
+
+    globalWordDescriptionLookup = map;
+    return globalWordDescriptionLookup;
+}
+
+function setWordDescriptionsFromObjects(wordObjects = []) {
+    const lookup = new Map();
+    wordObjects.forEach(entry => {
+        const key = normalizeWord(entry?.word);
+        const description = String(entry?.description || "").trim();
+        if (key && description) {
+            lookup.set(key, description);
+        }
+    });
+
+    wordDescriptionLookup = lookup;
+}
+
+function getTrainingDescription(word) {
+    const key = normalizeWord(word);
+    if (!key) {
+        return "";
+    }
+
+    return wordDescriptionLookup.get(key)
+        || buildGlobalWordDescriptionLookup().get(key)
+        || "Start broad, then narrow down with role, place, time period, and a distinctive trait.";
+}
+
+function clearTrainingHints() {
+    if (!currentWordsContainer) {
+        return;
+    }
+
+    currentWordsContainer.innerHTML = "";
+    currentWordsContainer.hidden = true;
+}
+
+function renderTrainingHints(words = []) {
+    if (!currentWordsContainer) {
+        return;
+    }
+
+    if (!isTrainingMode || !Array.isArray(words) || words.length === 0) {
+        clearTrainingHints();
+        return;
+    }
+
+    if (isOnlineGame && !isSpeaker) {
+        clearTrainingHints();
+        return;
+    }
+
+    currentWordsContainer.innerHTML = "";
+
+    const header = document.createElement("div");
+    header.className = "training-header";
+    header.textContent = "Training Mode: Easy clue ideas";
+    currentWordsContainer.appendChild(header);
+
+    words.forEach(word => {
+        const card = document.createElement("div");
+        card.className = "training-card";
+
+        const wordLabel = document.createElement("div");
+        wordLabel.className = "training-word";
+        wordLabel.textContent = word;
+
+        const description = document.createElement("div");
+        description.className = "training-description";
+        description.textContent = getTrainingDescription(word);
+
+        card.appendChild(wordLabel);
+        card.appendChild(description);
+        currentWordsContainer.appendChild(card);
+    });
+
+    currentWordsContainer.hidden = false;
 }
 
 function stopStalePlayerCleanupLoop() {
@@ -863,7 +974,7 @@ function stopStalePlayerCleanupLoop() {
 }
 
 async function pruneStalePlayers() {
-    if (!isOnlineGame || !isHost || !gameCode) {
+    if (!isOnlineGame || !gameCode || !playerName) {
         return;
     }
 
@@ -872,11 +983,22 @@ async function pruneStalePlayers() {
 
     try {
         await runTransaction(gameRef, (gameData) => {
-            if (!gameData || !Array.isArray(gameData.teams) || !gameData.presence) {
+            if (!gameData || !Array.isArray(gameData.teams)) {
                 return gameData;
             }
 
             ensureTeamsShape(gameData.teams);
+            gameData.presence = gameData.presence || {};
+
+            const callerIsCurrentHost = normalizeWord(gameData.hostName) === normalizeWord(playerName);
+            const hostPresence = getPresenceForPlayer(gameData, gameData.hostName);
+            const hostLastSeen = hostPresence?.lastSeen || 0;
+            const hostIsStale = !gameData.hostName || !hostPresence || (now - hostLastSeen) > HOST_STALE_THRESHOLD_MS;
+
+            // If host is healthy, only host should perform stale cleanup writes.
+            if (!callerIsCurrentHost && !hostIsStale) {
+                return gameData;
+            }
 
             const stalePresenceKeys = Object.keys(gameData.presence).filter(presenceKey => {
                 const presence = gameData.presence[presenceKey];
@@ -884,17 +1006,22 @@ async function pruneStalePlayers() {
                 return (now - lastSeen) > STALE_PLAYER_THRESHOLD_MS;
             });
 
-            if (stalePresenceKeys.length === 0) {
-                return gameData;
-            }
-
-            console.info(`[presence] pruning ${stalePresenceKeys.length} stale player(s) from lobby ${gameCode}`);
-
             const stalePlayers = new Set(
                 stalePresenceKeys
                     .map(presenceKey => gameData.presence[presenceKey]?.playerName)
                     .filter(Boolean)
             );
+
+            // If the host went stale (or host entry disappeared), force host recalculation.
+            if (hostIsStale && gameData.hostName) {
+                stalePlayers.add(gameData.hostName);
+            }
+
+            if (stalePresenceKeys.length === 0 && stalePlayers.size === 0 && !hostIsStale) {
+                return gameData;
+            }
+
+            console.info(`[presence] pruning ${stalePlayers.size} stale player(s) from lobby ${gameCode}`);
 
             let speakerWasRemoved = false;
             gameData.teams.forEach(team => {
@@ -914,6 +1041,9 @@ async function pruneStalePlayers() {
             stalePresenceKeys.forEach(presenceKey => {
                 delete gameData.presence[presenceKey];
             });
+            if (gameData.hostName && stalePlayers.has(gameData.hostName)) {
+                delete gameData.presence[toPresenceKey(gameData.hostName)];
+            }
 
             reindexPlayers(gameData.teams);
             gameData.numPlayers = countPlayersInTeams(gameData.teams);
@@ -954,7 +1084,7 @@ async function pruneStalePlayers() {
 }
 
 function startStalePlayerCleanupLoop() {
-    if (!isHost || staleCleanupIntervalId || !isOnlineGame || !gameCode) {
+    if (staleCleanupIntervalId || !isOnlineGame || !gameCode) {
         return;
     }
 
@@ -1201,6 +1331,7 @@ async function onLobbyJoined() {
             words.forEach((word, index) => {
                 wordButtons[index].textContent = word;
             });
+            renderTrainingHints(words);
 
             // For 2 or 3 player games, we do not show words to other players
             if ((numTeams == 2 && numPlayers == 2) || (numTeams == 3 && numPlayers == 3)) {
@@ -1274,13 +1405,14 @@ async function onLobbyJoined() {
             showElement(btnEndGame);
             showElement(btnStartOnlineGame);
             btnStartOnlineGame.disabled = !isTeamsValid(numPlayers) || isGameStarted;
-            startStalePlayerCleanupLoop();
         }
         else {
             hideElement(btnEndGame);
             hideElement(btnStartOnlineGame);
-            stopStalePlayerCleanupLoop();
         }
+
+        // Keep cleanup loop active for host failover detection, even on non-host clients.
+        startStalePlayerCleanupLoop();
     });
 
     listenForChanges(`games/${gameCode}/clickedButton`, (clickedButton) => {
@@ -1317,6 +1449,7 @@ function hideTimerAndAnswers() {
 
     hideElement(btnNextRound);
     hideElement(timer);
+    clearTrainingHints();
 }
 
 async function createGameLobby() {
@@ -1336,6 +1469,7 @@ async function createGameLobby() {
     pointsToWin = sanitizedSettings.pointsToWin;
     numWords = sanitizedSettings.numWords;
     numSeconds = sanitizedSettings.numSeconds;
+    isTrainingMode = sanitizedSettings.trainingMode;
     const selectedCategories = [...sanitizedSettings.selectedCategories];
     const selectedTheme = sanitizedSettings.selectedTheme;
     activeSelectedTheme = selectedTheme;
@@ -1347,6 +1481,7 @@ async function createGameLobby() {
         pointsToWin,
         numWords,
         numSeconds,
+        trainingMode: isTrainingMode,
         selectedTheme,
         selectedCategories: [...selectedCategories]
     };
@@ -1355,6 +1490,9 @@ async function createGameLobby() {
     document.getElementById("pointsToWin").value = String(pointsToWin);
     txtWords.value = String(numWords);
     txtSeconds.value = String(numSeconds);
+    if (chkTraining) {
+        chkTraining.checked = isTrainingMode;
+    }
 
     // Validate game settings
     if (selectedCategories.length > 0 && selectedTheme !== "None") {
@@ -1419,6 +1557,19 @@ async function createGameLobby() {
     }
 }
 
+function getPresenceForPlayer(gameData, name) {
+    if (!gameData || !gameData.presence || !name) {
+        return null;
+    }
+
+    const directMatch = gameData.presence[toPresenceKey(name)];
+    if (directMatch) {
+        return directMatch;
+    }
+
+    return Object.values(gameData.presence).find(entry => normalizeWord(entry?.playerName) === normalizeWord(name)) || null;
+}
+
 async function joinGameLobby() {
     const joinCode = String(txtGameCode.value || "").trim().toUpperCase();
     txtGameCode.value = joinCode;
@@ -1434,9 +1585,13 @@ async function joinGameLobby() {
                 pointsToWin = settings.pointsToWin;
                 numWords = settings.numWords;
                 numSeconds = settings.numSeconds;
+                isTrainingMode = settings.trainingMode;
                 numPlayers = gameData.numPlayers ?? countPlayersInTeams(gameData.teams || []);
                 activeSelectedTheme = settings.selectedTheme;
                 activeSelectedCategories = [...settings.selectedCategories];
+                if (chkTraining) {
+                    chkTraining.checked = isTrainingMode;
+                }
                 await onLobbyJoined();
             } else {
                 alert("This lobby has already ended.");
@@ -1765,7 +1920,7 @@ Output format rules:
 
     const generatedWords = textArea.textContent
         .split("\n")
-        .map(line => line.replace(/^\s*(?:[-*•]\s*|\d+[.)-]\s*)/, "").trim())
+        .map(line => line.replace(/^\s*(?:[-*\u2022]\s*|\d+[.)-]\s*)/, "").trim())
         .filter(Boolean);
 
     const uniqueGeneratedWords = [];
@@ -1802,6 +1957,7 @@ function startAIGame() {
         }
     });
     currentGameWords = shuffleArray(uniqueAiWords);
+    wordDescriptionLookup = new Map();
 
     startGame();
     
@@ -1812,6 +1968,7 @@ function startAIGame() {
 async function startGame() {
     // Play game start sound
     await playSound(startSound, () => false, 1.2);
+    clearTrainingHints();
 
     // Read and sanitize game settings
     const sanitizedSettings = getSanitizedSettingsFromInputs();
@@ -1827,11 +1984,15 @@ async function startGame() {
     pointsToWin = sanitizedSettings.pointsToWin;
     numWords = sanitizedSettings.numWords;
     numSeconds = sanitizedSettings.numSeconds;
+    isTrainingMode = sanitizedSettings.trainingMode;
 
     txtTeams.value = String(numTeams);
     document.getElementById("pointsToWin").value = String(pointsToWin);
     txtWords.value = String(numWords);
     txtSeconds.value = String(numSeconds);
+    if (chkTraining) {
+        chkTraining.checked = isTrainingMode;
+    }
 
     // Validate game settings
     if (selectedCategories.length > 0 && selectedTheme !== "None") {
@@ -1931,6 +2092,7 @@ function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
 
     selectedObjects = dedupeWordObjects(selectedObjects);
     selectedObjects = filterRecentlyUsedWords(selectedObjects);
+    setWordDescriptionsFromObjects(selectedObjects);
 
     // Shuffle selected objects
     selectedObjects = shuffleArray([...selectedObjects]);
@@ -1955,6 +2117,7 @@ function startRound() {
         lblAnswers.textContent = "Click the correct answers:"
         btnEndRound.hidden = true;
         btnNextRound.hidden = false;
+        clearTrainingHints();
 
         let count = 0;
         document.querySelectorAll(".scoreButton").forEach(button => {
@@ -2013,6 +2176,7 @@ async function nextRound() {
     btnNextRound.hidden = true;
     timer.hidden = true;
     clearWords();
+    clearTrainingHints();
 
     if (teams.some(team => team.points >= pointsToWin)) {
         endGame();
@@ -2043,6 +2207,7 @@ function endGame() {
     alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
     stopLobbyHeartbeat();
     stopStalePlayerCleanupLoop();
+    clearTrainingHints();
 
     if (isOnlineGame)
     {
@@ -2057,6 +2222,7 @@ function endRound() {
     btnEndRound.hidden = true;
     btnNextRound.hidden = false;
     endRoundEarly = true;
+    clearTrainingHints();
 
     if (isOnlineGame) {
         updateData(`games/${gameCode}`, { endRoundEarly: true });
@@ -2100,6 +2266,7 @@ function displayCurrentWords() {
         for (let i = 0; i < normalWords.length; i++) {
             wordButtons[i].textContent = normalWords[i];
         }
+        renderTrainingHints(normalWords);
 
         rememberUsedWords(normalWords);
 
@@ -2134,6 +2301,7 @@ function displayCurrentWords() {
         words.forEach((word, index) => {
             wordButtons[index].textContent = word;
         });
+        renderTrainingHints(words);
 
         rememberUsedWords(words);
     }

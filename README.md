@@ -8,6 +8,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - Offline local play
 - Online multiplayer lobbies (host + join by code)
 - AI word generation mode (topic-based and strict-topic mode)
+- Training mode (shows clue-friendly description hints per active word)
 - Category and theme filtering
 - Difficulty selection (`easy`, `normal`, `hard`)
 - Configurable team count, points-to-win, round time, and words per round
@@ -70,6 +71,12 @@ Important:
 - Prefix topic with `!` for strict scope generation.
 - Generated entries are cleaned and deduped before play.
 
+## Training Mode
+
+- Enable `Training Mode` in settings.
+- During a speaker turn, the game shows each active word with its short description.
+- Hints are hidden when the round moves to answer selection.
+
 ## Gameplay Flow
 
 1. Speaker starts round.
@@ -97,6 +104,7 @@ Available settings:
 - `Points to Win` (`10`-`60`)
 - `Round Duration` (`5`-`300` seconds)
 - `Words per Round` (`1`-`15`)
+- `Training Mode` (toggle)
 - Category multi-select or single theme (mutually exclusive)
 
 Input values are sanitized/clamped before game creation/start.

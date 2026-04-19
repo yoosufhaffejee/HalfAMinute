@@ -72,6 +72,10 @@
                             <input type="checkbox" id="chkChaos" value="false">
                         </div>
                         <div class="menu-section">
+                            <label for="chkTraining">Training Mode (Show Description Hints):</label>
+                            <input type="checkbox" id="chkTraining" value="false">
+                        </div>
+                        <div class="menu-section">
                             <button class="btn btn-primary" id="selectCategoriesBtn">Select Categories</button>
                             <button class="btn btn-primary" id="selectThemeBtn">Select Theme</button>
                         </div>
@@ -260,7 +264,7 @@
             <div id="timer"></div>
             <div id="gameBoard"></div>
             <div id="teamScores"></div>
-            <div id="currentWords"></div>
+            <div id="currentWords" hidden></div>
             <br>
             <div id="roundControls">
                 <button class="btn btn-success" id="startRoundButton">Start Round</button>
