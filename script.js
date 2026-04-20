@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyDmT5EcRhLm28kSwU8dw8ft-X7WwgNmp0U",
+    apiKey: "AIzaSyAHasvP2vwEY-WCPpSe4PGRTQKYuvzccaI",
     authDomain: "halfaminute-01.firebaseapp.com",
     databaseURL: "https://halfaminute-01-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "halfaminute-01",
