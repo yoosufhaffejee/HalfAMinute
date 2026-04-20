@@ -413,6 +413,12 @@ th, td {
         margin-top: 2px;
     }
 
+    #game {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
     #gameBoard {
         gap: 4px;
         justify-content: center;
@@ -446,5 +452,89 @@ th, td {
     .scoreButton {
         width: 100%;
         max-width: 280px;
+    }
+
+    #chaosModeBanner {
+        order: 0;
+        margin: 0 0 4px;
+    }
+
+    #currentTeamIndicator {
+        order: 1;
+    }
+
+    #timer {
+        order: 2;
+        margin-bottom: 8px;
+    }
+
+    #gameBoard {
+        order: 3;
+        margin-bottom: 8px;
+    }
+
+    #teamScores {
+        order: 4;
+    }
+
+    #currentWords {
+        order: 5;
+    }
+
+    #roundControls {
+        order: 6;
+    }
+
+    #chaosLegend {
+        order: 7;
+        margin-top: 6px;
+        margin-bottom: 0;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    #game.mobile-focus-words #chaosLegend {
+        display: none !important;
+    }
+
+    #game.mobile-focus-words #gameBoard {
+        margin-bottom: 4px;
+    }
+
+    #game.mobile-focus-words .board-cell {
+        width: 34px;
+        height: 34px;
+        padding: 4px;
+    }
+
+    #game.mobile-focus-words .board-powerup {
+        font-size: 8px;
+        padding: 2px 4px;
+    }
+
+    #game.mobile-focus-words .team-score {
+        font-size: 0.95rem;
+        margin: 6px 0;
+    }
+
+    #game.mobile-focus-words #scoreButtons {
+        max-height: 38dvh;
+        overflow-y: auto;
+        padding-bottom: 4px;
+    }
+
+    #game.mobile-focus-words #currentWords {
+        max-height: 32dvh;
+        overflow-y: auto;
+    }
+
+    #game.mobile-focus-board .board-cell {
+        width: 50px;
+        height: 50px;
+        padding: 8px;
+    }
+
+    #game.mobile-focus-board #gameBoard {
+        margin-bottom: 12px;
     }
 }

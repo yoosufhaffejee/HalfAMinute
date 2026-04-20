@@ -187,11 +187,13 @@ document.addEventListener("DOMContentLoaded", () => {
 function setLayoutMode(mode = "menu") {
     document.body.classList.remove("layout-menu", "layout-game");
     document.body.classList.add(mode === "game" ? "layout-game" : "layout-menu");
+    updateMobileGameFocus();
 }
 
 function initializeMenu() {
     setLayoutMode("menu");
     refreshChaosModeUi();
+    window.addEventListener("resize", updateMobileGameFocus);
     // Add categories to dropdown
     Object.keys(categories).forEach(category => {
         const option = document.createElement("option");
@@ -573,6 +575,8 @@ function refreshChaosModeUi() {
             renderChaosLegend();
         }
     }
+
+    updateMobileGameFocus();
 }
 
 function setNextRoundBusyState(isBusy) {
@@ -587,6 +591,35 @@ function setNextRoundBusyState(isBusy) {
     btnNextRound.textContent = isBusy
         ? "Resolving Chaos..."
         : (btnNextRound.dataset.defaultLabel || "Next Round");
+}
+
+function isNarrowViewport() {
+    return window.matchMedia("(max-width: 768px)").matches;
+}
+
+function areWordsInFocusPhase() {
+    const hasTrainingHintsVisible = Boolean(currentWordsContainer && !currentWordsContainer.hidden);
+    const answersVisible = Boolean(btnAnswers && !btnAnswers.hidden);
+    const hasVisibleWordButtons = Array.from(document.getElementsByClassName("scoreButton"))
+        .some(button => !button.hidden);
+    return hasTrainingHintsVisible || (answersVisible && hasVisibleWordButtons);
+}
+
+function updateMobileGameFocus() {
+    if (!game) {
+        return;
+    }
+
+    game.classList.remove("mobile-focus-words", "mobile-focus-board");
+    if (game.hidden || !isNarrowViewport()) {
+        return;
+    }
+
+    if (areWordsInFocusPhase()) {
+        game.classList.add("mobile-focus-words");
+    } else {
+        game.classList.add("mobile-focus-board");
+    }
 }
 
 function getBoardCellIndexForPoints(pointsValue, boardSize = pointsToWin) {
@@ -1429,6 +1462,7 @@ function clearTrainingHints() {
 
     currentWordsContainer.innerHTML = "";
     currentWordsContainer.hidden = true;
+    updateMobileGameFocus();
 }
 
 function renderTrainingHints(words = []) {
@@ -1471,6 +1505,7 @@ function renderTrainingHints(words = []) {
     });
 
     currentWordsContainer.hidden = false;
+    updateMobileGameFocus();
 }
 
 function stopStalePlayerCleanupLoop() {
@@ -2041,6 +2076,7 @@ function hideTimerAndAnswers() {
     hideElement(btnNextRound);
     hideElement(timer);
     clearTrainingHints();
+    updateMobileGameFocus();
 }
 
 async function createGameLobby() {
@@ -2814,6 +2850,7 @@ function startRound() {
     powerupRevealVisible = false;
     landedPowerupPreview = null;
     updateBoard();
+    updateMobileGameFocus();
     hideElement(lblGameState);
 
     if (isOnlineGame) {
@@ -2832,6 +2869,7 @@ function startRound() {
         setNextRoundBusyState(false);
         clearTrainingHints();
         isRoundActive = false;
+        updateMobileGameFocus();
 
         if (isOnlineGame && isSpeaker) {
             updateData(`games/${gameCode}`, { roundActive: false });
@@ -2870,6 +2908,7 @@ function hideRoundInputUI() {
     clearWords();
     clearTrainingHints();
     isRoundActive = false;
+    updateMobileGameFocus();
 }
 
 function advanceRoundPointers() {
@@ -3401,6 +3440,7 @@ function endRound() {
     endRoundEarly = true;
     clearTrainingHints();
     isRoundActive = false;
+    updateMobileGameFocus();
 
     if (isOnlineGame) {
         updateData(`games/${gameCode}`, {
@@ -3422,6 +3462,7 @@ function displayCurrentWords() {
     }
 
     btnAnswers.hidden = false;
+    updateMobileGameFocus();
     const wordButtons = document.getElementsByClassName("scoreButton");
 
     // We need to evenly mix easy and hard to make the game fair
@@ -3479,6 +3520,8 @@ function displayCurrentWords() {
 
         rememberUsedWords(words);
     }
+
+    updateMobileGameFocus();
 }
 
 function clearWords() {
