@@ -3905,17 +3905,17 @@ const categories = {
     {
       "word": "NBA Finals",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Championship series that decides the top pro basketball team in North America."
     },
     {
       "word": "Penalty",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Referee-imposed sanction for breaking rules during a match."
     },
     {
       "word": "Striker",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Attacking football position focused on scoring goals."
     },
     {
       "word": "Midfielder",
@@ -3925,62 +3925,62 @@ const categories = {
     {
       "word": "Nutmeg",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Dribbling move where the ball is played through an opponent's legs."
     },
     {
       "word": "Tiki-taka",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Short-passing possession style made famous by elite Spanish sides."
     },
     {
       "word": "False nine",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Central attacker role that drops into midfield to create space."
     },
     {
       "word": "Sweeper",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Deep defender positioned behind the back line for cover."
     },
     {
       "word": "Counter-attack",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Fast break launched immediately after winning possession."
     },
     {
       "word": "Libero",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Free defensive role that sweeps and starts attacks from the back."
     },
     {
       "word": "Man marking",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Defending system where each player tracks a specific opponent."
     },
     {
       "word": "Zonal marking",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Defensive system based on protecting areas, not individual opponents."
     },
     {
       "word": "Through ball",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Forward pass split between defenders for a runner to chase."
     },
     {
       "word": "Decathlon",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Ten-discipline track-and-field combined event."
     },
     {
       "word": "The Olympic Games",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Global multi-sport event held every four years."
     },
     {
       "word": "Bobsledding",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Winter race where teams speed in a sled down an ice track."
     },
     {
       "word": "Windsurfing",
@@ -3990,57 +3990,57 @@ const categories = {
     {
       "word": "Jesse Owens",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "American sprinter who won four gold medals at the 1936 Berlin Games."
     },
     {
       "word": "Tom Brady",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Legendary NFL quarterback with a record number of title wins."
     },
     {
       "word": "Australian Open",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "First tennis Grand Slam of the year, played in Melbourne."
     },
     {
       "word": "Champions League Final",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Title match of Europe's top annual club football tournament."
     },
     {
       "word": "Defensive Block",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Compact shape used to protect space and limit opposition chances."
     },
     {
       "word": "English Premier League Trophy",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Silverware awarded to champions of England's top football division."
     },
     {
       "word": "Formula 1 Grand Prix",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Single race event in the highest level of open-wheel motorsport."
     },
     {
       "word": "Formula 1 World Championship",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Season-long title decided by points across top-tier motor races."
     },
     {
       "word": "Free Kick Technique",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Set-piece striking method used to bend or dip the ball."
     },
     {
       "word": "French Open",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Clay-court Grand Slam held annually in Paris."
     },
     {
       "word": "Golf Masters",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Major golf tournament played at Augusta National."
     },
     {
       "word": "Ligue 1",
@@ -4055,7 +4055,7 @@ const categories = {
     {
       "word": "MVP",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Award for the most valuable performer in a season or final."
     },
     {
       "word": "NBA",
@@ -4070,57 +4070,57 @@ const categories = {
     {
       "word": "Olympic Gold Medal",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Top prize awarded to the winner of an Olympic event."
     },
     {
       "word": "Penalty Shootout",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Tie-break where teams alternate spot kicks after a drawn knockout game."
     },
     {
       "word": "Roger Federer vs Rafael Nadal",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Iconic tennis rivalry between Swiss and Spanish all-time greats."
     },
     {
       "word": "Summer Olympics Opening Ceremony",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Parade and spectacle that officially begins the warm-weather Games."
     },
     {
       "word": "Super Bowl Halftime Show",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Major live music performance staged during the NFL title game break."
     },
     {
       "word": "Super Bowl MVP Performance",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Standout display in the NFL final that earns top individual honors."
     },
     {
       "word": "US Open",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Grand Slam tennis tournament played in New York."
     },
     {
       "word": "Video Assistant Referee",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Match official support system using replay for key football decisions."
     },
     {
       "word": "Winter Olympics",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Global multi-sport event featuring snow and ice disciplines."
     },
     {
       "word": "Winter Olympics Opening Ceremony",
       "difficulty": "hard",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Official launch event for the Games focused on winter sports."
     },
     {
       "word": "World Cup Final",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Final match that decides the men's global football champion."
     },
     {
       "word": "Kylian Mbappé",
@@ -4135,7 +4135,7 @@ const categories = {
     {
       "word": "Neymar Jr.",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Brazilian forward known for flair, dribbling skills, and step-overs."
     },
     {
       "word": "Zlatan Ibrahimović",
@@ -4145,12 +4145,12 @@ const categories = {
     {
       "word": "Nike",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Global sportswear brand recognized by the swoosh logo."
     },
     {
       "word": "Manchester United",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Historic English football club based at Old Trafford."
     },
     {
       "word": "Adidas",
@@ -4160,7 +4160,7 @@ const categories = {
     {
       "word": "Real Madrid",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Spanish football giant with a record haul of European titles."
     },
     {
       "word": "Barcelona",
@@ -4175,22 +4175,22 @@ const categories = {
     {
       "word": "Liverpool",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "English football club from Anfield, famous red kit and anthem."
     },
     {
       "word": "Chelsea",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "London football club based at Stamford Bridge, commonly in blue."
     },
     {
       "word": "Paris Saint-Germain",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Top French football club from Paris, often shortened to PSG."
     },
     {
       "word": "Juventus",
       "difficulty": "easy",
-      "description": "A well-known sport or sporting term, usually clued by rules, equipment, or scoring."
+      "description": "Turin football club known for black-and-white striped kits."
     },
     {
       "word": "AC Milan",
@@ -4205,22 +4205,22 @@ const categories = {
     {
       "word": "Sir Alex Ferguson",
       "difficulty": "easy",
-      "description": "Athletics reference; clue with team/event context and a famous moment."
+      "description": "Legendary manager who built Manchester United into a dominant era."
     },
     {
       "word": "Pep Guardiola",
       "difficulty": "hard",
-      "description": "Athletics reference; clue with team/event context and a famous moment."
+      "description": "Elite coach known for possession-heavy tactics and multiple league titles."
     },
     {
       "word": "Jurgen Klopp",
       "difficulty": "hard",
-      "description": "Sports term; start with game type, then scoring or tournament context."
+      "description": "German football manager known for high-intensity pressing and Liverpool success."
     },
     {
       "word": "Cole Palmer",
       "difficulty": "hard",
-      "description": "Sports clue; describe the sport, role, and a defining achievement."
+      "description": "English attacking midfielder known for composure and set-piece goals."
     },
     {
       "word": "Bafana Bafana",
@@ -4247,7 +4247,7 @@ const categories = {
     {
       "word": "Star Wars",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Space-opera franchise with Jedi, Sith, lightsabers, and a galactic rebellion."
     },
     {
       "word": "The Matrix",
@@ -4257,12 +4257,12 @@ const categories = {
     {
       "word": "Friends",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Sitcom following six close companions living in New York City."
     },
     {
       "word": "The Simpsons",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Long-running animated satire about a yellow family in Springfield."
     },
     {
       "word": "Breaking Bad",
@@ -4272,22 +4272,22 @@ const categories = {
     {
       "word": "Game of Thrones",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Fantasy drama where rival houses battle for control of the Iron Throne."
     },
     {
       "word": "Harry Potter",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Wizard saga centered on a boy studying magic at a boarding school."
     },
     {
       "word": "The Godfather",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Mafia epic about a powerful Italian-American crime family."
     },
     {
       "word": "The Avengers",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Superhero team-up featuring Earth's mightiest defenders from Marvel."
     },
     {
       "word": "Avengers: Endgame",
@@ -4297,7 +4297,7 @@ const categories = {
     {
       "word": "Lord of the Rings",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Fantasy quest to destroy a cursed ring in a volcanic land."
     },
     {
       "word": "Jurassic Park",
@@ -4307,17 +4307,17 @@ const categories = {
     {
       "word": "The Shawshank Redemption",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Prison drama about hope, friendship, and a long-planned escape."
     },
     {
       "word": "Pulp Fiction",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Nonlinear crime film connecting hitmen, a boxer, and gangsters."
     },
     {
       "word": "Back to the Future",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Time-travel adventure featuring a teenager and a modified DeLorean."
     },
     {
       "word": "Star Trek",
@@ -4327,7 +4327,7 @@ const categories = {
     {
       "word": "The Office",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Mockumentary workplace comedy set at a paper company."
     },
     {
       "word": "Avatar",
@@ -4337,17 +4337,17 @@ const categories = {
     {
       "word": "Titanic",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Romance and disaster story set on a doomed luxury ocean liner."
     },
     {
       "word": "Inception",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Heist thriller where specialists enter layered dreams."
     },
     {
       "word": "Stranger Things",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "1980s-set sci-fi series with a parallel dimension and psychic powers."
     },
     {
       "word": "The Lion King",
@@ -4357,12 +4357,12 @@ const categories = {
     {
       "word": "Forrest Gump",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Drama following a kind-hearted man through major U.S. events."
     },
     {
       "word": "The Dark Knight",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Batman film remembered for a chaotic clown-faced villain."
     },
     {
       "word": "Toy Story",
@@ -4372,17 +4372,17 @@ const categories = {
     {
       "word": "The Walking Dead",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Post-apocalyptic survival series centered on zombie outbreaks."
     },
     {
       "word": "Frozen",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Animated musical about royal sisters and magical ice powers."
     },
     {
       "word": "The Big Bang Theory",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Sitcom about geeky scientists and their social lives."
     },
     {
       "word": "Indiana Jones",
@@ -4392,27 +4392,27 @@ const categories = {
     {
       "word": "The Sound of Music",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Classic musical about a singing governess and the von Trapp family."
     },
     {
       "word": "The Sopranos",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Crime drama about a New Jersey mob boss balancing family and violence."
     },
     {
       "word": "The Terminator",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Sci-fi action story about a killer cyborg sent back in time."
     },
     {
       "word": "Mulan",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Heroine disguises herself to take her father's place in war."
     },
     {
       "word": "Die Hard",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Action classic where a lone cop fights terrorists in a skyscraper."
     },
     {
       "word": "The Witcher",
@@ -4422,87 +4422,87 @@ const categories = {
     {
       "word": "The Hunger Games",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Dystopian saga of televised survival contests and rebellion."
     },
     {
       "word": "Mad Men",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "1960s advertising-agency drama set on Madison Avenue."
     },
     {
       "word": "The Princess Bride",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Fantasy romance adventure known for fencing, giants, and witty lines."
     },
     {
       "word": "Mission: Impossible",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Spy franchise famous for impossible assignments and practical stunts."
     },
     {
       "word": "The Twilight Zone",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Anthology series of eerie, moral, and speculative stories."
     },
     {
       "word": "The Good Place",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Afterlife comedy about ethics, redemption, and hidden twists."
     },
     {
       "word": "The X-Files",
-      "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "difficulty": "hard",
+      "description": "Two federal agents investigate paranormal cases and conspiracies."
     },
     {
       "word": "Avatar: The Last Airbender",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Animated fantasy about elemental bending and a chosen young hero."
     },
     {
       "word": "The Crown",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Drama chronicling the reign of Britain's long-serving monarch."
     },
     {
       "word": "The Mandalorian",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Space-western series about a bounty hunter protecting Grogu."
     },
     {
       "word": "Leonardo DiCaprio",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Oscar-winning actor linked to Titanic, Inception, and The Revenant."
     },
     {
       "word": "Actor",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Performer who portrays characters in film, TV, or theatre."
     },
     {
       "word": "Director",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Creative lead responsible for performances, camera choices, and tone."
     },
     {
       "word": "Oscar",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Nickname for the Academy Award trophy in film."
     },
     {
       "word": "Red carpet",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Ceremonial arrival walkway at premieres and awards nights."
     },
     {
       "word": "Blockbuster",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Massive commercial hit with broad audience appeal."
     },
     {
       "word": "Movie",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Feature-length story presented through moving images."
     },
     {
       "word": "Premiere",
@@ -4517,7 +4517,7 @@ const categories = {
     {
       "word": "Studio",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Company or lot where productions are financed and made."
     },
     {
       "word": "Sequel",
@@ -4527,57 +4527,57 @@ const categories = {
     {
       "word": "Cinematography",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Art of visual storytelling through lighting, framing, and camera movement."
     },
     {
       "word": "Method acting",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Performance approach where artists deeply embody roles on and off set."
     },
     {
       "word": "Film noir",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Moody crime style with shadows, cynicism, and morally gray leads."
     },
     {
       "word": "Biopic",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Dramatized feature based on a real person's life."
     },
     {
       "word": "Cameo",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Very brief appearance by a recognizable person."
     },
     {
       "word": "Auteur",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Filmmaker with a distinct personal signature across many works."
     },
     {
       "word": "Casting couch",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Exploitative abuse of power in audition or hiring situations."
     },
     {
       "word": "Stunt double",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Stand-in performer used for dangerous action sequences."
     },
     {
       "word": "Box office",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Theatrical ticket-sales revenue used to gauge commercial success."
     },
     {
       "word": "Green screen",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Chroma backdrop replaced with digital backgrounds in post-production."
     },
     {
       "word": "Grey's Anatomy",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Long-running hospital drama centered on Seattle surgeons."
     },
     {
       "word": "Seinfeld",
@@ -4592,22 +4592,22 @@ const categories = {
     {
       "word": "Twin Peaks",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Surreal mystery series about a murder in a strange small town."
     },
     {
       "word": "Black Mirror",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Anthology drama exploring the dark side of technology."
     },
     {
       "word": "True Detective",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Anthology crime series focused on complex investigations and flawed detectives."
     },
     {
       "word": "The Handmaid's Tale",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Dystopian story about authoritarian control over women's bodies."
     },
     {
       "word": "Westworld",
@@ -4617,27 +4617,27 @@ const categories = {
     {
       "word": "Better Call Saul",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Prequel following a struggling lawyer before his criminal-era identity."
     },
     {
       "word": "Bradley Cooper",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Actor-director associated with A Star Is Born and The Hangover."
     },
     {
       "word": "Daniel Day-Lewis",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Highly acclaimed performer known for total role immersion."
     },
     {
       "word": "Darth Vader",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Masked Sith enforcer known for heavy breathing and a red lightsaber."
     },
     {
       "word": "Dumbledore",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Wise headmaster who mentors a famous boy wizard."
     },
     {
       "word": "Gandalf",
@@ -4647,42 +4647,42 @@ const categories = {
     {
       "word": "George Clooney",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Hollywood star known for Ocean's films and ER."
     },
     {
       "word": "Hermione Granger",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Brilliant witch and close friend of a scarred young wizard."
     },
     {
       "word": "Jennifer Lawrence",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Oscar-winning actress who led a dystopian archery franchise."
     },
     {
       "word": "Johnny Depp",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Actor famous for eccentric roles, including a rum-loving pirate captain."
     },
     {
       "word": "Katniss Everdeen",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Archer heroine who becomes the symbol of an uprising."
     },
     {
       "word": "La La Land",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Modern musical-romance about love and ambition in Los Angeles."
     },
     {
       "word": "Luke Skywalker",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Farm boy who trains as a Jedi and confronts a dark enforcer."
     },
     {
       "word": "Meryl Streep",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Legendary actress with one of the highest award-nomination totals."
     },
     {
       "word": "Ryan Gosling",
@@ -4697,112 +4697,112 @@ const categories = {
     {
       "word": "Beam me up, Scotty",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Teleport command linked to a famous starship crew."
     },
     {
       "word": "Elementary, my dear Watson",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Catchphrase associated with a legendary detective and his companion."
     },
     {
       "word": "Frankly, my dear, I don't give a damn",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Blunt farewell line from a classic American romance epic."
     },
     {
       "word": "Go ahead, make my day",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Iconic threat delivered by a hard-nosed police character."
     },
     {
       "word": "Here's Johnny!",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Horror quote shouted during an axe-through-door scene."
     },
     {
       "word": "Here's looking at you, kid",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Romantic farewell line from a black-and-white wartime classic."
     },
     {
       "word": "I'll be back",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Famous one-liner spoken by a relentless time-traveling cyborg."
     },
     {
       "word": "May the Force be with you",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Blessing phrase used by Jedi and rebel fighters."
     },
     {
       "word": "May the odds be ever in your favor",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Ceremonial line before a deadly televised youth contest."
     },
     {
       "word": "Resistance is futile",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Warning from a cybernetic collective that assimilates civilizations."
     },
     {
       "word": "Say hello to my little friend",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Gangster movie line yelled before a violent shootout."
     },
     {
       "word": "To infinity and beyond",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Catchphrase of a toy space ranger in an animated franchise."
     },
     {
       "word": "Yippee-ki-yay, motherfucker!",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Signature wisecrack from an action hero trapped in a skyscraper siege."
     },
     {
       "word": "You can't handle the truth!",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Courtroom outburst from a military legal drama."
     },
     {
       "word": "Harry Potter Wizarding World",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Franchise universe featuring Hogwarts, spells, and magical creatures."
     },
     {
       "word": "Disney Classics",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Beloved older animated family films from a major U.S. studio."
     },
     {
       "word": "Disney Pixar Films",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "CG-animated hits from the studio behind talking toys and emotional stories."
     },
     {
       "word": "Disney Princesses",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Royal heroines from animated musicals and fairy-tale adventures."
     },
     {
       "word": "Marvel Cinematic Universe",
       "difficulty": "hard",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Shared superhero saga spanning interconnected films and series."
     },
     {
       "word": "Pirates of the Caribbean",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Swashbuckling adventure franchise with cursed treasure and a quirky captain."
     },
     {
       "word": "Pixar Movies",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Animated features known for emotional storytelling and technical polish."
     },
     {
       "word": "The Godfather Trilogy",
       "difficulty": "easy",
-      "description": "A notable film or TV reference, usually clued by plot, characters, or iconic scenes."
+      "description": "Three-film saga following a mafia dynasty across generations."
     },
     {
       "word": "Isibaya",
@@ -4939,12 +4939,12 @@ const categories = {
     {
       "word": "Chocolate",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Sweet treat made from cacao beans, sold in milk, dark, or white varieties."
     },
     {
       "word": "Burger",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Ground-meat patty served in a sliced bun with toppings and sauces."
     },
     {
       "word": "Coffee",
@@ -4954,37 +4954,37 @@ const categories = {
     {
       "word": "Sushi",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Japanese dish of vinegared rice with seafood, egg, or vegetables."
     },
     {
       "word": "Ice Cream",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Frozen dairy dessert served in scoops, cones, or cups."
     },
     {
       "word": "Pasta",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Italian noodles like penne or spaghetti, usually served with sauce."
     },
     {
       "word": "Wine",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Alcoholic grape drink commonly served as red, white, or rose."
     },
     {
       "word": "Beer",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Brewed drink made from grains and hops, usually served cold."
     },
     {
       "word": "Steak",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Thick cut of beef cooked on a grill, pan, or open flame."
     },
     {
       "word": "Salad",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Dish of mixed vegetables, often served cold with dressing."
     },
     {
       "word": "Sandwich",
@@ -4994,17 +4994,17 @@ const categories = {
     {
       "word": "Cheese",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Dairy product made by curdling milk and aging or processing it."
     },
     {
       "word": "Cupcake",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Single-serving mini cake in a paper wrapper, often topped with frosting."
     },
     {
       "word": "Tea",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Hot drink made by steeping dried leaves in water."
     },
     {
       "word": "Cookie",
@@ -5014,62 +5014,62 @@ const categories = {
     {
       "word": "Tacos",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Folded or rolled tortillas filled with meat, beans, salsa, and toppings."
     },
     {
       "word": "Whiskey",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Distilled grain spirit often aged in wooden barrels."
     },
     {
       "word": "Bread",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Baked staple made from flour and yeast, sold as loaves or rolls."
     },
     {
       "word": "Cocktail",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Mixed alcoholic drink combining spirits with juice, soda, or syrup."
     },
     {
       "word": "Smoothie",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Blended cold drink made from fruit, often with yogurt or milk."
     },
     {
       "word": "Donut",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Fried sweet pastry, commonly ring-shaped and glazed or sugared."
     },
     {
       "word": "Soup",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Liquid dish served hot with broth, vegetables, and sometimes meat."
     },
     {
       "word": "Cake",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Baked dessert often made for birthdays and celebrations."
     },
     {
       "word": "Barbecue",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Method of cooking meat over fire or smoke, often outdoors."
     },
     {
       "word": "Pancakes",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Flat batter cakes cooked on a griddle and often served with syrup."
     },
     {
       "word": "Ramen",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Japanese noodle soup with rich broth and toppings like egg or pork."
     },
     {
       "word": "Lobster",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Large marine shellfish with claws, often served with melted butter."
     },
     {
       "word": "Curry",
@@ -5089,72 +5089,72 @@ const categories = {
     {
       "word": "Caviar",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Salted fish eggs served as a luxury appetizer."
     },
     {
       "word": "Macaron",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "French almond meringue sandwich cookie with a soft filling."
     },
     {
       "word": "Paella",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Spanish rice dish cooked with saffron, seafood, or meat."
     },
     {
       "word": "Hot Dog",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Sausage served in a long soft bun with condiments."
     },
     {
       "word": "Dim Sum",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Cantonese small plates like dumplings served in steamer baskets."
     },
     {
       "word": "Champagne",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Sparkling wine from a specific French region, opened for celebrations."
     },
     {
       "word": "Margarita",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Tequila-based lime cocktail often served with a salted rim."
     },
     {
       "word": "Gourmet",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Term for high-end food prepared with refined ingredients and technique."
     },
     {
       "word": "Milkshake",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Thick cold drink blended with milk and ice cream."
     },
     {
       "word": "Risotto",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Creamy Italian rice dish cooked slowly with stock."
     },
     {
       "word": "Pho",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Vietnamese noodle soup with fragrant broth, herbs, and meat."
     },
     {
       "word": "Nachos",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Tortilla chips topped with melted cheese and savory extras."
     },
     {
       "word": "Cider",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Drink made from fermented apples, served still or sparkling."
     },
     {
       "word": "Fondue",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Communal melted pot for dipping bread or fruit."
     },
     {
       "word": "Poutine",
@@ -5164,67 +5164,67 @@ const categories = {
     {
       "word": "Tapas",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Spanish small sharing plates served as snacks or light meals."
     },
     {
       "word": "Biscuit",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Baked item that can mean a crisp cookie or soft quick bread by region."
     },
     {
       "word": "Eggs Benedict",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Brunch dish with poached eggs, ham, English muffin, and hollandaise."
     },
     {
       "word": "Beef Wellington",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Tenderloin wrapped in pastry with mushroom paste and baked."
     },
     {
       "word": "Lobster Bisque",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Rich, creamy shellfish soup with a smooth texture."
     },
     {
       "word": "Croque Monsieur",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "French grilled ham-and-cheese sandwich topped with creamy sauce."
     },
     {
       "word": "Chicken Parmesan",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Breaded poultry cutlet baked with tomato sauce and melted cheese."
     },
     {
       "word": "Tiramisu",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Italian layered dessert with coffee-soaked biscuits and mascarpone cream."
     },
     {
       "word": "Coq au Vin",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "French dish of poultry braised slowly in red wine."
     },
     {
       "word": "Crème Brûlée",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Custard dessert with a brittle caramelized sugar top."
     },
     {
       "word": "Spaghetti Carbonara",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Roman pasta made with egg, hard cheese, cured pork, and black pepper."
     },
     {
       "word": "Banoffee Pie",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Dessert pie with banana, toffee, and whipped cream."
     },
     {
       "word": "Cheeseburger",
       "difficulty": "hard",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Beef patty in a bun topped with a melted cheese slice."
     },
     {
       "word": "Coca-Cola",
@@ -5244,12 +5244,12 @@ const categories = {
     {
       "word": "Subway",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Global chain known for made-to-order submarine sandwiches."
     },
     {
       "word": "Taco Bell",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "Fast-food chain focused on tacos, burritos, and Tex-Mex items."
     },
     {
       "word": "Nandos",
@@ -5259,7 +5259,7 @@ const categories = {
     {
       "word": "Pizza Hut",
       "difficulty": "easy",
-      "description": "A common food or drink item, often clued by ingredients, taste, or preparation style."
+      "description": "International chain known for pan-style pies and delivery."
     },
     {
       "word": "Biltong",
@@ -5376,27 +5376,27 @@ const categories = {
     {
       "word": "Penguin",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Flightless seabird adapted to cold waters, known for waddling."
     },
     {
       "word": "Mountain",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Large natural landform rising steeply above surrounding terrain."
     },
     {
       "word": "Whale",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Giant marine mammal that breathes air through a blowhole."
     },
     {
       "word": "Sunset",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Evening moment when the sun dips below the horizon."
     },
     {
       "word": "Tiger",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Large striped big cat native to Asia."
     },
     {
       "word": "Savannah",
@@ -5406,12 +5406,12 @@ const categories = {
     {
       "word": "Coral Reef",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Underwater ecosystem built by tiny coral organisms."
     },
     {
       "word": "Desert",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Dry biome with low rainfall and sparse vegetation."
     },
     {
       "word": "Waterfall",
@@ -5421,22 +5421,22 @@ const categories = {
     {
       "word": "Polar Bear",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Large Arctic predator with white fur and strong swimming ability."
     },
     {
       "word": "Orangutan",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Great ape from Southeast Asian rainforests with long arms."
     },
     {
       "word": "Volcano",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Mountain opening that can erupt lava, ash, and gas."
     },
     {
       "word": "Forest",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Large area dominated by trees and dense plant life."
     },
     {
       "word": "Giraffe",
@@ -5456,7 +5456,7 @@ const categories = {
     {
       "word": "Jungle",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Thick tropical vegetation with dense, tangled growth."
     },
     {
       "word": "Arctic",
@@ -5466,12 +5466,12 @@ const categories = {
     {
       "word": "Humpback Whale",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Migratory baleen giant known for songs and breaching."
     },
     {
       "word": "Cheetah",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Fastest land animal, built for short explosive sprints."
     },
     {
       "word": "Sunrise",
@@ -5491,12 +5491,12 @@ const categories = {
     {
       "word": "Ocean",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Vast saltwater body covering most of Earth's surface."
     },
     {
       "word": "Redwood Tree",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Towering conifer species among the tallest trees on Earth."
     },
     {
       "word": "Squirrel",
@@ -5511,7 +5511,7 @@ const categories = {
     {
       "word": "Eagle",
       "difficulty": "easy",
-      "description": "A nature or wildlife term often clued by habitat, appearance, or behavior."
+      "description": "Bird of prey known for keen eyesight and powerful talons."
     },
     {
       "word": "Butterfly",
@@ -5683,17 +5683,17 @@ const categories = {
     {
       "word": "English",
       "difficulty": "easy",
-      "description": "The attempt to represent the text of one language in the writing system of another."
+      "description": "Global lingua franca spoken widely in the UK, US, and beyond."
     },
     {
       "word": "Spanish",
       "difficulty": "easy",
-      "description": "In linguistics, mutual intelligibility is a relationship between different but related language varieties in which speakers of the different varieties can readily understand eac..."
+      "description": "Romance language spoken in Spain and much of Latin America."
     },
     {
       "word": "French",
       "difficulty": "easy",
-      "description": "The attempt to represent the text of one language in the writing system of another."
+      "description": "Romance language associated with France and many francophone regions."
     },
     {
       "word": "Mandarin",
@@ -5703,7 +5703,7 @@ const categories = {
     {
       "word": "German",
       "difficulty": "easy",
-      "description": "In linguistics, romanization or romanisation is the conversion of text from a different writing system to the Roman script, or a system for doing so."
+      "description": "West Germanic language used in Germany, Austria, and Switzerland."
     },
     {
       "word": "Italian",
@@ -5713,12 +5713,12 @@ const categories = {
     {
       "word": "Japanese",
       "difficulty": "easy",
-      "description": "In linguistics, romanization or romanisation is the conversion of text from a different writing system to the Roman script, or a system for doing so."
+      "description": "East Asian language written with kanji and kana scripts."
     },
     {
       "word": "Russian",
       "difficulty": "easy",
-      "description": "The attempt to represent the text of one language in the writing system of another."
+      "description": "East Slavic language written in Cyrillic and spoken across Russia."
     },
     {
       "word": "Portuguese",
@@ -5733,12 +5733,12 @@ const categories = {
     {
       "word": "Korean",
       "difficulty": "easy",
-      "description": "In linguistics, romanization or romanisation is the conversion of text from a different writing system to the Roman script, or a system for doing so."
+      "description": "East Asian language primarily written in Hangul."
     },
     {
       "word": "Dutch",
       "difficulty": "easy",
-      "description": "In linguistics, mutual intelligibility is a relationship between different but related language varieties in which speakers of the different varieties can readily understand eac..."
+      "description": "West Germanic language spoken in the Netherlands and Flanders."
     },
     {
       "word": "Swedish",
@@ -5748,17 +5748,17 @@ const categories = {
     {
       "word": "Greek",
       "difficulty": "easy",
-      "description": "The attempt to represent the text of one language in the writing system of another."
+      "description": "Language of Greece with a distinct alphabet and ancient literary history."
     },
     {
       "word": "Turkish",
       "difficulty": "easy",
-      "description": "In linguistics, mutual intelligibility is a relationship between different but related language varieties in which speakers of the different varieties can readily understand eac..."
+      "description": "Turkic language spoken mainly in Turkey."
     },
     {
       "word": "Polish",
       "difficulty": "easy",
-      "description": "In linguistics, mutual intelligibility is a relationship between different but related language varieties in which speakers of the different varieties can readily understand eac..."
+      "description": "West Slavic language using Latin script with diacritics."
     },
     {
       "word": "Hindi",
@@ -5768,7 +5768,7 @@ const categories = {
     {
       "word": "Thai",
       "difficulty": "easy",
-      "description": "In linguistics, romanization or romanisation is the conversion of text from a different writing system to the Roman script, or a system for doing so."
+      "description": "Official language of Thailand with its own script."
     },
     {
       "word": "Finnish",
@@ -5803,22 +5803,22 @@ const categories = {
     {
       "word": "Romanian",
       "difficulty": "easy",
-      "description": "In linguistics, mutual intelligibility is a relationship between different but related language varieties in which speakers of the different varieties can readily understand eac..."
+      "description": "Romance language spoken mainly in Romania and Moldova."
     },
     {
       "word": "Danish",
       "difficulty": "easy",
-      "description": "In linguistics, mutual intelligibility is a relationship between different but related language varieties in which speakers of the different varieties can readily understand eac..."
+      "description": "North Germanic language of Denmark."
     },
     {
       "word": "Norwegian",
       "difficulty": "easy",
-      "description": "In linguistics, mutual intelligibility is a relationship between different but related language varieties in which speakers of the different varieties can readily understand eac..."
+      "description": "North Germanic language with Bokmal and Nynorsk standards."
     },
     {
       "word": "Persian",
       "difficulty": "easy",
-      "description": "In linguistics, romanization or romanisation is the conversion of text from a different writing system to the Roman script, or a system for doing so."
+      "description": "Indo-Iranian language also known as Farsi."
     },
     {
       "word": "Swahili",
@@ -5868,7 +5868,7 @@ const categories = {
     {
       "word": "Ukrainian",
       "difficulty": "easy",
-      "description": "In linguistics, romanization or romanisation is the conversion of text from a different writing system to the Roman script, or a system for doing so."
+      "description": "East Slavic language written in Cyrillic."
     },
     {
       "word": "Estonian",
@@ -6160,17 +6160,17 @@ const categories = {
     {
       "word": "Frida Kahlo",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Mexican painter known for striking self-portraits and surreal imagery."
     },
     {
       "word": "Alexander the Great",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Macedonian conqueror who built a vast empire before age 33."
     },
     {
       "word": "Jane Austen",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "English novelist behind Pride and Prejudice and other Regency classics."
     },
     {
       "word": "Walt Disney",
@@ -6200,12 +6200,12 @@ const categories = {
     {
       "word": "Malala Yousafzai",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Pakistani education activist and youngest-ever Nobel Peace Prize winner."
     },
     {
       "word": "J.K. Rowling",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "British author who created a globally famous boy-wizard book series."
     },
     {
       "word": "David Bowie",
@@ -6215,22 +6215,22 @@ const categories = {
     {
       "word": "Diana, Princess of Wales",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Beloved British royal widely known as the People's Princess."
     },
     {
       "word": "Che Guevara",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Argentine Marxist revolutionary linked to the Cuban uprising."
     },
     {
       "word": "Helen Keller",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Deafblind author and activist taught to communicate by Anne Sullivan."
     },
     {
       "word": "Queen Elizabeth II",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Longest-reigning British monarch, on the throne from 1952 to 2022."
     },
     {
       "word": "Salvador Dalí",
@@ -6250,12 +6250,12 @@ const categories = {
     {
       "word": "Emily Dickinson",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Reclusive American poet known for short lines and unusual punctuation."
     },
     {
       "word": "Napoleon Bonaparte",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "French military commander who crowned himself emperor."
     },
     {
       "word": "Beyoncé",
@@ -6265,12 +6265,12 @@ const categories = {
     {
       "word": "George Orwell",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Author of Animal Farm and the dystopian novel 1984."
     },
     {
       "word": "Stephen Spielberg",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Influential filmmaker behind Jaws, E.T., and Jurassic Park."
     },
     {
       "word": "Audrey Hepburn",
@@ -6280,7 +6280,7 @@ const categories = {
     {
       "word": "Pope Francis",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Argentine-born leader of the Roman Catholic Church since 2013."
     },
     {
       "word": "Brad Pitt",
@@ -6290,47 +6290,47 @@ const categories = {
     {
       "word": "Angelina Jolie",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Oscar-winning actress and humanitarian known for Lara Croft roles."
     },
     {
       "word": "Tom Cruise",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Action star famous for doing his own high-risk stunts."
     },
     {
       "word": "Jennifer Aniston",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Actress best known for playing Rachel in a top 1990s sitcom."
     },
     {
       "word": "Taylor Swift",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Singer-songwriter behind the Eras Tour and multiple re-recorded albums."
     },
     {
       "word": "Dwayne Johnson",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Former pro wrestler turned blockbuster actor known as The Rock."
     },
     {
       "word": "Robert Downey Jr.",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Actor famous for portraying Marvel's armored tech genius."
     },
     {
       "word": "Scarlett Johansson",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Film star known for Black Widow and Lost in Translation."
     },
     {
       "word": "Benedict Cumberbatch",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "British actor known for Sherlock and Marvel's mystical doctor."
     },
     {
       "word": "Keanu Reeves",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Actor tied to the Matrix and John Wick action franchises."
     },
     {
       "word": "Natalie Portman",
@@ -6340,7 +6340,7 @@ const categories = {
     {
       "word": "Joaquin Phoenix",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Actor who won an Oscar for portraying a notorious comic-book villain."
     },
     {
       "word": "Charlize Theron",
@@ -6350,17 +6350,17 @@ const categories = {
     {
       "word": "Michael Fassbender",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Performer seen in X-Men prequels and a Steve Jobs biographical film."
     },
     {
       "word": "Cate Blanchett",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Australian two-time Oscar winner seen in fantasy and drama hits."
     },
     {
       "word": "Tilda Swinton",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Scottish actor known for bold, unconventional, transformative roles."
     },
     {
       "word": "Christoph Waltz",
@@ -6370,12 +6370,12 @@ const categories = {
     {
       "word": "Saoirse Ronan",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Irish actress noted for Lady Bird, Brooklyn, and period dramas."
     },
     {
       "word": "Madame Curie",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Pioneering scientist of radioactivity and winner of two Nobel Prizes."
     },
     {
       "word": "Voltaire",
@@ -6385,12 +6385,12 @@ const categories = {
     {
       "word": "Albert Schweitzer",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Doctor and humanitarian who established a hospital in Gabon."
     },
     {
       "word": "Angela Merkel",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Long-serving German chancellor and key European Union leader."
     },
     {
       "word": "Aretha Franklin",
@@ -6405,7 +6405,7 @@ const categories = {
     {
       "word": "Bill Gates",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Microsoft co-founder and major global philanthropy donor."
     },
     {
       "word": "Bob Dylan",
@@ -6415,12 +6415,12 @@ const categories = {
     {
       "word": "Bradley Cooper",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Actor-director linked to A Star Is Born and The Hangover."
     },
     {
       "word": "Daniel Day-Lewis",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Rare performer with three Best Actor Academy Awards."
     },
     {
       "word": "Donald Trump",
@@ -6430,12 +6430,12 @@ const categories = {
     {
       "word": "Drake",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Canadian rapper-singer behind Hotline Bling and One Dance."
     },
     {
       "word": "Eleanor Roosevelt",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "U.S. First Lady who became a leading human-rights diplomat."
     },
     {
       "word": "Elton John",
@@ -6445,7 +6445,7 @@ const categories = {
     {
       "word": "George Clooney",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Hollywood star associated with ER and the Ocean's films."
     },
     {
       "word": "Hillary Clinton",
@@ -6455,17 +6455,17 @@ const categories = {
     {
       "word": "Jacinda Ardern",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Former New Zealand prime minister known for empathetic crisis leadership."
     },
     {
       "word": "Jennifer Lawrence",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Oscar-winning actress who led a major dystopian young-adult franchise."
     },
     {
       "word": "Jesse Owens",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "American sprinter who won four golds at the 1936 Berlin Games."
     },
     {
       "word": "John Lennon",
@@ -6475,17 +6475,17 @@ const categories = {
     {
       "word": "Johnny Depp",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Actor known for eccentric characters, including a pirate captain."
     },
     {
       "word": "Mark Zuckerberg",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Tech entrepreneur who co-founded Facebook, now under Meta."
     },
     {
       "word": "Meryl Streep",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Highly acclaimed actress with an exceptional number of Oscar nominations."
     },
     {
       "word": "Paul McCartney",
@@ -6500,7 +6500,7 @@ const categories = {
     {
       "word": "Ryan Gosling",
       "difficulty": "easy",
-      "description": "Ryan Thomas Gosling is a Canadian actor."
+      "description": "Canadian film star known for The Notebook, La La Land, and Drive."
     },
     {
       "word": "Satoshi Nakamoto",
@@ -6520,12 +6520,12 @@ const categories = {
     {
       "word": "Tom Brady",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "NFL quarterback with the most Super Bowl championships."
     },
     {
       "word": "Tom Hanks",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Beloved actor from Forrest Gump, Cast Away, and Toy Story voice work."
     },
     {
       "word": "Wayne Gretzky",
@@ -6535,12 +6535,12 @@ const categories = {
     {
       "word": "Whitney Houston",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Powerhouse vocalist behind I Will Always Love You."
     },
     {
       "word": "Winston Churchill",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "British wartime prime minister known for defiant speeches."
     },
     {
       "word": "Bruno Mars",
@@ -6550,17 +6550,17 @@ const categories = {
     {
       "word": "Celine Dion",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Canadian singer famous for My Heart Will Go On."
     },
     {
       "word": "Denzel Washington",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Oscar-winning actor known for Training Day and Malcolm X."
     },
     {
       "word": "Emma Stone",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Oscar-winning actress from La La Land and Poor Things."
     },
     {
       "word": "Emma Watson",
@@ -6575,7 +6575,7 @@ const categories = {
     {
       "word": "Kate Winslet",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "British actress known for Titanic and The Reader."
     },
     {
       "word": "Katy Perry",
@@ -6595,12 +6595,12 @@ const categories = {
     {
       "word": "Neymar Jr.",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Brazilian football forward famous for flair and dribbling."
     },
     {
       "word": "Shakira",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "Colombian pop star behind Hips Don't Lie and Waka Waka."
     },
     {
       "word": "Zlatan Ibrahimović",
@@ -6615,12 +6615,12 @@ const categories = {
     {
       "word": "Joe Biden",
       "difficulty": "easy",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "46th president of the United States, sworn in during 2021."
     },
     {
       "word": "Emmanuel Macron",
       "difficulty": "hard",
-      "description": "A notable public figure often clued by field, nationality, or signature achievement."
+      "description": "French president first elected in 2017."
     },
     {
       "word": "Mangosuthu Buthelezi",
@@ -6637,12 +6637,12 @@ const categories = {
     {
       "word": "Climate Change",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Long-term shifts in weather patterns driven largely by greenhouse gas emissions."
     },
     {
       "word": "Space Exploration",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Scientific missions beyond Earth using astronauts, probes, and telescopes."
     },
     {
       "word": "Olympic Games",
@@ -6652,17 +6652,17 @@ const categories = {
     {
       "word": "Presidential Election",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "National vote used to choose a country's head of state."
     },
     {
       "word": "Global Warming",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Rise in average planetary temperature linked to greenhouse gases."
     },
     {
       "word": "Brexit",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "United Kingdom's withdrawal from the European Union."
     },
     {
       "word": "Cybersecurity",
@@ -6672,202 +6672,202 @@ const categories = {
     {
       "word": "Artificial Intelligence",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Software systems that perform tasks requiring human-like reasoning."
     },
     {
       "word": "Social Media",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Online platforms where users share posts, videos, and messages."
     },
     {
       "word": "Electric Vehicles",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Road vehicles powered by batteries instead of petrol or diesel."
     },
     {
       "word": "Mars Rover Mission",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Robotic expedition sending wheeled labs to the red planet."
     },
     {
       "word": "Protests",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Public demonstrations used to demand political or social change."
     },
     {
       "word": "Vaccination Campaigns",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Organized immunization drives aimed at protecting communities."
     },
     {
       "word": "Trade Wars",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Economic disputes where countries impose tariffs on each other."
     },
     {
       "word": "Wildfires",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Large uncontrolled fires in forests, grasslands, or rural areas."
     },
     {
       "word": "Refugee Crisis",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Mass displacement of people fleeing war, persecution, or disaster."
     },
     {
       "word": "Terrorist Attacks",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Politically motivated violence targeting civilians to spread fear."
     },
     {
       "word": "Space Tourism",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Commercial civilian travel beyond Earth's atmosphere."
     },
     {
       "word": "Cryptocurrency Boom",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Rapid rise in adoption and prices of digital coins."
     },
     {
       "word": "Healthcare Reform",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Major policy changes to medical access, coverage, and costs."
     },
     {
       "word": "Artificial Meat",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Protein made in labs or from plants as an alternative to livestock."
     },
     {
       "word": "Pandemic Response",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Public-health measures used to control widespread infectious outbreaks."
     },
     {
       "word": "Environmental Policies",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Government rules aimed at pollution control and conservation."
     },
     {
       "word": "Gig Economy",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Labor market built around short-term contracts and app-based work."
     },
     {
       "word": "Student Protests",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Campus-led demonstrations over fees, rights, or policy decisions."
     },
     {
       "word": "Rising Inflation",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Sustained increase in prices that reduces purchasing power."
     },
     {
       "word": "Homelessness Crisis",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Severe shortage of stable housing leading to growing street populations."
     },
     {
       "word": "Online Education",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Teaching and learning delivered primarily through internet platforms."
     },
     {
       "word": "Political Scandals",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Public controversies involving misconduct by leaders or officials."
     },
     {
       "word": "Social Justice Movements",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Organized campaigns seeking fairness across race, gender, and class."
     },
     {
       "word": "Space Race",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Competition between powers to achieve major orbital and lunar milestones."
     },
     {
       "word": "Economic Stimulus Packages",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Government spending and tax plans used to boost weak economies."
     },
     {
       "word": "AI Ethics Debate",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Debate over bias, safety, accountability, and control of smart systems."
     },
     {
       "word": "Remote Work Trends",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Shift toward home-based and hybrid jobs across many industries."
     },
     {
       "word": "Ransomware Attacks",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Cyberattacks that encrypt files and demand payment for release."
     },
     {
       "word": "Sustainable Development Goals",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "United Nations targets for poverty reduction, equity, and environmental protection."
     },
     {
       "word": "Plastic Pollution",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Accumulation of synthetic waste in oceans, rivers, and landfills."
     },
     {
       "word": "Food Security",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Reliable access to sufficient, safe, and nutritious food."
     },
     {
       "word": "Medical Breakthroughs",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Major advances in diagnosis, treatment, or disease prevention."
     },
     {
       "word": "Gender Equality Movements",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Campaigns pushing equal rights, pay, and opportunities."
     },
     {
       "word": "Social Distancing",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Keeping physical distance to reduce spread of contagious illness."
     },
     {
       "word": "Renewable Energy Initiatives",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Programs expanding solar, wind, hydro, and other cleaner power sources."
     },
     {
       "word": "Remote Voting",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Casting ballots without physically visiting a polling station."
     },
     {
       "word": "Digital Privacy Issues",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Concerns about tracking, surveillance, data leaks, and consent online."
     },
     {
       "word": "Climate Activism",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Public pressure campaigns demanding stronger environmental action."
     },
     {
       "word": "Space Debris",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Dead satellites and fragments orbiting Earth that threaten missions."
     },
     {
       "word": "Paris Fashion Week",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Major runway event where luxury labels unveil seasonal collections."
     },
     {
       "word": "Coachella",
@@ -6877,7 +6877,7 @@ const categories = {
     {
       "word": "Dubai Shopping Festival",
       "difficulty": "easy",
-      "description": "A contemporary issue or event often clued by headlines and global impact."
+      "description": "Annual retail event in the UAE with promotions and entertainment."
     },
     {
       "word": "Rhino Poaching Crisis",
@@ -6894,12 +6894,12 @@ const categories = {
     {
       "word": "Buddha",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Spiritual teacher whose enlightenment forms the foundation of Buddhism."
     },
     {
       "word": "Jesus",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Central figure of Christianity, regarded as the Messiah by believers."
     },
     {
       "word": "Hinduism",
@@ -6909,12 +6909,12 @@ const categories = {
     {
       "word": "Egyptian Mythology",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Ancient belief system featuring deities like Ra, Isis, and Osiris."
     },
     {
       "word": "Greek Mythology",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Mythic tradition of Olympus gods, heroes, monsters, and epic quests."
     },
     {
       "word": "Christianity",
@@ -6924,7 +6924,7 @@ const categories = {
     {
       "word": "Islam",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Monotheistic faith centered on the Quran and Prophet Muhammad."
     },
     {
       "word": "Shiva",
@@ -6939,7 +6939,7 @@ const categories = {
     {
       "word": "Vishnu",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Major Hindu preserver deity linked to avatars like Rama and Krishna."
     },
     {
       "word": "Odin",
@@ -6959,52 +6959,52 @@ const categories = {
     {
       "word": "Taoism",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Chinese tradition focused on living in harmony with the Tao."
     },
     {
       "word": "Myth",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Traditional symbolic story explaining origins, nature, or human behavior."
     },
     {
       "word": "Ancient Greek Gods",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Olympian deities worshipped in ancient Greece."
     },
     {
       "word": "Norse Mythology",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Scandinavian myth tradition featuring Odin, Thor, Loki, and giants."
     },
     {
       "word": "Theology",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Academic study of religious belief, doctrine, and the divine."
     },
     {
       "word": "Creation Myth",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Story explaining how the world, gods, or humanity began."
     },
     {
       "word": "Divinity",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "State or quality associated with a godlike nature."
     },
     {
       "word": "Pantheon",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Complete set of gods in a religion or mythic system."
     },
     {
       "word": "Deity",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "A god or goddess worshipped in a faith."
     },
     {
       "word": "Ragnarok",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Norse end-times battle between gods and chaotic forces."
     },
     {
       "word": "Monotheism",
@@ -7014,32 +7014,32 @@ const categories = {
     {
       "word": "Polytheism",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Belief system involving worship of multiple gods."
     },
     {
       "word": "Hindu Gods",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Deities from Hindu tradition, often with distinct cosmic roles."
     },
     {
       "word": "Greek Gods",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Mythic deities such as Zeus, Athena, and Apollo."
     },
     {
       "word": "Roman Mythology",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Ancient Roman sacred stories featuring gods like Jupiter and Mars."
     },
     {
       "word": "Norse Gods",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Aesir and Vanir deities from Scandinavian tradition."
     },
     {
       "word": "Holy",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Describes something sacred and set apart for religious use."
     },
     {
       "word": "Sacred",
@@ -7049,22 +7049,22 @@ const categories = {
     {
       "word": "Religious Text",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Scripture treated as spiritually authoritative in a faith."
     },
     {
       "word": "Angel",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Supernatural messenger or guardian in Abrahamic traditions."
     },
     {
       "word": "Demon",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Malevolent supernatural being in many religious systems."
     },
     {
       "word": "Pagan Gods",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Deities worshipped in pre-Christian polytheistic traditions."
     },
     {
       "word": "Heaven",
@@ -7074,27 +7074,27 @@ const categories = {
     {
       "word": "Hell",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Realm or state of punishment in many afterlife beliefs."
     },
     {
       "word": "Mythical Creatures",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Legendary beings like dragons, griffins, and unicorns."
     },
     {
       "word": "Religion",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Structured system of beliefs, rituals, and worship."
     },
     {
       "word": "Mythological Beings",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Supernatural figures from traditional sacred stories."
     },
     {
       "word": "Holy Book",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Sacred scripture revered by a religious community."
     },
     {
       "word": "Prophet",
@@ -7104,12 +7104,12 @@ const categories = {
     {
       "word": "Goddess",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Female divine figure worshipped in a faith or myth."
     },
     {
       "word": "Ancient Gods",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Deities worshipped in old civilizations and early cultures."
     },
     {
       "word": "Divine",
@@ -7119,7 +7119,7 @@ const categories = {
     {
       "word": "Zeus",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Greek sky and thunder ruler of Mount Olympus."
     },
     {
       "word": "Hercules",
@@ -7134,22 +7134,22 @@ const categories = {
     {
       "word": "Medusa",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Gorgon with serpents for hair whose gaze turns viewers to stone."
     },
     {
       "word": "Minotaur",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Bull-headed monster kept inside a famous Cretan maze."
     },
     {
       "word": "Poseidon",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Greek ruler of seas, earthquakes, and horses."
     },
     {
       "word": "Apollo",
       "difficulty": "easy",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Greek deity linked to light, music, prophecy, and healing."
     },
     {
       "word": "Athena",
@@ -7179,12 +7179,12 @@ const categories = {
     {
       "word": "Charon",
       "difficulty": "hard",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Underworld ferryman who carries souls across a mythic river."
     },
     {
       "word": "Bifrost Bridge",
       "difficulty": "hard",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Rainbow path linking the human realm and the gods in Norse lore."
     },
     {
       "word": "Valkyrie",
@@ -7194,17 +7194,17 @@ const categories = {
     {
       "word": "Fenrir",
       "difficulty": "hard",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Monstrous wolf foretold to battle gods during Norse end-times."
     },
     {
       "word": "Chimera",
       "difficulty": "hard",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Hybrid beast typically described as lion, goat, and serpent."
     },
     {
       "word": "Labyrinth of Crete",
       "difficulty": "hard",
-      "description": "A religion or mythology term often clued by beliefs, stories, or symbols."
+      "description": "Legendary maze built to confine a man-bull monster."
     }
   ],
   "Space and Astronomy": [
@@ -7216,12 +7216,12 @@ const categories = {
     {
       "word": "Black Hole",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Region of extreme gravity where not even light can escape."
     },
     {
       "word": "Star",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Massive glowing sphere of plasma powered by nuclear fusion."
     },
     {
       "word": "Planet",
@@ -7231,22 +7231,22 @@ const categories = {
     {
       "word": "The Solar System",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Our sun and all planets, moons, and smaller objects bound to it."
     },
     {
       "word": "Moon",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Natural satellite that orbits Earth and drives ocean tides."
     },
     {
       "word": "Comet",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Icy body that forms a glowing tail when near the sun."
     },
     {
       "word": "Asteroid",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Small rocky object orbiting the sun, mostly between Mars and Jupiter."
     },
     {
       "word": "Constellation",
@@ -7256,22 +7256,22 @@ const categories = {
     {
       "word": "Milky Way",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Spiral galaxy that contains Earth and our solar neighborhood."
     },
     {
       "word": "Nebula",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Interstellar cloud of gas and dust where stars can form."
     },
     {
       "word": "Space Station",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Habitable laboratory orbiting Earth for long-duration crews."
     },
     {
       "word": "Supernova",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Explosive death of a massive star, briefly outshining galaxies."
     },
     {
       "word": "Telescope",
@@ -7281,27 +7281,27 @@ const categories = {
     {
       "word": "Mars",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Red planet often targeted for robotic and future human missions."
     },
     {
       "word": "Satellite",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Object placed in orbit for communication, navigation, or observation."
     },
     {
       "word": "Exoplanet",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "World that orbits a star outside our solar system."
     },
     {
       "word": "Big Bang",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Leading model for the universe beginning from a hot dense state."
     },
     {
       "word": "Cosmos",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "The universe considered as an ordered whole."
     },
     {
       "word": "Hubble Space Telescope",
@@ -7311,27 +7311,27 @@ const categories = {
     {
       "word": "Orbit",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Curved path an object follows around another due to gravity."
     },
     {
       "word": "Spacecraft",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Vehicle designed to travel or operate beyond Earth's atmosphere."
     },
     {
       "word": "Rocket",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Launch vehicle propelled by expelled gases for spaceflight."
     },
     {
       "word": "Interstellar",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Describes matter or travel occurring between stars."
     },
     {
       "word": "Gravity",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Force attracting masses toward each other."
     },
     {
       "word": "Galactic",
@@ -7341,67 +7341,67 @@ const categories = {
     {
       "word": "Lunar",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Adjective relating to Earth's natural satellite."
     },
     {
       "word": "Milky Way Galaxy",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Home galaxy containing our solar system and hundreds of billions of stars."
     },
     {
       "word": "Outer Space",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Region beyond Earth's atmosphere where celestial bodies exist."
     },
     {
       "word": "Astrobiology",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Study of life's origins, evolution, and potential beyond Earth."
     },
     {
       "word": "Black Holes",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Collapsed objects with gravity so strong even light cannot escape."
     },
     {
       "word": "Dark Matter",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Invisible mass inferred from gravitational effects on galaxies."
     },
     {
       "word": "Planetary",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Adjective relating to planets and their systems."
     },
     {
       "word": "Space Travel",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Human or robotic movement beyond Earth."
     },
     {
       "word": "Astrophysics",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Physics branch that explains stars, galaxies, and cosmic phenomena."
     },
     {
       "word": "Neutron Star",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Ultra-dense stellar remnant left after some supernova explosions."
     },
     {
       "word": "Cosmology",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Science of the universe's origin, structure, and fate."
     },
     {
       "word": "Meteor Shower",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Many streaking meteors visible when Earth crosses debris trails."
     },
     {
       "word": "Space Telescope",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Observatory in orbit avoiding atmospheric distortion."
     },
     {
       "word": "Astronaut",
@@ -7411,22 +7411,22 @@ const categories = {
     {
       "word": "Solar Eclipse",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Event when the moon blocks sunlight from reaching part of Earth."
     },
     {
       "word": "Orbital",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Describes motion or placement along a path around a body."
     },
     {
       "word": "Stellar",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Adjective meaning relating to stars."
     },
     {
       "word": "Space Mission",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Planned expedition with scientific, exploration, or engineering objectives."
     },
     {
       "word": "Astronomy",
@@ -7436,12 +7436,12 @@ const categories = {
     {
       "word": "Space Race",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Competition between powers for major achievements beyond Earth."
     },
     {
       "word": "Earth",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Third planet from the sun and home to known life."
     },
     {
       "word": "Sun",
@@ -7451,7 +7451,7 @@ const categories = {
     {
       "word": "Stars",
       "difficulty": "easy",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Luminous balls of hot plasma seen in the night sky."
     },
     {
       "word": "Meteor",
@@ -7461,32 +7461,32 @@ const categories = {
     {
       "word": "Light Year",
       "difficulty": "hard",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Distance light travels in a vacuum in one year."
     },
     {
       "word": "Red Giant",
       "difficulty": "hard",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Late-stage swollen star after hydrogen in its core is depleted."
     },
     {
       "word": "White Dwarf",
       "difficulty": "hard",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Dense cooling core left after a smaller star sheds outer layers."
     },
     {
       "word": "Event Horizon",
       "difficulty": "hard",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Boundary around a collapsed object beyond which escape is impossible."
     },
     {
       "word": "Cosmic Microwave Background",
       "difficulty": "hard",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Faint relic radiation left over from the early universe."
     },
     {
       "word": "Gravitational Waves",
       "difficulty": "hard",
-      "description": "A space-related term often clued by planets, stars, missions, or cosmic phenomena."
+      "description": "Ripples in spacetime produced by massive accelerating objects."
     }
   ],
   "Inventions and Discoveries": [
@@ -7503,7 +7503,7 @@ const categories = {
     {
       "word": "Internet",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Global network linking computers for information sharing and communication."
     },
     {
       "word": "Computer",
@@ -7513,12 +7513,12 @@ const categories = {
     {
       "word": "Printing Press",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Movable-type machine that enabled mass book production."
     },
     {
       "word": "Penicillin",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "First widely used antibiotic discovered from mold."
     },
     {
       "word": "Vaccination",
@@ -7533,22 +7533,22 @@ const categories = {
     {
       "word": "Radio",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Technology for transmitting audio using electromagnetic waves."
     },
     {
       "word": "Television",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Electronic medium delivering moving images and sound."
     },
     {
       "word": "Steam Engine",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Machine that turns steam pressure into mechanical power."
     },
     {
       "word": "Light Bulb",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Practical electric lamp for indoor illumination."
     },
     {
       "word": "Photography",
@@ -7563,27 +7563,27 @@ const categories = {
     {
       "word": "Antibiotics",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Medicines that kill or inhibit harmful bacteria."
     },
     {
       "word": "Theory of Relativity",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Physics framework connecting space, time, motion, and gravity."
     },
     {
       "word": "DNA Double Helix",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Twisted-ladder structure of the molecule carrying genetic code."
     },
     {
       "word": "Wheel",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Circular invention that revolutionized transport and machinery."
     },
     {
       "word": "Satellite",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Artificial object launched into orbit for communication or observation."
     },
     {
       "word": "Robotics",
@@ -7593,17 +7593,17 @@ const categories = {
     {
       "word": "Electric Light",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Illumination produced using electrical energy."
     },
     {
       "word": "Internet of Things",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Network of connected devices that collect and exchange data."
     },
     {
       "word": "Atomic Theory",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Scientific model that explains matter as made of atoms."
     },
     {
       "word": "Pen",
@@ -7613,7 +7613,7 @@ const categories = {
     {
       "word": "Calculator",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Device used to perform arithmetic quickly and accurately."
     },
     {
       "word": "Genetics",
@@ -7628,22 +7628,22 @@ const categories = {
     {
       "word": "Helicopter",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Aircraft with spinning rotors capable of vertical takeoff and landing."
     },
     {
       "word": "Plastic",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Moldable synthetic polymer used in countless everyday products."
     },
     {
       "word": "Submarine",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Watercraft engineered to operate below the ocean surface."
     },
     {
       "word": "Fiber Optics",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "High-speed data transmission using light through thin glass fibers."
     },
     {
       "word": "Refrigerator",
@@ -7658,47 +7658,47 @@ const categories = {
     {
       "word": "Printing",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Process of reproducing text or images in large quantities."
     },
     {
       "word": "Photovoltaic Cell",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Device that converts sunlight directly into electrical energy."
     },
     {
       "word": "Nuclear Power",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Energy generation from controlled splitting of atomic nuclei."
     },
     {
       "word": "Electric Motor",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Machine that converts electrical energy into motion."
     },
     {
       "word": "Semiconductor",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Material that controls current flow in modern electronic chips."
     },
     {
       "word": "Satnav",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Navigation system using satellite signals for location and routing."
     },
     {
       "word": "Artificial Heart",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Mechanical device that assists or replaces pumping function of a heart."
     },
     {
       "word": "Internet Protocol (IP)",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Core addressing and routing rules for data packets online."
     },
     {
       "word": "Neutron Bomb",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Enhanced-radiation nuclear weapon concept from Cold War research."
     },
     {
       "word": "MRI",
@@ -7708,12 +7708,12 @@ const categories = {
     {
       "word": "Quantum Theory",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Physics framework describing matter and energy at tiny scales."
     },
     {
       "word": "Nanotechnology",
       "difficulty": "easy",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Engineering and manipulation of materials at near-atomic scale."
     },
     {
       "word": "Car",
@@ -7733,7 +7733,7 @@ const categories = {
     {
       "word": "Thermometer",
       "difficulty": "hard",
-      "description": "An invention or discovery often clued by function, inventor, or scientific impact."
+      "description": "Instrument used to measure temperature."
     },
     {
       "word": "Stethoscope",
@@ -8444,12 +8444,12 @@ const categories = {
     {
       "word": "Charles Dickens",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Victorian novelist behind Oliver Twist and A Christmas Carol."
     },
     {
       "word": "Mark Twain",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "American humorist who wrote Tom Sawyer and Huck Finn."
     },
     {
       "word": "Agatha Christie",
@@ -8464,17 +8464,17 @@ const categories = {
     {
       "word": "The Lord of the Rings",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Epic fantasy quest to destroy a ring of immense power."
     },
     {
       "word": "To Kill a Mockingbird",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Novel about racial injustice seen through a young girl's perspective."
     },
     {
       "word": "The Catcher in the Rye",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Coming-of-age novel featuring a cynical teen in New York."
     },
     {
       "word": "Alice's Adventures in Wonderland",
@@ -8484,7 +8484,7 @@ const categories = {
     {
       "word": "The Bible",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Sacred anthology central to Christian and Jewish traditions."
     },
     {
       "word": "A Song of Ice and Fire",
@@ -8494,27 +8494,27 @@ const categories = {
     {
       "word": "The Odyssey",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Ancient Greek epic of a hero's long voyage home after war."
     },
     {
       "word": "The Hobbit",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Fantasy adventure about a reluctant burglar and a dragon's treasure."
     },
     {
       "word": "Lord of the Flies",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Story of stranded boys whose society collapses into savagery."
     },
     {
       "word": "Pride and Prejudice",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Regency romance centered on Elizabeth Bennet and Mr. Darcy."
     },
     {
       "word": "The Chronicles of Narnia",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Fantasy series where children enter another world through a wardrobe."
     },
     {
       "word": "Moby-Dick",
@@ -8524,17 +8524,17 @@ const categories = {
     {
       "word": "1984",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Dystopian novel about surveillance, propaganda, and Big Brother."
     },
     {
       "word": "Brave New World",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Dystopia of engineered citizens, conditioning, and social control."
     },
     {
       "word": "The Adventures of Huckleberry Finn",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Mississippi journey with a runaway boy and an escaped enslaved man."
     },
     {
       "word": "Wuthering Heights",
@@ -8544,22 +8544,22 @@ const categories = {
     {
       "word": "The Grapes of Wrath",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Dust Bowl family's migration west during the Great Depression."
     },
     {
       "word": "Frankenstein",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Gothic tale of a scientist creating life and facing consequences."
     },
     {
       "word": "Little Women",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Coming-of-age story of four sisters during the U.S. Civil War era."
     },
     {
       "word": "Gone with the Wind",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Civil War-era Southern romance centered on Scarlett O'Hara."
     },
     {
       "word": "The Count of Monte Cristo",
@@ -8569,7 +8569,7 @@ const categories = {
     {
       "word": "The Picture of Dorian Gray",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Man stays youthful while a hidden portrait reflects his corruption."
     },
     {
       "word": "Dracula",
@@ -8579,62 +8579,62 @@ const categories = {
     {
       "word": "One Hundred Years of Solitude",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Magical realism saga of one family across generations in Macondo."
     },
     {
       "word": "The Kite Runner",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Story of childhood betrayal and redemption linked to Afghanistan."
     },
     {
       "word": "The Girl with the Dragon Tattoo",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Nordic thriller pairing a hacker with a journalist on a cold case."
     },
     {
       "word": "The Alchemist",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Fable about a shepherd pursuing destiny and personal legend."
     },
     {
       "word": "The Hitchhiker's Guide to the Galaxy",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Comic sci-fi adventure known for absurd humor and a travel towel."
     },
     {
       "word": "The Book Thief",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "World War II story narrated by Death about a book-loving child."
     },
     {
       "word": "War and Peace",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Massive Russian epic of families and warfare during Napoleon's era."
     },
     {
       "word": "Les Misérables",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "French saga of redemption, law, poverty, and revolution."
     },
     {
       "word": "The Shining",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Horror story about an isolated hotel and a family unraveling."
     },
     {
       "word": "The Secret Garden",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Children's classic about healing through a hidden neglected garden."
     },
     {
       "word": "The Silmarillion",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Mythic prehistory of Middle-earth with gods, elves, and great wars."
     },
     {
       "word": "Anna Karenina",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Russian classic about love, marriage, and social consequences."
     },
     {
       "word": "The Fault in Our Stars",
@@ -8644,32 +8644,32 @@ const categories = {
     {
       "word": "The Road",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Bleak post-apocalyptic journey of a father and son."
     },
     {
       "word": "Moby Dick",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Seafaring obsession tale about hunting a giant white whale."
     },
     {
       "word": "The Da Vinci Code",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Conspiracy thriller involving symbols, art history, and secret societies."
     },
     {
       "word": "Lord of the Rings",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Epic fantasy journey to destroy a ring forged by dark power."
     },
     {
       "word": "Crime and Punishment",
       "difficulty": "hard",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Psychological novel about murder, guilt, and moral torment."
     },
     {
       "word": "The Brothers Karamazov",
       "difficulty": "hard",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Philosophical family drama exploring faith, doubt, and responsibility."
     },
     {
       "word": "Love in the Time of Cholera",
@@ -8679,17 +8679,17 @@ const categories = {
     {
       "word": "A Tale of Two Cities",
       "difficulty": "hard",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Historical novel set in London and Paris during revolutionary upheaval."
     },
     {
       "word": "Midnight's Children",
       "difficulty": "hard",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Magical realism novel tied to the birth of independent India."
     },
     {
       "word": "Infinite Jest",
       "difficulty": "hard",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Dense satirical novel about addiction, media, and elite tennis culture."
     },
     {
       "word": "Jean-Paul Sartre",
@@ -8699,12 +8699,12 @@ const categories = {
     {
       "word": "Walt Whitman",
       "difficulty": "hard",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "American poet of Leaves of Grass and free-verse innovation."
     },
     {
       "word": "DC Comics",
       "difficulty": "easy",
-      "description": "A literature term often clued by author, story, or famous characters."
+      "description": "Publisher behind Batman, Superman, Wonder Woman, and Justice League."
     }
   ],
   "Video Games": [
@@ -13633,820 +13633,820 @@ const themes = {
     {
       "word": "Bride",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Partner traditionally walking toward the altar in a white gown."
     },
     {
       "word": "Groom",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Partner waiting at the altar, often in formal suit."
     },
     {
       "word": "Wedding Cake",
       "difficulty": "easy",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Tiered celebration dessert cut by the couple."
     },
     {
       "word": "Bouquet",
       "difficulty": "easy",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Handheld bunch of flowers often tossed to guests."
     },
     {
       "word": "Honeymoon",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Trip taken by newlyweds right after ceremony celebrations."
     },
     {
       "word": "Vows",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Personal promises spoken by partners during the ceremony."
     },
     {
       "word": "Best Man",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Main attendant supporting the groom."
     },
     {
       "word": "Maid of Honor",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Chief attendant supporting the bride."
     },
     {
       "word": "Wedding Ring",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Circular band exchanged as symbol of lifelong commitment."
     },
     {
       "word": "Reception",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Post-ceremony party with speeches, food, and dancing."
     },
     {
       "word": "First Dance",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Opening dance shared by newlyweds at the party."
     },
     {
       "word": "Wedding Bells",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Traditional celebratory sound linked to marriage day."
     },
     {
       "word": "Unity Candle",
       "difficulty": "hard",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Ceremony symbol where two flames become one."
     },
     {
       "word": "Wedding Planner",
       "difficulty": "hard",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Professional coordinating venue, schedule, and suppliers."
     },
     {
       "word": "Flower Girl",
       "difficulty": "hard",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Young attendant scattering petals before the processional."
     },
     {
       "word": "Ring Bearer",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Young attendant carrying ceremonial bands down the aisle."
     },
     {
       "word": "Tuxedo",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Black-tie formal suit often worn by the groom."
     },
     {
       "word": "Wedding March",
       "difficulty": "hard",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Processional music played during entrance to the ceremony."
     },
     {
       "word": "Bridal Shower",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Pre-ceremony gathering where gifts are given to the bride."
     },
     {
       "word": "Bachelor Party",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Pre-ceremony celebration traditionally for the groom."
     },
     {
       "word": "Bachelorette Party",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Pre-ceremony celebration traditionally for the bride."
     },
     {
       "word": "Bridesmaid",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Attendant in matching attire who supports the bride."
     },
     {
       "word": "Engagement Ring",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Jewelry given during a proposal."
     },
     {
       "word": "Floral Arrangement",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Decorative flower display for ceremony or tables."
     },
     {
       "word": "Groomsmen",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Group of attendants standing with the groom."
     },
     {
       "word": "Marriage Certificate",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Official legal document proving a union."
     },
     {
       "word": "Marriage Vows",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Formal promises exchanged during the ceremony."
     },
     {
       "word": "Wedding Dress",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Ceremony gown worn by the bride."
     },
     {
       "word": "Wedding Venue",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Booked location where ceremony or reception is held."
     },
     {
       "word": "Wedding Vows",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Public promises made by the couple at the altar."
     },
     {
       "word": "Aisle",
       "difficulty": "hard",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Central walkway for the processional entrance."
     },
     {
       "word": "Confetti",
       "difficulty": "easy",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Small colored pieces tossed to celebrate."
     },
     {
       "word": "Guest List",
       "difficulty": "easy",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Names of all invited attendees."
     },
     {
       "word": "Wedding Toast",
       "difficulty": "easy",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Congratulatory speech followed by raised glasses."
     },
     {
       "word": "Reception Hall",
       "difficulty": "hard",
-      "description": "Wedding reference; use celebration context and emotional significance."
+      "description": "Indoor space where post-ceremony event happens."
     },
     {
       "word": "Photo Booth",
       "difficulty": "easy",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Set-up where guests take playful event pictures."
     },
     {
       "word": "Wedding Favors",
       "difficulty": "easy",
-      "description": "Wedding clue; describe ceremony role, tradition, or reception use."
+      "description": "Small thank-you gifts handed to guests."
     },
     {
       "word": "Bridal Veil",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Light head covering worn with a bridal gown."
     },
     {
       "word": "Table Seating",
       "difficulty": "hard",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Planned arrangement assigning guests to specific tables."
     },
     {
       "word": "Wedding Car",
       "difficulty": "easy",
-      "description": "Marriage-themed clue; start with who uses it and when during the event."
+      "description": "Decorated transport used for the couple's arrival or departure."
     }
   ],
   "Holiday Time": [
     {
       "word": "Christmas tree",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Decorated evergreen centerpiece placed in homes each December."
     },
     {
       "word": "Santa Claus",
       "difficulty": "easy",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Red-suited gift-bringer from North Pole stories."
     },
     {
       "word": "Snowman",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Figure made from stacked snowballs."
     },
     {
       "word": "Gifts",
       "difficulty": "easy",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Wrapped presents exchanged during celebrations."
     },
     {
       "word": "Stockings",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Hanging socks filled with small treats."
     },
     {
       "word": "Reindeer",
       "difficulty": "easy",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Antlered animals associated with Santa's sleigh."
     },
     {
       "word": "Sleigh",
       "difficulty": "easy",
-      "description": "Holiday term; use celebration context and recognizable custom."
+      "description": "Snow vehicle commonly shown in festive stories."
     },
     {
       "word": "Caroling",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Going door-to-door singing seasonal songs."
     },
     {
       "word": "Fireplace",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Indoor hearth often decorated with stockings."
     },
     {
       "word": "Gingerbread",
       "difficulty": "easy",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Spiced sweet dough used for cookies and houses."
     },
     {
       "word": "Ornament",
       "difficulty": "easy",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Decorative item hung on branches during holidays."
     },
     {
       "word": "Mistletoe",
       "difficulty": "easy",
-      "description": "Holiday term; use celebration context and recognizable custom."
+      "description": "Plant hung overhead for a festive kissing tradition."
     },
     {
       "word": "Eggnog",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Rich spiced milk drink served in festive season."
     },
     {
       "word": "New Year's Eve",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Night before January 1 with a midnight countdown."
     },
     {
       "word": "Hanukkah",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Eight-night Jewish Festival of Lights."
     },
     {
       "word": "Advent calendar",
       "difficulty": "hard",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "December countdown with daily doors or treats."
     },
     {
       "word": "Kwanzaa",
       "difficulty": "hard",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Week-long celebration of African heritage and unity."
     },
     {
       "word": "Yule log",
       "difficulty": "hard",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Traditional winter log ritual or rolled festive dessert."
     },
     {
       "word": "Boxing Day",
       "difficulty": "hard",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Public holiday on 26 December in many Commonwealth countries."
     },
     {
       "word": "Epiphany",
       "difficulty": "hard",
-      "description": "Holiday term; use celebration context and recognizable custom."
+      "description": "Christian feast marking the visit of the Magi."
     },
     {
       "word": "Menorah",
       "difficulty": "hard",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Nine-branched lamp lit over Hanukkah nights."
     },
     {
       "word": "Dreidel",
       "difficulty": "hard",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Four-sided spinning top used in Hanukkah games."
     },
     {
       "word": "Tinsel",
       "difficulty": "hard",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Shiny decorative strands used on festive displays."
     },
     {
       "word": "Wassail",
       "difficulty": "hard",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Traditional warm spiced punch and seasonal singing custom."
     },
     {
       "word": "Nutcracker",
       "difficulty": "hard",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Festive ballet tale featuring a magical toy soldier and fantasy kingdom."
     },
     {
       "word": "Krampus",
       "difficulty": "hard",
-      "description": "Holiday term; use celebration context and recognizable custom."
+      "description": "Alpine folklore figure said to punish naughty children."
     },
     {
       "word": "Solstice",
       "difficulty": "hard",
-      "description": "Holiday term; use celebration context and recognizable custom."
+      "description": "Seasonal turning point with shortest or longest daylight."
     },
     {
       "word": "Hogmanay",
       "difficulty": "hard",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Scottish New Year celebration with street parties."
     },
     {
       "word": "Black Friday",
       "difficulty": "hard",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Major shopping discount day after Thanksgiving."
     },
     {
       "word": "Feast of Seven Fishes",
       "difficulty": "hard",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Italian-American Christmas Eve meal featuring seafood courses."
     },
     {
       "word": "Holiday Market",
       "difficulty": "hard",
-      "description": "Holiday term; use celebration context and recognizable custom."
+      "description": "Seasonal bazaar selling gifts, food, and decorations."
     },
     {
       "word": "Secret Santa",
       "difficulty": "easy",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Anonymous gift-exchange game among a group."
     },
     {
       "word": "Family Feast",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Large celebratory meal shared with relatives."
     },
     {
       "word": "Holiday Lights",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Decorative string lights used in festive season."
     },
     {
       "word": "Winter Break",
       "difficulty": "hard",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "School or work pause around year-end holidays."
     },
     {
       "word": "Gift Wrap",
       "difficulty": "easy",
-      "description": "Festive reference; start with time of year and family or community use."
+      "description": "Decorative paper used to cover presents."
     },
     {
       "word": "Snow Globe",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Glass ornament with a miniature scene and shaken snow."
     },
     {
       "word": "Holiday Travel",
       "difficulty": "easy",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Peak-season trips to visit family or destinations."
     },
     {
       "word": "Warm Cocoa",
       "difficulty": "hard",
-      "description": "Holiday clue; describe seasonal tradition, decoration, or celebration activity."
+      "description": "Hot chocolate drink popular in cold months."
     },
     {
       "word": "Festive Playlist",
       "difficulty": "easy",
-      "description": "Holiday term; use celebration context and recognizable custom."
+      "description": "Collection of seasonal songs for parties and gatherings."
     }
   ],
   "Sports Event": [
     {
       "word": "Olympic Games",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Global multi-sport competition held every four years."
     },
     {
       "word": "World Cup",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "International tournament to crown a world champion."
     },
     {
       "word": "Super Bowl",
       "difficulty": "easy",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "NFL championship game and major US TV event."
     },
     {
       "word": "Wimbledon",
       "difficulty": "easy",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Historic grass-court tennis major held in London."
     },
     {
       "word": "Tour de France",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Multi-stage cycling race across France."
     },
     {
       "word": "NBA Finals",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Best-of-seven series deciding the NBA champion."
     },
     {
       "word": "Stanley Cup",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "NHL championship trophy and playoff final series."
     },
     {
       "word": "Masters Tournament",
       "difficulty": "easy",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Prestigious golf major played at Augusta National."
     },
     {
       "word": "Ryder Cup",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Team golf contest between Europe and the USA."
     },
     {
       "word": "Kentucky Derby",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Famous US horse race known as the Run for the Roses."
     },
     {
       "word": "F1 Grand Prix",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Formula One race weekend at a specific circuit."
     },
     {
       "word": "Rugby World Cup",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Top international tournament for national rugby teams."
     },
     {
       "word": "MLB World Series",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Championship series for Major League Baseball."
     },
     {
       "word": "UFC Championship",
       "difficulty": "easy",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Title fight in mixed martial arts."
     },
     {
       "word": "Cricket World Cup",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Global one-day international cricket championship."
     },
     {
       "word": "Heisman Trophy",
       "difficulty": "hard",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Award for top player in US college football."
     },
     {
       "word": "The Ashes Series",
       "difficulty": "hard",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Historic Test cricket rivalry between England and Australia."
     },
     {
       "word": "UEFA Champions League",
       "difficulty": "hard",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Elite European club football competition."
     },
     {
       "word": "Copa America",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Continental football tournament for South American national teams."
     },
     {
       "word": "La Liga Championship",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Title race in Spain's top football league."
     },
     {
       "word": "Indy 500",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Iconic 500-mile race at Indianapolis Motor Speedway."
     },
     {
       "word": "PGA Championship",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "One of the four major tournaments in men's golf."
     },
     {
       "word": "MotoGP",
       "difficulty": "hard",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Premier class of international motorcycle road racing."
     },
     {
       "word": "Commonwealth Games",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Multi-sport event for nations in the Commonwealth."
     },
     {
       "word": "Davis Cup",
       "difficulty": "hard",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "International men's team competition in tennis."
     },
     {
       "word": "America's Cup",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Top-level international yacht racing contest."
     },
     {
       "word": "FA Cup Final",
       "difficulty": "hard",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Deciding match of England's major knockout football cup."
     },
     {
       "word": "Six Nations Championship",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Annual northern hemisphere rugby union tournament."
     },
     {
       "word": "Belmont Stakes",
       "difficulty": "hard",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Final leg of the US Triple Crown horse races."
     },
     {
       "word": "Opening Ceremony",
       "difficulty": "hard",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Formal launch event before competition begins."
     },
     {
       "word": "Penalty Shootout",
       "difficulty": "easy",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Soccer tiebreak decided by spot kicks."
     },
     {
       "word": "Photo Finish",
       "difficulty": "easy",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Race decided by finish-line camera when margins are tiny."
     },
     {
       "word": "Extra Time",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Additional period played after a draw."
     },
     {
       "word": "Golden Medal",
       "difficulty": "hard",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Top prize awarded for first place."
     },
     {
       "word": "Team Captain",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Player chosen to lead the squad on the field."
     },
     {
       "word": "Locker Room",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Team changing area before and after matches."
     },
     {
       "word": "Match Officials",
       "difficulty": "easy",
-      "description": "Sports-event clue; describe competition type, participants, and stakes."
+      "description": "Referees and umpires who enforce the rules."
     },
     {
       "word": "Crowd Roar",
       "difficulty": "hard",
-      "description": "Tournament reference; start with sport and what decides the winner."
+      "description": "Loud surge of noise from excited spectators."
     },
     {
       "word": "Victory Lap",
       "difficulty": "easy",
-      "description": "Big-match clue; use event scale, format, and audience context."
+      "description": "Celebratory circuit after winning a race or title."
     }
   ],
   "Summer Vacation": [
     {
       "word": "Beach",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Sandy shoreline where people swim and relax."
     },
     {
       "word": "Surfing",
       "difficulty": "easy",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Riding ocean waves on a board."
     },
     {
       "word": "Ice cream",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Cold sweet dessert often eaten in hot weather."
     },
     {
       "word": "Sandcastle",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Mini fortress built from wet sand."
     },
     {
       "word": "Sunbathing",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Relaxing in sunlight to tan."
     },
     {
       "word": "Pool party",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Social event centered around swimming and music."
     },
     {
       "word": "Barbecue",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Outdoor meal cooked on a grill."
     },
     {
       "word": "Camping",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Staying outdoors in tents or caravans."
     },
     {
       "word": "Hiking",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Long walk on trails in nature."
     },
     {
       "word": "Road trip",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Long-distance holiday journey by car."
     },
     {
       "word": "Water park",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Attraction with slides, splash zones, and pools."
     },
     {
       "word": "Fishing",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Catching fish with rod, line, or net."
     },
     {
       "word": "Snorkeling",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Swimming at surface with mask and breathing tube."
     },
     {
       "word": "Jet skiing",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Riding a fast personal watercraft."
     },
     {
       "word": "Amusement park",
       "difficulty": "easy",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Venue with rides, games, and roller coasters."
     },
     {
       "word": "Bonfire Night",
       "difficulty": "hard",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Evening gathering around a large outdoor fire."
     },
     {
       "word": "Island Hopping",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Visiting multiple islands on one trip."
     },
     {
       "word": "Deep-sea Fishing",
       "difficulty": "hard",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Fishing far offshore in open ocean waters."
     },
     {
       "word": "Scenic Route",
       "difficulty": "hard",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Travel path chosen for views, not speed."
     },
     {
       "word": "Guided Tour",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Sightseeing led by a local expert."
     },
     {
       "word": "Outdoor Concert",
       "difficulty": "hard",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Live music performance in open air."
     },
     {
       "word": "Nature Trail",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Marked route through forests, parks, or reserves."
     },
     {
       "word": "Paddle Boarding",
       "difficulty": "hard",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Standing on a board while paddling across water."
     },
     {
       "word": "Paragliding",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Gliding through air with a fabric wing."
     },
     {
       "word": "Cliff Diving",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Jumping from high rock edges into water."
     },
     {
       "word": "Kayaking",
       "difficulty": "hard",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Paddling a small narrow boat."
     },
     {
       "word": "Wildlife Safari",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Guided drive to view wild animals in habitat."
     },
     {
       "word": "Scuba Diving",
       "difficulty": "hard",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Underwater diving using an air tank."
     },
     {
       "word": "Mountain Biking",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Cycling on rough trails and uneven terrain."
     },
     {
       "word": "Hot Air Balloon Ride",
       "difficulty": "hard",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Leisure flight in a basket beneath a heated balloon."
     },
     {
       "word": "Sunblock",
       "difficulty": "hard",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Skin lotion with SPF for UV protection."
     },
     {
       "word": "Flip Flops",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Open-toe sandals worn at pools and beaches."
     },
     {
       "word": "Beach Umbrella",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Portable shade canopy set up on sand."
     },
     {
       "word": "Resort",
       "difficulty": "easy",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Holiday property with lodging, food, and activities."
     },
     {
       "word": "Sightseeing",
       "difficulty": "hard",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Visiting notable attractions while traveling."
     },
     {
       "word": "Travel Photos",
       "difficulty": "easy",
-      "description": "Vacation clue; describe travel/leisure setting and what people do there."
+      "description": "Pictures captured to remember a trip."
     },
     {
       "word": "Day Trip",
       "difficulty": "easy",
-      "description": "Holiday-break clue; use destination, relaxation, or adventure angle."
+      "description": "Short outing that starts and ends same day."
     },
     {
       "word": "Boat Cruise",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Leisure journey by boat along sea or river."
     },
     {
       "word": "Sunset Picnic",
       "difficulty": "hard",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Outdoor meal timed for evening sky views."
     },
     {
       "word": "Seaside",
       "difficulty": "easy",
-      "description": "Summer activity reference; start with weather context and typical action."
+      "description": "Coastal area next to the sea."
     }
   ],
   "Halloween Party": [
     {
       "word": "Pumpkin",
       "difficulty": "easy",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Orange gourd commonly carved and displayed during Halloween."
     },
     {
       "word": "Ghost",
       "difficulty": "easy",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Spirit figure often shown as a floating white apparition."
     },
     {
       "word": "Witch",
       "difficulty": "easy",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Spell-casting character linked to brooms, hats, and cauldrons."
     },
     {
       "word": "Costume",
@@ -14456,990 +14456,990 @@ const themes = {
     {
       "word": "Candy",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Sweet treats handed out to children on Halloween night."
     },
     {
       "word": "Jack-o'-lantern",
       "difficulty": "easy",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Carved glowing gourd with a face cut into it."
     },
     {
       "word": "Haunted house",
       "difficulty": "easy",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Building attraction designed to scare visitors with spooky effects."
     },
     {
       "word": "Skeleton",
       "difficulty": "easy",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Set of bones often used as eerie seasonal decoration."
     },
     {
       "word": "Vampire",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Undead blood-drinker with fangs, often shown in a cape."
     },
     {
       "word": "Zombie",
       "difficulty": "easy",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Reanimated corpse character known for shambling movement."
     },
     {
       "word": "Trick-or-treat",
       "difficulty": "easy",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Door-to-door tradition where kids ask for sweets in costume."
     },
     {
       "word": "Black cat",
       "difficulty": "easy",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Dark-furred feline tied to superstition and spooky folklore."
     },
     {
       "word": "Spider web",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Sticky silk pattern spun by spiders and used in spooky decor."
     },
     {
       "word": "Bat",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Nocturnal flying mammal often associated with caves and vampires."
     },
     {
       "word": "Mask",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Face covering used to hide identity in costumes."
     },
     {
       "word": "Frankenstein's Monster",
       "difficulty": "hard",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Stitched creature brought to life by a mad scientist."
     },
     {
       "word": "Dracula's Castle",
       "difficulty": "hard",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Gothic fortress linked to a famous Transylvanian vampire count."
     },
     {
       "word": "Witch's Brew",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Bubbling cauldron potion from spooky fantasy imagery."
     },
     {
       "word": "Spooky Stories",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Scary tales told at night to unsettle listeners."
     },
     {
       "word": "Full Moon Night",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Bright lunar phase often linked to werewolf legends."
     },
     {
       "word": "Graveyard Shift",
       "difficulty": "hard",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Overnight work hours, often used as a creepy phrase."
     },
     {
       "word": "Poltergeist",
       "difficulty": "hard",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Noisy spirit said to move objects and cause disturbances."
     },
     {
       "word": "Werewolf Transformation",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Mythic change from human into wolf-like beast."
     },
     {
       "word": "Creepy Crawlies",
       "difficulty": "hard",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Insects and spiders used to create an unsettling mood."
     },
     {
       "word": "Phantom of the Opera",
       "difficulty": "hard",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Masked figure haunting a famous Paris music venue."
     },
     {
       "word": "Haunted Forest",
       "difficulty": "hard",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Dark woods setting rumored to contain spirits."
     },
     {
       "word": "Sleepy Hollow",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Story setting famous for the Headless Horseman legend."
     },
     {
       "word": "Blood Moon",
       "difficulty": "hard",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Reddish moon appearance during a total lunar eclipse."
     },
     {
       "word": "Scarecrow",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Straw-filled field figure used as farm and fall decoration."
     },
     {
       "word": "Halloween Parade",
       "difficulty": "hard",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Public costume procession with themed floats and performers."
     },
     {
       "word": "Trick Bucket",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Container children carry to collect sweets door to door."
     },
     {
       "word": "Fog Machine",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Device that produces artificial mist for dramatic party effects."
     },
     {
       "word": "Costume Contest",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Competition where participants are judged on themed outfits."
     },
     {
       "word": "Candy Corn",
       "difficulty": "easy",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Tri-color cone-shaped sweet sold around Halloween."
     },
     {
       "word": "Spooky Playlist",
       "difficulty": "hard",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Curated music set with eerie songs for themed events."
     },
     {
       "word": "Face Paint",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Makeup used to transform appearance into a character."
     },
     {
       "word": "Pumpkin Carving",
       "difficulty": "easy",
-      "description": "October-themed clue; use decoration, character, or night-time celebration context."
+      "description": "Activity of cutting decorative faces or patterns into gourds."
     },
     {
       "word": "Haunted Maze",
       "difficulty": "easy",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Walk-through labyrinth with scares, actors, and dark corridors."
     },
     {
       "word": "Ghost Story",
       "difficulty": "hard",
-      "description": "Seasonal party reference; start with scary/fun vibe and common tradition."
+      "description": "Narrative about spirits, hauntings, and supernatural events."
     },
     {
       "word": "Midnight Party",
       "difficulty": "easy",
-      "description": "Halloween clue; describe spooky theme, costume element, or party activity."
+      "description": "Late-night celebration that starts around twelve."
     }
   ],
   "Christmas Celebration": [
     {
       "word": "Santa Claus",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Red-suited gift-bringer from North Pole stories."
     },
     {
       "word": "Christmas tree",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Decorated evergreen centerpiece placed in homes each December."
     },
     {
       "word": "Snowman",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Figure made from stacked snowballs."
     },
     {
       "word": "Gifts",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Wrapped presents exchanged during celebrations."
     },
     {
       "word": "Stockings",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Hanging socks filled with small treats."
     },
     {
       "word": "Reindeer",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Antlered animals associated with Santa's sleigh."
     },
     {
       "word": "Sleigh",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Snow vehicle commonly shown in festive stories."
     },
     {
       "word": "Caroling",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Going door-to-door singing seasonal songs."
     },
     {
       "word": "Fireplace",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Indoor hearth often decorated with stockings."
     },
     {
       "word": "Gingerbread",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Spiced sweet dough used for cookies and houses."
     },
     {
       "word": "Ornament",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Decorative item hung on branches during holidays."
     },
     {
       "word": "Mistletoe",
       "difficulty": "easy",
-      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
+      "description": "Plant hung overhead for a festive kissing tradition."
     },
     {
       "word": "Eggnog",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Rich spiced milk drink served in festive season."
     },
     {
       "word": "New Year's Eve",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Night before January 1 with a midnight countdown."
     },
     {
       "word": "Hanukkah",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Eight-night Jewish Festival of Lights."
     },
     {
       "word": "Advent Calendar",
       "difficulty": "hard",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "December countdown with daily doors or treats."
     },
     {
       "word": "Kwanzaa",
       "difficulty": "hard",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Week-long celebration of African heritage and unity."
     },
     {
       "word": "Yule Log",
       "difficulty": "hard",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Traditional winter log ritual or rolled festive dessert."
     },
     {
       "word": "Boxing Day",
       "difficulty": "hard",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Public holiday on 26 December in many Commonwealth countries."
     },
     {
       "word": "Epiphany",
       "difficulty": "hard",
-      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
+      "description": "Christian feast marking the visit of the Magi."
     },
     {
       "word": "Menorah",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Nine-branched lamp lit over Hanukkah nights."
     },
     {
       "word": "Dreidel",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Four-sided spinning top used in Hanukkah games."
     },
     {
       "word": "Tinsel",
       "difficulty": "hard",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Shiny decorative strands used on festive displays."
     },
     {
       "word": "Wassail",
       "difficulty": "hard",
-      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
+      "description": "Traditional warm spiced punch and seasonal singing custom."
     },
     {
       "word": "Nutcracker",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Festive ballet tale featuring a magical toy soldier and fantasy kingdom."
     },
     {
       "word": "Krampus",
       "difficulty": "hard",
-      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
+      "description": "Alpine folklore figure said to punish naughty children."
     },
     {
       "word": "Solstice",
       "difficulty": "hard",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Seasonal turning point with shortest or longest daylight."
     },
     {
       "word": "Hogmanay",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Scottish New Year celebration with street parties."
     },
     {
       "word": "Black Friday",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Major shopping discount day after Thanksgiving."
     },
     {
       "word": "Feast of Seven Fishes",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Italian-American Christmas Eve meal featuring seafood courses."
     },
     {
       "word": "Nativity Scene",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Display depicting the birth story of Jesus."
     },
     {
       "word": "Christmas Choir",
       "difficulty": "easy",
-      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
+      "description": "Group performing seasonal songs in harmony."
     },
     {
       "word": "Candy Cane",
       "difficulty": "easy",
-      "description": "Christmas clue; describe tradition, decoration, or gift-related context."
+      "description": "Red-and-white striped peppermint sweet."
     },
     {
       "word": "Tree Topper",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Star or angel ornament placed at the top."
     },
     {
       "word": "Christmas Eve",
       "difficulty": "hard",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Night before Christmas Day."
     },
     {
       "word": "Gift Exchange",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Activity where people swap presents with each other."
     },
     {
       "word": "Festive Sweater",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Themed knit top worn during year-end parties."
     },
     {
       "word": "Holiday Ham",
       "difficulty": "easy",
-      "description": "Holiday celebration reference; start with family custom and seasonal timing."
+      "description": "Roasted pork centerpiece served at festive meals."
     },
     {
       "word": "Snow Angel",
       "difficulty": "hard",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Shape made by moving arms and legs while lying in snow."
     },
     {
       "word": "Winter Garland",
       "difficulty": "easy",
-      "description": "Festive clue; use winter/December context and familiar ritual."
+      "description": "Decorative greenery strand used around doors and mantels."
     }
   ],
   "Back to School": [
     {
       "word": "Homework",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Assignments completed at home after lessons."
     },
     {
       "word": "Backpack",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Bag used to carry books, stationery, and lunch."
     },
     {
       "word": "Teacher",
       "difficulty": "easy",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Adult who instructs and guides students in class."
     },
     {
       "word": "Classroom",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Room where lessons are taught and students sit in groups."
     },
     {
       "word": "Desk",
       "difficulty": "easy",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Individual table where a learner reads and writes."
     },
     {
       "word": "Notebook",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Bound pages used for class notes and exercises."
     },
     {
       "word": "Pencil",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Graphite writing tool that can be erased."
     },
     {
       "word": "Textbook",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Course book containing lessons, examples, and practice."
     },
     {
       "word": "Lunchbox",
       "difficulty": "easy",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Container used to carry packed meals to school."
     },
     {
       "word": "Bus",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Vehicle that transports students between home and school."
     },
     {
       "word": "Recess",
       "difficulty": "easy",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Short break between classes for play and rest."
     },
     {
       "word": "Blackboard",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Large teaching board written on during lessons."
     },
     {
       "word": "Calculator",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Device used to perform arithmetic quickly."
     },
     {
       "word": "Ruler",
       "difficulty": "easy",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Straight measuring tool used in math and drawing."
     },
     {
       "word": "School Bell",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Signal that marks class start, break, or dismissal time."
     },
     {
       "word": "Parent-Teacher Conference",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Meeting where guardians and educators discuss progress."
     },
     {
       "word": "Science Fair Project",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Student experiment display prepared for judging."
     },
     {
       "word": "Field Trip",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Educational outing to a museum, site, or activity venue."
     },
     {
       "word": "Honor Roll",
       "difficulty": "hard",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Published list recognizing high academic achievers."
     },
     {
       "word": "Extracurricular Activities",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Clubs and sports done outside regular class hours."
     },
     {
       "word": "Locker Combination",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Number sequence needed to unlock a storage locker."
     },
     {
       "word": "Study Group",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Small team that revises material together."
     },
     {
       "word": "Class President",
       "difficulty": "hard",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Elected learner who represents classmates."
     },
     {
       "word": "Graduation Ceremony",
       "difficulty": "hard",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Formal event celebrating completion of studies."
     },
     {
       "word": "Debate Club",
       "difficulty": "hard",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "School society for structured argument practice."
     },
     {
       "word": "School Assembly",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Whole-school gathering for notices or performances."
     },
     {
       "word": "Art Class",
       "difficulty": "hard",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Lesson focused on drawing, painting, and creative work."
     },
     {
       "word": "Gymnasium",
       "difficulty": "hard",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Indoor hall used for physical education and sports."
     },
     {
       "word": "History Lesson",
       "difficulty": "hard",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Class covering past events, people, and civilizations."
     },
     {
       "word": "Report Card",
       "difficulty": "hard",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Document listing grades and teacher comments."
     },
     {
       "word": "Syllabus",
       "difficulty": "hard",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Course outline of topics, assessments, and deadlines."
     },
     {
       "word": "Homeroom",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Daily admin class with an assigned teacher."
     },
     {
       "word": "Attendance Register",
       "difficulty": "easy",
-      "description": "School clue; describe classroom use, student role, or academic routine."
+      "description": "Record used to mark who is present or absent."
     },
     {
       "word": "School Uniform",
       "difficulty": "easy",
-      "description": "Back-to-school clue; use subject, schedule, or campus activity context."
+      "description": "Standardized clothing required by a school."
     },
     {
       "word": "Detention",
       "difficulty": "hard",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Disciplinary time served after regular classes."
     },
     {
       "word": "School Library",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Quiet campus room for reading, borrowing books, and study."
     },
     {
       "word": "Exam Hall",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Large room arranged for formal tests."
     },
     {
       "word": "Pencil Case",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Small pouch used to store pens and stationery."
     },
     {
       "word": "Study Timetable",
       "difficulty": "hard",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Planned revision schedule across subjects and days."
     },
     {
       "word": "Group Project",
       "difficulty": "easy",
-      "description": "Education reference; start with learning context and where it appears in school life."
+      "description": "Assignment completed collaboratively by multiple students."
     }
   ],
   "Music Festival": [
     {
       "word": "Stage",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Raised platform where performers play for a crowd."
     },
     {
       "word": "Band",
       "difficulty": "easy",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "Group of musicians performing together live."
     },
     {
       "word": "Audience",
       "difficulty": "easy",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "People watching and listening to a performance."
     },
     {
       "word": "Microphone",
       "difficulty": "easy",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Device that captures and amplifies a voice."
     },
     {
       "word": "Guitar",
       "difficulty": "easy",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "String instrument commonly used in rock, pop, and folk."
     },
     {
       "word": "Drums",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Percussion kit that drives rhythm and tempo."
     },
     {
       "word": "DJ",
       "difficulty": "easy",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "Performer who mixes recorded tracks for a crowd."
     },
     {
       "word": "Dance",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Rhythmic body movement to music."
     },
     {
       "word": "Lights",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Visual effects used to enhance live shows."
     },
     {
       "word": "Ticket",
       "difficulty": "easy",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "Entry pass required to access an event."
     },
     {
       "word": "Camping",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Staying overnight at the venue in temporary shelters."
     },
     {
       "word": "Tent",
       "difficulty": "easy",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Portable shelter often used at multi-day events."
     },
     {
       "word": "Soundcheck",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Pre-show test to balance instruments and microphones."
     },
     {
       "word": "Setlist",
       "difficulty": "easy",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Planned order of songs in a performance."
     },
     {
       "word": "Encore",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Extra performance after the main set ends."
     },
     {
       "word": "Backstage Pass",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Credential granting access behind performance areas."
     },
     {
       "word": "Crowd Surfing",
       "difficulty": "hard",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Attendee carried overhead by raised hands in the crowd."
     },
     {
       "word": "Headliner",
       "difficulty": "hard",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Main featured act at the top of the bill."
     },
     {
       "word": "Festival Wristband",
       "difficulty": "hard",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Wearable band proving admission or access level."
     },
     {
       "word": "VIP Area",
       "difficulty": "hard",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "Premium restricted section with added comfort and services."
     },
     {
       "word": "Acoustic Set",
       "difficulty": "hard",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "Performance with minimal amplification and stripped instrumentation."
     },
     {
       "word": "Merchandise Stand",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Booth selling shirts, posters, and artist memorabilia."
     },
     {
       "word": "Mosh Pit",
       "difficulty": "hard",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "High-energy dance zone near the front of certain shows."
     },
     {
       "word": "Opening Act",
       "difficulty": "hard",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Performer who goes on before the main attraction."
     },
     {
       "word": "Roadies",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Crew members who transport and set up gear."
     },
     {
       "word": "Tour Bus",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Vehicle used by artists and crew while traveling between shows."
     },
     {
       "word": "Sound Engineer",
       "difficulty": "hard",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Technician who controls live audio balance and clarity."
     },
     {
       "word": "Festival Grounds",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Full event site containing stages, vendors, and crowd areas."
     },
     {
       "word": "Food Truck",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Mobile kitchen serving meals at outdoor events."
     },
     {
       "word": "Festival Vibes",
       "difficulty": "hard",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Overall atmosphere and energy felt across the event."
     },
     {
       "word": "Main Stage",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Largest platform hosting the biggest scheduled acts."
     },
     {
       "word": "Sound Booth",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Control station where audio levels are mixed live."
     },
     {
       "word": "Festival Lineup",
       "difficulty": "easy",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Official list of artists and set times."
     },
     {
       "word": "Late Night Set",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Performance slot scheduled deep into the night."
     },
     {
       "word": "Warm-up DJ",
       "difficulty": "hard",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Opening mixer who builds momentum before headline acts."
     },
     {
       "word": "Crowd Chant",
       "difficulty": "easy",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Repeated shout performed in unison by attendees."
     },
     {
       "word": "Festival Poster",
       "difficulty": "easy",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "Promotional artwork showing acts, dates, and venue."
     },
     {
       "word": "Bass Drop",
       "difficulty": "easy",
-      "description": "Festival clue; describe live-performance setting and crowd experience."
+      "description": "Sudden low-end beat release common in electronic music."
     },
     {
       "word": "Live Mix",
       "difficulty": "hard",
-      "description": "Music-event reference; start with stage, sound, or artist lineup context."
+      "description": "Real-time blending of tracks during a performance."
     },
     {
       "word": "Encore Song",
       "difficulty": "easy",
-      "description": "Concert-festival clue; use audience energy and production elements."
+      "description": "Final extra track played after crowd demand."
     }
   ],
   "Movie Night": [
     {
       "word": "Popcorn",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Buttery snack strongly associated with cinema viewing."
     },
     {
       "word": "Movie",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Feature-length visual story shown on big or small screens."
     },
     {
       "word": "Ticket",
       "difficulty": "easy",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Paid pass required for entry to a screening."
     },
     {
       "word": "Director",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Creative lead shaping performances, shots, and pacing."
     },
     {
       "word": "Actor",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Performer portraying a character on screen."
     },
     {
       "word": "Theater",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Venue where audiences watch releases on a large screen."
     },
     {
       "word": "Screen",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Surface where projected images are displayed."
     },
     {
       "word": "Trailer",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Short preview shown to promote an upcoming release."
     },
     {
       "word": "Snack",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Small food item eaten while watching."
     },
     {
       "word": "Seat",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Numbered place reserved for audience members."
     },
     {
       "word": "Projector",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Device that throws moving images onto a screen."
     },
     {
       "word": "Credits",
       "difficulty": "easy",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "List of cast and crew shown after the story."
     },
     {
       "word": "Scene",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Single dramatic unit within a story sequence."
     },
     {
       "word": "Genre",
       "difficulty": "easy",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Category label such as comedy, horror, or action."
     },
     {
       "word": "Plot",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Main chain of events that drives the narrative."
     },
     {
       "word": "Cinematic Experience",
       "difficulty": "hard",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Immersive big-screen feeling created by visuals and sound."
     },
     {
       "word": "Red Carpet Event",
       "difficulty": "hard",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Premiere or awards arrival with photographers and formal attire."
     },
     {
       "word": "Independent Film",
       "difficulty": "hard",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Production made outside major studio systems."
     },
     {
       "word": "Blockbuster Hit",
       "difficulty": "hard",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Release that earns huge ticket sales and broad popularity."
     },
     {
       "word": "Special Effects",
       "difficulty": "hard",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Techniques used to create visuals not possible in real life."
     },
     {
       "word": "Box Office",
       "difficulty": "hard",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Revenue from theatrical ticket sales."
     },
     {
       "word": "Movie Marathon",
       "difficulty": "hard",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Watching many related titles back-to-back."
     },
     {
       "word": "Midnight Screening",
       "difficulty": "hard",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Late showing that begins around twelve at night."
     },
     {
       "word": "Dolby Surround Sound",
       "difficulty": "hard",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Multi-channel audio format creating immersive directional sound."
     },
     {
       "word": "Film Festival",
       "difficulty": "hard",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Event showcasing curated releases, often with awards."
     },
     {
       "word": "Cult Classic",
       "difficulty": "hard",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Title with a devoted fanbase despite modest mainstream success."
     },
     {
       "word": "Behind the Scenes",
       "difficulty": "hard",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Footage or details showing how production was made."
     },
     {
       "word": "Movie Franchise",
       "difficulty": "hard",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Series of connected releases sharing world or characters."
     },
     {
       "word": "Character Development",
       "difficulty": "hard",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "How a role's personality changes through the story."
     },
     {
       "word": "Post-Credit Scene",
       "difficulty": "hard",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Extra sequence shown after the end credits roll."
     },
     {
       "word": "Cinema Ticket",
       "difficulty": "hard",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Paid entry slip for a theater screening."
     },
     {
       "word": "Box Office Hit",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Commercial success that sells a very high number of tickets."
     },
     {
       "word": "Director's Cut",
       "difficulty": "easy",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Edition restored to the filmmaker's preferred version."
     },
     {
       "word": "Opening Scene",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Very first sequence that sets tone and context."
     },
     {
       "word": "Movie Quote",
       "difficulty": "hard",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Memorable line repeated by fans."
     },
     {
       "word": "Film Score",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Original background music composed for a release."
     },
     {
       "word": "Rom-com",
       "difficulty": "easy",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Genre combining romance with comedy."
     },
     {
       "word": "Thriller",
       "difficulty": "easy",
-      "description": "Screen-time clue; use theater or streaming context and audience behavior."
+      "description": "Suspense-heavy genre built around tension and danger."
     },
     {
       "word": "Mid-credit Scene",
       "difficulty": "hard",
-      "description": "Movie-night clue; describe cinema/home viewing context and storytelling element."
+      "description": "Bonus sequence shown during, not after, the credits."
     },
     {
       "word": "Sequel",
       "difficulty": "easy",
-      "description": "Film reference; start with viewing setup, genre mood, or plot role."
+      "description": "Follow-up release continuing events from an earlier story."
     }
   ],
   "Adventure Trip": [
@@ -15596,47 +15596,47 @@ const themes = {
     {
       "word": "Trail Map",
       "difficulty": "hard",
-      "description": "Adventure clue; describe outdoor setting, risk level, and activity style."
+      "description": "Route guide showing paths, terrain, and landmarks."
     },
     {
       "word": "Compass",
       "difficulty": "easy",
-      "description": "Travel-adventure reference; start with terrain and the action people perform."
+      "description": "Navigation tool that points toward magnetic north."
     },
     {
       "word": "Zipline",
       "difficulty": "easy",
-      "description": "Travel-adventure reference; start with terrain and the action people perform."
+      "description": "Ride suspended on a cable using a harness and pulley."
     },
     {
       "word": "Canyon",
       "difficulty": "easy",
-      "description": "Travel-adventure reference; start with terrain and the action people perform."
+      "description": "Deep valley with steep rock walls carved by water."
     },
     {
       "word": "Base Camp",
       "difficulty": "hard",
-      "description": "Expedition clue; use destination type, gear, and challenge context."
+      "description": "Primary staging area before climbing or trekking attempts."
     },
     {
       "word": "Rope Bridge",
       "difficulty": "easy",
-      "description": "Expedition clue; use destination type, gear, and challenge context."
+      "description": "Suspended crossing made from ropes and planks."
     },
     {
       "word": "Wild Camp",
       "difficulty": "easy",
-      "description": "Adventure clue; describe outdoor setting, risk level, and activity style."
+      "description": "Overnight stay in nature away from formal campsites."
     },
     {
       "word": "Hiking Boots",
       "difficulty": "easy",
-      "description": "Expedition clue; use destination type, gear, and challenge context."
+      "description": "Durable footwear designed for rough trails and ankle support."
     },
     {
       "word": "Summit",
       "difficulty": "hard",
-      "description": "Adventure clue; describe outdoor setting, risk level, and activity style."
+      "description": "Highest point reached at the top of a mountain."
     },
     {
       "word": "Night Safari",
