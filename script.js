@@ -17,8 +17,8 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 // Initialize Google AI
-const API_KEY = "AIzaSyAZkNr8lIdg6MyTCD3urTdiEgzJoKOamsk";
-const genAI = new GoogleGenerativeAI(API_KEY);
+const GEMINI = "AIzaSyBdCn9zygj_C7_fAHWDUidARavos_8OaRw";
+const genAI = new GoogleGenerativeAI(GEMINI);
 const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
 // Game state variables
