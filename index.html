@@ -70,6 +70,9 @@
                         <div class="menu-section">
                             <label for="chkChaos">Chaos Mode:</label>
                             <input type="checkbox" id="chkChaos" value="false">
+                            <small id="chaosModeHint" class="d-block text-muted">
+                                Adds random board powerups each round: boosts, setbacks, shields, bombs, and steal effects.
+                            </small>
                         </div>
                         <div class="menu-section">
                             <label for="chkTraining">Training Mode (Show Description Hints):</label>
@@ -260,6 +263,8 @@
         <div id="game" hidden>
             <h5 id="lblGameCode" hidden>Game Code: </h5>
             <h6 id="gameState" hidden>Status: Waiting for players!</h6>
+            <div id="chaosModeBanner" class="chaos-mode-banner" hidden>Chaos Mode Active</div>
+            <div id="chaosLegend" class="chaos-legend" hidden></div>
             <div id="currentTeamIndicator"></div>
             <div id="timer"></div>
             <div id="gameBoard"></div>

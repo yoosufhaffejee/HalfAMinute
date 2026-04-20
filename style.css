@@ -91,6 +91,25 @@ h1 {
     white-space: nowrap;
 }
 
+.board-powerup-landed {
+    animation: landed-powerup-pulse 0.8s ease-in-out infinite alternate;
+    box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.65);
+    z-index: 4;
+}
+
+.board-cell-landed-powerup {
+    box-shadow: inset 0 0 0 2px rgba(255, 193, 7, 0.9);
+}
+
+@keyframes landed-powerup-pulse {
+    from {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    to {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
 .powerup-plus {
     background: #d4f5dd;
 }
@@ -225,6 +244,76 @@ h1 {
 .training-description {
     font-size: 13px;
     color: #243647;
+}
+
+.chaos-mode-banner {
+    margin: 6px 0 10px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid #e2a93d;
+    background: linear-gradient(90deg, #fff3d2, #ffe6bf);
+    color: #7a4a00;
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.chaos-legend {
+    text-align: left;
+    border: 1px solid #e9cf95;
+    border-radius: 10px;
+    background: #fff8e8;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.chaos-legend-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #6a4303;
+}
+
+.chaos-legend-list {
+    display: grid;
+    gap: 6px;
+}
+
+.chaos-legend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.chaos-legend-badge {
+    position: static;
+    transform: none;
+    min-width: 34px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.chaos-legend-details {
+    flex: 1;
+}
+
+.chaos-legend-label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #3a2a12;
+}
+
+.chaos-legend-description {
+    font-size: 0.82rem;
+    color: #6b5a42;
+}
+
+body.chaos-active #gameBoard .board-cell {
+    border: 1px solid #f0cf94;
+    background-color: #f9f4e7;
+}
+
+body.chaos-active #currentTeamIndicator {
+    text-shadow: 0 0 0 transparent;
+    font-weight: 700;
 }
 
 #scoreButtons {

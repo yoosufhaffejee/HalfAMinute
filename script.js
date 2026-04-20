@@ -60,6 +60,7 @@ let isRoundActive = false;
 let onlineGameState = "waiting";
 let roundPowerups = {};
 let powerupRevealVisible = false;
+let landedPowerupPreview = null;
 let teamShields = [];
 let isResolvingChaosMove = false;
 let lastProcessedChaosResolutionId = 0;
@@ -77,6 +78,7 @@ const JOIN_TRANSACTION_MAX_RETRIES = 3;
 const JOIN_RETRY_BASE_DELAY_MS = 220;
 const CHAOS_MOVE_STEP_DELAY_MS = 420;
 const CHAOS_PREMOVE_REVEAL_MS = 3000;
+const CHAOS_LANDED_PREVIEW_DELAY_MS = 2000;
 const CHAOS_CLEAR_PAUSE_MS = 450;
 let heartbeatIntervalId = null;
 let staleCleanupIntervalId = null;
@@ -86,13 +88,55 @@ let lastProcessedAuditEventId = 0;
 const registeredModalHandlers = new Set();
 
 const CHAOS_POWERUP_TYPES = {
-    plus1: { label: "+1", weight: 34, cssClass: "powerup-plus" },
-    plus2: { label: "+2", weight: 7, cssClass: "powerup-plus-rare" },
-    minus1: { label: "-1", weight: 28, cssClass: "powerup-minus" },
-    minus2: { label: "-2", weight: 5, cssClass: "powerup-minus-rare" },
-    bomb: { label: "BOMB", weight: 2, cssClass: "powerup-bomb" },
-    shield: { label: "SHIELD", weight: 14, cssClass: "powerup-shield" },
-    steal1: { label: "STEAL 1", weight: 10, cssClass: "powerup-steal" }
+    plus1: {
+        label: "+1",
+        legendLabel: "+1 Boost",
+        description: "Move forward 1 extra tile.",
+        weight: 34,
+        cssClass: "powerup-plus"
+    },
+    plus2: {
+        label: "+2",
+        legendLabel: "+2 Boost",
+        description: "Rare boost: move forward 2 extra tiles.",
+        weight: 7,
+        cssClass: "powerup-plus-rare"
+    },
+    minus1: {
+        label: "-1",
+        legendLabel: "-1 Slip",
+        description: "Move back 1 tile unless shielded.",
+        weight: 28,
+        cssClass: "powerup-minus"
+    },
+    minus2: {
+        label: "-2",
+        legendLabel: "-2 Slip",
+        description: "Rare setback: move back 2 tiles unless shielded.",
+        weight: 5,
+        cssClass: "powerup-minus-rare"
+    },
+    bomb: {
+        label: "💣",
+        legendLabel: "💣 Bomb",
+        description: "Reset to start unless shielded.",
+        weight: 2,
+        cssClass: "powerup-bomb"
+    },
+    shield: {
+        label: "🛡️",
+        legendLabel: "🛡️ Shield",
+        description: "Store 1 shield to block your next negative effect.",
+        weight: 14,
+        cssClass: "powerup-shield"
+    },
+    steal1: {
+        label: "🥷",
+        legendLabel: "🥷 Steal 1",
+        description: "Gain +1 and the leading opposing team loses 1.",
+        weight: 10,
+        cssClass: "powerup-steal"
+    }
 };
 
 // DOM elements
@@ -124,6 +168,8 @@ const txtLobbyPlayers = document.getElementById('lobbyPlayers');
 const txtTeams = document.getElementById("numTeams");
 const btnStartOnlineGame = document.getElementById("startOnlineGame");
 const lblGameState = document.getElementById("gameState");
+const chaosModeBanner = document.getElementById("chaosModeBanner");
+const chaosLegend = document.getElementById("chaosLegend");
 
 // Audio elements
 const startSound = document.getElementById('startSound');
@@ -145,6 +191,7 @@ function setLayoutMode(mode = "menu") {
 
 function initializeMenu() {
     setLayoutMode("menu");
+    refreshChaosModeUi();
     // Add categories to dropdown
     Object.keys(categories).forEach(category => {
         const option = document.createElement("option");
@@ -474,6 +521,74 @@ function ensureLocalChaosState(teamCount = teams.length || numTeams || 2) {
     }
 }
 
+function renderChaosLegend() {
+    if (!chaosLegend) {
+        return;
+    }
+
+    chaosLegend.innerHTML = "";
+    const heading = document.createElement("div");
+    heading.className = "chaos-legend-title";
+    heading.textContent = "Chaos Powerups";
+    chaosLegend.appendChild(heading);
+
+    const list = document.createElement("div");
+    list.className = "chaos-legend-list";
+    Object.values(CHAOS_POWERUP_TYPES).forEach(powerupConfig => {
+        const item = document.createElement("div");
+        item.className = "chaos-legend-item";
+
+        const badge = document.createElement("span");
+        badge.className = `chaos-legend-badge board-powerup ${powerupConfig.cssClass}`;
+        badge.textContent = powerupConfig.label;
+
+        const details = document.createElement("div");
+        details.className = "chaos-legend-details";
+        const label = document.createElement("div");
+        label.className = "chaos-legend-label";
+        label.textContent = powerupConfig.legendLabel || powerupConfig.label;
+        const description = document.createElement("div");
+        description.className = "chaos-legend-description";
+        description.textContent = powerupConfig.description || "";
+        details.appendChild(label);
+        details.appendChild(description);
+
+        item.appendChild(badge);
+        item.appendChild(details);
+        list.appendChild(item);
+    });
+    chaosLegend.appendChild(list);
+}
+
+function refreshChaosModeUi() {
+    const chaosEnabledInGame = Boolean(isChaosMode) && !game.hidden;
+    document.body.classList.toggle("chaos-active", chaosEnabledInGame);
+
+    if (chaosModeBanner) {
+        chaosModeBanner.hidden = !chaosEnabledInGame;
+    }
+    if (chaosLegend) {
+        chaosLegend.hidden = !chaosEnabledInGame;
+        if (chaosEnabledInGame) {
+            renderChaosLegend();
+        }
+    }
+}
+
+function setNextRoundBusyState(isBusy) {
+    if (!btnNextRound) {
+        return;
+    }
+    if (!btnNextRound.dataset.defaultLabel) {
+        btnNextRound.dataset.defaultLabel = "Next Round";
+    }
+
+    btnNextRound.disabled = Boolean(isBusy);
+    btnNextRound.textContent = isBusy
+        ? "Resolving Chaos..."
+        : (btnNextRound.dataset.defaultLabel || "Next Round");
+}
+
 function getBoardCellIndexForPoints(pointsValue, boardSize = pointsToWin) {
     const size = Math.max(1, Number(boardSize) || 1);
     const pointsInt = Number(pointsValue) || 0;
@@ -506,6 +621,31 @@ function sanitizeRoundPowerups(powerups = {}, boardSize = pointsToWin) {
         sanitized[tileIndex] = type;
     });
     return sanitized;
+}
+
+function sanitizeChaosLandedPreview(landing = null, boardSize = pointsToWin, teamCount = teams.length || numTeams || 2) {
+    if (!landing || typeof landing !== "object") {
+        return null;
+    }
+
+    const tileIndex = Number.parseInt(landing.tileIndex, 10);
+    const type = sanitizeChaosPowerupType(landing.type);
+    const teamIndex = Number.parseInt(landing.teamIndex, 10);
+    const maxTileIndex = Math.max(0, (Math.max(1, Number(boardSize) || 1)) - 1);
+    const maxTeamCount = Math.max(1, Number(teamCount) || 1);
+
+    if (!Number.isInteger(tileIndex) || tileIndex < 0 || tileIndex > maxTileIndex || !type) {
+        return null;
+    }
+    if (!Number.isInteger(teamIndex) || teamIndex < 0 || teamIndex >= maxTeamCount) {
+        return null;
+    }
+
+    return {
+        tileIndex,
+        type,
+        teamIndex
+    };
 }
 
 function pickWeightedChaosPowerup(rng = Math.random) {
@@ -549,6 +689,7 @@ function getNormalizedChaosState(chaosState = {}, teamCount = teams.length || nu
         roundId: Number(chaosState?.roundId) || 0,
         powerups: sanitizeRoundPowerups(chaosState?.powerups || {}, boardSize),
         reveal: Boolean(chaosState?.reveal),
+        landed: sanitizeChaosLandedPreview(chaosState?.landed, boardSize, teamCount),
         teamShields: normalizeTeamShields(chaosState?.teamShields || [], teamCount),
         resolutionId: Number(chaosState?.resolutionId) || 0,
         pending: chaosState?.pending && typeof chaosState.pending === "object" ? chaosState.pending : null
@@ -667,6 +808,34 @@ function applyChaosPowerupToState({
     return summary;
 }
 
+function formatChaosSummaryForAudit(summary = null) {
+    if (!summary || !summary.type) {
+        return "No powerup";
+    }
+
+    switch (summary.type) {
+        case "plus1":
+            return "+1 boost";
+        case "plus2":
+            return "+2 boost";
+        case "minus1":
+            return summary.blockedByShield ? "🛡️ blocked -1" : "-1 setback";
+        case "minus2":
+            return summary.blockedByShield ? "🛡️ blocked -2" : "-2 setback";
+        case "bomb":
+            return summary.blockedByShield ? "🛡️ blocked 💣 bomb" : "💣 bomb reset";
+        case "shield":
+            return "🛡️ shield gained";
+        case "steal1":
+            if (Number.isInteger(summary.victimTeamIndex) && summary.victimTeamIndex >= 0) {
+                return `🥷 steal 1 from Team ${summary.victimTeamIndex + 1}`;
+            }
+            return "🥷 steal 1";
+        default:
+            return "Powerup resolved";
+    }
+}
+
 function buildChaosPendingPayload({
     resolutionId,
     teamIndexForRound,
@@ -696,6 +865,7 @@ async function syncChaosVisualState(roundNumberForRound = currentRound + 1) {
         roundId: Number(roundNumberForRound) || 0,
         powerups: { ...roundPowerups },
         reveal: Boolean(powerupRevealVisible),
+        landed: landedPowerupPreview ? { ...landedPowerupPreview } : null,
         teamShields: [...teamShields]
     });
 }
@@ -1466,6 +1636,7 @@ async function onLobbyJoined() {
     showElement(btnHistory);
     hideElement(btnStartRound);
     hideElement(btnNextRound);
+    refreshChaosModeUi();
 
     if (isHost) {
         showElement(btnStartOnlineGame);
@@ -1610,6 +1781,7 @@ async function onLobbyJoined() {
             alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
             location.reload();
         }
+        refreshChaosModeUi();
     });
 
     listenForChanges(`games/${gameCode}/settings`, (settingsFromDb) => {
@@ -1618,12 +1790,14 @@ async function onLobbyJoined() {
         if (!isChaosMode) {
             roundPowerups = {};
             powerupRevealVisible = false;
+            landedPowerupPreview = null;
             teamShields = createInitialTeamShields(teams.length || numTeams || 2);
             updateBoard();
         }
         if (chkChaos) {
             chkChaos.checked = isChaosMode;
         }
+        refreshChaosModeUi();
     });
 
     listenForChanges(`games/${gameCode}/roundActive`, (roundActive) => {
@@ -1776,13 +1950,16 @@ async function onLobbyJoined() {
 
         lastProcessedAuditEventId = eventId;
         createTeamAuditColumns(teamIndex, roundNumber);
-        createTeamAuditRows(teamIndex, roundNumber, auditEvent.correctAnswers);
+        createTeamAuditRows(teamIndex, roundNumber, auditEvent.correctAnswers, {
+            chaosSummary: auditEvent.chaosSummary
+        });
     });
 
     listenForChanges(`games/${gameCode}/chaos`, (chaosState) => {
         const normalized = getNormalizedChaosState(chaosState || {}, teams.length || numTeams, pointsToWin);
         roundPowerups = normalized.powerups;
         powerupRevealVisible = normalized.reveal;
+        landedPowerupPreview = normalized.landed;
         teamShields = normalized.teamShields;
         lastProcessedChaosResolutionId = Math.max(lastProcessedChaosResolutionId, normalized.resolutionId);
 
@@ -1926,6 +2103,7 @@ async function createGameLobby() {
     isRoundActive = false;
     roundPowerups = {};
     powerupRevealVisible = false;
+    landedPowerupPreview = null;
     teamShields = createInitialTeamShields(numTeams);
     lastProcessedChaosResolutionId = 0;
     lastProcessedChaosPendingId = 0;
@@ -1952,6 +2130,7 @@ async function createGameLobby() {
             roundId: 0,
             powerups: {},
             reveal: false,
+            landed: null,
             teamShields: [...teamShields],
             resolutionId: 0,
             pending: null
@@ -2029,6 +2208,7 @@ async function joinGameLobby() {
                 const normalizedChaos = getNormalizedChaosState(gameData.chaos || {}, numTeams, pointsToWin);
                 roundPowerups = normalizedChaos.powerups;
                 powerupRevealVisible = normalizedChaos.reveal;
+                landedPowerupPreview = normalizedChaos.landed;
                 teamShields = normalizedChaos.teamShields;
                 lastProcessedChaosResolutionId = normalizedChaos.resolutionId;
                 lastProcessedChaosPendingId = 0;
@@ -2082,6 +2262,7 @@ async function startOnlineGame() {
             gameData.chaos = {
                 ...normalizedChaos,
                 reveal: false,
+                landed: null,
                 pending: null
             };
             return gameData;
@@ -2316,18 +2497,76 @@ function updatePlayerListUI(teamsData) {
 }
 
 function generate() {
-    run(document.getElementById("topic").value);
+    void run(document.getElementById("topic").value);
+}
+
+function extractUniqueAiWordsFromText(rawText = "") {
+    const lines = String(rawText)
+        .split("\n")
+        .map(line => line.replace(/^\s*(?:[-*\u2022]\s*|\d+[.)-]\s*)/, "").trim())
+        .filter(Boolean);
+
+    const uniqueWords = [];
+    const seenWords = new Set();
+    lines.forEach(word => {
+        const normalized = normalizeWord(word);
+        if (!normalized || seenWords.has(normalized)) {
+            return;
+        }
+        seenWords.add(normalized);
+        uniqueWords.push(word);
+    });
+    return uniqueWords;
+}
+
+function getFriendlyGeminiErrorMessage(error) {
+    const rawMessage = String(error?.message || "").toLowerCase();
+    const rawCode = String(error?.code || "").toLowerCase();
+
+    if (rawCode.includes("429") || rawMessage.includes("429") || rawMessage.includes("quota") || rawMessage.includes("rate")) {
+        return "The AI service is currently rate-limited. Please wait a few seconds and try again.";
+    }
+    if (rawCode.includes("403") || rawMessage.includes("permission") || rawMessage.includes("api key")) {
+        return "AI access is currently unavailable due to credentials or permission limits. Please check your Gemini API key/project setup.";
+    }
+    if (rawCode.includes("503") || rawCode.includes("500") || rawMessage.includes("unavailable") || rawMessage.includes("deadline")) {
+        return "The AI service is temporarily unavailable. Please try again shortly.";
+    }
+    if (rawMessage.includes("safety") || rawMessage.includes("blocked")) {
+        return "The request was blocked by safety filters. Try a clearer, game-safe topic.";
+    }
+    if (rawMessage.includes("network") || rawMessage.includes("fetch")) {
+        return "Network issue while contacting Gemini. Check your connection and try again.";
+    }
+    return "Could not generate words right now. Please try again.";
 }
 
 async function run(topic) {
-    document.getElementById("btnAiGame").disabled = true;
+    const btnGenerate = document.getElementById("btnGenerate");
+    const btnAiGame = document.getElementById("btnAiGame");
+    const textArea = document.getElementById("aiWords");
+    btnGenerate.disabled = true;
+    btnAiGame.disabled = true;
 
-    const cleanTopic = topic.trim();
+    const cleanTopic = String(topic || "").trim();
     const strictTopic = cleanTopic.startsWith('!') ? cleanTopic.slice(1).trim() : cleanTopic;
+    if (!cleanTopic) {
+        showNotification("bg-warning", "text-dark", "Missing Topic", "Enter a topic first, then generate words.", 5);
+        btnGenerate.disabled = false;
+        btnAiGame.disabled = extractUniqueAiWordsFromText(textArea?.value || "").length === 0;
+        return;
+    }
+    if (cleanTopic.startsWith("!") && !strictTopic) {
+        showNotification("bg-warning", "text-dark", "Missing Focus", "After '!' enter a focused topic, then generate words.", 5);
+        btnGenerate.disabled = false;
+        btnAiGame.disabled = extractUniqueAiWordsFromText(textArea?.value || "").length === 0;
+        return;
+    }
 
-    let prompt = "";
-    if (cleanTopic.startsWith('!')) {
-        prompt = `You are generating words for a 30 Seconds-style clue game.
+    try {
+        let prompt = "";
+        if (cleanTopic.startsWith('!')) {
+            prompt = `You are generating words for a 30 Seconds-style clue game.
 Create exactly 60 unique, high-quality entries focused ONLY on "${strictTopic}".
 
 Goal quality rules:
@@ -2347,9 +2586,9 @@ Output format rules:
 1. Output only the 60 entries, one per line.
 2. No numbering, bullets, headings, explanations, or extra text.
 3. English only unless explicitly requested otherwise.`
-    }
-    else {
-        prompt = `You are generating words for a 30 Seconds-style clue game.
+        }
+        else {
+            prompt = `You are generating words for a 30 Seconds-style clue game.
 Create exactly 50 unique, high-quality entries related to "${cleanTopic}".
 
 Goal quality rules:
@@ -2366,39 +2605,35 @@ Output format rules:
 2. No numbering, bullets, headings, explanations, or extra text.
 3. No duplicates.
 4. English only unless explicitly requested otherwise.`
-    }
-
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    console.log(text);
-
-    let textArea = document.getElementById('aiWords');
-    if (textArea) {
-        textArea.textContent = '';
-        textArea.textContent = text;
-        textArea.value = '';
-        textArea.value = text;
-    }
-
-    const generatedWords = textArea.textContent
-        .split("\n")
-        .map(line => line.replace(/^\s*(?:[-*\u2022]\s*|\d+[.)-]\s*)/, "").trim())
-        .filter(Boolean);
-
-    const uniqueGeneratedWords = [];
-    const seenGeneratedWords = new Set();
-    generatedWords.forEach(word => {
-        const normalized = normalizeWord(word);
-        if (!seenGeneratedWords.has(normalized)) {
-            seenGeneratedWords.add(normalized);
-            uniqueGeneratedWords.push(word);
         }
-    });
 
-    // Shuffle cleaned array
-    currentGameWords = shuffleArray(uniqueGeneratedWords);
-    document.getElementById("btnAiGame").disabled = false;
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const text = String(response?.text?.() || "").trim();
+        if (!text) {
+            throw new Error("empty-response");
+        }
+
+        if (textArea) {
+            textArea.textContent = text;
+            textArea.value = text;
+        }
+
+        const uniqueGeneratedWords = extractUniqueAiWordsFromText(text);
+        if (uniqueGeneratedWords.length === 0) {
+            throw new Error("no-words-generated");
+        }
+
+        currentGameWords = shuffleArray([...uniqueGeneratedWords]);
+        showNotification("bg-success", "text-white", "Words Ready", `Generated ${uniqueGeneratedWords.length} unique words.`, 4);
+    } catch (error) {
+        console.error("Gemini generation failed:", error);
+        showNotification("bg-danger", "text-white", "AI Generation Failed", getFriendlyGeminiErrorMessage(error), 8);
+    } finally {
+        btnGenerate.disabled = false;
+        const availableWords = extractUniqueAiWordsFromText(textArea?.value || "");
+        btnAiGame.disabled = availableWords.length === 0;
+    }
 }
 
 function startAIGame() {
@@ -2406,19 +2641,11 @@ function startAIGame() {
 
     // Read user added words on start
     let textArea = document.getElementById('aiWords');
-    const aiWords = textArea.value
-        .split("\n")
-        .map(word => word.trim())
-        .filter(Boolean);
-    const uniqueAiWords = [];
-    const seenAiWords = new Set();
-    aiWords.forEach(word => {
-        const normalized = normalizeWord(word);
-        if (!seenAiWords.has(normalized)) {
-            seenAiWords.add(normalized);
-            uniqueAiWords.push(word);
-        }
-    });
+    const uniqueAiWords = extractUniqueAiWordsFromText(textArea?.value || "");
+    if (uniqueAiWords.length === 0) {
+        showNotification("bg-warning", "text-dark", "No Words Available", "Generate or paste words before starting AI mode.", 5);
+        return;
+    }
     currentGameWords = shuffleArray(uniqueAiWords);
     wordDescriptionLookup = new Map();
 
@@ -2488,6 +2715,7 @@ async function startGame() {
 
     roundPowerups = {};
     powerupRevealVisible = false;
+    landedPowerupPreview = null;
     teamShields = createInitialTeamShields(teams.length);
     lastProcessedChaosResolutionId = 0;
     lastProcessedChaosPendingId = 0;
@@ -2500,6 +2728,7 @@ async function startGame() {
     showElement(game);
     showElement(btnHistory);
     hideElement(btnOnline);
+    refreshChaosModeUi();
 
     registerModal(btnHistory, "historyModal");
 
@@ -2583,6 +2812,7 @@ function startRound() {
     btnEndGame.hidden = true;
     isRoundActive = true;
     powerupRevealVisible = false;
+    landedPowerupPreview = null;
     updateBoard();
     hideElement(lblGameState);
 
@@ -2599,6 +2829,7 @@ function startRound() {
         lblAnswers.textContent = "Click the correct answers:"
         btnEndRound.hidden = true;
         btnNextRound.hidden = false;
+        setNextRoundBusyState(false);
         clearTrainingHints();
         isRoundActive = false;
 
@@ -2634,6 +2865,7 @@ function hideRoundInputUI() {
         scoreButtons[index].hidden = true;
     }
     btnNextRound.hidden = true;
+    setNextRoundBusyState(false);
     timer.hidden = true;
     clearWords();
     clearTrainingHints();
@@ -2684,6 +2916,19 @@ function getChaosLandingPowerup(teamIndex) {
     return sanitizeChaosPowerupType(roundPowerups[tileIndex]);
 }
 
+function getChaosLandingPreview(teamIndex, powerupType) {
+    const type = sanitizeChaosPowerupType(powerupType);
+    if (!type || !teams[teamIndex]) {
+        return null;
+    }
+
+    return sanitizeChaosLandedPreview({
+        tileIndex: getBoardCellIndexForPoints(teams[teamIndex].points, pointsToWin),
+        type,
+        teamIndex
+    }, pointsToWin, teams.length);
+}
+
 async function resolveChaosPowerupLocally(
     teamIndex,
     powerupType,
@@ -2693,6 +2938,7 @@ async function resolveChaosPowerupLocally(
     roundNumberForRound = currentRound + 1
 ) {
     if (!powerupType) {
+        landedPowerupPreview = null;
         if (animate) {
             await sleep(CHAOS_CLEAR_PAUSE_MS);
         }
@@ -2720,8 +2966,26 @@ async function resolveChaosPowerupLocally(
 
     teamShields = tempShields;
 
-    // Keep indicators visible while applying the landed powerup.
+    landedPowerupPreview = getChaosLandingPreview(teamIndex, powerupType);
     updateTeamScores();
+    updateBoard();
+    const powerupLabel = CHAOS_POWERUP_TYPES[powerupType]?.label || powerupType;
+    lblGameState.textContent = `Chaos: Team ${teamIndex + 1} landed on ${powerupLabel}. Applying...`;
+    showElement(lblGameState);
+    if (syncToOnline) {
+        await syncChaosVisualState(roundNumberForRound);
+    }
+    if (animate) {
+        await sleep(CHAOS_LANDED_PREVIEW_DELAY_MS);
+    }
+
+    // Keep indicators visible while applying the landed powerup.
+    landedPowerupPreview = null;
+    updateBoard();
+    updateTeamScores();
+    if (syncToOnline) {
+        await syncChaosVisualState(roundNumberForRound);
+    }
 
     if (summary.actorDelta !== 0) {
         await animateTeamMovement(teamIndex, summary.actorDelta, animate, syncToOnline);
@@ -2739,12 +3003,14 @@ async function resolveChaosPowerupLocally(
 
     // Clear the map after powerup resolution is complete.
     powerupRevealVisible = false;
+    landedPowerupPreview = null;
     updateBoard();
     if (syncToOnline) {
         await syncChaosVisualState(roundNumberForRound);
     }
 
     updateTeamScores();
+    hideElement(lblGameState);
     return summary;
 }
 
@@ -2869,7 +3135,8 @@ async function resolveOnlineChaosPending(pendingState) {
             id: pendingId,
             teamIndex: actingTeamIndex,
             roundNumber: roundNumberForRound,
-            correctAnswers: [...correctAnswers]
+            correctAnswers: [...correctAnswers],
+            chaosSummary: formatChaosSummaryForAudit(chaosResolution.resolutionSummary)
         };
 
         advanceRoundPointers();
@@ -2896,6 +3163,7 @@ async function resolveOnlineChaosPending(pendingState) {
                 roundId: chaosResolution.roundId,
                 powerups: { ...chaosResolution.powerups },
                 reveal: false,
+                landed: null,
                 teamShields: [...teamShields],
                 resolutionId: pendingId,
                 pending: null
@@ -2929,55 +3197,99 @@ async function nextRound() {
     const roundNumberForRound = currentRound + 1;
 
     if (isChaosMode) {
-        const resolutionId = Date.now() + Math.floor(Math.random() * 1000);
-        const selectedPointsForRound = selectedButtons;
-        if (isOnlineGame && !isHost) {
-            hideRoundInputUI();
-            await updateData(`games/${gameCode}/chaos`, {
-                pending: buildChaosPendingPayload({
-                    resolutionId,
-                    teamIndexForRound,
-                    roundNumberForRound,
-                    correctAnswers,
-                    selectedPoints: selectedPointsForRound
-                })
-            });
-            lblGameState.textContent = "Status: Host is resolving chaos turn...";
-            showElement(lblGameState);
-            return;
-        }
-
-        isResolvingChaosMove = true;
+        setNextRoundBusyState(true);
         try {
-            const seededRng = createSeededRandom(resolutionId);
-            const chaosResolution = await runChaosResolutionLocally({
-                teamIndexForRound,
-                selectedPoints: selectedPointsForRound,
-                roundNumberForRound,
-                powerupsForRound: generateRoundPowerupsMap(pointsToWin, seededRng),
-                rng: seededRng,
-                animate: true,
-                syncToOnline: isOnlineGame && isHost
-            });
-
-            const auditEvent = {
-                id: resolutionId,
-                teamIndex: teamIndexForRound,
-                roundNumber: roundNumberForRound,
-                correctAnswers: [...correctAnswers]
-            };
-
-            if (!isOnlineGame) {
-                createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
-                createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers);
+            const resolutionId = Date.now() + Math.floor(Math.random() * 1000);
+            const selectedPointsForRound = selectedButtons;
+            if (isOnlineGame && !isHost) {
+                hideRoundInputUI();
+                await updateData(`games/${gameCode}/chaos`, {
+                    pending: buildChaosPendingPayload({
+                        resolutionId,
+                        teamIndexForRound,
+                        roundNumberForRound,
+                        correctAnswers,
+                        selectedPoints: selectedPointsForRound
+                    })
+                });
+                lblGameState.textContent = "Status: Host is resolving chaos turn...";
+                showElement(lblGameState);
+                return;
             }
 
-            advanceRoundPointers();
-            hideRoundInputUI();
+            isResolvingChaosMove = true;
+            try {
+                const seededRng = createSeededRandom(resolutionId);
+                const chaosResolution = await runChaosResolutionLocally({
+                    teamIndexForRound,
+                    selectedPoints: selectedPointsForRound,
+                    roundNumberForRound,
+                    powerupsForRound: generateRoundPowerupsMap(pointsToWin, seededRng),
+                    rng: seededRng,
+                    animate: true,
+                    syncToOnline: isOnlineGame && isHost
+                });
 
-            const hasWinner = teams.some(team => (Number(team?.points) || 0) >= pointsToWin);
-            if (hasWinner) {
+                const auditEvent = {
+                    id: resolutionId,
+                    teamIndex: teamIndexForRound,
+                    roundNumber: roundNumberForRound,
+                    correctAnswers: [...correctAnswers],
+                    chaosSummary: formatChaosSummaryForAudit(chaosResolution.resolutionSummary)
+                };
+
+                if (!isOnlineGame) {
+                    createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
+                    createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, {
+                        chaosSummary: auditEvent.chaosSummary
+                    });
+                }
+
+                advanceRoundPointers();
+                hideRoundInputUI();
+
+                const hasWinner = teams.some(team => (Number(team?.points) || 0) >= pointsToWin);
+                if (hasWinner) {
+                    if (isOnlineGame) {
+                        await updateData(`games/${gameCode}`, {
+                            teams: teams,
+                            easyWords: easyWords,
+                            hardWords: hardWords,
+                            currentGameWords: currentGameWords,
+                            numPlayers: numPlayers,
+                            currentTeam: currentTeam,
+                            currentRound: currentRound,
+                            words: [],
+                            remainingTime: null,
+                            roundActive: false,
+                            endRoundEarly: false,
+                            gameState: "ended",
+                            correctAnswers: [...correctAnswers],
+                            auditEvent,
+                            chaos: {
+                                roundId: chaosResolution.roundId,
+                                powerups: { ...chaosResolution.powerups },
+                                reveal: false,
+                                landed: null,
+                                teamShields: [...teamShields],
+                                resolutionId,
+                                pending: null
+                            }
+                        });
+                    }
+
+                    updateCurrentTeamIndicator();
+                    endGame();
+                    return;
+                }
+
+                btnStartRound.hidden = false;
+                btnEndGame.hidden = false;
+                updateCurrentTeamIndicator();
+                updateTeamScores();
+
                 if (isOnlineGame) {
+                    teams = setSpeaker(teams);
                     await updateData(`games/${gameCode}`, {
                         teams: teams,
                         easyWords: easyWords,
@@ -2990,13 +3302,14 @@ async function nextRound() {
                         remainingTime: null,
                         roundActive: false,
                         endRoundEarly: false,
-                        gameState: "ended",
+                        gameState: 'resumed',
                         correctAnswers: [...correctAnswers],
                         auditEvent,
                         chaos: {
                             roundId: chaosResolution.roundId,
                             powerups: { ...chaosResolution.powerups },
                             reveal: false,
+                            landed: null,
                             teamShields: [...teamShields],
                             resolutionId,
                             pending: null
@@ -3004,48 +3317,13 @@ async function nextRound() {
                     });
                 }
 
-                updateCurrentTeamIndicator();
-                endGame();
-                return;
+                lastProcessedChaosResolutionId = resolutionId;
+                hideElement(lblGameState);
+            } finally {
+                isResolvingChaosMove = false;
             }
-
-            btnStartRound.hidden = false;
-            btnEndGame.hidden = false;
-            updateCurrentTeamIndicator();
-            updateTeamScores();
-
-            if (isOnlineGame) {
-                teams = setSpeaker(teams);
-                await updateData(`games/${gameCode}`, {
-                    teams: teams,
-                    easyWords: easyWords,
-                    hardWords: hardWords,
-                    currentGameWords: currentGameWords,
-                    numPlayers: numPlayers,
-                    currentTeam: currentTeam,
-                    currentRound: currentRound,
-                    words: [],
-                    remainingTime: null,
-                    roundActive: false,
-                    endRoundEarly: false,
-                    gameState: 'resumed',
-                    correctAnswers: [...correctAnswers],
-                    auditEvent,
-                    chaos: {
-                        roundId: chaosResolution.roundId,
-                        powerups: { ...chaosResolution.powerups },
-                        reveal: false,
-                        teamShields: [...teamShields],
-                        resolutionId,
-                        pending: null
-                    }
-                });
-            }
-
-            lastProcessedChaosResolutionId = resolutionId;
-            hideElement(lblGameState);
         } finally {
-            isResolvingChaosMove = false;
+            setNextRoundBusyState(false);
         }
         return;
     }
@@ -3119,6 +3397,7 @@ function endGame() {
 function endRound() {
     btnEndRound.hidden = true;
     btnNextRound.hidden = false;
+    setNextRoundBusyState(false);
     endRoundEarly = true;
     clearTrainingHints();
     isRoundActive = false;
@@ -3178,15 +3457,8 @@ function displayCurrentWords() {
     else {
         if (currentGameWords.length < numWords) {
             if (isAiGame) {
-                const aiWordPool = document.getElementById("aiWords")?.value
-                    .split("\n")
-                    .map(word => word.trim())
-                    .filter(Boolean) || [];
-
-                const dedupedAiWords = Array.from(new Set(aiWordPool.map(word => normalizeWord(word))))
-                    .map(word => aiWordPool.find(original => normalizeWord(original) === word));
-
-                currentGameWords = shuffleArray(dedupedAiWords.filter(Boolean));
+                const dedupedAiWords = extractUniqueAiWordsFromText(document.getElementById("aiWords")?.value || "");
+                currentGameWords = shuffleArray(dedupedAiWords);
             }
             else {
                 currentGameWords = loadWords(activeSelectedTheme, [...activeSelectedCategories], difficulty);
@@ -3353,6 +3625,7 @@ function updateBoard() {
         cell.innerHTML = "";
         cell.style.backgroundColor = "";
         cell.classList.remove("board-cell-powerup");
+        cell.classList.remove("board-cell-landed-powerup");
     });
 
     // Track team positions on the board
@@ -3363,11 +3636,12 @@ function updateBoard() {
         cellTeams[position].push(index);
     });
 
-    // Update board cells with team colors
+    // Update board cells with team colors.
     cellTeams.forEach((teamIndexes, cellIndex) => {
-        if (teamIndexes.length === 0) return;
-
         const cell = boardCells[cellIndex];
+        if (teamIndexes.length === 0) {
+            return;
+        }
 
         // If there's only one team, just set the background color
         if (teamIndexes.length === 1) {
@@ -3390,17 +3664,30 @@ function updateBoard() {
 
             cell.appendChild(segmentsContainer);
         }
+    });
 
-        const powerupType = sanitizeChaosPowerupType(roundPowerups[cellIndex]);
-        if (isChaosMode && powerupRevealVisible && powerupType) {
+    // Reveal powerups across the full board map.
+    if (isChaosMode && powerupRevealVisible) {
+        Array.from(boardCells).forEach((cell, cellIndex) => {
+            const powerupType = sanitizeChaosPowerupType(roundPowerups[cellIndex]);
+            if (!powerupType) {
+                return;
+            }
             const powerupConfig = CHAOS_POWERUP_TYPES[powerupType];
             const badge = document.createElement("div");
             badge.className = `board-powerup ${powerupConfig.cssClass}`;
             badge.textContent = powerupConfig.label;
+            const isLandedCell = landedPowerupPreview
+                && landedPowerupPreview.tileIndex === cellIndex
+                && landedPowerupPreview.type === powerupType;
+            if (isLandedCell) {
+                badge.classList.add("board-powerup-landed");
+                cell.classList.add("board-cell-landed-powerup");
+            }
             cell.classList.add("board-cell-powerup");
             cell.appendChild(badge);
-        }
-    });
+        });
+    }
 
     updateTeamScores();
 }
@@ -3543,7 +3830,7 @@ function createTeamAuditColumns(tableIndex, roundNumber = currentRound + 1) {
     }
 }
 
-function createTeamAuditRows(tableIndex, roundNumber = currentRound + 1, correctAnswers = []) {
+function createTeamAuditRows(tableIndex, roundNumber = currentRound + 1, correctAnswers = [], options = {}) {
     const table = document.getElementById(`table${tableIndex}`);
     if (table) {
         const existingRow = table.tBodies[0].querySelector(`tr[data-round="${roundNumber}"]`);
@@ -3563,9 +3850,13 @@ function createTeamAuditRows(tableIndex, roundNumber = currentRound + 1, correct
         roundCell.textContent = String(roundNumber);
 
         const answersCell = row.insertCell(1);
-        answersCell.textContent = Array.isArray(correctAnswers) && correctAnswers.length > 0
+        const answersText = Array.isArray(correctAnswers) && correctAnswers.length > 0
             ? correctAnswers.join(", ")
             : "0";
+        const chaosText = typeof options.chaosSummary === "string" && options.chaosSummary.trim().length > 0
+            ? ` | Chaos: ${options.chaosSummary.trim()}`
+            : "";
+        answersCell.textContent = `${answersText}${chaosText}`;
     } else {
         console.error(`Table with index ${tableIndex} does not exist.`);
     }
