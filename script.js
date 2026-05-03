@@ -86,6 +86,7 @@ let isHeartbeatWriteInFlight = false;
 let lastProcessedAuditEventId = 0;
 
 const registeredModalHandlers = new Set();
+const registeredModalFocusHandlers = new Set();
 
 const CHAOS_POWERUP_TYPES = {
     plus1: {
@@ -591,6 +592,19 @@ function setNextRoundBusyState(isBusy) {
     btnNextRound.textContent = isBusy
         ? "Resolving Chaos..."
         : (btnNextRound.dataset.defaultLabel || "Next Round");
+}
+
+function isScoreButtonSelected(button) {
+    return Boolean(button?.classList?.contains("score-button-selected"));
+}
+
+function setScoreButtonSelected(button, isSelected) {
+    if (!button) {
+        return;
+    }
+
+    button.classList.toggle("score-button-selected", Boolean(isSelected));
+    button.style.background = isSelected ? "grey" : "";
 }
 
 function isNarrowViewport() {
@@ -1728,14 +1742,14 @@ async function onLobbyJoined() {
             count++;
             button.addEventListener("click", async () => {
                 if (!btnNextRound.hidden) {
-                    if (button.style.background == "grey") {
+                    if (isScoreButtonSelected(button)) {
                         selectedButtons--;
-                        button.style.background = null;
+                        setScoreButtonSelected(button, false);
                         await updateData(`games/${gameCode}`, { clickedButton: button.textContent });
                     }
                     else {
                         selectedButtons++;
-                        button.style.background = "grey";
+                        setScoreButtonSelected(button, true);
                         await updateData(`games/${gameCode}`, { clickedButton: `!${button.textContent}` });
                     }
                 }
@@ -2048,11 +2062,11 @@ async function onLobbyJoined() {
             for (const button of buttons) {
                 let startsWithExclamation = clickedButton.startsWith("!");
                 if ((startsWithExclamation && clickedButton.slice(1) === button.textContent.trim()) || clickedButton === button.textContent.trim()) {
-                    if (button.style.background == "grey") {
-                        button.style.background = null;
+                    if (isScoreButtonSelected(button)) {
+                        setScoreButtonSelected(button, false);
                     }
                     else {
-                        button.style.background = "grey";
+                        setScoreButtonSelected(button, true);
                     }
                 }
             }
@@ -2372,7 +2386,7 @@ function updateUI() {
     document.querySelectorAll(".scoreButton").forEach(button => {
         count++;
         if (count <= numWords) {
-            button.style.background = null;
+            setScoreButtonSelected(button, false);
         }
     });
 }
@@ -2775,13 +2789,13 @@ async function startGame() {
             count++;
             button.addEventListener("click", () => {
                 if (!btnNextRound.hidden) {
-                    if (button.style.background == "grey") {
+                    if (isScoreButtonSelected(button)) {
                         selectedButtons--;
-                        button.style.background = null;
+                        setScoreButtonSelected(button, false);
                     }
                     else {
                         selectedButtons++;
-                        button.style.background = "grey";
+                        setScoreButtonSelected(button, true);
                     }
                 }
             });
@@ -2879,7 +2893,7 @@ function startRound() {
         document.querySelectorAll(".scoreButton").forEach(button => {
             count++;
             if (count <= numWords) {
-                button.style.background = null;
+                setScoreButtonSelected(button, false);
                 button.disabled = false;
             }
         });
@@ -2889,7 +2903,7 @@ function startRound() {
 function getSelectedCorrectAnswers() {
     const correctAnswers = [];
     document.querySelectorAll(".scoreButton").forEach(button => {
-        if (button.style.background === "grey") {
+        if (isScoreButtonSelected(button)) {
             correctAnswers.push(button.textContent);
         }
     });
@@ -3526,7 +3540,7 @@ function displayCurrentWords() {
 
 function clearWords() {
     document.querySelectorAll(".scoreButton").forEach(button => {
-        button.style.background = null;
+        setScoreButtonSelected(button, false);
         selectedButtons = 0;
     });
 }
@@ -3548,23 +3562,86 @@ function updatePoints(points) {
 
 function playSound(audioElement, endCondition, playbackRate = 1.0) {
     return new Promise((resolve) => {
-        audioElement.playbackRate = playbackRate;
-        audioElement.currentTime = 0;
-        audioElement.play();
+        if (!audioElement) {
+            resolve();
+            return;
+        }
 
-        const checkInterval = setInterval(() => {
-            if (endCondition()) {
-                audioElement.pause();
-                audioElement.currentTime = 0;
+        let settled = false;
+        let checkInterval = null;
+        let failsafeTimeout = null;
+
+        const cleanupAndResolve = () => {
+            if (settled) {
+                return;
+            }
+            settled = true;
+
+            if (checkInterval) {
                 clearInterval(checkInterval);
-                resolve();
+            }
+            if (failsafeTimeout) {
+                clearTimeout(failsafeTimeout);
+            }
+
+            audioElement.onended = null;
+            audioElement.onerror = null;
+            resolve();
+        };
+
+        try {
+            audioElement.playbackRate = playbackRate;
+            audioElement.currentTime = 0;
+        } catch (_) {
+            cleanupAndResolve();
+            return;
+        }
+
+        const durationMs = Number.isFinite(audioElement.duration) && audioElement.duration > 0
+            ? Math.ceil((audioElement.duration / Math.max(0.1, playbackRate)) * 1000)
+            : 0;
+        const fallbackMs = Math.max(1200, Math.min(6000, durationMs > 0 ? durationMs + 800 : 3200));
+
+        failsafeTimeout = setTimeout(() => {
+            cleanupAndResolve();
+        }, fallbackMs);
+
+        checkInterval = setInterval(() => {
+            let shouldEnd = false;
+            try {
+                shouldEnd = Boolean(endCondition && endCondition());
+            } catch (_) {
+                shouldEnd = true;
+            }
+
+            if (shouldEnd) {
+                try {
+                    audioElement.pause();
+                    audioElement.currentTime = 0;
+                } catch (_) {
+                    // Ignore pause/reset failures and continue resolving.
+                }
+                cleanupAndResolve();
             }
         }, 100);
 
         audioElement.onended = () => {
-            clearInterval(checkInterval);
-            resolve();
+            cleanupAndResolve();
         };
+        audioElement.onerror = () => {
+            cleanupAndResolve();
+        };
+
+        try {
+            const playAttempt = audioElement.play();
+            if (playAttempt && typeof playAttempt.then === "function") {
+                playAttempt.catch(() => {
+                    cleanupAndResolve();
+                });
+            }
+        } catch (_) {
+            cleanupAndResolve();
+        }
     });
 }
 
@@ -3942,7 +4019,113 @@ function getModalInstance(modalId) {
     return bootstrap.Modal.getOrCreateInstance(modalElement);
 }
 
+function focusElementSafely(element) {
+    if (!(element instanceof HTMLElement)) {
+        return false;
+    }
+
+    try {
+        element.focus({ preventScroll: true });
+        return true;
+    } catch (_) {
+        try {
+            element.focus();
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+}
+
+function getModalFocusReturnTarget(modalElement) {
+    if (!(modalElement instanceof HTMLElement)) {
+        return null;
+    }
+
+    const returnFocusId = String(modalElement.dataset.returnFocusId || "").trim();
+    if (!returnFocusId) {
+        return null;
+    }
+
+    const target = document.getElementById(returnFocusId);
+    if (!(target instanceof HTMLElement)) {
+        return null;
+    }
+
+    return target;
+}
+
+function registerModalFocusGuards(modalId) {
+    if (!modalId || registeredModalFocusHandlers.has(modalId)) {
+        return;
+    }
+
+    const modalElement = document.getElementById(modalId);
+    if (!(modalElement instanceof HTMLElement)) {
+        return;
+    }
+
+    registeredModalFocusHandlers.add(modalId);
+
+    modalElement.addEventListener("show.bs.modal", (event) => {
+        modalElement.inert = false;
+        const relatedTarget = event?.relatedTarget;
+        if (relatedTarget instanceof HTMLElement && relatedTarget.id) {
+            modalElement.dataset.returnFocusId = relatedTarget.id;
+        }
+    });
+
+    modalElement.addEventListener("hide.bs.modal", () => {
+        modalElement.inert = true;
+        const active = document.activeElement;
+        if (!(active instanceof HTMLElement) || !modalElement.contains(active)) {
+            return;
+        }
+
+        const returnTarget = getModalFocusReturnTarget(modalElement);
+        if (returnTarget && returnTarget !== active) {
+            const moved = focusElementSafely(returnTarget);
+            if (moved) {
+                return;
+            }
+        }
+
+        active.blur();
+    });
+
+    modalElement.addEventListener("hidden.bs.modal", () => {
+        modalElement.inert = true;
+        const active = document.activeElement;
+        if (active instanceof HTMLElement && modalElement.contains(active)) {
+            active.blur();
+        }
+
+        const returnTarget = getModalFocusReturnTarget(modalElement);
+        if (returnTarget && returnTarget !== document.activeElement) {
+            focusElementSafely(returnTarget);
+        }
+    });
+}
+
 function hideModalById(modalId) {
+    registerModalFocusGuards(modalId);
+    const modalElement = document.getElementById(modalId);
+    if (modalElement instanceof HTMLElement) {
+        const active = document.activeElement;
+        if (active instanceof HTMLElement && modalElement.contains(active)) {
+            const returnTarget = getModalFocusReturnTarget(modalElement);
+            if (returnTarget && returnTarget !== active) {
+                const moved = focusElementSafely(returnTarget);
+                if (!moved) {
+                    active.blur();
+                }
+            }
+            else {
+                active.blur();
+            }
+        }
+    }
+
     const modalInstance = getModalInstance(modalId);
     if (modalInstance) {
         modalInstance.hide();
@@ -3959,8 +4142,14 @@ function registerModal(modalButton, modalId) {
         return;
     }
 
+    registerModalFocusGuards(modalId);
     registeredModalHandlers.add(registrationKey);
     modalButton.addEventListener("click", () => {
+        const modalElement = document.getElementById(modalId);
+        if (modalElement instanceof HTMLElement && modalButton.id) {
+            modalElement.dataset.returnFocusId = modalButton.id;
+        }
+
         const modalInstance = getModalInstance(modalId);
         if (modalInstance) {
             modalInstance.show();
