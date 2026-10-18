@@ -1,6 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getDatabase, onValue, ref, get, set, push, off, update, child, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
+import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
+import * as OnlineState from './online/state.js';
+import { OnlineClient } from './online/client.js';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -42,6 +44,11 @@ let isGameStarted = false;
 let countdownSoundPlaying = false;
 let hasRegisteredLobbyExitHandlers = false;
 let isLeavingLobby = false;
+let onlineClient = null;
+let onlineLobbyActionPending = false;
+let onlineEndedHandled = false;
+let onlineBoardSignature = '';
+const ONLINE_SESSION_KEY = 'half_a_minute_online_session_v2';
 
 // Game settings variables
 let isAiGame = false;
@@ -63,26 +70,14 @@ let powerupRevealVisible = false;
 let landedPowerupPreview = null;
 let teamShields = [];
 let isResolvingChaosMove = false;
-let lastProcessedChaosResolutionId = 0;
-let lastProcessedChaosPendingId = 0;
 
 const RECENT_WORDS_STORAGE_KEY = "half_a_minute_recent_words_v1";
 const MAX_RECENT_WORDS = 600;
-
-const HEARTBEAT_INTERVAL_MS = 4000;
-const HOST_STALE_THRESHOLD_MS = 10000;
-const STALE_PLAYER_THRESHOLD_MS = 90000;
-const STALE_CLEANUP_INTERVAL_MS = 3000;
 const LOBBY_EXPIRY_MS = 12 * 60 * 60 * 1000;
-const JOIN_TRANSACTION_MAX_RETRIES = 3;
-const JOIN_RETRY_BASE_DELAY_MS = 220;
 const CHAOS_MOVE_STEP_DELAY_MS = 420;
 const CHAOS_PREMOVE_REVEAL_MS = 3000;
 const CHAOS_LANDED_PREVIEW_DELAY_MS = 2000;
 const CHAOS_CLEAR_PAUSE_MS = 450;
-let heartbeatIntervalId = null;
-let staleCleanupIntervalId = null;
-let isHeartbeatWriteInFlight = false;
 let lastProcessedAuditEventId = 0;
 
 const registeredModalHandlers = new Set();
@@ -180,10 +175,12 @@ const warningSound = document.getElementById('warningSound');
 const endSound = document.getElementById('endSound');
 const endSoundAlt = document.getElementById('endSoundAlt');
 
-// Load menu
-document.addEventListener("DOMContentLoaded", () => {
+// CDN module imports can finish after DOMContentLoaded has already fired.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeMenu, { once: true });
+} else {
     initializeMenu();
-});
+}
 
 function setLayoutMode(mode = "menu") {
     document.body.classList.remove("layout-menu", "layout-game");
@@ -294,95 +291,12 @@ function initializeMenu() {
     document.getElementById("endRoundButton").addEventListener("click", endRound);
     document.getElementById("btnGenerate").addEventListener("click", generate);
     document.getElementById("btnAiGame").addEventListener("click", startAIGame);
-}
-
-//// FIREBASE METHODS START ////
-// Function to set data
-function setData(path, data) {
-    return set(ref(db, path), data)
-        .then(() => console.log(`Data set at ${path}`))
-        .catch((error) => console.error(`Error setting data: ${error}`));
-}
-
-// Function to update data
-function updateData(path, data) {
-    return update(ref(db, path), data)
-        .then(() => {
-            console.log(`Data updated at ${path}`)
-        })
-        .catch((error) => console.error(`Error updating data: ${error}`));
-}
-
-function updateDataSilent(path, data) {
-    return update(ref(db, path), data)
-        .catch((error) => console.error(`Error updating data: ${error}`));
-}
-
-function setDataSilent(path, data) {
-    return set(ref(db, path), data)
-        .catch((error) => console.error(`Error setting data: ${error}`));
-}
-
-// Function to add data using push
-function pushData(path, data) {
-    const newRef = push(ref(db, path));
-    return set(newRef, data)
-        .then(() => console.log(`Data pushed to ${path}`))
-        .catch((error) => console.error(`Error pushing data: ${error}`));
-}
-
-// Function to remove data
-function removeData(path) {
-    return remove(ref(db, path))
-        .then(() => {
-            //console.log(`Data removed from ${path}`)
-        })
-        .catch((error) => console.error(`Error removing data: ${error}`));
-}
-
-// Function to read data once
-async function readDataOnce(path) {
-    try {
-        const snapshot = await get(ref(db, path));
-        return snapshot.val();
-    } catch (error) {
-        console.error(`Error reading data: ${error}`);
-        throw error;
-    }
-}
-
-// Function to listen for changes
-function listenForChanges(path, callback) {
-    const dataRef = ref(db, path);
-    onValue(dataRef, (snapshot) => {
-        const data = snapshot.val();
-        //console.log(`Data changed at ${path}`, data);
-        callback(data);
+    document.getElementById('leaveOnlineGame').addEventListener('click', leaveLobbyWithTransaction);
+    document.getElementById('rejoinOnlineGame').addEventListener('click', () => {
+        void onlineClient?.resume(true).catch(error => console.error('Unable to rejoin:', error));
     });
+    void restoreOnlineSession();
 }
-
-// Function to stop listening for changes
-function stopListening(path) {
-    const dataRef = ref(db, path);
-    off(dataRef);
-    console.log(`Stopped listening to ${path}`);
-}
-
-function firebaseWrite(path, data) {
-    return set(ref(db, path), data);
-}
-
-function firebaseRead(path, callback) {
-    const dataRef = ref(db, path);
-    onValue(dataRef, (snapshot) => {
-        callback(snapshot.val());
-    });
-}
-
-function firebaseDelete(path) {
-    remove(ref(db, path));
-}
-//// FIREBASE METHODS END ////
 
 function doesPlayerExist(teams, playerName) {
     const normalizedTarget = normalizeWord(playerName);
@@ -484,12 +398,6 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
     }
 
     return sanitized;
-}
-
-function isRetryableJoinError(error) {
-    const code = String(error?.code || "").toLowerCase();
-    const message = String(error?.message || "").toLowerCase();
-    return code.includes("aborted") || message.includes("aborted") || message.includes("retry");
 }
 
 function sleep(ms) {
@@ -883,40 +791,6 @@ function formatChaosSummaryForAudit(summary = null) {
     }
 }
 
-function buildChaosPendingPayload({
-    resolutionId,
-    teamIndexForRound,
-    roundNumberForRound,
-    correctAnswers,
-    selectedPoints
-}) {
-    return {
-        id: Number(resolutionId),
-        submittedBy: playerName,
-        teamIndex: teamIndexForRound,
-        roundNumber: roundNumberForRound,
-        points: clampInt(selectedPoints, 0, 0, numWords),
-        correctAnswers: Array.isArray(correctAnswers) ? [...correctAnswers] : [],
-        easyWords: Array.isArray(easyWords) ? [...easyWords] : [],
-        hardWords: Array.isArray(hardWords) ? [...hardWords] : [],
-        currentGameWords: Array.isArray(currentGameWords) ? [...currentGameWords] : []
-    };
-}
-
-async function syncChaosVisualState(roundNumberForRound = currentRound + 1) {
-    if (!isOnlineGame || !isHost || !gameCode) {
-        return;
-    }
-
-    await updateDataSilent(`games/${gameCode}/chaos`, {
-        roundId: Number(roundNumberForRound) || 0,
-        powerups: { ...roundPowerups },
-        reveal: Boolean(powerupRevealVisible),
-        landed: landedPowerupPreview ? { ...landedPowerupPreview } : null,
-        teamShields: [...teamShields]
-    });
-}
-
 function dedupeWordObjects(wordObjects = []) {
     const seenWords = new Set();
     return wordObjects.filter(wordObj => {
@@ -998,421 +872,30 @@ function filterRecentlyUsedWords(wordObjects = []) {
     return wordObjects;
 }
 
-function toPresenceKey(name) {
-    return String(name || "")
-        .trim()
-        .toLowerCase()
-        .replace(/[.#$/\[\]]/g, "_");
-}
-
-function getBalancedTeamIndex(teamsData, configuredTeamCount, totalPlayers) {
-    const candidateIndexes = Array.from({ length: configuredTeamCount }, (_, index) => index);
-    let minPlayers = Number.MAX_SAFE_INTEGER;
-    let leastFilledTeamIndexes = [];
-
-    for (const teamIndex of candidateIndexes) {
-        const team = teamsData[teamIndex];
-        const teamSize = team?.players?.length || 0;
-        if (teamSize < minPlayers) {
-            minPlayers = teamSize;
-            leastFilledTeamIndexes = [teamIndex];
-        } else if (teamSize === minPlayers) {
-            leastFilledTeamIndexes.push(teamIndex);
-        }
-    }
-
-    if (leastFilledTeamIndexes.length === 0) {
-        return totalPlayers % configuredTeamCount;
-    }
-
-    return leastFilledTeamIndexes[totalPlayers % leastFilledTeamIndexes.length];
-}
-
-function countPlayersInTeams(teamsData = []) {
-    return teamsData.reduce((total, team) => total + (team.players ? team.players.length : 0), 0);
-}
-
-function ensureTeamsShape(teamsData = []) {
-    teamsData.forEach((team, index) => {
-        if (!Array.isArray(team.players)) {
-            team.players = [];
-        }
-
-        if (team.id === undefined || team.id === null) {
-            team.id = index;
-        }
-    });
-}
-
-function reindexPlayers(teamsData = []) {
-    teamsData.forEach(team => {
-        if (!Array.isArray(team.players)) {
-            team.players = [];
-        }
-
-        team.players.forEach((player, index) => {
-            player.id = index;
-        });
-    });
-}
-
-function getFirstAvailablePlayerName(teamsData = []) {
-    for (const team of teamsData) {
-        if (team.players && team.players.length > 0) {
-            return team.players[0].playerName;
-        }
-    }
-
-    return "";
-}
-
-function assignFallbackSpeaker(teamsData = [], preferredTeamIndex = 0) {
-    teamsData.forEach(team => {
-        if (team.players) {
-            team.players.forEach(player => {
-                player.isSpeaker = false;
-            });
-        }
-    });
-
-    if (teamsData.length === 0) {
-        return;
-    }
-
-    const teamCount = teamsData.length;
-    for (let offset = 0; offset < teamCount; offset++) {
-        const index = (preferredTeamIndex + offset) % teamCount;
-        const team = teamsData[index];
-        if (team.players && team.players.length > 0) {
-            team.players[0].isSpeaker = true;
-            return;
-        }
-    }
-}
-
-function isTeamsValidForTeamCount(teamCount, playerCount) {
-    if (teamCount == 2 && playerCount == 2) {
-        return true;
-    }
-    else if (teamCount == 3 && playerCount == 3) {
-        return true;
-    }
-    else if (playerCount >= teamCount * 2) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
-function getConfiguredTeamCount(gameData) {
-    const teamsCount = Array.isArray(gameData?.teams) ? gameData.teams.length : 0;
-    const configured = Number(gameData?.settings?.numTeams) || teamsCount;
-    return Math.max(1, Math.min(configured, teamsCount || configured));
-}
-
-async function joinPlayerToLobby(playerNameToJoin) {
-    const gameRef = ref(db, `games/${gameCode}`);
-    const safePlayerName = sanitizePlayerName(playerNameToJoin);
-    if (!safePlayerName) {
-        return { success: false, reason: "invalid-player-name" };
-    }
-
-    for (let attempt = 1; attempt <= JOIN_TRANSACTION_MAX_RETRIES; attempt++) {
-        let duplicatePlayerName = false;
-        let lobbyUnavailable = false;
-        const now = Date.now();
-
-        try {
-            // Preflight read helps avoid false "unavailable" on freshly-created lobbies.
-            const preflightData = await readDataOnce(`games/${gameCode}`);
-            if (!preflightData || preflightData.gameState === "ended") {
-                if (attempt < JOIN_TRANSACTION_MAX_RETRIES) {
-                    const delay = JOIN_RETRY_BASE_DELAY_MS * attempt;
-                    console.info(`[join] preflight missing/ended for ${safePlayerName} (attempt ${attempt}/${JOIN_TRANSACTION_MAX_RETRIES}); retrying in ${delay}ms`);
-                    await sleep(delay);
-                    continue;
-                }
-
-                return { success: false, reason: "lobby-unavailable" };
-            }
-
-            const result = await runTransaction(gameRef, (gameData) => {
-                let workingGameData = gameData;
-                if (!workingGameData && preflightData && preflightData.gameState !== "ended") {
-                    // If SDK gives an initial empty snapshot, use confirmed preflight state as a base.
-                    workingGameData = JSON.parse(JSON.stringify(preflightData));
-                }
-
-                if (!workingGameData) {
-                    lobbyUnavailable = true;
-                    return;
-                }
-
-                if (workingGameData.gameState === "ended") {
-                    lobbyUnavailable = true;
-                    return;
-                }
-
-                if (!Array.isArray(workingGameData.teams) || workingGameData.teams.length === 0) {
-                    lobbyUnavailable = true;
-                    return;
-                }
-
-                ensureTeamsShape(workingGameData.teams);
-                const configuredTeamCount = getConfiguredTeamCount(workingGameData);
-
-                if (doesPlayerExist(workingGameData.teams, safePlayerName)) {
-                    duplicatePlayerName = true;
-                    return;
-                }
-
-                const totalPlayers = countPlayersInTeams(workingGameData.teams);
-                const teamIndex = getBalancedTeamIndex(workingGameData.teams, configuredTeamCount, totalPlayers);
-                const targetTeam = workingGameData.teams[teamIndex];
-                const playerToAdd = {
-                    id: targetTeam.players.length,
-                    playerName: safePlayerName,
-                    isSpeaker: totalPlayers === 0
-                };
-
-                targetTeam.players.push(playerToAdd);
-                workingGameData.numPlayers = totalPlayers + 1;
-                workingGameData.presence = workingGameData.presence || {};
-                workingGameData.presence[toPresenceKey(safePlayerName)] = {
-                    playerName: safePlayerName,
-                    lastSeen: now
-                };
-
-                if (!workingGameData.hostName) {
-                    workingGameData.hostName = safePlayerName;
-                }
-
-                const canStart = isTeamsValidForTeamCount(configuredTeamCount, workingGameData.numPlayers);
-                workingGameData.gameState = canStart ? (workingGameData.isGameStarted ? "resumed" : "ready") : "waiting";
-
-                if (canStart && workingGameData.isGameStarted) {
-                    const hasSpeaker = workingGameData.teams.some(team =>
-                        Array.isArray(team.players) && team.players.some(player => player.isSpeaker)
-                    );
-
-                    if (!hasSpeaker) {
-                        const preferredTeamIndex = Math.max(0, (workingGameData.currentTeam || 1) - 1);
-                        assignFallbackSpeaker(workingGameData.teams, preferredTeamIndex);
-                    }
-                }
-
-                return workingGameData;
-            }, { applyLocally: false });
-
-            if (!result.committed) {
-                if (duplicatePlayerName) {
-                    return { success: false, reason: "duplicate-player-name" };
-                }
-
-                if (lobbyUnavailable) {
-                    return { success: false, reason: "lobby-unavailable" };
-                }
-
-                if (attempt < JOIN_TRANSACTION_MAX_RETRIES) {
-                    const delay = JOIN_RETRY_BASE_DELAY_MS * attempt;
-                    console.info(`[join] transient abort for ${safePlayerName} (attempt ${attempt}/${JOIN_TRANSACTION_MAX_RETRIES}); retrying in ${delay}ms`);
-                    await sleep(delay);
-                    continue;
-                }
-
-                return { success: false, reason: "transaction-aborted" };
-            }
-
-            const updatedGame = result.snapshot.val();
-            teams = updatedGame?.teams || [];
-            numPlayers = updatedGame?.numPlayers ?? countPlayersInTeams(teams);
-            numTeams = updatedGame?.settings?.numTeams ?? numTeams;
-            isGameStarted = Boolean(updatedGame?.isGameStarted);
-
-            return { success: true };
-        } catch (error) {
-            if (attempt < JOIN_TRANSACTION_MAX_RETRIES && isRetryableJoinError(error)) {
-                const delay = JOIN_RETRY_BASE_DELAY_MS * attempt;
-                console.info(`[join] retryable transaction error for ${safePlayerName} (attempt ${attempt}/${JOIN_TRANSACTION_MAX_RETRIES}): ${error?.message || error}`);
-                await sleep(delay);
-                continue;
-            }
-
-            console.error("Failed to join lobby:", error);
-            return { success: false, reason: "join-error", error };
-        }
-    }
-
-    return { success: false, reason: "transaction-aborted" };
-}
-
 async function leaveLobbyWithTransaction() {
-    if (!isOnlineGame || !gameCode || !playerName || isLeavingLobby) {
-        return;
-    }
-
+    if (!onlineClient || isLeavingLobby) return;
     isLeavingLobby = true;
-    const gameRef = ref(db, `games/${gameCode}`);
-
     try {
-        await runTransaction(gameRef, (gameData) => {
-            if (!gameData || !Array.isArray(gameData.teams)) {
-                return gameData;
-            }
-
-            ensureTeamsShape(gameData.teams);
-
-            let removedPlayer = null;
-            let removedTeamIndex = -1;
-
-            for (let teamIndex = 0; teamIndex < gameData.teams.length; teamIndex++) {
-                const team = gameData.teams[teamIndex];
-                const playerIndex = team.players.findIndex(player => player.playerName === playerName);
-                if (playerIndex !== -1) {
-                    removedPlayer = team.players[playerIndex];
-                    removedTeamIndex = teamIndex;
-                    team.players.splice(playerIndex, 1);
-                    break;
-                }
-            }
-
-            if (!removedPlayer) {
-                return gameData;
-            }
-
-            if (gameData.presence) {
-                delete gameData.presence[toPresenceKey(playerName)];
-            }
-
-            reindexPlayers(gameData.teams);
-            gameData.numPlayers = countPlayersInTeams(gameData.teams);
-
-            if (gameData.numPlayers <= 0) {
-                return null;
-            }
-
-            if (gameData.hostName === playerName) {
-                gameData.hostName = getFirstAvailablePlayerName(gameData.teams);
-            }
-            if (!gameData.hostName) {
-                gameData.hostName = getFirstAvailablePlayerName(gameData.teams);
-            }
-
-            const configuredTeamCount = getConfiguredTeamCount(gameData);
-            const canContinue = isTeamsValidForTeamCount(configuredTeamCount, gameData.numPlayers);
-
-            if (!canContinue) {
-                clearAllSpeakers(gameData.teams);
-                gameData.roundActive = false;
-                gameData.words = [];
-                if (gameData.isGameStarted) {
-                    gameData.endRoundEarly = true;
-                    gameData.remainingTime = 0;
-                }
-
-                gameData.gameState = "waiting";
-                return gameData;
-            }
-
-            const hasSpeaker = gameData.teams.some(team =>
-                team.players && team.players.some(player => player.isSpeaker)
-            );
-
-            if (!hasSpeaker) {
-                const preferredTeamIndex = removedPlayer.isSpeaker
-                    ? Math.max(0, (gameData.currentTeam || 1) - 1)
-                    : Math.max(0, removedTeamIndex);
-                assignFallbackSpeaker(gameData.teams, preferredTeamIndex);
-            }
-
-            if (removedPlayer.isSpeaker && gameData.isGameStarted) {
-                gameData.endRoundEarly = true;
-                gameData.remainingTime = 0;
-                gameData.roundActive = false;
-            }
-
-            gameData.gameState = canContinue ? (gameData.isGameStarted ? "resumed" : "ready") : "waiting";
-
-            return gameData;
-        }, { applyLocally: false });
+        await onlineClient.close(true);
+        saveOnlineSession(null);
+        location.reload();
     } catch (error) {
-        console.error("Failed to leave lobby:", error);
-    } finally {
-        isLeavingLobby = false;
-    }
+        console.error('Failed to leave lobby:', error);
+        alert('Unable to leave yet. Check your connection and retry.');
+    } finally { isLeavingLobby = false; }
 }
 
 function registerLobbyExitHandlers() {
-    if (hasRegisteredLobbyExitHandlers) {
-        return;
-    }
-
-    const handleLobbyExit = () => {
-        stopLobbyHeartbeat();
-        stopStalePlayerCleanupLoop();
-        void leaveLobbyWithTransaction();
-    };
-
-    window.addEventListener("beforeunload", handleLobbyExit);
-    window.addEventListener("pagehide", handleLobbyExit);
+    if (hasRegisteredLobbyExitHandlers) return;
+    window.addEventListener('pagehide', () => onlineClient?.suspend());
+    window.addEventListener('pageshow', event => {
+        if (event.persisted) void onlineClient?.resume().catch(error => console.error('Unable to resume lobby:', error));
+    });
     hasRegisteredLobbyExitHandlers = true;
 }
 
-function stopLobbyHeartbeat() {
-    if (heartbeatIntervalId) {
-        clearInterval(heartbeatIntervalId);
-        heartbeatIntervalId = null;
-    }
-}
-
-function startLobbyHeartbeat() {
-    if (heartbeatIntervalId || !isOnlineGame || !gameCode || !playerName) {
-        return;
-    }
-
-    const writeHeartbeat = async () => {
-        if (isHeartbeatWriteInFlight || !isOnlineGame || !gameCode || !playerName) {
-            return;
-        }
-
-        isHeartbeatWriteInFlight = true;
-        try {
-            await updateDataSilent(`games/${gameCode}/presence/${toPresenceKey(playerName)}`, {
-                playerName,
-                lastSeen: Date.now()
-            });
-        } catch (error) {
-            console.error("Failed heartbeat update:", error);
-        } finally {
-            isHeartbeatWriteInFlight = false;
-        }
-    };
-
-    void writeHeartbeat();
-    heartbeatIntervalId = setInterval(() => {
-        void writeHeartbeat();
-    }, HEARTBEAT_INTERVAL_MS);
-
-    startStalePlayerCleanupLoop();
-}
-
 async function triggerOnlineHealthScan() {
-    if (!isOnlineGame || !gameCode) {
-        return;
-    }
-
-    await pruneStalePlayers();
-}
-
-function clearAllSpeakers(teamsData = []) {
-    teamsData.forEach(team => {
-        if (Array.isArray(team.players)) {
-            team.players.forEach(player => {
-                player.isSpeaker = false;
-            });
-        }
-    });
+    await onlineClient?.health();
 }
 
 function buildGlobalWordDescriptionLookup() {
@@ -1522,560 +1005,41 @@ function renderTrainingHints(words = []) {
     updateMobileGameFocus();
 }
 
-function stopStalePlayerCleanupLoop() {
-    if (staleCleanupIntervalId) {
-        clearInterval(staleCleanupIntervalId);
-        staleCleanupIntervalId = null;
-    }
-}
-
-async function pruneStalePlayers() {
-    if (!isOnlineGame || !gameCode || !playerName) {
-        return;
-    }
-
-    const gameRef = ref(db, `games/${gameCode}`);
-    const now = Date.now();
-
-    try {
-        await runTransaction(gameRef, (gameData) => {
-            if (!gameData || !Array.isArray(gameData.teams)) {
-                return gameData;
-            }
-
-            ensureTeamsShape(gameData.teams);
-            gameData.presence = gameData.presence || {};
-
-            const callerIsCurrentHost = normalizeWord(gameData.hostName) === normalizeWord(playerName);
-            const hostPresence = getPresenceForPlayer(gameData, gameData.hostName);
-            const hostLastSeen = hostPresence?.lastSeen || 0;
-            const hostIsStale = !gameData.hostName || !hostPresence || (now - hostLastSeen) > HOST_STALE_THRESHOLD_MS;
-
-            // If host is healthy, only host should perform stale cleanup writes.
-            if (!callerIsCurrentHost && !hostIsStale) {
-                return gameData;
-            }
-
-            const stalePresenceKeys = Object.keys(gameData.presence).filter(presenceKey => {
-                const presence = gameData.presence[presenceKey];
-                const lastSeen = presence?.lastSeen || 0;
-                return (now - lastSeen) > STALE_PLAYER_THRESHOLD_MS;
-            });
-
-            const stalePlayers = new Set(
-                stalePresenceKeys
-                    .map(presenceKey => gameData.presence[presenceKey]?.playerName)
-                    .filter(Boolean)
-            );
-
-            // If the host went stale (or host entry disappeared), force host recalculation.
-            if (hostIsStale && gameData.hostName) {
-                stalePlayers.add(gameData.hostName);
-            }
-
-            if (stalePresenceKeys.length === 0 && stalePlayers.size === 0 && !hostIsStale) {
-                return gameData;
-            }
-
-            console.info(`[presence] pruning ${stalePlayers.size} stale player(s) from lobby ${gameCode}`);
-
-            let speakerWasRemoved = false;
-            gameData.teams.forEach(team => {
-                if (!Array.isArray(team.players)) {
-                    team.players = [];
-                }
-
-                team.players = team.players.filter(player => {
-                    const shouldKeep = !stalePlayers.has(player.playerName);
-                    if (!shouldKeep && player.isSpeaker) {
-                        speakerWasRemoved = true;
-                    }
-                    return shouldKeep;
-                });
-            });
-
-            stalePresenceKeys.forEach(presenceKey => {
-                delete gameData.presence[presenceKey];
-            });
-            if (gameData.hostName && stalePlayers.has(gameData.hostName)) {
-                delete gameData.presence[toPresenceKey(gameData.hostName)];
-            }
-
-            reindexPlayers(gameData.teams);
-            gameData.numPlayers = countPlayersInTeams(gameData.teams);
-
-            if (gameData.numPlayers <= 0) {
-                return null;
-            }
-
-            if (gameData.hostName && stalePlayers.has(gameData.hostName)) {
-                gameData.hostName = getFirstAvailablePlayerName(gameData.teams);
-            }
-            if (!gameData.hostName) {
-                gameData.hostName = getFirstAvailablePlayerName(gameData.teams);
-            }
-
-            const configuredTeamCount = getConfiguredTeamCount(gameData);
-            const canContinue = isTeamsValidForTeamCount(configuredTeamCount, gameData.numPlayers);
-
-            if (!canContinue) {
-                clearAllSpeakers(gameData.teams);
-                gameData.roundActive = false;
-                gameData.words = [];
-                if (gameData.isGameStarted) {
-                    gameData.endRoundEarly = true;
-                    gameData.remainingTime = 0;
-                }
-
-                gameData.gameState = "waiting";
-                return gameData;
-            }
-
-            const hasSpeaker = gameData.teams.some(team =>
-                team.players && team.players.some(player => player.isSpeaker)
-            );
-
-            if (!hasSpeaker) {
-                assignFallbackSpeaker(gameData.teams, Math.max(0, (gameData.currentTeam || 1) - 1));
-            }
-
-            if ((speakerWasRemoved || !hasSpeaker) && gameData.isGameStarted) {
-                gameData.endRoundEarly = true;
-                gameData.remainingTime = 0;
-                gameData.roundActive = false;
-            }
-
-            gameData.gameState = canContinue ? (gameData.isGameStarted ? "resumed" : "ready") : "waiting";
-
-            return gameData;
-        }, { applyLocally: false });
-    } catch (error) {
-        console.error("Failed stale-player cleanup:", error);
-    }
-}
-
-function startStalePlayerCleanupLoop() {
-    if (staleCleanupIntervalId || !isOnlineGame || !gameCode) {
-        return;
-    }
-
-    void pruneStalePlayers();
-    staleCleanupIntervalId = setInterval(() => {
-        void pruneStalePlayers();
-    }, STALE_CLEANUP_INTERVAL_MS);
-}
-
-async function onLobbyJoined() {
-    // Play game start sound
-    await playSound(startSound, () => false, 1.2);
-    setLayoutMode("game");
-
+async function onLobbyJoined(actor = onlineIdentity(gameCode)) {
+    await onlineClient?.close();
     isOnlineGame = true;
-
-    hideElement(txtLobbyMenu);
-    showElement(txtLobbyPlayers);
-    hideModalById("onlineModal");
-
-    // Show/Hide UI elements
+    onlineEndedHandled = false;
+    isSpeaker = isHost = false;
+    clearInterval(countdownTimer);
     hideElement(menu);
     hideElement(btnSettings);
     hideElement(btnAI);
     hideElement(btnRules);
+    hideElement(txtLobbyMenu);
+    showElement(txtLobbyPlayers);
+    hideModalById('onlineModal');
     showElement(game);
     showElement(btnHistory);
     hideElement(btnStartRound);
     hideElement(btnNextRound);
-    refreshChaosModeUi();
-
-    if (isHost) {
-        showElement(btnStartOnlineGame);
-        btnStartOnlineGame.disabled = true;
-    }
-    else {
-        hideElement(btnEndGame);
-    }
-
-    registerModal(btnHistory, "historyModal");
-
-    displayGameCode(gameCode);
+    hideElement(btnEndGame);
     showElement(lblGameState);
-
-    playerName = sanitizePlayerName(txtPlayerName.value);
-    txtPlayerName.value = playerName;
-
-    if (!playerName) {
-        alert("Enter a valid player name!");
-        location.reload();
-        return;
-    }
-
-    const joinResult = await joinPlayerToLobby(playerName);
-    if (!joinResult.success) {
-        console.warn(`[join] failed for ${playerName} in lobby ${gameCode}:`, joinResult.reason, joinResult.error || "");
-        if (joinResult.reason === "duplicate-player-name") {
-            alert("Player name is already in use in this lobby.");
-        } else if (joinResult.reason === "lobby-unavailable") {
-            alert("Lobby is unavailable, expired, or already ended.");
-        } else if (joinResult.reason === "invalid-player-name") {
-            alert("Please use a valid player name.");
-        } else if (joinResult.reason === "transaction-aborted") {
-            alert("Join failed because of a temporary sync issue. Please try again.");
-        } else {
-            alert("Unable to join lobby right now. Please try again.");
-        }
-
-        location.reload();
-        return;
-    }
-
-    lastProcessedAuditEventId = 0;
-    lastProcessedChaosPendingId = 0;
-
+    lblGameState.textContent = 'Status: Connecting to lobby...';
+    setLayoutMode('game');
+    displayGameCode(gameCode);
+    registerModal(btnHistory, 'historyModal');
+    onlineClient = new OnlineClient({
+        sdk: { ref, get, onValue, runTransaction, onDisconnect, serverTimestamp, update }, db, code: gameCode, actor,
+        rules: { drawWords: drawOnlineWords, planChaos: planOnlineChaos },
+        onSnapshot: renderOnlineSnapshot, onStatus: renderOnlineControls,
+        onError: error => console.error('Online connection error:', error)
+    });
     registerLobbyExitHandlers();
-    startLobbyHeartbeat();
-    createTeamAuditTables(numTeams, { forceReset: true });
-
-    // Handle answer button click logic
-    let count = 0;
-    document.querySelectorAll(".scoreButton").forEach(button => {
-        if (count < numWords) {
-            count++;
-            button.addEventListener("click", async () => {
-                if (!btnNextRound.hidden) {
-                    if (isScoreButtonSelected(button)) {
-                        selectedButtons--;
-                        setScoreButtonSelected(button, false);
-                        await updateData(`games/${gameCode}`, { clickedButton: button.textContent });
-                    }
-                    else {
-                        selectedButtons++;
-                        setScoreButtonSelected(button, true);
-                        await updateData(`games/${gameCode}`, { clickedButton: `!${button.textContent}` });
-                    }
-                }
-            });
-        }
+    await onlineClient.connect();
+    document.querySelectorAll('.scoreButton').forEach((button, index) => {
+        button.onclick = () => { void sendOnlineCommand({ type: 'toggle-answer', index }); };
     });
-
-    await readDataOnce(`games/${gameCode}/currentTeam`).then(currentTeamNumber => {
-        if (currentTeamNumber) {
-            currentTeam = currentTeamNumber;
-        }
-        else {
-            // Set starting team
-            currentTeam = 1;
-            setCurrentTeam();
-        }
-    });
-
-    // Add gameState listener to know when to start/update game
-    listenForChanges(`games/${gameCode}/gameState`, async (state) => {
-        onlineGameState = state || "waiting";
-        if (state == "started") {
-            isGameStarted = true;
-            hideElement(lblGameState);
-            if (isHost) {
-                hideElement(btnStartOnlineGame);
-                showElement(btnStartRound);
-            }
-
-            createTeamAuditTables(numTeams);
-            generateBoard();
-            updateBoard();
-            updateTeamScores();
-            updateCurrentTeamIndicator();
-        }
-        else if (state === "waiting") {
-            if (isHost) {
-                btnStartOnlineGame.disabled = true;
-            }
-
-            hideElement(btnStartRound);
-            showElement(lblGameState);
-            lblGameState.textContent = "Status: Waiting for players!";
-        }
-        else if (state === "ready") {
-            if (isHost) {
-                btnStartOnlineGame.disabled = false;
-            }
-            hideElement(btnStartRound);
-            lblGameState.textContent = "Status: Waiting for host to start game!";
-        }
-        else if (state === "resumed") {
-            if (isSpeaker) {
-                showElement(btnStartRound);
-            }
-            hideElement(lblGameState);
-
-            createTeamAuditTables(numTeams);
-            generateBoard();
-            updateBoard();
-            updateTeamScores();
-            updateCurrentTeamIndicator();
-
-            // For 2 or 3 player games, we do not show words to other players
-            if ((numTeams == 2 && numPlayers == 2) || (numTeams == 3 && numPlayers == 3)) {
-                if (!isSpeaker) {
-                    btnAnswers.hidden = true;
-                }
-            }
-            // Show the words to players in other teams
-            else if (getPlayerTeamIndex() != getCurrentTeamIndex(currentTeam)) {
-                btnAnswers.hidden = false;
-            }
-        }
-        else if (state === "ended") {
-            stopLobbyHeartbeat();
-            stopStalePlayerCleanupLoop();
-            alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
-            location.reload();
-        }
-        refreshChaosModeUi();
-    });
-
-    listenForChanges(`games/${gameCode}/settings`, (settingsFromDb) => {
-        const sanitizedSettings = sanitizeGameSettingsFromDb(settingsFromDb || {}, numTeams);
-        isChaosMode = Boolean(sanitizedSettings.chaosMode);
-        if (!isChaosMode) {
-            roundPowerups = {};
-            powerupRevealVisible = false;
-            landedPowerupPreview = null;
-            teamShields = createInitialTeamShields(teams.length || numTeams || 2);
-            updateBoard();
-        }
-        if (chkChaos) {
-            chkChaos.checked = isChaosMode;
-        }
-        refreshChaosModeUi();
-    });
-
-    listenForChanges(`games/${gameCode}/roundActive`, (roundActive) => {
-        isRoundActive = Boolean(roundActive);
-        if (!isRoundActive && !isSpeaker) {
-            hideTimerAndAnswers();
-            clearWords();
-        }
-    });
-
-    // Teams are updated when a player joins or leaves
-    listenForChanges(`games/${gameCode}/teams`, (teamData) => {
-        if (!teamData) {
-            stopLobbyHeartbeat();
-            stopStalePlayerCleanupLoop();
-            alert("Lobby has been closed.");
-            location.reload();
-            return;
-        }
-
-        // Detect changes and notify
-        detectPlayerChanges(teams, teamData);
-        teams = Array.isArray(teamData) ? teamData : [];
-        ensureTeamsShape(teams);
-        numTeams = teams.length || numTeams;
-
-        // Set numPlayers to the total number of players
-        numPlayers = countPlayersInTeams(teams);
-
-        // Update the player list UI
-        updatePlayerListUI(teams);
-        if (isGameStarted) {
-            if (isTeamsValid(numPlayers)) {
-                updateUI();
-            }
-            hideTimerAndAnswers();
-        }
-    });
-
-    listenForChanges(`games/${gameCode}/currentTeam`, (currentTeam) => {
-        if (isGameStarted) {
-            updateRound(currentTeam, 'currentTeam');
-        }
-    });
-
-    listenForChanges(`games/${gameCode}/currentRound`, (currentRound) => {
-        if (isGameStarted) {
-            updateRound(currentRound, 'currentRound');
-        }
-    });
-
-    listenForChanges(`games/${gameCode}/numPlayers`, (np) => {
-        numPlayers = np;
-    });
-
-    listenForChanges(`games/${gameCode}/easyWords`, (easyWords) => {
-        updateWords(easyWords, 'easyWords');
-    });
-
-    listenForChanges(`games/${gameCode}/hardWords`, (hardWords) => {
-        updateWords(hardWords, 'hardWords');
-    });
-
-    listenForChanges(`games/${gameCode}/currentGameWords`, (currentGameWords) => {
-        updateWords(currentGameWords, 'currentGameWords');
-    });
-
-    listenForChanges(`games/${gameCode}/words`, (words) => {
-        if (words && isGameStarted && (isRoundActive || isSpeaker)) {
-            lblAnswers.textContent = "The 'Speaker' is describing the following words:";
-
-            const scoreButtons = document.getElementsByClassName("scoreButton");
-            for (let index = 0; index < scoreButtons.length; index++) {
-                if (index < numWords) {
-                    const element = scoreButtons[index];
-                    element.hidden = false;
-                }
-            }
-
-            const wordButtons = document.getElementsByClassName("scoreButton");
-
-            words.forEach((word, index) => {
-                wordButtons[index].textContent = word;
-            });
-            renderTrainingHints(words);
-
-            // For 2 or 3 player games, we do not show words to other players
-            if ((numTeams == 2 && numPlayers == 2) || (numTeams == 3 && numPlayers == 3)) {
-                if (!isSpeaker) {
-                    btnAnswers.hidden = true;
-                }
-            }
-            // Show the words to players in other teams
-            else if (getPlayerTeamIndex() != getCurrentTeamIndex(currentTeam)) {
-                btnAnswers.hidden = false;
-            }
-        }
-        else if (!isSpeaker) {
-            hideTimerAndAnswers();
-        }
-    });
-
-    listenForChanges(`games/${gameCode}/remainingTime`, (seconds) => {
-        if (seconds !== null && seconds !== undefined && isGameStarted && isRoundActive) {
-            // Show timer to all players
-            if (!isSpeaker) {
-                showElement(timer);
-                let remainingTime = seconds;
-                timer.textContent = remainingTime;
-
-                if (remainingTime <= 0) {
-                    lblAnswers.textContent = "The 'Speaker' is selecting the correct answers:";
-                    btnAnswers.hidden = false;
-                    clearWords();
-                }
-            }
-        }
-    });
-
-    listenForChanges(`games/${gameCode}/endRoundEarly`, (endRoundEarly) => {
-        if (endRoundEarly && isGameStarted) {
-            // Hide stuff
-            if (!isSpeaker) {
-                lblAnswers.textContent = "The 'Speaker' has ended the round early and is now selecting the correct answers:";
-                btnAnswers.hidden = false;
-                clearWords();
-            }
-        }
-    });
-
-    listenForChanges(`games/${gameCode}/auditEvent`, (auditEvent) => {
-        if (!isGameStarted || !auditEvent || typeof auditEvent !== "object") {
-            return;
-        }
-
-        const eventId = Number(auditEvent.id);
-        if (!Number.isFinite(eventId) || eventId <= lastProcessedAuditEventId) {
-            return;
-        }
-
-        const teamIndex = Number(auditEvent.teamIndex);
-        const roundNumber = Number(auditEvent.roundNumber);
-        if (!Number.isInteger(teamIndex) || teamIndex < 0 || teamIndex >= numTeams) {
-            return;
-        }
-
-        if (!Number.isInteger(roundNumber) || roundNumber < 1) {
-            return;
-        }
-
-        lastProcessedAuditEventId = eventId;
-        createTeamAuditColumns(teamIndex, roundNumber);
-        createTeamAuditRows(teamIndex, roundNumber, auditEvent.correctAnswers, {
-            chaosSummary: auditEvent.chaosSummary
-        });
-    });
-
-    listenForChanges(`games/${gameCode}/chaos`, (chaosState) => {
-        const normalized = getNormalizedChaosState(chaosState || {}, teams.length || numTeams, pointsToWin);
-        roundPowerups = normalized.powerups;
-        powerupRevealVisible = normalized.reveal;
-        landedPowerupPreview = normalized.landed;
-        teamShields = normalized.teamShields;
-        lastProcessedChaosResolutionId = Math.max(lastProcessedChaosResolutionId, normalized.resolutionId);
-
-        if (!isGameStarted) {
-            return;
-        }
-
-        updateBoard();
-        updateTeamScores();
-    });
-
-    listenForChanges(`games/${gameCode}/chaos/pending`, (pendingState) => {
-        if (!isHost || !isOnlineGame || !isChaosMode || !isGameStarted || !pendingState || typeof pendingState !== "object") {
-            return;
-        }
-
-        const pendingId = Number(pendingState.id);
-        if (!Number.isFinite(pendingId) || pendingId <= 0 || pendingId <= lastProcessedChaosPendingId) {
-            return;
-        }
-
-        lastProcessedChaosPendingId = pendingId;
-        void resolveOnlineChaosPending(pendingState);
-    });
-
-    listenForChanges(`games/${gameCode}/hostName`, (hostName) => {
-        isHost = hostName === playerName;
-        if (isHost) {
-            showElement(btnEndGame);
-            const canShowStartButton = !isGameStarted && (onlineGameState === "waiting" || onlineGameState === "ready");
-            if (canShowStartButton) {
-                showElement(btnStartOnlineGame);
-                btnStartOnlineGame.disabled = onlineGameState !== "ready" || !isTeamsValid(numPlayers);
-            } else {
-                hideElement(btnStartOnlineGame);
-            }
-        }
-        else {
-            hideElement(btnEndGame);
-            hideElement(btnStartOnlineGame);
-        }
-
-        // Keep cleanup loop active for host failover detection, even on non-host clients.
-        startStalePlayerCleanupLoop();
-    });
-
-    listenForChanges(`games/${gameCode}/clickedButton`, (clickedButton) => {
-        if (clickedButton && isGameStarted && !isSpeaker) {
-            const buttons = document.querySelectorAll('button.scoreButton');
-            // Loop through the buttons to find the one with the specified text
-            for (const button of buttons) {
-                let startsWithExclamation = clickedButton.startsWith("!");
-                if ((startsWithExclamation && clickedButton.slice(1) === button.textContent.trim()) || clickedButton === button.textContent.trim()) {
-                    if (isScoreButtonSelected(button)) {
-                        setScoreButtonSelected(button, false);
-                    }
-                    else {
-                        setScoreButtonSelected(button, true);
-                    }
-                }
-            }
-        }
-    });
-}
-
-function isTeamsValid (numPlayers) {
-    return isTeamsValidForTeamCount(numTeams, numPlayers);
+    void playSound(startSound, () => false, 1.2);
 }
 
 function hideTimerAndAnswers() {
@@ -2094,304 +1058,66 @@ function hideTimerAndAnswers() {
 }
 
 async function createGameLobby() {
-    // Host specific settings
-    isHost = true;
-    isSpeaker = true;
-    playerName = sanitizePlayerName(txtPlayerName.value);
-    txtPlayerName.value = playerName;
-    if (!playerName) {
-        alert("Enter a valid player name!");
-        return;
-    }
-
-    const sanitizedSettings = getSanitizedSettingsFromInputs();
-    difficulty = sanitizedSettings.difficulty;
-    numTeams = sanitizedSettings.numTeams;
-    pointsToWin = sanitizedSettings.pointsToWin;
-    numWords = sanitizedSettings.numWords;
-    numSeconds = sanitizedSettings.numSeconds;
-    isChaosMode = sanitizedSettings.chaosMode;
-    isTrainingMode = sanitizedSettings.trainingMode;
-    const selectedCategories = [...sanitizedSettings.selectedCategories];
-    const selectedTheme = sanitizedSettings.selectedTheme;
-    activeSelectedTheme = selectedTheme;
-    activeSelectedCategories = [...selectedCategories];
-
-    const gameSettings = {
-        numTeams,
-        difficulty,
-        pointsToWin,
-        numWords,
-        numSeconds,
-        chaosMode: isChaosMode,
-        trainingMode: isTrainingMode,
-        selectedTheme,
-        selectedCategories: [...selectedCategories]
-    };
-
-    txtTeams.value = String(numTeams);
-    document.getElementById("pointsToWin").value = String(pointsToWin);
-    txtWords.value = String(numWords);
-    txtSeconds.value = String(numSeconds);
-    if (chkChaos) {
-        chkChaos.checked = isChaosMode;
-    }
-    if (chkTraining) {
-        chkTraining.checked = isTrainingMode;
-    }
-
-    // Validate game settings
-    if (selectedCategories.length > 0 && selectedTheme !== "None") {
-        alert("Please select either categories or theme, not both.");
-        return;
-    }
-
-    // Load game data
-    currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
-    currentTeam = 1;
-    currentRound = 0;
-    isRoundActive = false;
-    roundPowerups = {};
-    powerupRevealVisible = false;
-    landedPowerupPreview = null;
-    teamShields = createInitialTeamShields(numTeams);
-    lastProcessedChaosResolutionId = 0;
-    lastProcessedChaosPendingId = 0;
-
-    // Gamedata
-    const gameData = {
-        dateCreated: Date.now(),
-        settings: gameSettings,
-        teams: Array.from({ length: gameSettings.numTeams }, (_, i) => ({
-            id: i,
-            points: 0
-        })),
-        easyWords,
-        hardWords,
-        currentGameWords,
-        numPlayers: 0,
-        currentTeam,
-        currentRound,
-        roundActive: false,
-        remainingTime: null,
-        hostName: playerName,
-        gameState: 'waiting',
-        chaos: {
-            roundId: 0,
-            powerups: {},
-            reveal: false,
-            landed: null,
-            teamShields: [...teamShields],
-            resolutionId: 0,
-            pending: null
-        },
-        auditEvent: {
-            id: 0,
-            teamIndex: 0,
-            roundNumber: 0,
-            correctAnswers: []
-        }
-    };
-
-    let gameCodeExists = true;
-    // Find a code that is not taken
-    while (gameCodeExists) {
-        // Generate random game code
-        gameCode = generateGameCode();
-        await readDataOnce(`games/${gameCode}`).then(data => {
-            if (!data) {
-                gameCodeExists = false;
-            }
-            else if (!data.dateCreated || (Date.now() - data.dateCreated) > LOBBY_EXPIRY_MS || data.gameState === "ended") {
-                // Overwrite old game lobbies
-                gameCodeExists = false;
-            }
-        });
-    }
-
-    // Write gameData to db
+    if (onlineLobbyActionPending || isOnlineGame) return;
+    onlineLobbyActionPending = true;
     try {
-        await firebaseWrite(`games/${gameCode}`, gameData);
-        await readDataOnce(`games/${gameCode}`);
-        // Execute logic when a player joins the lobby (host)
-        await onLobbyJoined();
-    } catch (error) {
-        console.error("Failed to create lobby:", error);
-        alert("Unable to create lobby right now. Please try again.");
-    }
-}
-
-function getPresenceForPlayer(gameData, name) {
-    if (!gameData || !gameData.presence || !name) {
-        return null;
-    }
-
-    const directMatch = gameData.presence[toPresenceKey(name)];
-    if (directMatch) {
-        return directMatch;
-    }
-
-    return Object.values(gameData.presence).find(entry => normalizeWord(entry?.playerName) === normalizeWord(name)) || null;
+        playerName = sanitizePlayerName(txtPlayerName.value);
+        txtPlayerName.value = playerName;
+        if (!playerName) { alert('Enter a valid player name!'); return; }
+        const settings = getSanitizedSettingsFromInputs();
+        const pools = loadWords(settings.selectedTheme, settings.selectedCategories, settings.difficulty);
+        // .info values are local SDK metadata and must be listened to, not read
+        // through get(), which may fall back to a REST path the server rejects.
+        const serverOffset = await new Promise((resolve, reject) => {
+            onValue(ref(db, '.info/serverTimeOffset'), snapshot => resolve(Number(snapshot.val()) || 0), reject, { onlyOnce: true });
+        });
+        const initial = {
+            protocolVersion: OnlineState.PROTOCOL_VERSION, dateCreated: serverTimestamp(), settings,
+            teams: Array.from({ length: settings.numTeams }, (_, id) => ({ id, points: 0, players: [] })),
+            easyWords, hardWords, currentGameWords: pools, numPlayers: 0, currentTeam: 1, currentRound: 0,
+            isGameStarted: false, roundActive: false, phase: 'waiting', gameState: 'waiting', hostId: '', hostName: '', hostEpoch: 0,
+            chaos: { teamShields: createInitialTeamShields(settings.numTeams), resolutionId: 0 }
+        };
+        let created = false;
+        for (let attempt = 0; attempt < 12; attempt++) {
+            const code = generateGameCode();
+            const gameRef = ref(db, `games/${code}`);
+            await get(gameRef);
+            const result = await runTransaction(gameRef, existing => {
+                if (existing && existing.gameState !== 'ended'
+                    && (!existing.dateCreated || Date.now() + serverOffset - existing.dateCreated <= LOBBY_EXPIRY_MS)) return;
+                return initial;
+            }, { applyLocally: false });
+            if (!result.committed) continue;
+            gameCode = code;
+            created = true;
+            break;
+        }
+        if (!created) throw new Error('Unable to reserve a lobby code. Please retry.');
+        await onLobbyJoined(onlineIdentity(gameCode, true));
+    } catch (error) { await handleOnlineJoinError(error); }
+    finally { onlineLobbyActionPending = false; }
 }
 
 async function joinGameLobby() {
-    const joinCode = String(txtGameCode.value || "").trim().toUpperCase();
-    txtGameCode.value = joinCode;
-
-    try {
-        const gameData = await readDataOnce(`games/${joinCode}`);
-        if (gameData) {
-            if (gameData.gameState !== "ended") {
-                const settings = sanitizeGameSettingsFromDb(gameData.settings || {}, gameData.teams?.length || 2);
-                gameCode = joinCode;
-                numTeams = settings.numTeams;
-                difficulty = settings.difficulty;
-                pointsToWin = settings.pointsToWin;
-                numWords = settings.numWords;
-                numSeconds = settings.numSeconds;
-                isChaosMode = settings.chaosMode;
-                isTrainingMode = settings.trainingMode;
-                numPlayers = gameData.numPlayers ?? countPlayersInTeams(gameData.teams || []);
-                isRoundActive = Boolean(gameData.roundActive);
-                activeSelectedTheme = settings.selectedTheme;
-                activeSelectedCategories = [...settings.selectedCategories];
-                const normalizedChaos = getNormalizedChaosState(gameData.chaos || {}, numTeams, pointsToWin);
-                roundPowerups = normalizedChaos.powerups;
-                powerupRevealVisible = normalizedChaos.reveal;
-                landedPowerupPreview = normalizedChaos.landed;
-                teamShields = normalizedChaos.teamShields;
-                lastProcessedChaosResolutionId = normalizedChaos.resolutionId;
-                lastProcessedChaosPendingId = 0;
-                if (chkChaos) {
-                    chkChaos.checked = isChaosMode;
-                }
-                if (chkTraining) {
-                    chkTraining.checked = isTrainingMode;
-                }
-                await onLobbyJoined();
-            } else {
-                alert("This lobby has already ended.");
-            }
-        } else {
-            alert('Invalid game code. Please try again.');
-        }
-    } catch (error) {
-        console.error("Failed to join lobby:", error);
-        alert("Unable to join lobby right now. Please try again.");
-    }
+    if (onlineLobbyActionPending || isOnlineGame) return;
+    const code = String(txtGameCode.value || '').trim().toUpperCase();
+    txtGameCode.value = code;
+    if (!/^[A-Z]{4}$/.test(code)) { alert('Enter a four-letter lobby code.'); return; }
+    playerName = sanitizePlayerName(txtPlayerName.value);
+    txtPlayerName.value = playerName;
+    if (!playerName) { alert('Enter a valid player name!'); return; }
+    onlineLobbyActionPending = true;
+    gameCode = code;
+    try { await onLobbyJoined(onlineIdentity(code)); }
+    catch (error) { await handleOnlineJoinError(error); }
+    finally { onlineLobbyActionPending = false; }
 }
 
 async function startOnlineGame() {
-    if (!isHost) {
-        return;
-    }
-
-    const gameRef = ref(db, `games/${gameCode}`);
-    let notEnoughPlayers = false;
-
-    try {
-        const result = await runTransaction(gameRef, (gameData) => {
-            if (!gameData || !Array.isArray(gameData.teams)) {
-                return gameData;
-            }
-
-            const configuredTeamCount = getConfiguredTeamCount(gameData);
-            const playerCount = countPlayersInTeams(gameData.teams);
-
-            if (!isTeamsValidForTeamCount(configuredTeamCount, playerCount)) {
-                notEnoughPlayers = true;
-                return;
-            }
-
-            gameData.gameState = "started";
-            gameData.isGameStarted = true;
-            gameData.roundActive = false;
-            const teamCount = gameData.teams.length;
-            const settings = sanitizeGameSettingsFromDb(gameData.settings || {}, teamCount);
-            const normalizedChaos = getNormalizedChaosState(gameData.chaos || {}, teamCount, settings.pointsToWin);
-            gameData.chaos = {
-                ...normalizedChaos,
-                reveal: false,
-                landed: null,
-                pending: null
-            };
-            return gameData;
-        }, { applyLocally: false });
-
-        if (!result.committed || notEnoughPlayers) {
-            alert("Wait for more players!");
-        }
-    } catch (error) {
-        console.error("Failed to start online game:", error);
-        alert("Unable to start the game right now. Please try again.");
-    }
+    await sendOnlineCommand({ type: 'start-game' });
 }
 
-function setCurrentTeam() {
-    const gameRef = ref(db, `games/${gameCode}`);
-
-    update(gameRef, {
-        currentTeam: currentTeam
-    });
-}
-
-function updateWords(words, type) {
-    if (type === 'easyWords') {
-        easyWords = words;
-    } else if (type === 'hardWords') {
-        hardWords = words;
-    } else if (type === 'currentGameWords') {
-        currentGameWords = words;
-    }
-}
-
-function updateRound(value, type) {
-    if (type === 'currentTeam') {
-        currentTeam = value;
-    } else if (type === 'currentRound') {
-        currentRound = value;
-    }
-
-    updateCurrentTeamIndicator();
-}
-
-function updateUI() {
-    updatePoints(0);
-    
-    teams.forEach(team => {
-        team?.players?.forEach(player => {
-            // Find my player by name
-            if (playerName === player.playerName) {
-                if (player.isSpeaker) {
-                    isSpeaker = true;
-                    hideElement(btnNextRound);
-                    showElement(btnStartRound);
-                }
-                else {
-                    isSpeaker = false;
-                    hideElement(btnNextRound);
-                    hideElement(btnStartRound);
-                }
-            }
-        });
-    });
-
-    if (!isHost) {
-        hideElement(btnEndGame);
-    } else {
-        showElement(btnEndGame);
-    }
-
-    let count = 0;
-    document.querySelectorAll(".scoreButton").forEach(button => {
-        count++;
-        if (count <= numWords) {
-            setScoreButtonSelected(button, false);
-        }
-    });
-}
-
-// Function to determine player changes and notify others
 function detectPlayerChanges(teams, teamsData) {
     const oldPlayerNames = new Set();
     const newPlayerNames = new Set();
@@ -2445,63 +1171,6 @@ function detectPlayerChanges(teams, teamsData) {
     });
 }
 
-function rotateSpeakerForRound(teamsData = [], roundNumber = currentRound) {
-    const mutableTeams = Array.isArray(teamsData) ? teamsData : [];
-    if (mutableTeams.length === 0) {
-        return mutableTeams;
-    }
-
-    // Find the current speaker and their team
-    let currentTeamIndex = -1;
-    let currentSpeakerIndex = -1;
-
-    // Identify the current speaker
-    for (let i = 0; i < mutableTeams.length; i++) {
-        const team = mutableTeams[i];
-        const speakerIndex = (team.players || []).findIndex(player => player.isSpeaker);
-        if (speakerIndex !== -1) {
-            currentTeamIndex = i;
-            currentSpeakerIndex = speakerIndex;
-            break;
-        }
-    }
-
-    // Set the current speaker's isSpeaker to false
-    if (currentTeamIndex !== -1 && currentSpeakerIndex !== -1) {
-        mutableTeams[currentTeamIndex].players[currentSpeakerIndex].isSpeaker = false;
-    }
-
-    // Calculate the next team index, cycling through teams
-    let nextTeamIndex = (currentTeamIndex + 1) % mutableTeams.length;
-
-    // Calculate the next speaker index within the next team
-    let nextSpeakerIndex = currentSpeakerIndex;
-
-    // If we've cycled back to the initial team, move to the next speaker within that team
-    if (nextTeamIndex === 0 && currentTeamIndex === mutableTeams.length - 1) {
-        nextSpeakerIndex = (currentSpeakerIndex + 1) % mutableTeams[nextTeamIndex].players.length;
-        // Only 1 player in current team
-        if (mutableTeams[currentTeamIndex].players.length === 1 && roundNumber % 2 != 0) {
-            nextSpeakerIndex = 0;
-        }
-    }
-
-    if (mutableTeams[nextTeamIndex].players[nextSpeakerIndex]) {
-        // Set the next speaker's isSpeaker to true
-        mutableTeams[nextTeamIndex].players[nextSpeakerIndex].isSpeaker = true;
-    }
-    else {
-        // If the player does not exist, they probably left the game, so we move to the first player in the team
-        mutableTeams[nextTeamIndex].players[0].isSpeaker = true;
-    }
-
-    return mutableTeams;
-}
-
-function setSpeaker(teamsData) {
-    return rotateSpeakerForRound(teamsData, currentRound);
-}
-
 function displayGameCode(gameCode) {
     const gameCodeLabel = document.getElementById("lblGameCode");
     gameCodeLabel.textContent = `Game Code: ${gameCode}`;
@@ -2535,8 +1204,11 @@ function updatePlayerListUI(teamsData) {
         if (team.players) {
             team.players.forEach((player) => {
                 const playerItem = document.createElement('li');
-                playerItem.textContent = `Player ${player.id + 1}: ${player.playerName} ${player.isSpeaker ? '(Speaker)' : ''}`;
-                if (player.playerName === playerName)
+                const disconnected = isOnlineGame && onlineClient?.snapshot
+                    && !OnlineState.isConnected(onlineClient.snapshot, player, onlineClient.serverNow());
+                const host = isOnlineGame && onlineClient?.snapshot?.hostId === player.playerId;
+                playerItem.textContent = `Player ${player.id + 1}: ${player.playerName} ${player.isSpeaker ? '(Speaker)' : ''}${host ? ' (Host)' : ''}${disconnected ? ' (Disconnected)' : ''}`;
+                if (isOnlineGame ? player.playerId === onlineClient?.actor?.playerId : player.playerName === playerName)
                 {
                     playerItem.style.fontWeight = 'bold';
                 }
@@ -2767,8 +1439,6 @@ async function startGame() {
     powerupRevealVisible = false;
     landedPowerupPreview = null;
     teamShields = createInitialTeamShields(teams.length);
-    lastProcessedChaosResolutionId = 0;
-    lastProcessedChaosPendingId = 0;
 
     // Show/Hide UI elements
     hideElement(menu);
@@ -2858,6 +1528,7 @@ function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
 }
 
 function startRound() {
+    if (isOnlineGame) { void startOnlineRound(); return; }
     btnStartRound.hidden = true;
     btnEndGame.hidden = true;
     isRoundActive = true;
@@ -2866,14 +1537,6 @@ function startRound() {
     updateBoard();
     updateMobileGameFocus();
     hideElement(lblGameState);
-
-    if (isOnlineGame) {
-        updateData(`games/${gameCode}`, {
-            endRoundEarly: false,
-            roundActive: true,
-            remainingTime: numSeconds
-        });
-    }
     endRoundEarly = false;
 
     startCountdown(numSeconds, () => {
@@ -2884,10 +1547,6 @@ function startRound() {
         clearTrainingHints();
         isRoundActive = false;
         updateMobileGameFocus();
-
-        if (isOnlineGame && isSpeaker) {
-            updateData(`games/${gameCode}`, { roundActive: false });
-        }
 
         let count = 0;
         document.querySelectorAll(".scoreButton").forEach(button => {
@@ -2933,7 +1592,7 @@ function advanceRoundPointers() {
     }
 }
 
-async function animateTeamMovement(teamIndex, delta, animate = true, syncToOnline = false) {
+async function animateTeamMovement(teamIndex, delta, animate = true) {
     if (!Number.isInteger(teamIndex) || teamIndex < 0 || teamIndex >= teams.length || delta === 0) {
         return;
     }
@@ -2946,9 +1605,6 @@ async function animateTeamMovement(teamIndex, delta, animate = true, syncToOnlin
         const nextPoints = Math.max(0, currentPoints + direction);
         team.points = nextPoints;
         updateBoard();
-        if (syncToOnline && isOnlineGame && isHost) {
-            await setDataSilent(`games/${gameCode}/teams`, teams);
-        }
         if (animate) {
             await sleep(CHAOS_MOVE_STEP_DELAY_MS);
         }
@@ -2987,7 +1643,6 @@ async function resolveChaosPowerupLocally(
     powerupType,
     rng = Math.random,
     animate = true,
-    syncToOnline = false,
     roundNumberForRound = currentRound + 1
 ) {
     if (!powerupType) {
@@ -2998,9 +1653,6 @@ async function resolveChaosPowerupLocally(
         powerupRevealVisible = false;
         updateBoard();
         updateTeamScores();
-        if (syncToOnline) {
-            await syncChaosVisualState(roundNumberForRound);
-        }
 
         return {
             type: null
@@ -3025,9 +1677,6 @@ async function resolveChaosPowerupLocally(
     const powerupLabel = CHAOS_POWERUP_TYPES[powerupType]?.label || powerupType;
     lblGameState.textContent = `Chaos: Team ${teamIndex + 1} landed on ${powerupLabel}. Applying...`;
     showElement(lblGameState);
-    if (syncToOnline) {
-        await syncChaosVisualState(roundNumberForRound);
-    }
     if (animate) {
         await sleep(CHAOS_LANDED_PREVIEW_DELAY_MS);
     }
@@ -3036,18 +1685,15 @@ async function resolveChaosPowerupLocally(
     landedPowerupPreview = null;
     updateBoard();
     updateTeamScores();
-    if (syncToOnline) {
-        await syncChaosVisualState(roundNumberForRound);
-    }
 
     if (summary.actorDelta !== 0) {
-        await animateTeamMovement(teamIndex, summary.actorDelta, animate, syncToOnline);
+        await animateTeamMovement(teamIndex, summary.actorDelta, animate);
     } else {
         updateBoard();
     }
 
     if (Number.isInteger(summary.victimTeamIndex) && summary.victimDelta !== 0) {
-        await animateTeamMovement(summary.victimTeamIndex, summary.victimDelta, animate, syncToOnline);
+        await animateTeamMovement(summary.victimTeamIndex, summary.victimDelta, animate);
     }
 
     if (animate) {
@@ -3058,9 +1704,6 @@ async function resolveChaosPowerupLocally(
     powerupRevealVisible = false;
     landedPowerupPreview = null;
     updateBoard();
-    if (syncToOnline) {
-        await syncChaosVisualState(roundNumberForRound);
-    }
 
     updateTeamScores();
     hideElement(lblGameState);
@@ -3073,8 +1716,7 @@ async function runChaosResolutionLocally({
     roundNumberForRound,
     powerupsForRound = null,
     rng = Math.random,
-    animate = true,
-    syncToOnline = false
+    animate = true
 }) {
     ensureLocalChaosState(teams.length);
     const safeSelectedPoints = clampInt(selectedPoints, 0, 0, numWords);
@@ -3087,14 +1729,11 @@ async function runChaosResolutionLocally({
     powerupRevealVisible = true;
     updateBoard();
     updateTeamScores();
-    if (syncToOnline) {
-        await syncChaosVisualState(roundNumberForRound);
-    }
     if (animate) {
         await sleep(CHAOS_PREMOVE_REVEAL_MS);
     }
 
-    await animateTeamMovement(teamIndexForRound, safeSelectedPoints, animate, syncToOnline);
+    await animateTeamMovement(teamIndexForRound, safeSelectedPoints, animate);
 
     const landedPowerup = getChaosLandingPowerup(teamIndexForRound);
     const summary = await resolveChaosPowerupLocally(
@@ -3102,7 +1741,6 @@ async function runChaosResolutionLocally({
         landedPowerup,
         rng,
         animate,
-        syncToOnline,
         roundNumberForRound
     );
 
@@ -3114,340 +1752,45 @@ async function runChaosResolutionLocally({
     };
 }
 
-async function resolveOnlineChaosPending(pendingState) {
-    if (!isHost || !isOnlineGame || !isChaosMode || isResolvingChaosMove) {
-        return;
-    }
-
-    const pendingId = Number(pendingState?.id);
-    if (!Number.isFinite(pendingId) || pendingId <= 0 || pendingId <= lastProcessedChaosResolutionId) {
-        return;
-    }
-
-    isResolvingChaosMove = true;
-    try {
-        const gameData = await readDataOnce(`games/${gameCode}`);
-        if (!gameData || !Array.isArray(gameData.teams)) {
-            return;
-        }
-
-        const teamCount = gameData.teams.length;
-        const settings = sanitizeGameSettingsFromDb(gameData.settings || {}, teamCount);
-        if (!settings.chaosMode) {
-            return;
-        }
-
-        const normalizedChaos = getNormalizedChaosState(gameData.chaos || {}, teamCount, settings.pointsToWin);
-        if (pendingId <= normalizedChaos.resolutionId) {
-            return;
-        }
-
-        teams = Array.isArray(gameData.teams) ? gameData.teams : [];
-        ensureTeamsShape(teams);
-        numTeams = teams.length || numTeams;
-        pointsToWin = settings.pointsToWin;
-        numWords = settings.numWords;
-        easyWords = Array.isArray(pendingState.easyWords) ? [...pendingState.easyWords] : (Array.isArray(gameData.easyWords) ? [...gameData.easyWords] : []);
-        hardWords = Array.isArray(pendingState.hardWords) ? [...pendingState.hardWords] : (Array.isArray(gameData.hardWords) ? [...gameData.hardWords] : []);
-        currentGameWords = Array.isArray(pendingState.currentGameWords) ? [...pendingState.currentGameWords] : (Array.isArray(gameData.currentGameWords) ? [...gameData.currentGameWords] : []);
-        teamShields = normalizeTeamShields(normalizedChaos.teamShields, teams.length);
-        currentTeam = Number(gameData.currentTeam) || 1;
-        currentRound = Number(gameData.currentRound) || 0;
-
-        const actingTeamIndex = Number.isInteger(Number(pendingState.teamIndex))
-            ? Math.max(0, Math.min(teams.length - 1, Number(pendingState.teamIndex)))
-            : getCurrentTeamIndex(currentTeam);
-        const roundNumberForRound = Number.isInteger(Number(pendingState.roundNumber)) && Number(pendingState.roundNumber) > 0
-            ? Number(pendingState.roundNumber)
-            : currentRound + 1;
-        const selectedPoints = clampInt(pendingState.points, 0, 0, settings.numWords);
-        const correctAnswers = Array.isArray(pendingState.correctAnswers) ? [...pendingState.correctAnswers] : [];
-
-        const expectedTeamIndex = getCurrentTeamIndex(currentTeam);
-        const expectedRoundNumber = currentRound + 1;
-        if (actingTeamIndex !== expectedTeamIndex || roundNumberForRound !== expectedRoundNumber) {
-            console.warn(`[chaos] Ignoring stale pending resolution ${pendingId} for ${roundNumberForRound}-${actingTeamIndex + 1}; expected ${expectedRoundNumber}-${expectedTeamIndex + 1}`);
-            await updateData(`games/${gameCode}/chaos`, {
-                pending: null
-            });
-            return;
-        }
-
-        const seededRng = createSeededRandom(pendingId);
-        const chaosResolution = await runChaosResolutionLocally({
-            teamIndexForRound: actingTeamIndex,
-            selectedPoints,
-            roundNumberForRound,
-            powerupsForRound: generateRoundPowerupsMap(settings.pointsToWin, seededRng),
-            rng: seededRng,
-            animate: true,
-            syncToOnline: true
-        });
-
-        const auditEvent = {
-            id: pendingId,
-            teamIndex: actingTeamIndex,
-            roundNumber: roundNumberForRound,
-            correctAnswers: [...correctAnswers],
-            chaosSummary: formatChaosSummaryForAudit(chaosResolution.resolutionSummary)
-        };
-
-        advanceRoundPointers();
-        teams = setSpeaker(teams);
-        const hasWinner = teams.some(team => (Number(team?.points) || 0) >= pointsToWin);
-        const nextGameState = hasWinner ? "ended" : "resumed";
-
-        await updateData(`games/${gameCode}`, {
-            teams: teams,
-            easyWords: easyWords,
-            hardWords: hardWords,
-            currentGameWords: currentGameWords,
-            numPlayers: countPlayersInTeams(teams),
-            currentTeam: currentTeam,
-            currentRound: currentRound,
-            words: [],
-            remainingTime: null,
-            roundActive: false,
-            endRoundEarly: false,
-            gameState: nextGameState,
-            correctAnswers: [...correctAnswers],
-            auditEvent,
-            chaos: {
-                roundId: chaosResolution.roundId,
-                powerups: { ...chaosResolution.powerups },
-                reveal: false,
-                landed: null,
-                teamShields: [...teamShields],
-                resolutionId: pendingId,
-                pending: null
-            }
-        });
-
-        hideRoundInputUI();
-        updateCurrentTeamIndicator();
-        updateTeamScores();
-
-        if (hasWinner) {
-            endGame();
-        }
-
-        lastProcessedChaosResolutionId = pendingId;
-    } catch (error) {
-        console.error("Failed to resolve chaos round:", error);
-    } finally {
-        isResolvingChaosMove = false;
-    }
-}
-
 async function nextRound() {
-    if (isResolvingChaosMove) {
-        return;
-    }
-
+    if (isOnlineGame) { await sendOnlineCommand({ type: 'submit-round' }); return; }
+    if (isResolvingChaosMove) return;
     const correctAnswers = getSelectedCorrectAnswers();
-
     const teamIndexForRound = getCurrentTeamIndex(currentTeam);
     const roundNumberForRound = currentRound + 1;
-
+    let chaosSummary;
     if (isChaosMode) {
+        isResolvingChaosMove = true;
         setNextRoundBusyState(true);
         try {
-            const resolutionId = Date.now() + Math.floor(Math.random() * 1000);
-            const selectedPointsForRound = selectedButtons;
-            if (isOnlineGame && !isHost) {
-                hideRoundInputUI();
-                await updateData(`games/${gameCode}/chaos`, {
-                    pending: buildChaosPendingPayload({
-                        resolutionId,
-                        teamIndexForRound,
-                        roundNumberForRound,
-                        correctAnswers,
-                        selectedPoints: selectedPointsForRound
-                    })
-                });
-                lblGameState.textContent = "Status: Host is resolving chaos turn...";
-                showElement(lblGameState);
-                return;
-            }
-
-            isResolvingChaosMove = true;
-            try {
-                const seededRng = createSeededRandom(resolutionId);
-                const chaosResolution = await runChaosResolutionLocally({
-                    teamIndexForRound,
-                    selectedPoints: selectedPointsForRound,
-                    roundNumberForRound,
-                    powerupsForRound: generateRoundPowerupsMap(pointsToWin, seededRng),
-                    rng: seededRng,
-                    animate: true,
-                    syncToOnline: isOnlineGame && isHost
-                });
-
-                const auditEvent = {
-                    id: resolutionId,
-                    teamIndex: teamIndexForRound,
-                    roundNumber: roundNumberForRound,
-                    correctAnswers: [...correctAnswers],
-                    chaosSummary: formatChaosSummaryForAudit(chaosResolution.resolutionSummary)
-                };
-
-                if (!isOnlineGame) {
-                    createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
-                    createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, {
-                        chaosSummary: auditEvent.chaosSummary
-                    });
-                }
-
-                advanceRoundPointers();
-                hideRoundInputUI();
-
-                const hasWinner = teams.some(team => (Number(team?.points) || 0) >= pointsToWin);
-                if (hasWinner) {
-                    if (isOnlineGame) {
-                        await updateData(`games/${gameCode}`, {
-                            teams: teams,
-                            easyWords: easyWords,
-                            hardWords: hardWords,
-                            currentGameWords: currentGameWords,
-                            numPlayers: numPlayers,
-                            currentTeam: currentTeam,
-                            currentRound: currentRound,
-                            words: [],
-                            remainingTime: null,
-                            roundActive: false,
-                            endRoundEarly: false,
-                            gameState: "ended",
-                            correctAnswers: [...correctAnswers],
-                            auditEvent,
-                            chaos: {
-                                roundId: chaosResolution.roundId,
-                                powerups: { ...chaosResolution.powerups },
-                                reveal: false,
-                                landed: null,
-                                teamShields: [...teamShields],
-                                resolutionId,
-                                pending: null
-                            }
-                        });
-                    }
-
-                    updateCurrentTeamIndicator();
-                    endGame();
-                    return;
-                }
-
-                btnStartRound.hidden = false;
-                btnEndGame.hidden = false;
-                updateCurrentTeamIndicator();
-                updateTeamScores();
-
-                if (isOnlineGame) {
-                    teams = setSpeaker(teams);
-                    await updateData(`games/${gameCode}`, {
-                        teams: teams,
-                        easyWords: easyWords,
-                        hardWords: hardWords,
-                        currentGameWords: currentGameWords,
-                        numPlayers: numPlayers,
-                        currentTeam: currentTeam,
-                        currentRound: currentRound,
-                        words: [],
-                        remainingTime: null,
-                        roundActive: false,
-                        endRoundEarly: false,
-                        gameState: 'resumed',
-                        correctAnswers: [...correctAnswers],
-                        auditEvent,
-                        chaos: {
-                            roundId: chaosResolution.roundId,
-                            powerups: { ...chaosResolution.powerups },
-                            reveal: false,
-                            landed: null,
-                            teamShields: [...teamShields],
-                            resolutionId,
-                            pending: null
-                        }
-                    });
-                }
-
-                lastProcessedChaosResolutionId = resolutionId;
-                hideElement(lblGameState);
-            } finally {
-                isResolvingChaosMove = false;
-            }
+            const result = await runChaosResolutionLocally({ teamIndexForRound, selectedPoints: correctAnswers.length, roundNumberForRound });
+            chaosSummary = formatChaosSummaryForAudit(result.resolutionSummary);
         } finally {
+            isResolvingChaosMove = false;
             setNextRoundBusyState(false);
         }
-        return;
-    }
-
-    updatePoints(selectedButtons);
-
-    if (isOnlineGame) {
-        const auditEvent = {
-            id: Date.now(),
-            teamIndex: teamIndexForRound,
-            roundNumber: roundNumberForRound,
-            correctAnswers: [...correctAnswers]
-        };
-
-        updateData(`games/${gameCode}`, {
-            correctAnswers: correctAnswers,
-            auditEvent
-        });
-    } else {
-        createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
-        createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers);
-    }
-
+    } else updatePoints(correctAnswers.length);
+    createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
+    createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, { chaosSummary });
     advanceRoundPointers();
     hideRoundInputUI();
-
-    if (teams.some(team => team.points >= pointsToWin)) {
-        endGame();
-    } else {
-        btnStartRound.hidden = false;
-        btnEndGame.hidden = false;
-    }
-
+    if (teams.some(team => team.points >= pointsToWin)) { await endGame(); return; }
+    btnStartRound.hidden = false;
+    btnEndGame.hidden = false;
     updateCurrentTeamIndicator();
-
-    if (isOnlineGame) {
-        // Add logic for setting the current speaker
-        teams = setSpeaker(teams);
-        updateData(`games/${gameCode}`, {
-            teams: teams,
-            easyWords: easyWords,
-            hardWords: hardWords,
-            currentGameWords: currentGameWords,
-            numPlayers: numPlayers,
-            currentTeam: currentTeam,
-            currentRound: currentRound,
-            words: [],
-            remainingTime: null,
-            roundActive: false,
-            endRoundEarly: false,
-            gameState: 'resumed'
-        });
-    }
+    updateTeamScores();
 }
 
-function endGame() {
-    alert("Game over! Team scores:\n" + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join("\n"));
-    stopLobbyHeartbeat();
-    stopStalePlayerCleanupLoop();
+async function endGame() {
+    if (isOnlineGame) { await sendOnlineCommand({ type: 'end-game' }); return; }
+    alert('Game over! Team scores:\n' + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join('\n'));
+    clearInterval(countdownTimer);
     clearTrainingHints();
-
-    if (isOnlineGame)
-    {
-        updateData(`games/${gameCode}`, { gameState: "ended" });
-        firebaseDelete(`games/${gameCode}`);
-    }
-
     location.reload();
 }
 
 function endRound() {
+    if (isOnlineGame) { void sendOnlineCommand({ type: 'end-round' }); return; }
     btnEndRound.hidden = true;
     btnNextRound.hidden = false;
     setNextRoundBusyState(false);
@@ -3455,13 +1798,6 @@ function endRound() {
     clearTrainingHints();
     isRoundActive = false;
     updateMobileGameFocus();
-
-    if (isOnlineGame) {
-        updateData(`games/${gameCode}`, {
-            endRoundEarly: true,
-            roundActive: false
-        });
-    }
 }
 
 function displayCurrentWords() {
@@ -3495,10 +1831,6 @@ function displayCurrentWords() {
         normalWords = easyWords.slice(0, numEasy).concat(hardWords.slice(0, numHard));
         normalWords = shuffleArray(normalWords);
 
-        if (isOnlineGame) {
-            updateData(`games/${gameCode}`, {words: normalWords});
-        }
-
         for (let i = 0; i < normalWords.length; i++) {
             wordButtons[i].textContent = normalWords[i];
         }
@@ -3522,10 +1854,6 @@ function displayCurrentWords() {
 
         let words = currentGameWords.slice(0, numWords);
         currentGameWords = currentGameWords.slice(numWords);
-
-        if (isOnlineGame) {
-            updateData(`games/${gameCode}`, {words: words});
-        }
 
         words.forEach((word, index) => {
             wordButtons[index].textContent = word;
@@ -3687,10 +2015,6 @@ async function startCountdown(seconds, callback) {
         timer.textContent = remainingTime;
         if (remainingTime < 0) {
             timer.textContent = 0;
-        }
-
-        if (isOnlineGame && isSpeaker) {
-            updateData(`games/${gameCode}`, {remainingTime: remainingTime});
         }
 
         // Play the warning sound 5 seconds before the end if not already playing
@@ -3883,20 +2207,6 @@ function getSpeakerName() {
 
     const speaker = team.players.find(player => player.isSpeaker === true);
     return speaker ? speaker.playerName : null;
-}
-
-function getPlayerTeamIndex() {
-    for (const team of teams) {
-        // Check if the team has a 'players' array
-        if (team.players) {
-            // Find the player in the current team's players array by name
-            const player = team.players.find(player => player.playerName === playerName);
-            if (player) {
-                return team.id; // Return the team id
-            }
-        }
-    }
-    return null; // Return null if no speaker is found
 }
 
 function createTeamAuditTables(numTeams, options = {}) {
@@ -4128,6 +2438,15 @@ function hideModalById(modalId) {
 
     const modalInstance = getModalInstance(modalId);
     if (modalInstance) {
+        if (modalElement.classList.contains('show')) {
+            // Bootstrap ignores hide() during its opening transition. A fast
+            // join must still close the lobby modal once that transition ends.
+            const hideAfterShow = () => modalInstance.hide();
+            modalElement.addEventListener('shown.bs.modal', hideAfterShow, { once: true });
+            modalElement.addEventListener('hidden.bs.modal', () => {
+                modalElement.removeEventListener('shown.bs.modal', hideAfterShow);
+            }, { once: true });
+        }
         modalInstance.hide();
     }
 }
@@ -4189,4 +2508,293 @@ function showNotification(bgColorClass, textColorClass, headerText, bodyText, au
 
     const bsToast = new bootstrap.Toast(toast, options);
     bsToast.show();
+}
+
+function readOnlineSession() {
+    try { return JSON.parse(sessionStorage.getItem(ONLINE_SESSION_KEY) || 'null'); }
+    catch (_) { return null; }
+}
+
+function saveOnlineSession(value) {
+    try {
+        if (value) sessionStorage.setItem(ONLINE_SESSION_KEY, JSON.stringify(value));
+        else sessionStorage.removeItem(ONLINE_SESSION_KEY);
+    } catch (_) { /* Play still works when browser storage is unavailable. */ }
+}
+
+function onlineIdentity(code, fresh = false) {
+    const saved = fresh ? null : readOnlineSession();
+    const name = sanitizePlayerName(txtPlayerName.value);
+    return {
+        playerId: saved?.code === code && normalizeWord(saved.playerName) === normalizeWord(name)
+            ? saved.playerId : crypto.randomUUID(),
+        connectionId: crypto.randomUUID(),
+        playerName: name
+    };
+}
+
+async function restoreOnlineSession() {
+    const saved = readOnlineSession();
+    if (!saved?.playerId || !/^[A-Z]{4}$/.test(saved.code || '') || !saved.playerName) return;
+    txtPlayerName.value = saved.playerName;
+    txtGameCode.value = saved.code;
+    await joinGameLobby();
+}
+
+async function sendOnlineCommand(action) {
+    try { return await onlineClient?.command(action); }
+    catch (error) {
+        console.error('Online action failed:', error);
+        lblGameState.textContent = 'Unable to save that action. Check your connection and retry.';
+        showElement(lblGameState);
+        return false;
+    }
+}
+
+function getOnlineWordObjects(settings) {
+    const objects = settings.selectedTheme !== 'None'
+        ? (themes[settings.selectedTheme] || [])
+        : (settings.selectedCategories.length ? settings.selectedCategories : Object.keys(categories))
+            .flatMap(category => categories[category] || []);
+    return dedupeWordObjects(objects).filter(word => settings.difficulty === 'normal' || word.difficulty === settings.difficulty);
+}
+
+function drawOnlineWords(gameData, seed) {
+    const settings = sanitizeGameSettingsFromDb(gameData.settings, gameData.teams.length);
+    const rng = createSeededRandom(seed);
+    const shuffle = values => {
+        const result = [...values];
+        for (let i = result.length - 1; i > 0; i--) {
+            const j = Math.floor(rng() * (i + 1));
+            [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+    };
+    let easy = [...(gameData.easyWords || [])];
+    let hard = [...(gameData.hardWords || [])];
+    let all = [...(gameData.currentGameWords || [])];
+    if (settings.difficulty === 'normal') {
+        const numEasy = Math.ceil(settings.numWords / 2), numHard = settings.numWords - numEasy;
+        if (easy.length < numEasy || hard.length < numHard) {
+            const full = getOnlineWordObjects(settings);
+            easy = shuffle(full.filter(word => word.difficulty === 'easy').map(word => word.word));
+            hard = shuffle(full.filter(word => word.difficulty === 'hard').map(word => word.word));
+        }
+        const chosen = [...easy.slice(0, numEasy), ...hard.slice(0, numHard)];
+        const remaining = [...easy, ...hard].filter(word => !chosen.includes(word));
+        chosen.push(...remaining.slice(0, Math.max(0, settings.numWords - chosen.length)));
+        const selected = new Set(chosen);
+        return { words: shuffle(chosen), pools: {
+            easyWords: easy.filter(word => !selected.has(word)), hardWords: hard.filter(word => !selected.has(word))
+        } };
+    }
+    if (all.length < settings.numWords) all = shuffle(getOnlineWordObjects(settings).map(word => word.word));
+    return { words: all.slice(0, settings.numWords), pools: { currentGameWords: all.slice(settings.numWords) } };
+}
+
+function planOnlineChaos(gameData, basePoints) {
+    const rng = createSeededRandom(gameData.turn.seed);
+    const powerups = generateRoundPowerupsMap(gameData.settings.pointsToWin, rng);
+    const actorIndex = gameData.turn.teamIndex;
+    const temporaryTeams = basePoints.map(points => ({ points }));
+    const shields = normalizeTeamShields(gameData.chaos?.teamShields || [], gameData.teams.length);
+    const tileIndex = getBoardCellIndexForPoints(basePoints[actorIndex], gameData.settings.pointsToWin);
+    const type = basePoints[actorIndex] >= gameData.settings.pointsToWin ? null : powerups[tileIndex] || null;
+    const summary = applyChaosPowerupToState({ teamsData: temporaryTeams, shields, actingTeamIndex: actorIndex, powerupType: type, rng });
+    const moveCount = (gameData.turn.selectedIndexes || []).length;
+    return {
+        basePoints, points: temporaryTeams.map(team => team.points), shields, powerups,
+        landing: type ? { teamIndex: actorIndex, tileIndex, type } : null,
+        summary: formatChaosSummaryForAudit(summary), moveCount,
+        actorDelta: summary.actorDelta, victimTeamIndex: summary.victimTeamIndex, victimDelta: summary.victimDelta,
+        durationMs: CHAOS_PREMOVE_REVEAL_MS + moveCount * CHAOS_MOVE_STEP_DELAY_MS
+            + (type ? CHAOS_LANDED_PREVIEW_DELAY_MS : 0)
+            + (Math.abs(summary.actorDelta) + Math.abs(summary.victimDelta)) * CHAOS_MOVE_STEP_DELAY_MS
+            + CHAOS_CLEAR_PAUSE_MS
+    };
+}
+
+function renderOnlineClock() {
+    const data = onlineClient?.snapshot;
+    if (!data || !isOnlineGame) return;
+    const now = onlineClient.serverNow();
+    const view = OnlineState.view(data, onlineClient.actor, now);
+    timer.hidden = !(onlineClient.connected && view.active && data.phase === 'describing');
+    timer.textContent = String(view.remainingSeconds);
+    if (data.phase !== 'resolving') return;
+    const plan = data.turn.resolution;
+    const actorIndex = data.turn.teamIndex;
+    const elapsed = Math.max(0, now - plan.startedAt);
+    const baseFinishedAt = CHAOS_PREMOVE_REVEAL_MS + plan.moveCount * CHAOS_MOVE_STEP_DELAY_MS;
+    const effectStartsAt = baseFinishedAt + (plan.landing ? CHAOS_LANDED_PREVIEW_DELAY_MS : 0);
+    const display = data.teams.map(team => Number(team.points) || 0);
+    const steps = Math.max(0, Math.floor((elapsed - CHAOS_PREMOVE_REVEAL_MS) / CHAOS_MOVE_STEP_DELAY_MS) + 1);
+    display[actorIndex] += Math.min(plan.moveCount, steps);
+    const actorSteps = Math.max(0, Math.floor((elapsed - effectStartsAt) / CHAOS_MOVE_STEP_DELAY_MS) + 1);
+    display[actorIndex] += Math.sign(plan.actorDelta) * Math.min(Math.abs(plan.actorDelta), actorSteps);
+    if (Number.isInteger(plan.victimTeamIndex)) {
+        const victimSteps = Math.max(0, Math.floor((elapsed - effectStartsAt - Math.abs(plan.actorDelta) * CHAOS_MOVE_STEP_DELAY_MS) / CHAOS_MOVE_STEP_DELAY_MS) + 1);
+        display[plan.victimTeamIndex] += Math.sign(plan.victimDelta) * Math.min(Math.abs(plan.victimDelta), victimSteps);
+    }
+    landedPowerupPreview = elapsed >= baseFinishedAt && elapsed < effectStartsAt ? plan.landing : null;
+    powerupRevealVisible = true;
+    roundPowerups = plan.powerups;
+    teamShields = elapsed >= effectStartsAt ? plan.shields : normalizeTeamShields(data.chaos?.teamShields || [], data.teams.length);
+    const signature = JSON.stringify([display, landedPowerupPreview, teamShields]);
+    if (signature !== onlineBoardSignature) {
+        onlineBoardSignature = signature;
+        teams.forEach((team, index) => { team.points = Math.max(0, display[index]); });
+        updateBoard();
+        updateTeamScores();
+    }
+}
+
+function renderOnlineControls() {
+    const data = onlineClient?.snapshot;
+    if (!data || !isOnlineGame) return;
+    const view = OnlineState.view(data, onlineClient.actor, onlineClient.serverNow());
+    const active = view.active && onlineClient.connected && !onlineClient.suspended;
+    isHost = active && view.host;
+    isSpeaker = active && view.speaker;
+    isRoundActive = data.phase === 'describing';
+    endRoundEarly = Boolean(data.endRoundEarly);
+    selectedButtons = (data.turn?.selectedIndexes || []).length;
+    const busy = onlineClient.busy || onlineClient.registering;
+    btnStartOnlineGame.hidden = !isHost || Boolean(data.isGameStarted);
+    btnStartOnlineGame.disabled = busy || data.phase !== 'ready';
+    btnStartRound.hidden = !(active && view.canStartRound);
+    btnStartRound.disabled = busy;
+    btnEndRound.hidden = !(active && view.canEndRound);
+    btnEndRound.disabled = busy;
+    btnNextRound.hidden = !(active && view.canSelect);
+    btnNextRound.disabled = busy;
+    btnNextRound.textContent = 'Next Round';
+    btnEndGame.hidden = !isHost || data.phase === 'ended';
+    btnEndGame.disabled = busy;
+    document.getElementById('leaveOnlineGame').hidden = false;
+    const rejoin = document.getElementById('rejoinOnlineGame');
+    rejoin.hidden = Boolean((view.active && !onlineClient.error) || data.phase === 'ended' || onlineClient.registering);
+    rejoin.disabled = busy;
+    btnAnswers.hidden = !(active && view.showWords);
+    const words = data.turn?.words || [];
+    const selected = new Set(data.turn?.selectedIndexes || []);
+    document.querySelectorAll('.scoreButton').forEach((button, index) => {
+        button.hidden = btnAnswers.hidden || index >= words.length;
+        button.disabled = busy || !view.canSelect;
+        button.textContent = words[index] || '';
+        setScoreButtonSelected(button, selected.has(index));
+    });
+    lblAnswers.textContent = data.phase === 'selecting'
+        ? (isSpeaker ? 'Click the correct answers:' : "The 'Speaker' is selecting the correct answers:")
+        : (isSpeaker ? 'Describe the below words:' : "The 'Speaker' is describing the following words:");
+    if (active && isSpeaker && data.phase === 'describing') renderTrainingHints(words);
+    else clearTrainingHints();
+    let status = '';
+    if (!onlineClient.connected || onlineClient.suspended) status = 'Status: Connection lost. Reconnecting...';
+    else if (!view.player) status = 'Status: Your seat is no longer active. Rejoin the lobby to play.';
+    else if (!view.active) status = 'Status: Rejoin the lobby to restore your connection.';
+    else if (data.phase === 'waiting') status = 'Status: Waiting for players!';
+    else if (data.phase === 'ready') status = 'Status: Waiting for host to start game!';
+    else if (data.phase === 'resolving') status = 'Status: Resolving chaos turn...';
+    else {
+        const speaker = OnlineState.members(data).find(player => player.playerId === data.turn?.speakerId);
+        if (speaker && !OnlineState.isConnected(data, speaker, onlineClient.serverNow())) status = 'Status: Waiting for the speaker to reconnect...';
+    }
+    lblGameState.hidden = !status;
+    lblGameState.textContent = status;
+    updateMobileGameFocus();
+    renderOnlineClock();
+}
+
+function renderOnlineSnapshot(data) {
+    if (!data || data.phase === 'ended') {
+        if (onlineEndedHandled) return;
+        onlineEndedHandled = true;
+        isSpeaker = isHost = isRoundActive = false;
+        clearInterval(countdownTimer);
+        saveOnlineSession(null);
+        void onlineClient?.close().catch(error => console.error('Failed to close connection:', error));
+        alert(data ? 'Game over! Team scores:\n' + data.teams.map((team, index) => `Team ${index + 1}: ${team.points || 0} points`).join('\n') : 'Lobby has been closed.');
+        location.reload();
+        return;
+    }
+    const settings = sanitizeGameSettingsFromDb(data.settings, data.teams.length);
+    numTeams = settings.numTeams;
+    pointsToWin = settings.pointsToWin;
+    numWords = settings.numWords;
+    numSeconds = settings.numSeconds;
+    difficulty = settings.difficulty;
+    isChaosMode = settings.chaosMode;
+    isTrainingMode = settings.trainingMode;
+    activeSelectedTheme = settings.selectedTheme;
+    activeSelectedCategories = settings.selectedCategories;
+    numPlayers = data.numPlayers;
+    currentTeam = data.currentTeam;
+    currentRound = data.currentRound;
+    isGameStarted = Boolean(data.isGameStarted);
+    onlineGameState = data.phase;
+    if (onlineClient.rosterLoaded) detectPlayerChanges(teams, data.teams);
+    onlineClient.rosterLoaded = true;
+    teams = data.teams.map(team => ({ ...team, players: (team.players || []).map(player => ({ ...player })) }));
+    const local = OnlineState.ownsSeat(data, onlineClient.actor);
+    if (local) {
+        playerName = local.playerName;
+        saveOnlineSession({ code: gameCode, playerId: local.playerId, playerName });
+    }
+    const chaos = getNormalizedChaosState(data.chaos || {}, teams.length, pointsToWin);
+    roundPowerups = chaos.powerups;
+    powerupRevealVisible = chaos.reveal;
+    landedPowerupPreview = chaos.landed;
+    teamShields = chaos.teamShields;
+    onlineBoardSignature = '';
+    updatePlayerListUI(teams);
+    const boardKey = `${numTeams}:${pointsToWin}`;
+    if (onlineClient.boardKey !== boardKey) {
+        onlineClient.boardKey = boardKey;
+        generateBoard();
+        createTeamAuditTables(numTeams, { forceReset: true });
+        lastProcessedAuditEventId = 0;
+    }
+    for (const event of Object.values(data.auditEvents || {}).sort((a, b) => a.id - b.id)) {
+        if (event.id <= lastProcessedAuditEventId) continue;
+        createTeamAuditRows(event.teamIndex, event.roundNumber, event.correctAnswers || [], { chaosSummary: event.chaosSummary });
+        lastProcessedAuditEventId = event.id;
+    }
+    updateBoard();
+    updateTeamScores();
+    updateCurrentTeamIndicator();
+    refreshChaosModeUi();
+    renderOnlineControls();
+}
+
+async function startOnlineRound() {
+    if (!onlineClient?.snapshot || !onlineClient.connected || onlineClient.busy || !OnlineState.view(onlineClient.snapshot, onlineClient.actor, onlineClient.serverNow()).canStartRound) return;
+    const turnId = onlineClient.snapshot.turn.id;
+    onlineClient.busy = true;
+    renderOnlineControls();
+    try { await playSound(countdownSound, () => !onlineClient.connected || onlineClient.snapshot?.turn?.id !== turnId, 1.1); }
+    finally { onlineClient.busy = false; }
+    await sendOnlineCommand({ type: 'start-round', turnId, seed: crypto.getRandomValues(new Uint32Array(1))[0] });
+}
+
+async function handleOnlineJoinError(error) {
+    console.error('Unable to join lobby:', error);
+    const messages = {
+        'duplicate-player-name': 'Player name is already in use in this lobby.',
+        'incompatible-lobby': 'This lobby uses an older online version. Ask the host to create a new lobby.',
+        'lobby-unavailable': 'This lobby is unavailable or has ended.'
+    };
+    if (messages[error.message]) saveOnlineSession(null);
+    await onlineClient?.close().catch(() => {});
+    onlineClient = null;
+    isOnlineGame = false;
+    showElement(menu);
+    showElement(btnSettings);
+    showElement(btnAI);
+    showElement(btnRules);
+    showElement(txtLobbyMenu);
+    hideElement(txtLobbyPlayers);
+    hideElement(game);
+    setLayoutMode('menu');
+    alert(messages[error.message] || 'Unable to connect to the lobby. Check your connection and try again.');
 }

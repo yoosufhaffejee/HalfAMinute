@@ -19,6 +19,8 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 
 - `index.html`: UI and modal structure
 - `script.js`: core game logic, online sync, prompts, gameplay state
+- `online/state.js`: transactional lobby membership, turn phases, host election, and speaker queues
+- `online/client.js`: Firebase connection lifecycle, presence, reconnects, and turn commands
 - `data.js`: categories, themes, word metadata
 - `style.css`: styling
 - `tools/validate-data.js`: word-data validation and quality audit utility
@@ -26,7 +28,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 ## Quick Start
 
 1. Clone/download the project.
-2. Open `index.html` in a modern browser.
+2. Serve the folder locally (for example, `python -m http.server 8000`) and open `http://localhost:8000` in a modern browser.
 3. Use the menu to start:
    - local game (`Start Game`)
    - online game (`Play Online`)
@@ -63,7 +65,13 @@ Important:
 - Team assignment is auto-balanced.
 - Host starts game once team/player requirements are valid.
 - Host transfer happens automatically if host disconnects/leaves.
-- Presence heartbeat + stale cleanup handle dropped tabs/connections.
+- Server disconnect markers and connection-specific presence detect dropped tabs/connections.
+- Host authority transfers without ejecting a player just because their tab's heartbeat was delayed.
+- Disconnected seats have a 90-second reconnect grace period. A server-connected tab is not removed solely for delayed heartbeats.
+- Refresh restores the same player, team, turn, and answer selection using per-tab session storage.
+- `Leave Lobby` explicitly releases a seat; `Rejoin Lobby` can restore a lost or superseded connection.
+- Online protocol version 2 requires a newly created lobby; old-version lobbies show a message asking the host to recreate them.
+- Each team rotates its own speaker queue. Empty teams are skipped safely without changing the player-count eligibility rules.
 
 ## AI Mode
 
@@ -199,17 +207,27 @@ Run the focused pool-loading checks with `node tools/test-word-data.js`. They ex
 - History is stored as one row per round (vertical layout) per team.
 - Duplicate event guards prevent repeated row creation.
 
+## Multiplayer Regression Tests
+
+Run the state, connection, and UI regression suites with Node.js 18 or newer:
+
+```bash
+node --test tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
+```
+
+These tests use an in-memory Firebase adapter and execute the UI functions with a stubbed DOM. They cover stale roster writes, transaction retries, simultaneous clients, reconnects and old sessions, host handover, uneven teams, round controls, scoring, Chaos recovery, game ending, and offline-play regression. They do not contact the production database. See `ONLINE_RELIABILITY_AUDIT.md` for the resolution record and remaining real-browser checks.
+
 ## Known Limitations
 
 - Client-side API keys/config are not production-safe.
 - No authentication/authorization layer for online lobbies.
 - No server-authoritative anti-cheat or moderation logic.
-- Browser refresh resets local client state.
+- Clearing per-tab session storage creates a new online player identity.
 
 ## Roadmap
 
 1. Move secrets/config to secure environment management.
 2. Add auth and role-based lobby permissions.
-3. Add reconnect-aware state restoration for mid-round reconnects.
+3. Add Firebase Emulator and real-browser multiplayer integration coverage.
 4. Add richer analytics for word usage, difficulty balance, and duplicates.
 5. Add automated data CI checks using validator output thresholds.
