@@ -1,3 +1,7 @@
+// Difficulty measures legal clue effort, never length or spelling.
+// easy: a distinctive, direct association without using answer words.
+// hard: indirect clues, competing answers, or several explanation steps.
+// Audience familiarity also matters; see WORD_CURATION.md for the rubric.
 const categories = {
   "History": [
     {
@@ -33,7 +37,7 @@ const categories = {
     {
       "word": "Cold War",
       "difficulty": "easy",
-      "description": "Political tension between the USA and USSR from 1947 to 1991."
+      "description": "Postwar rivalry between the United States and Soviet Union."
     },
     {
       "word": "The Renaissance",
@@ -211,11 +215,6 @@ const categories = {
       "description": "1863 order by President Lincoln freeing slaves in Confederate states."
     },
     {
-      "word": "Columbus' First Voyage",
-      "difficulty": "easy",
-      "description": "1492 journey by Christopher Columbus leading to European awareness of the Americas."
-    },
-    {
       "word": "Feudalism",
       "difficulty": "hard",
       "description": "Medieval social system where land was exchanged for military service and loyalty."
@@ -227,12 +226,12 @@ const categories = {
     },
     {
       "word": "Nelson Mandela",
-      "difficulty": "hard",
-      "description": "Anti-apartheid leader and first black president of South Africa."
+      "difficulty": "easy",
+      "description": "Anti-apartheid leader known as Madiba who spent 27 years in prison."
     },
     {
       "word": "Cleopatra",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Last active ruler of ancient Egypt, known for her alliances with Roman leaders."
     },
     {
@@ -256,11 +255,6 @@ const categories = {
       "description": "Chinese philosopher known for his teachings on ethics and politics."
     },
     {
-      "word": "Albert Camus",
-      "difficulty": "hard",
-      "description": "French philosopher and writer known for his ideas on absurdism and existentialism."
-    },
-    {
       "word": "Moon Landing",
       "difficulty": "easy",
       "description": "1969 event where astronauts first walked on the moon."
@@ -276,19 +270,9 @@ const categories = {
       "description": "1989 event marking the end of the division between East and West Berlin."
     },
     {
-      "word": "Renaissance",
-      "difficulty": "easy",
-      "description": "Period of cultural rebirth in Europe, following the Middle Ages."
-    },
-    {
       "word": "Great Depression",
       "difficulty": "easy",
-      "description": "Severe worldwide economic downturn during the 1930s."
-    },
-    {
-      "word": "Signing of the Magna Carta",
-      "difficulty": "hard",
-      "description": "1215 event where English nobles forced King John to sign a document limiting his power."
+      "description": "Severe global economic downturn associated with the 1929 crash."
     },
     {
       "word": "Battle of Hastings",
@@ -348,7 +332,7 @@ const categories = {
     {
       "word": "Jacinda Ardern",
       "difficulty": "easy",
-      "description": "Prime Minister of New Zealand known for her leadership style and policies."
+      "description": "New Zealand leader associated with the response to the 2019 Christchurch attacks."
     },
     {
       "word": "Julius Caesar",
@@ -358,12 +342,7 @@ const categories = {
     {
       "word": "Margaret Thatcher",
       "difficulty": "easy",
-      "description": "Prime Minister of the UK known for her conservative policies and leadership."
-    },
-    {
-      "word": "Napoleon",
-      "difficulty": "easy",
-      "description": "French military leader and emperor known for his role in the Napoleonic Wars."
+      "description": "British leader nicknamed the Iron Lady."
     },
     {
       "word": "Queen Elizabeth I",
@@ -383,22 +362,12 @@ const categories = {
     {
       "word": "Vladimir Putin",
       "difficulty": "easy",
-      "description": "Current President of Russia and former Prime Minister."
+      "description": "Russian political leader associated with the Kremlin and judo."
     },
     {
       "word": "Winston Churchill",
       "difficulty": "easy",
       "description": "British Prime Minister known for his leadership during World War II."
-    },
-    {
-      "word": "The Cold War",
-      "difficulty": "hard",
-      "description": "Extended period of geopolitical tension between the US and USSR."
-    },
-    {
-      "word": "The Great Depression",
-      "difficulty": "easy",
-      "description": "Severe global economic downturn during the 1930s."
     },
     {
       "word": "The Industrial Revolution",
@@ -429,13 +398,443 @@ const categories = {
       "word": "Nelson Mandela Capture Site",
       "difficulty": "hard",
       "description": "Historic site near Howick where Mandela was arrested in 1962."
+    },
+    {
+      "word": "Stone Age",
+      "difficulty": "easy",
+      "description": "Prehistoric period of flint tools and cave dwellings."
+    },
+    {
+      "word": "Bronze Age",
+      "difficulty": "easy",
+      "description": "Era when copper and tin transformed tools."
+    },
+    {
+      "word": "Iron Age",
+      "difficulty": "easy",
+      "description": "Era of stronger metal weapons after bronze."
+    },
+    {
+      "word": "Ice Age",
+      "difficulty": "easy",
+      "description": "Prehistoric period when glaciers covered vast areas."
+    },
+    {
+      "word": "Pompeii",
+      "difficulty": "easy",
+      "description": "Roman city buried by Vesuvius in AD 79."
+    },
+    {
+      "word": "Spartacus",
+      "difficulty": "easy",
+      "description": "Enslaved gladiator who led a Roman revolt."
+    },
+    {
+      "word": "Gladiator",
+      "difficulty": "easy",
+      "description": "Arena fighter entertaining crowds in ancient Rome."
+    },
+    {
+      "word": "Pharaoh",
+      "difficulty": "easy",
+      "description": "Title held by rulers of ancient Egypt."
+    },
+    {
+      "word": "Mummy",
+      "difficulty": "easy",
+      "description": "Preserved body wrapped in linen for burial."
+    },
+    {
+      "word": "Hieroglyphics",
+      "difficulty": "easy",
+      "description": "Ancient Egyptian writing using pictures and symbols."
+    },
+    {
+      "word": "Trojan Horse",
+      "difficulty": "easy",
+      "description": "Wooden decoy hiding soldiers outside an ancient city."
+    },
+    {
+      "word": "Round Table",
+      "difficulty": "easy",
+      "description": "King Arthur's gathering place for his knights."
+    },
+    {
+      "word": "Excalibur",
+      "difficulty": "easy",
+      "description": "Legendary blade wielded by King Arthur."
+    },
+    {
+      "word": "Samurai",
+      "difficulty": "easy",
+      "description": "Warrior class of feudal Japan."
+    },
+    {
+      "word": "Ninja",
+      "difficulty": "easy",
+      "description": "Covert agent associated with feudal Japan."
+    },
+    {
+      "word": "Shogun",
+      "difficulty": "easy",
+      "description": "Military ruler of feudal Japan."
+    },
+    {
+      "word": "Silk Road",
+      "difficulty": "easy",
+      "description": "Ancient trading network connecting China with the Mediterranean."
+    },
+    {
+      "word": "Christopher Columbus",
+      "difficulty": "easy",
+      "description": "Explorer whose 1492 voyage reached the Caribbean."
+    },
+    {
+      "word": "Ferdinand Magellan",
+      "difficulty": "easy",
+      "description": "Explorer whose expedition first circumnavigated the globe."
+    },
+    {
+      "word": "Florence Nightingale",
+      "difficulty": "easy",
+      "description": "Crimean War nurse known for her lamp."
+    },
+    {
+      "word": "Henry VIII",
+      "difficulty": "easy",
+      "description": "English monarch famous for having six wives."
+    },
+    {
+      "word": "Anne Boleyn",
+      "difficulty": "easy",
+      "description": "Second wife of Henry VIII, executed in 1536."
+    },
+    {
+      "word": "Guy Fawkes",
+      "difficulty": "easy",
+      "description": "Gunpowder Plot conspirator commemorated every November fifth."
+    },
+    {
+      "word": "Blackbeard",
+      "difficulty": "easy",
+      "description": "Pirate whose fearsome facial hair gave him his nickname."
+    },
+    {
+      "word": "Pirate",
+      "difficulty": "easy",
+      "description": "Seafaring raider associated with treasure and eye patches."
+    },
+    {
+      "word": "Boston",
+      "difficulty": "easy",
+      "description": "Massachusetts city associated with a colonial tea protest."
+    },
+    {
+      "word": "Gold Rush",
+      "difficulty": "easy",
+      "description": "Prospectors flocking to newly discovered precious deposits."
+    },
+    {
+      "word": "Wild West",
+      "difficulty": "easy",
+      "description": "Frontier setting associated with cowboys and outlaws."
+    },
+    {
+      "word": "Cowboy",
+      "difficulty": "easy",
+      "description": "Mounted cattle herder associated with lassos and rodeos."
+    },
+    {
+      "word": "Sheriff",
+      "difficulty": "easy",
+      "description": "Law officer associated with frontier towns and badges."
+    },
+    {
+      "word": "Al Capone",
+      "difficulty": "easy",
+      "description": "Chicago gangster associated with Prohibition and tax evasion."
+    },
+    {
+      "word": "Prohibition",
+      "difficulty": "easy",
+      "description": "American period when alcoholic drink sales were banned."
+    },
+    {
+      "word": "Suffragette",
+      "difficulty": "easy",
+      "description": "Campaigner demanding voting rights for women."
+    },
+    {
+      "word": "Emmeline Pankhurst",
+      "difficulty": "easy",
+      "description": "British leader campaigning for women's voting rights."
+    },
+    {
+      "word": "Anne Frank",
+      "difficulty": "easy",
+      "description": "Jewish teenager whose diary records hiding from Nazis."
+    },
+    {
+      "word": "D-Day",
+      "difficulty": "easy",
+      "description": "Allied landings in Normandy on June sixth, 1944."
+    },
+    {
+      "word": "Holocaust",
+      "difficulty": "easy",
+      "description": "Nazi genocide of six million Jewish people."
+    },
+    {
+      "word": "Wright Brothers",
+      "difficulty": "easy",
+      "description": "Aviation pioneers behind the 1903 powered flight."
+    },
+    {
+      "word": "Neil Armstrong",
+      "difficulty": "easy",
+      "description": "First person to set foot on the Moon."
+    },
+    {
+      "word": "Yuri Gagarin",
+      "difficulty": "easy",
+      "description": "First human to travel into space."
+    },
+    {
+      "word": "Gutenberg",
+      "difficulty": "easy",
+      "description": "Surname associated with Europe's movable-type printing revolution."
+    },
+    {
+      "word": "Apartheid",
+      "difficulty": "easy",
+      "description": "South Africa's former system of enforced racial segregation."
+    },
+    {
+      "word": "1994 Elections",
+      "difficulty": "easy",
+      "description": "South Africa's first national vote with universal adult suffrage."
+    },
+    {
+      "word": "Truth and Reconciliation Commission",
+      "difficulty": "easy",
+      "description": "South African hearings addressing abuses under apartheid."
+    },
+    {
+      "word": "Long Walk to Freedom",
+      "difficulty": "easy",
+      "description": "Nelson Mandela's autobiography, titled after his journey."
+    },
+    {
+      "word": "The Great Fire of London",
+      "difficulty": "easy",
+      "description": "1666 blaze that devastated England's capital."
+    },
+    {
+      "word": "The Roaring Twenties",
+      "difficulty": "easy",
+      "description": "Jazz, flappers and prosperity before the 1929 crash."
+    },
+    {
+      "word": "Rosetta Stone",
+      "difficulty": "hard",
+      "description": "Multilingual inscription that helped decode Egyptian writing."
+    },
+    {
+      "word": "Domesday Book",
+      "difficulty": "hard",
+      "description": "William the Conqueror's survey of English landholdings."
+    },
+    {
+      "word": "Bay of Pigs",
+      "difficulty": "hard",
+      "description": "Failed 1961 invasion of Cuba by exiles."
+    },
+    {
+      "word": "Watergate",
+      "difficulty": "hard",
+      "description": "Break-in scandal that led to Nixon's resignation."
+    },
+    {
+      "word": "Iron Curtain",
+      "difficulty": "hard",
+      "description": "Churchill's metaphor for Europe's Cold War division."
+    },
+    {
+      "word": "Trench Warfare",
+      "difficulty": "hard",
+      "description": "Combat from long dug defensive positions."
+    },
+    {
+      "word": "No Man's Land",
+      "difficulty": "hard",
+      "description": "Dangerous ground separating opposing frontline positions."
+    },
+    {
+      "word": "Armistice",
+      "difficulty": "hard",
+      "description": "Agreement between opponents to stop fighting."
+    },
+    {
+      "word": "Mutiny",
+      "difficulty": "hard",
+      "description": "Rebellion by soldiers or sailors against officers."
+    },
+    {
+      "word": "Blockade",
+      "difficulty": "hard",
+      "description": "Military action cutting off supplies to an area."
+    },
+    {
+      "word": "Siege",
+      "difficulty": "hard",
+      "description": "Surrounding a fortified place to force surrender."
+    },
+    {
+      "word": "Rationing",
+      "difficulty": "hard",
+      "description": "Limiting individual supplies during shortages or wartime."
+    },
+    {
+      "word": "Propaganda",
+      "difficulty": "hard",
+      "description": "Persuasive messaging used to shape public beliefs."
+    },
+    {
+      "word": "Rasputin",
+      "difficulty": "hard",
+      "description": "Mystic associated with the last Russian imperial family."
+    },
+    {
+      "word": "Tsar",
+      "difficulty": "hard",
+      "description": "Title used by Russia's emperors before 1917."
+    },
+    {
+      "word": "Bolsheviks",
+      "difficulty": "hard",
+      "description": "Lenin's faction that seized power in Russia."
+    },
+    {
+      "word": "October Revolution",
+      "difficulty": "hard",
+      "description": "1917 uprising that brought Lenin's faction to power."
+    },
+    {
+      "word": "Proletariat",
+      "difficulty": "hard",
+      "description": "Industrial working class in Marxist theory."
+    },
+    {
+      "word": "The Enlightenment",
+      "difficulty": "hard",
+      "description": "European intellectual movement emphasizing reason and individual rights."
+    },
+    {
+      "word": "Age of Exploration",
+      "difficulty": "hard",
+      "description": "Era of European voyages to distant continents."
+    },
+    {
+      "word": "Scramble for Africa",
+      "difficulty": "hard",
+      "description": "European powers racing to colonize a continent."
+    },
+    {
+      "word": "Decolonisation",
+      "difficulty": "hard",
+      "description": "Colonies gaining independence from overseas imperial rule."
+    },
+    {
+      "word": "Partition of India",
+      "difficulty": "hard",
+      "description": "1947 division creating two independent states."
+    },
+    {
+      "word": "Salt March",
+      "difficulty": "hard",
+      "description": "Gandhi's 1930 protest against a British monopoly."
+    },
+    {
+      "word": "Opium Wars",
+      "difficulty": "hard",
+      "description": "Conflicts over Britain's drug trade with China."
+    },
+    {
+      "word": "Terracotta Army",
+      "difficulty": "hard",
+      "description": "Thousands of clay soldiers guarding Qin's tomb."
+    },
+    {
+      "word": "Ming Dynasty",
+      "difficulty": "hard",
+      "description": "Chinese imperial era associated with prized porcelain."
+    },
+    {
+      "word": "Inca Empire",
+      "difficulty": "hard",
+      "description": "Andean civilization ruled from Cusco before Spanish conquest."
+    },
+    {
+      "word": "Aztecs",
+      "difficulty": "hard",
+      "description": "Civilization whose capital stood where Mexico City stands."
+    },
+    {
+      "word": "Maya Civilization",
+      "difficulty": "hard",
+      "description": "Mesoamerican culture known for temples and intricate calendars."
+    },
+    {
+      "word": "Vasco da Gama",
+      "difficulty": "hard",
+      "description": "Portuguese navigator who reached India via southern Africa."
+    },
+    {
+      "word": "Bartolomeu Dias",
+      "difficulty": "hard",
+      "description": "Portuguese explorer who rounded Africa's southern tip."
+    },
+    {
+      "word": "Jan van Riebeeck",
+      "difficulty": "hard",
+      "description": "Dutch commander who established a Cape refreshment station."
+    },
+    {
+      "word": "Anglo-Boer War",
+      "difficulty": "hard",
+      "description": "1899–1902 conflict between Britain and two southern African republics."
+    },
+    {
+      "word": "Women’s March of 1956",
+      "difficulty": "hard",
+      "description": "Protest against pass laws at the Union Buildings."
+    },
+    {
+      "word": "Pass Laws",
+      "difficulty": "hard",
+      "description": "Apartheid restrictions requiring identity documents for movement."
+    },
+    {
+      "word": "Rivonia Trial",
+      "difficulty": "hard",
+      "description": "Proceedings that sent Mandela and comrades to prison."
+    },
+    {
+      "word": "Freedom Charter",
+      "difficulty": "hard",
+      "description": "1955 declaration beginning with the people governing."
+    },
+    {
+      "word": "Hector Pieterson",
+      "difficulty": "hard",
+      "description": "Schoolboy whose death symbolised the 1976 Soweto uprising."
     }
   ],
   "Geography (Places & Attractions)": [
     {
       "word": "Mount Everest",
       "difficulty": "easy",
-      "description": "Tallest mountain"
+      "description": "Highest mountain above sea level, on the Nepal–China border."
     },
     {
       "word": "Amazon River",
@@ -505,7 +904,7 @@ const categories = {
     {
       "word": "Mount Kilimanjaro",
       "difficulty": "easy",
-      "description": "Highest peak in Africa"
+      "description": "Africa's highest mountain, located in Tanzania."
     },
     {
       "word": "Mediterranean Sea",
@@ -543,7 +942,7 @@ const categories = {
       "description": "Coldest continent on Earth"
     },
     {
-      "word": "Galapagos Islands",
+      "word": "Galápagos Islands",
       "difficulty": "hard",
       "description": "Remote volcanic archipelago with unique species."
     },
@@ -598,7 +997,7 @@ const categories = {
       "description": "High-altitude lake in the Andes between Peru and Bolivia."
     },
     {
-      "word": "Serengeti",
+      "word": "Serengeti National Park",
       "difficulty": "easy",
       "description": "Famous national park in Tanzania known for wildlife migrations."
     },
@@ -858,12 +1257,7 @@ const categories = {
       "description": "Major river in Europe flowing through several countries."
     },
     {
-      "word": "Kilimanjaro",
-      "difficulty": "easy",
-      "description": "Tallest mountain in Africa, located in Tanzania."
-    },
-    {
-      "word": "Opera House",
+      "word": "Sydney Opera House",
       "difficulty": "easy",
       "description": "Theater building known for performances and architectural design."
     },
@@ -948,7 +1342,7 @@ const categories = {
       "description": "Ancient rock-cut city in Jordan, famous for its archaeological sites."
     },
     {
-      "word": "Mount McKinley",
+      "word": "Denali",
       "difficulty": "easy",
       "description": "Highest mountain peak in North America, located in Alaska."
     },
@@ -1073,11 +1467,6 @@ const categories = {
       "description": "Major city in Illinois, known for its architecture and deep-dish pizza."
     },
     {
-      "word": "Denali",
-      "difficulty": "hard",
-      "description": "Highest peak in North America, located in Alaska."
-    },
-    {
       "word": "Dubai",
       "difficulty": "easy",
       "description": "City in the United Arab Emirates known for its modern architecture and luxury."
@@ -1093,11 +1482,6 @@ const categories = {
       "description": "Country that is part of the United Kingdom, known for its rich history and landmarks."
     },
     {
-      "word": "Everest",
-      "difficulty": "easy",
-      "description": "Common name for Mount, the highest peak in the world."
-    },
-    {
       "word": "Everest Base Camp",
       "difficulty": "hard",
       "description": "Base camp located at the foot of Mount Everest, starting point for climbers."
@@ -1106,16 +1490,6 @@ const categories = {
       "word": "France",
       "difficulty": "easy",
       "description": "Country in Western Europe, known for its cuisine, art, and landmarks like the Eiffel Tower."
-    },
-    {
-      "word": "Galápagos Islands",
-      "difficulty": "hard",
-      "description": "Archipelago in the Pacific Ocean known for its unique wildlife and biodiversity."
-    },
-    {
-      "word": "Giza Pyramids",
-      "difficulty": "easy",
-      "description": "Ancient pyramid structures located in Egypt, built as tombs for pharaohs."
     },
     {
       "word": "India",
@@ -1148,8 +1522,8 @@ const categories = {
       "description": "Major city in California, known for its entertainment industry and beaches."
     },
     {
-      "word": "Louvre Museum",
-      "difficulty": "hard",
+      "word": "The Louvre",
+      "difficulty": "easy",
       "description": "World-famous museum in Paris, France, known for housing the Mona Lisa."
     },
     {
@@ -1333,24 +1707,9 @@ const categories = {
       "description": "Greek island in the Aegean Sea known for its white-washed buildings and stunning sunsets."
     },
     {
-      "word": "Serengeti National Park",
-      "difficulty": "hard",
-      "description": "National park in Tanzania known for its vast savannas and annual migration of wildebeest and other wildlife."
-    },
-    {
       "word": "Sydney",
       "difficulty": "easy",
       "description": "City in Australia known for its iconic Opera House and Harbour Bridge."
-    },
-    {
-      "word": "The Acropolis of Athens",
-      "difficulty": "hard",
-      "description": "Ancient citadel in Athens, Greece, featuring the Parthenon and other historic temples."
-    },
-    {
-      "word": "The Amazon Rainforest",
-      "difficulty": "easy",
-      "description": "Large tropical rainforest spanning several South American countries, known for its biodiversity."
     },
     {
       "word": "The Arctic Circle",
@@ -1358,64 +1717,14 @@ const categories = {
       "description": "Latitude circle around the Earth, marking the boundary of the polar region in the Northern Hemisphere."
     },
     {
-      "word": "The Colosseum",
-      "difficulty": "easy",
-      "description": "Ancient amphitheater in Rome, Italy, known for its gladiatorial contests and historic architecture."
-    },
-    {
-      "word": "The Eiffel Tower",
-      "difficulty": "easy",
-      "description": "Iron lattice tower in Paris, France, one of the most recognizable landmarks in the world."
-    },
-    {
-      "word": "The Galapagos Islands",
-      "difficulty": "hard",
-      "description": "Archipelago in the Pacific Ocean, known for its unique wildlife and Charles Darwin's research."
-    },
-    {
-      "word": "The Grand Canyon",
-      "difficulty": "easy",
-      "description": "Massive canyon in Arizona, USA, carved by the Colorado River, known for its breathtaking views."
-    },
-    {
-      "word": "The Great Barrier Reef",
-      "difficulty": "easy",
-      "description": "Largest coral reef system in the world, located off the coast of Queensland, Australia."
-    },
-    {
-      "word": "The Himalayas",
-      "difficulty": "easy",
-      "description": "Mountain range in Asia, home to the world's highest peaks including Mount Everest."
-    },
-    {
       "word": "The Inca Trail",
       "difficulty": "hard",
       "description": "Historic trail in Peru leading to the ancient city of Machu Picchu, known for its archaeological significance."
     },
     {
-      "word": "The Nile River",
-      "difficulty": "easy",
-      "description": "Longest river in Africa, flowing through northeastern Africa into the Mediterranean Sea."
-    },
-    {
       "word": "The Pacific Ocean",
       "difficulty": "easy",
       "description": "Largest and deepest ocean, stretching between Asia/Australia and the Americas."
-    },
-    {
-      "word": "The Pyramids of Giza",
-      "difficulty": "easy",
-      "description": "Ancient pyramids in Egypt, built as tombs for pharaohs and one of the Seven Wonders of the Ancient World."
-    },
-    {
-      "word": "The Sahara Desert",
-      "difficulty": "easy",
-      "description": "Largest hot desert in the world, located in North Africa."
-    },
-    {
-      "word": "The Sydney Opera House",
-      "difficulty": "hard",
-      "description": "Iconic performing arts center in Sydney, Australia, known for its distinctive sail-like design."
     },
     {
       "word": "Times Square",
@@ -1446,16 +1755,6 @@ const categories = {
       "word": "Yellowstone National Park",
       "difficulty": "hard",
       "description": "First national park in the world, located in the U.S. states of Wyoming, Montana, and Idaho, known for its geothermal features."
-    },
-    {
-      "word": "The United Nations",
-      "difficulty": "hard",
-      "description": "International organization headquartered in New York City, promoting global peace and cooperation."
-    },
-    {
-      "word": "The European Union",
-      "difficulty": "hard",
-      "description": "Political and economic union of European countries, aiming for regional integration and cooperation."
     },
     {
       "word": "Universal Studios",
@@ -1596,6 +1895,456 @@ const categories = {
       "word": "Freedom Park",
       "difficulty": "easy",
       "description": "Heritage site and memorial in Pretoria."
+    },
+    {
+      "word": "South Africa",
+      "difficulty": "easy",
+      "description": "Country whose major cities include Durban and Pretoria."
+    },
+    {
+      "word": "Durban",
+      "difficulty": "easy",
+      "description": "KwaZulu-Natal coastal city known for its Golden Mile."
+    },
+    {
+      "word": "Pretoria",
+      "difficulty": "easy",
+      "description": "South African administrative capital known for jacarandas."
+    },
+    {
+      "word": "Gqeberha",
+      "difficulty": "easy",
+      "description": "Eastern Cape port city formerly called Port Elizabeth."
+    },
+    {
+      "word": "Bloemfontein",
+      "difficulty": "easy",
+      "description": "Free State city associated with roses and rugby."
+    },
+    {
+      "word": "Kimberley",
+      "difficulty": "easy",
+      "description": "Northern Cape city famous for its Big Hole."
+    },
+    {
+      "word": "Stellenbosch",
+      "difficulty": "easy",
+      "description": "Cape university town surrounded by vineyards."
+    },
+    {
+      "word": "Franschhoek",
+      "difficulty": "easy",
+      "description": "Cape wine town associated with French Huguenot heritage."
+    },
+    {
+      "word": "Knysna",
+      "difficulty": "easy",
+      "description": "Garden Route town known for its lagoon and oysters."
+    },
+    {
+      "word": "Plettenberg Bay",
+      "difficulty": "easy",
+      "description": "Garden Route holiday town near Robberg Peninsula."
+    },
+    {
+      "word": "Jeffreys Bay",
+      "difficulty": "easy",
+      "description": "Eastern Cape surfing town famous for Supertubes."
+    },
+    {
+      "word": "Coffee Bay",
+      "difficulty": "easy",
+      "description": "Wild Coast village near Hole in the Wall."
+    },
+    {
+      "word": "Mossel Bay",
+      "difficulty": "easy",
+      "description": "Garden Route harbour town with a maritime museum."
+    },
+    {
+      "word": "Lesotho",
+      "difficulty": "easy",
+      "description": "Mountain kingdom completely surrounded by South Africa."
+    },
+    {
+      "word": "Eswatini",
+      "difficulty": "easy",
+      "description": "Southern African kingdom formerly called Swaziland."
+    },
+    {
+      "word": "Botswana",
+      "difficulty": "easy",
+      "description": "Country associated with the Okavango and Gaborone."
+    },
+    {
+      "word": "Namibia",
+      "difficulty": "easy",
+      "description": "Country of red dunes and the Skeleton Coast."
+    },
+    {
+      "word": "Mozambique",
+      "difficulty": "easy",
+      "description": "Indian Ocean neighbour of South Africa with Maputo as capital."
+    },
+    {
+      "word": "Zimbabwe",
+      "difficulty": "easy",
+      "description": "Country whose capital is Harare."
+    },
+    {
+      "word": "Zambia",
+      "difficulty": "easy",
+      "description": "Country sharing Victoria Falls with its southern neighbour."
+    },
+    {
+      "word": "Madagascar",
+      "difficulty": "easy",
+      "description": "Island nation associated with lemurs and baobabs."
+    },
+    {
+      "word": "Mauritius",
+      "difficulty": "easy",
+      "description": "Indian Ocean island nation associated with the extinct dodo."
+    },
+    {
+      "word": "Seychelles",
+      "difficulty": "easy",
+      "description": "Indian Ocean archipelago known for granite boulders and beaches."
+    },
+    {
+      "word": "Egypt",
+      "difficulty": "easy",
+      "description": "North African country associated with pharaohs and pyramids."
+    },
+    {
+      "word": "Morocco",
+      "difficulty": "easy",
+      "description": "North African country with Rabat as capital."
+    },
+    {
+      "word": "Kenya",
+      "difficulty": "easy",
+      "description": "East African country associated with Nairobi and safaris."
+    },
+    {
+      "word": "Tanzania",
+      "difficulty": "easy",
+      "description": "East African country containing Kilimanjaro and Zanzibar."
+    },
+    {
+      "word": "Ghana",
+      "difficulty": "easy",
+      "description": "West African country with Accra as capital."
+    },
+    {
+      "word": "Nigeria",
+      "difficulty": "easy",
+      "description": "West African country containing Lagos and Abuja."
+    },
+    {
+      "word": "Ethiopia",
+      "difficulty": "easy",
+      "description": "Country associated with Addis Ababa and injera."
+    },
+    {
+      "word": "New Zealand",
+      "difficulty": "easy",
+      "description": "Pacific country associated with kiwis and the haka."
+    },
+    {
+      "word": "Singapore",
+      "difficulty": "easy",
+      "description": "Island city-state associated with its Merlion statue."
+    },
+    {
+      "word": "Thailand",
+      "difficulty": "easy",
+      "description": "Southeast Asian country with Bangkok as capital."
+    },
+    {
+      "word": "Vietnam",
+      "difficulty": "easy",
+      "description": "Southeast Asian country associated with Hanoi and pho."
+    },
+    {
+      "word": "Indonesia",
+      "difficulty": "easy",
+      "description": "Archipelago containing Java, Sumatra and Bali."
+    },
+    {
+      "word": "Philippines",
+      "difficulty": "easy",
+      "description": "Archipelago with Manila as capital."
+    },
+    {
+      "word": "South Korea",
+      "difficulty": "easy",
+      "description": "Country associated with Seoul, kimchi and K-pop."
+    },
+    {
+      "word": "North Korea",
+      "difficulty": "easy",
+      "description": "Country with Pyongyang as capital."
+    },
+    {
+      "word": "Mexico",
+      "difficulty": "easy",
+      "description": "Country associated with tacos, mariachi and ancient Maya ruins."
+    },
+    {
+      "word": "Argentina",
+      "difficulty": "easy",
+      "description": "Country associated with Buenos Aires and tango."
+    },
+    {
+      "word": "Peru",
+      "difficulty": "easy",
+      "description": "South American country containing Machu Picchu."
+    },
+    {
+      "word": "Chile",
+      "difficulty": "easy",
+      "description": "Long narrow country along South America's Pacific coast."
+    },
+    {
+      "word": "Cuba",
+      "difficulty": "easy",
+      "description": "Caribbean island associated with Havana and vintage cars."
+    },
+    {
+      "word": "Jamaica",
+      "difficulty": "easy",
+      "description": "Caribbean island associated with reggae and Usain Bolt."
+    },
+    {
+      "word": "Ireland",
+      "difficulty": "easy",
+      "description": "Country associated with Dublin, shamrocks and Guinness."
+    },
+    {
+      "word": "Scotland",
+      "difficulty": "easy",
+      "description": "Country associated with Edinburgh, kilts and bagpipes."
+    },
+    {
+      "word": "Wales",
+      "difficulty": "easy",
+      "description": "Country whose flag features a red dragon."
+    },
+    {
+      "word": "Switzerland",
+      "difficulty": "easy",
+      "description": "Alpine country associated with fondue and neutrality."
+    },
+    {
+      "word": "Greece",
+      "difficulty": "easy",
+      "description": "Country associated with Athens and ancient Olympic traditions."
+    },
+    {
+      "word": "Turkey",
+      "difficulty": "easy",
+      "description": "Country spanning Europe and Asia with Ankara as capital."
+    },
+    {
+      "word": "Dubai Mall",
+      "difficulty": "easy",
+      "description": "Huge shopping destination beside the Burj Khalifa."
+    },
+    {
+      "word": "Bali",
+      "difficulty": "easy",
+      "description": "Indonesian island associated with temples and rice terraces."
+    },
+    {
+      "word": "Maldives",
+      "difficulty": "easy",
+      "description": "Indian Ocean nation associated with overwater holiday villas."
+    },
+    {
+      "word": "Mount Etna",
+      "difficulty": "easy",
+      "description": "Active Sicilian volcano overlooking Catania."
+    },
+    {
+      "word": "Loch Ness",
+      "difficulty": "easy",
+      "description": "Scottish lake associated with a legendary monster."
+    },
+    {
+      "word": "Buckingham Palace",
+      "difficulty": "easy",
+      "description": "London residence associated with royal balcony appearances."
+    },
+    {
+      "word": "Kremlin",
+      "difficulty": "easy",
+      "description": "Fortified Moscow complex associated with Russian government."
+    },
+    {
+      "word": "Hollywood Sign",
+      "difficulty": "easy",
+      "description": "Huge white letters on a Los Angeles hillside."
+    },
+    {
+      "word": "Route 66",
+      "difficulty": "easy",
+      "description": "Historic American highway between Chicago and Santa Monica."
+    },
+    {
+      "word": "Disneyland",
+      "difficulty": "easy",
+      "description": "Theme park destination featuring a castle and Mickey Mouse."
+    },
+    {
+      "word": "Strait of Gibraltar",
+      "difficulty": "hard",
+      "description": "Narrow passage linking the Atlantic and Mediterranean."
+    },
+    {
+      "word": "Suez Canal",
+      "difficulty": "hard",
+      "description": "Shipping shortcut connecting the Mediterranean and Red Sea."
+    },
+    {
+      "word": "Panama Canal",
+      "difficulty": "hard",
+      "description": "Shipping shortcut between the Atlantic and Pacific."
+    },
+    {
+      "word": "Cape Agulhas",
+      "difficulty": "hard",
+      "description": "Southernmost point of the African continent."
+    },
+    {
+      "word": "Skeleton Coast",
+      "difficulty": "hard",
+      "description": "Namibian shoreline associated with fog and shipwrecks."
+    },
+    {
+      "word": "Fish River Canyon",
+      "difficulty": "hard",
+      "description": "Vast gorge in southern Namibia."
+    },
+    {
+      "word": "Sossusvlei",
+      "difficulty": "hard",
+      "description": "Namibian destination famous for towering red dunes."
+    },
+    {
+      "word": "Deadvlei",
+      "difficulty": "hard",
+      "description": "White clay pan with dead trees among Namibian dunes."
+    },
+    {
+      "word": "Ngorongoro Crater",
+      "difficulty": "hard",
+      "description": "Tanzanian volcanic caldera renowned for wildlife."
+    },
+    {
+      "word": "Maasai Mara",
+      "difficulty": "hard",
+      "description": "Kenyan reserve associated with wildebeest migration."
+    },
+    {
+      "word": "Devil's Pool",
+      "difficulty": "hard",
+      "description": "Natural swimming spot at the edge of Victoria Falls."
+    },
+    {
+      "word": "Lake Retba",
+      "difficulty": "hard",
+      "description": "Senegalese body of water known for its pink colour."
+    },
+    {
+      "word": "Socotra",
+      "difficulty": "hard",
+      "description": "Yemeni island famous for dragon's blood trees."
+    },
+    {
+      "word": "Cappadocia",
+      "difficulty": "hard",
+      "description": "Turkish region with cave dwellings and balloon rides."
+    },
+    {
+      "word": "Pamukkale",
+      "difficulty": "hard",
+      "description": "Turkish terraces of white mineral deposits and thermal pools."
+    },
+    {
+      "word": "Ha Long Bay",
+      "difficulty": "hard",
+      "description": "Vietnamese seascape of limestone towers and islets."
+    },
+    {
+      "word": "Mariana Trench",
+      "difficulty": "hard",
+      "description": "Ocean's deepest known major depression."
+    },
+    {
+      "word": "Ring of Fire",
+      "difficulty": "hard",
+      "description": "Pacific zone of frequent earthquakes and volcanoes."
+    },
+    {
+      "word": "Antipodes",
+      "difficulty": "hard",
+      "description": "Places on directly opposite sides of the globe."
+    },
+    {
+      "word": "Landlocked Country",
+      "difficulty": "hard",
+      "description": "Nation with no direct access to an ocean."
+    },
+    {
+      "word": "International Waters",
+      "difficulty": "hard",
+      "description": "Sea areas beyond national territorial jurisdiction."
+    },
+    {
+      "word": "Salar de Uyuni",
+      "difficulty": "hard",
+      "description": "Bolivian salt flat that becomes a giant mirror."
+    },
+    {
+      "word": "Ushuaia",
+      "difficulty": "hard",
+      "description": "Argentine city often described as a gateway to Antarctica."
+    },
+    {
+      "word": "Lima",
+      "difficulty": "hard",
+      "description": "Peruvian capital overlooking the Pacific."
+    },
+    {
+      "word": "Lisbon",
+      "difficulty": "hard",
+      "description": "Portuguese capital associated with yellow trams."
+    },
+    {
+      "word": "Prague",
+      "difficulty": "hard",
+      "description": "Czech capital famous for its astronomical clock."
+    },
+    {
+      "word": "Budapest",
+      "difficulty": "hard",
+      "description": "Hungarian capital split by the Danube."
+    },
+    {
+      "word": "Dubrovnik",
+      "difficulty": "hard",
+      "description": "Croatian walled city used in Game of Thrones."
+    },
+    {
+      "word": "Reykjavik",
+      "difficulty": "hard",
+      "description": "Iceland's capital city."
+    },
+    {
+      "word": "Helsinki",
+      "difficulty": "hard",
+      "description": "Finland's capital city."
     }
   ],
   "Science & Technology": [
@@ -1606,12 +2355,12 @@ const categories = {
     },
     {
       "word": "Quantum Mechanics",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Branch of physics dealing with phenomena on very small scales, such as atoms and subatomic particles."
     },
     {
       "word": "Space Exploration",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Investigation and discovery of celestial structures beyond Earth's atmosphere using space technology."
     },
     {
@@ -1621,17 +2370,17 @@ const categories = {
     },
     {
       "word": "Genetics",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Study of heredity and the variation of inherited characteristics."
     },
     {
-      "word": "Internet of Things (IoT)",
-      "difficulty": "easy",
-      "description": "Network of interconnected devices and systems that communicate and exchange data."
+      "word": "Internet of Things",
+      "difficulty": "hard",
+      "description": "Connected everyday devices sharing data through a network."
     },
     {
       "word": "Climate Change",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Long-term alteration in Earth's climate, primarily due to human activities like burning fossil fuels."
     },
     {
@@ -1656,7 +2405,7 @@ const categories = {
     },
     {
       "word": "Cybersecurity",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Protection of computer systems and networks from digital attacks, theft, or damage."
     },
     {
@@ -1671,7 +2420,7 @@ const categories = {
     },
     {
       "word": "Machine Learning",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Subfield of artificial intelligence where algorithms improve through experience and data analysis."
     },
     {
@@ -1690,7 +2439,7 @@ const categories = {
       "description": "Gene-editing technology that allows precise modification of DNA in living organisms."
     },
     {
-      "word": "Drones",
+      "word": "Drone",
       "difficulty": "easy",
       "description": "Unmanned aerial vehicles used for various purposes, including surveillance and delivery."
     },
@@ -1706,7 +2455,7 @@ const categories = {
     },
     {
       "word": "Cloud Computing",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Delivery of computing services over the internet, including storage, processing, and software applications."
     },
     {
@@ -1715,17 +2464,17 @@ const categories = {
       "description": "Techniques used to create visual representations of the interior of a body for clinical analysis."
     },
     {
-      "word": "Artificial Neural Networks",
+      "word": "Neural Networks",
       "difficulty": "hard",
       "description": "Computational models inspired by the human brain, used to recognize patterns and solve complex problems."
     },
     {
-      "word": "Fusion Energy",
+      "word": "Nuclear Fusion",
       "difficulty": "hard",
-      "description": "Energy produced by fusing atomic nuclei, potentially providing a nearly limitless and clean energy source."
+      "description": "Joining light atomic nuclei to release energy."
     },
     {
-      "word": "Smartphones",
+      "word": "Smartphone",
       "difficulty": "easy",
       "description": "Mobile devices combining phone functionality with computing capabilities and internet access."
     },
@@ -1761,7 +2510,7 @@ const categories = {
     },
     {
       "word": "Renewable Resources",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Natural resources that can be replenished naturally, such as wind, solar, and biomass."
     },
     {
@@ -1781,7 +2530,7 @@ const categories = {
     },
     {
       "word": "Telecommunications",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Transmission of information over distances using various technologies, including phones, internet, and radio."
     },
     {
@@ -1796,13 +2545,8 @@ const categories = {
     },
     {
       "word": "Data Science",
-      "difficulty": "easy",
-      "description": "Field combining statistical analysis, machine learning, and data visualization to extract insights from data."
-    },
-    {
-      "word": "Nuclear Fusion",
       "difficulty": "hard",
-      "description": "Process of combining atomic nuclei to release energy, potentially providing a powerful and clean energy source."
+      "description": "Field combining statistical analysis, machine learning, and data visualization to extract insights from data."
     },
     {
       "word": "Cyborgs",
@@ -1821,7 +2565,7 @@ const categories = {
     },
     {
       "word": "Internet Privacy",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Protection of personal information and data from unauthorized access and misuse online."
     },
     {
@@ -1860,11 +2604,6 @@ const categories = {
       "description": "Space telescope providing detailed images of distant galaxies and cosmic phenomena."
     },
     {
-      "word": "Smartphone",
-      "difficulty": "easy",
-      "description": "Mobile device combining phone functionality with computing capabilities and internet access."
-    },
-    {
       "word": "Artificial Intelligence",
       "difficulty": "easy",
       "description": "Field of computer science focused on creating systems that can perform tasks requiring human intelligence."
@@ -1898,21 +2637,6 @@ const categories = {
       "word": "Smartwatch",
       "difficulty": "easy",
       "description": "Wearable device that functions as a watch and provides notifications, fitness tracking, and other features."
-    },
-    {
-      "word": "Drone",
-      "difficulty": "easy",
-      "description": "Unmanned aerial vehicle used for various purposes, including surveillance and delivery."
-    },
-    {
-      "word": "Internet of Things",
-      "difficulty": "hard",
-      "description": "Network of interconnected devices embedded with sensors and software to collect and exchange data."
-    },
-    {
-      "word": "Neural Networks",
-      "difficulty": "hard",
-      "description": "Computational models inspired by the human brain, used to recognize patterns and make decisions based on data."
     },
     {
       "word": "Autonomous Vehicles",
@@ -1985,11 +2709,6 @@ const categories = {
       "description": "Electronics that connect to the internet and can be controlled remotely, such as smart thermostats, lights, and security systems."
     },
     {
-      "word": "Sociology",
-      "difficulty": "hard",
-      "description": "Study of society, social relationships, and institutions, and how they influence individual and group behavior."
-    },
-    {
       "word": "Wearable Technology",
       "difficulty": "hard",
       "description": "Devices worn on the body that track health metrics or provide notifications, such as smartwatches and fitness trackers."
@@ -2037,7 +2756,7 @@ const categories = {
     {
       "word": "Cell C",
       "difficulty": "easy",
-      "description": "South African mobile network operator, that is being acquired."
+      "description": "South African mobile network operator."
     },
     {
       "word": "Telkom",
@@ -2058,6 +2777,481 @@ const categories = {
       "word": "Sasol",
       "difficulty": "easy",
       "description": "Leading integrated fuel, energy and chemical company."
+    },
+    {
+      "word": "Magnet",
+      "difficulty": "easy",
+      "description": "Object that attracts iron and has opposing poles."
+    },
+    {
+      "word": "Static Electricity",
+      "difficulty": "easy",
+      "description": "Charge buildup that makes hair stand up."
+    },
+    {
+      "word": "Rainbow",
+      "difficulty": "easy",
+      "description": "Coloured arc appearing when sunlight meets raindrops."
+    },
+    {
+      "word": "Prism",
+      "difficulty": "easy",
+      "description": "Transparent block splitting white light into colours."
+    },
+    {
+      "word": "Battery",
+      "difficulty": "easy",
+      "description": "Portable source of stored electrical energy."
+    },
+    {
+      "word": "Circuit",
+      "difficulty": "easy",
+      "description": "Closed path allowing electric current to flow."
+    },
+    {
+      "word": "Solar Energy",
+      "difficulty": "easy",
+      "description": "Power harnessed from our nearest star."
+    },
+    {
+      "word": "Wind Turbine",
+      "difficulty": "easy",
+      "description": "Rotating blades converting moving air into electricity."
+    },
+    {
+      "word": "Robot Vacuum",
+      "difficulty": "easy",
+      "description": "Autonomous device that cleans floors while you relax."
+    },
+    {
+      "word": "Touchscreen",
+      "difficulty": "easy",
+      "description": "Display you operate by tapping with your fingers."
+    },
+    {
+      "word": "Search Engine",
+      "difficulty": "easy",
+      "description": "Service that finds websites from typed queries."
+    },
+    {
+      "word": "Browser",
+      "difficulty": "easy",
+      "description": "Program used to view websites."
+    },
+    {
+      "word": "Email",
+      "difficulty": "easy",
+      "description": "Electronic messages delivered to an inbox."
+    },
+    {
+      "word": "Spam",
+      "difficulty": "easy",
+      "description": "Unwanted bulk messages clogging an inbox."
+    },
+    {
+      "word": "Password",
+      "difficulty": "easy",
+      "description": "Secret combination used to access an account."
+    },
+    {
+      "word": "USB",
+      "difficulty": "easy",
+      "description": "Common connection standard for accessories and storage sticks."
+    },
+    {
+      "word": "Hard Drive",
+      "difficulty": "easy",
+      "description": "Computer component used for storing files."
+    },
+    {
+      "word": "Keyboard",
+      "difficulty": "easy",
+      "description": "Computer accessory with letters, numbers and a spacebar."
+    },
+    {
+      "word": "Mouse",
+      "difficulty": "easy",
+      "description": "Pointing device clicked beside a computer."
+    },
+    {
+      "word": "Cursor",
+      "difficulty": "easy",
+      "description": "Onscreen pointer moved with a trackpad."
+    },
+    {
+      "word": "Printer",
+      "difficulty": "easy",
+      "description": "Device that turns digital documents into paper copies."
+    },
+    {
+      "word": "Scanner",
+      "difficulty": "easy",
+      "description": "Device that converts paper documents into digital images."
+    },
+    {
+      "word": "Charger",
+      "difficulty": "easy",
+      "description": "Accessory that replenishes a device's battery."
+    },
+    {
+      "word": "Headphones",
+      "difficulty": "easy",
+      "description": "Personal audio accessory worn over the ears."
+    },
+    {
+      "word": "Microchip",
+      "difficulty": "easy",
+      "description": "Tiny silicon component containing electronic circuits."
+    },
+    {
+      "word": "Webcam",
+      "difficulty": "easy",
+      "description": "Device used to show your face during video calls."
+    },
+    {
+      "word": "Video Call",
+      "difficulty": "easy",
+      "description": "Conversation where participants see each other remotely."
+    },
+    {
+      "word": "Download",
+      "difficulty": "easy",
+      "description": "Transfer a file from the internet to your device."
+    },
+    {
+      "word": "Upload",
+      "difficulty": "easy",
+      "description": "Send a file from your device to an online service."
+    },
+    {
+      "word": "App Store",
+      "difficulty": "easy",
+      "description": "Digital marketplace for phone software."
+    },
+    {
+      "word": "Autocorrect",
+      "difficulty": "easy",
+      "description": "Phone feature that changes typing, sometimes embarrassingly."
+    },
+    {
+      "word": "Airplane Mode",
+      "difficulty": "easy",
+      "description": "Phone setting that disables cellular communication."
+    },
+    {
+      "word": "Notification",
+      "difficulty": "easy",
+      "description": "Alert that appears when a message arrives."
+    },
+    {
+      "word": "Facial Recognition",
+      "difficulty": "easy",
+      "description": "Unlocking a device by showing it who you are."
+    },
+    {
+      "word": "Fingerprint Scanner",
+      "difficulty": "easy",
+      "description": "Sensor identifying someone from patterns on their fingertip."
+    },
+    {
+      "word": "Photosynthesis",
+      "difficulty": "easy",
+      "description": "Process by which plants use sunlight to make food."
+    },
+    {
+      "word": "Evaporation",
+      "difficulty": "easy",
+      "description": "Liquid changing into gas at its surface."
+    },
+    {
+      "word": "Condensation",
+      "difficulty": "easy",
+      "description": "Water droplets forming on a cold glass."
+    },
+    {
+      "word": "Freezing",
+      "difficulty": "easy",
+      "description": "Liquid turning solid when sufficiently cooled."
+    },
+    {
+      "word": "Melting",
+      "difficulty": "easy",
+      "description": "Solid becoming liquid as it warms."
+    },
+    {
+      "word": "Earthquake",
+      "difficulty": "easy",
+      "description": "Sudden shaking caused by shifting tectonic plates."
+    },
+    {
+      "word": "Tsunami",
+      "difficulty": "easy",
+      "description": "Huge sea waves often triggered by underwater earthquakes."
+    },
+    {
+      "word": "Fossil",
+      "difficulty": "easy",
+      "description": "Preserved trace of an ancient living organism."
+    },
+    {
+      "word": "Dinosaur",
+      "difficulty": "easy",
+      "description": "Prehistoric reptile associated with Jurassic Park."
+    },
+    {
+      "word": "Tyrannosaurus Rex",
+      "difficulty": "easy",
+      "description": "Huge prehistoric predator with comically tiny arms."
+    },
+    {
+      "word": "Triceratops",
+      "difficulty": "easy",
+      "description": "Prehistoric reptile with three horns and a neck frill."
+    },
+    {
+      "word": "Skeleton",
+      "difficulty": "easy",
+      "description": "Framework of bones supporting a body."
+    },
+    {
+      "word": "Atom",
+      "difficulty": "easy",
+      "description": "Basic unit of a chemical element."
+    },
+    {
+      "word": "Oxygen",
+      "difficulty": "easy",
+      "description": "Gas humans need to breathe."
+    },
+    {
+      "word": "Carbon Dioxide",
+      "difficulty": "easy",
+      "description": "Gas exhaled by people and absorbed by plants."
+    },
+    {
+      "word": "Helium",
+      "difficulty": "easy",
+      "description": "Gas that fills floating party balloons."
+    },
+    {
+      "word": "Laboratory",
+      "difficulty": "easy",
+      "description": "Workplace where experiments are performed."
+    },
+    {
+      "word": "Test Tube",
+      "difficulty": "easy",
+      "description": "Small glass vessel used in experiments."
+    },
+    {
+      "word": "Bunsen Burner",
+      "difficulty": "easy",
+      "description": "Laboratory gas device producing an adjustable flame."
+    },
+    {
+      "word": "Petri Dish",
+      "difficulty": "easy",
+      "description": "Shallow laboratory container used to grow microbes."
+    },
+    {
+      "word": "Placebo Effect",
+      "difficulty": "hard",
+      "description": "Improvement caused by expecting treatment to work."
+    },
+    {
+      "word": "Scientific Method",
+      "difficulty": "hard",
+      "description": "Testing explanations through evidence and repeatable experiments."
+    },
+    {
+      "word": "Control Group",
+      "difficulty": "hard",
+      "description": "Participants used as a baseline in an experiment."
+    },
+    {
+      "word": "Peer Review",
+      "difficulty": "hard",
+      "description": "Independent experts checking research before publication."
+    },
+    {
+      "word": "Hypothesis",
+      "difficulty": "hard",
+      "description": "Testable proposed explanation for an observation."
+    },
+    {
+      "word": "Correlation",
+      "difficulty": "hard",
+      "description": "Two measurements varying together without proving causation."
+    },
+    {
+      "word": "Inertia",
+      "difficulty": "hard",
+      "description": "Tendency to resist a change in motion."
+    },
+    {
+      "word": "Friction",
+      "difficulty": "hard",
+      "description": "Resistance between surfaces sliding past each other."
+    },
+    {
+      "word": "Centrifugal Force",
+      "difficulty": "hard",
+      "description": "Apparent outward push felt in a rotating frame."
+    },
+    {
+      "word": "Buoyancy",
+      "difficulty": "hard",
+      "description": "Upward fluid force that helps objects float."
+    },
+    {
+      "word": "Refraction",
+      "difficulty": "hard",
+      "description": "Bending of light when it enters another material."
+    },
+    {
+      "word": "Osmosis",
+      "difficulty": "hard",
+      "description": "Movement of water through a selectively permeable barrier."
+    },
+    {
+      "word": "Entropy",
+      "difficulty": "hard",
+      "description": "Measure associated with energy dispersal and disorder."
+    },
+    {
+      "word": "Half-life",
+      "difficulty": "hard",
+      "description": "Time required for a radioactive sample to lose fifty percent through decay."
+    },
+    {
+      "word": "Isotope",
+      "difficulty": "hard",
+      "description": "Version of an element with a different neutron count."
+    },
+    {
+      "word": "Stem Cell",
+      "difficulty": "hard",
+      "description": "Unspecialised biological unit able to develop into different tissues."
+    },
+    {
+      "word": "Clone",
+      "difficulty": "hard",
+      "description": "Genetically identical copy of an organism."
+    },
+    {
+      "word": "Selective Breeding",
+      "difficulty": "hard",
+      "description": "Choosing parents to encourage desired inherited traits."
+    },
+    {
+      "word": "Antimatter",
+      "difficulty": "hard",
+      "description": "Particles whose properties oppose those of ordinary matter."
+    },
+    {
+      "word": "Superconductor",
+      "difficulty": "hard",
+      "description": "Material that can carry current with no electrical resistance."
+    },
+    {
+      "word": "Encryption",
+      "difficulty": "hard",
+      "description": "Scrambling information so only authorised people can read it."
+    },
+    {
+      "word": "Firewall",
+      "difficulty": "hard",
+      "description": "Security barrier filtering computer network traffic."
+    },
+    {
+      "word": "Two-factor Authentication",
+      "difficulty": "hard",
+      "description": "Logging in using an additional identity check."
+    },
+    {
+      "word": "Phishing",
+      "difficulty": "hard",
+      "description": "Fake message designed to steal login details."
+    },
+    {
+      "word": "Malware",
+      "difficulty": "hard",
+      "description": "Software designed to damage or compromise devices."
+    },
+    {
+      "word": "Open Source",
+      "difficulty": "hard",
+      "description": "Software whose code is available for inspection and modification."
+    },
+    {
+      "word": "Operating System",
+      "difficulty": "hard",
+      "description": "Core software managing a computer and its programs."
+    },
+    {
+      "word": "Software Bug",
+      "difficulty": "hard",
+      "description": "Programming flaw causing unexpected behaviour."
+    },
+    {
+      "word": "Blue Screen of Death",
+      "difficulty": "hard",
+      "description": "Windows crash display associated with a serious failure."
+    },
+    {
+      "word": "Captcha",
+      "difficulty": "hard",
+      "description": "Online test asking users to prove they are human."
+    },
+    {
+      "word": "Incognito Mode",
+      "difficulty": "hard",
+      "description": "Browser setting that avoids saving local browsing history."
+    },
+    {
+      "word": "Cookies",
+      "difficulty": "hard",
+      "description": "Small website files that can remember preferences."
+    },
+    {
+      "word": "Cache",
+      "difficulty": "hard",
+      "description": "Temporary storage used to speed up repeated access."
+    },
+    {
+      "word": "Bandwidth",
+      "difficulty": "hard",
+      "description": "Capacity of a connection to transfer data."
+    },
+    {
+      "word": "Latency",
+      "difficulty": "hard",
+      "description": "Delay between an action and its response."
+    },
+    {
+      "word": "Pixel",
+      "difficulty": "hard",
+      "description": "Smallest picture element in a digital display."
+    },
+    {
+      "word": "Resolution",
+      "difficulty": "hard",
+      "description": "Image detail measured by the number of picture elements."
+    },
+    {
+      "word": "Source Code",
+      "difficulty": "hard",
+      "description": "Human-readable instructions used to create software."
+    },
+    {
+      "word": "Debugging",
+      "difficulty": "hard",
+      "description": "Finding and fixing errors in a program."
+    },
+    {
+      "word": "Rubber Duck Debugging",
+      "difficulty": "hard",
+      "description": "Explaining your program to a bath toy to find mistakes."
     }
   ],
   "Literature": [
@@ -2082,14 +3276,14 @@ const categories = {
       "description": "A novel by F. Scott Fitzgerald set in the Roaring Twenties, exploring themes of wealth, love, and the American Dream."
     },
     {
-      "word": "Moby Dick",
+      "word": "Moby-Dick",
       "difficulty": "easy",
       "description": "A novel by Herman Melville that follows Captain Ahab's obsessive quest to hunt the elusive white whale,."
     },
     {
       "word": "1984",
       "difficulty": "easy",
-      "description": "A dystopian novel by George Orwell depicting a totalitarian regime led by Big Brother, focusing on themes of surveillance and individuality."
+      "description": "George Orwell's dystopia featuring Winston Smith and Big Brother."
     },
     {
       "word": "Pride and Prejudice",
@@ -2345,6 +3539,451 @@ const categories = {
       "word": "Et tu, Brute?",
       "difficulty": "hard",
       "description": "A famous line from Shakespeare's play 'Julius Caesar,' uttered by Caesar as he is being assassinated by Brutus and others."
+    },
+    {
+      "word": "Winnie-the-Pooh",
+      "difficulty": "easy",
+      "description": "Honey-loving bear who lives in the Hundred Acre Wood."
+    },
+    {
+      "word": "Paddington Bear",
+      "difficulty": "easy",
+      "description": "Peruvian visitor associated with marmalade and a blue coat."
+    },
+    {
+      "word": "Peter Pan",
+      "difficulty": "easy",
+      "description": "Boy from Neverland who refuses to grow up."
+    },
+    {
+      "word": "Captain Hook",
+      "difficulty": "easy",
+      "description": "Neverland pirate pursued by a ticking crocodile."
+    },
+    {
+      "word": "Tinker Bell",
+      "difficulty": "easy",
+      "description": "Tiny fairy companion of the boy from Neverland."
+    },
+    {
+      "word": "Mary Poppins",
+      "difficulty": "easy",
+      "description": "Magical nanny arriving with an umbrella."
+    },
+    {
+      "word": "Matilda",
+      "difficulty": "easy",
+      "description": "Roald Dahl heroine with telekinetic powers."
+    },
+    {
+      "word": "The BFG",
+      "difficulty": "easy",
+      "description": "Roald Dahl's friendly giant who collects dreams."
+    },
+    {
+      "word": "Charlie and the Chocolate Factory",
+      "difficulty": "easy",
+      "description": "Roald Dahl story about a golden ticket winner."
+    },
+    {
+      "word": "The Very Hungry Caterpillar",
+      "difficulty": "easy",
+      "description": "Picture book about an insect eating before becoming a butterfly."
+    },
+    {
+      "word": "The Gruffalo",
+      "difficulty": "easy",
+      "description": "Julia Donaldson creature invented by a clever mouse."
+    },
+    {
+      "word": "The Cat in the Hat",
+      "difficulty": "easy",
+      "description": "Dr. Seuss visitor who brings chaos indoors."
+    },
+    {
+      "word": "Green Eggs and Ham",
+      "difficulty": "easy",
+      "description": "Dr. Seuss story about trying an unusual meal."
+    },
+    {
+      "word": "Where the Wild Things Are",
+      "difficulty": "easy",
+      "description": "Max sails to an island of monsters."
+    },
+    {
+      "word": "Charlotte's Web",
+      "difficulty": "easy",
+      "description": "A spider helps save Wilbur the pig."
+    },
+    {
+      "word": "Stuart Little",
+      "difficulty": "easy",
+      "description": "Tiny mouse adopted by a human family."
+    },
+    {
+      "word": "The Secret Seven",
+      "difficulty": "easy",
+      "description": "Enid Blyton's club of young detectives."
+    },
+    {
+      "word": "The Famous Five",
+      "difficulty": "easy",
+      "description": "Enid Blyton adventurers including Timmy the dog."
+    },
+    {
+      "word": "Nancy Drew",
+      "difficulty": "easy",
+      "description": "Teenage detective created under the name Carolyn Keene."
+    },
+    {
+      "word": "The Hardy Boys",
+      "difficulty": "easy",
+      "description": "Young detective siblings Frank and Joe."
+    },
+    {
+      "word": "Percy Jackson",
+      "difficulty": "easy",
+      "description": "Young demigod who discovers Poseidon is his father."
+    },
+    {
+      "word": "The Lightning Thief",
+      "difficulty": "easy",
+      "description": "Opening novel about Poseidon's young demigod son."
+    },
+    {
+      "word": "Diary of a Wimpy Kid",
+      "difficulty": "easy",
+      "description": "Greg Heffley's illustrated school misadventures."
+    },
+    {
+      "word": "Goosebumps",
+      "difficulty": "easy",
+      "description": "R. L. Stine's spooky series for younger readers."
+    },
+    {
+      "word": "The Little Prince",
+      "difficulty": "easy",
+      "description": "Antoine de Saint-Exupéry tale of a visitor from an asteroid."
+    },
+    {
+      "word": "Pinocchio",
+      "difficulty": "easy",
+      "description": "Wooden puppet whose nose grows when he lies."
+    },
+    {
+      "word": "Goldilocks",
+      "difficulty": "easy",
+      "description": "Girl who tries three bears' porridge and beds."
+    },
+    {
+      "word": "Little Red Riding Hood",
+      "difficulty": "easy",
+      "description": "Fairy-tale heroine who meets a wolf en route to Grandma."
+    },
+    {
+      "word": "The Three Little Pigs",
+      "difficulty": "easy",
+      "description": "Siblings whose houses face a huffing, puffing wolf."
+    },
+    {
+      "word": "Jack and the Beanstalk",
+      "difficulty": "easy",
+      "description": "Fairy tale involving magical seeds and a giant."
+    },
+    {
+      "word": "Rapunzel",
+      "difficulty": "easy",
+      "description": "Tower-dwelling heroine who lets down her long hair."
+    },
+    {
+      "word": "Rumpelstiltskin",
+      "difficulty": "easy",
+      "description": "Magical spinner whose secret name saves a child."
+    },
+    {
+      "word": "The Ugly Duckling",
+      "difficulty": "easy",
+      "description": "Misunderstood young bird who becomes a swan."
+    },
+    {
+      "word": "Hansel and Gretel",
+      "difficulty": "easy",
+      "description": "Siblings who discover a witch's edible cottage."
+    },
+    {
+      "word": "The Boy Who Cried Wolf",
+      "difficulty": "easy",
+      "description": "Fable about false alarms destroying trust."
+    },
+    {
+      "word": "The Tortoise and the Hare",
+      "difficulty": "easy",
+      "description": "Fable in which slow persistence wins a race."
+    },
+    {
+      "word": "The Emperor's New Clothes",
+      "difficulty": "easy",
+      "description": "Tale of a ruler fooled into parading naked."
+    },
+    {
+      "word": "Cinderella",
+      "difficulty": "easy",
+      "description": "Fairy-tale heroine who loses a glass slipper."
+    },
+    {
+      "word": "Snow White",
+      "difficulty": "easy",
+      "description": "Fairy-tale heroine associated with seven dwarfs."
+    },
+    {
+      "word": "Sleeping Beauty",
+      "difficulty": "easy",
+      "description": "Fairy-tale princess awakened after an enchanted slumber."
+    },
+    {
+      "word": "Beauty and the Beast",
+      "difficulty": "easy",
+      "description": "Fairy tale involving a rose and an enchanted prince."
+    },
+    {
+      "word": "Treasure Island",
+      "difficulty": "easy",
+      "description": "Robert Louis Stevenson adventure featuring Long John Silver."
+    },
+    {
+      "word": "Robinson Crusoe",
+      "difficulty": "easy",
+      "description": "Daniel Defoe's shipwrecked hero befriends Friday."
+    },
+    {
+      "word": "Oliver Twist",
+      "difficulty": "easy",
+      "description": "Dickens orphan who asks for another serving."
+    },
+    {
+      "word": "A Christmas Carol",
+      "difficulty": "easy",
+      "description": "Dickens tale about Scrooge and three visiting spirits."
+    },
+    {
+      "word": "Ebenezer Scrooge",
+      "difficulty": "easy",
+      "description": "Miser visited by festive ghosts in Dickens's novella."
+    },
+    {
+      "word": "Dr. Watson",
+      "difficulty": "easy",
+      "description": "Medical companion who narrates Sherlock Holmes adventures."
+    },
+    {
+      "word": "Hercule Poirot",
+      "difficulty": "easy",
+      "description": "Agatha Christie's Belgian detective with a famous moustache."
+    },
+    {
+      "word": "Miss Marple",
+      "difficulty": "easy",
+      "description": "Agatha Christie's observant elderly amateur detective."
+    },
+    {
+      "word": "Willy Wonka",
+      "difficulty": "easy",
+      "description": "Eccentric confectioner who hides golden tickets in sweets."
+    },
+    {
+      "word": "Atticus Finch",
+      "difficulty": "hard",
+      "description": "Lawyer defending Tom Robinson in Harper Lee's novel."
+    },
+    {
+      "word": "Scout Finch",
+      "difficulty": "hard",
+      "description": "Young narrator of To Kill a Mockingbird."
+    },
+    {
+      "word": "Holden Caulfield",
+      "difficulty": "hard",
+      "description": "Alienated teenage narrator of Salinger's best-known novel."
+    },
+    {
+      "word": "Jay Gatsby",
+      "difficulty": "hard",
+      "description": "Fitzgerald millionaire throwing parties in pursuit of Daisy."
+    },
+    {
+      "word": "Elizabeth Bennet",
+      "difficulty": "hard",
+      "description": "Austen heroine who falls for Mr. Darcy."
+    },
+    {
+      "word": "Mr. Darcy",
+      "difficulty": "hard",
+      "description": "Reserved Austen hero initially judged proud by Elizabeth."
+    },
+    {
+      "word": "Heathcliff",
+      "difficulty": "hard",
+      "description": "Brooding outsider in Emily Brontë's Yorkshire novel."
+    },
+    {
+      "word": "Captain Ahab",
+      "difficulty": "hard",
+      "description": "Melville's obsessed whaler pursuing a white creature."
+    },
+    {
+      "word": "Jean Valjean",
+      "difficulty": "hard",
+      "description": "Hugo's former prisoner pursued by Inspector Javert."
+    },
+    {
+      "word": "Sancho Panza",
+      "difficulty": "hard",
+      "description": "Practical squire accompanying Cervantes's deluded knight."
+    },
+    {
+      "word": "Scheherazade",
+      "difficulty": "hard",
+      "description": "Storyteller who delays execution through nightly tales."
+    },
+    {
+      "word": "Aladdin",
+      "difficulty": "hard",
+      "description": "Folktale hero associated with a magic lamp."
+    },
+    {
+      "word": "Ali Baba",
+      "difficulty": "hard",
+      "description": "Folktale character who discovers a cave opened by a password."
+    },
+    {
+      "word": "Sinbad",
+      "difficulty": "hard",
+      "description": "Folkloric sailor whose voyages involve fantastic adventures."
+    },
+    {
+      "word": "Beowulf",
+      "difficulty": "hard",
+      "description": "Old English hero who battles Grendel."
+    },
+    {
+      "word": "Grendel",
+      "difficulty": "hard",
+      "description": "Monster defeated by the hero of an Old English epic."
+    },
+    {
+      "word": "Odysseus",
+      "difficulty": "hard",
+      "description": "Greek hero whose long journey home includes the Cyclops."
+    },
+    {
+      "word": "Cyclops",
+      "difficulty": "hard",
+      "description": "One-eyed giant encountered by a wandering Greek hero."
+    },
+    {
+      "word": "Achilles' Heel",
+      "difficulty": "hard",
+      "description": "Expression for the single weakness that causes downfall."
+    },
+    {
+      "word": "Big Brother",
+      "difficulty": "hard",
+      "description": "Orwell's ever-watching symbol of totalitarian surveillance."
+    },
+    {
+      "word": "Animal Farm",
+      "difficulty": "hard",
+      "description": "Orwell's political fable featuring Napoleon the pig."
+    },
+    {
+      "word": "The Old Man and the Sea",
+      "difficulty": "hard",
+      "description": "Hemingway novella about an ageing fisherman's struggle."
+    },
+    {
+      "word": "Of Mice and Men",
+      "difficulty": "hard",
+      "description": "Steinbeck tragedy following George and Lennie."
+    },
+    {
+      "word": "The Outsiders",
+      "difficulty": "hard",
+      "description": "S. E. Hinton novel about Greasers and Socs."
+    },
+    {
+      "word": "Holes",
+      "difficulty": "hard",
+      "description": "Louis Sachar novel about boys digging at a detention camp."
+    },
+    {
+      "word": "Wonder",
+      "difficulty": "hard",
+      "description": "R. J. Palacio novel about Auggie entering school."
+    },
+    {
+      "word": "Life of Pi",
+      "difficulty": "hard",
+      "description": "Yann Martel novel featuring a boy and a tiger at sea."
+    },
+    {
+      "word": "The Giver",
+      "difficulty": "hard",
+      "description": "Lois Lowry dystopia about a boy receiving memories."
+    },
+    {
+      "word": "The Neverending Story",
+      "difficulty": "hard",
+      "description": "Fantasy about Bastian and the threatened land of Fantastica."
+    },
+    {
+      "word": "Narnia",
+      "difficulty": "hard",
+      "description": "C. S. Lewis's magical land reached through a wardrobe."
+    },
+    {
+      "word": "Aslan",
+      "difficulty": "hard",
+      "description": "Great lion central to C. S. Lewis's fantasy series."
+    },
+    {
+      "word": "Sauron",
+      "difficulty": "hard",
+      "description": "Tolkien's dark lord associated with a fiery eye."
+    },
+    {
+      "word": "Gollum",
+      "difficulty": "hard",
+      "description": "Tolkien creature who calls a stolen object precious."
+    },
+    {
+      "word": "Bilbo Baggins",
+      "difficulty": "hard",
+      "description": "Tolkien's reluctant burglar on a quest with dwarves."
+    },
+    {
+      "word": "Frodo Baggins",
+      "difficulty": "hard",
+      "description": "Tolkien hero tasked with destroying a powerful object."
+    },
+    {
+      "word": "Samwise Gamgee",
+      "difficulty": "hard",
+      "description": "Faithful gardener accompanying Tolkien's central questing hero."
+    },
+    {
+      "word": "Mockingjay",
+      "difficulty": "hard",
+      "description": "Rebellion symbol associated with Katniss Everdeen."
+    },
+    {
+      "word": "District Twelve",
+      "difficulty": "hard",
+      "description": "Coal-mining home of Katniss Everdeen."
+    },
+    {
+      "word": "Platform Nine and Three-Quarters",
+      "difficulty": "hard",
+      "description": "Hidden railway departure point for Hogwarts students."
     }
   ],
   "Art and Culture": [
@@ -2380,7 +4019,7 @@ const categories = {
     },
     {
       "word": "Impressionism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An art movement originating in France during the late 19th century, characterized by small, visible brushstrokes and an emphasis on light and color."
     },
     {
@@ -2404,9 +4043,9 @@ const categories = {
       "description": "An American artist known for his leading role in the Pop Art movement and works like 'Campbell's Soup Cans' and 'Marilyn Diptych.'"
     },
     {
-      "word": "Shakespeare",
+      "word": "William Shakespeare",
       "difficulty": "easy",
-      "description": "William, an English playwright and poet, known for his influential plays and sonnets, including 'Hamlet' and 'Romeo and Juliet.'."
+      "description": "Playwright associated with Hamlet and the Globe Theatre."
     },
     {
       "word": "Frida Kahlo",
@@ -2415,7 +4054,7 @@ const categories = {
     },
     {
       "word": "Gothic Architecture",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An architectural style prevalent in Europe from the 12th to the 16th century, known for its pointed arches, ribbed vaults, and flying buttresses."
     },
     {
@@ -2425,7 +4064,7 @@ const categories = {
     },
     {
       "word": "Surrealism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An art movement that sought to release the creative potential of the unconscious mind, often characterized by dream-like and bizarre imagery."
     },
     {
@@ -2435,7 +4074,7 @@ const categories = {
     },
     {
       "word": "Film Noir",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A genre of crime films from the 1940s and 1950s characterized by dark, cynical narratives and a visual style with high-contrast lighting."
     },
     {
@@ -2445,12 +4084,12 @@ const categories = {
     },
     {
       "word": "Hip Hop",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A cultural movement that includes a musical genre characterized by rhythmic vocal style (rapping), DJing, graffiti art, and breakdancing."
     },
     {
       "word": "Abstract Art",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An art style that uses shapes, colors, and forms to create compositions independent of visual references from the world."
     },
     {
@@ -2465,7 +4104,7 @@ const categories = {
     },
     {
       "word": "Cubism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An art movement pioneered by Picasso and Braque, characterized by fragmented objects and multiple viewpoints in a single plane."
     },
     {
@@ -2480,22 +4119,17 @@ const categories = {
     },
     {
       "word": "Classical Music",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A broad term for a tradition of music that spans from the 9th century to the present, including composers like Beethoven and Mozart."
     },
     {
       "word": "Pop Art",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An art movement of the 1950s and 1960s that drew inspiration from popular and commercial culture, using imagery from advertising and mass media."
     },
     {
-      "word": "Literary Classic",
-      "difficulty": "easy",
-      "description": "A term for books that have stood the test of time, often considered essential reading for their artistic and cultural value."
-    },
-    {
       "word": "Rococo",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An 18th-century art and design style characterized by ornate details, playful themes, and elaborate decorations, often in pastel colors."
     },
     {
@@ -2505,7 +4139,7 @@ const categories = {
     },
     {
       "word": "Baroque Music",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A style of classical music from the 1600s to the mid-1700s, known for its elaborate ornamentation and expressive melodies, with composers like Bach and Handel."
     },
     {
@@ -2515,7 +4149,7 @@ const categories = {
     },
     {
       "word": "Dadaism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An avant-garde art movement of the early 20th century that rejected logic and embraced chaos and absurdity in art."
     },
     {
@@ -2525,7 +4159,7 @@ const categories = {
     },
     {
       "word": "Abstract Expressionism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An art movement emphasizing spontaneous, non-representational forms and bold colors, associated with artists like Jackson Pollock and Mark Rothko."
     },
     {
@@ -2539,8 +4173,8 @@ const categories = {
       "description": "A three-dimensional art form created by shaping materials such as clay, stone, or metal to form artistic objects or figures."
     },
     {
-      "word": "Neo-Classicism",
-      "difficulty": "easy",
+      "word": "Neoclassicism",
+      "difficulty": "hard",
       "description": "An art movement of the late 18th and early 19th centuries that sought to revive the classical style and ideals of ancient Greece and Rome."
     },
     {
@@ -2575,17 +4209,17 @@ const categories = {
     },
     {
       "word": "Classical Ballet",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A formal dance style with structured techniques and traditional choreography, including ballets like 'Swan Lake' and 'The Nutcracker.'"
     },
     {
       "word": "Folk Music",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A genre of music rooted in the traditions and cultures of communities, often featuring acoustic instruments and storytelling lyrics."
     },
     {
       "word": "Romanticism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An artistic, literary, and intellectual movement of the late 18th and early 19th centuries emphasizing emotion, nature, and individualism."
     },
     {
@@ -2650,12 +4284,12 @@ const categories = {
     },
     {
       "word": "Hieroglyphics",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "An ancient writing system used by Egyptians, consisting of pictorial symbols representing objects, sounds, or ideas."
     },
     {
       "word": "Tower Bridge",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A famous structure in London known for its distinctive twin towers and its ability to lift to allow ships to pass beneath."
     },
     {
@@ -2675,7 +4309,7 @@ const categories = {
     },
     {
       "word": "Hollywood Walk of Fame",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A sidewalk in Hollywood, California, featuring stars embedded in the pavement to honor celebrities in the entertainment industry."
     },
     {
@@ -2690,17 +4324,12 @@ const categories = {
     },
     {
       "word": "Rio Carnival",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "An annual festival in Rio de Janeiro, Brazil, featuring elaborate parades, samba music, and vibrant costumes."
     },
     {
-      "word": "The Louvre Museum",
-      "difficulty": "hard",
-      "description": "A world-renowned museum in Paris, France, housing thousands of works of art, including the 'Mona Lisa' and 'Venus de Milo.'"
-    },
-    {
       "word": "Kwaito",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "South African music genre."
     },
     {
@@ -2710,12 +4339,12 @@ const categories = {
     },
     {
       "word": "Ladysmith Black Mambazo",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "World-renowned South African male choral group."
     },
     {
       "word": "Ndebele Art",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Vibrant, colorful geometric patterns used in Ndebele culture."
     },
     {
@@ -2727,13 +4356,463 @@ const categories = {
       "word": "Zulu Beadwork",
       "difficulty": "hard",
       "description": "Intricate bead designs used in traditional Zulu culture."
+    },
+    {
+      "word": "Origami",
+      "difficulty": "easy",
+      "description": "Japanese craft of folding paper into shapes."
+    },
+    {
+      "word": "Calligraphy",
+      "difficulty": "easy",
+      "description": "Decorative handwriting made with carefully formed strokes."
+    },
+    {
+      "word": "Graffiti",
+      "difficulty": "easy",
+      "description": "Painted or sprayed artwork on public walls."
+    },
+    {
+      "word": "Mural",
+      "difficulty": "easy",
+      "description": "Large painting made directly on a wall."
+    },
+    {
+      "word": "Portrait",
+      "difficulty": "easy",
+      "description": "Artwork depicting a person, often their face."
+    },
+    {
+      "word": "Self-portrait",
+      "difficulty": "easy",
+      "description": "Artwork in which the artist depicts themselves."
+    },
+    {
+      "word": "Caricature",
+      "difficulty": "easy",
+      "description": "Drawing exaggerating someone's most recognisable features."
+    },
+    {
+      "word": "Cartoon",
+      "difficulty": "easy",
+      "description": "Humorous illustrated scene, often with speech bubbles."
+    },
+    {
+      "word": "Comic Strip",
+      "difficulty": "easy",
+      "description": "Sequence of illustrated panels telling a short story."
+    },
+    {
+      "word": "Mosaic",
+      "difficulty": "easy",
+      "description": "Picture assembled from tiny pieces of coloured material."
+    },
+    {
+      "word": "Pottery",
+      "difficulty": "easy",
+      "description": "Craft of shaping and firing clay vessels."
+    },
+    {
+      "word": "Embroidery",
+      "difficulty": "easy",
+      "description": "Decorative designs stitched into fabric."
+    },
+    {
+      "word": "Knitting",
+      "difficulty": "easy",
+      "description": "Making fabric with yarn and two pointed tools."
+    },
+    {
+      "word": "Crochet",
+      "difficulty": "easy",
+      "description": "Making fabric with yarn and a single hook."
+    },
+    {
+      "word": "Tie-dye",
+      "difficulty": "easy",
+      "description": "Colouring fabric after binding sections to create patterns."
+    },
+    {
+      "word": "Stained Glass",
+      "difficulty": "easy",
+      "description": "Coloured window artwork often seen in churches."
+    },
+    {
+      "word": "Sand Sculpture",
+      "difficulty": "easy",
+      "description": "Temporary seaside artwork shaped from loose grains."
+    },
+    {
+      "word": "Ice Sculpture",
+      "difficulty": "easy",
+      "description": "Carved frozen artwork that eventually melts."
+    },
+    {
+      "word": "Body Paint",
+      "difficulty": "easy",
+      "description": "Colour applied directly to a person's skin."
+    },
+    {
+      "word": "Henna",
+      "difficulty": "easy",
+      "description": "Plant-based dye used for temporary skin designs."
+    },
+    {
+      "word": "Tattoo",
+      "difficulty": "easy",
+      "description": "Permanent design made by placing ink beneath skin."
+    },
+    {
+      "word": "Piercing",
+      "difficulty": "easy",
+      "description": "Hole made in the body for decorative jewellery."
+    },
+    {
+      "word": "Mime",
+      "difficulty": "easy",
+      "description": "Performer acting silently, often trapped in an invisible box."
+    },
+    {
+      "word": "Clown",
+      "difficulty": "easy",
+      "description": "Comic performer associated with a red nose."
+    },
+    {
+      "word": "Magician",
+      "difficulty": "easy",
+      "description": "Entertainer making objects apparently disappear."
+    },
+    {
+      "word": "Ventriloquist",
+      "difficulty": "easy",
+      "description": "Performer who appears to give a puppet its own voice."
+    },
+    {
+      "word": "Puppet Show",
+      "difficulty": "easy",
+      "description": "Performance using animated dolls controlled by people."
+    },
+    {
+      "word": "Circus",
+      "difficulty": "easy",
+      "description": "Travelling entertainment featuring acrobats and a big top."
+    },
+    {
+      "word": "Trapeze",
+      "difficulty": "easy",
+      "description": "Suspended bar used for aerial acrobatics."
+    },
+    {
+      "word": "Tightrope",
+      "difficulty": "easy",
+      "description": "Thin elevated cable crossed by a balancing performer."
+    },
+    {
+      "word": "Fire Eater",
+      "difficulty": "easy",
+      "description": "Performer who appears to swallow flames."
+    },
+    {
+      "word": "Tap Dance",
+      "difficulty": "easy",
+      "description": "Rhythmic footwork performed in shoes with metal plates."
+    },
+    {
+      "word": "Breakdancing",
+      "difficulty": "easy",
+      "description": "Hip-hop movement featuring spins, freezes and floorwork."
+    },
+    {
+      "word": "Ballroom Dancing",
+      "difficulty": "easy",
+      "description": "Partner movement associated with waltz and foxtrot."
+    },
+    {
+      "word": "Tango",
+      "difficulty": "easy",
+      "description": "Passionate partner dance associated with Argentina."
+    },
+    {
+      "word": "Salsa",
+      "difficulty": "easy",
+      "description": "Partner dance with Cuban roots and lively rhythms."
+    },
+    {
+      "word": "Flamenco",
+      "difficulty": "easy",
+      "description": "Spanish art involving expressive dance, guitar and singing."
+    },
+    {
+      "word": "Samba",
+      "difficulty": "easy",
+      "description": "Brazilian rhythm and dance associated with carnival."
+    },
+    {
+      "word": "Hula",
+      "difficulty": "easy",
+      "description": "Hawaiian dance using gestures to tell stories."
+    },
+    {
+      "word": "Haka",
+      "difficulty": "easy",
+      "description": "Māori ceremonial performance associated with the All Blacks."
+    },
+    {
+      "word": "Can-can",
+      "difficulty": "easy",
+      "description": "High-kicking chorus dance associated with French cabaret."
+    },
+    {
+      "word": "Kilt",
+      "difficulty": "easy",
+      "description": "Pleated garment associated with Scottish dress."
+    },
+    {
+      "word": "Bagpipes",
+      "difficulty": "easy",
+      "description": "Wind instrument with an air reservoir and drones."
+    },
+    {
+      "word": "Didgeridoo",
+      "difficulty": "easy",
+      "description": "Aboriginal Australian wind instrument made from a hollow tube."
+    },
+    {
+      "word": "Carnival",
+      "difficulty": "easy",
+      "description": "Festive street celebration featuring costumes and parades."
+    },
+    {
+      "word": "Chinese New Year",
+      "difficulty": "easy",
+      "description": "Lunar celebration associated with red envelopes and dragon dances."
+    },
+    {
+      "word": "Day of the Dead",
+      "difficulty": "hard",
+      "description": "Mexican remembrance tradition featuring decorated skulls and altars."
+    },
+    {
+      "word": "Diwali",
+      "difficulty": "hard",
+      "description": "Festival associated with lamps, sweets and Hindu celebrations."
+    },
+    {
+      "word": "Eid al-Fitr",
+      "difficulty": "hard",
+      "description": "Celebration marking the end of Ramadan fasting."
+    },
+    {
+      "word": "Oktoberfest",
+      "difficulty": "easy",
+      "description": "Munich festival associated with beer tents and pretzels."
+    },
+    {
+      "word": "Burning Man",
+      "difficulty": "easy",
+      "description": "Nevada desert gathering ending with a giant effigy aflame."
+    },
+    {
+      "word": "Comic-Con",
+      "difficulty": "easy",
+      "description": "Convention associated with superheroes and elaborate costumes."
+    },
+    {
+      "word": "Cosplay",
+      "difficulty": "easy",
+      "description": "Dressing as a fictional character at conventions."
+    },
+    {
+      "word": "Busker",
+      "difficulty": "easy",
+      "description": "Street performer entertaining passers-by for tips."
+    },
+    {
+      "word": "Standing Ovation",
+      "difficulty": "easy",
+      "description": "Audience rising to applaud a performance."
+    },
+    {
+      "word": "Banksy",
+      "difficulty": "hard",
+      "description": "Anonymous street artist known for political stencil works."
+    },
+    {
+      "word": "Salvador Dalí",
+      "difficulty": "hard",
+      "description": "Surrealist associated with melting clocks and a curled moustache."
+    },
+    {
+      "word": "Jackson Pollock",
+      "difficulty": "hard",
+      "description": "American artist famous for dripping paint onto canvases."
+    },
+    {
+      "word": "Georgia O'Keeffe",
+      "difficulty": "hard",
+      "description": "American artist known for enlarged flowers and desert scenes."
+    },
+    {
+      "word": "Yayoi Kusama",
+      "difficulty": "hard",
+      "description": "Japanese artist known for polka dots and mirrored rooms."
+    },
+    {
+      "word": "Marina Abramović",
+      "difficulty": "hard",
+      "description": "Serbian performance artist known for endurance-based works."
+    },
+    {
+      "word": "Keith Haring",
+      "difficulty": "hard",
+      "description": "Artist known for bold outlines and energetic figures."
+    },
+    {
+      "word": "Jean-Michel Basquiat",
+      "difficulty": "hard",
+      "description": "New York artist associated with crowns and expressive imagery."
+    },
+    {
+      "word": "Ai Weiwei",
+      "difficulty": "hard",
+      "description": "Chinese artist and activist known for large installations."
+    },
+    {
+      "word": "David Hockney",
+      "difficulty": "hard",
+      "description": "British artist associated with swimming pools and vivid colours."
+    },
+    {
+      "word": "Salvator Mundi",
+      "difficulty": "hard",
+      "description": "Painting of Christ holding a transparent orb."
+    },
+    {
+      "word": "The Persistence of Memory",
+      "difficulty": "hard",
+      "description": "Dalí painting featuring limp timepieces in a surreal landscape."
+    },
+    {
+      "word": "The Scream",
+      "difficulty": "hard",
+      "description": "Edvard Munch image of a figure with an open mouth."
+    },
+    {
+      "word": "Nighthawks",
+      "difficulty": "hard",
+      "description": "Edward Hopper painting of diner customers after dark."
+    },
+    {
+      "word": "Campbell's Soup Cans",
+      "difficulty": "hard",
+      "description": "Warhol series depicting supermarket tins."
+    },
+    {
+      "word": "David",
+      "difficulty": "hard",
+      "description": "Michelangelo's marble statue of the biblical giant slayer."
+    },
+    {
+      "word": "Venus de Milo",
+      "difficulty": "hard",
+      "description": "Ancient marble statue famous for its missing arms."
+    },
+    {
+      "word": "The Great Wave off Kanagawa",
+      "difficulty": "hard",
+      "description": "Hokusai print showing boats beneath a towering sea surge."
+    },
+    {
+      "word": "Las Meninas",
+      "difficulty": "hard",
+      "description": "Velázquez painting featuring a princess and the artist."
+    },
+    {
+      "word": "The School of Athens",
+      "difficulty": "hard",
+      "description": "Raphael fresco depicting ancient philosophers in conversation."
+    },
+    {
+      "word": "Still Life",
+      "difficulty": "hard",
+      "description": "Artwork depicting arranged inanimate objects."
+    },
+    {
+      "word": "Vanishing Point",
+      "difficulty": "hard",
+      "description": "Place where parallel lines appear to meet in perspective."
+    },
+    {
+      "word": "Negative Space",
+      "difficulty": "hard",
+      "description": "Empty area surrounding the subject of an image."
+    },
+    {
+      "word": "Chiaroscuro",
+      "difficulty": "hard",
+      "description": "Strong contrast between light and shadow in art."
+    },
+    {
+      "word": "Fresco",
+      "difficulty": "hard",
+      "description": "Painting made on freshly applied wet plaster."
+    },
+    {
+      "word": "Etching",
+      "difficulty": "hard",
+      "description": "Printmaking method using acid to create lines on metal."
+    },
+    {
+      "word": "Lithography",
+      "difficulty": "hard",
+      "description": "Printmaking technique based on oil repelling water."
+    },
+    {
+      "word": "Installation Art",
+      "difficulty": "hard",
+      "description": "Creative work arranged within a space for viewers to experience."
+    },
+    {
+      "word": "Performance Art",
+      "difficulty": "hard",
+      "description": "Creative work expressed through live actions by an artist."
+    },
+    {
+      "word": "Ready-made",
+      "difficulty": "hard",
+      "description": "Ordinary manufactured object presented as an artwork."
+    },
+    {
+      "word": "Art Deco",
+      "difficulty": "hard",
+      "description": "Design style associated with geometric luxury in the 1920s."
+    },
+    {
+      "word": "Art Nouveau",
+      "difficulty": "hard",
+      "description": "Decorative style featuring flowing lines and plant motifs."
+    },
+    {
+      "word": "Bauhaus",
+      "difficulty": "hard",
+      "description": "German design school associated with functional simplicity."
+    },
+    {
+      "word": "Kintsugi",
+      "difficulty": "hard",
+      "description": "Japanese repair technique highlighting cracks with gold."
+    },
+    {
+      "word": "Wabi-sabi",
+      "difficulty": "hard",
+      "description": "Japanese aesthetic appreciating impermanence and imperfection."
     }
   ],
   "Music": [
     {
-      "word": "Beethoven",
+      "word": "Ludwig van Beethoven",
       "difficulty": "easy",
-      "description": "German classical composer of famous symphonies like the Fifth and Ninth."
+      "description": "Composer who continued writing music after losing his hearing."
     },
     {
       "word": "The Beatles",
@@ -2742,13 +4821,13 @@ const categories = {
     },
     {
       "word": "Rock and Roll",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Energetic guitar-driven genre that rose to fame in the 1950s."
     },
     {
-      "word": "Mozart",
+      "word": "Wolfgang Amadeus Mozart",
       "difficulty": "easy",
-      "description": "Austrian child-prodigy composer from the classical era."
+      "description": "Child-prodigy composer associated with The Magic Flute."
     },
     {
       "word": "Jazz",
@@ -2757,7 +4836,7 @@ const categories = {
     },
     {
       "word": "Hip Hop",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Music culture built around rap, beats, DJing, and street style."
     },
     {
@@ -2793,16 +4872,16 @@ const categories = {
     {
       "word": "The Rolling Stones",
       "difficulty": "easy",
-      "description": "Long-running British rock band led by Mick Jagger."
+      "description": "Rock band fronted by Mick Jagger."
     },
     {
       "word": "Country Music",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Storytelling genre linked to Nashville, guitars, and rural themes."
     },
     {
       "word": "Classical Music",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Orchestral tradition featuring composers like Mozart and Beethoven."
     },
     {
@@ -2837,7 +4916,7 @@ const categories = {
     },
     {
       "word": "Folk Music",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Traditional acoustic songs passed down through communities."
     },
     {
@@ -2857,22 +4936,22 @@ const categories = {
     },
     {
       "word": "Acoustic Guitar",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Non-electric guitar with a hollow wooden body."
     },
     {
       "word": "Heavy Metal",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Loud rock style with distorted guitars and intense drumming."
     },
     {
       "word": "Electronic Music",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Genre created mainly with synths, software, and drum machines."
     },
     {
       "word": "Opera Singer",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Classically trained vocalist who projects over an orchestra."
     },
     {
@@ -2887,12 +4966,12 @@ const categories = {
     },
     {
       "word": "Drum Set",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Collection of drums and cymbals played by one drummer."
     },
     {
       "word": "R&B",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Rhythm and blues style mixing soulful vocals with groove."
     },
     {
@@ -2907,7 +4986,7 @@ const categories = {
     },
     {
       "word": "Synthesizer",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Electronic keyboard used to create synthetic sounds."
     },
     {
@@ -2917,22 +4996,22 @@ const categories = {
     },
     {
       "word": "Marching Band",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Uniformed band that performs music while marching in formation."
     },
     {
       "word": "Singer-Songwriter",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Artist who writes their own songs and performs them."
     },
     {
       "word": "Motown",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Detroit record label and soul sound behind many classic hits."
     },
     {
       "word": "Orchestra",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Large ensemble of strings, brass, woodwinds, and percussion."
     },
     {
@@ -2942,22 +5021,22 @@ const categories = {
     },
     {
       "word": "Conducting",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Leading musicians with baton cues for tempo and dynamics."
     },
     {
       "word": "Punk Rock",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Fast, raw rock genre known for rebellious energy."
     },
     {
       "word": "Bass Guitar",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Low-pitched guitar that anchors rhythm and groove."
     },
     {
       "word": "Songwriting",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Creating lyrics, melody, and structure for a song."
     },
     {
@@ -2967,11 +5046,11 @@ const categories = {
     },
     {
       "word": "Rhythm and Blues",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Full name of R&B, a groove-focused vocal genre."
     },
     {
-      "word": "Beyonce",
+      "word": "Beyoncé",
       "difficulty": "easy",
       "description": "Global pop and R&B star from Destiny's Child, known for Single Ladies."
     },
@@ -3004,11 +5083,6 @@ const categories = {
       "word": "Queen",
       "difficulty": "easy",
       "description": "British rock band behind Bohemian Rhapsody."
-    },
-    {
-      "word": "Rolling Stones",
-      "difficulty": "easy",
-      "description": "British rock group famous for Satisfaction and decades of touring."
     },
     {
       "word": "Lady Gaga",
@@ -3172,12 +5246,12 @@ const categories = {
     },
     {
       "word": "Amapiano",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "South African house style with log drums and piano grooves."
     },
     {
       "word": "Cassper Nyovest",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "South African rapper known for major local stadium shows."
     },
     {
@@ -3187,18 +5261,413 @@ const categories = {
     },
     {
       "word": "AKA",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "South African rapper known for Fela in Versace and All Eyes on Me."
     },
     {
       "word": "Cape Town Jazz Festival",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Major annual South African event featuring local and global jazz artists."
     },
     {
       "word": "Oppikoppi",
       "difficulty": "hard",
       "description": "Iconic South African outdoor music festival in Limpopo."
+    },
+    {
+      "word": "Billie Eilish",
+      "difficulty": "easy",
+      "description": "Singer associated with Bad Guy and whispery vocals."
+    },
+    {
+      "word": "Lizzo",
+      "difficulty": "easy",
+      "description": "Singer and flautist associated with Truth Hurts."
+    },
+    {
+      "word": "Dua Lipa",
+      "difficulty": "easy",
+      "description": "Pop singer associated with Levitating and Future Nostalgia."
+    },
+    {
+      "word": "Olivia Rodrigo",
+      "difficulty": "easy",
+      "description": "Singer whose debut single was Drivers License."
+    },
+    {
+      "word": "Harry Styles",
+      "difficulty": "easy",
+      "description": "Former One Direction member associated with Watermelon Sugar."
+    },
+    {
+      "word": "Post Malone",
+      "difficulty": "easy",
+      "description": "Tattooed singer associated with Circles and Sunflower."
+    },
+    {
+      "word": "SZA",
+      "difficulty": "easy",
+      "description": "Singer associated with Kill Bill and the album SOS."
+    },
+    {
+      "word": "The Weeknd",
+      "difficulty": "easy",
+      "description": "Canadian singer associated with Blinding Lights."
+    },
+    {
+      "word": "Kendrick Lamar",
+      "difficulty": "easy",
+      "description": "Rapper whose album DAMN. received a Pulitzer Prize."
+    },
+    {
+      "word": "Nicki Minaj",
+      "difficulty": "easy",
+      "description": "Rapper associated with Super Bass and the Barbz fandom."
+    },
+    {
+      "word": "Cardi B",
+      "difficulty": "easy",
+      "description": "Rapper associated with Bodak Yellow."
+    },
+    {
+      "word": "Doja Cat",
+      "difficulty": "easy",
+      "description": "Singer and rapper associated with Say So."
+    },
+    {
+      "word": "Snoop Dogg",
+      "difficulty": "easy",
+      "description": "Laid-back rapper associated with Gin and Juice."
+    },
+    {
+      "word": "50 Cent",
+      "difficulty": "easy",
+      "description": "Rapper associated with In da Club."
+    },
+    {
+      "word": "Pitbull",
+      "difficulty": "easy",
+      "description": "Miami rapper who calls himself Mr. Worldwide."
+    },
+    {
+      "word": "Shawn Mendes",
+      "difficulty": "easy",
+      "description": "Canadian singer associated with Stitches."
+    },
+    {
+      "word": "Camila Cabello",
+      "difficulty": "easy",
+      "description": "Former Fifth Harmony singer associated with Havana."
+    },
+    {
+      "word": "Lana Del Rey",
+      "difficulty": "easy",
+      "description": "Singer associated with Video Games and cinematic melancholy."
+    },
+    {
+      "word": "Sam Smith",
+      "difficulty": "easy",
+      "description": "British singer associated with Stay With Me."
+    },
+    {
+      "word": "Lewis Capaldi",
+      "difficulty": "easy",
+      "description": "Scottish singer associated with Someone You Loved."
+    },
+    {
+      "word": "Imagine Dragons",
+      "difficulty": "easy",
+      "description": "Band associated with Radioactive and Believer."
+    },
+    {
+      "word": "One Direction",
+      "difficulty": "easy",
+      "description": "Boy band formed on The X Factor."
+    },
+    {
+      "word": "BTS",
+      "difficulty": "easy",
+      "description": "Korean boy band associated with Dynamite and the ARMY fandom."
+    },
+    {
+      "word": "Blackpink",
+      "difficulty": "easy",
+      "description": "Korean girl group featuring Lisa, Jennie, Jisoo and Rosé."
+    },
+    {
+      "word": "ABBA",
+      "difficulty": "easy",
+      "description": "Swedish group associated with Mamma Mia and Dancing Queen."
+    },
+    {
+      "word": "Metallica",
+      "difficulty": "easy",
+      "description": "Heavy rock band associated with Enter Sandman."
+    },
+    {
+      "word": "Green Day",
+      "difficulty": "easy",
+      "description": "Punk band associated with American Idiot."
+    },
+    {
+      "word": "Linkin Park",
+      "difficulty": "easy",
+      "description": "Band associated with Numb and In the End."
+    },
+    {
+      "word": "Guns N' Roses",
+      "difficulty": "easy",
+      "description": "Band associated with Sweet Child o' Mine."
+    },
+    {
+      "word": "Bon Jovi",
+      "difficulty": "easy",
+      "description": "Rock band associated with Livin' on a Prayer."
+    },
+    {
+      "word": "Backstreet Boys",
+      "difficulty": "easy",
+      "description": "Boy band associated with I Want It That Way."
+    },
+    {
+      "word": "Spice Girls",
+      "difficulty": "easy",
+      "description": "British girl group associated with Wannabe."
+    },
+    {
+      "word": "Destiny's Child",
+      "difficulty": "easy",
+      "description": "Girl group that included Beyoncé and Kelly Rowland."
+    },
+    {
+      "word": "Black Eyed Peas",
+      "difficulty": "easy",
+      "description": "Group associated with I Gotta Feeling."
+    },
+    {
+      "word": "Daft Punk",
+      "difficulty": "easy",
+      "description": "French electronic duo known for robot helmets."
+    },
+    {
+      "word": "Avicii",
+      "difficulty": "easy",
+      "description": "Swedish DJ associated with Wake Me Up."
+    },
+    {
+      "word": "Calvin Harris",
+      "difficulty": "easy",
+      "description": "Scottish DJ associated with Summer and Feel So Close."
+    },
+    {
+      "word": "David Guetta",
+      "difficulty": "easy",
+      "description": "French DJ associated with Titanium."
+    },
+    {
+      "word": "Marshmello",
+      "difficulty": "easy",
+      "description": "DJ who performs in a white bucket-shaped helmet."
+    },
+    {
+      "word": "Master KG",
+      "difficulty": "easy",
+      "description": "South African producer associated with Jerusalema."
+    },
+    {
+      "word": "Nomcebo Zikode",
+      "difficulty": "easy",
+      "description": "South African vocalist on Jerusalema."
+    },
+    {
+      "word": "Burna Boy",
+      "difficulty": "easy",
+      "description": "Nigerian artist associated with Last Last."
+    },
+    {
+      "word": "Wizkid",
+      "difficulty": "easy",
+      "description": "Nigerian artist associated with Essence."
+    },
+    {
+      "word": "Davido",
+      "difficulty": "easy",
+      "description": "Nigerian artist associated with Fall."
+    },
+    {
+      "word": "Rema",
+      "difficulty": "easy",
+      "description": "Nigerian singer associated with Calm Down."
+    },
+    {
+      "word": "Yemi Alade",
+      "difficulty": "easy",
+      "description": "Nigerian singer associated with Johnny."
+    },
+    {
+      "word": "Makhadzi",
+      "difficulty": "easy",
+      "description": "Limpopo performer associated with energetic dance performances."
+    },
+    {
+      "word": "Sho Madjozi",
+      "difficulty": "easy",
+      "description": "South African rapper associated with John Cena."
+    },
+    {
+      "word": "Nasty C",
+      "difficulty": "easy",
+      "description": "South African rapper whose album is Strings and Bling."
+    },
+    {
+      "word": "Focalistic",
+      "difficulty": "easy",
+      "description": "South African artist associated with Ke Star."
+    },
+    {
+      "word": "Gqom",
+      "difficulty": "hard",
+      "description": "Durban-born electronic dance genre with heavy percussion."
+    },
+    {
+      "word": "Kwaito",
+      "difficulty": "easy",
+      "description": "South African township genre associated with slowed house beats."
+    },
+    {
+      "word": "Afrobeats",
+      "difficulty": "hard",
+      "description": "West African pop umbrella associated with Lagos hitmakers."
+    },
+    {
+      "word": "Scat Singing",
+      "difficulty": "hard",
+      "description": "Jazz improvisation using nonsense syllables instead of lyrics."
+    },
+    {
+      "word": "Beatboxing",
+      "difficulty": "hard",
+      "description": "Making percussion sounds using only the mouth."
+    },
+    {
+      "word": "Falsetto",
+      "difficulty": "hard",
+      "description": "High vocal register above a singer's usual range."
+    },
+    {
+      "word": "Vibrato",
+      "difficulty": "hard",
+      "description": "Small regular fluctuation in a sustained musical pitch."
+    },
+    {
+      "word": "Crescendo",
+      "difficulty": "hard",
+      "description": "Instruction for a gradual increase in loudness."
+    },
+    {
+      "word": "Decrescendo",
+      "difficulty": "hard",
+      "description": "Instruction for a gradual decrease in loudness."
+    },
+    {
+      "word": "Syncopation",
+      "difficulty": "hard",
+      "description": "Rhythm emphasizing normally weak beats."
+    },
+    {
+      "word": "Offbeat",
+      "difficulty": "hard",
+      "description": "Rhythmic placement between the main pulses."
+    },
+    {
+      "word": "Perfect Pitch",
+      "difficulty": "hard",
+      "description": "Ability to identify a note without a reference tone."
+    },
+    {
+      "word": "Earworm",
+      "difficulty": "hard",
+      "description": "Catchy tune that keeps repeating in your head."
+    },
+    {
+      "word": "One-hit Wonder",
+      "difficulty": "hard",
+      "description": "Artist remembered mainly for a single successful song."
+    },
+    {
+      "word": "Lip-sync",
+      "difficulty": "hard",
+      "description": "Mouthing lyrics to a prerecorded vocal track."
+    },
+    {
+      "word": "Auto-Tune",
+      "difficulty": "hard",
+      "description": "Audio tool associated with corrected or robotic vocals."
+    },
+    {
+      "word": "Sampling",
+      "difficulty": "hard",
+      "description": "Reusing a recorded audio fragment in another track."
+    },
+    {
+      "word": "Mashup",
+      "difficulty": "hard",
+      "description": "Combining elements of different songs into one piece."
+    },
+    {
+      "word": "Remix",
+      "difficulty": "hard",
+      "description": "Reworked version of an existing recording."
+    },
+    {
+      "word": "Bridge Section",
+      "difficulty": "hard",
+      "description": "Contrasting passage connecting other parts of a song."
+    },
+    {
+      "word": "Hook",
+      "difficulty": "hard",
+      "description": "Memorable musical phrase that grabs listeners immediately."
+    },
+    {
+      "word": "Backing Vocals",
+      "difficulty": "hard",
+      "description": "Additional singing supporting the main performer."
+    },
+    {
+      "word": "Session Musician",
+      "difficulty": "hard",
+      "description": "Hired performer who plays on other artists' recordings."
+    },
+    {
+      "word": "Ghostwriter",
+      "difficulty": "hard",
+      "description": "Uncredited person who creates material for another artist."
+    },
+    {
+      "word": "Royalties",
+      "difficulty": "hard",
+      "description": "Payments to rights holders when creative works are used."
+    },
+    {
+      "word": "Master Recording",
+      "difficulty": "hard",
+      "description": "Original audio version from which copies are produced."
+    },
+    {
+      "word": "Vinyl",
+      "difficulty": "hard",
+      "description": "Grooved record format played with a stylus."
+    },
+    {
+      "word": "Mixtape",
+      "difficulty": "hard",
+      "description": "Collection of tracks associated with cassettes and hip-hop releases."
+    },
+    {
+      "word": "Concept Album",
+      "difficulty": "hard",
+      "description": "Record whose songs share an overarching theme or narrative."
     }
   ],
   "Sports": [
@@ -3211,11 +5680,6 @@ const categories = {
       "word": "Basketball",
       "difficulty": "easy",
       "description": "A team sport in which two teams of five players each, opposing one another on a rectangular court, compete with the primary objective of shooting a basketball through a hoop at..."
-    },
-    {
-      "word": "Soccer",
-      "difficulty": "easy",
-      "description": "Association football, more commonly known as just football or soccer, is a team sport played between two teams of 11 players who almost exclusively use their feet to propel a ba..."
     },
     {
       "word": "Tennis",
@@ -3324,7 +5788,7 @@ const categories = {
     },
     {
       "word": "Polo",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A stick and ball game that is played on horseback as a traditional field sport."
     },
     {
@@ -3334,7 +5798,7 @@ const categories = {
     },
     {
       "word": "Equestrian",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Qatar competed at the 2016 Summer Olympics in Rio de Janeiro, Brazil, from 5 to 21 August 2016."
     },
     {
@@ -3359,12 +5823,12 @@ const categories = {
     },
     {
       "word": "Canoeing",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An activity which involves paddling a canoe with a single-bladed paddle."
     },
     {
       "word": "Rowing",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The act of propelling a human-powered watercraft using the sweeping motions of oars to displace water and generate reactional propulsion."
     },
     {
@@ -3379,37 +5843,37 @@ const categories = {
     },
     {
       "word": "Pentathlon",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A pentathlon is a contest featuring five events."
     },
     {
       "word": "Handball",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A team sport in which two teams of seven players each pass a ball using their hands with the aim of throwing it into the goal of the opposing team."
     },
     {
       "word": "Curling",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A sport in which players slide stones on a sheet of ice towards a target area that is segmented into four concentric circles."
     },
     {
       "word": "Fencing",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A combat sport that features sword fighting."
     },
     {
       "word": "Lacrosse",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A contact team sport played with a lacrosse stick and a lacrosse ball."
     },
     {
       "word": "Bobsleigh",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Bobsleigh or bobsled is a winter sport in which individual athletes or teams of two to four athletes make timed speed runs down narrow, twisting, banked, iced tracks in a gravit..."
     },
     {
       "word": "Powerlifting",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A competitive strength sport that consists of three attempts at maximal weight on three lifts: squat, bench press, and deadlift."
     },
     {
@@ -3424,7 +5888,7 @@ const categories = {
     },
     {
       "word": "Biathlon",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A winter sport that combines cross-country skiing and rifle shooting."
     },
     {
@@ -3446,21 +5910,6 @@ const categories = {
       "word": "Goal",
       "difficulty": "easy",
       "description": "A goal or objective is an idea of the future or desired result that a person or a group of people envision, plan, and commit to achieve."
-    },
-    {
-      "word": "Ball",
-      "difficulty": "easy",
-      "description": "A ball is a round object with several uses."
-    },
-    {
-      "word": "Kick",
-      "difficulty": "easy",
-      "description": "A kick is a physical strike using the leg, in unison usually with an area of the knee or lower using the foot, heel, tibia , ball of the foot, blade of the foot, toes or knee."
-    },
-    {
-      "word": "Pass",
-      "difficulty": "easy",
-      "description": "A team sport in which two teams of five players each, opposing one another on a rectangular court, compete with the primary objective of shooting a basketball through a hoop at..."
     },
     {
       "word": "Referee",
@@ -3489,7 +5938,7 @@ const categories = {
     },
     {
       "word": "Offside",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A scaled-down variant of association football played between two teams of five players each on a court smaller than a football pitch."
     },
     {
@@ -3499,22 +5948,22 @@ const categories = {
     },
     {
       "word": "Corner Kick",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Sheffield Rules was a code of football devised and played in the English city of Sheffield between 1858 and 1877."
     },
     {
       "word": "Free Kick",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A scaled-down variant of association football played between two teams of five players each on a court smaller than a football pitch."
     },
     {
       "word": "Tackle",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Lehigh Mountain Hawks are the athletic teams representing Lehigh University in Bethlehem, Pennsylvania."
     },
     {
       "word": "Header",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A baseball that is played by student-athletes at institutions of higher education."
     },
     {
@@ -3528,12 +5977,12 @@ const categories = {
       "description": "A title, an appellative for the commanding officer of a military unit; the supreme leader or highest rank officer of a navy ship, merchant ship, aeroplane, spacecraft, or other..."
     },
     {
-      "word": "World Cup",
+      "word": "FIFA World Cup",
       "difficulty": "easy",
-      "description": "A world cup is a global sporting competition in which the participant entities – usually international teams or individuals representing their countries – compete for the title..."
+      "description": "International football tournament won by Argentina in 2022."
     },
     {
-      "word": "Champions League",
+      "word": "UEFA Champions League",
       "difficulty": "easy",
       "description": "The UEFA Champions League, commonly known as the Champions League, is an annual club association football competition organised by the Union of European Football Associations th..."
     },
@@ -3544,36 +5993,36 @@ const categories = {
     },
     {
       "word": "La Liga",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Campeonato Nacional de Liga de Primera División, commonly known as the Primera División or La Liga, and officially known as LaLiga EA Sports for sponsorship reasons, is a pr..."
     },
     {
       "word": "Serie A",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Serie A, officially known as Serie A Enilive in Italy and Serie A Made in Italy abroad for sponsorship reasons, is a professional association football league in Italy and th..."
     },
     {
       "word": "Bundesliga",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Bundesliga, sometimes referred to as the Fußball-Bundesliga or 1."
     },
     {
-      "word": "Messi",
+      "word": "Lionel Messi",
       "difficulty": "easy",
       "description": "Lionel Andrés \"Leo\" Messi is an Argentine professional footballer who plays as a forward for and captains both Major League Soccer club Inter Miami and the Argentina national team."
     },
     {
-      "word": "Ronaldo",
+      "word": "Cristiano Ronaldo",
       "difficulty": "easy",
       "description": "A Portuguese given name equivalent to the English Ronald."
     },
     {
-      "word": "Neymar",
+      "word": "Neymar Jr.",
       "difficulty": "easy",
       "description": "Neymar da Silva Santos Júnior, simply known as Neymar Júnior or mononymously as Neymar, is a Brazilian professional footballer who plays as an attacking midfielder or a forward..."
     },
     {
-      "word": "Mbappe",
+      "word": "Kylian Mbappé",
       "difficulty": "easy",
       "description": "Kylian Mbappé Lottin is a French professional footballer who plays as a forward for La Liga club Real Madrid and captains the France national team."
     },
@@ -3583,24 +6032,24 @@ const categories = {
       "description": "The 2006 FIFA World Cup final was the final match of the 2006 World Cup, the 18th edition of FIFA's competition for national football teams."
     },
     {
-      "word": "Maradona",
+      "word": "Diego Maradona",
       "difficulty": "easy",
       "description": "Diego Armando Maradona was an Argentine professional football player and manager."
     },
     {
-      "word": "Pele",
+      "word": "Pelé",
       "difficulty": "easy",
       "description": "Edson Arantes do Nascimento, better known by his nickname Pelé, was a Brazilian professional footballer who played as a forward."
     },
     {
       "word": "Beckenbauer",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Franz Anton Beckenbauer was a German professional football player, manager, and official."
     },
     {
       "word": "Wembley Stadium",
       "difficulty": "easy",
-      "description": "Wembley Stadium, currently branded as Wembley Stadium connected by EE for sponsorship reasons, is an association football stadium in Wembley, London, England."
+      "description": "London football ground with a huge arch, associated with England's national team."
     },
     {
       "word": "Camp Nou",
@@ -3608,9 +6057,9 @@ const categories = {
       "description": "Camp Nou, officially Spotify Camp Nou for sponsorship reasons, and often referred to in English as the Nou Camp, is a stadium in Barcelona and the home of La Liga club FC Barcel..."
     },
     {
-      "word": "Santiago Bernabeu",
+      "word": "Santiago Bernabéu Stadium",
       "difficulty": "easy",
-      "description": "Santiago Bernabéu de Yeste was a Spanish football player, coach, and administrator who played for Real Madrid as a forward, later serving as the club's manager and then president."
+      "description": "Real Madrid's home ground in the Spanish capital."
     },
     {
       "word": "Old Trafford",
@@ -3624,7 +6073,7 @@ const categories = {
     },
     {
       "word": "Allianz Arena",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A football stadium in Munich, Germany, with a 70,000 seating capacity for international matches and 75,000 for domestic matches."
     },
     {
@@ -3639,21 +6088,21 @@ const categories = {
     },
     {
       "word": "Golden Boot",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Rachel Ann Daly is an English professional footballer who plays predominantly as a striker for Aston Villa in the FA Women's Super League."
     },
     {
       "word": "Golden Ball",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The FIFA Futsal World Cup is an international futsal competition contested by the senior men's national teams of the member associations of FIFA, the sport's global governing body."
     },
     {
       "word": "Top Scorer",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The UEFA European Football Championship, less formally the European Championship and informally the Euro or Euros, is the primary association football tournament organised by th..."
     },
     {
-      "word": "Hat-Trick",
+      "word": "Hat-trick",
       "difficulty": "easy",
       "description": "A hat-trick or hat trick is the achievement of a generally positive feat three times in a match, or another achievement based on the number three."
     },
@@ -3664,42 +6113,42 @@ const categories = {
     },
     {
       "word": "Touchdown",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A touchdown is a scoring play in gridiron football."
     },
     {
       "word": "Home Run",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "In baseball, a home run is scored when the ball is hit in such a way that the batter is able to circle the bases and reach home plate safely in one play without any errors being..."
     },
     {
       "word": "Ace",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An ace is a playing card, die or domino with a single pip."
     },
     {
       "word": "Birdie",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A New Zealand professional golfer who plays on the European Tour, PGA Tour and PGA Tour of Australasia."
     },
     {
       "word": "Forehand",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The forehand is a shot used in most racket sports, such as tennis, table tennis and pickleball, where the palm of the hand precedes the back of the hand when swinging the racket."
     },
     {
       "word": "Backhand",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The backhand is a shot used in most racket sports, such as tennis, table tennis and pickleball, where the back of the hand precedes the palm when swinging the racket."
     },
     {
       "word": "Serve",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A sport of European origin, primarily played in the German-speaking nations of Austria, Germany and Switzerland, as well as in Brazil."
     },
     {
       "word": "Grand Slam",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An American former professional tennis player and coach."
     },
     {
@@ -3718,9 +6167,9 @@ const categories = {
       "description": "The World Series is the annual championship series of Major League Baseball , a professional baseball league in North America, and has been contested since 1903 between the cham..."
     },
     {
-      "word": "Olympics",
+      "word": "Olympic Games",
       "difficulty": "easy",
-      "description": "The modern Olympic Games are the world's preeminent international sporting events."
+      "description": "Global sporting competition associated with five interlocking rings."
     },
     {
       "word": "Tour de France",
@@ -3749,7 +6198,7 @@ const categories = {
     },
     {
       "word": "Pole Vault",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Pole vaulting, also known as pole jumping, is a track and field event in which an athlete uses a long and flexible pole, usually made from fiberglass or carbon fiber, as an aid..."
     },
     {
@@ -3759,7 +6208,7 @@ const categories = {
     },
     {
       "word": "Shot Put",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The shot put is a track and field event involving \"putting\" a heavy spherical ball—the shot—as far as possible."
     },
     {
@@ -3798,16 +6247,6 @@ const categories = {
       "description": "An American professional boxer and activist."
     },
     {
-      "word": "Cristiano Ronaldo",
-      "difficulty": "easy",
-      "description": "Cristiano Ronaldo dos Santos Aveiro, nicknamed CR7, is a Portuguese professional footballer who plays as a forward for and captains both Saudi Pro League club Al-Nassr and the P..."
-    },
-    {
-      "word": "Lionel Messi",
-      "difficulty": "easy",
-      "description": "Lionel Andrés \"Leo\" Messi is an Argentine professional footballer who plays as a forward for and captains both Major League Soccer club Inter Miami and the Argentina national team."
-    },
-    {
       "word": "Roger Federer",
       "difficulty": "easy",
       "description": "A Swiss former professional tennis player."
@@ -3844,12 +6283,12 @@ const categories = {
     },
     {
       "word": "Mia Hamm",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Mariel Margaret \"Mia\" Hamm is an American former professional soccer player, two-time Olympic gold medalist and two-time FIFA Women's World Cup champion."
     },
     {
       "word": "Babe Ruth",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "George Herman \"Babe\" Ruth was an American professional baseball player whose career in Major League Baseball spanned 22 seasons, from 1914 through 1935."
     },
     {
@@ -3859,7 +6298,7 @@ const categories = {
     },
     {
       "word": "Jackie Joyner-Kersee",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Jacqueline Joyner-Kersee, née Joyner, is an American former track and field athlete who competed in both the heptathlon and long jump."
     },
     {
@@ -3869,13 +6308,8 @@ const categories = {
     },
     {
       "word": "Martina Navratilova",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A Czech-American former professional tennis player."
-    },
-    {
-      "word": "Diego Maradona",
-      "difficulty": "easy",
-      "description": "Diego Armando Maradona was an Argentine professional football player and manager."
     },
     {
       "word": "Michael Schumacher",
@@ -3898,28 +6332,18 @@ const categories = {
       "description": "The United States women's national soccer team represents the United States in international women's soccer."
     },
     {
-      "word": "FIFA World Cup",
-      "difficulty": "hard",
-      "description": "The FIFA World Cup, often called the World Cup, is an international association football competition among the senior men's national teams of the members of the Fédération Inter..."
-    },
-    {
       "word": "NBA Finals",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Championship series that decides the top pro basketball team in North America."
     },
     {
-      "word": "Penalty",
-      "difficulty": "easy",
-      "description": "Referee-imposed sanction for breaking rules during a match."
-    },
-    {
       "word": "Striker",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Attacking football position focused on scoring goals."
     },
     {
       "word": "Midfielder",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "In association football, a midfielder takes an outfield position primarily in the middle of the pitch."
     },
     {
@@ -3933,7 +6357,7 @@ const categories = {
       "description": "Short-passing possession style made famous by elite Spanish sides."
     },
     {
-      "word": "False nine",
+      "word": "False Nine",
       "difficulty": "hard",
       "description": "Central attacker role that drops into midfield to create space."
     },
@@ -3973,18 +6397,8 @@ const categories = {
       "description": "Ten-discipline track-and-field combined event."
     },
     {
-      "word": "The Olympic Games",
-      "difficulty": "hard",
-      "description": "Global multi-sport event held every four years."
-    },
-    {
-      "word": "Bobsledding",
-      "difficulty": "hard",
-      "description": "Winter race where teams speed in a sled down an ice track."
-    },
-    {
       "word": "Windsurfing",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A wind-propelled water sport that is a combination of sailing and surfing."
     },
     {
@@ -4008,29 +6422,9 @@ const categories = {
       "description": "Title match of Europe's top annual club football tournament."
     },
     {
-      "word": "Defensive Block",
-      "difficulty": "hard",
-      "description": "Compact shape used to protect space and limit opposition chances."
-    },
-    {
-      "word": "English Premier League Trophy",
-      "difficulty": "hard",
-      "description": "Silverware awarded to champions of England's top football division."
-    },
-    {
       "word": "Formula 1 Grand Prix",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Single race event in the highest level of open-wheel motorsport."
-    },
-    {
-      "word": "Formula 1 World Championship",
-      "difficulty": "hard",
-      "description": "Season-long title decided by points across top-tier motor races."
-    },
-    {
-      "word": "Free Kick Technique",
-      "difficulty": "hard",
-      "description": "Set-piece striking method used to bend or dip the ball."
     },
     {
       "word": "French Open",
@@ -4038,13 +6432,13 @@ const categories = {
       "description": "Clay-court Grand Slam held annually in Paris."
     },
     {
-      "word": "Golf Masters",
+      "word": "Masters Tournament",
       "difficulty": "easy",
       "description": "Major golf tournament played at Augusta National."
     },
     {
       "word": "Ligue 1",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Ligue 1, officially known as Ligue 1 McDonald's for sponsorship reasons, is a professional association football league in France and the highest level of the French football lea..."
     },
     {
@@ -4074,13 +6468,8 @@ const categories = {
     },
     {
       "word": "Penalty Shootout",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Tie-break where teams alternate spot kicks after a drawn knockout game."
-    },
-    {
-      "word": "Roger Federer vs Rafael Nadal",
-      "difficulty": "hard",
-      "description": "Iconic tennis rivalry between Swiss and Spanish all-time greats."
     },
     {
       "word": "Summer Olympics Opening Ceremony",
@@ -4089,13 +6478,8 @@ const categories = {
     },
     {
       "word": "Super Bowl Halftime Show",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Major live music performance staged during the NFL title game break."
-    },
-    {
-      "word": "Super Bowl MVP Performance",
-      "difficulty": "hard",
-      "description": "Standout display in the NFL final that earns top individual honors."
     },
     {
       "word": "US Open",
@@ -4123,19 +6507,9 @@ const categories = {
       "description": "Final match that decides the men's global football champion."
     },
     {
-      "word": "Kylian Mbappé",
-      "difficulty": "easy",
-      "description": "Kylian Mbappé Lottin is a French professional footballer who plays as a forward for La Liga club Real Madrid and captains the France national team."
-    },
-    {
       "word": "Mohamed Salah",
       "difficulty": "easy",
       "description": "Mohamed Salah Hamed Mahrous Ghaly is an Egyptian professional footballer who plays as a right winger or right midfielder for Premier League club Liverpool and captains the Egypt..."
-    },
-    {
-      "word": "Neymar Jr.",
-      "difficulty": "easy",
-      "description": "Brazilian forward known for flair, dribbling skills, and step-overs."
     },
     {
       "word": "Zlatan Ibrahimović",
@@ -4209,17 +6583,17 @@ const categories = {
     },
     {
       "word": "Pep Guardiola",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Elite coach known for possession-heavy tactics and multiple league titles."
     },
     {
       "word": "Jurgen Klopp",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "German football manager known for high-intensity pressing and Liverpool success."
     },
     {
       "word": "Cole Palmer",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "English attacking midfielder known for composure and set-piece goals."
     },
     {
@@ -4241,6 +6615,366 @@ const categories = {
       "word": "Proteas",
       "difficulty": "easy",
       "description": "South Africa's national cricket team."
+    },
+    {
+      "word": "Pickleball",
+      "difficulty": "easy",
+      "description": "Paddle sport combining elements of tennis and badminton."
+    },
+    {
+      "word": "Padel",
+      "difficulty": "easy",
+      "description": "Racket sport played on an enclosed court with walls."
+    },
+    {
+      "word": "Synchronised Swimming",
+      "difficulty": "easy",
+      "description": "Aquatic discipline involving coordinated routines to music."
+    },
+    {
+      "word": "Judo",
+      "difficulty": "easy",
+      "description": "Japanese martial art emphasizing throws and holds."
+    },
+    {
+      "word": "Sumo Wrestling",
+      "difficulty": "easy",
+      "description": "Japanese contest where huge competitors push each other out."
+    },
+    {
+      "word": "Arm Wrestling",
+      "difficulty": "easy",
+      "description": "Contest of forcing an opponent's hand onto a surface."
+    },
+    {
+      "word": "Tug of War",
+      "difficulty": "easy",
+      "description": "Teams pulling opposite ends of a rope."
+    },
+    {
+      "word": "Paintball",
+      "difficulty": "easy",
+      "description": "Team activity shooting capsules of coloured dye."
+    },
+    {
+      "word": "Laser Tag",
+      "difficulty": "easy",
+      "description": "Game using infrared blasters and electronic targets."
+    },
+    {
+      "word": "Ultimate Frisbee",
+      "difficulty": "easy",
+      "description": "Team sport passing a flying disc into an end zone."
+    },
+    {
+      "word": "Parkour",
+      "difficulty": "easy",
+      "description": "Moving through urban obstacles using jumps and vaults."
+    },
+    {
+      "word": "Ironman",
+      "difficulty": "easy",
+      "description": "Long-distance endurance race with three disciplines."
+    },
+    {
+      "word": "Comrades Marathon",
+      "difficulty": "easy",
+      "description": "South African ultramarathon between Durban and Pietermaritzburg."
+    },
+    {
+      "word": "Two Oceans Marathon",
+      "difficulty": "easy",
+      "description": "Cape Town ultramarathon associated with a scenic coastal route."
+    },
+    {
+      "word": "Cape Town Cycle Tour",
+      "difficulty": "easy",
+      "description": "Major annual bicycle race around South Africa's southwestern peninsula."
+    },
+    {
+      "word": "Soweto Derby",
+      "difficulty": "easy",
+      "description": "Football rivalry between Kaizer Chiefs and Orlando Pirates."
+    },
+    {
+      "word": "Kaizer Chiefs",
+      "difficulty": "easy",
+      "description": "South African football club nicknamed Amakhosi."
+    },
+    {
+      "word": "Orlando Pirates",
+      "difficulty": "easy",
+      "description": "South African football club nicknamed the Buccaneers."
+    },
+    {
+      "word": "Mamelodi Sundowns",
+      "difficulty": "easy",
+      "description": "South African football club nicknamed the Brazilians."
+    },
+    {
+      "word": "Sharks",
+      "difficulty": "easy",
+      "description": "Durban rugby side associated with black and white."
+    },
+    {
+      "word": "Stormers",
+      "difficulty": "easy",
+      "description": "Cape Town rugby side associated with blue and white hoops."
+    },
+    {
+      "word": "Bulls",
+      "difficulty": "easy",
+      "description": "Pretoria rugby side associated with light blue."
+    },
+    {
+      "word": "Cheslin Kolbe",
+      "difficulty": "easy",
+      "description": "Springbok winger known for dazzling footwork."
+    },
+    {
+      "word": "Faf de Klerk",
+      "difficulty": "easy",
+      "description": "Blond Springbok scrum-half known for energetic defence."
+    },
+    {
+      "word": "Handré Pollard",
+      "difficulty": "easy",
+      "description": "Springbok fly-half known for pressure goal-kicking."
+    },
+    {
+      "word": "Eben Etzebeth",
+      "difficulty": "easy",
+      "description": "Towering Springbok lock associated with physical play."
+    },
+    {
+      "word": "AB de Villiers",
+      "difficulty": "easy",
+      "description": "Proteas batter nicknamed Mr. 360."
+    },
+    {
+      "word": "Jacques Kallis",
+      "difficulty": "easy",
+      "description": "Proteas all-rounder renowned for batting and seam bowling."
+    },
+    {
+      "word": "Dale Steyn",
+      "difficulty": "easy",
+      "description": "Fast bowler nicknamed the Phalaborwa Express."
+    },
+    {
+      "word": "Kagiso Rabada",
+      "difficulty": "easy",
+      "description": "South African fast bowler known by the nickname KG."
+    },
+    {
+      "word": "Hashim Amla",
+      "difficulty": "easy",
+      "description": "Proteas batter known for his beard and elegant strokeplay."
+    },
+    {
+      "word": "Brett Lee",
+      "difficulty": "easy",
+      "description": "Australian fast bowler known for extreme pace."
+    },
+    {
+      "word": "Shane Warne",
+      "difficulty": "easy",
+      "description": "Australian leg-spinner associated with the ball of the century."
+    },
+    {
+      "word": "MS Dhoni",
+      "difficulty": "easy",
+      "description": "Indian wicketkeeper-captain associated with the helicopter shot."
+    },
+    {
+      "word": "Rohit Sharma",
+      "difficulty": "easy",
+      "description": "Indian opening batter nicknamed the Hitman."
+    },
+    {
+      "word": "Naomi Osaka",
+      "difficulty": "easy",
+      "description": "Japanese tennis champion associated with powerful groundstrokes."
+    },
+    {
+      "word": "Coco Gauff",
+      "difficulty": "easy",
+      "description": "American tennis player who won the 2023 US Open."
+    },
+    {
+      "word": "Iga Świątek",
+      "difficulty": "easy",
+      "description": "Polish tennis champion associated with clay-court dominance."
+    },
+    {
+      "word": "Carlos Alcaraz",
+      "difficulty": "easy",
+      "description": "Spanish tennis champion who won Wimbledon in 2023."
+    },
+    {
+      "word": "Jannik Sinner",
+      "difficulty": "easy",
+      "description": "Italian tennis player who won the 2024 Australian Open."
+    },
+    {
+      "word": "Erling Haaland",
+      "difficulty": "easy",
+      "description": "Norwegian football striker associated with Manchester City goals."
+    },
+    {
+      "word": "Jude Bellingham",
+      "difficulty": "easy",
+      "description": "English midfielder associated with Real Madrid and outstretched-arm celebrations."
+    },
+    {
+      "word": "Bukayo Saka",
+      "difficulty": "easy",
+      "description": "Arsenal winger nicknamed Starboy."
+    },
+    {
+      "word": "Son Heung-min",
+      "difficulty": "easy",
+      "description": "South Korean footballer associated with Tottenham Hotspur."
+    },
+    {
+      "word": "Sadio Mané",
+      "difficulty": "easy",
+      "description": "Senegalese forward associated with Liverpool's title-winning side."
+    },
+    {
+      "word": "Offside Trap",
+      "difficulty": "hard",
+      "description": "Defensive tactic leaving an attacker beyond the last line."
+    },
+    {
+      "word": "Panenka",
+      "difficulty": "hard",
+      "description": "Chipped penalty aimed down the middle of the goal."
+    },
+    {
+      "word": "Bicycle Kick",
+      "difficulty": "hard",
+      "description": "Acrobatic football strike performed upside down in midair."
+    },
+    {
+      "word": "Rabona",
+      "difficulty": "hard",
+      "description": "Football strike with one leg wrapped behind the other."
+    },
+    {
+      "word": "Clean Sheet",
+      "difficulty": "hard",
+      "description": "Finishing a match without conceding."
+    },
+    {
+      "word": "Golden Duck",
+      "difficulty": "hard",
+      "description": "Cricket dismissal without scoring on the first delivery faced."
+    },
+    {
+      "word": "LBW",
+      "difficulty": "hard",
+      "description": "Cricket dismissal involving a batter's pad blocking the stumps."
+    },
+    {
+      "word": "Yorker",
+      "difficulty": "hard",
+      "description": "Cricket delivery pitching near the batter's feet."
+    },
+    {
+      "word": "Googly",
+      "difficulty": "hard",
+      "description": "Leg-spinner's deceptive delivery turning the unexpected way."
+    },
+    {
+      "word": "Reverse Swing",
+      "difficulty": "hard",
+      "description": "Late movement of an older cricket ball through the air."
+    },
+    {
+      "word": "Follow-on",
+      "difficulty": "hard",
+      "description": "Making the opposing cricket side bat again immediately."
+    },
+    {
+      "word": "Silly Point",
+      "difficulty": "hard",
+      "description": "Close cricket fielding position near the batter."
+    },
+    {
+      "word": "Sledging",
+      "difficulty": "hard",
+      "description": "Verbal attempts to unsettle a sporting opponent."
+    },
+    {
+      "word": "Maul",
+      "difficulty": "hard",
+      "description": "Rugby contest with the carrier held upright by players."
+    },
+    {
+      "word": "Ruck",
+      "difficulty": "hard",
+      "description": "Rugby contest over the ball on the ground."
+    },
+    {
+      "word": "Scrum",
+      "difficulty": "hard",
+      "description": "Rugby restart with opposing packs bound together."
+    },
+    {
+      "word": "Lineout",
+      "difficulty": "hard",
+      "description": "Rugby restart where players lift teammates to catch a throw."
+    },
+    {
+      "word": "Drop Goal",
+      "difficulty": "hard",
+      "description": "Rugby score from kicking after the ball bounces."
+    },
+    {
+      "word": "Conversion",
+      "difficulty": "hard",
+      "description": "Extra scoring attempt after a rugby try."
+    },
+    {
+      "word": "Sin Bin",
+      "difficulty": "hard",
+      "description": "Temporary exclusion area for a penalised player."
+    },
+    {
+      "word": "Photo Finish",
+      "difficulty": "hard",
+      "description": "Race ending so closely that an image determines the winner."
+    },
+    {
+      "word": "False Start",
+      "difficulty": "hard",
+      "description": "Beginning a race before the signal."
+    },
+    {
+      "word": "Personal Best",
+      "difficulty": "hard",
+      "description": "An athlete's own highest recorded performance."
+    },
+    {
+      "word": "Dead Heat",
+      "difficulty": "hard",
+      "description": "Contest ending with competitors tied for the same position."
+    },
+    {
+      "word": "Underdog",
+      "difficulty": "hard",
+      "description": "Competitor considered unlikely to win."
+    },
+    {
+      "word": "Choke",
+      "difficulty": "hard",
+      "description": "Failing under pressure despite being well positioned."
+    },
+    {
+      "word": "Home Advantage",
+      "difficulty": "hard",
+      "description": "Benefit from competing at your usual venue."
     }
   ],
   "Movies and TV": [
@@ -4295,7 +7029,7 @@ const categories = {
       "description": "A 2019 American superhero film based on the Marvel Comics superhero team the Avengers."
     },
     {
-      "word": "Lord of the Rings",
+      "word": "The Lord of the Rings",
       "difficulty": "easy",
       "description": "Fantasy quest to destroy a cursed ring in a volcanic land."
     },
@@ -4411,7 +7145,7 @@ const categories = {
     },
     {
       "word": "Die Hard",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Action classic where a lone cop fights terrorists in a skyscraper."
     },
     {
@@ -4535,7 +7269,7 @@ const categories = {
       "description": "Performance approach where artists deeply embody roles on and off set."
     },
     {
-      "word": "Film noir",
+      "word": "Film Noir",
       "difficulty": "hard",
       "description": "Moody crime style with shadows, cynicism, and morally gray leads."
     },
@@ -4546,7 +7280,7 @@ const categories = {
     },
     {
       "word": "Cameo",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Very brief appearance by a recognizable person."
     },
     {
@@ -4555,23 +7289,18 @@ const categories = {
       "description": "Filmmaker with a distinct personal signature across many works."
     },
     {
-      "word": "Casting couch",
-      "difficulty": "hard",
-      "description": "Exploitative abuse of power in audition or hiring situations."
-    },
-    {
       "word": "Stunt double",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Stand-in performer used for dangerous action sequences."
     },
     {
       "word": "Box office",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Theatrical ticket-sales revenue used to gauge commercial success."
     },
     {
       "word": "Green screen",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Chroma backdrop replaced with digital backgrounds in post-production."
     },
     {
@@ -4606,7 +7335,7 @@ const categories = {
     },
     {
       "word": "The Handmaid's Tale",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Dystopian story about authoritarian control over women's bodies."
     },
     {
@@ -4755,34 +7484,9 @@ const categories = {
       "description": "Catchphrase of a toy space ranger in an animated franchise."
     },
     {
-      "word": "Yippee-ki-yay, motherfucker!",
-      "difficulty": "hard",
-      "description": "Signature wisecrack from an action hero trapped in a skyscraper siege."
-    },
-    {
       "word": "You can't handle the truth!",
       "difficulty": "hard",
       "description": "Courtroom outburst from a military legal drama."
-    },
-    {
-      "word": "Harry Potter Wizarding World",
-      "difficulty": "hard",
-      "description": "Franchise universe featuring Hogwarts, spells, and magical creatures."
-    },
-    {
-      "word": "Disney Classics",
-      "difficulty": "easy",
-      "description": "Beloved older animated family films from a major U.S. studio."
-    },
-    {
-      "word": "Disney Pixar Films",
-      "difficulty": "easy",
-      "description": "CG-animated hits from the studio behind talking toys and emotional stories."
-    },
-    {
-      "word": "Disney Princesses",
-      "difficulty": "easy",
-      "description": "Royal heroines from animated musicals and fairy-tale adventures."
     },
     {
       "word": "Marvel Cinematic Universe",
@@ -4793,16 +7497,6 @@ const categories = {
       "word": "Pirates of the Caribbean",
       "difficulty": "easy",
       "description": "Swashbuckling adventure franchise with cursed treasure and a quirky captain."
-    },
-    {
-      "word": "Pixar Movies",
-      "difficulty": "easy",
-      "description": "Animated features known for emotional storytelling and technical polish."
-    },
-    {
-      "word": "The Godfather Trilogy",
-      "difficulty": "easy",
-      "description": "Three-film saga following a mafia dynasty across generations."
     },
     {
       "word": "Isibaya",
@@ -4876,7 +7570,7 @@ const categories = {
     },
     {
       "word": "Cliffhanger",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Suspenseful ending designed to leave the audience wanting more."
     },
     {
@@ -4928,6 +7622,456 @@ const categories = {
       "word": "Golden Globes",
       "difficulty": "easy",
       "description": "Award ceremony honoring excellence in both film and television."
+    },
+    {
+      "word": "Shrek",
+      "difficulty": "easy",
+      "description": "Green ogre whose best friend is a talking donkey."
+    },
+    {
+      "word": "Donkey",
+      "difficulty": "easy",
+      "description": "Shrek's chatty animal companion voiced by Eddie Murphy."
+    },
+    {
+      "word": "Puss in Boots",
+      "difficulty": "easy",
+      "description": "Swashbuckling feline famous for enormous pleading eyes."
+    },
+    {
+      "word": "Kung Fu Panda",
+      "difficulty": "easy",
+      "description": "Animated franchise featuring Po the martial-arts-loving bear."
+    },
+    {
+      "word": "Finding Nemo",
+      "difficulty": "easy",
+      "description": "Pixar adventure about Marlin searching for his missing son."
+    },
+    {
+      "word": "Dory",
+      "difficulty": "easy",
+      "description": "Forgetful blue fish who insists on continuing to swim."
+    },
+    {
+      "word": "Finding Dory",
+      "difficulty": "easy",
+      "description": "Pixar sequel about a forgetful fish seeking her family."
+    },
+    {
+      "word": "Inside Out",
+      "difficulty": "easy",
+      "description": "Pixar film showing emotions operating a girl's mind."
+    },
+    {
+      "word": "Ratatouille",
+      "difficulty": "easy",
+      "description": "Pixar film about Remy becoming a chef in Paris."
+    },
+    {
+      "word": "WALL-E",
+      "difficulty": "easy",
+      "description": "Pixar robot left cleaning up an abandoned Earth."
+    },
+    {
+      "word": "Up",
+      "difficulty": "easy",
+      "description": "Pixar film featuring a house lifted by balloons."
+    },
+    {
+      "word": "Coco",
+      "difficulty": "easy",
+      "description": "Pixar story about Miguel visiting the Land of the Dead."
+    },
+    {
+      "word": "Encanto",
+      "difficulty": "easy",
+      "description": "Disney film about the magical Madrigal family."
+    },
+    {
+      "word": "Moana",
+      "difficulty": "easy",
+      "description": "Disney heroine who sails with the demigod Maui."
+    },
+    {
+      "word": "Lilo & Stitch",
+      "difficulty": "easy",
+      "description": "Disney film about a Hawaiian girl and an alien experiment."
+    },
+    {
+      "word": "Zootopia",
+      "difficulty": "easy",
+      "description": "Animated mystery pairing a rabbit officer with a fox."
+    },
+    {
+      "word": "Madagascar",
+      "difficulty": "easy",
+      "description": "Animated film featuring zoo animals stranded on an island."
+    },
+    {
+      "word": "Despicable Me",
+      "difficulty": "easy",
+      "description": "Animated franchise featuring Gru and yellow henchmen."
+    },
+    {
+      "word": "Minions",
+      "difficulty": "easy",
+      "description": "Goggle-wearing yellow helpers obsessed with bananas."
+    },
+    {
+      "word": "The Incredibles",
+      "difficulty": "easy",
+      "description": "Pixar family of superheroes trying to live ordinary lives."
+    },
+    {
+      "word": "Cars",
+      "difficulty": "easy",
+      "description": "Pixar film featuring Lightning McQueen and Mater."
+    },
+    {
+      "word": "Lightning McQueen",
+      "difficulty": "easy",
+      "description": "Red racing character voiced by Owen Wilson."
+    },
+    {
+      "word": "Buzz Lightyear",
+      "difficulty": "easy",
+      "description": "Space-ranger toy who believes he can fly."
+    },
+    {
+      "word": "Woody",
+      "difficulty": "easy",
+      "description": "Cowboy toy voiced by Tom Hanks."
+    },
+    {
+      "word": "SpongeBob SquarePants",
+      "difficulty": "easy",
+      "description": "Absorbent cartoon fry cook living in a pineapple."
+    },
+    {
+      "word": "Patrick Star",
+      "difficulty": "easy",
+      "description": "Pink cartoon sea creature who lives under a rock."
+    },
+    {
+      "word": "Squidward",
+      "difficulty": "easy",
+      "description": "Grumpy clarinet-playing neighbour in Bikini Bottom."
+    },
+    {
+      "word": "Scooby-Doo",
+      "difficulty": "easy",
+      "description": "Talking cartoon Great Dane investigating spooky mysteries."
+    },
+    {
+      "word": "Tom and Jerry",
+      "difficulty": "easy",
+      "description": "Cartoon rivalry between a cat and a mouse."
+    },
+    {
+      "word": "Looney Tunes",
+      "difficulty": "easy",
+      "description": "Cartoon franchise featuring Bugs Bunny and Daffy Duck."
+    },
+    {
+      "word": "Bugs Bunny",
+      "difficulty": "easy",
+      "description": "Wisecracking cartoon rabbit who asks what's up."
+    },
+    {
+      "word": "Peppa Pig",
+      "difficulty": "easy",
+      "description": "British cartoon preschooler who loves muddy puddles."
+    },
+    {
+      "word": "Bluey",
+      "difficulty": "easy",
+      "description": "Australian cartoon about a blue heeler puppy's family."
+    },
+    {
+      "word": "Paw Patrol",
+      "difficulty": "easy",
+      "description": "Children's show featuring rescue puppies and Ryder."
+    },
+    {
+      "word": "Dora the Explorer",
+      "difficulty": "easy",
+      "description": "Children's heroine accompanied by Boots and a talking map."
+    },
+    {
+      "word": "Pokémon",
+      "difficulty": "easy",
+      "description": "Anime franchise featuring Ash and collectible battling creatures."
+    },
+    {
+      "word": "Dragon Ball Z",
+      "difficulty": "easy",
+      "description": "Anime featuring Goku and the Saiyans."
+    },
+    {
+      "word": "Naruto",
+      "difficulty": "easy",
+      "description": "Anime about a young ninja who dreams of leading his village."
+    },
+    {
+      "word": "One Piece",
+      "difficulty": "easy",
+      "description": "Anime following Luffy and a pirate crew."
+    },
+    {
+      "word": "Death Note",
+      "difficulty": "easy",
+      "description": "Anime where a student can kill by writing someone's name."
+    },
+    {
+      "word": "Squid Game",
+      "difficulty": "easy",
+      "description": "Korean thriller involving deadly versions of children's activities."
+    },
+    {
+      "word": "Wednesday",
+      "difficulty": "easy",
+      "description": "Series following the Addams family's daughter at Nevermore Academy."
+    },
+    {
+      "word": "The Addams Family",
+      "difficulty": "easy",
+      "description": "Spooky household featuring Morticia, Gomez and Uncle Fester."
+    },
+    {
+      "word": "Mr. Bean",
+      "difficulty": "easy",
+      "description": "Mostly silent comedy character played by Rowan Atkinson."
+    },
+    {
+      "word": "The Fresh Prince of Bel-Air",
+      "difficulty": "easy",
+      "description": "Sitcom about Will moving from Philadelphia to wealthy relatives."
+    },
+    {
+      "word": "Brooklyn Nine-Nine",
+      "difficulty": "easy",
+      "description": "Police sitcom featuring Jake Peralta and Captain Holt."
+    },
+    {
+      "word": "Modern Family",
+      "difficulty": "easy",
+      "description": "Sitcom following the Pritchett and Dunphy households."
+    },
+    {
+      "word": "Schitt's Creek",
+      "difficulty": "easy",
+      "description": "Sitcom about a rich family losing everything and relocating."
+    },
+    {
+      "word": "Ted Lasso",
+      "difficulty": "easy",
+      "description": "Comedy about an American coach managing an English football club."
+    },
+    {
+      "word": "The Bear",
+      "difficulty": "easy",
+      "description": "Kitchen drama following Carmy in Chicago."
+    },
+    {
+      "word": "The Last of Us",
+      "difficulty": "easy",
+      "description": "TV adaptation following Joel and Ellie after a fungal outbreak."
+    },
+    {
+      "word": "House of the Dragon",
+      "difficulty": "easy",
+      "description": "Game of Thrones prequel about Targaryen succession."
+    },
+    {
+      "word": "The Boys",
+      "difficulty": "easy",
+      "description": "Series about corrupt superheroes and their vigilante opponents."
+    },
+    {
+      "word": "The Umbrella Academy",
+      "difficulty": "easy",
+      "description": "Series about superpowered adopted siblings and time disasters."
+    },
+    {
+      "word": "Loki",
+      "difficulty": "hard",
+      "description": "Marvel series following Thor's mischievous brother through timelines."
+    },
+    {
+      "word": "WandaVision",
+      "difficulty": "easy",
+      "description": "Marvel series blending sitcom worlds with grief and magic."
+    },
+    {
+      "word": "Black Panther",
+      "difficulty": "easy",
+      "description": "Marvel hero associated with Wakanda and vibranium."
+    },
+    {
+      "word": "Deadpool",
+      "difficulty": "easy",
+      "description": "Fourth-wall-breaking Marvel antihero in a red suit."
+    },
+    {
+      "word": "Spider-Man",
+      "difficulty": "easy",
+      "description": "Marvel hero associated with web-slinging and Peter Parker."
+    },
+    {
+      "word": "Batman",
+      "difficulty": "easy",
+      "description": "Gotham vigilante associated with Bruce Wayne."
+    },
+    {
+      "word": "The Truman Show",
+      "difficulty": "hard",
+      "description": "Jim Carrey discovers his entire life is televised."
+    },
+    {
+      "word": "Groundhog Day",
+      "difficulty": "hard",
+      "description": "Bill Murray relives the same date repeatedly."
+    },
+    {
+      "word": "Cast Away",
+      "difficulty": "hard",
+      "description": "Tom Hanks survives a plane crash and befriends Wilson."
+    },
+    {
+      "word": "The Sixth Sense",
+      "difficulty": "hard",
+      "description": "Thriller featuring a child who sees dead people."
+    },
+    {
+      "word": "Fight Club",
+      "difficulty": "hard",
+      "description": "Film featuring an underground bare-knuckle group and Tyler Durden."
+    },
+    {
+      "word": "The Usual Suspects",
+      "difficulty": "hard",
+      "description": "Crime mystery associated with Keyser Söze."
+    },
+    {
+      "word": "Memento",
+      "difficulty": "hard",
+      "description": "Christopher Nolan thriller told through fragmented memory."
+    },
+    {
+      "word": "Get Out",
+      "difficulty": "hard",
+      "description": "Jordan Peele horror about a boyfriend visiting his partner's family."
+    },
+    {
+      "word": "Parasite",
+      "difficulty": "hard",
+      "description": "Bong Joon-ho film about two families separated by wealth."
+    },
+    {
+      "word": "Slumdog Millionaire",
+      "difficulty": "hard",
+      "description": "Mumbai contestant's past explains his quiz-show answers."
+    },
+    {
+      "word": "The Devil Wears Prada",
+      "difficulty": "hard",
+      "description": "Fashion magazine comedy featuring Miranda Priestly."
+    },
+    {
+      "word": "Mean Girls",
+      "difficulty": "hard",
+      "description": "Teen comedy featuring the Plastics and a notorious burn book."
+    },
+    {
+      "word": "Legally Blonde",
+      "difficulty": "hard",
+      "description": "Elle Woods goes to Harvard after a breakup."
+    },
+    {
+      "word": "Bridesmaids",
+      "difficulty": "hard",
+      "description": "Comedy about Annie's chaotic role in her friend's wedding."
+    },
+    {
+      "word": "The Hangover",
+      "difficulty": "hard",
+      "description": "Friends retrace a disastrous bachelor party in Las Vegas."
+    },
+    {
+      "word": "Home Alone",
+      "difficulty": "hard",
+      "description": "Kevin defends his house from burglars over Christmas."
+    },
+    {
+      "word": "Elf",
+      "difficulty": "easy",
+      "description": "Will Ferrell plays Buddy, raised at the North Pole."
+    },
+    {
+      "word": "Love Actually",
+      "difficulty": "hard",
+      "description": "Interwoven romantic stories set around Christmas in London."
+    },
+    {
+      "word": "Notting Hill",
+      "difficulty": "hard",
+      "description": "Romance between a London bookseller and a famous actress."
+    },
+    {
+      "word": "Pretty Woman",
+      "difficulty": "hard",
+      "description": "Romantic comedy pairing Julia Roberts with Richard Gere."
+    },
+    {
+      "word": "Grease",
+      "difficulty": "hard",
+      "description": "Musical featuring Danny, Sandy and Rydell High."
+    },
+    {
+      "word": "Mamma Mia!",
+      "difficulty": "hard",
+      "description": "ABBA musical about a bride trying to identify her father."
+    },
+    {
+      "word": "The Greatest Showman",
+      "difficulty": "hard",
+      "description": "Musical inspired by P. T. Barnum's circus career."
+    },
+    {
+      "word": "Les Misérables",
+      "difficulty": "hard",
+      "description": "Musical adaptation featuring Jean Valjean and Inspector Javert."
+    },
+    {
+      "word": "Wicked",
+      "difficulty": "hard",
+      "description": "Musical reimagining the witches of Oz."
+    },
+    {
+      "word": "Hamilton",
+      "difficulty": "hard",
+      "description": "Rap musical about a founding father on America's ten-dollar bill."
+    },
+    {
+      "word": "The Rocky Horror Picture Show",
+      "difficulty": "hard",
+      "description": "Cult musical featuring Dr. Frank-N-Furter."
+    },
+    {
+      "word": "Rocky",
+      "difficulty": "hard",
+      "description": "Sylvester Stallone's underdog boxer from Philadelphia."
+    },
+    {
+      "word": "Rambo",
+      "difficulty": "hard",
+      "description": "Sylvester Stallone's troubled veteran turned action hero."
+    },
+    {
+      "word": "John Wick",
+      "difficulty": "hard",
+      "description": "Keanu Reeves's assassin drawn back in after his puppy is killed."
     }
   ],
   "Food and Drink": [
@@ -5088,17 +8232,17 @@ const categories = {
     },
     {
       "word": "Caviar",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Salted fish eggs served as a luxury appetizer."
     },
     {
       "word": "Macaron",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "French almond meringue sandwich cookie with a soft filling."
     },
     {
       "word": "Paella",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Spanish rice dish cooked with saffron, seafood, or meat."
     },
     {
@@ -5108,7 +8252,7 @@ const categories = {
     },
     {
       "word": "Dim Sum",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Cantonese small plates like dumplings served in steamer baskets."
     },
     {
@@ -5123,7 +8267,7 @@ const categories = {
     },
     {
       "word": "Gourmet",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Term for high-end food prepared with refined ingredients and technique."
     },
     {
@@ -5133,12 +8277,12 @@ const categories = {
     },
     {
       "word": "Risotto",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Creamy Italian rice dish cooked slowly with stock."
     },
     {
       "word": "Pho",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Vietnamese noodle soup with fragrant broth, herbs, and meat."
     },
     {
@@ -5153,17 +8297,17 @@ const categories = {
     },
     {
       "word": "Fondue",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Communal melted pot for dipping bread or fruit."
     },
     {
       "word": "Poutine",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A dish of French fries and cheese curds topped with a hot brown beef and chicken stock gravy."
     },
     {
       "word": "Tapas",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Spanish small sharing plates served as snacks or light meals."
     },
     {
@@ -5252,9 +8396,9 @@ const categories = {
       "description": "Fast-food chain focused on tacos, burritos, and Tex-Mex items."
     },
     {
-      "word": "Nandos",
+      "word": "Nando’s",
       "difficulty": "easy",
-      "description": "Internationally known restaurant chain that originated in South Africa. Famous for their chicken."
+      "description": "Restaurant chain associated with peri-peri chicken and cheeky adverts."
     },
     {
       "word": "Pizza Hut",
@@ -5303,7 +8447,7 @@ const categories = {
     },
     {
       "word": "Umqombothi",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Traditional South African beer made from sorghum."
     },
     {
@@ -5313,7 +8457,7 @@ const categories = {
     },
     {
       "word": "Inkomazi",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Traditional fermented milk drink."
     },
     {
@@ -5360,6 +8504,456 @@ const categories = {
       "word": "Slap Chips",
       "difficulty": "hard",
       "description": "South African style of thick-cut, vinegar-drenched fries."
+    },
+    {
+      "word": "Spaghetti",
+      "difficulty": "easy",
+      "description": "Long thin pasta often twirled around a fork."
+    },
+    {
+      "word": "Lasagne",
+      "difficulty": "easy",
+      "description": "Layered baked pasta with sauce and cheese."
+    },
+    {
+      "word": "Ravioli",
+      "difficulty": "easy",
+      "description": "Pasta parcels with a filling inside."
+    },
+    {
+      "word": "Gnocchi",
+      "difficulty": "easy",
+      "description": "Small Italian dumplings often made with potato."
+    },
+    {
+      "word": "Garlic Bread",
+      "difficulty": "easy",
+      "description": "Buttery baked loaf flavoured with a pungent bulb."
+    },
+    {
+      "word": "French Toast",
+      "difficulty": "easy",
+      "description": "Sliced loaf dipped in egg and fried."
+    },
+    {
+      "word": "Waffles",
+      "difficulty": "easy",
+      "description": "Breakfast batter cooked in an iron with square indentations."
+    },
+    {
+      "word": "Croissant",
+      "difficulty": "easy",
+      "description": "Flaky crescent-shaped French pastry."
+    },
+    {
+      "word": "Bagel",
+      "difficulty": "easy",
+      "description": "Ring-shaped bread traditionally boiled before baking."
+    },
+    {
+      "word": "Pretzel",
+      "difficulty": "easy",
+      "description": "Twisted baked snack associated with German beer halls."
+    },
+    {
+      "word": "Scone",
+      "difficulty": "easy",
+      "description": "Baked teatime treat often served with jam and cream."
+    },
+    {
+      "word": "Muffin",
+      "difficulty": "easy",
+      "description": "Individual domed baked treat, often blueberry or chocolate."
+    },
+    {
+      "word": "Brownie",
+      "difficulty": "easy",
+      "description": "Dense chocolate square, often fudgy inside."
+    },
+    {
+      "word": "Cinnamon Roll",
+      "difficulty": "easy",
+      "description": "Spiral sweet bun flavoured with a warming spice."
+    },
+    {
+      "word": "Apple Pie",
+      "difficulty": "easy",
+      "description": "Fruit-filled pastry associated with American desserts."
+    },
+    {
+      "word": "Lemon Meringue",
+      "difficulty": "easy",
+      "description": "Citrus tart topped with fluffy beaten egg whites."
+    },
+    {
+      "word": "Pavlova",
+      "difficulty": "easy",
+      "description": "Crisp meringue dessert topped with cream and fruit."
+    },
+    {
+      "word": "Malva Pudding",
+      "difficulty": "easy",
+      "description": "South African baked dessert soaked in a sweet sauce."
+    },
+    {
+      "word": "Peppermint Crisp Tart",
+      "difficulty": "easy",
+      "description": "South African fridge dessert with caramel and mint chocolate."
+    },
+    {
+      "word": "Rusks",
+      "difficulty": "easy",
+      "description": "Hard baked biscuits commonly dunked in hot drinks."
+    },
+    {
+      "word": "Potjiekos",
+      "difficulty": "easy",
+      "description": "South African stew cooked in a three-legged cast-iron vessel."
+    },
+    {
+      "word": "Sosaties",
+      "difficulty": "easy",
+      "description": "South African marinated meat skewers."
+    },
+    {
+      "word": "Droëwors",
+      "difficulty": "easy",
+      "description": "Dried South African sausage snack."
+    },
+    {
+      "word": "Boerewors Roll",
+      "difficulty": "easy",
+      "description": "South African sausage served in a long bun."
+    },
+    {
+      "word": "Chicken Feet",
+      "difficulty": "easy",
+      "description": "Poultry extremities eaten as a snack or stew ingredient."
+    },
+    {
+      "word": "Mogodu",
+      "difficulty": "easy",
+      "description": "Southern African tripe dish."
+    },
+    {
+      "word": "Amagwinya",
+      "difficulty": "easy",
+      "description": "Fried dough balls often sold as street food."
+    },
+    {
+      "word": "Samp",
+      "difficulty": "easy",
+      "description": "Dried maize kernels stamped and broken into pieces."
+    },
+    {
+      "word": "Maas",
+      "difficulty": "easy",
+      "description": "Cultured sour milk eaten in southern Africa."
+    },
+    {
+      "word": "Jollof Rice",
+      "difficulty": "easy",
+      "description": "West African tomato-based dish inspiring friendly national rivalries."
+    },
+    {
+      "word": "Egusi Soup",
+      "difficulty": "easy",
+      "description": "West African stew thickened with ground melon seeds."
+    },
+    {
+      "word": "Fufu",
+      "difficulty": "easy",
+      "description": "Starchy West African staple often served with soup."
+    },
+    {
+      "word": "Injera",
+      "difficulty": "easy",
+      "description": "Spongy Ethiopian flatbread used to scoop up stews."
+    },
+    {
+      "word": "Tagine",
+      "difficulty": "easy",
+      "description": "North African slow-cooked dish named after its conical vessel."
+    },
+    {
+      "word": "Couscous",
+      "difficulty": "easy",
+      "description": "Tiny steamed semolina granules common in North Africa."
+    },
+    {
+      "word": "Falafel",
+      "difficulty": "easy",
+      "description": "Fried chickpea or broad-bean balls served in wraps."
+    },
+    {
+      "word": "Hummus",
+      "difficulty": "easy",
+      "description": "Chickpea spread blended with tahini and lemon."
+    },
+    {
+      "word": "Shawarma",
+      "difficulty": "easy",
+      "description": "Thinly sliced meat shaved from a rotating spit."
+    },
+    {
+      "word": "Kebab",
+      "difficulty": "easy",
+      "description": "Seasoned meat cooked on a skewer or spit."
+    },
+    {
+      "word": "Samosa",
+      "difficulty": "easy",
+      "description": "Triangular savoury pastry with a spiced filling."
+    },
+    {
+      "word": "Naan",
+      "difficulty": "easy",
+      "description": "Soft flatbread often baked against a tandoor's wall."
+    },
+    {
+      "word": "Butter Chicken",
+      "difficulty": "easy",
+      "description": "Creamy tomato-based Indian curry with poultry."
+    },
+    {
+      "word": "Biryani",
+      "difficulty": "easy",
+      "description": "Spiced layered rice dish often including meat."
+    },
+    {
+      "word": "Dhal",
+      "difficulty": "easy",
+      "description": "South Asian lentil-based dish."
+    },
+    {
+      "word": "Chutney",
+      "difficulty": "easy",
+      "description": "Sweet or savoury condiment made from fruit or vegetables."
+    },
+    {
+      "word": "Wasabi",
+      "difficulty": "easy",
+      "description": "Sharp green condiment served with sushi."
+    },
+    {
+      "word": "Soy Sauce",
+      "difficulty": "easy",
+      "description": "Salty dark condiment made from fermented beans."
+    },
+    {
+      "word": "Tofu",
+      "difficulty": "easy",
+      "description": "Pressed bean curd used as a protein ingredient."
+    },
+    {
+      "word": "Kimchi",
+      "difficulty": "easy",
+      "description": "Korean fermented vegetables, often spicy cabbage."
+    },
+    {
+      "word": "Dumpling",
+      "difficulty": "easy",
+      "description": "Small dough parcel with a savoury or sweet filling."
+    },
+    {
+      "word": "Spring Roll",
+      "difficulty": "easy",
+      "description": "Thin pastry cylinder enclosing vegetables or meat."
+    },
+    {
+      "word": "Satay",
+      "difficulty": "easy",
+      "description": "Southeast Asian skewers commonly served with peanut sauce."
+    },
+    {
+      "word": "Pad Thai",
+      "difficulty": "easy",
+      "description": "Bangkok street-food noodles with tamarind and peanuts."
+    },
+    {
+      "word": "Bubble Tea",
+      "difficulty": "easy",
+      "description": "Drink with chewy tapioca pearls and a wide straw."
+    },
+    {
+      "word": "Matcha",
+      "difficulty": "easy",
+      "description": "Finely ground Japanese green tea powder."
+    },
+    {
+      "word": "Espresso",
+      "difficulty": "easy",
+      "description": "Small concentrated coffee made under pressure."
+    },
+    {
+      "word": "Cappuccino",
+      "difficulty": "easy",
+      "description": "Coffee topped with steamed milk and a thick foam layer."
+    },
+    {
+      "word": "Latte",
+      "difficulty": "easy",
+      "description": "Coffee with plenty of steamed milk."
+    },
+    {
+      "word": "Flat White",
+      "difficulty": "easy",
+      "description": "Coffee with steamed milk and a thin microfoam layer."
+    },
+    {
+      "word": "Hot Chocolate",
+      "difficulty": "easy",
+      "description": "Warm cocoa drink often served with marshmallows."
+    },
+    {
+      "word": "Affogato",
+      "difficulty": "hard",
+      "description": "Ice cream topped with a shot of hot coffee."
+    },
+    {
+      "word": "Gelato",
+      "difficulty": "hard",
+      "description": "Italian frozen dessert typically denser than standard ice cream."
+    },
+    {
+      "word": "Sorbet",
+      "difficulty": "hard",
+      "description": "Frozen dessert made from fruit and sugar without dairy."
+    },
+    {
+      "word": "Soufflé",
+      "difficulty": "hard",
+      "description": "Airy baked dish that rises and can collapse."
+    },
+    {
+      "word": "Meringue",
+      "difficulty": "hard",
+      "description": "Whipped egg whites and sugar baked into a light sweet."
+    },
+    {
+      "word": "Ganache",
+      "difficulty": "hard",
+      "description": "Chocolate and cream mixture used for fillings and coatings."
+    },
+    {
+      "word": "Caramelisation",
+      "difficulty": "hard",
+      "description": "Browning sugar through heat to develop flavour."
+    },
+    {
+      "word": "Sourdough",
+      "difficulty": "hard",
+      "description": "Bread raised using a fermented starter culture."
+    },
+    {
+      "word": "Fermentation",
+      "difficulty": "hard",
+      "description": "Microbes converting sugars into acids, gases or alcohol."
+    },
+    {
+      "word": "Umami",
+      "difficulty": "hard",
+      "description": "Savoury taste associated with mushrooms and parmesan."
+    },
+    {
+      "word": "Al Dente",
+      "difficulty": "hard",
+      "description": "Italian instruction for pasta retaining a firm bite."
+    },
+    {
+      "word": "Sous Vide",
+      "difficulty": "hard",
+      "description": "Cooking vacuum-sealed food in a precisely heated bath."
+    },
+    {
+      "word": "Flambé",
+      "difficulty": "hard",
+      "description": "Cooking technique involving briefly igniting alcohol."
+    },
+    {
+      "word": "Julienne",
+      "difficulty": "hard",
+      "description": "Cutting vegetables into thin matchstick strips."
+    },
+    {
+      "word": "Blanching",
+      "difficulty": "hard",
+      "description": "Briefly boiling food before rapidly cooling it."
+    },
+    {
+      "word": "Poaching",
+      "difficulty": "hard",
+      "description": "Gently cooking food in hot liquid below boiling."
+    },
+    {
+      "word": "Reduction",
+      "difficulty": "hard",
+      "description": "Concentrating a sauce by simmering away liquid."
+    },
+    {
+      "word": "Emulsion",
+      "difficulty": "hard",
+      "description": "Mixture of liquids that normally resist combining."
+    },
+    {
+      "word": "Deglaze",
+      "difficulty": "hard",
+      "description": "Adding liquid to lift browned bits from a pan."
+    },
+    {
+      "word": "Marinade",
+      "difficulty": "hard",
+      "description": "Flavoured liquid used to soak food before cooking."
+    },
+    {
+      "word": "Charcuterie",
+      "difficulty": "hard",
+      "description": "Prepared cured meats often arranged on a serving board."
+    },
+    {
+      "word": "Canapé",
+      "difficulty": "hard",
+      "description": "Small savoury bite served at a reception."
+    },
+    {
+      "word": "Amuse-bouche",
+      "difficulty": "hard",
+      "description": "Tiny complimentary bite served before a restaurant meal."
+    },
+    {
+      "word": "Palate Cleanser",
+      "difficulty": "hard",
+      "description": "Small refreshment served between courses to reset taste."
+    },
+    {
+      "word": "Digestif",
+      "difficulty": "hard",
+      "description": "Drink traditionally served after a meal."
+    },
+    {
+      "word": "Mocktail",
+      "difficulty": "hard",
+      "description": "Mixed drink made without alcohol."
+    },
+    {
+      "word": "Mojito",
+      "difficulty": "hard",
+      "description": "Cuban drink mixing rum, lime, mint and soda."
+    },
+    {
+      "word": "Piña Colada",
+      "difficulty": "hard",
+      "description": "Tropical drink mixing rum, pineapple and coconut."
+    },
+    {
+      "word": "Bloody Mary",
+      "difficulty": "hard",
+      "description": "Vodka drink with tomato juice and savoury seasonings."
+    },
+    {
+      "word": "Irish Coffee",
+      "difficulty": "hard",
+      "description": "Hot drink combining whiskey, sweetened brew and cream."
     }
   ],
   "Nature and Wildlife": [
@@ -5370,7 +8964,7 @@ const categories = {
     },
     {
       "word": "Rainforest",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Rainforests are forests characterized by a closed and continuous tree canopy, moisture-dependent vegetation, the presence of epiphytes and lianas and the absence of wildfire."
     },
     {
@@ -5400,12 +8994,12 @@ const categories = {
     },
     {
       "word": "Savannah",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A savanna or savannah is a mixed woodland-grassland biome and ecosystem characterised by the trees being sufficiently widely spaced so that the canopy does not close."
     },
     {
       "word": "Coral Reef",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Underwater ecosystem built by tiny coral organisms."
     },
     {
@@ -5505,7 +9099,7 @@ const categories = {
     },
     {
       "word": "Oasis",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "In ecology, an oasis is a fertile area of a desert or semi-desert environment that sustains plant life and provides habitat for animals."
     },
     {
@@ -5525,7 +9119,7 @@ const categories = {
     },
     {
       "word": "Fjord",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "In physical geography, a fjord is a long, narrow sea inlet with steep sides or cliffs in a valley created by a former glacier, which has since become inundated with water."
     },
     {
@@ -5540,12 +9134,12 @@ const categories = {
     },
     {
       "word": "Tropical Fish",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A fish found in aquatic tropical environments around the world."
     },
     {
       "word": "Monsoon",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A monsoon is traditionally a seasonal reversing wind accompanied by corresponding changes in precipitation but is now used to describe seasonal changes in atmospheric circulatio..."
     },
     {
@@ -5555,7 +9149,7 @@ const categories = {
     },
     {
       "word": "Bamboo Forest",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The wildlife of Rwanda comprising its flora and fauna, in prehistoric times, consisted of montane forest in one third the territory of present-day Rwanda."
     },
     {
@@ -5580,7 +9174,7 @@ const categories = {
     },
     {
       "word": "Mangrove",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A mangrove is a shrub or tree that grows mainly in coastal saline or brackish water."
     },
     {
@@ -5670,13 +9264,458 @@ const categories = {
     },
     {
       "word": "The Amazon Rainforest",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "The wildlife of Brazil comprises all naturally occurring animals, plants, and fungi in Brazil, which is the most biodiverse country in the world."
     },
     {
       "word": "Protea",
       "difficulty": "easy",
       "description": "National flower of South Africa."
+    },
+    {
+      "word": "Hippopotamus",
+      "difficulty": "easy",
+      "description": "Huge semiaquatic African mammal with a massive mouth."
+    },
+    {
+      "word": "Rhinoceros",
+      "difficulty": "easy",
+      "description": "Large thick-skinned herbivore with horns on its snout."
+    },
+    {
+      "word": "Buffalo",
+      "difficulty": "easy",
+      "description": "Large horned grazer included in Africa's Big Five."
+    },
+    {
+      "word": "Warthog",
+      "difficulty": "easy",
+      "description": "Tusked African pig associated with Pumbaa."
+    },
+    {
+      "word": "Meerkat",
+      "difficulty": "easy",
+      "description": "Small mongoose that stands upright as a lookout."
+    },
+    {
+      "word": "Hyena",
+      "difficulty": "easy",
+      "description": "African scavenger associated with a laughing call."
+    },
+    {
+      "word": "Wildebeest",
+      "difficulty": "easy",
+      "description": "Bearded antelope known for mass migrations across East Africa."
+    },
+    {
+      "word": "Zebra",
+      "difficulty": "easy",
+      "description": "Striped African relative of the horse."
+    },
+    {
+      "word": "Impala",
+      "difficulty": "easy",
+      "description": "Slender African antelope famous for leaping."
+    },
+    {
+      "word": "Kudu",
+      "difficulty": "easy",
+      "description": "African antelope whose males have spiral horns."
+    },
+    {
+      "word": "Springbok",
+      "difficulty": "easy",
+      "description": "Leaping antelope that lends its name to a rugby side."
+    },
+    {
+      "word": "Ostrich",
+      "difficulty": "easy",
+      "description": "Huge flightless bird that can run very fast."
+    },
+    {
+      "word": "Flamingo",
+      "difficulty": "easy",
+      "description": "Pink wading bird often standing on one leg."
+    },
+    {
+      "word": "Peacock",
+      "difficulty": "easy",
+      "description": "Bird famous for its colourful fan-shaped tail."
+    },
+    {
+      "word": "Toucan",
+      "difficulty": "easy",
+      "description": "Tropical bird with an enormous colourful bill."
+    },
+    {
+      "word": "Pelican",
+      "difficulty": "easy",
+      "description": "Waterbird with a large pouch beneath its bill."
+    },
+    {
+      "word": "Vulture",
+      "difficulty": "easy",
+      "description": "Large bird often seen circling above carrion."
+    },
+    {
+      "word": "Owl",
+      "difficulty": "easy",
+      "description": "Nocturnal bird associated with hooting and wisdom."
+    },
+    {
+      "word": "Woodpecker",
+      "difficulty": "easy",
+      "description": "Bird that drums against tree trunks with its beak."
+    },
+    {
+      "word": "Kingfisher",
+      "difficulty": "easy",
+      "description": "Brightly coloured bird that dives to catch aquatic prey."
+    },
+    {
+      "word": "Puffin",
+      "difficulty": "easy",
+      "description": "Northern seabird with a colourful bill."
+    },
+    {
+      "word": "Albatross",
+      "difficulty": "easy",
+      "description": "Ocean-going bird famous for its enormous wingspan."
+    },
+    {
+      "word": "Parrot",
+      "difficulty": "easy",
+      "description": "Often colourful bird known for mimicking speech."
+    },
+    {
+      "word": "Macaw",
+      "difficulty": "easy",
+      "description": "Large tropical bird with a curved beak and long tail."
+    },
+    {
+      "word": "Budgie",
+      "difficulty": "easy",
+      "description": "Small pet parakeet commonly kept in a cage."
+    },
+    {
+      "word": "Canary",
+      "difficulty": "easy",
+      "description": "Small songbird historically taken into coal mines."
+    },
+    {
+      "word": "Pigeon",
+      "difficulty": "easy",
+      "description": "City bird associated with cooing and message delivery."
+    },
+    {
+      "word": "Duck",
+      "difficulty": "easy",
+      "description": "Waterbird associated with quacking and webbed feet."
+    },
+    {
+      "word": "Goose",
+      "difficulty": "easy",
+      "description": "Long-necked waterbird known for honking."
+    },
+    {
+      "word": "Swan",
+      "difficulty": "easy",
+      "description": "Elegant waterbird associated with a curved neck."
+    },
+    {
+      "word": "Crocodile",
+      "difficulty": "easy",
+      "description": "Large armoured reptile lurking near rivers."
+    },
+    {
+      "word": "Alligator",
+      "difficulty": "easy",
+      "description": "Broad-snouted reptile associated with Florida wetlands."
+    },
+    {
+      "word": "Tortoise",
+      "difficulty": "easy",
+      "description": "Land reptile carrying a domed protective shell."
+    },
+    {
+      "word": "Turtle",
+      "difficulty": "easy",
+      "description": "Shelled reptile often associated with swimming in the sea."
+    },
+    {
+      "word": "Gecko",
+      "difficulty": "easy",
+      "description": "Small lizard able to cling to walls."
+    },
+    {
+      "word": "Iguana",
+      "difficulty": "easy",
+      "description": "Large lizard with a spiny crest along its back."
+    },
+    {
+      "word": "Python",
+      "difficulty": "easy",
+      "description": "Large nonvenomous snake that kills by constriction."
+    },
+    {
+      "word": "Cobra",
+      "difficulty": "easy",
+      "description": "Venomous snake that spreads a hood when threatened."
+    },
+    {
+      "word": "Black Mamba",
+      "difficulty": "easy",
+      "description": "Fast African snake known for potent venom."
+    },
+    {
+      "word": "Anaconda",
+      "difficulty": "easy",
+      "description": "Heavy-bodied South American snake associated with wetlands."
+    },
+    {
+      "word": "Frog",
+      "difficulty": "easy",
+      "description": "Amphibian associated with croaking and jumping."
+    },
+    {
+      "word": "Toad",
+      "difficulty": "easy",
+      "description": "Usually squat amphibian with bumpy skin."
+    },
+    {
+      "word": "Salamander",
+      "difficulty": "easy",
+      "description": "Amphibian with a long body and tail."
+    },
+    {
+      "word": "Jellyfish",
+      "difficulty": "easy",
+      "description": "Drifting sea creature with stinging tentacles."
+    },
+    {
+      "word": "Starfish",
+      "difficulty": "easy",
+      "description": "Marine animal usually having five radiating arms."
+    },
+    {
+      "word": "Sea Urchin",
+      "difficulty": "easy",
+      "description": "Spiny marine animal with a rounded body."
+    },
+    {
+      "word": "Crab",
+      "difficulty": "easy",
+      "description": "Sideways-walking crustacean with pincers."
+    },
+    {
+      "word": "Hermit Crab",
+      "difficulty": "easy",
+      "description": "Crustacean that lives inside discarded shells."
+    },
+    {
+      "word": "Lobster",
+      "difficulty": "easy",
+      "description": "Large marine crustacean associated with claws and luxury meals."
+    },
+    {
+      "word": "Prawn",
+      "difficulty": "easy",
+      "description": "Small edible crustacean often served with garlic butter."
+    },
+    {
+      "word": "Snail",
+      "difficulty": "easy",
+      "description": "Slow mollusc carrying a spiral shell."
+    },
+    {
+      "word": "Slug",
+      "difficulty": "easy",
+      "description": "Shell-less garden mollusc that leaves a slime trail."
+    },
+    {
+      "word": "Earthworm",
+      "difficulty": "easy",
+      "description": "Soil-dwelling creature often used as fishing bait."
+    },
+    {
+      "word": "Ladybird",
+      "difficulty": "easy",
+      "description": "Small beetle associated with red wings and black spots."
+    },
+    {
+      "word": "Praying Mantis",
+      "difficulty": "easy",
+      "description": "Insect holding its front legs as if in devotion."
+    },
+    {
+      "word": "Dragonfly",
+      "difficulty": "easy",
+      "description": "Fast flying insect with two pairs of transparent wings."
+    },
+    {
+      "word": "Firefly",
+      "difficulty": "easy",
+      "description": "Beetle whose abdomen produces a glowing light."
+    },
+    {
+      "word": "Dung Beetle",
+      "difficulty": "easy",
+      "description": "Insect that rolls animal droppings into balls."
+    },
+    {
+      "word": "Mosquito",
+      "difficulty": "easy",
+      "description": "Blood-feeding insect responsible for itchy bites."
+    },
+    {
+      "word": "Cockroach",
+      "difficulty": "easy",
+      "description": "Flat-bodied household insect known for hiding in kitchens."
+    },
+    {
+      "word": "Camouflage",
+      "difficulty": "hard",
+      "description": "Blending into surroundings to avoid being noticed."
+    },
+    {
+      "word": "Mimicry",
+      "difficulty": "hard",
+      "description": "Resembling another organism to gain protection or advantage."
+    },
+    {
+      "word": "Hibernation",
+      "difficulty": "hard",
+      "description": "Seasonal inactive state conserving energy during cold months."
+    },
+    {
+      "word": "Migration",
+      "difficulty": "hard",
+      "description": "Regular seasonal movement between different habitats."
+    },
+    {
+      "word": "Nocturnal",
+      "difficulty": "hard",
+      "description": "Active mainly after sunset."
+    },
+    {
+      "word": "Endangered Species",
+      "difficulty": "hard",
+      "description": "Type of organism facing a serious risk of extinction."
+    },
+    {
+      "word": "Invasive Species",
+      "difficulty": "hard",
+      "description": "Introduced organism that harms an ecosystem."
+    },
+    {
+      "word": "Keystone Species",
+      "difficulty": "hard",
+      "description": "Organism with an unusually large influence on its ecosystem."
+    },
+    {
+      "word": "Food Chain",
+      "difficulty": "hard",
+      "description": "Sequence showing who eats whom in an ecosystem."
+    },
+    {
+      "word": "Ecosystem",
+      "difficulty": "hard",
+      "description": "Community of organisms interacting with their physical environment."
+    },
+    {
+      "word": "Symbiosis",
+      "difficulty": "hard",
+      "description": "Close long-term relationship between different organisms."
+    },
+    {
+      "word": "Pollination",
+      "difficulty": "hard",
+      "description": "Transfer enabling flowering plants to produce seeds."
+    },
+    {
+      "word": "Metamorphosis",
+      "difficulty": "hard",
+      "description": "Major body transformation from larva to adult."
+    },
+    {
+      "word": "Chrysalis",
+      "difficulty": "hard",
+      "description": "Protective pupal stage of a butterfly."
+    },
+    {
+      "word": "Bioluminescence",
+      "difficulty": "hard",
+      "description": "Light produced by a living organism."
+    },
+    {
+      "word": "Echolocation",
+      "difficulty": "hard",
+      "description": "Finding objects by listening to returning sound pulses."
+    },
+    {
+      "word": "Carnivorous Plant",
+      "difficulty": "hard",
+      "description": "Vegetation that traps and digests small creatures."
+    },
+    {
+      "word": "Venus Flytrap",
+      "difficulty": "hard",
+      "description": "Plant whose hinged leaves snap shut on insects."
+    },
+    {
+      "word": "Pitcher Plant",
+      "difficulty": "hard",
+      "description": "Carnivorous vegetation trapping insects inside fluid-filled leaf cups."
+    },
+    {
+      "word": "Baobab",
+      "difficulty": "hard",
+      "description": "African tree with an enormous trunk and branch-like silhouette."
+    },
+    {
+      "word": "Quiver Tree",
+      "difficulty": "hard",
+      "description": "Southern African aloe traditionally used for arrow containers."
+    },
+    {
+      "word": "Fynbos",
+      "difficulty": "hard",
+      "description": "Cape vegetation rich in proteas, ericas and restios."
+    },
+    {
+      "word": "Spekboom",
+      "difficulty": "hard",
+      "description": "Southern African succulent with small round fleshy leaves."
+    },
+    {
+      "word": "Marula",
+      "difficulty": "hard",
+      "description": "African tree whose fruit flavours a cream liqueur."
+    },
+    {
+      "word": "Fever Tree",
+      "difficulty": "hard",
+      "description": "African acacia with distinctive yellow-green bark."
+    },
+    {
+      "word": "Stink Bug",
+      "difficulty": "hard",
+      "description": "Insect releasing an unpleasant odour when disturbed."
+    },
+    {
+      "word": "Honey Badger",
+      "difficulty": "hard",
+      "description": "Tough African mammal famous for fearless behaviour."
+    },
+    {
+      "word": "Pangolin",
+      "difficulty": "hard",
+      "description": "Scaly mammal that curls into a protective ball."
+    },
+    {
+      "word": "Aardvark",
+      "difficulty": "hard",
+      "description": "African nocturnal mammal using a long tongue to eat termites."
     }
   ],
   "Languages": [
@@ -5891,11 +9930,6 @@ const categories = {
       "description": "In linguistics, lenition is a sound change that alters consonants, making them \"weaker\" in some way."
     },
     {
-      "word": "Farsi",
-      "difficulty": "easy",
-      "description": "Persian, also known by its endonym Farsi, is a Western Iranian language belonging to the Iranian branch of the Indo-Iranian subdivision of the Indo-European languages."
-    },
-    {
       "word": "Yiddish",
       "difficulty": "easy",
       "description": "Yiddish, historically Judeo-German or Jewish German, is a West Germanic language historically spoken by Ashkenazi Jews."
@@ -5961,23 +9995,18 @@ const categories = {
       "description": "Sotho, also known as Sesotho, Southern Sotho, or Sesotho sa Borwa, is a Southern Bantu language spoken in Lesotho, as its national language, and South Africa, where it is an off..."
     },
     {
-      "word": "Kiswahili",
-      "difficulty": "hard",
-      "description": "Swahili, also known as Kiswahili, is a Bantu language originally spoken by the Swahili people, who are found primarily in Tanzania, Kenya, and Mozambique."
-    },
-    {
       "word": "Latin Alphabet",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Latin alphabet is the set of letters used by the ancient Romans to write Classical Latin, later augmented with lower-case letters to write Medieval Latin, and continued in a..."
     },
     {
       "word": "Cyrillic Script",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Cyrillic script is a writing system used for various languages across Eurasia."
     },
     {
       "word": "Phonetics",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A branch of linguistics that mainly concerns the articulation and perception of speech sounds."
     },
     {
@@ -5992,7 +10021,7 @@ const categories = {
     },
     {
       "word": "Bilingual",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The use of more than one language, either by an individual speaker or by a group of speakers."
     },
     {
@@ -6017,7 +10046,7 @@ const categories = {
     },
     {
       "word": "Loanword",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A loanword is a word at least partly assimilated from one language into another language, through the process of borrowing."
     },
     {
@@ -6037,7 +10066,7 @@ const categories = {
     },
     {
       "word": "Verb Conjugation",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "In linguistics, conjugation is the creation of derived forms of a verb from its principal parts by inflection."
     },
     {
@@ -6047,8 +10076,458 @@ const categories = {
     },
     {
       "word": "Mother Tongue",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Gujari also spelt Gurjari, Gojri, Gujri, Gojari, or Gurjar is a Central Indo-Aryan language belonging to the Indo-Iranian subdivision of the Indo-European languages, spoken by m..."
+    },
+    {
+      "word": "Alphabet",
+      "difficulty": "easy",
+      "description": "Ordered set of letters used in writing."
+    },
+    {
+      "word": "Vowel",
+      "difficulty": "easy",
+      "description": "Speech sound represented in English by A, E, I, O or U."
+    },
+    {
+      "word": "Consonant",
+      "difficulty": "easy",
+      "description": "Speech sound produced with some obstruction of airflow."
+    },
+    {
+      "word": "Noun",
+      "difficulty": "easy",
+      "description": "Word class naming people, places or things."
+    },
+    {
+      "word": "Verb",
+      "difficulty": "easy",
+      "description": "Word class often describing an action."
+    },
+    {
+      "word": "Adjective",
+      "difficulty": "easy",
+      "description": "Word class that describes a thing or person."
+    },
+    {
+      "word": "Adverb",
+      "difficulty": "easy",
+      "description": "Word class modifying an action, often ending in -ly."
+    },
+    {
+      "word": "Pronoun",
+      "difficulty": "easy",
+      "description": "Word replacing a name, such as she or they."
+    },
+    {
+      "word": "Plural",
+      "difficulty": "easy",
+      "description": "Form referring to more than one."
+    },
+    {
+      "word": "Singular",
+      "difficulty": "easy",
+      "description": "Form referring to just one."
+    },
+    {
+      "word": "Past Tense",
+      "difficulty": "easy",
+      "description": "Verb form describing something that already happened."
+    },
+    {
+      "word": "Future Tense",
+      "difficulty": "easy",
+      "description": "Verb form describing something that has yet to happen."
+    },
+    {
+      "word": "Question Mark",
+      "difficulty": "easy",
+      "description": "Punctuation appearing after an enquiry."
+    },
+    {
+      "word": "Exclamation Mark",
+      "difficulty": "easy",
+      "description": "Punctuation expressing excitement or strong feeling."
+    },
+    {
+      "word": "Full Stop",
+      "difficulty": "easy",
+      "description": "Punctuation ending a declarative sentence."
+    },
+    {
+      "word": "Comma",
+      "difficulty": "easy",
+      "description": "Punctuation marking a brief break or separating list items."
+    },
+    {
+      "word": "Apostrophe",
+      "difficulty": "easy",
+      "description": "Punctuation used for possession or omitted letters."
+    },
+    {
+      "word": "Quotation Marks",
+      "difficulty": "easy",
+      "description": "Punctuation placed around someone's exact speech."
+    },
+    {
+      "word": "Hyphen",
+      "difficulty": "easy",
+      "description": "Short horizontal punctuation joining parts of some compounds."
+    },
+    {
+      "word": "Dictionary",
+      "difficulty": "easy",
+      "description": "Reference listing meanings of words."
+    },
+    {
+      "word": "Thesaurus",
+      "difficulty": "easy",
+      "description": "Reference offering synonyms and related expressions."
+    },
+    {
+      "word": "Spellcheck",
+      "difficulty": "easy",
+      "description": "Writing tool that flags incorrectly formed words."
+    },
+    {
+      "word": "Abbreviation",
+      "difficulty": "easy",
+      "description": "Shortened version of a longer expression."
+    },
+    {
+      "word": "Acronym",
+      "difficulty": "easy",
+      "description": "Initial-letter name pronounced as a word, like NASA."
+    },
+    {
+      "word": "Initials",
+      "difficulty": "easy",
+      "description": "First letters of someone's names."
+    },
+    {
+      "word": "Nickname",
+      "difficulty": "easy",
+      "description": "Informal alternative name for a person."
+    },
+    {
+      "word": "Slang",
+      "difficulty": "easy",
+      "description": "Informal vocabulary associated with a group or community."
+    },
+    {
+      "word": "Gibberish",
+      "difficulty": "easy",
+      "description": "Speech that sounds meaningless or incomprehensible."
+    },
+    {
+      "word": "Baby Talk",
+      "difficulty": "easy",
+      "description": "Simplified affectionate speech used with infants."
+    },
+    {
+      "word": "Small Talk",
+      "difficulty": "easy",
+      "description": "Polite casual conversation about uncontroversial subjects."
+    },
+    {
+      "word": "Whisper",
+      "difficulty": "easy",
+      "description": "Speak very softly with little vocal vibration."
+    },
+    {
+      "word": "Shout",
+      "difficulty": "easy",
+      "description": "Speak or call out very loudly."
+    },
+    {
+      "word": "Stutter",
+      "difficulty": "easy",
+      "description": "Involuntary repetition or interruption of speech sounds."
+    },
+    {
+      "word": "Lisp",
+      "difficulty": "easy",
+      "description": "Speech pattern affecting sounds such as S and Z."
+    },
+    {
+      "word": "Lip Reading",
+      "difficulty": "easy",
+      "description": "Understanding speech by watching a speaker's mouth."
+    },
+    {
+      "word": "Subtitles",
+      "difficulty": "easy",
+      "description": "Written dialogue displayed along the bottom of a screen."
+    },
+    {
+      "word": "Dubbing",
+      "difficulty": "easy",
+      "description": "Replacing a film's original dialogue with another recording."
+    },
+    {
+      "word": "Braille",
+      "difficulty": "easy",
+      "description": "Tactile writing system using raised dots."
+    },
+    {
+      "word": "Emoji Language",
+      "difficulty": "easy",
+      "description": "Communicating through tiny expressive digital pictures."
+    },
+    {
+      "word": "Sesame Street",
+      "difficulty": "easy",
+      "description": "Children's programme teaching letters with colourful puppets."
+    },
+    {
+      "word": "Duolingo",
+      "difficulty": "easy",
+      "description": "Learning app associated with a demanding green owl."
+    },
+    {
+      "word": "Scrabble Tiles",
+      "difficulty": "easy",
+      "description": "Lettered pieces used on a crossword-style game board."
+    },
+    {
+      "word": "Hangman",
+      "difficulty": "easy",
+      "description": "Guessing game where wrong letters build a stick figure."
+    },
+    {
+      "word": "Crossword",
+      "difficulty": "easy",
+      "description": "Grid puzzle solved using numbered verbal clues."
+    },
+    {
+      "word": "Word Search",
+      "difficulty": "easy",
+      "description": "Letter-grid puzzle containing hidden vocabulary."
+    },
+    {
+      "word": "Palindrome",
+      "difficulty": "easy",
+      "description": "Expression reading identically forwards and backwards."
+    },
+    {
+      "word": "Anagram",
+      "difficulty": "easy",
+      "description": "New expression made by rearranging another's letters."
+    },
+    {
+      "word": "Synonym",
+      "difficulty": "easy",
+      "description": "Word with a similar meaning to another."
+    },
+    {
+      "word": "Antonym",
+      "difficulty": "easy",
+      "description": "Word with the opposite meaning to another."
+    },
+    {
+      "word": "Onomatopoeia",
+      "difficulty": "easy",
+      "description": "Naming something using a sound like buzz or hiss."
+    },
+    {
+      "word": "Alliteration",
+      "difficulty": "hard",
+      "description": "Repeated initial sounds in neighbouring words."
+    },
+    {
+      "word": "Assonance",
+      "difficulty": "hard",
+      "description": "Repetition of similar vowel sounds in nearby words."
+    },
+    {
+      "word": "Metaphor",
+      "difficulty": "hard",
+      "description": "Describing one thing as another to suggest similarity."
+    },
+    {
+      "word": "Simile",
+      "difficulty": "hard",
+      "description": "Comparison using like or as."
+    },
+    {
+      "word": "Hyperbole",
+      "difficulty": "hard",
+      "description": "Deliberate exaggeration used for emphasis."
+    },
+    {
+      "word": "Understatement",
+      "difficulty": "hard",
+      "description": "Deliberately making something seem less significant."
+    },
+    {
+      "word": "Oxymoron",
+      "difficulty": "hard",
+      "description": "Pairing contradictory terms, such as deafening silence."
+    },
+    {
+      "word": "Euphemism",
+      "difficulty": "hard",
+      "description": "Gentler substitute for a blunt or uncomfortable expression."
+    },
+    {
+      "word": "Irony",
+      "difficulty": "hard",
+      "description": "Contrast between expectations and what actually happens."
+    },
+    {
+      "word": "Sarcasm",
+      "difficulty": "hard",
+      "description": "Mocking remark often meaning the opposite of its wording."
+    },
+    {
+      "word": "Pun",
+      "difficulty": "hard",
+      "description": "Joke exploiting multiple meanings or similar sounds."
+    },
+    {
+      "word": "Double Entendre",
+      "difficulty": "hard",
+      "description": "Phrase carrying two meanings, often one suggestive."
+    },
+    {
+      "word": "Malapropism",
+      "difficulty": "hard",
+      "description": "Mistaken substitution of a similar-sounding word."
+    },
+    {
+      "word": "Spoonerism",
+      "difficulty": "hard",
+      "description": "Accidentally swapping initial sounds between words."
+    },
+    {
+      "word": "Freudian Slip",
+      "difficulty": "hard",
+      "description": "Verbal mistake interpreted as revealing a hidden thought."
+    },
+    {
+      "word": "Eggcorn",
+      "difficulty": "hard",
+      "description": "Misheard expression replaced with something that seems logical."
+    },
+    {
+      "word": "Mondegreen",
+      "difficulty": "hard",
+      "description": "Misheard lyric or phrase given a different meaning."
+    },
+    {
+      "word": "Portmanteau",
+      "difficulty": "hard",
+      "description": "New word blending parts of two others, like brunch."
+    },
+    {
+      "word": "Homophone",
+      "difficulty": "hard",
+      "description": "Word sounding identical to another with different meaning."
+    },
+    {
+      "word": "Homograph",
+      "difficulty": "hard",
+      "description": "Word sharing another's spelling but differing in meaning."
+    },
+    {
+      "word": "False Friend",
+      "difficulty": "hard",
+      "description": "Similar-looking foreign word with a different meaning."
+    },
+    {
+      "word": "Code-switching",
+      "difficulty": "hard",
+      "description": "Moving between languages or varieties during conversation."
+    },
+    {
+      "word": "Lingua Franca",
+      "difficulty": "hard",
+      "description": "Shared language used by people with different native tongues."
+    },
+    {
+      "word": "Creole",
+      "difficulty": "hard",
+      "description": "Stable language developed from contact between different communities."
+    },
+    {
+      "word": "Pidgin",
+      "difficulty": "hard",
+      "description": "Simplified contact language used between different speech communities."
+    },
+    {
+      "word": "Dead Language",
+      "difficulty": "hard",
+      "description": "A tongue with no native speakers, such as Latin."
+    },
+    {
+      "word": "Esperanto",
+      "difficulty": "hard",
+      "description": "Constructed international language created by Zamenhof."
+    },
+    {
+      "word": "Klingon",
+      "difficulty": "hard",
+      "description": "Constructed language spoken by a warrior species in Star Trek."
+    },
+    {
+      "word": "Elvish",
+      "difficulty": "hard",
+      "description": "Tolkien's invented tongues associated with immortal fantasy peoples."
+    },
+    {
+      "word": "Pig Latin",
+      "difficulty": "hard",
+      "description": "Playful English code moving initial sounds and adding ay."
+    },
+    {
+      "word": "Tongue-in-cheek",
+      "difficulty": "hard",
+      "description": "Intended humorously despite appearing serious."
+    },
+    {
+      "word": "Lost in Translation",
+      "difficulty": "hard",
+      "description": "Meaning failing to survive a change between languages."
+    },
+    {
+      "word": "Read Between the Lines",
+      "difficulty": "hard",
+      "description": "Infer an unstated meaning from context."
+    },
+    {
+      "word": "Tip of the Tongue",
+      "difficulty": "hard",
+      "description": "Feeling that a forgotten word is almost retrievable."
+    },
+    {
+      "word": "Cat Got Your Tongue",
+      "difficulty": "hard",
+      "description": "Teasing question asked when someone becomes unusually silent."
+    },
+    {
+      "word": "Break the Ice",
+      "difficulty": "hard",
+      "description": "Ease initial social awkwardness between people."
+    },
+    {
+      "word": "Bite Your Tongue",
+      "difficulty": "hard",
+      "description": "Stop yourself from saying something."
+    },
+    {
+      "word": "Spill the Beans",
+      "difficulty": "hard",
+      "description": "Reveal a secret accidentally or deliberately."
+    },
+    {
+      "word": "Piece of Cake",
+      "difficulty": "hard",
+      "description": "Idiom for something extremely easy to do."
+    },
+    {
+      "word": "Under the Weather",
+      "difficulty": "hard",
+      "description": "Idiom meaning slightly ill or unwell."
     }
   ],
   "Famous Personalities": [
@@ -6060,12 +10539,12 @@ const categories = {
     {
       "word": "Nelson Mandela",
       "difficulty": "easy",
-      "description": "First South African President and anti-apartheid revolutionary."
+      "description": "Anti-apartheid leader known as Madiba who spent 27 years in prison."
     },
     {
       "word": "William Shakespeare",
       "difficulty": "easy",
-      "description": "An English playwright, poet and actor."
+      "description": "Playwright associated with Hamlet and the Globe Theatre."
     },
     {
       "word": "Mahatma Gandhi",
@@ -6085,7 +10564,7 @@ const categories = {
     {
       "word": "Marie Curie",
       "difficulty": "easy",
-      "description": "Maria Salomea Skłodowska Curie, better known as Marie Curie, was a Polish and naturalised-French physicist and chemist."
+      "description": "Scientist associated with radioactivity and two Nobel Prizes."
     },
     {
       "word": "Elvis Presley",
@@ -6110,7 +10589,7 @@ const categories = {
     {
       "word": "Wolfgang Amadeus Mozart",
       "difficulty": "easy",
-      "description": "A Classical composer and musician."
+      "description": "Child-prodigy composer associated with The Magic Flute."
     },
     {
       "word": "Charles Darwin",
@@ -6153,9 +10632,9 @@ const categories = {
       "description": "Jean-Pierre Léaud, ComM is a French actor best known for being an important figure of the French New Wave and his portrayal of Antoine Doinel in a series of films by François Tr..."
     },
     {
-      "word": "Beethoven",
+      "word": "Ludwig van Beethoven",
       "difficulty": "easy",
-      "description": "A German composer and pianist."
+      "description": "Composer who continued writing music after losing his hearing."
     },
     {
       "word": "Frida Kahlo",
@@ -6234,7 +10713,7 @@ const categories = {
     },
     {
       "word": "Salvador Dalí",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Salvador Domingo Felipe Jacinto Dalí i Domènech, Marquess of Dalí de Púbol, known as Salvador Dalí, was a Spanish surrealist artist renowned for his technical skill, precise dra..."
     },
     {
@@ -6243,7 +10722,7 @@ const categories = {
       "description": "A Queen of France as the wife of Louis XVI from 10 May 1774 until the abolition of the monarchy in 1792."
     },
     {
-      "word": "Pele",
+      "word": "Pelé",
       "difficulty": "easy",
       "description": "Edson Arantes do Nascimento, better known by his nickname Pelé, was a Brazilian professional footballer who played as a forward."
     },
@@ -6268,9 +10747,9 @@ const categories = {
       "description": "Author of Animal Farm and the dystopian novel 1984."
     },
     {
-      "word": "Stephen Spielberg",
+      "word": "Steven Spielberg",
       "difficulty": "easy",
-      "description": "Influential filmmaker behind Jaws, E.T., and Jurassic Park."
+      "description": "Director associated with Jaws, E.T. and Jurassic Park."
     },
     {
       "word": "Audrey Hepburn",
@@ -6373,11 +10852,6 @@ const categories = {
       "description": "Irish actress noted for Lady Bird, Brooklyn, and period dramas."
     },
     {
-      "word": "Madame Curie",
-      "difficulty": "easy",
-      "description": "Pioneering scientist of radioactivity and winner of two Nobel Prizes."
-    },
-    {
       "word": "Voltaire",
       "difficulty": "hard",
       "description": "François-Marie Arouet, known by his pen name Voltaire, was a French Enlightenment writer, philosopher , satirist, and historian."
@@ -6394,7 +10868,7 @@ const categories = {
     },
     {
       "word": "Aretha Franklin",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Aretha Louise Franklin was an American singer, songwriter and pianist."
     },
     {
@@ -6409,12 +10883,12 @@ const categories = {
     },
     {
       "word": "Bob Dylan",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "An American singer-songwriter."
     },
     {
       "word": "Bradley Cooper",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Actor-director linked to A Star Is Born and The Hangover."
     },
     {
@@ -6425,7 +10899,7 @@ const categories = {
     {
       "word": "Donald Trump",
       "difficulty": "easy",
-      "description": "Donald John Trump is an American politician, media personality, and businessman who is the 47th president of the United States."
+      "description": "US politician associated with The Apprentice and the MAGA slogan."
     },
     {
       "word": "Drake",
@@ -6454,8 +10928,8 @@ const categories = {
     },
     {
       "word": "Jacinda Ardern",
-      "difficulty": "hard",
-      "description": "Former New Zealand prime minister known for empathetic crisis leadership."
+      "difficulty": "easy",
+      "description": "New Zealand leader associated with the response to the 2019 Christchurch attacks."
     },
     {
       "word": "Jennifer Lawrence",
@@ -6464,12 +10938,12 @@ const categories = {
     },
     {
       "word": "Jesse Owens",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "American sprinter who won four golds at the 1936 Berlin Games."
     },
     {
       "word": "John Lennon",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "John Winston Ono Lennon was an English musician and activist."
     },
     {
@@ -6484,12 +10958,12 @@ const categories = {
     },
     {
       "word": "Meryl Streep",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Highly acclaimed actress with an exceptional number of Oscar nominations."
     },
     {
       "word": "Paul McCartney",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Sir James Paul McCartney is an English musician."
     },
     {
@@ -6509,7 +10983,7 @@ const categories = {
     },
     {
       "word": "Simone Biles",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Simone Arianne Biles Owens is an American artistic gymnast."
     },
     {
@@ -6529,7 +11003,7 @@ const categories = {
     },
     {
       "word": "Wayne Gretzky",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Wayne Douglas Gretzky is a Canadian former professional ice hockey player and former head coach."
     },
     {
@@ -6604,13 +11078,13 @@ const categories = {
     },
     {
       "word": "Zlatan Ibrahimović",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A Swedish former professional footballer who played as a striker."
     },
     {
       "word": "Justin Trudeau",
       "difficulty": "hard",
-      "description": "Justin Pierre James Trudeau is a Canadian politician who served as the 23rd prime minister of Canada from 2015 to 2025."
+      "description": "Canadian politician whose father Pierre also led the country."
     },
     {
       "word": "Joe Biden",
@@ -6620,12 +11094,457 @@ const categories = {
     {
       "word": "Emmanuel Macron",
       "difficulty": "hard",
-      "description": "French president first elected in 2017."
+      "description": "French politician who founded the En Marche movement."
     },
     {
       "word": "Mangosuthu Buthelezi",
       "difficulty": "hard",
       "description": "Influential Zulu leader and politician."
+    },
+    {
+      "word": "Jackie Chan",
+      "difficulty": "easy",
+      "description": "Hong Kong action star famous for doing elaborate stunts."
+    },
+    {
+      "word": "Bruce Lee",
+      "difficulty": "easy",
+      "description": "Martial arts icon associated with Enter the Dragon."
+    },
+    {
+      "word": "Jet Li",
+      "difficulty": "easy",
+      "description": "Martial arts actor associated with Hero and Fearless."
+    },
+    {
+      "word": "Chuck Norris",
+      "difficulty": "easy",
+      "description": "Action star whose exaggerated toughness became an internet joke."
+    },
+    {
+      "word": "Arnold Schwarzenegger",
+      "difficulty": "easy",
+      "description": "Bodybuilder, Terminator actor and former California governor."
+    },
+    {
+      "word": "Sylvester Stallone",
+      "difficulty": "easy",
+      "description": "Actor associated with Rocky and Rambo."
+    },
+    {
+      "word": "Harrison Ford",
+      "difficulty": "easy",
+      "description": "Actor who played Indiana Jones and Han Solo."
+    },
+    {
+      "word": "Samuel L. Jackson",
+      "difficulty": "easy",
+      "description": "Actor associated with Nick Fury and Pulp Fiction."
+    },
+    {
+      "word": "Morgan Freeman",
+      "difficulty": "easy",
+      "description": "Actor famous for his distinctive narration voice."
+    },
+    {
+      "word": "Eddie Murphy",
+      "difficulty": "easy",
+      "description": "Comedian who voiced Shrek's chatty animal companion."
+    },
+    {
+      "word": "Jim Carrey",
+      "difficulty": "easy",
+      "description": "Rubber-faced comic actor associated with Ace Ventura."
+    },
+    {
+      "word": "Adam Sandler",
+      "difficulty": "easy",
+      "description": "Comedy actor associated with Happy Gilmore."
+    },
+    {
+      "word": "Will Ferrell",
+      "difficulty": "easy",
+      "description": "Comic actor who played Buddy in Elf."
+    },
+    {
+      "word": "Steve Carell",
+      "difficulty": "easy",
+      "description": "Actor who played Michael Scott in The Office."
+    },
+    {
+      "word": "Rowan Atkinson",
+      "difficulty": "easy",
+      "description": "British comedian who created Mr. Bean."
+    },
+    {
+      "word": "Kevin Hart",
+      "difficulty": "easy",
+      "description": "American stand-up comedian known for his short stature."
+    },
+    {
+      "word": "Chris Rock",
+      "difficulty": "easy",
+      "description": "Stand-up comedian who voiced Marty the zebra in Madagascar."
+    },
+    {
+      "word": "Dave Chappelle",
+      "difficulty": "easy",
+      "description": "Comedian associated with a sketch show bearing his surname."
+    },
+    {
+      "word": "Ricky Gervais",
+      "difficulty": "easy",
+      "description": "British comedian who played David Brent."
+    },
+    {
+      "word": "Sacha Baron Cohen",
+      "difficulty": "easy",
+      "description": "Actor who created Borat and Ali G."
+    },
+    {
+      "word": "Ryan Reynolds",
+      "difficulty": "easy",
+      "description": "Canadian actor who plays Deadpool."
+    },
+    {
+      "word": "Hugh Jackman",
+      "difficulty": "easy",
+      "description": "Australian actor known for Wolverine and musical theatre."
+    },
+    {
+      "word": "Chris Hemsworth",
+      "difficulty": "easy",
+      "description": "Australian actor who plays Thor."
+    },
+    {
+      "word": "Chris Evans",
+      "difficulty": "easy",
+      "description": "Actor who played Steve Rogers in Marvel films."
+    },
+    {
+      "word": "Tom Holland",
+      "difficulty": "easy",
+      "description": "Actor who plays Peter Parker in Marvel films."
+    },
+    {
+      "word": "Zendaya",
+      "difficulty": "easy",
+      "description": "Actor associated with Euphoria and the Dune films."
+    },
+    {
+      "word": "Timothée Chalamet",
+      "difficulty": "easy",
+      "description": "Actor who played Paul Atreides and a young confectioner."
+    },
+    {
+      "word": "Florence Pugh",
+      "difficulty": "easy",
+      "description": "Actor associated with Midsommar and Yelena Belova."
+    },
+    {
+      "word": "Margot Robbie",
+      "difficulty": "easy",
+      "description": "Australian actor who played Harley Quinn and Barbie."
+    },
+    {
+      "word": "Viola Davis",
+      "difficulty": "easy",
+      "description": "Actor associated with Fences and How to Get Away with Murder."
+    },
+    {
+      "word": "Lupita Nyong'o",
+      "difficulty": "easy",
+      "description": "Actor associated with 12 Years a Slave and Us."
+    },
+    {
+      "word": "Octavia Spencer",
+      "difficulty": "easy",
+      "description": "Actor who won an Oscar for The Help."
+    },
+    {
+      "word": "Julia Roberts",
+      "difficulty": "easy",
+      "description": "Actor associated with Pretty Woman and Erin Brockovich."
+    },
+    {
+      "word": "Sandra Bullock",
+      "difficulty": "easy",
+      "description": "Actor associated with Speed and The Blind Side."
+    },
+    {
+      "word": "Reese Witherspoon",
+      "difficulty": "easy",
+      "description": "Actor who played Elle Woods in Legally Blonde."
+    },
+    {
+      "word": "Anne Hathaway",
+      "difficulty": "easy",
+      "description": "Actor associated with The Princess Diaries."
+    },
+    {
+      "word": "Halle Berry",
+      "difficulty": "easy",
+      "description": "Actor who won an Oscar for Monster's Ball."
+    },
+    {
+      "word": "Whoopi Goldberg",
+      "difficulty": "easy",
+      "description": "Actor and comedian associated with Sister Act."
+    },
+    {
+      "word": "Judi Dench",
+      "difficulty": "easy",
+      "description": "British actor who played M in several Bond films."
+    },
+    {
+      "word": "Maggie Smith",
+      "difficulty": "easy",
+      "description": "Actor who played Professor McGonagall."
+    },
+    {
+      "word": "Julie Andrews",
+      "difficulty": "easy",
+      "description": "Actor associated with Mary Poppins and Maria von Trapp."
+    },
+    {
+      "word": "Dolly Parton",
+      "difficulty": "easy",
+      "description": "Country singer associated with Jolene and a book-gifting programme."
+    },
+    {
+      "word": "Cher",
+      "difficulty": "easy",
+      "description": "Singer and actor associated with Believe."
+    },
+    {
+      "word": "Madonna",
+      "difficulty": "easy",
+      "description": "Pop performer associated with Vogue and Like a Prayer."
+    },
+    {
+      "word": "Tina Turner",
+      "difficulty": "easy",
+      "description": "Singer associated with The Best and Proud Mary."
+    },
+    {
+      "word": "Freddie Mercury",
+      "difficulty": "easy",
+      "description": "Queen frontman known for his four-octave voice and stage presence."
+    },
+    {
+      "word": "Kurt Cobain",
+      "difficulty": "easy",
+      "description": "Nirvana frontman associated with the grunge era."
+    },
+    {
+      "word": "Bob Marley",
+      "difficulty": "easy",
+      "description": "Jamaican reggae icon associated with One Love."
+    },
+    {
+      "word": "Bob Ross",
+      "difficulty": "easy",
+      "description": "Gentle TV painter associated with happy little trees."
+    },
+    {
+      "word": "David Attenborough",
+      "difficulty": "easy",
+      "description": "British natural-history broadcaster associated with Planet Earth."
+    },
+    {
+      "word": "Steve Irwin",
+      "difficulty": "easy",
+      "description": "Australian wildlife presenter nicknamed the Crocodile Hunter."
+    },
+    {
+      "word": "Gordon Ramsay",
+      "difficulty": "easy",
+      "description": "Chef known for Hell's Kitchen and fiery criticism."
+    },
+    {
+      "word": "Jamie Oliver",
+      "difficulty": "easy",
+      "description": "British chef associated with school-meal campaigns."
+    },
+    {
+      "word": "Nigella Lawson",
+      "difficulty": "easy",
+      "description": "British food writer and broadcaster associated with indulgent cooking."
+    },
+    {
+      "word": "Martha Stewart",
+      "difficulty": "easy",
+      "description": "American lifestyle personality associated with cooking and home entertaining."
+    },
+    {
+      "word": "Simon Cowell",
+      "difficulty": "easy",
+      "description": "Talent-show judge famous for blunt feedback."
+    },
+    {
+      "word": "RuPaul",
+      "difficulty": "easy",
+      "description": "Drag performer and host associated with a competitive makeover series."
+    },
+    {
+      "word": "Bear Grylls",
+      "difficulty": "easy",
+      "description": "Survival presenter known for unusual wilderness food choices."
+    },
+    {
+      "word": "Greta Thunberg",
+      "difficulty": "easy",
+      "description": "Swedish climate campaigner associated with school strikes."
+    },
+    {
+      "word": "Jane Goodall",
+      "difficulty": "hard",
+      "description": "Primatologist known for studying chimpanzees at Gombe."
+    },
+    {
+      "word": "Dian Fossey",
+      "difficulty": "hard",
+      "description": "Researcher whose gorilla work inspired Gorillas in the Mist."
+    },
+    {
+      "word": "Jacques Cousteau",
+      "difficulty": "hard",
+      "description": "French ocean explorer associated with a red knit cap."
+    },
+    {
+      "word": "Valentina Tereshkova",
+      "difficulty": "hard",
+      "description": "First woman to travel into space."
+    },
+    {
+      "word": "Katherine Johnson",
+      "difficulty": "hard",
+      "description": "NASA mathematician portrayed in Hidden Figures."
+    },
+    {
+      "word": "Ada Lovelace",
+      "difficulty": "hard",
+      "description": "Mathematician associated with an early algorithm for Babbage's machine."
+    },
+    {
+      "word": "Alan Turing",
+      "difficulty": "hard",
+      "description": "Mathematician associated with wartime codebreaking and computing."
+    },
+    {
+      "word": "Grace Hopper",
+      "difficulty": "hard",
+      "description": "Computer pioneer associated with early compilers and COBOL."
+    },
+    {
+      "word": "Hedy Lamarr",
+      "difficulty": "hard",
+      "description": "Hollywood actor who co-developed frequency-hopping communication ideas."
+    },
+    {
+      "word": "Rosalind Franklin",
+      "difficulty": "hard",
+      "description": "Researcher whose X-ray images helped reveal DNA's structure."
+    },
+    {
+      "word": "Tu Youyou",
+      "difficulty": "hard",
+      "description": "Researcher associated with the antimalarial artemisinin."
+    },
+    {
+      "word": "Wole Soyinka",
+      "difficulty": "hard",
+      "description": "Nigerian playwright awarded the 1986 literature Nobel."
+    },
+    {
+      "word": "Desmond Doss",
+      "difficulty": "hard",
+      "description": "Conscientious objector whose wartime service inspired Hacksaw Ridge."
+    },
+    {
+      "word": "Oskar Schindler",
+      "difficulty": "hard",
+      "description": "Industrialist who helped save Jewish workers during the Holocaust."
+    },
+    {
+      "word": "Irena Sendler",
+      "difficulty": "hard",
+      "description": "Polish humanitarian who rescued Jewish children in wartime Warsaw."
+    },
+    {
+      "word": "Harriet Tubman",
+      "difficulty": "hard",
+      "description": "Escaped enslaved woman who guided others to freedom."
+    },
+    {
+      "word": "Sojourner Truth",
+      "difficulty": "hard",
+      "description": "Abolitionist associated with the speech Ain't I a Woman."
+    },
+    {
+      "word": "Frederick Douglass",
+      "difficulty": "hard",
+      "description": "Formerly enslaved American abolitionist and influential writer."
+    },
+    {
+      "word": "Susan B. Anthony",
+      "difficulty": "hard",
+      "description": "American campaigner for women's voting rights."
+    },
+    {
+      "word": "Ruth Bader Ginsburg",
+      "difficulty": "hard",
+      "description": "US justice associated with a lace collar and dissent opinions."
+    },
+    {
+      "word": "Amal Clooney",
+      "difficulty": "hard",
+      "description": "Human-rights lawyer married to a Hollywood actor."
+    },
+    {
+      "word": "Michelle Obama",
+      "difficulty": "hard",
+      "description": "Author of Becoming and former US first lady."
+    },
+    {
+      "word": "Jacqueline Kennedy",
+      "difficulty": "hard",
+      "description": "Former US first lady associated with Camelot and elegant fashion."
+    },
+    {
+      "word": "Grace Kelly",
+      "difficulty": "hard",
+      "description": "Hollywood actor who became Princess of Monaco."
+    },
+    {
+      "word": "Wallis Simpson",
+      "difficulty": "hard",
+      "description": "American divorcee whose relationship prompted Edward VIII's abdication."
+    },
+    {
+      "word": "Serena Williams",
+      "difficulty": "easy",
+      "description": "Tennis champion with 23 major singles titles."
+    },
+    {
+      "word": "Venus Williams",
+      "difficulty": "easy",
+      "description": "Tennis champion and elder sister in a celebrated sporting duo."
+    },
+    {
+      "word": "Lewis Hamilton",
+      "difficulty": "easy",
+      "description": "British Formula One driver with seven world championships."
+    },
+    {
+      "word": "Max Verstappen",
+      "difficulty": "easy",
+      "description": "Dutch Formula One driver who won the 2021 championship."
+    },
+    {
+      "word": "Michael Schumacher",
+      "difficulty": "easy",
+      "description": "German Formula One driver with seven world championships."
     }
   ],
   "Current Events": [
@@ -6636,18 +11555,18 @@ const categories = {
     },
     {
       "word": "Climate Change",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Long-term shifts in weather patterns driven largely by greenhouse gas emissions."
     },
     {
       "word": "Space Exploration",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Scientific missions beyond Earth using astronauts, probes, and telescopes."
     },
     {
       "word": "Olympic Games",
       "difficulty": "easy",
-      "description": "The modern Olympic Games are the world's preeminent international sporting events."
+      "description": "Global sporting competition associated with five interlocking rings."
     },
     {
       "word": "Presidential Election",
@@ -6656,7 +11575,7 @@ const categories = {
     },
     {
       "word": "Global Warming",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Rise in average planetary temperature linked to greenhouse gases."
     },
     {
@@ -6666,7 +11585,7 @@ const categories = {
     },
     {
       "word": "Cybersecurity",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A subdiscipline within the field of information security."
     },
     {
@@ -6696,12 +11615,12 @@ const categories = {
     },
     {
       "word": "Vaccination Campaigns",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Organized immunization drives aimed at protecting communities."
     },
     {
       "word": "Trade Wars",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Economic disputes where countries impose tariffs on each other."
     },
     {
@@ -6731,27 +11650,27 @@ const categories = {
     },
     {
       "word": "Healthcare Reform",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Major policy changes to medical access, coverage, and costs."
     },
     {
       "word": "Artificial Meat",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Protein made in labs or from plants as an alternative to livestock."
     },
     {
       "word": "Pandemic Response",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Public-health measures used to control widespread infectious outbreaks."
     },
     {
       "word": "Environmental Policies",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Government rules aimed at pollution control and conservation."
     },
     {
       "word": "Gig Economy",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Labor market built around short-term contracts and app-based work."
     },
     {
@@ -6761,7 +11680,7 @@ const categories = {
     },
     {
       "word": "Rising Inflation",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Sustained increase in prices that reduces purchasing power."
     },
     {
@@ -6776,7 +11695,7 @@ const categories = {
     },
     {
       "word": "Political Scandals",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Public controversies involving misconduct by leaders or officials."
     },
     {
@@ -6786,17 +11705,17 @@ const categories = {
     },
     {
       "word": "Space Race",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Competition between powers to achieve major orbital and lunar milestones."
     },
     {
       "word": "Economic Stimulus Packages",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Government spending and tax plans used to boost weak economies."
     },
     {
       "word": "AI Ethics Debate",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Debate over bias, safety, accountability, and control of smart systems."
     },
     {
@@ -6811,7 +11730,7 @@ const categories = {
     },
     {
       "word": "Sustainable Development Goals",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "United Nations targets for poverty reduction, equity, and environmental protection."
     },
     {
@@ -6821,17 +11740,17 @@ const categories = {
     },
     {
       "word": "Food Security",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Reliable access to sufficient, safe, and nutritious food."
     },
     {
       "word": "Medical Breakthroughs",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Major advances in diagnosis, treatment, or disease prevention."
     },
     {
       "word": "Gender Equality Movements",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Campaigns pushing equal rights, pay, and opportunities."
     },
     {
@@ -6841,27 +11760,27 @@ const categories = {
     },
     {
       "word": "Renewable Energy Initiatives",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Programs expanding solar, wind, hydro, and other cleaner power sources."
     },
     {
       "word": "Remote Voting",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Casting ballots without physically visiting a polling station."
     },
     {
       "word": "Digital Privacy Issues",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Concerns about tracking, surveillance, data leaks, and consent online."
     },
     {
       "word": "Climate Activism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Public pressure campaigns demanding stronger environmental action."
     },
     {
       "word": "Space Debris",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Dead satellites and fragments orbiting Earth that threaten missions."
     },
     {
@@ -6883,6 +11802,451 @@ const categories = {
       "word": "Rhino Poaching Crisis",
       "difficulty": "hard",
       "description": "Critical conservation issue."
+    },
+    {
+      "word": "Lockdown",
+      "difficulty": "easy",
+      "description": "Emergency restrictions keeping people at home during a crisis."
+    },
+    {
+      "word": "Quarantine",
+      "difficulty": "easy",
+      "description": "Separating exposed people to limit possible disease spread."
+    },
+    {
+      "word": "Face Mask",
+      "difficulty": "easy",
+      "description": "Covering worn over the nose and mouth."
+    },
+    {
+      "word": "Handwashing",
+      "difficulty": "easy",
+      "description": "Cleaning your fingers and palms with soap and water."
+    },
+    {
+      "word": "Working from Home",
+      "difficulty": "easy",
+      "description": "Doing your job remotely, often in slippers."
+    },
+    {
+      "word": "Video Conferencing",
+      "difficulty": "easy",
+      "description": "Meeting colleagues through cameras and microphones online."
+    },
+    {
+      "word": "Online Shopping",
+      "difficulty": "easy",
+      "description": "Buying goods through websites and apps."
+    },
+    {
+      "word": "Contactless Payment",
+      "difficulty": "easy",
+      "description": "Settling a purchase by tapping a card or phone."
+    },
+    {
+      "word": "Cashless Society",
+      "difficulty": "easy",
+      "description": "Community where purchases rarely involve notes or coins."
+    },
+    {
+      "word": "Electric Scooter",
+      "difficulty": "easy",
+      "description": "Battery-powered two-wheeled vehicle often rented in cities."
+    },
+    {
+      "word": "Charging Station",
+      "difficulty": "easy",
+      "description": "Place to replenish an electric vehicle's battery."
+    },
+    {
+      "word": "Load Shedding",
+      "difficulty": "easy",
+      "description": "Scheduled electricity interruptions used to manage demand."
+    },
+    {
+      "word": "Power Outage",
+      "difficulty": "easy",
+      "description": "Loss of electricity supply to an area."
+    },
+    {
+      "word": "Water Restrictions",
+      "difficulty": "easy",
+      "description": "Rules limiting household use during shortages."
+    },
+    {
+      "word": "Drought",
+      "difficulty": "easy",
+      "description": "Long period with unusually little rain."
+    },
+    {
+      "word": "Heatwave",
+      "difficulty": "easy",
+      "description": "Extended spell of exceptionally hot weather."
+    },
+    {
+      "word": "Flood",
+      "difficulty": "easy",
+      "description": "Water covering land that is normally dry."
+    },
+    {
+      "word": "Hurricane",
+      "difficulty": "easy",
+      "description": "Powerful rotating tropical storm over the Atlantic."
+    },
+    {
+      "word": "Cyclone",
+      "difficulty": "easy",
+      "description": "Rotating tropical storm associated with the Indian Ocean."
+    },
+    {
+      "word": "Earth Hour",
+      "difficulty": "easy",
+      "description": "Global event encouraging people to switch off lights briefly."
+    },
+    {
+      "word": "Recycling",
+      "difficulty": "easy",
+      "description": "Processing used materials into new products."
+    },
+    {
+      "word": "Single-use Plastic",
+      "difficulty": "easy",
+      "description": "Disposable synthetic material used once before being discarded."
+    },
+    {
+      "word": "Reusable Straw",
+      "difficulty": "easy",
+      "description": "Drinking tube designed to be washed and used again."
+    },
+    {
+      "word": "Beach Cleanup",
+      "difficulty": "easy",
+      "description": "Community effort collecting litter along the shoreline."
+    },
+    {
+      "word": "Tree Planting",
+      "difficulty": "easy",
+      "description": "Putting new saplings into the ground."
+    },
+    {
+      "word": "Solar Geyser",
+      "difficulty": "easy",
+      "description": "Household water heater powered by sunlight."
+    },
+    {
+      "word": "Rooftop Panels",
+      "difficulty": "easy",
+      "description": "Electricity-generating modules installed above a house."
+    },
+    {
+      "word": "Inverter",
+      "difficulty": "easy",
+      "description": "Device converting battery electricity for household appliances."
+    },
+    {
+      "word": "Backup Battery",
+      "difficulty": "easy",
+      "description": "Stored power supply used when mains electricity fails."
+    },
+    {
+      "word": "Generator",
+      "difficulty": "easy",
+      "description": "Machine producing electricity, often with a fuel engine."
+    },
+    {
+      "word": "Fuel Price",
+      "difficulty": "easy",
+      "description": "What motorists pay per litre at the pump."
+    },
+    {
+      "word": "Cost of Living",
+      "difficulty": "easy",
+      "description": "Money needed to cover everyday necessities."
+    },
+    {
+      "word": "Interest Rate",
+      "difficulty": "easy",
+      "description": "Percentage charged for borrowing money."
+    },
+    {
+      "word": "Rent Increase",
+      "difficulty": "easy",
+      "description": "Landlord raising the amount paid for accommodation."
+    },
+    {
+      "word": "Minimum Wage",
+      "difficulty": "easy",
+      "description": "Lowest legally permitted pay for covered workers."
+    },
+    {
+      "word": "Strike Action",
+      "difficulty": "easy",
+      "description": "Employees withholding labour to press demands."
+    },
+    {
+      "word": "Protest March",
+      "difficulty": "easy",
+      "description": "Public demonstration moving through streets."
+    },
+    {
+      "word": "Petition",
+      "difficulty": "easy",
+      "description": "Collection of signatures supporting a request."
+    },
+    {
+      "word": "Boycott",
+      "difficulty": "easy",
+      "description": "Refusal to buy or participate as a protest."
+    },
+    {
+      "word": "Humanitarian Aid",
+      "difficulty": "easy",
+      "description": "Emergency assistance for people affected by disaster or conflict."
+    },
+    {
+      "word": "Food Bank",
+      "difficulty": "easy",
+      "description": "Organisation collecting groceries for people in need."
+    },
+    {
+      "word": "Soup Kitchen",
+      "difficulty": "easy",
+      "description": "Place serving free meals to vulnerable people."
+    },
+    {
+      "word": "Crowdfunding Campaign",
+      "difficulty": "easy",
+      "description": "Online appeal collecting small contributions from many people."
+    },
+    {
+      "word": "Missing Person",
+      "difficulty": "easy",
+      "description": "Someone whose whereabouts are unknown."
+    },
+    {
+      "word": "Breaking News",
+      "difficulty": "easy",
+      "description": "Urgent reporting on a developing event."
+    },
+    {
+      "word": "Press Conference",
+      "difficulty": "easy",
+      "description": "Event where reporters question public figures."
+    },
+    {
+      "word": "Fact-checking",
+      "difficulty": "easy",
+      "description": "Verifying whether public claims are accurate."
+    },
+    {
+      "word": "Misinformation",
+      "difficulty": "hard",
+      "description": "False information spread regardless of intent."
+    },
+    {
+      "word": "Disinformation",
+      "difficulty": "hard",
+      "description": "False information deliberately spread to deceive."
+    },
+    {
+      "word": "Vaccine Rollout",
+      "difficulty": "easy",
+      "description": "Organised distribution of immunisations across a population."
+    },
+    {
+      "word": "Carbon Footprint",
+      "difficulty": "hard",
+      "description": "Total greenhouse-gas emissions associated with an activity."
+    },
+    {
+      "word": "Carbon Offset",
+      "difficulty": "hard",
+      "description": "Compensating for emissions by funding reductions elsewhere."
+    },
+    {
+      "word": "Net Zero",
+      "difficulty": "hard",
+      "description": "Balancing greenhouse-gas emissions with removals."
+    },
+    {
+      "word": "Greenwashing",
+      "difficulty": "hard",
+      "description": "Misleading claims that make a business appear environmentally responsible."
+    },
+    {
+      "word": "Fast Fashion",
+      "difficulty": "hard",
+      "description": "Cheap clothing produced rapidly to follow trends."
+    },
+    {
+      "word": "Circular Economy",
+      "difficulty": "hard",
+      "description": "System keeping materials in use rather than discarding them."
+    },
+    {
+      "word": "Microplastics",
+      "difficulty": "hard",
+      "description": "Tiny synthetic particles found in water, soil and organisms."
+    },
+    {
+      "word": "E-waste",
+      "difficulty": "hard",
+      "description": "Discarded electronic equipment."
+    },
+    {
+      "word": "Climate Refugee",
+      "difficulty": "hard",
+      "description": "Person displaced by environmental changes linked to warming."
+    },
+    {
+      "word": "Just Transition",
+      "difficulty": "hard",
+      "description": "Shift to cleaner industries that protects affected workers."
+    },
+    {
+      "word": "Energy Grid",
+      "difficulty": "hard",
+      "description": "Network distributing electricity from producers to consumers."
+    },
+    {
+      "word": "Peak Demand",
+      "difficulty": "hard",
+      "description": "Time when electricity consumption reaches its highest level."
+    },
+    {
+      "word": "Energy Crisis",
+      "difficulty": "hard",
+      "description": "Severe shortage or disruption of usable power supplies."
+    },
+    {
+      "word": "Supply Chain",
+      "difficulty": "hard",
+      "description": "Network moving goods from raw materials to customers."
+    },
+    {
+      "word": "Chip Shortage",
+      "difficulty": "hard",
+      "description": "Insufficient semiconductor supply disrupting electronics manufacturing."
+    },
+    {
+      "word": "Trade Tariff",
+      "difficulty": "hard",
+      "description": "Tax imposed on imported goods."
+    },
+    {
+      "word": "Trade Deficit",
+      "difficulty": "hard",
+      "description": "Country importing more goods and services than it exports."
+    },
+    {
+      "word": "Recession",
+      "difficulty": "hard",
+      "description": "Significant decline in economic activity."
+    },
+    {
+      "word": "Stagflation",
+      "difficulty": "hard",
+      "description": "Weak growth combined with rising prices and unemployment."
+    },
+    {
+      "word": "Shrinkflation",
+      "difficulty": "hard",
+      "description": "Selling a smaller package for the same price."
+    },
+    {
+      "word": "Price Gouging",
+      "difficulty": "hard",
+      "description": "Demanding excessive payment during an emergency shortage."
+    },
+    {
+      "word": "Digital Divide",
+      "difficulty": "hard",
+      "description": "Gap between people with and without access to technology."
+    },
+    {
+      "word": "Data Breach",
+      "difficulty": "hard",
+      "description": "Exposure of information that should have remained private."
+    },
+    {
+      "word": "Right to Repair",
+      "difficulty": "hard",
+      "description": "Movement supporting owners' ability to fix their devices."
+    },
+    {
+      "word": "Planned Obsolescence",
+      "difficulty": "hard",
+      "description": "Designing products to become outdated or unusable prematurely."
+    },
+    {
+      "word": "Facial Surveillance",
+      "difficulty": "hard",
+      "description": "Monitoring people by automatically identifying their appearance."
+    },
+    {
+      "word": "Algorithmic Bias",
+      "difficulty": "hard",
+      "description": "Systematic unfairness in automated decision-making."
+    },
+    {
+      "word": "Generative AI",
+      "difficulty": "hard",
+      "description": "Software producing new text, images or other media."
+    },
+    {
+      "word": "Hallucination",
+      "difficulty": "hard",
+      "description": "Plausible but invented output from an AI system."
+    },
+    {
+      "word": "Prompt Injection",
+      "difficulty": "hard",
+      "description": "Malicious instructions hidden in material an AI reads."
+    },
+    {
+      "word": "Digital Nomad",
+      "difficulty": "hard",
+      "description": "Person earning remotely while travelling between locations."
+    },
+    {
+      "word": "Quiet Quitting",
+      "difficulty": "hard",
+      "description": "Doing the required job without extra unpaid effort."
+    },
+    {
+      "word": "Great Resignation",
+      "difficulty": "hard",
+      "description": "Wave of employees voluntarily leaving their jobs."
+    },
+    {
+      "word": "Four-day Week",
+      "difficulty": "hard",
+      "description": "Work schedule reducing the usual number of attendance days."
+    },
+    {
+      "word": "Universal Basic Income",
+      "difficulty": "hard",
+      "description": "Regular unconditional payment proposed for all eligible residents."
+    },
+    {
+      "word": "Whistleblowing",
+      "difficulty": "hard",
+      "description": "Revealing wrongdoing within an organisation."
+    },
+    {
+      "word": "Cancel Culture Debate",
+      "difficulty": "hard",
+      "description": "Dispute over public accountability and social exclusion."
+    },
+    {
+      "word": "Media Literacy",
+      "difficulty": "hard",
+      "description": "Ability to critically evaluate information and its sources."
+    },
+    {
+      "word": "Citizen Journalism",
+      "difficulty": "hard",
+      "description": "Public reporting of events outside professional news organisations."
     }
   ],
   "Religion and Mythology": [
@@ -6905,16 +12269,6 @@ const categories = {
       "word": "Hinduism",
       "difficulty": "easy",
       "description": "An umbrella term for a range of Indian religious and spiritual traditions that are unified by adherence to the concept of dharma, a cosmic order maintained by its followers thro..."
-    },
-    {
-      "word": "Egyptian Mythology",
-      "difficulty": "easy",
-      "description": "Ancient belief system featuring deities like Ra, Isis, and Osiris."
-    },
-    {
-      "word": "Greek Mythology",
-      "difficulty": "easy",
-      "description": "Mythic tradition of Olympus gods, heroes, monsters, and epic quests."
     },
     {
       "word": "Christianity",
@@ -6947,59 +12301,19 @@ const categories = {
       "description": "A widely revered god in Norse mythology and Germanic paganism."
     },
     {
-      "word": "Mythology",
-      "difficulty": "easy",
-      "description": "A genre of folklore consisting primarily of narratives that play a fundamental role in a society."
-    },
-    {
       "word": "Paganism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "In early Christianity, paganism collectively referred to the diverse religious practices of all people who were polytheists."
     },
     {
       "word": "Taoism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Chinese tradition focused on living in harmony with the Tao."
     },
     {
-      "word": "Myth",
-      "difficulty": "easy",
-      "description": "Traditional symbolic story explaining origins, nature, or human behavior."
-    },
-    {
-      "word": "Ancient Greek Gods",
-      "difficulty": "easy",
-      "description": "Olympian deities worshipped in ancient Greece."
-    },
-    {
-      "word": "Norse Mythology",
-      "difficulty": "easy",
-      "description": "Scandinavian myth tradition featuring Odin, Thor, Loki, and giants."
-    },
-    {
       "word": "Theology",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Academic study of religious belief, doctrine, and the divine."
-    },
-    {
-      "word": "Creation Myth",
-      "difficulty": "easy",
-      "description": "Story explaining how the world, gods, or humanity began."
-    },
-    {
-      "word": "Divinity",
-      "difficulty": "easy",
-      "description": "State or quality associated with a godlike nature."
-    },
-    {
-      "word": "Pantheon",
-      "difficulty": "easy",
-      "description": "Complete set of gods in a religion or mythic system."
-    },
-    {
-      "word": "Deity",
-      "difficulty": "easy",
-      "description": "A god or goddess worshipped in a faith."
     },
     {
       "word": "Ragnarok",
@@ -7008,48 +12322,13 @@ const categories = {
     },
     {
       "word": "Monotheism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The belief in only one deity, or God."
     },
     {
       "word": "Polytheism",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Belief system involving worship of multiple gods."
-    },
-    {
-      "word": "Hindu Gods",
-      "difficulty": "easy",
-      "description": "Deities from Hindu tradition, often with distinct cosmic roles."
-    },
-    {
-      "word": "Greek Gods",
-      "difficulty": "easy",
-      "description": "Mythic deities such as Zeus, Athena, and Apollo."
-    },
-    {
-      "word": "Roman Mythology",
-      "difficulty": "easy",
-      "description": "Ancient Roman sacred stories featuring gods like Jupiter and Mars."
-    },
-    {
-      "word": "Norse Gods",
-      "difficulty": "easy",
-      "description": "Aesir and Vanir deities from Scandinavian tradition."
-    },
-    {
-      "word": "Holy",
-      "difficulty": "easy",
-      "description": "Describes something sacred and set apart for religious use."
-    },
-    {
-      "word": "Sacred",
-      "difficulty": "easy",
-      "description": "Sacred describes something that is dedicated or set apart for the service or worship of a deity; is considered worthy of spiritual respect or devotion; or inspires awe or revere..."
-    },
-    {
-      "word": "Religious Text",
-      "difficulty": "easy",
-      "description": "Scripture treated as spiritually authoritative in a faith."
     },
     {
       "word": "Angel",
@@ -7062,11 +12341,6 @@ const categories = {
       "description": "Malevolent supernatural being in many religious systems."
     },
     {
-      "word": "Pagan Gods",
-      "difficulty": "easy",
-      "description": "Deities worshipped in pre-Christian polytheistic traditions."
-    },
-    {
       "word": "Heaven",
       "difficulty": "easy",
       "description": "Heaven, or the Heavens, is a common religious cosmological or supernatural place where beings such as deities, angels, souls, saints, or venerated ancestors are said to originat..."
@@ -7077,44 +12351,9 @@ const categories = {
       "description": "Realm or state of punishment in many afterlife beliefs."
     },
     {
-      "word": "Mythical Creatures",
-      "difficulty": "easy",
-      "description": "Legendary beings like dragons, griffins, and unicorns."
-    },
-    {
-      "word": "Religion",
-      "difficulty": "easy",
-      "description": "Structured system of beliefs, rituals, and worship."
-    },
-    {
-      "word": "Mythological Beings",
-      "difficulty": "easy",
-      "description": "Supernatural figures from traditional sacred stories."
-    },
-    {
-      "word": "Holy Book",
-      "difficulty": "easy",
-      "description": "Sacred scripture revered by a religious community."
-    },
-    {
       "word": "Prophet",
       "difficulty": "easy",
       "description": "In religion, a prophet or prophetess is an individual who is regarded as being in contact with a divine being and is said to be a conduit for that being, serving as an intermedi..."
-    },
-    {
-      "word": "Goddess",
-      "difficulty": "easy",
-      "description": "Female divine figure worshipped in a faith or myth."
-    },
-    {
-      "word": "Ancient Gods",
-      "difficulty": "easy",
-      "description": "Deities worshipped in old civilizations and early cultures."
-    },
-    {
-      "word": "Divine",
-      "difficulty": "easy",
-      "description": "Divinity refers to the quality, presence, or nature of that which is divine—a term that, before the rise of monotheism, evoked a broad and dynamic field of sacred power."
     },
     {
       "word": "Zeus",
@@ -7205,6 +12444,456 @@ const categories = {
       "word": "Labyrinth of Crete",
       "difficulty": "hard",
       "description": "Legendary maze built to confine a man-bull monster."
+    },
+    {
+      "word": "Ramadan",
+      "difficulty": "easy",
+      "description": "Islamic month associated with fasting from dawn to sunset."
+    },
+    {
+      "word": "Hajj",
+      "difficulty": "easy",
+      "description": "Islamic pilgrimage to Mecca."
+    },
+    {
+      "word": "Mecca",
+      "difficulty": "easy",
+      "description": "Saudi city towards which Muslims pray."
+    },
+    {
+      "word": "Medina",
+      "difficulty": "easy",
+      "description": "Saudi city associated with the Prophet's mosque."
+    },
+    {
+      "word": "Kaaba",
+      "difficulty": "easy",
+      "description": "Cube-shaped sanctuary at the centre of Islam's holiest mosque."
+    },
+    {
+      "word": "Quran",
+      "difficulty": "easy",
+      "description": "Islam's sacred scripture."
+    },
+    {
+      "word": "Mosque",
+      "difficulty": "easy",
+      "description": "Place of worship associated with Islam."
+    },
+    {
+      "word": "Minaret",
+      "difficulty": "easy",
+      "description": "Tower from which the Islamic call to prayer is made."
+    },
+    {
+      "word": "Imam",
+      "difficulty": "easy",
+      "description": "Leader of prayer in a Muslim congregation."
+    },
+    {
+      "word": "Halal",
+      "difficulty": "easy",
+      "description": "Permissible under Islamic law, often used for food."
+    },
+    {
+      "word": "Kosher",
+      "difficulty": "easy",
+      "description": "Food meeting Jewish dietary requirements."
+    },
+    {
+      "word": "Synagogue",
+      "difficulty": "easy",
+      "description": "Jewish place of worship and communal gathering."
+    },
+    {
+      "word": "Rabbi",
+      "difficulty": "easy",
+      "description": "Jewish religious teacher or leader."
+    },
+    {
+      "word": "Torah",
+      "difficulty": "easy",
+      "description": "Central Jewish teaching associated with the first five biblical books."
+    },
+    {
+      "word": "Shabbat",
+      "difficulty": "easy",
+      "description": "Weekly Jewish day of rest."
+    },
+    {
+      "word": "Passover",
+      "difficulty": "easy",
+      "description": "Jewish festival commemorating liberation from Egypt."
+    },
+    {
+      "word": "Bar Mitzvah",
+      "difficulty": "easy",
+      "description": "Jewish coming-of-age milestone traditionally for boys."
+    },
+    {
+      "word": "Hanukkah",
+      "difficulty": "easy",
+      "description": "Jewish festival associated with an eight-branched lamp."
+    },
+    {
+      "word": "Christmas",
+      "difficulty": "easy",
+      "description": "Christian celebration of the birth of Jesus."
+    },
+    {
+      "word": "Easter",
+      "difficulty": "easy",
+      "description": "Christian celebration of the resurrection of Jesus."
+    },
+    {
+      "word": "Good Friday",
+      "difficulty": "easy",
+      "description": "Christian observance commemorating the crucifixion."
+    },
+    {
+      "word": "Lent",
+      "difficulty": "easy",
+      "description": "Christian period of preparation before Easter."
+    },
+    {
+      "word": "Palm Sunday",
+      "difficulty": "easy",
+      "description": "Christian observance recalling Jesus entering Jerusalem."
+    },
+    {
+      "word": "Last Supper",
+      "difficulty": "easy",
+      "description": "Final meal of Jesus with his disciples."
+    },
+    {
+      "word": "Noah's Ark",
+      "difficulty": "easy",
+      "description": "Biblical vessel carrying animals through a great flood."
+    },
+    {
+      "word": "Adam and Eve",
+      "difficulty": "easy",
+      "description": "Biblical pair associated with Eden and forbidden fruit."
+    },
+    {
+      "word": "Garden of Eden",
+      "difficulty": "easy",
+      "description": "Biblical paradise containing a forbidden tree."
+    },
+    {
+      "word": "David and Goliath",
+      "difficulty": "easy",
+      "description": "Biblical contest involving a young shepherd and a giant."
+    },
+    {
+      "word": "Moses",
+      "difficulty": "easy",
+      "description": "Biblical leader associated with parting the Red Sea."
+    },
+    {
+      "word": "Ten Commandments",
+      "difficulty": "easy",
+      "description": "Biblical laws associated with stone tablets."
+    },
+    {
+      "word": "Burning Bush",
+      "difficulty": "easy",
+      "description": "Biblical plant through which God addresses Moses."
+    },
+    {
+      "word": "Jonah",
+      "difficulty": "easy",
+      "description": "Biblical prophet swallowed by a great sea creature."
+    },
+    {
+      "word": "Daniel",
+      "difficulty": "easy",
+      "description": "Biblical figure who survives a den of lions."
+    },
+    {
+      "word": "Samson",
+      "difficulty": "easy",
+      "description": "Biblical strongman whose hair is cut by Delilah."
+    },
+    {
+      "word": "Solomon",
+      "difficulty": "easy",
+      "description": "Biblical ruler renowned for wisdom."
+    },
+    {
+      "word": "Bethlehem",
+      "difficulty": "hard",
+      "description": "Town traditionally identified as Jesus's birthplace."
+    },
+    {
+      "word": "Nazareth",
+      "difficulty": "easy",
+      "description": "Town associated with Jesus's childhood."
+    },
+    {
+      "word": "Jerusalem",
+      "difficulty": "easy",
+      "description": "City sacred to Judaism, Christianity and Islam."
+    },
+    {
+      "word": "Vatican",
+      "difficulty": "easy",
+      "description": "Enclave in Rome associated with the pope."
+    },
+    {
+      "word": "Sistine Chapel",
+      "difficulty": "easy",
+      "description": "Vatican building famous for Michelangelo's ceiling."
+    },
+    {
+      "word": "Pope",
+      "difficulty": "easy",
+      "description": "Bishop of Rome and leader of the Catholic Church."
+    },
+    {
+      "word": "Nun",
+      "difficulty": "easy",
+      "description": "Woman belonging to a religious community, often wearing a habit."
+    },
+    {
+      "word": "Monk",
+      "difficulty": "easy",
+      "description": "Member of a religious community often living in a monastery."
+    },
+    {
+      "word": "Temple",
+      "difficulty": "easy",
+      "description": "Sacred building associated with several religious traditions."
+    },
+    {
+      "word": "Incense",
+      "difficulty": "easy",
+      "description": "Aromatic material burned during rituals."
+    },
+    {
+      "word": "Prayer Beads",
+      "difficulty": "easy",
+      "description": "String of small objects used to count devotions."
+    },
+    {
+      "word": "Meditation",
+      "difficulty": "easy",
+      "description": "Practice of focused awareness or contemplation."
+    },
+    {
+      "word": "Yoga",
+      "difficulty": "easy",
+      "description": "Indian tradition associated with postures, breathing and discipline."
+    },
+    {
+      "word": "Karma",
+      "difficulty": "easy",
+      "description": "Idea connecting actions with moral consequences."
+    },
+    {
+      "word": "Reincarnation",
+      "difficulty": "easy",
+      "description": "Belief in being born again after death."
+    },
+    {
+      "word": "Nirvana",
+      "difficulty": "easy",
+      "description": "Liberation from suffering in Buddhist traditions."
+    },
+    {
+      "word": "Ganesha",
+      "difficulty": "easy",
+      "description": "Hindu deity depicted with an elephant's head."
+    },
+    {
+      "word": "Hanuman",
+      "difficulty": "easy",
+      "description": "Hindu deity depicted as a devoted monkey figure."
+    },
+    {
+      "word": "Krishna",
+      "difficulty": "easy",
+      "description": "Hindu deity often shown playing a flute."
+    },
+    {
+      "word": "Lakshmi",
+      "difficulty": "easy",
+      "description": "Hindu goddess associated with prosperity."
+    },
+    {
+      "word": "Durga",
+      "difficulty": "hard",
+      "description": "Hindu goddess often shown riding a lion or tiger."
+    },
+    {
+      "word": "Saraswati",
+      "difficulty": "hard",
+      "description": "Hindu goddess associated with knowledge and the arts."
+    },
+    {
+      "word": "Sikhism",
+      "difficulty": "hard",
+      "description": "Religion founded in Punjab associated with Guru Nanak."
+    },
+    {
+      "word": "Gurdwara",
+      "difficulty": "hard",
+      "description": "Sikh place of worship often offering a communal meal."
+    },
+    {
+      "word": "Langar",
+      "difficulty": "hard",
+      "description": "Free communal meal served in Sikh tradition."
+    },
+    {
+      "word": "Jainism",
+      "difficulty": "hard",
+      "description": "Indian religion strongly associated with nonviolence."
+    },
+    {
+      "word": "Shinto",
+      "difficulty": "hard",
+      "description": "Japanese religious tradition associated with kami and shrines."
+    },
+    {
+      "word": "Torii",
+      "difficulty": "hard",
+      "description": "Japanese gateway marking entry to sacred space."
+    },
+    {
+      "word": "Zen",
+      "difficulty": "hard",
+      "description": "Buddhist tradition emphasizing direct experience and seated contemplation."
+    },
+    {
+      "word": "Yin and Yang",
+      "difficulty": "hard",
+      "description": "Complementary opposing forces shown in a black-and-white symbol."
+    },
+    {
+      "word": "Anubis",
+      "difficulty": "hard",
+      "description": "Egyptian deity depicted with a jackal's head."
+    },
+    {
+      "word": "Ra",
+      "difficulty": "hard",
+      "description": "Ancient Egyptian deity associated with the sun."
+    },
+    {
+      "word": "Osiris",
+      "difficulty": "hard",
+      "description": "Egyptian deity associated with the afterlife."
+    },
+    {
+      "word": "Isis",
+      "difficulty": "hard",
+      "description": "Egyptian goddess associated with magic and motherhood."
+    },
+    {
+      "word": "Bastet",
+      "difficulty": "hard",
+      "description": "Egyptian goddess associated with cats."
+    },
+    {
+      "word": "Horus",
+      "difficulty": "hard",
+      "description": "Egyptian deity depicted with a falcon's head."
+    },
+    {
+      "word": "Sphinx",
+      "difficulty": "hard",
+      "description": "Mythical creature with a lion's body and a human head."
+    },
+    {
+      "word": "Phoenix",
+      "difficulty": "hard",
+      "description": "Legendary bird reborn from ashes."
+    },
+    {
+      "word": "Griffin",
+      "difficulty": "hard",
+      "description": "Mythical creature combining an eagle and a lion."
+    },
+    {
+      "word": "Pegasus",
+      "difficulty": "hard",
+      "description": "Winged horse of Greek mythology."
+    },
+    {
+      "word": "Cerberus",
+      "difficulty": "hard",
+      "description": "Three-headed hound guarding the Greek underworld."
+    },
+    {
+      "word": "Hydra",
+      "difficulty": "hard",
+      "description": "Many-headed serpent defeated by Heracles."
+    },
+    {
+      "word": "Icarus",
+      "difficulty": "hard",
+      "description": "Mythical flier whose wax-bound wings failed near the sun."
+    },
+    {
+      "word": "Daedalus",
+      "difficulty": "hard",
+      "description": "Mythical craftsman who built the Cretan maze."
+    },
+    {
+      "word": "Sisyphus",
+      "difficulty": "hard",
+      "description": "Mythical figure condemned to roll a boulder uphill forever."
+    },
+    {
+      "word": "Midas",
+      "difficulty": "hard",
+      "description": "King whose touch transformed things into gold."
+    },
+    {
+      "word": "Narcissus",
+      "difficulty": "hard",
+      "description": "Youth who fell in love with his own reflection."
+    },
+    {
+      "word": "Echo",
+      "difficulty": "hard",
+      "description": "Nymph condemned to repeat the words of others."
+    },
+    {
+      "word": "Orpheus",
+      "difficulty": "hard",
+      "description": "Musician who tried to bring Eurydice back from the underworld."
+    },
+    {
+      "word": "Eurydice",
+      "difficulty": "hard",
+      "description": "Mythical woman lost again when her lover looked back."
+    },
+    {
+      "word": "Loki",
+      "difficulty": "hard",
+      "description": "Norse trickster associated with mischief and shapeshifting."
+    },
+    {
+      "word": "Valhalla",
+      "difficulty": "hard",
+      "description": "Norse hall receiving selected warriors killed in battle."
+    },
+    {
+      "word": "Yggdrasil",
+      "difficulty": "hard",
+      "description": "Great cosmic tree connecting realms in Norse mythology."
+    },
+    {
+      "word": "Mjolnir",
+      "difficulty": "hard",
+      "description": "Thor's mighty hammer."
+    },
+    {
+      "word": "Jörmungandr",
+      "difficulty": "hard",
+      "description": "Norse serpent said to encircle the world."
     }
   ],
   "Space and Astronomy": [
@@ -7305,7 +12994,7 @@ const categories = {
     },
     {
       "word": "Hubble Space Telescope",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The Hubble Space Telescope is a space telescope that was launched into low Earth orbit in 1990 and remains in operation."
     },
     {
@@ -7334,63 +13023,28 @@ const categories = {
       "description": "Force attracting masses toward each other."
     },
     {
-      "word": "Galactic",
-      "difficulty": "easy",
-      "description": "An American funk band from New Orleans, Louisiana."
-    },
-    {
-      "word": "Lunar",
-      "difficulty": "easy",
-      "description": "Adjective relating to Earth's natural satellite."
-    },
-    {
-      "word": "Milky Way Galaxy",
-      "difficulty": "easy",
-      "description": "Home galaxy containing our solar system and hundreds of billions of stars."
-    },
-    {
-      "word": "Outer Space",
-      "difficulty": "easy",
-      "description": "Region beyond Earth's atmosphere where celestial bodies exist."
-    },
-    {
       "word": "Astrobiology",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Study of life's origins, evolution, and potential beyond Earth."
     },
     {
-      "word": "Black Holes",
-      "difficulty": "easy",
-      "description": "Collapsed objects with gravity so strong even light cannot escape."
-    },
-    {
       "word": "Dark Matter",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Invisible mass inferred from gravitational effects on galaxies."
     },
     {
-      "word": "Planetary",
-      "difficulty": "easy",
-      "description": "Adjective relating to planets and their systems."
-    },
-    {
-      "word": "Space Travel",
-      "difficulty": "easy",
-      "description": "Human or robotic movement beyond Earth."
-    },
-    {
       "word": "Astrophysics",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Physics branch that explains stars, galaxies, and cosmic phenomena."
     },
     {
       "word": "Neutron Star",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Ultra-dense stellar remnant left after some supernova explosions."
     },
     {
       "word": "Cosmology",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Science of the universe's origin, structure, and fate."
     },
     {
@@ -7414,28 +13068,13 @@ const categories = {
       "description": "Event when the moon blocks sunlight from reaching part of Earth."
     },
     {
-      "word": "Orbital",
-      "difficulty": "easy",
-      "description": "Describes motion or placement along a path around a body."
-    },
-    {
-      "word": "Stellar",
-      "difficulty": "easy",
-      "description": "Adjective meaning relating to stars."
-    },
-    {
-      "word": "Space Mission",
-      "difficulty": "easy",
-      "description": "Planned expedition with scientific, exploration, or engineering objectives."
-    },
-    {
       "word": "Astronomy",
       "difficulty": "easy",
       "description": "A natural science that studies celestial objects and the phenomena that occur in the cosmos."
     },
     {
       "word": "Space Race",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Competition between powers for major achievements beyond Earth."
     },
     {
@@ -7447,11 +13086,6 @@ const categories = {
       "word": "Sun",
       "difficulty": "easy",
       "description": "The Sun is the star located at the centre of the Solar System."
-    },
-    {
-      "word": "Stars",
-      "difficulty": "easy",
-      "description": "Luminous balls of hot plasma seen in the night sky."
     },
     {
       "word": "Meteor",
@@ -7487,6 +13121,436 @@ const categories = {
       "word": "Gravitational Waves",
       "difficulty": "hard",
       "description": "Ripples in spacetime produced by massive accelerating objects."
+    },
+    {
+      "word": "Mercury",
+      "difficulty": "easy",
+      "description": "Smallest planet and the closest to our star."
+    },
+    {
+      "word": "Venus",
+      "difficulty": "easy",
+      "description": "Planet known for intense heat and a thick atmosphere."
+    },
+    {
+      "word": "Jupiter",
+      "difficulty": "easy",
+      "description": "Largest planet, famous for a giant persistent storm."
+    },
+    {
+      "word": "Saturn",
+      "difficulty": "easy",
+      "description": "Planet most famous for its prominent rings."
+    },
+    {
+      "word": "Uranus",
+      "difficulty": "easy",
+      "description": "Ice giant whose axis lies almost on its side."
+    },
+    {
+      "word": "Pluto",
+      "difficulty": "easy",
+      "description": "Former ninth planet reclassified as a dwarf world."
+    },
+    {
+      "word": "International Space Station",
+      "difficulty": "easy",
+      "description": "Orbiting laboratory inhabited by rotating astronaut crews."
+    },
+    {
+      "word": "Space Shuttle",
+      "difficulty": "easy",
+      "description": "Reusable NASA vehicle that landed like a glider."
+    },
+    {
+      "word": "Lunar Module",
+      "difficulty": "easy",
+      "description": "Apollo craft designed to land astronauts on our satellite."
+    },
+    {
+      "word": "Mars Rover",
+      "difficulty": "easy",
+      "description": "Robotic vehicle exploring the red planet's surface."
+    },
+    {
+      "word": "Curiosity",
+      "difficulty": "easy",
+      "description": "NASA rover that landed in Gale Crater in 2012."
+    },
+    {
+      "word": "Perseverance",
+      "difficulty": "easy",
+      "description": "NASA rover that landed in Jezero Crater in 2021."
+    },
+    {
+      "word": "Ingenuity",
+      "difficulty": "easy",
+      "description": "Small helicopter that first flew on another planet."
+    },
+    {
+      "word": "Sputnik",
+      "difficulty": "easy",
+      "description": "First artificial satellite, launched by the Soviet Union."
+    },
+    {
+      "word": "Laika",
+      "difficulty": "easy",
+      "description": "Soviet dog sent into orbit in 1957."
+    },
+    {
+      "word": "Voyager",
+      "difficulty": "easy",
+      "description": "NASA probe programme associated with golden records."
+    },
+    {
+      "word": "Golden Record",
+      "difficulty": "easy",
+      "description": "Message of Earth sounds and images sent on interstellar probes."
+    },
+    {
+      "word": "James Webb Telescope",
+      "difficulty": "easy",
+      "description": "Infrared observatory launched in 2021 with a gold mirror."
+    },
+    {
+      "word": "NASA",
+      "difficulty": "easy",
+      "description": "US agency associated with Apollo and planetary exploration."
+    },
+    {
+      "word": "ESA",
+      "difficulty": "easy",
+      "description": "European agency associated with the Rosetta comet mission."
+    },
+    {
+      "word": "Cape Canaveral",
+      "difficulty": "easy",
+      "description": "Florida location associated with American rocket launches."
+    },
+    {
+      "word": "Houston",
+      "difficulty": "easy",
+      "description": "Texas city associated with NASA mission control."
+    },
+    {
+      "word": "Mission Control",
+      "difficulty": "easy",
+      "description": "Ground team supervising a spacecraft's operations."
+    },
+    {
+      "word": "Countdown",
+      "difficulty": "easy",
+      "description": "Backwards sequence before a rocket launch."
+    },
+    {
+      "word": "Liftoff",
+      "difficulty": "easy",
+      "description": "Moment a rocket leaves its launch platform."
+    },
+    {
+      "word": "Spacesuit",
+      "difficulty": "easy",
+      "description": "Protective clothing worn outside a spacecraft."
+    },
+    {
+      "word": "Spacewalk",
+      "difficulty": "easy",
+      "description": "Astronaut activity performed outside a spacecraft."
+    },
+    {
+      "word": "Zero Gravity",
+      "difficulty": "easy",
+      "description": "Apparent weightlessness associated with orbiting astronauts."
+    },
+    {
+      "word": "Alien",
+      "difficulty": "easy",
+      "description": "Imagined or hypothetical being from another world."
+    },
+    {
+      "word": "UFO",
+      "difficulty": "easy",
+      "description": "Unidentified object seen moving through the sky."
+    },
+    {
+      "word": "Flying Saucer",
+      "difficulty": "easy",
+      "description": "Disc-shaped craft associated with fictional extraterrestrials."
+    },
+    {
+      "word": "Area 51",
+      "difficulty": "easy",
+      "description": "Nevada military site associated with alien conspiracy stories."
+    },
+    {
+      "word": "ET",
+      "difficulty": "easy",
+      "description": "Friendly movie extraterrestrial who wants to phone home."
+    },
+    {
+      "word": "Martian",
+      "difficulty": "easy",
+      "description": "Imagined inhabitant of the red planet."
+    },
+    {
+      "word": "Moon Rock",
+      "difficulty": "easy",
+      "description": "Sample of our natural satellite brought back by astronauts."
+    },
+    {
+      "word": "Crater",
+      "difficulty": "easy",
+      "description": "Bowl-shaped depression often formed by an impact."
+    },
+    {
+      "word": "Full Moon",
+      "difficulty": "easy",
+      "description": "Phase when our natural satellite appears completely illuminated."
+    },
+    {
+      "word": "Crescent",
+      "difficulty": "easy",
+      "description": "Thin curved shape seen during an early lunar phase."
+    },
+    {
+      "word": "Lunar Eclipse",
+      "difficulty": "easy",
+      "description": "Earth's shadow passing over its natural satellite."
+    },
+    {
+      "word": "Shooting Star",
+      "difficulty": "easy",
+      "description": "Bright streak from debris burning in the atmosphere."
+    },
+    {
+      "word": "North Star",
+      "difficulty": "easy",
+      "description": "Polaris, used as a guide towards a compass direction."
+    },
+    {
+      "word": "Southern Cross",
+      "difficulty": "easy",
+      "description": "Small constellation featured on the flags of Australia and New Zealand."
+    },
+    {
+      "word": "Orion's Belt",
+      "difficulty": "easy",
+      "description": "Three bright stars aligned in a famous hunter constellation."
+    },
+    {
+      "word": "Big Dipper",
+      "difficulty": "easy",
+      "description": "Seven-star pattern resembling a ladle."
+    },
+    {
+      "word": "Zodiac",
+      "difficulty": "easy",
+      "description": "Band of constellations associated with astrological signs."
+    },
+    {
+      "word": "Horoscope",
+      "difficulty": "easy",
+      "description": "Astrological forecast based on celestial positions."
+    },
+    {
+      "word": "Planetarium",
+      "difficulty": "easy",
+      "description": "Venue projecting a simulated night sky overhead."
+    },
+    {
+      "word": "Observatory",
+      "difficulty": "easy",
+      "description": "Facility equipped for studying celestial objects."
+    },
+    {
+      "word": "Andromeda Galaxy",
+      "difficulty": "hard",
+      "description": "Large spiral neighbour of our own stellar system."
+    },
+    {
+      "word": "Alpha Centauri",
+      "difficulty": "hard",
+      "description": "Nearest stellar system to our Sun."
+    },
+    {
+      "word": "Proxima Centauri",
+      "difficulty": "hard",
+      "description": "Nearest known individual star beyond our own."
+    },
+    {
+      "word": "Betelgeuse",
+      "difficulty": "hard",
+      "description": "Red supergiant in the shoulder of Orion."
+    },
+    {
+      "word": "Sirius",
+      "difficulty": "hard",
+      "description": "Brightest star visible in Earth's night sky."
+    },
+    {
+      "word": "Polaris",
+      "difficulty": "hard",
+      "description": "Star nearly aligned with Earth's northern rotational axis."
+    },
+    {
+      "word": "Halley's Comet",
+      "difficulty": "hard",
+      "description": "Icy visitor visible from Earth roughly every 76 years."
+    },
+    {
+      "word": "Kuiper Belt",
+      "difficulty": "hard",
+      "description": "Region of icy objects beyond Neptune."
+    },
+    {
+      "word": "Oort Cloud",
+      "difficulty": "hard",
+      "description": "Hypothesised distant reservoir of icy bodies around our system."
+    },
+    {
+      "word": "Asteroid Belt",
+      "difficulty": "hard",
+      "description": "Region of rocky bodies between Mars and Jupiter."
+    },
+    {
+      "word": "Great Red Spot",
+      "difficulty": "hard",
+      "description": "Long-lived enormous storm on Jupiter."
+    },
+    {
+      "word": "Olympus Mons",
+      "difficulty": "hard",
+      "description": "Giant volcano on Mars."
+    },
+    {
+      "word": "Sea of Tranquility",
+      "difficulty": "hard",
+      "description": "Lunar plain where Apollo 11 touched down."
+    },
+    {
+      "word": "Europa",
+      "difficulty": "hard",
+      "description": "Jupiter's icy satellite thought to hide a subsurface ocean."
+    },
+    {
+      "word": "Titan",
+      "difficulty": "hard",
+      "description": "Saturn's largest satellite, with lakes of liquid hydrocarbons."
+    },
+    {
+      "word": "Enceladus",
+      "difficulty": "hard",
+      "description": "Saturnian satellite that sprays plumes from beneath its ice."
+    },
+    {
+      "word": "Io",
+      "difficulty": "hard",
+      "description": "Jupiter's volcanically active satellite."
+    },
+    {
+      "word": "Ganymede",
+      "difficulty": "hard",
+      "description": "Largest natural satellite in our planetary system."
+    },
+    {
+      "word": "Escape Velocity",
+      "difficulty": "hard",
+      "description": "Speed needed to leave an object's gravitational pull."
+    },
+    {
+      "word": "Geostationary Orbit",
+      "difficulty": "hard",
+      "description": "Path keeping a satellite above the same equatorial location."
+    },
+    {
+      "word": "Space Elevator",
+      "difficulty": "hard",
+      "description": "Proposed cable-based transport system from Earth into orbit."
+    },
+    {
+      "word": "Gravity Assist",
+      "difficulty": "hard",
+      "description": "Using a planet's motion to change a spacecraft's trajectory."
+    },
+    {
+      "word": "Lagrange Point",
+      "difficulty": "hard",
+      "description": "Location where a small object can maintain position relative to two large bodies."
+    },
+    {
+      "word": "Redshift",
+      "difficulty": "hard",
+      "description": "Stretching of light towards longer wavelengths from receding objects."
+    },
+    {
+      "word": "Dark Energy",
+      "difficulty": "hard",
+      "description": "Proposed cause of the universe's accelerating expansion."
+    },
+    {
+      "word": "Singularity",
+      "difficulty": "hard",
+      "description": "Region where a theoretical description predicts infinite density."
+    },
+    {
+      "word": "Wormhole",
+      "difficulty": "hard",
+      "description": "Hypothetical shortcut connecting distant regions of spacetime."
+    },
+    {
+      "word": "Spaghettification",
+      "difficulty": "hard",
+      "description": "Extreme tidal stretching near a black hole."
+    },
+    {
+      "word": "Pulsar",
+      "difficulty": "hard",
+      "description": "Rapidly rotating stellar remnant emitting regular radiation beams."
+    },
+    {
+      "word": "Quasar",
+      "difficulty": "hard",
+      "description": "Extremely bright galactic centre powered by an accreting black hole."
+    },
+    {
+      "word": "Binary Star",
+      "difficulty": "hard",
+      "description": "Pair of suns orbiting a common centre."
+    },
+    {
+      "word": "Habitable Zone",
+      "difficulty": "hard",
+      "description": "Region where a planet could sustain surface liquid water."
+    },
+    {
+      "word": "Terraforming",
+      "difficulty": "hard",
+      "description": "Hypothetically changing another world to support Earth-like life."
+    },
+    {
+      "word": "Fermi Paradox",
+      "difficulty": "hard",
+      "description": "Puzzle of why we see no clear evidence of alien civilizations."
+    },
+    {
+      "word": "Drake Equation",
+      "difficulty": "hard",
+      "description": "Framework estimating the number of communicative extraterrestrial civilizations."
+    },
+    {
+      "word": "Overview Effect",
+      "difficulty": "hard",
+      "description": "Perspective shift astronauts report after seeing Earth from above."
+    },
+    {
+      "word": "Kessler Syndrome",
+      "difficulty": "hard",
+      "description": "Runaway chain of collisions involving orbiting debris."
+    },
+    {
+      "word": "Cosmic Calendar",
+      "difficulty": "hard",
+      "description": "Compressing the universe's history into a single year."
     }
   ],
   "Inventions and Discoveries": [
@@ -7567,12 +13631,12 @@ const categories = {
     },
     {
       "word": "Theory of Relativity",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Physics framework connecting space, time, motion, and gravity."
     },
     {
       "word": "DNA Double Helix",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Twisted-ladder structure of the molecule carrying genetic code."
     },
     {
@@ -7591,18 +13655,13 @@ const categories = {
       "description": "The interdisciplinary study and practice of the design, construction, operation, and use of robots."
     },
     {
-      "word": "Electric Light",
-      "difficulty": "easy",
-      "description": "Illumination produced using electrical energy."
-    },
-    {
       "word": "Internet of Things",
-      "difficulty": "easy",
-      "description": "Network of connected devices that collect and exchange data."
+      "difficulty": "hard",
+      "description": "Connected everyday devices sharing data through a network."
     },
     {
       "word": "Atomic Theory",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Scientific model that explains matter as made of atoms."
     },
     {
@@ -7617,7 +13676,7 @@ const categories = {
     },
     {
       "word": "Genetics",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The study of genes, genetic variation, and heredity in organisms."
     },
     {
@@ -7656,18 +13715,13 @@ const categories = {
       "description": "A laser is a device that emits light through a process of optical amplification based on the stimulated emission of electromagnetic radiation."
     },
     {
-      "word": "Printing",
-      "difficulty": "easy",
-      "description": "Process of reproducing text or images in large quantities."
-    },
-    {
       "word": "Photovoltaic Cell",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Device that converts sunlight directly into electrical energy."
     },
     {
       "word": "Nuclear Power",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Energy generation from controlled splitting of atomic nuclei."
     },
     {
@@ -7677,7 +13731,7 @@ const categories = {
     },
     {
       "word": "Semiconductor",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Material that controls current flow in modern electronic chips."
     },
     {
@@ -7687,12 +13741,12 @@ const categories = {
     },
     {
       "word": "Artificial Heart",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Mechanical device that assists or replaces pumping function of a heart."
     },
     {
       "word": "Internet Protocol (IP)",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Core addressing and routing rules for data packets online."
     },
     {
@@ -7707,12 +13761,12 @@ const categories = {
     },
     {
       "word": "Quantum Theory",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Physics framework describing matter and energy at tiny scales."
     },
     {
       "word": "Nanotechnology",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Engineering and manipulation of materials at near-atomic scale."
     },
     {
@@ -7732,7 +13786,7 @@ const categories = {
     },
     {
       "word": "Thermometer",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Instrument used to measure temperature."
     },
     {
@@ -7752,8 +13806,8 @@ const categories = {
     },
     {
       "word": "Solar Panel",
-      "difficulty": "hard",
-      "description": "In the 19th century, it was observed that the sunlight striking certain materials generates detectable electric current – the photoelectric effect."
+      "difficulty": "easy",
+      "description": "Roof-mounted module converting sunlight into electricity."
     },
     {
       "word": "Barcode",
@@ -7764,6 +13818,446 @@ const categories = {
       "word": "Transistor",
       "difficulty": "hard",
       "description": "A transistor is a semiconductor device used to amplify or switch electrical signals and power."
+    },
+    {
+      "word": "Seatbelt",
+      "difficulty": "easy",
+      "description": "Vehicle safety strap fastened across a passenger."
+    },
+    {
+      "word": "Airbag",
+      "difficulty": "easy",
+      "description": "Inflatable vehicle cushion deployed in a collision."
+    },
+    {
+      "word": "Traffic Light",
+      "difficulty": "easy",
+      "description": "Road signal cycling through red, amber and green."
+    },
+    {
+      "word": "Zebra Crossing",
+      "difficulty": "easy",
+      "description": "Striped pedestrian route across a road."
+    },
+    {
+      "word": "Escalator",
+      "difficulty": "easy",
+      "description": "Moving staircase carrying people between floors."
+    },
+    {
+      "word": "Elevator",
+      "difficulty": "easy",
+      "description": "Cabin transporting people vertically through a building."
+    },
+    {
+      "word": "Zipper",
+      "difficulty": "easy",
+      "description": "Fastener joining two rows of interlocking teeth."
+    },
+    {
+      "word": "Velcro",
+      "difficulty": "easy",
+      "description": "Hook-and-loop fastener that makes a ripping sound."
+    },
+    {
+      "word": "Safety Pin",
+      "difficulty": "easy",
+      "description": "Clothing fastener with a covered sharp point."
+    },
+    {
+      "word": "Paper Clip",
+      "difficulty": "easy",
+      "description": "Bent wire used to hold sheets together."
+    },
+    {
+      "word": "Ballpoint Pen",
+      "difficulty": "easy",
+      "description": "Writing tool using a tiny rolling sphere to dispense ink."
+    },
+    {
+      "word": "Fountain Pen",
+      "difficulty": "easy",
+      "description": "Refillable writing tool using a nib and liquid ink."
+    },
+    {
+      "word": "Post-it Note",
+      "difficulty": "easy",
+      "description": "Small adhesive square used for reminders."
+    },
+    {
+      "word": "Bubble Wrap",
+      "difficulty": "easy",
+      "description": "Air-pocket packaging people enjoy popping."
+    },
+    {
+      "word": "Scotch Tape",
+      "difficulty": "easy",
+      "description": "Clear adhesive strip sold on a roll."
+    },
+    {
+      "word": "Superglue",
+      "difficulty": "easy",
+      "description": "Fast-setting adhesive that can accidentally bond fingers."
+    },
+    {
+      "word": "Matches",
+      "difficulty": "easy",
+      "description": "Small sticks ignited by striking a rough surface."
+    },
+    {
+      "word": "Cigarette Lighter",
+      "difficulty": "easy",
+      "description": "Pocket device producing a flame for smokers."
+    },
+    {
+      "word": "Fire Extinguisher",
+      "difficulty": "easy",
+      "description": "Portable device used to put out small blazes."
+    },
+    {
+      "word": "Smoke Detector",
+      "difficulty": "easy",
+      "description": "Ceiling alarm warning of combustion particles."
+    },
+    {
+      "word": "Sprinkler System",
+      "difficulty": "easy",
+      "description": "Automatic water jets used for lawns or fire control."
+    },
+    {
+      "word": "Water Filter",
+      "difficulty": "easy",
+      "description": "Device removing impurities from a drinking supply."
+    },
+    {
+      "word": "Desalination Plant",
+      "difficulty": "easy",
+      "description": "Facility turning seawater into a usable freshwater supply."
+    },
+    {
+      "word": "Flush Toilet",
+      "difficulty": "easy",
+      "description": "Sanitation fixture cleared by releasing water."
+    },
+    {
+      "word": "Toilet Paper",
+      "difficulty": "easy",
+      "description": "Soft disposable roll used in the bathroom."
+    },
+    {
+      "word": "Disposable Nappy",
+      "difficulty": "easy",
+      "description": "Absorbent single-use garment for babies."
+    },
+    {
+      "word": "Contact Lenses",
+      "difficulty": "easy",
+      "description": "Vision-correcting discs worn directly on the eyes."
+    },
+    {
+      "word": "Spectacles",
+      "difficulty": "easy",
+      "description": "Vision aid consisting of lenses in a frame."
+    },
+    {
+      "word": "Hearing Aid",
+      "difficulty": "easy",
+      "description": "Small device amplifying sound for its wearer."
+    },
+    {
+      "word": "Pacemaker",
+      "difficulty": "easy",
+      "description": "Implanted device helping regulate the heart's rhythm."
+    },
+    {
+      "word": "Defibrillator",
+      "difficulty": "easy",
+      "description": "Device delivering a shock to correct dangerous heart rhythms."
+    },
+    {
+      "word": "Insulin Pump",
+      "difficulty": "easy",
+      "description": "Wearable device delivering a hormone used in diabetes management."
+    },
+    {
+      "word": "Pregnancy Test",
+      "difficulty": "easy",
+      "description": "Home kit checking urine for a hormone after conception."
+    },
+    {
+      "word": "Ultrasound",
+      "difficulty": "easy",
+      "description": "Imaging method using high-frequency sound waves."
+    },
+    {
+      "word": "CT Scan",
+      "difficulty": "easy",
+      "description": "Medical imaging method combining multiple X-ray views."
+    },
+    {
+      "word": "Endoscope",
+      "difficulty": "easy",
+      "description": "Instrument with a camera used to inspect inside the body."
+    },
+    {
+      "word": "Anesthetic",
+      "difficulty": "easy",
+      "description": "Medicine used to prevent pain during a procedure."
+    },
+    {
+      "word": "Pasteurisation",
+      "difficulty": "easy",
+      "description": "Heating food or drink to reduce harmful microbes."
+    },
+    {
+      "word": "Tin Can",
+      "difficulty": "easy",
+      "description": "Sealed metal container that preserves food."
+    },
+    {
+      "word": "Bottle Opener",
+      "difficulty": "easy",
+      "description": "Tool for removing a capped drink's metal lid."
+    },
+    {
+      "word": "Corkscrew",
+      "difficulty": "easy",
+      "description": "Helical tool used to remove a wine stopper."
+    },
+    {
+      "word": "Can Opener",
+      "difficulty": "easy",
+      "description": "Tool that cuts the lid from a sealed metal container."
+    },
+    {
+      "word": "Coffee Machine",
+      "difficulty": "easy",
+      "description": "Appliance that brews a caffeinated morning drink."
+    },
+    {
+      "word": "Washing Machine",
+      "difficulty": "easy",
+      "description": "Appliance that launders clothing in a rotating drum."
+    },
+    {
+      "word": "Tumble Dryer",
+      "difficulty": "easy",
+      "description": "Appliance drying clothes in a rotating heated drum."
+    },
+    {
+      "word": "Electric Blanket",
+      "difficulty": "easy",
+      "description": "Heated bedding plugged into a wall socket."
+    },
+    {
+      "word": "Air Conditioner",
+      "difficulty": "easy",
+      "description": "Appliance that cools and dehumidifies indoor spaces."
+    },
+    {
+      "word": "Ceiling Fan",
+      "difficulty": "easy",
+      "description": "Overhead rotating blades used to circulate air."
+    },
+    {
+      "word": "Thermostat",
+      "difficulty": "easy",
+      "description": "Device that regulates temperature around a chosen setting."
+    },
+    {
+      "word": "Movable Type",
+      "difficulty": "hard",
+      "description": "Reusable individual characters used to print pages."
+    },
+    {
+      "word": "Carbon Paper",
+      "difficulty": "hard",
+      "description": "Coated sheet used to make duplicates while writing."
+    },
+    {
+      "word": "Photocopier",
+      "difficulty": "hard",
+      "description": "Machine producing paper duplicates of documents."
+    },
+    {
+      "word": "Fax Machine",
+      "difficulty": "hard",
+      "description": "Device transmitting scanned pages over telephone lines."
+    },
+    {
+      "word": "Telegraph",
+      "difficulty": "hard",
+      "description": "Early long-distance system sending coded electrical messages."
+    },
+    {
+      "word": "Telex",
+      "difficulty": "hard",
+      "description": "Historic network exchanging typed messages between terminals."
+    },
+    {
+      "word": "Rotary Dial",
+      "difficulty": "hard",
+      "description": "Circular telephone control turned to enter numbers."
+    },
+    {
+      "word": "Answering Machine",
+      "difficulty": "hard",
+      "description": "Device recording messages when nobody picks up a call."
+    },
+    {
+      "word": "Pager",
+      "difficulty": "hard",
+      "description": "Pocket receiver that alerts someone to call back."
+    },
+    {
+      "word": "Walkie-talkie",
+      "difficulty": "hard",
+      "description": "Portable two-way handheld radio."
+    },
+    {
+      "word": "Cassette Tape",
+      "difficulty": "hard",
+      "description": "Magnetic recording format wound between two small reels."
+    },
+    {
+      "word": "Compact Disc",
+      "difficulty": "hard",
+      "description": "Optical audio format associated with shiny silver circles."
+    },
+    {
+      "word": "Floppy Disk",
+      "difficulty": "hard",
+      "description": "Older removable computer storage in a thin square case."
+    },
+    {
+      "word": "Memory Stick",
+      "difficulty": "hard",
+      "description": "Small portable flash-storage device plugged into a computer."
+    },
+    {
+      "word": "Lithium-ion Battery",
+      "difficulty": "hard",
+      "description": "Rechargeable power-storage technology common in phones and laptops."
+    },
+    {
+      "word": "Touchpad",
+      "difficulty": "hard",
+      "description": "Finger-operated pointing surface on a laptop."
+    },
+    {
+      "word": "Joystick",
+      "difficulty": "hard",
+      "description": "Handheld control lever associated with arcade machines."
+    },
+    {
+      "word": "Motion Sensor",
+      "difficulty": "hard",
+      "description": "Device detecting nearby movement."
+    },
+    {
+      "word": "Night Vision",
+      "difficulty": "hard",
+      "description": "Technology enabling visibility in very low light."
+    },
+    {
+      "word": "Thermal Camera",
+      "difficulty": "hard",
+      "description": "Imaging device showing differences in heat."
+    },
+    {
+      "word": "Radar",
+      "difficulty": "hard",
+      "description": "Detection system using reflected radio waves."
+    },
+    {
+      "word": "Sonar",
+      "difficulty": "hard",
+      "description": "Underwater detection system using sound pulses."
+    },
+    {
+      "word": "Seismograph",
+      "difficulty": "hard",
+      "description": "Instrument that records ground vibrations."
+    },
+    {
+      "word": "Geiger Counter",
+      "difficulty": "hard",
+      "description": "Instrument detecting ionising radiation with characteristic clicks."
+    },
+    {
+      "word": "Particle Accelerator",
+      "difficulty": "hard",
+      "description": "Machine boosting charged objects to very high speeds."
+    },
+    {
+      "word": "Large Hadron Collider",
+      "difficulty": "hard",
+      "description": "CERN facility smashing protons together at enormous energies."
+    },
+    {
+      "word": "Higgs Boson",
+      "difficulty": "hard",
+      "description": "Particle associated with a field that gives others mass."
+    },
+    {
+      "word": "Periodic Table",
+      "difficulty": "hard",
+      "description": "Organised chart of chemical elements."
+    },
+    {
+      "word": "Radiocarbon Dating",
+      "difficulty": "hard",
+      "description": "Estimating the age of organic remains using an isotope."
+    },
+    {
+      "word": "DNA Profiling",
+      "difficulty": "hard",
+      "description": "Identifying individuals through distinctive genetic patterns."
+    },
+    {
+      "word": "Gene Editing",
+      "difficulty": "hard",
+      "description": "Precisely altering an organism's inherited instructions."
+    },
+    {
+      "word": "In Vitro Fertilisation",
+      "difficulty": "hard",
+      "description": "Assisted conception involving an embryo formed outside the body."
+    },
+    {
+      "word": "Organ Transplant",
+      "difficulty": "hard",
+      "description": "Replacing a failing body part with a donor's."
+    },
+    {
+      "word": "Cochlear Implant",
+      "difficulty": "hard",
+      "description": "Electronic device stimulating the auditory nerve."
+    },
+    {
+      "word": "Artificial Limb",
+      "difficulty": "hard",
+      "description": "Manufactured replacement for a missing arm or leg."
+    },
+    {
+      "word": "Bionic Hand",
+      "difficulty": "hard",
+      "description": "Powered prosthesis designed to imitate finger movement."
+    },
+    {
+      "word": "Self-driving Car",
+      "difficulty": "hard",
+      "description": "Vehicle navigating without a human controlling the wheel."
+    },
+    {
+      "word": "Reusable Rocket",
+      "difficulty": "hard",
+      "description": "Launch vehicle designed to fly on multiple missions."
+    },
+    {
+      "word": "Carbon Fibre",
+      "difficulty": "hard",
+      "description": "Lightweight strong material used in aircraft and racing vehicles."
     }
   ],
   "Health and Medicine": [
@@ -7829,12 +14323,12 @@ const categories = {
     },
     {
       "word": "Obesity",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "A medical condition, considered a disease by multiple organizations, in which excess body fat has accumulated to such an extent that it can have negative effects on health."
     },
     {
       "word": "Immune System",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The immune system is a network of biological systems that protects an organism from diseases."
     },
     {
@@ -7844,17 +14338,17 @@ const categories = {
     },
     {
       "word": "Anatomy",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The branch of morphology concerned with the study of the internal and external structure of organisms and their parts."
     },
     {
       "word": "Physiology",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The scientific study of functions and mechanisms in a living system."
     },
     {
       "word": "Mental Health",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Mental health encompasses emotional, psychological, and social well-being, influencing cognition, perception, and behavior."
     },
     {
@@ -7869,7 +14363,7 @@ const categories = {
     },
     {
       "word": "Stethoscope",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The stethoscope is a medical device for auscultation, or listening to internal sounds of an animal or human body."
     },
     {
@@ -7904,7 +14398,7 @@ const categories = {
     },
     {
       "word": "Public Health",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The history of medicine is both a study of medicine throughout history as well as a multidisciplinary field of study that seeks to explore and understand medical practices, both..."
     },
     {
@@ -7924,7 +14418,7 @@ const categories = {
     },
     {
       "word": "Cholesterol",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The principal sterol of all animals, distributed in body tissues, especially the brain and spinal cord, and in animal fats and oils."
     },
     {
@@ -7944,27 +14438,27 @@ const categories = {
     },
     {
       "word": "Physical Therapy",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Physical therapy , also known as physiotherapy, is a healthcare profession, as well as the care provided by physical therapists."
     },
     {
       "word": "Health Insurance",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Health insurance or medical insurance is a type of insurance that covers the whole or a part of the risk of a person incurring medical expenses."
     },
     {
       "word": "Hospice Care",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Nursing in Japan did not develop as an occupation until the end of the nineteenth century."
     },
     {
       "word": "Medical Ethics",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "An applied branch of ethics which analyzes the practice of clinical medicine and related scientific research."
     },
     {
       "word": "Nutrition",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The biochemical and physiological process by which an organism uses food and water to support its life."
     },
     {
@@ -7989,7 +14483,7 @@ const categories = {
     },
     {
       "word": "Epidemiology",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "The study and analysis of the distribution, patterns and determinants of health and disease conditions in a defined population, and application of this knowledge to prevent dise..."
     },
     {
@@ -7998,9 +14492,9 @@ const categories = {
       "description": "Anesthesia or anaesthesia is a state of controlled, temporary loss of sensation or awareness that is induced for medical or veterinary purposes."
     },
     {
-      "word": "Madame Curie",
+      "word": "Marie Curie",
       "difficulty": "easy",
-      "description": "This is a timeline of women in science, spanning from ancient history up to the 21st century."
+      "description": "Scientist associated with radioactivity and two Nobel Prizes."
     },
     {
       "word": "Groote Schuur Hospital",
@@ -8051,6 +14545,456 @@ const categories = {
       "word": "Fedhealth",
       "difficulty": "hard",
       "description": "Established medical aid scheme."
+    },
+    {
+      "word": "Hiccup",
+      "difficulty": "easy",
+      "description": "Sudden involuntary diaphragm contraction making a short sound."
+    },
+    {
+      "word": "Sneeze",
+      "difficulty": "easy",
+      "description": "Sudden forceful expulsion of air through the nose and mouth."
+    },
+    {
+      "word": "Cough",
+      "difficulty": "easy",
+      "description": "Forceful reflex helping clear the airways."
+    },
+    {
+      "word": "Yawn",
+      "difficulty": "easy",
+      "description": "Wide-mouthed inhalation often associated with tiredness."
+    },
+    {
+      "word": "Snore",
+      "difficulty": "easy",
+      "description": "Noisy breathing during sleep."
+    },
+    {
+      "word": "Burp",
+      "difficulty": "easy",
+      "description": "Release of gas through the mouth after swallowing air."
+    },
+    {
+      "word": "Blister",
+      "difficulty": "hard",
+      "description": "Small fluid-filled pocket caused by rubbing or injury."
+    },
+    {
+      "word": "Bruise",
+      "difficulty": "easy",
+      "description": "Discoloured skin after damage to small blood vessels."
+    },
+    {
+      "word": "Scab",
+      "difficulty": "easy",
+      "description": "Dried protective crust over a healing wound."
+    },
+    {
+      "word": "Scar",
+      "difficulty": "easy",
+      "description": "Mark remaining after a wound has healed."
+    },
+    {
+      "word": "Sunburn",
+      "difficulty": "hard",
+      "description": "Skin damage caused by too much ultraviolet exposure."
+    },
+    {
+      "word": "Splinter",
+      "difficulty": "easy",
+      "description": "Tiny fragment of wood lodged beneath the skin."
+    },
+    {
+      "word": "Sprained Ankle",
+      "difficulty": "easy",
+      "description": "Injured ligaments around the joint above the foot."
+    },
+    {
+      "word": "Broken Arm",
+      "difficulty": "easy",
+      "description": "Fracture in an upper limb, often put in a cast."
+    },
+    {
+      "word": "Crutches",
+      "difficulty": "easy",
+      "description": "Supports used to walk while keeping weight off an injury."
+    },
+    {
+      "word": "Wheelchair",
+      "difficulty": "easy",
+      "description": "Wheeled seat used for mobility."
+    },
+    {
+      "word": "Walking Stick",
+      "difficulty": "easy",
+      "description": "Handheld support used while moving on foot."
+    },
+    {
+      "word": "Plaster Cast",
+      "difficulty": "easy",
+      "description": "Rigid covering used to hold a healing fracture still."
+    },
+    {
+      "word": "Sling",
+      "difficulty": "easy",
+      "description": "Fabric support holding an injured upper limb."
+    },
+    {
+      "word": "Ice Pack",
+      "difficulty": "easy",
+      "description": "Cold compress used to reduce swelling."
+    },
+    {
+      "word": "Hot Water Bottle",
+      "difficulty": "easy",
+      "description": "Rubber container filled to provide warmth."
+    },
+    {
+      "word": "Ambulance",
+      "difficulty": "easy",
+      "description": "Emergency vehicle transporting sick or injured people."
+    },
+    {
+      "word": "Stretcher",
+      "difficulty": "easy",
+      "description": "Portable bed used to carry a patient."
+    },
+    {
+      "word": "Operating Theatre",
+      "difficulty": "easy",
+      "description": "Hospital room where surgical procedures take place."
+    },
+    {
+      "word": "Waiting Room",
+      "difficulty": "easy",
+      "description": "Area where patients sit before an appointment."
+    },
+    {
+      "word": "Hospital Gown",
+      "difficulty": "easy",
+      "description": "Loose patient garment notorious for opening at the back."
+    },
+    {
+      "word": "Bedpan",
+      "difficulty": "easy",
+      "description": "Container used by patients unable to reach a toilet."
+    },
+    {
+      "word": "Syringe",
+      "difficulty": "easy",
+      "description": "Medical instrument with a plunger used to inject fluid."
+    },
+    {
+      "word": "Needle",
+      "difficulty": "easy",
+      "description": "Thin pointed instrument used to deliver an injection."
+    },
+    {
+      "word": "IV Drip",
+      "difficulty": "easy",
+      "description": "Bag and tubing delivering fluid into a vein."
+    },
+    {
+      "word": "Blood Pressure Cuff",
+      "difficulty": "easy",
+      "description": "Inflatable sleeve used to measure arterial force."
+    },
+    {
+      "word": "Thermometer",
+      "difficulty": "easy",
+      "description": "Instrument used to measure temperature."
+    },
+    {
+      "word": "Tongue Depressor",
+      "difficulty": "easy",
+      "description": "Flat wooden tool used to inspect a patient's throat."
+    },
+    {
+      "word": "Cotton Wool",
+      "difficulty": "easy",
+      "description": "Soft fluffy material used to clean or dress skin."
+    },
+    {
+      "word": "Antiseptic",
+      "difficulty": "easy",
+      "description": "Substance applied to skin to reduce microbes."
+    },
+    {
+      "word": "Disinfectant",
+      "difficulty": "easy",
+      "description": "Chemical used to reduce microbes on surfaces."
+    },
+    {
+      "word": "Painkiller",
+      "difficulty": "easy",
+      "description": "Medicine taken to reduce discomfort."
+    },
+    {
+      "word": "Sleeping Pill",
+      "difficulty": "easy",
+      "description": "Tablet used to treat insomnia."
+    },
+    {
+      "word": "Antihistamine",
+      "difficulty": "easy",
+      "description": "Medicine commonly used to reduce allergy symptoms."
+    },
+    {
+      "word": "Inhaler",
+      "difficulty": "easy",
+      "description": "Handheld device delivering medicine into the lungs."
+    },
+    {
+      "word": "Asthma",
+      "difficulty": "easy",
+      "description": "Condition associated with narrowed airways and wheezing."
+    },
+    {
+      "word": "Hay Fever",
+      "difficulty": "easy",
+      "description": "Seasonal allergic condition associated with pollen and sneezing."
+    },
+    {
+      "word": "Chickenpox",
+      "difficulty": "easy",
+      "description": "Contagious infection causing an itchy blister-like rash."
+    },
+    {
+      "word": "Measles",
+      "difficulty": "easy",
+      "description": "Contagious viral infection associated with fever and rash."
+    },
+    {
+      "word": "Mumps",
+      "difficulty": "easy",
+      "description": "Viral infection often causing swollen glands near the jaw."
+    },
+    {
+      "word": "Common Cold",
+      "difficulty": "easy",
+      "description": "Routine viral illness associated with a runny nose."
+    },
+    {
+      "word": "Flu",
+      "difficulty": "easy",
+      "description": "Respiratory viral illness often causing fever and body aches."
+    },
+    {
+      "word": "Migraine",
+      "difficulty": "easy",
+      "description": "Headache disorder often involving nausea and light sensitivity."
+    },
+    {
+      "word": "Toothache",
+      "difficulty": "easy",
+      "description": "Pain centred in a dental structure."
+    },
+    {
+      "word": "Root Canal",
+      "difficulty": "easy",
+      "description": "Dental procedure treating infected tissue inside a tooth."
+    },
+    {
+      "word": "Braces",
+      "difficulty": "easy",
+      "description": "Dental appliance used to straighten teeth."
+    },
+    {
+      "word": "Dentures",
+      "difficulty": "easy",
+      "description": "Removable replacements for missing teeth."
+    },
+    {
+      "word": "Wisdom Teeth",
+      "difficulty": "easy",
+      "description": "Last molars, often removed when they become impacted."
+    },
+    {
+      "word": "Appendix",
+      "difficulty": "easy",
+      "description": "Small pouch attached to the large intestine."
+    },
+    {
+      "word": "Tonsils",
+      "difficulty": "easy",
+      "description": "Tissue at the back of the throat that can become inflamed."
+    },
+    {
+      "word": "Kidneys",
+      "difficulty": "easy",
+      "description": "Organs that filter waste from the bloodstream."
+    },
+    {
+      "word": "Liver",
+      "difficulty": "easy",
+      "description": "Large organ involved in metabolism and detoxification."
+    },
+    {
+      "word": "Stomach",
+      "difficulty": "easy",
+      "description": "Digestive organ between the oesophagus and small intestine."
+    },
+    {
+      "word": "Intestines",
+      "difficulty": "easy",
+      "description": "Long digestive tract sections that absorb nutrients and water."
+    },
+    {
+      "word": "Skin",
+      "difficulty": "easy",
+      "description": "Body's outer protective covering and largest organ."
+    },
+    {
+      "word": "Dehydration",
+      "difficulty": "hard",
+      "description": "Condition caused by losing more fluid than you take in."
+    },
+    {
+      "word": "Anaemia",
+      "difficulty": "hard",
+      "description": "Condition involving too little haemoglobin or too few red cells."
+    },
+    {
+      "word": "Insomnia",
+      "difficulty": "hard",
+      "description": "Persistent difficulty falling or staying asleep."
+    },
+    {
+      "word": "Sleepwalking",
+      "difficulty": "hard",
+      "description": "Moving around while still partly asleep."
+    },
+    {
+      "word": "Sleep Apnoea",
+      "difficulty": "hard",
+      "description": "Repeated interruptions of breathing during slumber."
+    },
+    {
+      "word": "Vertigo",
+      "difficulty": "hard",
+      "description": "False sensation that you or the surroundings are spinning."
+    },
+    {
+      "word": "Tinnitus",
+      "difficulty": "hard",
+      "description": "Perceived ringing or buzzing without an external sound."
+    },
+    {
+      "word": "Amnesia",
+      "difficulty": "hard",
+      "description": "Loss of memories or inability to form them."
+    },
+    {
+      "word": "Concussion",
+      "difficulty": "hard",
+      "description": "Brain injury often following a blow to the head."
+    },
+    {
+      "word": "Whiplash",
+      "difficulty": "hard",
+      "description": "Neck injury from sudden backward-and-forward motion."
+    },
+    {
+      "word": "Carpal Tunnel Syndrome",
+      "difficulty": "hard",
+      "description": "Wrist nerve compression associated with numbness and tingling."
+    },
+    {
+      "word": "Tennis Elbow",
+      "difficulty": "hard",
+      "description": "Painful tendon condition near the outer arm joint."
+    },
+    {
+      "word": "Athlete's Foot",
+      "difficulty": "hard",
+      "description": "Fungal skin infection often found between toes."
+    },
+    {
+      "word": "Food Poisoning",
+      "difficulty": "hard",
+      "description": "Illness caused by consuming contaminated meals or drinks."
+    },
+    {
+      "word": "Lactose Intolerance",
+      "difficulty": "hard",
+      "description": "Difficulty digesting the sugar naturally present in milk."
+    },
+    {
+      "word": "Gluten",
+      "difficulty": "hard",
+      "description": "Protein group in wheat associated with coeliac reactions."
+    },
+    {
+      "word": "Coeliac Disease",
+      "difficulty": "hard",
+      "description": "Immune condition triggered by eating certain grain proteins."
+    },
+    {
+      "word": "Autoimmune Disease",
+      "difficulty": "hard",
+      "description": "Condition where the body's defences attack its own tissues."
+    },
+    {
+      "word": "Antibody",
+      "difficulty": "hard",
+      "description": "Immune protein that recognises a specific foreign target."
+    },
+    {
+      "word": "Blood Donor",
+      "difficulty": "hard",
+      "description": "Person who gives a life-saving fluid for others' treatment."
+    },
+    {
+      "word": "Bone Marrow",
+      "difficulty": "hard",
+      "description": "Soft tissue inside skeletal structures that produces blood cells."
+    },
+    {
+      "word": "Platelet",
+      "difficulty": "hard",
+      "description": "Small cell fragment important for clotting."
+    },
+    {
+      "word": "Red Blood Cell",
+      "difficulty": "hard",
+      "description": "Oxygen-carrying component containing haemoglobin."
+    },
+    {
+      "word": "White Blood Cell",
+      "difficulty": "hard",
+      "description": "Immune-system component involved in fighting infection."
+    },
+    {
+      "word": "Triage",
+      "difficulty": "hard",
+      "description": "Sorting patients according to urgency of treatment."
+    },
+    {
+      "word": "Resuscitation",
+      "difficulty": "hard",
+      "description": "Emergency efforts to restore breathing or circulation."
+    },
+    {
+      "word": "CPR",
+      "difficulty": "hard",
+      "description": "Emergency chest compressions used when someone's heart stops."
+    },
+    {
+      "word": "Recovery Position",
+      "difficulty": "hard",
+      "description": "Side-lying posture used to help protect an unconscious person's airway."
+    },
+    {
+      "word": "Informed Consent",
+      "difficulty": "hard",
+      "description": "Agreement to treatment after understanding relevant information."
+    },
+    {
+      "word": "Patient Confidentiality",
+      "difficulty": "hard",
+      "description": "Duty to keep someone's medical information private."
     }
   ],
   "Games and Toys": [
@@ -8067,10 +15011,10 @@ const categories = {
     {
       "word": "LEGO",
       "difficulty": "easy",
-      "description": "A brand of plastic construction toys manufactured by the Lego Group, a privately held company based in Billund, Denmark."
+      "description": "Interlocking plastic bricks from a Danish toy company."
     },
     {
-      "word": "Puzzle",
+      "word": "Jigsaw Puzzle",
       "difficulty": "easy",
       "description": "A puzzle is a game, problem, or toy that tests a person's ingenuity or knowledge."
     },
@@ -8080,17 +15024,7 @@ const categories = {
       "description": "A doll is a model typically of a human or humanoid character, often used as a toy for children."
     },
     {
-      "word": "Video Games",
-      "difficulty": "easy",
-      "description": "An electronic game is a game that uses electronics to create an interactive system with which a player can play."
-    },
-    {
-      "word": "Board Game",
-      "difficulty": "easy",
-      "description": "A board game is a type of tabletop game that involves small objects that are placed and moved in particular ways on a specially designed patterned game board, potentially includ..."
-    },
-    {
-      "word": "Action Figures",
+      "word": "Action Figure",
       "difficulty": "easy",
       "description": "An action figure is a poseable character model figure made most commonly of plastic, and often based upon characters from a film, comic book, military, video game, television pr..."
     },
@@ -8100,24 +15034,9 @@ const categories = {
       "description": "The Rubik's Cube is a 3D combination puzzle invented in 1974 by Hungarian sculptor and professor of architecture Ernő Rubik."
     },
     {
-      "word": "Card Game",
-      "difficulty": "easy",
-      "description": "A card game is any game that uses cards as the primary device with which the game is played, whether the cards are of a traditional design or specifically created for the game ."
-    },
-    {
-      "word": "Toy Cars",
-      "difficulty": "easy",
-      "description": "An American rock band from Asbury Park, New Jersey."
-    },
-    {
       "word": "Dungeons & Dragons",
       "difficulty": "easy",
       "description": "A fantasy tabletop role-playing game originally created and designed by Gary Gygax and Dave Arneson."
-    },
-    {
-      "word": "Lego Bricks",
-      "difficulty": "easy",
-      "description": "A brand of plastic construction toys manufactured by the Lego Group, a privately held company based in Billund, Denmark."
     },
     {
       "word": "Barbie",
@@ -8145,19 +15064,9 @@ const categories = {
       "description": "A video gaming brand that consists of four main home video game console lines, as well as applications, the streaming service Xbox Cloud Gaming, and online services such as the..."
     },
     {
-      "word": "Dungeons and Dragons",
-      "difficulty": "easy",
-      "description": "A fantasy tabletop role-playing game originally created and designed by Gary Gygax and Dave Arneson."
-    },
-    {
       "word": "Checkers",
       "difficulty": "easy",
       "description": "Checkers, also known as draughts, is a group of strategy board games for two players which involve forward movements of uniform game pieces and mandatory captures by jumping ove..."
-    },
-    {
-      "word": "Jigsaw Puzzle",
-      "difficulty": "easy",
-      "description": "An American game company, based in San Francisco, California."
     },
     {
       "word": "Yo-Yo",
@@ -8180,11 +15089,6 @@ const categories = {
       "description": "A mecha media franchise produced by American toy company Hasbro and Japanese toy company Takara Tomy."
     },
     {
-      "word": "Barbie Dolls",
-      "difficulty": "easy",
-      "description": "Girls' toys and games, as opposed to boys' toys and games, are toys and games specifically targeted at girls by the toy industry."
-    },
-    {
       "word": "Nintendo Switch",
       "difficulty": "easy",
       "description": "The Nintendo Switch is a video game console developed by Nintendo and released worldwide in most regions on March 3, 2017."
@@ -8200,19 +15104,9 @@ const categories = {
       "description": "A fidget spinner or hand spinner is a fidget toy composed of a central ball bearing and two or more weighted lobes that rotate around the central axis when spun."
     },
     {
-      "word": "Legos",
-      "difficulty": "easy",
-      "description": "A brand of plastic construction toys manufactured by the Lego Group, a privately held company based in Billund, Denmark."
-    },
-    {
-      "word": "Remote Control Cars",
+      "word": "Remote Control Car",
       "difficulty": "easy",
       "description": "In the game show Minute to Win It aired on ABS-CBN, Most of the time, celebrities are invited to play in the show."
-    },
-    {
-      "word": "Rubik's Cubes",
-      "difficulty": "easy",
-      "description": "The Rubik's Cube is a 3D combination puzzle invented in 1974 by Hungarian sculptor and professor of architecture Ernő Rubik."
     },
     {
       "word": "Magic: The Gathering",
@@ -8235,7 +15129,7 @@ const categories = {
       "description": "A brand of handheld digital pets marketed since 1996 by Japanese toymaker Bandai, a division of Bandai Namco Holdings."
     },
     {
-      "word": "Nerf Guns",
+      "word": "Nerf Blaster",
       "difficulty": "easy",
       "description": "A Nerf Blaster or Nerf Gun is a toy gun made by Hasbro that fires foam darts, arrows, discs, or foam balls."
     },
@@ -8275,16 +15169,6 @@ const categories = {
       "description": "An American electronic robotic toy created by Tiger Electronics – a subsidiary of Hasbro."
     },
     {
-      "word": "Barbie Doll",
-      "difficulty": "easy",
-      "description": "A fashion doll franchise created by American businesswoman Ruth Handler, manufactured by American toy and entertainment company Mattel and introduced on March 9, 1959."
-    },
-    {
-      "word": "Remote Control Car",
-      "difficulty": "easy",
-      "description": "An American toy manufacturer."
-    },
-    {
       "word": "Stuffed Animals",
       "difficulty": "easy",
       "description": "A stuffed toy is a toy with an outer fabric sewn from a textile and stuffed with flexible material."
@@ -8306,13 +15190,13 @@ const categories = {
     },
     {
       "word": "Scrabble",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A word game in which two to four players score points by placing tiles, each bearing a single letter, onto a game board divided into a 15×15 grid of squares."
     },
     {
-      "word": "Clue",
+      "word": "Cluedo",
       "difficulty": "easy",
-      "description": "Classic mystery board game about suspects, rooms, and solving a whodunit."
+      "description": "Murder mystery board game involving rooms and weapons."
     },
     {
       "word": "Risk",
@@ -8326,23 +15210,13 @@ const categories = {
     },
     {
       "word": "Twister",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A game of physical skill produced by Milton Bradley Company and Winning Moves Games USA."
     },
     {
       "word": "Operation",
       "difficulty": "easy",
       "description": "A battery-operated game of physical skill that tests players' hand-eye coordination and fine motor skills."
-    },
-    {
-      "word": "Nerf Blaster",
-      "difficulty": "easy",
-      "description": "A Nerf Blaster or Nerf Gun is a toy gun made by Hasbro that fires foam darts, arrows, discs, or foam balls."
-    },
-    {
-      "word": "RC Car",
-      "difficulty": "easy",
-      "description": "Radio-controlled cars, or RC cars for short, are miniature vehicles controlled via radio."
     },
     {
       "word": "Puzzle Box",
@@ -8368,16 +15242,6 @@ const categories = {
       "word": "Water Gun",
       "difficulty": "easy",
       "description": "The National Toy Hall of Fame is a U.S."
-    },
-    {
-      "word": "Action Figure",
-      "difficulty": "easy",
-      "description": "An action figure is a poseable character model figure made most commonly of plastic, and often based upon characters from a film, comic book, military, video game, television pr..."
-    },
-    {
-      "word": "Board Game Night",
-      "difficulty": "hard",
-      "description": "Toys for Bob, Inc. is an American video game developer based in Novato, California."
     },
     {
       "word": "Card Deck",
@@ -8423,13 +15287,458 @@ const categories = {
       "word": "Pinball",
       "difficulty": "easy",
       "description": "Pinball games are a family of games in which a ball is propelled into a specially designed table where it bounces off various obstacles, scoring points either en-route or when i..."
+    },
+    {
+      "word": "30 Seconds",
+      "difficulty": "easy",
+      "description": "Team guessing game involving five prompts and a short timer."
+    },
+    {
+      "word": "Articulate",
+      "difficulty": "easy",
+      "description": "Team game of rapidly describing words from categories."
+    },
+    {
+      "word": "Taboo",
+      "difficulty": "easy",
+      "description": "Guessing game with a list of forbidden clue words."
+    },
+    {
+      "word": "Pictionary",
+      "difficulty": "easy",
+      "description": "Team guessing game where clues are drawn."
+    },
+    {
+      "word": "Charades",
+      "difficulty": "easy",
+      "description": "Guessing game using silent acting."
+    },
+    {
+      "word": "Balderdash",
+      "difficulty": "easy",
+      "description": "Party game where players invent convincing false definitions."
+    },
+    {
+      "word": "Codenames",
+      "difficulty": "easy",
+      "description": "Team game linking secret agents through single-word clues."
+    },
+    {
+      "word": "Dixit",
+      "difficulty": "easy",
+      "description": "Illustrated card game based on imaginative clues."
+    },
+    {
+      "word": "Dobble",
+      "difficulty": "easy",
+      "description": "Fast matching game where each card pair shares one symbol."
+    },
+    {
+      "word": "Exploding Kittens",
+      "difficulty": "easy",
+      "description": "Card game involving avoiding a fatal feline draw."
+    },
+    {
+      "word": "Cards Against Humanity",
+      "difficulty": "easy",
+      "description": "Adult party game filling blanks with outrageous responses."
+    },
+    {
+      "word": "Guess Who?",
+      "difficulty": "easy",
+      "description": "Deduction game identifying a face through yes-or-no questions."
+    },
+    {
+      "word": "Battleship",
+      "difficulty": "easy",
+      "description": "Grid-based guessing game involving hidden naval vessels."
+    },
+    {
+      "word": "Snakes and Ladders",
+      "difficulty": "easy",
+      "description": "Board game featuring climbs and sudden downward slides."
+    },
+    {
+      "word": "Ludo",
+      "difficulty": "easy",
+      "description": "Race game moving coloured pieces from home to the centre."
+    },
+    {
+      "word": "Backgammon",
+      "difficulty": "easy",
+      "description": "Two-player board game with triangular points and dice."
+    },
+    {
+      "word": "Othello",
+      "difficulty": "easy",
+      "description": "Disc-flipping strategy game also known as Reversi."
+    },
+    {
+      "word": "Go",
+      "difficulty": "easy",
+      "description": "Ancient strategy game placing black and white stones."
+    },
+    {
+      "word": "Chinese Checkers",
+      "difficulty": "easy",
+      "description": "Star-shaped board game moving marbles by hopping."
+    },
+    {
+      "word": "Mahjong",
+      "difficulty": "easy",
+      "description": "Tile-based game involving sets and pairs."
+    },
+    {
+      "word": "Dominoes",
+      "difficulty": "easy",
+      "description": "Rectangular spotted tiles matched end to end."
+    },
+    {
+      "word": "Rummikub",
+      "difficulty": "easy",
+      "description": "Numbered-tile game involving runs and matching groups."
+    },
+    {
+      "word": "Yahtzee",
+      "difficulty": "easy",
+      "description": "Dice game aiming for combinations including five of a kind."
+    },
+    {
+      "word": "Boggle",
+      "difficulty": "easy",
+      "description": "Word-finding game using a shaken grid of letter cubes."
+    },
+    {
+      "word": "Bananagrams",
+      "difficulty": "easy",
+      "description": "Fast word-building game packaged in a yellow fruit-shaped pouch."
+    },
+    {
+      "word": "Catan",
+      "difficulty": "easy",
+      "description": "Board game trading resources to build settlements and roads."
+    },
+    {
+      "word": "Ticket to Ride",
+      "difficulty": "easy",
+      "description": "Board game connecting cities with coloured railway routes."
+    },
+    {
+      "word": "Carcassonne",
+      "difficulty": "easy",
+      "description": "Tile-laying board game building a medieval landscape."
+    },
+    {
+      "word": "Pandemic",
+      "difficulty": "easy",
+      "description": "Cooperative board game about containing worldwide disease outbreaks."
+    },
+    {
+      "word": "Mouse Trap",
+      "difficulty": "easy",
+      "description": "Board game featuring an elaborate chain-reaction contraption."
+    },
+    {
+      "word": "Hungry Hungry Hippos",
+      "difficulty": "easy",
+      "description": "Tabletop game with snapping animal heads collecting marbles."
+    },
+    {
+      "word": "KerPlunk",
+      "difficulty": "easy",
+      "description": "Game removing sticks without dropping the supported marbles."
+    },
+    {
+      "word": "Buckaroo!",
+      "difficulty": "easy",
+      "description": "Toy game loading gear onto a spring-loaded mule."
+    },
+    {
+      "word": "Pop-up Pirate",
+      "difficulty": "easy",
+      "description": "Toy game where inserting a sword may launch a barrel's occupant."
+    },
+    {
+      "word": "Simon",
+      "difficulty": "easy",
+      "description": "Electronic memory game repeating sequences of coloured lights."
+    },
+    {
+      "word": "Etch A Sketch",
+      "difficulty": "easy",
+      "description": "Drawing toy with two knobs and a shake-to-erase screen."
+    },
+    {
+      "word": "Spirograph",
+      "difficulty": "easy",
+      "description": "Drawing toy creating geometric curves with interlocking gears."
+    },
+    {
+      "word": "Slinky",
+      "difficulty": "easy",
+      "description": "Coiled spring toy famous for walking down stairs."
+    },
+    {
+      "word": "Spinning Top",
+      "difficulty": "easy",
+      "description": "Toy that balances while rapidly rotating."
+    },
+    {
+      "word": "Hula Hoop",
+      "difficulty": "easy",
+      "description": "Large ring spun around the waist."
+    },
+    {
+      "word": "Skipping Rope",
+      "difficulty": "easy",
+      "description": "Exercise toy swung over the head and jumped over."
+    },
+    {
+      "word": "Pogo Stick",
+      "difficulty": "easy",
+      "description": "Spring-powered hopping device with handles."
+    },
+    {
+      "word": "Space Hopper",
+      "difficulty": "easy",
+      "description": "Inflatable bouncing toy with handles."
+    },
+    {
+      "word": "Frisbee",
+      "difficulty": "easy",
+      "description": "Plastic disc thrown between players."
+    },
+    {
+      "word": "Kite",
+      "difficulty": "easy",
+      "description": "Lightweight flying toy tethered by a string."
+    },
+    {
+      "word": "Soap Bubbles",
+      "difficulty": "easy",
+      "description": "Floating films made by blowing through a wetted ring."
+    },
+    {
+      "word": "Slime",
+      "difficulty": "easy",
+      "description": "Stretchy gooey play material squeezed and pulled by hand."
+    },
+    {
+      "word": "Kinetic Sand",
+      "difficulty": "easy",
+      "description": "Mouldable granular toy material that clumps together."
+    },
+    {
+      "word": "Magic 8 Ball",
+      "difficulty": "easy",
+      "description": "Novelty fortune-telling toy revealing answers through a window."
+    },
+    {
+      "word": "Jack-in-the-box",
+      "difficulty": "easy",
+      "description": "Wind-up toy with a surprise figure springing out."
+    },
+    {
+      "word": "Russian Doll",
+      "difficulty": "easy",
+      "description": "Painted figure containing smaller matching figures inside."
+    },
+    {
+      "word": "Rocking Horse",
+      "difficulty": "easy",
+      "description": "Child's ride-on toy that moves back and forth."
+    },
+    {
+      "word": "Hobby Horse",
+      "difficulty": "easy",
+      "description": "Stick-mounted animal head used for pretend riding."
+    },
+    {
+      "word": "Toy Soldier",
+      "difficulty": "easy",
+      "description": "Miniature military figure used in pretend battles."
+    },
+    {
+      "word": "Finger Puppet",
+      "difficulty": "easy",
+      "description": "Tiny character worn over a digit during a performance."
+    },
+    {
+      "word": "Hand Puppet",
+      "difficulty": "easy",
+      "description": "Fabric character operated from inside with a palm and fingers."
+    },
+    {
+      "word": "Kaleidoscope",
+      "difficulty": "easy",
+      "description": "Optical toy creating changing symmetrical coloured patterns."
+    },
+    {
+      "word": "Water Balloon",
+      "difficulty": "easy",
+      "description": "Thin rubber container filled for splashy outdoor battles."
+    },
+    {
+      "word": "Super Soaker",
+      "difficulty": "easy",
+      "description": "Powerful branded toy used for wet outdoor battles."
+    },
+    {
+      "word": "Poker Face",
+      "difficulty": "hard",
+      "description": "Blank expression hiding your feelings or intentions."
+    },
+    {
+      "word": "Bluff",
+      "difficulty": "hard",
+      "description": "Convincing opponents you hold a stronger position than you do."
+    },
+    {
+      "word": "Royal Flush",
+      "difficulty": "hard",
+      "description": "Poker's highest standard hand, all one suit from ten upward."
+    },
+    {
+      "word": "Full House",
+      "difficulty": "hard",
+      "description": "Poker combination of three matching ranks plus a pair."
+    },
+    {
+      "word": "Blackjack",
+      "difficulty": "hard",
+      "description": "Casino card game aiming to reach twenty-one."
+    },
+    {
+      "word": "Baccarat",
+      "difficulty": "hard",
+      "description": "Casino game comparing player and banker hands."
+    },
+    {
+      "word": "Roulette",
+      "difficulty": "hard",
+      "description": "Casino game betting on a numbered spinning wheel."
+    },
+    {
+      "word": "Craps",
+      "difficulty": "hard",
+      "description": "Casino dice game played around a betting table."
+    },
+    {
+      "word": "Snap",
+      "difficulty": "hard",
+      "description": "Fast card game where matching ranks prompt a shouted response."
+    },
+    {
+      "word": "Go Fish",
+      "difficulty": "hard",
+      "description": "Card game asking opponents for ranks to complete sets."
+    },
+    {
+      "word": "Old Maid",
+      "difficulty": "hard",
+      "description": "Matching card game where one unwanted unpaired card remains."
+    },
+    {
+      "word": "Crazy Eights",
+      "difficulty": "hard",
+      "description": "Shedding card game with a wild rank."
+    },
+    {
+      "word": "Spades",
+      "difficulty": "hard",
+      "description": "Trick-taking card game named after the highest trump suit."
+    },
+    {
+      "word": "Hearts",
+      "difficulty": "hard",
+      "description": "Trick-taking card game where certain cards score penalty points."
+    },
+    {
+      "word": "Bridge",
+      "difficulty": "hard",
+      "description": "Partnership card game involving bidding and thirteen tricks."
+    },
+    {
+      "word": "Solitaire",
+      "difficulty": "hard",
+      "description": "Single-player card pastime often associated with Windows computers."
+    },
+    {
+      "word": "Patience",
+      "difficulty": "hard",
+      "description": "British name for many single-player card games."
+    },
+    {
+      "word": "Checkmate",
+      "difficulty": "hard",
+      "description": "Chess position where a threatened king has no escape."
+    },
+    {
+      "word": "Stalemate",
+      "difficulty": "hard",
+      "description": "Chess draw where a player has no legal move but is not checked."
+    },
+    {
+      "word": "Castling",
+      "difficulty": "hard",
+      "description": "Chess move that repositions the king and a rook together."
+    },
+    {
+      "word": "En Passant",
+      "difficulty": "hard",
+      "description": "Special pawn capture available immediately after a two-square advance."
+    },
+    {
+      "word": "Pawn Promotion",
+      "difficulty": "hard",
+      "description": "Chess event where a lowly piece reaches the final rank."
+    },
+    {
+      "word": "Queen Sacrifice",
+      "difficulty": "hard",
+      "description": "Deliberately giving up the most powerful chess piece."
+    },
+    {
+      "word": "King's Gambit",
+      "difficulty": "hard",
+      "description": "Chess opening offering a pawn after both central pawns advance."
+    },
+    {
+      "word": "Beginner's Luck",
+      "difficulty": "hard",
+      "description": "Unexpected success by someone new to an activity."
+    },
+    {
+      "word": "Sore Loser",
+      "difficulty": "hard",
+      "description": "Person who reacts badly to being beaten."
+    },
+    {
+      "word": "House Rules",
+      "difficulty": "hard",
+      "description": "Local variations agreed by players before a game."
+    },
+    {
+      "word": "Sudden Death",
+      "difficulty": "hard",
+      "description": "Tie-breaking format where the next decisive event ends play."
+    },
+    {
+      "word": "Analysis Paralysis",
+      "difficulty": "hard",
+      "description": "Taking too long because you keep weighing every option."
+    },
+    {
+      "word": "Kingmaker",
+      "difficulty": "hard",
+      "description": "Player whose choice decides which opponent wins."
     }
   ],
   "Books and Authors": [
     {
       "word": "William Shakespeare",
       "difficulty": "easy",
-      "description": "An English playwright, poet and actor."
+      "description": "Playwright associated with Hamlet and the Globe Theatre."
     },
     {
       "word": "Jane Austen",
@@ -8524,7 +15833,7 @@ const categories = {
     {
       "word": "1984",
       "difficulty": "easy",
-      "description": "Dystopian novel about surveillance, propaganda, and Big Brother."
+      "description": "George Orwell's dystopia featuring Winston Smith and Big Brother."
     },
     {
       "word": "Brave New World",
@@ -8578,7 +15887,7 @@ const categories = {
     },
     {
       "word": "One Hundred Years of Solitude",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Magical realism saga of one family across generations in Macondo."
     },
     {
@@ -8608,12 +15917,12 @@ const categories = {
     },
     {
       "word": "War and Peace",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Massive Russian epic of families and warfare during Napoleon's era."
     },
     {
       "word": "Les Misérables",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "French saga of redemption, law, poverty, and revolution."
     },
     {
@@ -8633,7 +15942,7 @@ const categories = {
     },
     {
       "word": "Anna Karenina",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Russian classic about love, marriage, and social consequences."
     },
     {
@@ -8647,19 +15956,9 @@ const categories = {
       "description": "Bleak post-apocalyptic journey of a father and son."
     },
     {
-      "word": "Moby Dick",
-      "difficulty": "easy",
-      "description": "Seafaring obsession tale about hunting a giant white whale."
-    },
-    {
       "word": "The Da Vinci Code",
       "difficulty": "easy",
       "description": "Conspiracy thriller involving symbols, art history, and secret societies."
-    },
-    {
-      "word": "Lord of the Rings",
-      "difficulty": "easy",
-      "description": "Epic fantasy journey to destroy a ring forged by dark power."
     },
     {
       "word": "Crime and Punishment",
@@ -8678,7 +15977,7 @@ const categories = {
     },
     {
       "word": "A Tale of Two Cities",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Historical novel set in London and Paris during revolutionary upheaval."
     },
     {
@@ -8705,6 +16004,446 @@ const categories = {
       "word": "DC Comics",
       "difficulty": "easy",
       "description": "Publisher behind Batman, Superman, Wonder Woman, and Justice League."
+    },
+    {
+      "word": "Roald Dahl",
+      "difficulty": "easy",
+      "description": "Author of Matilda and stories about a giant and a confectioner."
+    },
+    {
+      "word": "Dr. Seuss",
+      "difficulty": "easy",
+      "description": "Children's author associated with a feline in striped headwear."
+    },
+    {
+      "word": "Enid Blyton",
+      "difficulty": "easy",
+      "description": "Children's author of boarding-school and young-detective adventures."
+    },
+    {
+      "word": "Beatrix Potter",
+      "difficulty": "easy",
+      "description": "Author and illustrator who created Peter Rabbit."
+    },
+    {
+      "word": "Julia Donaldson",
+      "difficulty": "easy",
+      "description": "Children's author who co-created a monster with terrible tusks."
+    },
+    {
+      "word": "Eric Carle",
+      "difficulty": "easy",
+      "description": "Picture-book creator associated with a ravenous transforming insect."
+    },
+    {
+      "word": "Jacqueline Wilson",
+      "difficulty": "easy",
+      "description": "Children's writer who created Tracy Beaker."
+    },
+    {
+      "word": "Michael Morpurgo",
+      "difficulty": "easy",
+      "description": "British children's author of War Horse."
+    },
+    {
+      "word": "David Walliams",
+      "difficulty": "easy",
+      "description": "Comedian and children's author of Gangsta Granny."
+    },
+    {
+      "word": "Jeff Kinney",
+      "difficulty": "easy",
+      "description": "Creator of Greg Heffley's illustrated school diaries."
+    },
+    {
+      "word": "Rick Riordan",
+      "difficulty": "easy",
+      "description": "Author of adventures about Poseidon's demigod son."
+    },
+    {
+      "word": "Suzanne Collins",
+      "difficulty": "easy",
+      "description": "Author of the dystopian series featuring Katniss Everdeen."
+    },
+    {
+      "word": "Veronica Roth",
+      "difficulty": "easy",
+      "description": "Author of Divergent and its faction-divided society."
+    },
+    {
+      "word": "Stephenie Meyer",
+      "difficulty": "easy",
+      "description": "Author of the vampire romance featuring Bella and Edward."
+    },
+    {
+      "word": "John Green",
+      "difficulty": "easy",
+      "description": "Young-adult writer of Hazel and Augustus's love story."
+    },
+    {
+      "word": "J. R. R. Tolkien",
+      "difficulty": "easy",
+      "description": "Oxford scholar who created Middle-earth."
+    },
+    {
+      "word": "C. S. Lewis",
+      "difficulty": "easy",
+      "description": "Author of fantasy adventures reached through a wardrobe."
+    },
+    {
+      "word": "Lewis Carroll",
+      "difficulty": "easy",
+      "description": "Author of a girl's adventures after following a white rabbit."
+    },
+    {
+      "word": "A. A. Milne",
+      "difficulty": "easy",
+      "description": "Creator of the Hundred Acre Wood's honey-loving bear."
+    },
+    {
+      "word": "J. M. Barrie",
+      "difficulty": "easy",
+      "description": "Creator of Neverland's eternally young hero."
+    },
+    {
+      "word": "Hans Christian Andersen",
+      "difficulty": "easy",
+      "description": "Danish fairy-tale writer associated with a mermaid and an ugly bird."
+    },
+    {
+      "word": "Brothers Grimm",
+      "difficulty": "easy",
+      "description": "German collectors associated with dark European fairy tales."
+    },
+    {
+      "word": "Aesop",
+      "difficulty": "easy",
+      "description": "Ancient storyteller associated with moral tales about animals."
+    },
+    {
+      "word": "Arthur Conan Doyle",
+      "difficulty": "easy",
+      "description": "Creator of Sherlock Holmes and his medical companion."
+    },
+    {
+      "word": "Ian Fleming",
+      "difficulty": "easy",
+      "description": "Writer who created James Bond."
+    },
+    {
+      "word": "Dan Brown",
+      "difficulty": "easy",
+      "description": "Thriller author whose professor hero is Robert Langdon."
+    },
+    {
+      "word": "Lee Child",
+      "difficulty": "easy",
+      "description": "Thriller writer who created Jack Reacher."
+    },
+    {
+      "word": "James Patterson",
+      "difficulty": "easy",
+      "description": "Prolific thriller writer who created Alex Cross."
+    },
+    {
+      "word": "John Grisham",
+      "difficulty": "easy",
+      "description": "American novelist known for legal thrillers."
+    },
+    {
+      "word": "Michael Connelly",
+      "difficulty": "easy",
+      "description": "Crime writer who created detective Harry Bosch."
+    },
+    {
+      "word": "Patricia Cornwell",
+      "difficulty": "easy",
+      "description": "Crime writer who created medical examiner Kay Scarpetta."
+    },
+    {
+      "word": "Gillian Flynn",
+      "difficulty": "easy",
+      "description": "Author of Gone Girl and Sharp Objects."
+    },
+    {
+      "word": "Paula Hawkins",
+      "difficulty": "easy",
+      "description": "Author of The Girl on the Train."
+    },
+    {
+      "word": "Stieg Larsson",
+      "difficulty": "easy",
+      "description": "Creator of hacker Lisbeth Salander."
+    },
+    {
+      "word": "Terry Pratchett",
+      "difficulty": "easy",
+      "description": "Comic fantasy author who created Discworld."
+    },
+    {
+      "word": "Douglas Adams",
+      "difficulty": "easy",
+      "description": "Writer associated with a galactic guide and the answer 42."
+    },
+    {
+      "word": "Neil Gaiman",
+      "difficulty": "easy",
+      "description": "Writer of Coraline and The Sandman."
+    },
+    {
+      "word": "Philip Pullman",
+      "difficulty": "easy",
+      "description": "Author of His Dark Materials."
+    },
+    {
+      "word": "Jules Verne",
+      "difficulty": "easy",
+      "description": "French novelist associated with submarines and global adventures."
+    },
+    {
+      "word": "H. G. Wells",
+      "difficulty": "easy",
+      "description": "Writer associated with alien invasion and a temporal machine."
+    },
+    {
+      "word": "Isaac Asimov",
+      "difficulty": "easy",
+      "description": "Science-fiction writer associated with three laws for robots."
+    },
+    {
+      "word": "Arthur C. Clarke",
+      "difficulty": "easy",
+      "description": "Science-fiction writer associated with 2001 and HAL."
+    },
+    {
+      "word": "Frank Herbert",
+      "difficulty": "easy",
+      "description": "Creator of the desert planet Arrakis."
+    },
+    {
+      "word": "Margaret Atwood",
+      "difficulty": "easy",
+      "description": "Canadian writer who created the dystopia of Gilead."
+    },
+    {
+      "word": "Harper Lee",
+      "difficulty": "easy",
+      "description": "American author who created Scout and Atticus Finch."
+    },
+    {
+      "word": "Louisa May Alcott",
+      "difficulty": "easy",
+      "description": "Writer associated with the March sisters."
+    },
+    {
+      "word": "Mary Shelley",
+      "difficulty": "easy",
+      "description": "Author of the tale about Victor and his created creature."
+    },
+    {
+      "word": "Bram Stoker",
+      "difficulty": "easy",
+      "description": "Irish writer who created a Transylvanian vampire count."
+    },
+    {
+      "word": "Oscar Wilde",
+      "difficulty": "easy",
+      "description": "Witty Irish author associated with Dorian Gray."
+    },
+    {
+      "word": "Ernest Hemingway",
+      "difficulty": "easy",
+      "description": "American novelist associated with a fisherman and a marlin."
+    },
+    {
+      "word": "F. Scott Fitzgerald",
+      "difficulty": "hard",
+      "description": "American author who created Jay Gatsby."
+    },
+    {
+      "word": "John Steinbeck",
+      "difficulty": "hard",
+      "description": "American author associated with George, Lennie and the Joads."
+    },
+    {
+      "word": "Virginia Woolf",
+      "difficulty": "hard",
+      "description": "Modernist writer associated with Mrs Dalloway."
+    },
+    {
+      "word": "James Joyce",
+      "difficulty": "hard",
+      "description": "Irish novelist associated with Ulysses and Dubliners."
+    },
+    {
+      "word": "Franz Kafka",
+      "difficulty": "hard",
+      "description": "Writer associated with a man awakening as an insect."
+    },
+    {
+      "word": "Gabriel García Márquez",
+      "difficulty": "hard",
+      "description": "Colombian novelist associated with the fictional town Macondo."
+    },
+    {
+      "word": "Isabel Allende",
+      "difficulty": "hard",
+      "description": "Chilean novelist who wrote The House of the Spirits."
+    },
+    {
+      "word": "Paulo Coelho",
+      "difficulty": "hard",
+      "description": "Brazilian author of a fable about Santiago seeking treasure."
+    },
+    {
+      "word": "Haruki Murakami",
+      "difficulty": "hard",
+      "description": "Japanese novelist associated with surreal everyday worlds."
+    },
+    {
+      "word": "Kazuo Ishiguro",
+      "difficulty": "hard",
+      "description": "Novelist who wrote Never Let Me Go."
+    },
+    {
+      "word": "Salman Rushdie",
+      "difficulty": "hard",
+      "description": "Novelist who wrote Midnight's Children."
+    },
+    {
+      "word": "Arundhati Roy",
+      "difficulty": "hard",
+      "description": "Indian writer whose debut was The God of Small Things."
+    },
+    {
+      "word": "Vikram Seth",
+      "difficulty": "hard",
+      "description": "Indian novelist who wrote A Suitable Boy."
+    },
+    {
+      "word": "Khaled Hosseini",
+      "difficulty": "hard",
+      "description": "Afghan-born author whose debut features Amir and Hassan."
+    },
+    {
+      "word": "Chinua Achebe",
+      "difficulty": "hard",
+      "description": "Nigerian novelist who created Okonkwo."
+    },
+    {
+      "word": "Chimamanda Ngozi Adichie",
+      "difficulty": "hard",
+      "description": "Nigerian author of Americanah and Half of a Yellow Sun."
+    },
+    {
+      "word": "Ngũgĩ wa Thiong'o",
+      "difficulty": "hard",
+      "description": "Kenyan novelist who wrote A Grain of Wheat."
+    },
+    {
+      "word": "J. M. Coetzee",
+      "difficulty": "hard",
+      "description": "South African-born novelist who wrote Disgrace."
+    },
+    {
+      "word": "Athol Fugard",
+      "difficulty": "hard",
+      "description": "South African playwright associated with Tsotsi and apartheid-era drama."
+    },
+    {
+      "word": "Alan Paton",
+      "difficulty": "hard",
+      "description": "South African author of Cry, the Beloved Country."
+    },
+    {
+      "word": "Zakes Mda",
+      "difficulty": "hard",
+      "description": "South African writer whose novels include The Heart of Redness."
+    },
+    {
+      "word": "Dalene Matthee",
+      "difficulty": "hard",
+      "description": "South African writer known for novels set in Knysna forests."
+    },
+    {
+      "word": "Deon Meyer",
+      "difficulty": "hard",
+      "description": "South African crime writer who created detective Bennie Griessel."
+    },
+    {
+      "word": "Lauren Beukes",
+      "difficulty": "hard",
+      "description": "South African novelist who wrote Zoo City."
+    },
+    {
+      "word": "The Book of Five Rings",
+      "difficulty": "hard",
+      "description": "Miyamoto Musashi's classic text on strategy and swordsmanship."
+    },
+    {
+      "word": "The Art of War",
+      "difficulty": "hard",
+      "description": "Ancient strategic text attributed to Sun Tzu."
+    },
+    {
+      "word": "Meditations",
+      "difficulty": "hard",
+      "description": "Personal philosophical notes of Roman emperor Marcus Aurelius."
+    },
+    {
+      "word": "Sapiens",
+      "difficulty": "hard",
+      "description": "Yuval Noah Harari's broad history of humankind."
+    },
+    {
+      "word": "Atomic Habits",
+      "difficulty": "hard",
+      "description": "James Clear's book about small repeated behavioural changes."
+    },
+    {
+      "word": "The Diary of a Young Girl",
+      "difficulty": "hard",
+      "description": "Anne Frank's account of hiding in Nazi-occupied Amsterdam."
+    },
+    {
+      "word": "I Know Why the Caged Bird Sings",
+      "difficulty": "hard",
+      "description": "Maya Angelou's first autobiography."
+    },
+    {
+      "word": "Born a Crime",
+      "difficulty": "hard",
+      "description": "Trevor Noah's memoir of growing up under apartheid."
+    },
+    {
+      "word": "Eat Pray Love",
+      "difficulty": "hard",
+      "description": "Elizabeth Gilbert's memoir of travel and personal rediscovery."
+    },
+    {
+      "word": "Becoming",
+      "difficulty": "hard",
+      "description": "Michelle Obama's memoir published in 2018."
+    },
+    {
+      "word": "Educated",
+      "difficulty": "hard",
+      "description": "Tara Westover's memoir of leaving an isolated upbringing."
+    },
+    {
+      "word": "The Subtle Art of Not Giving a F*ck",
+      "difficulty": "hard",
+      "description": "Mark Manson's irreverently titled self-help book."
+    },
+    {
+      "word": "The Life-Changing Magic of Tidying Up",
+      "difficulty": "hard",
+      "description": "Marie Kondo's book about decluttering possessions."
+    },
+    {
+      "word": "Who Moved My Cheese?",
+      "difficulty": "hard",
+      "description": "Business fable about adapting to change."
     }
   ],
   "Video Games": [
@@ -8734,7 +16473,7 @@ const categories = {
       "description": "Block-based sandbox where players mine, craft, and survive."
     },
     {
-      "word": "Pokemon",
+      "word": "Pokémon",
       "difficulty": "easy",
       "description": "Creature-collecting RPG series with trainers and evolutions."
     },
@@ -8830,7 +16569,7 @@ const categories = {
     },
     {
       "word": "Half-Life",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Story-driven shooter featuring scientist Gordon Freeman."
     },
     {
@@ -8869,11 +16608,6 @@ const categories = {
       "description": "Battle royale where one survivor remains from a large lobby."
     },
     {
-      "word": "PlayerUnknown's Battlegrounds",
-      "difficulty": "hard",
-      "description": "Full title of the battle royale commonly shortened to PUBG."
-    },
-    {
       "word": "God of War",
       "difficulty": "easy",
       "description": "Action franchise centered on Kratos and mythological conflicts."
@@ -8904,11 +16638,6 @@ const categories = {
       "description": "Free looter-shooter featuring space ninjas called Tenno."
     },
     {
-      "word": "Fortnite Battle Royale",
-      "difficulty": "hard",
-      "description": "Main PvP mode where a storm circle closes over time."
-    },
-    {
       "word": "Cyberpunk 2077",
       "difficulty": "easy",
       "description": "Open-world RPG set in neon-lit Night City."
@@ -8932,21 +16661,6 @@ const categories = {
       "word": "Borderlands",
       "difficulty": "easy",
       "description": "Looter-shooter series with cel-shaded visuals and wild humor."
-    },
-    {
-      "word": "Zelda",
-      "difficulty": "easy",
-      "description": "Princess associated with Hyrule's royal bloodline."
-    },
-    {
-      "word": "Sonic",
-      "difficulty": "easy",
-      "description": "Blue speedster mascot known for rings and loops."
-    },
-    {
-      "word": "Pokémon",
-      "difficulty": "easy",
-      "description": "Global monster-collecting franchise with gyms and evolutions."
     },
     {
       "word": "Red Dead Redemption",
@@ -8980,7 +16694,7 @@ const categories = {
     },
     {
       "word": "The Last of Us",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Narrative survival game centered on Joel and Ellie."
     },
     {
@@ -9040,7 +16754,7 @@ const categories = {
     },
     {
       "word": "Hades",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Roguelike where Zagreus repeatedly attempts to escape the underworld."
     },
     {
@@ -9142,6 +16856,456 @@ const categories = {
       "word": "ZeniMax Media",
       "difficulty": "hard",
       "description": "Parent group linked to Bethesda and id Software."
+    },
+    {
+      "word": "Roblox",
+      "difficulty": "easy",
+      "description": "Online platform where users create and play shared experiences."
+    },
+    {
+      "word": "Clash of Clans",
+      "difficulty": "easy",
+      "description": "Mobile strategy game building a village and raiding rivals."
+    },
+    {
+      "word": "Clash Royale",
+      "difficulty": "easy",
+      "description": "Mobile card battler featuring towers and familiar Supercell troops."
+    },
+    {
+      "word": "Subway Surfers",
+      "difficulty": "easy",
+      "description": "Endless runner escaping a railway guard and his dog."
+    },
+    {
+      "word": "Temple Run",
+      "difficulty": "easy",
+      "description": "Endless runner fleeing through ruins with stolen treasure."
+    },
+    {
+      "word": "Angry Birds",
+      "difficulty": "easy",
+      "description": "Mobile game launching furious feathered characters at pigs."
+    },
+    {
+      "word": "Fruit Ninja",
+      "difficulty": "easy",
+      "description": "Mobile game slicing produce while avoiding bombs."
+    },
+    {
+      "word": "Cut the Rope",
+      "difficulty": "easy",
+      "description": "Puzzle game feeding candy to Om Nom."
+    },
+    {
+      "word": "Plants vs. Zombies",
+      "difficulty": "easy",
+      "description": "Defence game using garden defenders against undead attackers."
+    },
+    {
+      "word": "Flappy Bird",
+      "difficulty": "easy",
+      "description": "Mobile game tapping to pass through gaps between pipes."
+    },
+    {
+      "word": "Doodle Jump",
+      "difficulty": "easy",
+      "description": "Platformer guiding a little creature upwards endlessly."
+    },
+    {
+      "word": "Geometry Dash",
+      "difficulty": "easy",
+      "description": "Rhythm platformer where a cube jumps over obstacles."
+    },
+    {
+      "word": "Crossy Road",
+      "difficulty": "easy",
+      "description": "Arcade game helping a character navigate traffic and rivers."
+    },
+    {
+      "word": "Pokémon GO",
+      "difficulty": "easy",
+      "description": "Mobile game finding collectible creatures in real-world locations."
+    },
+    {
+      "word": "Wii Sports",
+      "difficulty": "easy",
+      "description": "Motion-controlled collection featuring bowling and tennis."
+    },
+    {
+      "word": "Wii Fit",
+      "difficulty": "easy",
+      "description": "Fitness game associated with a balance-board accessory."
+    },
+    {
+      "word": "Just Dance",
+      "difficulty": "easy",
+      "description": "Rhythm game copying choreography shown on screen."
+    },
+    {
+      "word": "Guitar Hero",
+      "difficulty": "easy",
+      "description": "Rhythm game using a plastic instrument controller."
+    },
+    {
+      "word": "Rock Band",
+      "difficulty": "easy",
+      "description": "Music game supporting vocals, drums and instrument controllers."
+    },
+    {
+      "word": "Dance Dance Revolution",
+      "difficulty": "easy",
+      "description": "Arcade rhythm game played on a directional floor pad."
+    },
+    {
+      "word": "SingStar",
+      "difficulty": "easy",
+      "description": "Karaoke game associated with PlayStation microphones."
+    },
+    {
+      "word": "Mario Kart",
+      "difficulty": "easy",
+      "description": "Nintendo racing series involving shells and banana skins."
+    },
+    {
+      "word": "Mario Party",
+      "difficulty": "easy",
+      "description": "Nintendo minigame series presented as a digital board game."
+    },
+    {
+      "word": "Luigi's Mansion",
+      "difficulty": "easy",
+      "description": "Nintendo adventure using a vacuum to capture ghosts."
+    },
+    {
+      "word": "Donkey Kong",
+      "difficulty": "easy",
+      "description": "Nintendo gorilla associated with barrels and bananas."
+    },
+    {
+      "word": "Kirby",
+      "difficulty": "easy",
+      "description": "Pink Nintendo hero who inhales enemies."
+    },
+    {
+      "word": "Yoshi",
+      "difficulty": "easy",
+      "description": "Green dinosaur companion who swallows enemies with his tongue."
+    },
+    {
+      "word": "Pikachu",
+      "difficulty": "easy",
+      "description": "Yellow electric creature associated with Ash Ketchum."
+    },
+    {
+      "word": "Charizard",
+      "difficulty": "easy",
+      "description": "Fire-breathing orange creature evolved from Charmeleon."
+    },
+    {
+      "word": "Jigglypuff",
+      "difficulty": "easy",
+      "description": "Round pink creature that puts listeners to sleep by singing."
+    },
+    {
+      "word": "Eevee",
+      "difficulty": "easy",
+      "description": "Foxlike collectible creature with many possible evolutions."
+    },
+    {
+      "word": "Team Rocket",
+      "difficulty": "easy",
+      "description": "Anime villains who repeatedly try to steal Pikachu."
+    },
+    {
+      "word": "Bowser",
+      "difficulty": "easy",
+      "description": "Spiked-shelled Nintendo villain who kidnaps Princess Peach."
+    },
+    {
+      "word": "Princess Peach",
+      "difficulty": "easy",
+      "description": "Mushroom Kingdom ruler often rescued by Mario."
+    },
+    {
+      "word": "Toad",
+      "difficulty": "easy",
+      "description": "Nintendo character with a spotted mushroom cap."
+    },
+    {
+      "word": "Wario",
+      "difficulty": "easy",
+      "description": "Greedy yellow-clad rival of Nintendo's moustached plumber."
+    },
+    {
+      "word": "Waluigi",
+      "difficulty": "easy",
+      "description": "Tall purple-clad Nintendo character associated with sports spin-offs."
+    },
+    {
+      "word": "Link",
+      "difficulty": "easy",
+      "description": "Green-clad Nintendo hero who wields the Master Sword."
+    },
+    {
+      "word": "Master Chief",
+      "difficulty": "easy",
+      "description": "Armoured protagonist associated with the Halo series."
+    },
+    {
+      "word": "Lara Croft",
+      "difficulty": "easy",
+      "description": "Adventurer at the centre of Tomb Raider."
+    },
+    {
+      "word": "Crash Bandicoot",
+      "difficulty": "easy",
+      "description": "Spinning orange platforming hero created by Naughty Dog."
+    },
+    {
+      "word": "Spyro",
+      "difficulty": "easy",
+      "description": "Small purple dragon starring in a platforming series."
+    },
+    {
+      "word": "Ratchet & Clank",
+      "difficulty": "easy",
+      "description": "Insomniac duo featuring a lombax and a small robot."
+    },
+    {
+      "word": "Sackboy",
+      "difficulty": "easy",
+      "description": "Stitched fabric mascot associated with LittleBigPlanet."
+    },
+    {
+      "word": "Kratos",
+      "difficulty": "easy",
+      "description": "Ashen warrior associated with the God of War series."
+    },
+    {
+      "word": "Nathan Drake",
+      "difficulty": "easy",
+      "description": "Treasure-hunting protagonist of Uncharted."
+    },
+    {
+      "word": "Agent 47",
+      "difficulty": "easy",
+      "description": "Bald assassin known for a barcode on his head."
+    },
+    {
+      "word": "Solid Snake",
+      "difficulty": "easy",
+      "description": "Stealth-game operative associated with hiding in cardboard boxes."
+    },
+    {
+      "word": "Chun-Li",
+      "difficulty": "easy",
+      "description": "Street Fighter character famous for rapid kicks."
+    },
+    {
+      "word": "Scorpion",
+      "difficulty": "easy",
+      "description": "Mortal Kombat fighter associated with a spear and a fiery skull."
+    },
+    {
+      "word": "Resident Evil",
+      "difficulty": "hard",
+      "description": "Survival-horror franchise associated with Umbrella and infected creatures."
+    },
+    {
+      "word": "Silent Hill",
+      "difficulty": "hard",
+      "description": "Horror franchise associated with fog and Pyramid Head."
+    },
+    {
+      "word": "Five Nights at Freddy's",
+      "difficulty": "hard",
+      "description": "Horror series involving hostile restaurant animatronics."
+    },
+    {
+      "word": "Little Nightmares",
+      "difficulty": "hard",
+      "description": "Creepy puzzle-platformer featuring a child in a yellow raincoat."
+    },
+    {
+      "word": "Limbo",
+      "difficulty": "hard",
+      "description": "Monochrome puzzle-platformer featuring a boy in a dangerous landscape."
+    },
+    {
+      "word": "Inside",
+      "difficulty": "hard",
+      "description": "Dystopian puzzle-platformer from the creators of Limbo."
+    },
+    {
+      "word": "Undertale",
+      "difficulty": "hard",
+      "description": "Role-playing game where mercy can replace defeating monsters."
+    },
+    {
+      "word": "Cuphead",
+      "difficulty": "hard",
+      "description": "Run-and-gun game styled like a 1930s cartoon."
+    },
+    {
+      "word": "Hollow Knight",
+      "difficulty": "hard",
+      "description": "Metroidvania set in a ruined insect kingdom."
+    },
+    {
+      "word": "Celeste",
+      "difficulty": "hard",
+      "description": "Platformer about Madeline climbing a difficult mountain."
+    },
+    {
+      "word": "Terraria",
+      "difficulty": "hard",
+      "description": "Side-scrolling sandbox game involving digging, crafting and bosses."
+    },
+    {
+      "word": "No Man's Sky",
+      "difficulty": "hard",
+      "description": "Exploration game featuring procedurally generated planets."
+    },
+    {
+      "word": "Subnautica",
+      "difficulty": "hard",
+      "description": "Survival game set largely beneath an alien ocean."
+    },
+    {
+      "word": "Valheim",
+      "difficulty": "hard",
+      "description": "Viking-themed cooperative survival game."
+    },
+    {
+      "word": "Don't Starve",
+      "difficulty": "hard",
+      "description": "Survival game with a hand-drawn gothic style."
+    },
+    {
+      "word": "It Takes Two",
+      "difficulty": "hard",
+      "description": "Cooperative adventure about estranged parents transformed into dolls."
+    },
+    {
+      "word": "Overcooked",
+      "difficulty": "hard",
+      "description": "Cooperative game managing chaotic kitchens."
+    },
+    {
+      "word": "Moving Out",
+      "difficulty": "hard",
+      "description": "Cooperative game transporting furniture through absurd obstacles."
+    },
+    {
+      "word": "Human: Fall Flat",
+      "difficulty": "hard",
+      "description": "Physics puzzle game starring wobbly, featureless characters."
+    },
+    {
+      "word": "Gang Beasts",
+      "difficulty": "hard",
+      "description": "Party brawler featuring floppy gelatinous fighters."
+    },
+    {
+      "word": "Untitled Goose Game",
+      "difficulty": "hard",
+      "description": "Mischief simulator starring a honking bird."
+    },
+    {
+      "word": "Goat Simulator",
+      "difficulty": "hard",
+      "description": "Absurd sandbox game starring a destructive farm animal."
+    },
+    {
+      "word": "PowerWash Simulator",
+      "difficulty": "hard",
+      "description": "Cleaning game using high-pressure water to remove grime."
+    },
+    {
+      "word": "Farming Simulator",
+      "difficulty": "hard",
+      "description": "Game series operating tractors and managing agricultural work."
+    },
+    {
+      "word": "Euro Truck Simulator",
+      "difficulty": "hard",
+      "description": "Driving game transporting cargo between cities such as Paris and Berlin."
+    },
+    {
+      "word": "Microsoft Flight Simulator",
+      "difficulty": "hard",
+      "description": "Detailed aviation game using real-world geography."
+    },
+    {
+      "word": "Cities: Skylines",
+      "difficulty": "hard",
+      "description": "Urban planning game involving roads, services and zoning."
+    },
+    {
+      "word": "RollerCoaster Tycoon",
+      "difficulty": "hard",
+      "description": "Management game building amusement parks and thrill rides."
+    },
+    {
+      "word": "Zoo Tycoon",
+      "difficulty": "hard",
+      "description": "Management game building enclosures and caring for animals."
+    },
+    {
+      "word": "Theme Hospital",
+      "difficulty": "hard",
+      "description": "Comic management game treating absurd fictional illnesses."
+    },
+    {
+      "word": "Two Point Hospital",
+      "difficulty": "hard",
+      "description": "Comic healthcare-management game featuring light-headed patients."
+    },
+    {
+      "word": "Prison Architect",
+      "difficulty": "hard",
+      "description": "Management game designing and running a correctional facility."
+    },
+    {
+      "word": "Papers, Please",
+      "difficulty": "hard",
+      "description": "Dystopian game checking travellers' documents at a border."
+    },
+    {
+      "word": "Disco Elysium",
+      "difficulty": "hard",
+      "description": "Role-playing detective story featuring competing internal voices."
+    },
+    {
+      "word": "Return of the Obra Dinn",
+      "difficulty": "hard",
+      "description": "Mystery game investigating deaths aboard a merchant ship."
+    },
+    {
+      "word": "Outer Wilds",
+      "difficulty": "hard",
+      "description": "Exploration mystery involving a small planetary system and a time loop."
+    },
+    {
+      "word": "The Stanley Parable",
+      "difficulty": "hard",
+      "description": "Narrated exploration game about choice and office corridors."
+    },
+    {
+      "word": "Firewatch",
+      "difficulty": "hard",
+      "description": "Narrative adventure following a lookout in the Wyoming wilderness."
+    },
+    {
+      "word": "What Remains of Edith Finch",
+      "difficulty": "hard",
+      "description": "Narrative game exploring a family's strange deaths."
+    },
+    {
+      "word": "Journey",
+      "difficulty": "hard",
+      "description": "Wordless desert adventure featuring a robed traveller and scarf."
     }
   ],
   "Cars": [
@@ -9434,6 +17598,446 @@ const categories = {
       "word": "Volvo XC60",
       "difficulty": "hard",
       "description": "Swedish midsize SUV known for safety-focused design."
+    },
+    {
+      "word": "Volkswagen Golf",
+      "difficulty": "easy",
+      "description": "German hatchback associated with GTI models."
+    },
+    {
+      "word": "Toyota Hilux",
+      "difficulty": "easy",
+      "description": "Pickup associated with South African bakkie culture."
+    },
+    {
+      "word": "Ford Ranger",
+      "difficulty": "easy",
+      "description": "Pickup truck sharing its name with a park guardian."
+    },
+    {
+      "word": "Isuzu D-Max",
+      "difficulty": "easy",
+      "description": "Pickup associated with a Japanese commercial-vehicle maker."
+    },
+    {
+      "word": "Nissan NP200",
+      "difficulty": "easy",
+      "description": "Small pickup familiar on South African work sites."
+    },
+    {
+      "word": "Toyota Corolla",
+      "difficulty": "easy",
+      "description": "Long-running Japanese family-car nameplate."
+    },
+    {
+      "word": "Toyota Quantum",
+      "difficulty": "easy",
+      "description": "Passenger van commonly used as a South African minibus taxi."
+    },
+    {
+      "word": "Volkswagen Polo",
+      "difficulty": "easy",
+      "description": "Compact German hatchback common on South African roads."
+    },
+    {
+      "word": "Suzuki Swift",
+      "difficulty": "easy",
+      "description": "Small Japanese hatchback with a speedy-sounding name."
+    },
+    {
+      "word": "Hyundai i10",
+      "difficulty": "easy",
+      "description": "Small city hatchback from a Korean manufacturer."
+    },
+    {
+      "word": "Kia Picanto",
+      "difficulty": "easy",
+      "description": "Compact Korean city car."
+    },
+    {
+      "word": "Renault Clio",
+      "difficulty": "easy",
+      "description": "French supermini associated with a short four-letter name."
+    },
+    {
+      "word": "Peugeot",
+      "difficulty": "easy",
+      "description": "French car marque with a lion badge."
+    },
+    {
+      "word": "Citroën",
+      "difficulty": "easy",
+      "description": "French car marque with a double-chevron badge."
+    },
+    {
+      "word": "Opel",
+      "difficulty": "easy",
+      "description": "Car marque whose badge features a lightning bolt."
+    },
+    {
+      "word": "Fiat 500",
+      "difficulty": "easy",
+      "description": "Tiny Italian city car revived with retro styling."
+    },
+    {
+      "word": "Mini Cooper",
+      "difficulty": "easy",
+      "description": "Small British-associated car featured in The Italian Job."
+    },
+    {
+      "word": "Land Rover Defender",
+      "difficulty": "easy",
+      "description": "Boxy off-road vehicle associated with expedition travel."
+    },
+    {
+      "word": "Toyota Land Cruiser",
+      "difficulty": "easy",
+      "description": "Rugged Japanese SUV associated with safari trips."
+    },
+    {
+      "word": "Jeep",
+      "difficulty": "easy",
+      "description": "Vehicle brand associated with seven-slot grilles and off-roading."
+    },
+    {
+      "word": "Hummer",
+      "difficulty": "easy",
+      "description": "Bulky vehicle brand associated with military-inspired styling."
+    },
+    {
+      "word": "Limousine",
+      "difficulty": "easy",
+      "description": "Long luxury car often hired for matric dances."
+    },
+    {
+      "word": "Hearse",
+      "difficulty": "easy",
+      "description": "Vehicle used to transport a coffin."
+    },
+    {
+      "word": "Ambulance Siren",
+      "difficulty": "easy",
+      "description": "Warning sound announcing an approaching medical vehicle."
+    },
+    {
+      "word": "Fire Engine",
+      "difficulty": "easy",
+      "description": "Emergency vehicle carrying ladders, hoses and rescue equipment."
+    },
+    {
+      "word": "Tow Truck",
+      "difficulty": "easy",
+      "description": "Vehicle used to recover a broken-down car."
+    },
+    {
+      "word": "Garbage Truck",
+      "difficulty": "easy",
+      "description": "Vehicle collecting household refuse."
+    },
+    {
+      "word": "Ice Cream Van",
+      "difficulty": "easy",
+      "description": "Vehicle selling frozen treats, often announcing itself with music."
+    },
+    {
+      "word": "Food Truck",
+      "difficulty": "easy",
+      "description": "Mobile kitchen serving meals from a parked vehicle."
+    },
+    {
+      "word": "Campervan",
+      "difficulty": "easy",
+      "description": "Vehicle fitted with sleeping and basic living facilities."
+    },
+    {
+      "word": "Bakkie",
+      "difficulty": "easy",
+      "description": "South African term for a pickup truck."
+    },
+    {
+      "word": "Boot",
+      "difficulty": "easy",
+      "description": "British term for a car's rear luggage compartment."
+    },
+    {
+      "word": "Bonnet",
+      "difficulty": "easy",
+      "description": "British term for the panel covering a car's engine."
+    },
+    {
+      "word": "Windscreen",
+      "difficulty": "easy",
+      "description": "Front glass panel a driver looks through."
+    },
+    {
+      "word": "Windscreen Wipers",
+      "difficulty": "easy",
+      "description": "Blades that clear rain from a driver's view."
+    },
+    {
+      "word": "Rear-view Mirror",
+      "difficulty": "easy",
+      "description": "Reflective device showing traffic behind the driver."
+    },
+    {
+      "word": "Side Mirror",
+      "difficulty": "easy",
+      "description": "Reflective device outside a car near the front doors."
+    },
+    {
+      "word": "Indicator",
+      "difficulty": "easy",
+      "description": "Flashing vehicle signal used before turning."
+    },
+    {
+      "word": "Hazard Lights",
+      "difficulty": "easy",
+      "description": "All turn signals flashing together as a warning."
+    },
+    {
+      "word": "Brake Pedal",
+      "difficulty": "easy",
+      "description": "Foot-operated control used to slow a vehicle."
+    },
+    {
+      "word": "Accelerator",
+      "difficulty": "easy",
+      "description": "Pedal pressed to increase engine power."
+    },
+    {
+      "word": "Clutch",
+      "difficulty": "easy",
+      "description": "Control disconnecting the engine when changing manual gears."
+    },
+    {
+      "word": "Gearstick",
+      "difficulty": "easy",
+      "description": "Lever used to select a vehicle's transmission ratio."
+    },
+    {
+      "word": "Handbrake",
+      "difficulty": "easy",
+      "description": "Parking control often pulled beside the driver's seat."
+    },
+    {
+      "word": "Spare Tyre",
+      "difficulty": "easy",
+      "description": "Extra wheel covering kept for a puncture emergency."
+    },
+    {
+      "word": "Jack",
+      "difficulty": "easy",
+      "description": "Lifting device used when changing a vehicle wheel."
+    },
+    {
+      "word": "Jumper Cables",
+      "difficulty": "easy",
+      "description": "Leads connecting a flat vehicle battery to another supply."
+    },
+    {
+      "word": "Puncture",
+      "difficulty": "easy",
+      "description": "Hole causing air to escape from a tyre."
+    },
+    {
+      "word": "Flat Battery",
+      "difficulty": "easy",
+      "description": "Power source unable to provide enough charge to start."
+    },
+    {
+      "word": "Petrol Station",
+      "difficulty": "easy",
+      "description": "Roadside place to refill a vehicle's fuel tank."
+    },
+    {
+      "word": "Car Wash",
+      "difficulty": "easy",
+      "description": "Place where a vehicle's exterior gets cleaned."
+    },
+    {
+      "word": "Drive-through",
+      "difficulty": "easy",
+      "description": "Service where customers order without leaving their vehicle."
+    },
+    {
+      "word": "Speed Bump",
+      "difficulty": "easy",
+      "description": "Raised road feature intended to slow vehicles."
+    },
+    {
+      "word": "Pothole",
+      "difficulty": "easy",
+      "description": "Depression in a road that can damage tyres."
+    },
+    {
+      "word": "Traffic Cone",
+      "difficulty": "easy",
+      "description": "Bright tapered marker used around roadworks."
+    },
+    {
+      "word": "Roadblock",
+      "difficulty": "easy",
+      "description": "Checkpoint where police stop and inspect vehicles."
+    },
+    {
+      "word": "Learner Driver",
+      "difficulty": "easy",
+      "description": "Person practising behind the wheel before qualifying."
+    },
+    {
+      "word": "Driving Test",
+      "difficulty": "easy",
+      "description": "Assessment required before receiving a motorist's licence."
+    },
+    {
+      "word": "Parallel Parking",
+      "difficulty": "easy",
+      "description": "Manoeuvre fitting a vehicle lengthwise beside a kerb."
+    },
+    {
+      "word": "Reverse Parking",
+      "difficulty": "easy",
+      "description": "Manoeuvre backing a vehicle into a space."
+    },
+    {
+      "word": "Blind Spot",
+      "difficulty": "hard",
+      "description": "Area a driver cannot directly see or check in mirrors."
+    },
+    {
+      "word": "Hydroplaning",
+      "difficulty": "hard",
+      "description": "Tyres losing road contact on a layer of water."
+    },
+    {
+      "word": "Understeer",
+      "difficulty": "hard",
+      "description": "Vehicle turning less sharply than the driver intends."
+    },
+    {
+      "word": "Oversteer",
+      "difficulty": "hard",
+      "description": "Vehicle's rear sliding outward during a turn."
+    },
+    {
+      "word": "Drifting",
+      "difficulty": "hard",
+      "description": "Deliberately maintaining a controlled sideways slide."
+    },
+    {
+      "word": "Wheel Alignment",
+      "difficulty": "hard",
+      "description": "Adjusting tyre angles to improve tracking and wear."
+    },
+    {
+      "word": "Wheel Balancing",
+      "difficulty": "hard",
+      "description": "Correcting uneven mass distribution around a rotating tyre assembly."
+    },
+    {
+      "word": "Traction Control",
+      "difficulty": "hard",
+      "description": "System limiting driven wheels from spinning excessively."
+    },
+    {
+      "word": "ABS",
+      "difficulty": "hard",
+      "description": "Braking system designed to prevent wheels locking."
+    },
+    {
+      "word": "Cruise Control",
+      "difficulty": "hard",
+      "description": "System maintaining a selected speed without pedal input."
+    },
+    {
+      "word": "Power Steering",
+      "difficulty": "hard",
+      "description": "Assisted system reducing effort needed to turn the wheels."
+    },
+    {
+      "word": "Regenerative Braking",
+      "difficulty": "hard",
+      "description": "Slowing a vehicle while recovering energy into its battery."
+    },
+    {
+      "word": "Hybrid",
+      "difficulty": "hard",
+      "description": "Vehicle combining an engine with an electric motor."
+    },
+    {
+      "word": "Plug-in Hybrid",
+      "difficulty": "hard",
+      "description": "Vehicle with both an engine and externally rechargeable battery."
+    },
+    {
+      "word": "All-wheel Drive",
+      "difficulty": "hard",
+      "description": "System delivering engine power to both vehicle axles."
+    },
+    {
+      "word": "Front-wheel Drive",
+      "difficulty": "hard",
+      "description": "Configuration where the forward tyres propel the vehicle."
+    },
+    {
+      "word": "Rear-wheel Drive",
+      "difficulty": "hard",
+      "description": "Configuration where the back tyres propel the vehicle."
+    },
+    {
+      "word": "Anti-roll Bar",
+      "difficulty": "hard",
+      "description": "Suspension component reducing body lean in corners."
+    },
+    {
+      "word": "Crankshaft",
+      "difficulty": "hard",
+      "description": "Engine component converting piston movement into rotation."
+    },
+    {
+      "word": "Camshaft",
+      "difficulty": "hard",
+      "description": "Engine shaft controlling when valves open and close."
+    },
+    {
+      "word": "Spark Plug",
+      "difficulty": "hard",
+      "description": "Engine component igniting the air-fuel mixture."
+    },
+    {
+      "word": "Timing Belt",
+      "difficulty": "hard",
+      "description": "Toothed loop synchronising an engine's rotating components."
+    },
+    {
+      "word": "Radiator",
+      "difficulty": "hard",
+      "description": "Heat exchanger helping keep an engine cool."
+    },
+    {
+      "word": "Alternator",
+      "difficulty": "hard",
+      "description": "Engine-driven component that replenishes a vehicle's battery."
+    },
+    {
+      "word": "Exhaust",
+      "difficulty": "hard",
+      "description": "System carrying combustion gases away from an engine."
+    },
+    {
+      "word": "Muffler",
+      "difficulty": "hard",
+      "description": "Component reducing noise from an engine's waste gases."
+    },
+    {
+      "word": "Odometer",
+      "difficulty": "hard",
+      "description": "Instrument recording a vehicle's total distance travelled."
+    },
+    {
+      "word": "Tachometer",
+      "difficulty": "hard",
+      "description": "Gauge showing engine revolutions per minute."
     }
   ],
   "Fashion": [
@@ -9494,7 +18098,7 @@ const categories = {
     },
     {
       "word": "Little Black Dress",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Simple, elegant black dress that is versatile for various occasions."
     },
     {
@@ -9504,17 +18108,17 @@ const categories = {
     },
     {
       "word": "Trench Coat",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Long, waterproof coat with a belt and often double-breasted."
     },
     {
       "word": "Catwalk",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Runway where models showcase clothing during fashion shows."
     },
     {
       "word": "Fashion Week",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Event showcasing the latest fashion designs and trends over several days."
     },
     {
@@ -9529,7 +18133,7 @@ const categories = {
     },
     {
       "word": "Vintage Clothing",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Clothing from previous decades, often valued for its style or rarity."
     },
     {
@@ -9564,7 +18168,7 @@ const categories = {
     },
     {
       "word": "Bomber Jacket",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Waist-length zip jacket with ribbed cuffs and hem."
     },
     {
@@ -9584,7 +18188,7 @@ const categories = {
     },
     {
       "word": "Turtleneck",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Top with a high collar that covers the neck."
     },
     {
@@ -9628,7 +18232,7 @@ const categories = {
       "description": "Boots that end around the ankle."
     },
     {
-      "word": "Stiletto",
+      "word": "High Heels",
       "difficulty": "easy",
       "description": "Shoe with a very thin high heel."
     },
@@ -9644,7 +18248,7 @@ const categories = {
     },
     {
       "word": "Clutch Bag",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Small hand-held purse, often used for evenings."
     },
     {
@@ -9664,13 +18268,453 @@ const categories = {
     },
     {
       "word": "Leather Jacket",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Outerwear made from treated hide, often linked to biker style."
     },
     {
       "word": "Seamstress",
       "difficulty": "easy",
       "description": "Person who sews garments professionally."
+    },
+    {
+      "word": "Hoodie",
+      "difficulty": "easy",
+      "description": "Casual sweatshirt with an attached head covering."
+    },
+    {
+      "word": "Tracksuit",
+      "difficulty": "easy",
+      "description": "Matching sporty jacket and trousers."
+    },
+    {
+      "word": "Pyjamas",
+      "difficulty": "easy",
+      "description": "Matching clothes worn to bed."
+    },
+    {
+      "word": "Dressing Gown",
+      "difficulty": "easy",
+      "description": "Loose robe worn around the house."
+    },
+    {
+      "word": "Bathrobe",
+      "difficulty": "easy",
+      "description": "Absorbent wrap worn after washing."
+    },
+    {
+      "word": "Slippers",
+      "difficulty": "easy",
+      "description": "Soft indoor footwear."
+    },
+    {
+      "word": "Flip-flops",
+      "difficulty": "easy",
+      "description": "Open footwear held on by a strap between the toes."
+    },
+    {
+      "word": "Crocs",
+      "difficulty": "easy",
+      "description": "Foam clogs famous for ventilation holes and decorative charms."
+    },
+    {
+      "word": "Gumboots",
+      "difficulty": "easy",
+      "description": "Waterproof rubber footwear for muddy conditions."
+    },
+    {
+      "word": "Cowboy Boots",
+      "difficulty": "easy",
+      "description": "Western footwear associated with pointed toes and angled heels."
+    },
+    {
+      "word": "Platform Shoes",
+      "difficulty": "easy",
+      "description": "Footwear with thick raised soles."
+    },
+    {
+      "word": "Wedges",
+      "difficulty": "easy",
+      "description": "Footwear with a solid raised sole under the arch."
+    },
+    {
+      "word": "Ballet Flats",
+      "difficulty": "easy",
+      "description": "Low-cut slip-on footwear inspired by a stage discipline."
+    },
+    {
+      "word": "Moccasins",
+      "difficulty": "easy",
+      "description": "Soft footwear traditionally associated with Indigenous North American peoples."
+    },
+    {
+      "word": "Espadrilles",
+      "difficulty": "easy",
+      "description": "Casual footwear with braided rope soles."
+    },
+    {
+      "word": "Sandals",
+      "difficulty": "easy",
+      "description": "Open footwear held on with straps."
+    },
+    {
+      "word": "Socks",
+      "difficulty": "easy",
+      "description": "Soft coverings worn between feet and shoes."
+    },
+    {
+      "word": "Stockings",
+      "difficulty": "easy",
+      "description": "Close-fitting leg coverings associated with garters."
+    },
+    {
+      "word": "Tights",
+      "difficulty": "easy",
+      "description": "Close-fitting garment covering legs and waist."
+    },
+    {
+      "word": "Leggings",
+      "difficulty": "easy",
+      "description": "Stretchy close-fitting trousers often worn for exercise."
+    },
+    {
+      "word": "Cargo Pants",
+      "difficulty": "easy",
+      "description": "Casual trousers with large side pockets."
+    },
+    {
+      "word": "Dungarees",
+      "difficulty": "easy",
+      "description": "Trousers with a bib and shoulder straps."
+    },
+    {
+      "word": "Overalls",
+      "difficulty": "easy",
+      "description": "Protective work garment covering torso and legs."
+    },
+    {
+      "word": "Shorts",
+      "difficulty": "easy",
+      "description": "Trousers ending above or near the knee."
+    },
+    {
+      "word": "Cycling Shorts",
+      "difficulty": "easy",
+      "description": "Tight exercise bottoms associated with padded seats."
+    },
+    {
+      "word": "Sarong",
+      "difficulty": "easy",
+      "description": "Long cloth wrapped around the waist."
+    },
+    {
+      "word": "Sari",
+      "difficulty": "easy",
+      "description": "Draped garment traditionally worn on the Indian subcontinent."
+    },
+    {
+      "word": "Kimono",
+      "difficulty": "easy",
+      "description": "Japanese wrap garment with wide sleeves."
+    },
+    {
+      "word": "Kaftan",
+      "difficulty": "easy",
+      "description": "Loose flowing robe associated with several cultures."
+    },
+    {
+      "word": "Poncho",
+      "difficulty": "easy",
+      "description": "Outer garment with a central opening for the head."
+    },
+    {
+      "word": "Cape",
+      "difficulty": "easy",
+      "description": "Sleeveless outer garment fastened near the neck."
+    },
+    {
+      "word": "Raincoat",
+      "difficulty": "easy",
+      "description": "Waterproof outer garment for wet weather."
+    },
+    {
+      "word": "Puffer Jacket",
+      "difficulty": "easy",
+      "description": "Quilted insulated outerwear with padded sections."
+    },
+    {
+      "word": "Waistcoat",
+      "difficulty": "easy",
+      "description": "Sleeveless tailored garment worn over a shirt."
+    },
+    {
+      "word": "Bow Tie",
+      "difficulty": "easy",
+      "description": "Formal neck accessory shaped like butterfly wings."
+    },
+    {
+      "word": "Necktie",
+      "difficulty": "easy",
+      "description": "Long strip of fabric knotted beneath a shirt collar."
+    },
+    {
+      "word": "Cufflinks",
+      "difficulty": "easy",
+      "description": "Decorative fasteners used on formal shirt sleeves."
+    },
+    {
+      "word": "Suspenders",
+      "difficulty": "easy",
+      "description": "Straps running over shoulders to hold trousers up."
+    },
+    {
+      "word": "Belt",
+      "difficulty": "easy",
+      "description": "Waist accessory used to hold trousers in place."
+    },
+    {
+      "word": "Buckle",
+      "difficulty": "easy",
+      "description": "Fastener on a strap or waist accessory."
+    },
+    {
+      "word": "Brooch",
+      "difficulty": "easy",
+      "description": "Decorative pin worn on clothing."
+    },
+    {
+      "word": "Necklace",
+      "difficulty": "easy",
+      "description": "Jewellery worn around the throat."
+    },
+    {
+      "word": "Bracelet",
+      "difficulty": "easy",
+      "description": "Jewellery worn around the wrist."
+    },
+    {
+      "word": "Earrings",
+      "difficulty": "easy",
+      "description": "Jewellery attached to the lobes or outer ear."
+    },
+    {
+      "word": "Anklet",
+      "difficulty": "easy",
+      "description": "Jewellery worn just above the foot."
+    },
+    {
+      "word": "Tiara",
+      "difficulty": "easy",
+      "description": "Jewelled headpiece associated with princesses."
+    },
+    {
+      "word": "Fascinator",
+      "difficulty": "easy",
+      "description": "Decorative formal headpiece often seen at horse races."
+    },
+    {
+      "word": "Fedora",
+      "difficulty": "easy",
+      "description": "Soft felt hat with a pinched crown and brim."
+    },
+    {
+      "word": "Beret",
+      "difficulty": "easy",
+      "description": "Soft round flat cap associated with French style."
+    },
+    {
+      "word": "Balaclava",
+      "difficulty": "easy",
+      "description": "Close-fitting head covering leaving openings for the eyes."
+    },
+    {
+      "word": "Bandana",
+      "difficulty": "easy",
+      "description": "Square cloth worn tied around the head or neck."
+    },
+    {
+      "word": "Doek",
+      "difficulty": "easy",
+      "description": "Southern African term for a head wrap."
+    },
+    {
+      "word": "Durag",
+      "difficulty": "easy",
+      "description": "Close-fitting head covering associated with maintaining hair waves."
+    },
+    {
+      "word": "Wig",
+      "difficulty": "easy",
+      "description": "Artificial hair covering worn on the head."
+    },
+    {
+      "word": "Hair Extensions",
+      "difficulty": "easy",
+      "description": "Artificial strands added to make a longer, fuller look."
+    },
+    {
+      "word": "Cornrows",
+      "difficulty": "easy",
+      "description": "Tight braids arranged close to the scalp."
+    },
+    {
+      "word": "Dreadlocks",
+      "difficulty": "easy",
+      "description": "Hair worn in rope-like matted strands."
+    },
+    {
+      "word": "Afro",
+      "difficulty": "easy",
+      "description": "Rounded natural hairstyle associated with tightly curled hair."
+    },
+    {
+      "word": "Mullet",
+      "difficulty": "hard",
+      "description": "Hairstyle famously short in front and long at the back."
+    },
+    {
+      "word": "Man Bun",
+      "difficulty": "hard",
+      "description": "Masculine hairstyle gathering long hair into a knot."
+    },
+    {
+      "word": "Comb-over",
+      "difficulty": "hard",
+      "description": "Hairstyle sweeping strands across a thinning area."
+    },
+    {
+      "word": "Five O'Clock Shadow",
+      "difficulty": "hard",
+      "description": "Visible facial stubble after a day without shaving."
+    },
+    {
+      "word": "Wardrobe Malfunction",
+      "difficulty": "hard",
+      "description": "Accidental clothing failure in public."
+    },
+    {
+      "word": "Fashion Faux Pas",
+      "difficulty": "hard",
+      "description": "Socially awkward mistake in personal styling."
+    },
+    {
+      "word": "Double Denim",
+      "difficulty": "hard",
+      "description": "Outfit combining a jean-material top and bottoms."
+    },
+    {
+      "word": "Canadian Tuxedo",
+      "difficulty": "hard",
+      "description": "Nickname for wearing a jean-material jacket with matching trousers."
+    },
+    {
+      "word": "Power Dressing",
+      "difficulty": "hard",
+      "description": "Clothing choices intended to communicate professional authority."
+    },
+    {
+      "word": "Smart Casual",
+      "difficulty": "hard",
+      "description": "Dress code between relaxed clothes and formal business attire."
+    },
+    {
+      "word": "Black Tie",
+      "difficulty": "hard",
+      "description": "Formal dress code associated with tuxedos and evening gowns."
+    },
+    {
+      "word": "Dress Code",
+      "difficulty": "hard",
+      "description": "Rules about what clothing is appropriate for an occasion."
+    },
+    {
+      "word": "Thrift Shopping",
+      "difficulty": "hard",
+      "description": "Buying second-hand clothes or goods at bargain prices."
+    },
+    {
+      "word": "Upcycling",
+      "difficulty": "hard",
+      "description": "Transforming discarded items into something of greater value."
+    },
+    {
+      "word": "Mending",
+      "difficulty": "hard",
+      "description": "Repairing damaged fabric or clothing."
+    },
+    {
+      "word": "Hemming",
+      "difficulty": "hard",
+      "description": "Finishing a garment's edge by folding and stitching it."
+    },
+    {
+      "word": "Pleat",
+      "difficulty": "hard",
+      "description": "Fold sewn or pressed into fabric."
+    },
+    {
+      "word": "Seam",
+      "difficulty": "hard",
+      "description": "Stitched line joining pieces of fabric."
+    },
+    {
+      "word": "Lapels",
+      "difficulty": "hard",
+      "description": "Folded flaps at the front of a tailored jacket."
+    },
+    {
+      "word": "Epaulette",
+      "difficulty": "hard",
+      "description": "Decorative or rank-bearing strip on a uniform's shoulder."
+    },
+    {
+      "word": "Peplum",
+      "difficulty": "hard",
+      "description": "Short flared fabric section attached at the waist."
+    },
+    {
+      "word": "Herringbone",
+      "difficulty": "hard",
+      "description": "V-shaped woven pattern resembling repeated zigzags."
+    },
+    {
+      "word": "Houndstooth",
+      "difficulty": "hard",
+      "description": "Broken-check textile pattern associated with black and white."
+    },
+    {
+      "word": "Paisley",
+      "difficulty": "hard",
+      "description": "Decorative pattern of curved teardrop shapes."
+    },
+    {
+      "word": "Polka Dots",
+      "difficulty": "hard",
+      "description": "Pattern of regularly repeated round spots."
+    },
+    {
+      "word": "Tie Clip",
+      "difficulty": "hard",
+      "description": "Accessory holding a neckwear strip against a shirt."
+    },
+    {
+      "word": "Pocket Square",
+      "difficulty": "hard",
+      "description": "Folded decorative cloth displayed in a jacket's breast opening."
+    },
+    {
+      "word": "Statement Piece",
+      "difficulty": "hard",
+      "description": "Bold accessory or garment intended to attract attention."
+    },
+    {
+      "word": "Fashion Victim",
+      "difficulty": "hard",
+      "description": "Person who follows clothing trends excessively."
+    },
+    {
+      "word": "Hand-me-down",
+      "difficulty": "hard",
+      "description": "Item passed from an older owner to a younger one."
     }
   ],
   "Miscellaneous": [
@@ -9686,7 +18730,7 @@ const categories = {
     },
     {
       "word": "Jacaranda Trees",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Trees that bloom purple flowers, particularly famous in Pretoria."
     },
     {
@@ -9696,7 +18740,7 @@ const categories = {
     },
     {
       "word": "Samp and Beans",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Traditional South African dish."
     },
     {
@@ -9775,7 +18819,7 @@ const categories = {
       "description": "High-quality lamb meat from the Karoo region."
     },
     {
-      "word": "Shweshwe Fabric",
+      "word": "Shweshwe",
       "difficulty": "hard",
       "description": "Traditional printed cotton fabric popular in South African fashion."
     },
@@ -9880,54 +18924,19 @@ const categories = {
       "description": "South Africa's largest online retailer."
     },
     {
-      "word": "Festival",
-      "difficulty": "hard",
-      "description": "A festival is an event celebrated by a community and centering on some characteristics aspect or aspects of that community and its religion or cultures."
-    },
-    {
-      "word": "Ceremony",
-      "difficulty": "easy",
-      "description": "A ceremony is a unified ritualistic event with a purpose, usually consisting of a number of artistic components, performed on a special occasion."
-    },
-    {
-      "word": "Tradition",
-      "difficulty": "easy",
-      "description": "A tradition is a system of beliefs or behaviors passed down within a group of people or society with symbolic meaning or special significance with origins in the past."
-    },
-    {
-      "word": "Innovation",
-      "difficulty": "easy",
-      "description": "The practical implementation of ideas that result in the creation or improvements of goods or services."
-    },
-    {
       "word": "Debate",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Formal discussion where opposing sides argue viewpoints."
     },
     {
-      "word": "Puzzle",
+      "word": "Jigsaw Puzzle",
       "difficulty": "easy",
       "description": "A puzzle is a game, problem, or toy that tests a person's ingenuity or knowledge."
-    },
-    {
-      "word": "Masterpiece",
-      "difficulty": "easy",
-      "description": "A masterpiece, magnum opus, or chef-d'œuvre is a creation that has been given much critical praise, especially one that is considered the greatest work of a person's career or a..."
     },
     {
       "word": "Landmark",
       "difficulty": "easy",
       "description": "Important place or event recognized for significance."
-    },
-    {
-      "word": "Milestone",
-      "difficulty": "hard",
-      "description": "Major stage or achievement point in progress."
-    },
-    {
-      "word": "Breakthrough",
-      "difficulty": "easy",
-      "description": "Sudden major advance in science, tech, or effort."
     },
     {
       "word": "Negotiation",
@@ -9941,7 +18950,7 @@ const categories = {
     },
     {
       "word": "Blueprint",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Detailed plan or design before execution."
     },
     {
@@ -9950,18 +18959,13 @@ const categories = {
       "description": "Early test version of a product or idea."
     },
     {
-      "word": "Headline",
-      "difficulty": "easy",
-      "description": "Short title summarizing the main news story."
-    },
-    {
       "word": "Timeline",
       "difficulty": "easy",
       "description": "Chronological sequence of events over time."
     },
     {
       "word": "Checklist",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "List of tasks or items to be confirmed."
     },
     {
@@ -9981,7 +18985,7 @@ const categories = {
     },
     {
       "word": "Countdown",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Backward counting to a launch or deadline."
     },
     {
@@ -10001,7 +19005,7 @@ const categories = {
     },
     {
       "word": "Lifeline",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Rescue rope or figurative source of critical support."
     },
     {
@@ -10015,19 +19019,444 @@ const categories = {
       "description": "Unexpected twist; also a baseball pitch that bends."
     },
     {
-      "word": "Highlight Reel",
+      "word": "Awkward Silence",
       "difficulty": "easy",
-      "description": "Compilation of the best moments from an event."
+      "description": "Uncomfortable pause when nobody knows what to say."
     },
     {
-      "word": "Fast Track",
+      "word": "Dad Joke",
+      "difficulty": "easy",
+      "description": "Corny pun associated with an embarrassing parent."
+    },
+    {
+      "word": "Brain Freeze",
+      "difficulty": "easy",
+      "description": "Sudden head pain after eating something very cold."
+    },
+    {
+      "word": "Bed Hair",
+      "difficulty": "easy",
+      "description": "Untidy mop on your head after sleeping."
+    },
+    {
+      "word": "Bad Hair Day",
+      "difficulty": "easy",
+      "description": "When the mop on your head refuses to cooperate."
+    },
+    {
+      "word": "Food Coma",
+      "difficulty": "easy",
+      "description": "Sleepy feeling after eating a large meal."
+    },
+    {
+      "word": "Butterfingers",
+      "difficulty": "easy",
+      "description": "Nickname for someone who keeps dropping things."
+    },
+    {
+      "word": "Butterflies in Your Stomach",
+      "difficulty": "easy",
+      "description": "Fluttery nervous feeling before an important moment."
+    },
+    {
+      "word": "Goosebumps",
+      "difficulty": "easy",
+      "description": "Tiny raised skin bumps caused by cold or emotion."
+    },
+    {
+      "word": "Pins and Needles",
+      "difficulty": "easy",
+      "description": "Tingling sensation when a limb has gone numb."
+    },
+    {
+      "word": "Funny Bone",
+      "difficulty": "easy",
+      "description": "Elbow spot that causes a tingling jolt when knocked."
+    },
+    {
+      "word": "Ticklish",
+      "difficulty": "easy",
+      "description": "Easily made to laugh by light touching."
+    },
+    {
+      "word": "Double Chin",
+      "difficulty": "easy",
+      "description": "Fold of flesh beneath the jaw."
+    },
+    {
+      "word": "Unibrow",
+      "difficulty": "easy",
+      "description": "Single continuous line of facial hair above both eyes."
+    },
+    {
+      "word": "Cowlick",
+      "difficulty": "easy",
+      "description": "Patch of hair that grows in an awkward direction."
+    },
+    {
+      "word": "Tan Line",
+      "difficulty": "easy",
+      "description": "Visible boundary between sun-exposed and covered skin."
+    },
+    {
+      "word": "Fake Tan",
+      "difficulty": "easy",
+      "description": "Cosmetic colouring used to imitate sun-darkened skin."
+    },
+    {
+      "word": "Spray Tan",
+      "difficulty": "easy",
+      "description": "Cosmetic bronzing applied through a fine mist."
+    },
+    {
+      "word": "Photobomb",
+      "difficulty": "easy",
+      "description": "Unexpectedly appearing in someone else's picture."
+    },
+    {
+      "word": "Selfie Stick",
+      "difficulty": "easy",
+      "description": "Extendable pole used to take a picture of yourself."
+    },
+    {
+      "word": "Duck Face",
+      "difficulty": "easy",
+      "description": "Pouty expression made while posing for a photograph."
+    },
+    {
+      "word": "Peace Sign",
+      "difficulty": "easy",
+      "description": "Two raised fingers forming a V."
+    },
+    {
+      "word": "High Five",
+      "difficulty": "easy",
+      "description": "Celebratory gesture touching raised palms."
+    },
+    {
+      "word": "Fist Bump",
+      "difficulty": "easy",
+      "description": "Greeting made by touching closed hands."
+    },
+    {
+      "word": "Thumbs Up",
+      "difficulty": "easy",
+      "description": "Gesture commonly signalling approval."
+    },
+    {
+      "word": "Facepalm",
+      "difficulty": "easy",
+      "description": "Gesture covering your face in embarrassment or frustration."
+    },
+    {
+      "word": "Eye Roll",
+      "difficulty": "easy",
+      "description": "Upward glance expressing annoyance or disbelief."
+    },
+    {
+      "word": "Air Guitar",
+      "difficulty": "easy",
+      "description": "Pretending to play a stringed instrument without holding one."
+    },
+    {
+      "word": "Air Drums",
+      "difficulty": "easy",
+      "description": "Pretending to play a percussion kit without equipment."
+    },
+    {
+      "word": "Karaoke",
+      "difficulty": "easy",
+      "description": "Singing along to recorded accompaniment with displayed lyrics."
+    },
+    {
+      "word": "Talent Show",
+      "difficulty": "easy",
+      "description": "Competition where people perform skills before an audience."
+    },
+    {
+      "word": "Fancy Dress",
+      "difficulty": "easy",
+      "description": "Event clothing intended to resemble a character or theme."
+    },
+    {
+      "word": "Surprise Party",
+      "difficulty": "easy",
+      "description": "Celebration organised without the guest of honour knowing."
+    },
+    {
+      "word": "Prank Call",
+      "difficulty": "easy",
+      "description": "Telephone conversation intended as a practical joke."
+    },
+    {
+      "word": "Whoopee Cushion",
+      "difficulty": "easy",
+      "description": "Rubber joke device that makes a rude noise when sat on."
+    },
+    {
+      "word": "Fake Spider",
+      "difficulty": "easy",
+      "description": "Toy arachnid used to startle an unsuspecting person."
+    },
+    {
+      "word": "Rubber Chicken",
+      "difficulty": "easy",
+      "description": "Squeaky poultry-shaped prop associated with silly comedy."
+    },
+    {
+      "word": "Banana Peel",
+      "difficulty": "easy",
+      "description": "Slippery fruit covering associated with slapstick accidents."
+    },
+    {
+      "word": "Pie in the Face",
+      "difficulty": "easy",
+      "description": "Classic slapstick gag involving a flying dessert."
+    },
+    {
+      "word": "April Fool",
+      "difficulty": "easy",
+      "description": "Person tricked by a prank on the first day of the fourth month."
+    },
+    {
+      "word": "Lucky Charm",
+      "difficulty": "easy",
+      "description": "Object believed to bring good fortune."
+    },
+    {
+      "word": "Four-leaf Clover",
+      "difficulty": "easy",
+      "description": "Rare plant variation associated with good luck."
+    },
+    {
+      "word": "Horseshoe",
+      "difficulty": "easy",
+      "description": "Curved metal object hung above doors for good luck."
+    },
+    {
+      "word": "Rabbit's Foot",
+      "difficulty": "easy",
+      "description": "Animal-derived object traditionally carried as a good-luck token."
+    },
+    {
+      "word": "Fortune Cookie",
+      "difficulty": "easy",
+      "description": "Crisp sweet containing a small written prediction."
+    },
+    {
+      "word": "Crystal Ball",
+      "difficulty": "easy",
+      "description": "Transparent sphere associated with predicting the future."
+    },
+    {
+      "word": "Tarot Cards",
+      "difficulty": "easy",
+      "description": "Illustrated deck associated with divination."
+    },
+    {
+      "word": "Palm Reading",
+      "difficulty": "easy",
+      "description": "Predicting someone's future from lines on their hand."
+    },
+    {
+      "word": "Time Capsule",
+      "difficulty": "easy",
+      "description": "Collection buried for people to open in the future."
+    },
+    {
+      "word": "Déjà Vu",
       "difficulty": "hard",
-      "description": "Accelerated route to finish something sooner."
+      "description": "Feeling that a new experience has happened before."
     },
     {
-      "word": "Home Stretch",
-      "difficulty": "easy",
-      "description": "Final phase before reaching the finish."
+      "word": "Jamais Vu",
+      "difficulty": "hard",
+      "description": "Familiar situation suddenly seeming strange or unknown."
+    },
+    {
+      "word": "Mandela Effect",
+      "difficulty": "hard",
+      "description": "Shared false memory of an event or detail."
+    },
+    {
+      "word": "Placebo",
+      "difficulty": "hard",
+      "description": "Inactive treatment given as though it were real."
+    },
+    {
+      "word": "Red Herring",
+      "difficulty": "hard",
+      "description": "Misleading clue that distracts from the real issue."
+    },
+    {
+      "word": "Wild Goose Chase",
+      "difficulty": "hard",
+      "description": "Long pointless pursuit of something unattainable."
+    },
+    {
+      "word": "Elephant in the Room",
+      "difficulty": "hard",
+      "description": "Obvious uncomfortable issue everyone avoids discussing."
+    },
+    {
+      "word": "Skeleton in the Closet",
+      "difficulty": "hard",
+      "description": "Embarrassing secret someone wants to hide."
+    },
+    {
+      "word": "Storm in a Teacup",
+      "difficulty": "hard",
+      "description": "Huge fuss over a relatively minor problem."
+    },
+    {
+      "word": "Silver Lining",
+      "difficulty": "hard",
+      "description": "Positive aspect of an otherwise unpleasant situation."
+    },
+    {
+      "word": "Blessing in Disguise",
+      "difficulty": "hard",
+      "description": "Apparent misfortune that later proves beneficial."
+    },
+    {
+      "word": "Catch Twenty-two",
+      "difficulty": "hard",
+      "description": "Situation where conflicting conditions prevent a solution."
+    },
+    {
+      "word": "Chicken-and-egg Problem",
+      "difficulty": "hard",
+      "description": "Puzzle about which of two dependent things came first."
+    },
+    {
+      "word": "Domino Effect",
+      "difficulty": "hard",
+      "description": "Chain reaction where one event triggers others."
+    },
+    {
+      "word": "Snowball Effect",
+      "difficulty": "hard",
+      "description": "Process that grows larger and faster as it continues."
+    },
+    {
+      "word": "Ripple Effect",
+      "difficulty": "hard",
+      "description": "Consequences spreading outward from an initial event."
+    },
+    {
+      "word": "Butterfly Effect",
+      "difficulty": "hard",
+      "description": "Idea that tiny changes can lead to large later differences."
+    },
+    {
+      "word": "Murphy's Law",
+      "difficulty": "hard",
+      "description": "Saying that whatever can go wrong will."
+    },
+    {
+      "word": "Comfort Zone",
+      "difficulty": "hard",
+      "description": "Familiar situation where someone feels safe and unchallenged."
+    },
+    {
+      "word": "Guilty Pleasure",
+      "difficulty": "hard",
+      "description": "Enjoyment someone feels embarrassed to admit."
+    },
+    {
+      "word": "Pet Peeve",
+      "difficulty": "hard",
+      "description": "Minor irritation that particularly annoys someone."
+    },
+    {
+      "word": "Bucket List",
+      "difficulty": "hard",
+      "description": "Experiences someone hopes to have during their lifetime."
+    },
+    {
+      "word": "Midlife Crisis",
+      "difficulty": "hard",
+      "description": "Period of identity anxiety associated with middle age."
+    },
+    {
+      "word": "Identity Crisis",
+      "difficulty": "hard",
+      "description": "Uncertainty about who you are or what defines you."
+    },
+    {
+      "word": "Existential Crisis",
+      "difficulty": "hard",
+      "description": "Deep anxiety about meaning, purpose or existence."
+    },
+    {
+      "word": "Impostor Syndrome",
+      "difficulty": "hard",
+      "description": "Feeling fraudulent despite evidence of competence."
+    },
+    {
+      "word": "Main Character Energy",
+      "difficulty": "hard",
+      "description": "Acting as though events revolve around your personal story."
+    },
+    {
+      "word": "Second-hand Embarrassment",
+      "difficulty": "hard",
+      "description": "Feeling awkward while watching someone else's social mistake."
+    },
+    {
+      "word": "Happy Accident",
+      "difficulty": "hard",
+      "description": "Unplanned event that produces a welcome result."
+    },
+    {
+      "word": "Serendipity",
+      "difficulty": "hard",
+      "description": "Finding something valuable or pleasant unexpectedly."
+    },
+    {
+      "word": "Schadenfreude",
+      "difficulty": "hard",
+      "description": "Pleasure at another person's misfortune."
+    },
+    {
+      "word": "Nostalgia",
+      "difficulty": "hard",
+      "description": "Affectionate longing for an earlier time."
+    },
+    {
+      "word": "Procrastination",
+      "difficulty": "hard",
+      "description": "Putting off a task despite knowing it needs doing."
+    },
+    {
+      "word": "Overthinking",
+      "difficulty": "hard",
+      "description": "Analysing something so much that it becomes unhelpful."
+    },
+    {
+      "word": "Decision Fatigue",
+      "difficulty": "hard",
+      "description": "Reduced judgement after making too many choices."
+    },
+    {
+      "word": "Tunnel Vision",
+      "difficulty": "hard",
+      "description": "Focusing narrowly and missing the wider picture."
+    },
+    {
+      "word": "Selective Hearing",
+      "difficulty": "hard",
+      "description": "Appearing to notice only what you want to hear."
+    },
+    {
+      "word": "Short Fuse",
+      "difficulty": "hard",
+      "description": "Tendency to become angry very quickly."
+    },
+    {
+      "word": "Last Straw",
+      "difficulty": "hard",
+      "description": "Final small irritation that exhausts someone's patience."
     }
   ],
   "Business, Brands, and Companies": [
@@ -10113,7 +19542,7 @@ const categories = {
     },
     {
       "word": "SpaceX",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Private aerospace company known for Falcon rockets and Starlink."
     },
     {
@@ -10213,12 +19642,12 @@ const categories = {
     },
     {
       "word": "Mastercard",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Global card-payment network and Visa competitor."
     },
     {
       "word": "American Express",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Payment-card company known for premium cards and rewards."
     },
     {
@@ -10368,7 +19797,7 @@ const categories = {
     },
     {
       "word": "Alibaba",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Chinese e-commerce company serving retail and wholesale markets."
     },
     {
@@ -10413,7 +19842,7 @@ const categories = {
     },
     {
       "word": "Gucci",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Italian luxury fashion brand known for handbags and monogram style."
     },
     {
@@ -10430,11 +19859,6 @@ const categories = {
       "word": "Cartier",
       "difficulty": "easy",
       "description": "French luxury brand known for jewelry and premium watches."
-    },
-    {
-      "word": "Samsung Electronics",
-      "difficulty": "hard",
-      "description": "Core Samsung division making phones, TVs, chips, and devices."
     },
     {
       "word": "Shopify",
@@ -10477,9 +19901,459 @@ const categories = {
       "description": "Energy-drink brand heavily associated with extreme-sports sponsorships."
     },
     {
-      "word": "Nando's",
+      "word": "Nando’s",
       "difficulty": "easy",
-      "description": "Restaurant chain famous for peri-peri flame-grilled chicken."
+      "description": "Restaurant chain associated with peri-peri chicken and cheeky adverts."
+    },
+    {
+      "word": "LEGO",
+      "difficulty": "easy",
+      "description": "Interlocking plastic bricks from a Danish toy company."
+    },
+    {
+      "word": "Nintendo",
+      "difficulty": "easy",
+      "description": "Japanese company behind Mario and the Switch console."
+    },
+    {
+      "word": "PlayStation",
+      "difficulty": "easy",
+      "description": "Sony gaming brand associated with a triangle-circle-cross-square controller."
+    },
+    {
+      "word": "Xbox",
+      "difficulty": "easy",
+      "description": "Microsoft gaming brand associated with a green emblem."
+    },
+    {
+      "word": "WhatsApp",
+      "difficulty": "easy",
+      "description": "Messaging app associated with a green speech bubble and telephone."
+    },
+    {
+      "word": "Telegram",
+      "difficulty": "easy",
+      "description": "Messaging service associated with a paper-plane logo."
+    },
+    {
+      "word": "Reddit",
+      "difficulty": "easy",
+      "description": "Online discussion platform whose users post in topic communities."
+    },
+    {
+      "word": "Discord",
+      "difficulty": "easy",
+      "description": "Chat platform associated with gaming communities and servers."
+    },
+    {
+      "word": "Twitch",
+      "difficulty": "easy",
+      "description": "Streaming platform associated with live gaming broadcasts."
+    },
+    {
+      "word": "Zoom",
+      "difficulty": "easy",
+      "description": "Video-meeting service associated with pandemic-era office calls."
+    },
+    {
+      "word": "Skype",
+      "difficulty": "easy",
+      "description": "Internet calling service historically associated with a blue S."
+    },
+    {
+      "word": "Canva",
+      "difficulty": "easy",
+      "description": "Online design platform offering templates and drag-and-drop editing."
+    },
+    {
+      "word": "Dropbox",
+      "difficulty": "easy",
+      "description": "Cloud file-sharing service associated with an open-carton logo."
+    },
+    {
+      "word": "Wikipedia",
+      "difficulty": "easy",
+      "description": "Collaborative online encyclopedia edited by volunteers."
+    },
+    {
+      "word": "Mozilla Firefox",
+      "difficulty": "easy",
+      "description": "Browser associated with a fiery animal wrapped around a globe."
+    },
+    {
+      "word": "Google Chrome",
+      "difficulty": "easy",
+      "description": "Browser associated with a red-yellow-green circular logo."
+    },
+    {
+      "word": "Safari Browser",
+      "difficulty": "easy",
+      "description": "Apple web software associated with a compass icon."
+    },
+    {
+      "word": "Opera Browser",
+      "difficulty": "easy",
+      "description": "Web software associated with a red O logo."
+    },
+    {
+      "word": "DuckDuckGo",
+      "difficulty": "easy",
+      "description": "Search service associated with privacy and a bow-tied bird."
+    },
+    {
+      "word": "Booking.com",
+      "difficulty": "easy",
+      "description": "Accommodation reservation website associated with a blue logo."
+    },
+    {
+      "word": "Tripadvisor",
+      "difficulty": "easy",
+      "description": "Travel-review service associated with an owl-eye logo."
+    },
+    {
+      "word": "Expedia",
+      "difficulty": "easy",
+      "description": "Travel booking service associated with a plane-and-globe logo."
+    },
+    {
+      "word": "Emirates",
+      "difficulty": "easy",
+      "description": "Dubai-based airline associated with red branding and the A380."
+    },
+    {
+      "word": "Qatar Airways",
+      "difficulty": "easy",
+      "description": "Doha-based airline associated with an oryx emblem."
+    },
+    {
+      "word": "British Airways",
+      "difficulty": "easy",
+      "description": "UK airline associated with a red-white-blue tail design."
+    },
+    {
+      "word": "Lufthansa",
+      "difficulty": "easy",
+      "description": "German airline associated with a crane emblem."
+    },
+    {
+      "word": "Singapore Airlines",
+      "difficulty": "easy",
+      "description": "Carrier associated with a golden bird logo and Changi."
+    },
+    {
+      "word": "FlySafair",
+      "difficulty": "easy",
+      "description": "South African airline associated with pink-and-blue aircraft."
+    },
+    {
+      "word": "Airlink",
+      "difficulty": "easy",
+      "description": "Southern African regional carrier with a sunbird emblem."
+    },
+    {
+      "word": "Lift",
+      "difficulty": "easy",
+      "description": "South African airline with yellow-and-black branding."
+    },
+    {
+      "word": "South African Airways",
+      "difficulty": "easy",
+      "description": "National carrier associated with a colourful flag-inspired tail."
+    },
+    {
+      "word": "Gautrain",
+      "difficulty": "easy",
+      "description": "Rapid rail service linking Johannesburg, Pretoria and an airport."
+    },
+    {
+      "word": "Checkers",
+      "difficulty": "easy",
+      "description": "South African supermarket brand associated with Sixty60 deliveries."
+    },
+    {
+      "word": "Sixty60",
+      "difficulty": "easy",
+      "description": "Grocery delivery service associated with teal scooters."
+    },
+    {
+      "word": "Makro",
+      "difficulty": "easy",
+      "description": "Warehouse-style retailer associated with bulk shopping."
+    },
+    {
+      "word": "Game Stores",
+      "difficulty": "easy",
+      "description": "South African retailer associated with a bright pink logo."
+    },
+    {
+      "word": "Builders Warehouse",
+      "difficulty": "easy",
+      "description": "South African home-improvement retailer associated with orange branding."
+    },
+    {
+      "word": "Cash Crusaders",
+      "difficulty": "easy",
+      "description": "South African retailer buying and selling second-hand goods."
+    },
+    {
+      "word": "Cash Converters",
+      "difficulty": "easy",
+      "description": "Second-hand goods chain associated with yellow-and-black branding."
+    },
+    {
+      "word": "Ackermans",
+      "difficulty": "easy",
+      "description": "Southern African clothing retailer with a green logo."
+    },
+    {
+      "word": "Jet Stores",
+      "difficulty": "easy",
+      "description": "Southern African value clothing retailer."
+    },
+    {
+      "word": "Truworths",
+      "difficulty": "easy",
+      "description": "South African fashion retailer associated with department-style clothing stores."
+    },
+    {
+      "word": "Edgars",
+      "difficulty": "easy",
+      "description": "Southern African clothing and cosmetics retailer."
+    },
+    {
+      "word": "Sportscene",
+      "difficulty": "easy",
+      "description": "South African retailer associated with sneakers and streetwear."
+    },
+    {
+      "word": "Totalsports",
+      "difficulty": "easy",
+      "description": "South African retailer selling athletic clothing and equipment."
+    },
+    {
+      "word": "Cape Union Mart",
+      "difficulty": "easy",
+      "description": "Outdoor retailer associated with K-Way jackets."
+    },
+    {
+      "word": "K-Way",
+      "difficulty": "easy",
+      "description": "Outdoor clothing brand associated with a multicoloured arrow logo."
+    },
+    {
+      "word": "Ocean Basket",
+      "difficulty": "easy",
+      "description": "Seafood restaurant chain associated with sharing platters."
+    },
+    {
+      "word": "Spur",
+      "difficulty": "easy",
+      "description": "Restaurant chain associated with steaks and family play areas."
+    },
+    {
+      "word": "Steers",
+      "difficulty": "easy",
+      "description": "Fast-food chain associated with flame-grilled burgers."
+    },
+    {
+      "word": "Debonairs",
+      "difficulty": "easy",
+      "description": "Pizza chain associated with a suited delivery character."
+    },
+    {
+      "word": "Roman's Pizza",
+      "difficulty": "easy",
+      "description": "Fast-food chain associated with two-for-one topped flatbreads."
+    },
+    {
+      "word": "Chicken Licken",
+      "difficulty": "easy",
+      "description": "South African fast-food chain associated with hot wings."
+    },
+    {
+      "word": "RocoMamas",
+      "difficulty": "easy",
+      "description": "Restaurant chain associated with smashburgers and orange branding."
+    },
+    {
+      "word": "Mugg & Bean",
+      "difficulty": "easy",
+      "description": "Café chain associated with generous portions and bottomless coffee."
+    },
+    {
+      "word": "Vida e Caffè",
+      "difficulty": "easy",
+      "description": "Coffee chain associated with red branding and Portuguese-inspired treats."
+    },
+    {
+      "word": "Seattle Coffee Company",
+      "difficulty": "easy",
+      "description": "Café chain with a green circular logo and prominent South African outlets."
+    },
+    {
+      "word": "Krispy Kreme",
+      "difficulty": "easy",
+      "description": "Doughnut chain associated with glazed rings and a green-red logo."
+    },
+    {
+      "word": "Dunkin'",
+      "difficulty": "easy",
+      "description": "Coffee and doughnut chain associated with orange-and-pink branding."
+    },
+    {
+      "word": "Baskin-Robbins",
+      "difficulty": "easy",
+      "description": "Ice-cream chain associated with 31 flavours."
+    },
+    {
+      "word": "Franchise",
+      "difficulty": "hard",
+      "description": "Business arrangement letting operators use an established brand."
+    },
+    {
+      "word": "Start-up",
+      "difficulty": "hard",
+      "description": "New business often pursuing a scalable idea."
+    },
+    {
+      "word": "Unicorn Company",
+      "difficulty": "hard",
+      "description": "Privately held start-up valued at over a billion dollars."
+    },
+    {
+      "word": "Angel Investor",
+      "difficulty": "hard",
+      "description": "Individual funding an early-stage business with personal money."
+    },
+    {
+      "word": "Venture Capital",
+      "difficulty": "hard",
+      "description": "Investment funding aimed at high-growth young businesses."
+    },
+    {
+      "word": "Pitch Deck",
+      "difficulty": "hard",
+      "description": "Slide presentation used to persuade potential investors."
+    },
+    {
+      "word": "Elevator Pitch",
+      "difficulty": "hard",
+      "description": "Very brief persuasive explanation of an idea."
+    },
+    {
+      "word": "Crowdsourcing",
+      "difficulty": "hard",
+      "description": "Obtaining ideas or work from a large online group."
+    },
+    {
+      "word": "Outsourcing",
+      "difficulty": "hard",
+      "description": "Contracting work to an external provider."
+    },
+    {
+      "word": "Offshoring",
+      "difficulty": "hard",
+      "description": "Moving business activity to another country."
+    },
+    {
+      "word": "Supply and Demand",
+      "difficulty": "hard",
+      "description": "Interaction between available quantity and buyers' willingness to purchase."
+    },
+    {
+      "word": "Break-even Point",
+      "difficulty": "hard",
+      "description": "Level of sales where total costs are exactly covered."
+    },
+    {
+      "word": "Profit Margin",
+      "difficulty": "hard",
+      "description": "Share of revenue remaining after relevant expenses."
+    },
+    {
+      "word": "Cash Flow",
+      "difficulty": "hard",
+      "description": "Movement of money into and out of a business."
+    },
+    {
+      "word": "Market Share",
+      "difficulty": "hard",
+      "description": "Proportion of industry sales held by one business."
+    },
+    {
+      "word": "Brand Loyalty",
+      "difficulty": "hard",
+      "description": "Customers repeatedly choosing the same maker."
+    },
+    {
+      "word": "Loss Leader",
+      "difficulty": "hard",
+      "description": "Product priced cheaply to attract customers to other purchases."
+    },
+    {
+      "word": "Bait and Switch",
+      "difficulty": "hard",
+      "description": "Advertising an appealing offer then pushing a different one."
+    },
+    {
+      "word": "Upselling",
+      "difficulty": "hard",
+      "description": "Encouraging a customer to buy a more expensive option."
+    },
+    {
+      "word": "Cross-selling",
+      "difficulty": "hard",
+      "description": "Offering complementary products alongside a purchase."
+    },
+    {
+      "word": "Buyer's Remorse",
+      "difficulty": "hard",
+      "description": "Regret felt after making a purchase."
+    },
+    {
+      "word": "Impulse Buy",
+      "difficulty": "hard",
+      "description": "Unplanned purchase made on sudden desire."
+    },
+    {
+      "word": "Window Shopping",
+      "difficulty": "hard",
+      "description": "Looking at goods without intending to purchase them."
+    },
+    {
+      "word": "Retail Therapy",
+      "difficulty": "hard",
+      "description": "Buying things to improve your mood."
+    },
+    {
+      "word": "Mystery Shopper",
+      "difficulty": "hard",
+      "description": "Person secretly assessing a store's service as a customer."
+    },
+    {
+      "word": "Focus Group",
+      "difficulty": "hard",
+      "description": "Small moderated discussion used to gather consumer opinions."
+    },
+    {
+      "word": "Word of Mouth",
+      "difficulty": "hard",
+      "description": "Recommendations spread through personal conversations."
+    },
+    {
+      "word": "Public Relations",
+      "difficulty": "hard",
+      "description": "Managing how an organisation is perceived by others."
+    },
+    {
+      "word": "Rebranding",
+      "difficulty": "hard",
+      "description": "Changing an organisation's public name, look or identity."
+    },
+    {
+      "word": "Hostile Takeover",
+      "difficulty": "hard",
+      "description": "Acquiring a company against its management's wishes."
     }
   ],
   "Politics and Government": [
@@ -10655,7 +20529,7 @@ const categories = {
     },
     {
       "word": "Summit",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "High-level meeting between national leaders."
     },
     {
@@ -10932,12 +20806,457 @@ const categories = {
       "word": "Diplomatic Mission",
       "difficulty": "hard",
       "description": "Embassy or consulate representing a country abroad."
+    },
+    {
+      "word": "National Anthem",
+      "difficulty": "easy",
+      "description": "Patriotic song performed before major public events."
+    },
+    {
+      "word": "National Flag",
+      "difficulty": "easy",
+      "description": "Symbolic cloth representing a country."
+    },
+    {
+      "word": "Coat of Arms",
+      "difficulty": "easy",
+      "description": "Heraldic emblem representing a state or institution."
+    },
+    {
+      "word": "Inauguration",
+      "difficulty": "easy",
+      "description": "Ceremony formally starting a leader's term in office."
+    },
+    {
+      "word": "Oath of Office",
+      "difficulty": "easy",
+      "description": "Formal pledge made before taking a public position."
+    },
+    {
+      "word": "State Visit",
+      "difficulty": "easy",
+      "description": "Formal trip by a country's head to another nation."
+    },
+    {
+      "word": "Royal Family",
+      "difficulty": "easy",
+      "description": "Relatives of a reigning monarch."
+    },
+    {
+      "word": "Coronation",
+      "difficulty": "easy",
+      "description": "Ceremony in which a monarch is crowned."
+    },
+    {
+      "word": "Abdication",
+      "difficulty": "easy",
+      "description": "Voluntarily giving up a throne."
+    },
+    {
+      "word": "Succession",
+      "difficulty": "easy",
+      "description": "Process determining who takes over a leadership position."
+    },
+    {
+      "word": "King",
+      "difficulty": "easy",
+      "description": "Male hereditary monarch."
+    },
+    {
+      "word": "Queen",
+      "difficulty": "easy",
+      "description": "Female monarch or a monarch's consort."
+    },
+    {
+      "word": "Prince",
+      "difficulty": "easy",
+      "description": "Royal title often held by a monarch's son."
+    },
+    {
+      "word": "Princess",
+      "difficulty": "easy",
+      "description": "Royal title often held by a monarch's daughter."
+    },
+    {
+      "word": "First Lady",
+      "difficulty": "easy",
+      "description": "Title often used for a president's wife."
+    },
+    {
+      "word": "Deputy President",
+      "difficulty": "easy",
+      "description": "Official serving immediately below a country's elected head."
+    },
+    {
+      "word": "Minister",
+      "difficulty": "easy",
+      "description": "Political official responsible for a government department."
+    },
+    {
+      "word": "Member of Parliament",
+      "difficulty": "easy",
+      "description": "Elected representative serving in a national legislature."
+    },
+    {
+      "word": "Councillor",
+      "difficulty": "easy",
+      "description": "Elected representative serving in local government."
+    },
+    {
+      "word": "Ward",
+      "difficulty": "easy",
+      "description": "Local electoral area represented by a councillor."
+    },
+    {
+      "word": "Municipality",
+      "difficulty": "easy",
+      "description": "Local administrative area responsible for community services."
+    },
+    {
+      "word": "Capital City",
+      "difficulty": "easy",
+      "description": "Main location of a country's government."
+    },
+    {
+      "word": "Embassy",
+      "difficulty": "easy",
+      "description": "Permanent diplomatic office in another country."
+    },
+    {
+      "word": "Consulate",
+      "difficulty": "easy",
+      "description": "Overseas office assisting citizens and handling official paperwork."
+    },
+    {
+      "word": "Diplomat",
+      "difficulty": "easy",
+      "description": "Official representing a country abroad."
+    },
+    {
+      "word": "Passport Control",
+      "difficulty": "easy",
+      "description": "Checkpoint checking identity documents at an international border."
+    },
+    {
+      "word": "Border Post",
+      "difficulty": "easy",
+      "description": "Official entry point between neighbouring countries."
+    },
+    {
+      "word": "Citizenship",
+      "difficulty": "easy",
+      "description": "Legal membership of a nation."
+    },
+    {
+      "word": "Dual Citizenship",
+      "difficulty": "easy",
+      "description": "Legal membership of two nations at once."
+    },
+    {
+      "word": "National Holiday",
+      "difficulty": "easy",
+      "description": "Public day off observed across a country."
+    },
+    {
+      "word": "Freedom Day",
+      "difficulty": "hard",
+      "description": "South African public holiday commemorating the 1994 election."
+    },
+    {
+      "word": "Human Rights Day",
+      "difficulty": "hard",
+      "description": "South African public holiday associated with Sharpeville remembrance."
+    },
+    {
+      "word": "Youth Day",
+      "difficulty": "easy",
+      "description": "South African public holiday commemorating the 1976 student uprising."
+    },
+    {
+      "word": "Heritage Day",
+      "difficulty": "hard",
+      "description": "South African public holiday celebrating diverse cultural traditions."
+    },
+    {
+      "word": "Women's Day",
+      "difficulty": "easy",
+      "description": "South African public holiday recalling the 1956 march."
+    },
+    {
+      "word": "Election Poster",
+      "difficulty": "easy",
+      "description": "Campaign image displayed on poles and public boards."
+    },
+    {
+      "word": "Campaign Rally",
+      "difficulty": "easy",
+      "description": "Political gathering where supporters hear speeches."
+    },
+    {
+      "word": "Voting Booth",
+      "difficulty": "easy",
+      "description": "Private cubicle used to mark a ballot."
+    },
+    {
+      "word": "Ballot Paper",
+      "difficulty": "easy",
+      "description": "Document marked to choose a candidate or party."
+    },
+    {
+      "word": "Spoilt Ballot",
+      "difficulty": "easy",
+      "description": "Vote made invalid by incorrect or unclear marking."
+    },
+    {
+      "word": "Polling Queue",
+      "difficulty": "easy",
+      "description": "Line of people waiting to cast their votes."
+    },
+    {
+      "word": "Ink Mark",
+      "difficulty": "easy",
+      "description": "Finger stain used in some elections to prevent repeat voting."
+    },
+    {
+      "word": "Vote Counting",
+      "difficulty": "easy",
+      "description": "Tallying marked ballots after an election."
+    },
+    {
+      "word": "Majority",
+      "difficulty": "easy",
+      "description": "More than half of the relevant votes or seats."
+    },
+    {
+      "word": "Minority",
+      "difficulty": "easy",
+      "description": "Smaller share of votes, seats or a population."
+    },
+    {
+      "word": "Landslide Victory",
+      "difficulty": "easy",
+      "description": "Election won by an overwhelming margin."
+    },
+    {
+      "word": "Swing Voter",
+      "difficulty": "easy",
+      "description": "Person whose party preference can change between elections."
+    },
+    {
+      "word": "Running Mate",
+      "difficulty": "easy",
+      "description": "Candidate campaigning alongside someone seeking a higher office."
+    },
+    {
+      "word": "Political Party",
+      "difficulty": "easy",
+      "description": "Organised group seeking influence through elections."
+    },
+    {
+      "word": "Independent Candidate",
+      "difficulty": "easy",
+      "description": "Person contesting an election without a party affiliation."
+    },
+    {
+      "word": "Hung Parliament",
+      "difficulty": "hard",
+      "description": "Legislature where no party has an outright majority."
+    },
+    {
+      "word": "Proportional Representation",
+      "difficulty": "hard",
+      "description": "System allocating seats according to each party's vote share."
+    },
+    {
+      "word": "First Past the Post",
+      "difficulty": "hard",
+      "description": "Election system where the highest local vote count wins."
+    },
+    {
+      "word": "Electoral College",
+      "difficulty": "hard",
+      "description": "Body formally choosing the US president."
+    },
+    {
+      "word": "Popular Vote",
+      "difficulty": "hard",
+      "description": "Total ballots cast directly by eligible members of the public."
+    },
+    {
+      "word": "Voter Turnout",
+      "difficulty": "hard",
+      "description": "Proportion of eligible people who participate in an election."
+    },
+    {
+      "word": "Electoral Threshold",
+      "difficulty": "hard",
+      "description": "Minimum vote share needed to qualify for representation."
+    },
+    {
+      "word": "Filibuster Speech",
+      "difficulty": "hard",
+      "description": "Extended debate used to delay legislative action."
+    },
+    {
+      "word": "Veto",
+      "difficulty": "hard",
+      "description": "Power to block a proposed decision or law."
+    },
+    {
+      "word": "Executive Order",
+      "difficulty": "hard",
+      "description": "Directive issued by a president without a legislative vote."
+    },
+    {
+      "word": "Decree",
+      "difficulty": "hard",
+      "description": "Official order issued by a ruler or authority."
+    },
+    {
+      "word": "Bill",
+      "difficulty": "hard",
+      "description": "Proposed legislation awaiting approval."
+    },
+    {
+      "word": "Act of Parliament",
+      "difficulty": "hard",
+      "description": "Law formally passed by a national legislature."
+    },
+    {
+      "word": "Amendment",
+      "difficulty": "hard",
+      "description": "Formal change to a law or constitutional text."
+    },
+    {
+      "word": "Constitutional Amendment",
+      "difficulty": "hard",
+      "description": "Formal alteration of a country's foundational legal text."
+    },
+    {
+      "word": "Judicial Independence",
+      "difficulty": "hard",
+      "description": "Courts deciding cases free from improper external influence."
+    },
+    {
+      "word": "Rule of Law",
+      "difficulty": "hard",
+      "description": "Principle that everyone is subject to the same legal system."
+    },
+    {
+      "word": "Due Process",
+      "difficulty": "hard",
+      "description": "Fair legal procedures before rights or liberty are removed."
+    },
+    {
+      "word": "Civil Liberties",
+      "difficulty": "hard",
+      "description": "Basic freedoms protected against improper state interference."
+    },
+    {
+      "word": "Freedom of Speech",
+      "difficulty": "hard",
+      "description": "Right to express ideas subject to applicable legal limits."
+    },
+    {
+      "word": "Freedom of the Press",
+      "difficulty": "hard",
+      "description": "Protection for independent reporting and publication."
+    },
+    {
+      "word": "State Capture",
+      "difficulty": "hard",
+      "description": "Private interests improperly directing public institutions for their benefit."
+    },
+    {
+      "word": "Nepotism",
+      "difficulty": "hard",
+      "description": "Giving jobs or favours to relatives."
+    },
+    {
+      "word": "Cronyism",
+      "difficulty": "hard",
+      "description": "Giving opportunities to friends regardless of merit."
+    },
+    {
+      "word": "Patronage",
+      "difficulty": "hard",
+      "description": "Using influence to reward supporters with positions or benefits."
+    },
+    {
+      "word": "Populism",
+      "difficulty": "hard",
+      "description": "Political approach claiming to represent ordinary people against elites."
+    },
+    {
+      "word": "Authoritarianism",
+      "difficulty": "hard",
+      "description": "System concentrating power and restricting opposition."
+    },
+    {
+      "word": "Totalitarianism",
+      "difficulty": "hard",
+      "description": "System seeking extensive control over public and private life."
+    },
+    {
+      "word": "Technocracy",
+      "difficulty": "hard",
+      "description": "Government or administration led by technical experts."
+    },
+    {
+      "word": "Meritocracy",
+      "difficulty": "hard",
+      "description": "System distributing opportunities according to ability and achievement."
+    },
+    {
+      "word": "Diplomatic Immunity",
+      "difficulty": "hard",
+      "description": "Legal protections granted to foreign representatives."
+    },
+    {
+      "word": "Political Asylum",
+      "difficulty": "hard",
+      "description": "Protection offered to someone fleeing persecution abroad."
+    },
+    {
+      "word": "Extradition",
+      "difficulty": "hard",
+      "description": "Sending a suspect to another jurisdiction for prosecution."
+    },
+    {
+      "word": "Devolution",
+      "difficulty": "hard",
+      "description": "Transferring powers from central authorities to regional bodies."
+    },
+    {
+      "word": "Decentralisation",
+      "difficulty": "hard",
+      "description": "Distributing decision-making away from a single central authority."
+    },
+    {
+      "word": "Sovereignty",
+      "difficulty": "hard",
+      "description": "A state's authority to govern itself."
+    },
+    {
+      "word": "Soft Power",
+      "difficulty": "hard",
+      "description": "Influencing others through attraction rather than force."
+    },
+    {
+      "word": "Balance of Power",
+      "difficulty": "hard",
+      "description": "Distribution preventing one actor from dominating others."
+    },
+    {
+      "word": "Red Tape",
+      "difficulty": "hard",
+      "description": "Excessive administrative rules and paperwork."
     }
   ],
   "Household and Everyday Objects": [
     {
       "word": "Sofa",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Padded seating for multiple people in a living room."
     },
     {
@@ -10957,7 +21276,7 @@ const categories = {
     },
     {
       "word": "Bedframe",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Support structure that holds a mattress off the floor."
     },
     {
@@ -10977,12 +21296,12 @@ const categories = {
     },
     {
       "word": "Duvet",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A duvet, usually called a comforter or quilt in American English, and a doona in Australian English, is a type of bedding consisting of a soft flat bag filled with down, feather..."
     },
     {
       "word": "Wardrobe",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Tall cabinet or closet used to store clothing."
     },
     {
@@ -10997,12 +21316,12 @@ const categories = {
     },
     {
       "word": "Iron",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Heated appliance used to remove wrinkles from clothes."
     },
     {
       "word": "Ironing Board",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "The United States provided many inventions in the time from the Colonial Period to the Gilded Age, which were achieved by inventors who were either native-born or naturalized ci..."
     },
     {
@@ -11017,7 +21336,7 @@ const categories = {
     },
     {
       "word": "Broom",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Long-handled brush used for sweeping."
     },
     {
@@ -11037,7 +21356,7 @@ const categories = {
     },
     {
       "word": "Microwave",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Kitchen appliance that heats food quickly."
     },
     {
@@ -11057,7 +21376,7 @@ const categories = {
     },
     {
       "word": "Pressure Cooker",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Sealed pot that cooks food faster under pressure."
     },
     {
@@ -11077,7 +21396,7 @@ const categories = {
     },
     {
       "word": "Chef's Knife",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "All-purpose kitchen knife for slicing and chopping."
     },
     {
@@ -11092,22 +21411,22 @@ const categories = {
     },
     {
       "word": "Colander",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Perforated bowl used to drain pasta or rinse produce."
     },
     {
       "word": "Measuring Cup",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Cup marked with units for accurate ingredient volumes."
     },
     {
       "word": "Tupperware",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "An American company that manufactures and internationally distributes preparation, storage, and serving containers for the kitchen and home."
     },
     {
       "word": "Thermos",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Insulated flask that keeps drinks hot or cold."
     },
     {
@@ -11117,7 +21436,7 @@ const categories = {
     },
     {
       "word": "Mug",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Handled cup commonly used for coffee or tea."
     },
     {
@@ -11137,7 +21456,7 @@ const categories = {
     },
     {
       "word": "Spoon",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Utensil with rounded bowl for scooping food."
     },
     {
@@ -11156,13 +21475,13 @@ const categories = {
       "description": "Cloth or paper used to wipe hands and mouth."
     },
     {
-      "word": "Trash Can",
-      "difficulty": "hard",
+      "word": "Dustbin",
+      "difficulty": "easy",
       "description": "Container for regular household waste."
     },
     {
       "word": "Recycling Bin",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Container for paper, plastic, and other recyclables."
     },
     {
@@ -11172,12 +21491,12 @@ const categories = {
     },
     {
       "word": "Extension Cord",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Cable used to extend electrical outlet reach."
     },
     {
       "word": "Power Strip",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Device that provides multiple plugs from one outlet."
     },
     {
@@ -11197,12 +21516,12 @@ const categories = {
     },
     {
       "word": "Mirror",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Reflective surface used to view your appearance."
     },
     {
       "word": "Shower Curtain",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "The term \"home front\" covers the activities of the civilians in a nation at war."
     },
     {
@@ -11217,7 +21536,7 @@ const categories = {
     },
     {
       "word": "Dental Floss",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Thin thread used to clean between teeth."
     },
     {
@@ -11237,7 +21556,7 @@ const categories = {
     },
     {
       "word": "Conditioner",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Hair product applied after shampoo to soften and smooth."
     },
     {
@@ -11257,12 +21576,12 @@ const categories = {
     },
     {
       "word": "Bandage",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A bandage is a piece of material used either to support a medical device such as a dressing or splint, or on its own to provide support for the movement of a part of the body."
     },
     {
       "word": "Tape Measure",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "The skill of making items from wood, and includes cabinetry, furniture making, wood carving, joinery, carpentry, and woodturning."
     },
     {
@@ -11277,17 +21596,17 @@ const categories = {
     },
     {
       "word": "Pliers",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A hand tool used to hold objects firmly, possibly developed from tongs used to handle hot metal in Bronze Age Europe."
     },
     {
       "word": "Wrench",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A wrench or spanner is a tool used to provide grip and mechanical advantage in applying torque to turn objects—usually rotary fasteners, such as nuts and bolts—or keep them from..."
     },
     {
       "word": "Drill",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Powered tool for making holes and driving screws."
     },
     {
@@ -11297,7 +21616,7 @@ const categories = {
     },
     {
       "word": "Screw",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A screw is an externally helical threaded fastener capable of being tightened or released by a twisting force to the head."
     },
     {
@@ -11307,7 +21626,7 @@ const categories = {
     },
     {
       "word": "Glue Gun",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Heated tool that dispenses hot adhesive."
     },
     {
@@ -11317,7 +21636,7 @@ const categories = {
     },
     {
       "word": "Stapler",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Device that fastens papers with metal staples."
     },
     {
@@ -11337,7 +21656,7 @@ const categories = {
     },
     {
       "word": "Pencil",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A pencil is a writing or drawing implement with a solid pigment core in a protective casing that reduces the risk of core breakage and keeps it from marking the user's hand."
     },
     {
@@ -11347,7 +21666,7 @@ const categories = {
     },
     {
       "word": "Highlighter",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Bright marker used to emphasize text."
     },
     {
@@ -11357,7 +21676,7 @@ const categories = {
     },
     {
       "word": "Umbrella",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Foldable canopy used for rain or sun protection."
     },
     {
@@ -11377,19 +21696,454 @@ const categories = {
     },
     {
       "word": "Reusable Bag",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Durable shopping bag designed for repeated use."
     },
     {
       "word": "Flashlight",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Portable battery-powered handheld light."
+    },
+    {
+      "word": "Air Fryer",
+      "difficulty": "easy",
+      "description": "Countertop appliance using a powerful fan to make food crisp."
+    },
+    {
+      "word": "Slow Cooker",
+      "difficulty": "easy",
+      "description": "Countertop appliance preparing meals gently over several hours."
+    },
+    {
+      "word": "Rice Cooker",
+      "difficulty": "easy",
+      "description": "Appliance automatically preparing a staple grain."
+    },
+    {
+      "word": "Sandwich Press",
+      "difficulty": "easy",
+      "description": "Heated appliance toasting filled bread between plates."
+    },
+    {
+      "word": "Waffle Iron",
+      "difficulty": "easy",
+      "description": "Appliance making batter into a grid-patterned breakfast treat."
+    },
+    {
+      "word": "Electric Can Opener",
+      "difficulty": "easy",
+      "description": "Powered tool removing lids from sealed food tins."
+    },
+    {
+      "word": "Rolling Pin",
+      "difficulty": "easy",
+      "description": "Cylinder used to flatten pastry dough."
+    },
+    {
+      "word": "Whisk",
+      "difficulty": "easy",
+      "description": "Wire kitchen tool used to beat eggs or cream."
+    },
+    {
+      "word": "Spatula",
+      "difficulty": "easy",
+      "description": "Flat kitchen tool used to turn food or scrape bowls."
+    },
+    {
+      "word": "Ladle",
+      "difficulty": "easy",
+      "description": "Deep-bowled utensil used to serve soup."
+    },
+    {
+      "word": "Tongs",
+      "difficulty": "easy",
+      "description": "Paired gripping utensil used to lift hot food."
+    },
+    {
+      "word": "Sieve",
+      "difficulty": "easy",
+      "description": "Fine mesh kitchen tool used for straining."
+    },
+    {
+      "word": "Mortar and Pestle",
+      "difficulty": "easy",
+      "description": "Bowl and pounding tool used to crush spices."
+    },
+    {
+      "word": "Nutcracker",
+      "difficulty": "easy",
+      "description": "Tool designed to break hard shells around edible kernels."
+    },
+    {
+      "word": "Garlic Press",
+      "difficulty": "easy",
+      "description": "Kitchen tool squeezing pungent cloves through small holes."
+    },
+    {
+      "word": "Pizza Cutter",
+      "difficulty": "easy",
+      "description": "Rolling blade used to divide a topped flatbread."
+    },
+    {
+      "word": "Ice Tray",
+      "difficulty": "easy",
+      "description": "Container with compartments for freezing small cubes."
+    },
+    {
+      "word": "Oven Mitt",
+      "difficulty": "easy",
+      "description": "Insulated hand covering for handling hot cookware."
+    },
+    {
+      "word": "Apron",
+      "difficulty": "easy",
+      "description": "Protective garment tied over clothes while cooking."
+    },
+    {
+      "word": "Tea Towel",
+      "difficulty": "easy",
+      "description": "Kitchen cloth used to dry dishes."
+    },
+    {
+      "word": "Dish Rack",
+      "difficulty": "easy",
+      "description": "Stand holding washed plates while they drain."
+    },
+    {
+      "word": "Sink Plug",
+      "difficulty": "easy",
+      "description": "Stopper keeping water inside a basin."
+    },
+    {
+      "word": "Drain",
+      "difficulty": "easy",
+      "description": "Opening through which wastewater flows away."
+    },
+    {
+      "word": "Tap",
+      "difficulty": "easy",
+      "description": "Fitting controlling the flow of water from a pipe."
+    },
+    {
+      "word": "Plunger",
+      "difficulty": "easy",
+      "description": "Suction tool used to unblock a toilet or sink."
+    },
+    {
+      "word": "Toilet Brush",
+      "difficulty": "easy",
+      "description": "Handled cleaning tool kept beside the bathroom bowl."
+    },
+    {
+      "word": "Bath Mat",
+      "difficulty": "easy",
+      "description": "Floor covering used to prevent slipping after washing."
+    },
+    {
+      "word": "Shower Cap",
+      "difficulty": "easy",
+      "description": "Waterproof head covering keeping hair dry while washing."
+    },
+    {
+      "word": "Loofah",
+      "difficulty": "easy",
+      "description": "Rough sponge-like material used to scrub skin."
+    },
+    {
+      "word": "Nail Clippers",
+      "difficulty": "easy",
+      "description": "Small lever tool trimming fingernails and toenails."
+    },
+    {
+      "word": "Tweezers",
+      "difficulty": "easy",
+      "description": "Small gripping tool used to pluck stray hairs."
+    },
+    {
+      "word": "Cotton Bud",
+      "difficulty": "easy",
+      "description": "Small stick with soft tips used for precise cleaning."
+    },
+    {
+      "word": "Hot Comb",
+      "difficulty": "easy",
+      "description": "Heated hair-styling tool with teeth."
+    },
+    {
+      "word": "Hair Straightener",
+      "difficulty": "easy",
+      "description": "Heated plates used to flatten curls."
+    },
+    {
+      "word": "Curling Iron",
+      "difficulty": "easy",
+      "description": "Heated styling tool that forms waves or ringlets."
+    },
+    {
+      "word": "Hairbrush",
+      "difficulty": "easy",
+      "description": "Grooming tool with bristles used on the head."
+    },
+    {
+      "word": "Comb",
+      "difficulty": "easy",
+      "description": "Toothed grooming tool used to untangle hair."
+    },
+    {
+      "word": "Shoe Rack",
+      "difficulty": "easy",
+      "description": "Stand used to organise footwear."
+    },
+    {
+      "word": "Coat Hook",
+      "difficulty": "easy",
+      "description": "Wall fitting used to hang outer garments."
+    },
+    {
+      "word": "Doormat",
+      "difficulty": "easy",
+      "description": "Surface at an entrance used to wipe footwear."
+    },
+    {
+      "word": "Doorbell",
+      "difficulty": "easy",
+      "description": "Button-triggered chime announcing a visitor."
+    },
+    {
+      "word": "Doorstop",
+      "difficulty": "easy",
+      "description": "Wedge or weight preventing an entrance from swinging shut."
+    },
+    {
+      "word": "Padlock",
+      "difficulty": "easy",
+      "description": "Portable lock with a hinged metal shackle."
+    },
+    {
+      "word": "Deadbolt",
+      "difficulty": "easy",
+      "description": "Door lock using a solid sliding bar."
+    },
+    {
+      "word": "Keyhole",
+      "difficulty": "easy",
+      "description": "Opening where a lock's matching metal tool is inserted."
+    },
+    {
+      "word": "Curtain Rail",
+      "difficulty": "easy",
+      "description": "Overhead support from which window fabric hangs."
+    },
+    {
+      "word": "Blinds",
+      "difficulty": "easy",
+      "description": "Adjustable slats used to cover a window."
+    },
+    {
+      "word": "Lampshade",
+      "difficulty": "easy",
+      "description": "Cover diffusing light from a bulb."
+    },
+    {
+      "word": "Night Light",
+      "difficulty": "easy",
+      "description": "Small lamp left on during darkness."
+    },
+    {
+      "word": "Candlestick",
+      "difficulty": "easy",
+      "description": "Holder supporting a taper used for illumination."
+    },
+    {
+      "word": "Compost Bin",
+      "difficulty": "easy",
+      "description": "Container where organic scraps break down into soil improver."
+    },
+    {
+      "word": "Fly Swatter",
+      "difficulty": "easy",
+      "description": "Handled mesh tool used to hit nuisance insects."
+    },
+    {
+      "word": "Mosquito Net",
+      "difficulty": "easy",
+      "description": "Fine mesh canopy protecting sleepers from biting insects."
+    },
+    {
+      "word": "Clothes Peg",
+      "difficulty": "easy",
+      "description": "Clip holding laundry on an outdoor line."
+    },
+    {
+      "word": "Washing Line",
+      "difficulty": "easy",
+      "description": "Cord from which damp clothes hang to dry."
+    },
+    {
+      "word": "Drying Rack",
+      "difficulty": "easy",
+      "description": "Folding stand supporting wet laundry indoors."
+    },
+    {
+      "word": "Lint Roller",
+      "difficulty": "easy",
+      "description": "Sticky rotating tool removing fluff from clothing."
+    },
+    {
+      "word": "Sewing Needle",
+      "difficulty": "easy",
+      "description": "Fine pointed tool used to draw thread through fabric."
+    },
+    {
+      "word": "Spirit Level",
+      "difficulty": "hard",
+      "description": "Tool showing whether a surface is horizontal using a bubble."
+    },
+    {
+      "word": "Stud Finder",
+      "difficulty": "hard",
+      "description": "Device locating hidden framing behind a wall."
+    },
+    {
+      "word": "Allen Key",
+      "difficulty": "hard",
+      "description": "L-shaped tool used with hexagonal socket screws."
+    },
+    {
+      "word": "Socket Wrench",
+      "difficulty": "hard",
+      "description": "Tool with interchangeable heads used to turn nuts."
+    },
+    {
+      "word": "Ratchet",
+      "difficulty": "hard",
+      "description": "Mechanism allowing motion in one direction while resisting reversal."
+    },
+    {
+      "word": "Vice",
+      "difficulty": "hard",
+      "description": "Workbench clamp holding material firmly in place."
+    },
+    {
+      "word": "Clamp",
+      "difficulty": "hard",
+      "description": "Tool used to grip objects tightly together."
+    },
+    {
+      "word": "Chisel",
+      "difficulty": "hard",
+      "description": "Sharp-edged tool used to carve wood or stone."
+    },
+    {
+      "word": "Sandpaper",
+      "difficulty": "hard",
+      "description": "Abrasive sheet used to smooth rough surfaces."
+    },
+    {
+      "word": "Caulking Gun",
+      "difficulty": "hard",
+      "description": "Tool dispensing sealant from a cartridge."
+    },
+    {
+      "word": "Wall Plug",
+      "difficulty": "hard",
+      "description": "Insert helping a screw grip a masonry hole."
+    },
+    {
+      "word": "Cable Tie",
+      "difficulty": "hard",
+      "description": "Plastic strip with a locking head used to bind wires."
+    },
+    {
+      "word": "Duct Tape",
+      "difficulty": "hard",
+      "description": "Strong fabric-backed adhesive strip associated with improvised repairs."
+    },
+    {
+      "word": "Insulation Tape",
+      "difficulty": "hard",
+      "description": "Adhesive strip used to cover electrical connections."
+    },
+    {
+      "word": "Furniture Polish",
+      "difficulty": "hard",
+      "description": "Product used to clean and shine wooden surfaces."
+    },
+    {
+      "word": "Silica Gel",
+      "difficulty": "hard",
+      "description": "Moisture-absorbing granules found in small do-not-eat packets."
+    },
+    {
+      "word": "Mothballs",
+      "difficulty": "hard",
+      "description": "Pungent pellets used to deter fabric-eating insects."
+    },
+    {
+      "word": "Lavender Sachet",
+      "difficulty": "hard",
+      "description": "Scented fabric pouch placed among clothes."
+    },
+    {
+      "word": "Drawer Divider",
+      "difficulty": "hard",
+      "description": "Insert organising small items inside a storage compartment."
+    },
+    {
+      "word": "Cable Organiser",
+      "difficulty": "hard",
+      "description": "Accessory keeping wires neat and separated."
+    },
+    {
+      "word": "Surge Protector",
+      "difficulty": "hard",
+      "description": "Device shielding electronics from voltage spikes."
+    },
+    {
+      "word": "Dimmer Switch",
+      "difficulty": "hard",
+      "description": "Control adjusting the brightness of a lamp."
+    },
+    {
+      "word": "Smart Plug",
+      "difficulty": "hard",
+      "description": "Socket accessory remotely controlling a connected appliance."
+    },
+    {
+      "word": "Timer Switch",
+      "difficulty": "hard",
+      "description": "Control automatically operating an appliance at scheduled times."
+    },
+    {
+      "word": "Dehumidifier",
+      "difficulty": "hard",
+      "description": "Appliance removing moisture from indoor air."
+    },
+    {
+      "word": "Humidifier",
+      "difficulty": "hard",
+      "description": "Appliance adding moisture to indoor air."
+    },
+    {
+      "word": "Diffuser",
+      "difficulty": "hard",
+      "description": "Device dispersing fragrance or fine vapour into a room."
+    },
+    {
+      "word": "Essential Oil",
+      "difficulty": "hard",
+      "description": "Concentrated aromatic plant extract."
+    },
+    {
+      "word": "Carbon Monoxide Alarm",
+      "difficulty": "hard",
+      "description": "Device warning of an invisible poisonous combustion gas."
     }
   ],
   "Professions and Workplaces": [
     {
       "word": "Doctor",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Bullying in the medical profession is common, particularly of student or trainee physicians."
     },
     {
@@ -11409,7 +22163,7 @@ const categories = {
     },
     {
       "word": "Dentist",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Clinician who treats teeth, gums, and oral health."
     },
     {
@@ -11419,7 +22173,7 @@ const categories = {
     },
     {
       "word": "Physiotherapist",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Physical therapy , also known as physiotherapy, is a healthcare profession, as well as the care provided by physical therapists."
     },
     {
@@ -11429,7 +22183,7 @@ const categories = {
     },
     {
       "word": "Teacher",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A teacher, also called a schoolteacher or formally an educator, is a person who helps students to acquire knowledge, competence, or virtue, via the practice of teaching."
     },
     {
@@ -11449,7 +22203,7 @@ const categories = {
     },
     {
       "word": "Accountant",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "An accountant is a practitioner of accounting or accountancy."
     },
     {
@@ -11509,7 +22263,7 @@ const categories = {
     },
     {
       "word": "Soldier",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A soldier is a person who is a member of an army."
     },
     {
@@ -11524,12 +22278,12 @@ const categories = {
     },
     {
       "word": "Air Traffic Controller",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "An air traffic controller is a person responsible for the coordination of air traffic within controlled airspace."
     },
     {
       "word": "Mechanic",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Technician who repairs and maintains vehicles or machines."
     },
     {
@@ -11549,7 +22303,7 @@ const categories = {
     },
     {
       "word": "Welder",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A welder is a person or equipment that fuses materials together."
     },
     {
@@ -11569,7 +22323,7 @@ const categories = {
     },
     {
       "word": "Software Engineer",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Developer who designs and builds software systems."
     },
     {
@@ -11589,7 +22343,7 @@ const categories = {
     },
     {
       "word": "Graphic Designer",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A graphic designer is a practitioner who follows the discipline of graphic design, either within companies or organizations or independently."
     },
     {
@@ -11609,7 +22363,7 @@ const categories = {
     },
     {
       "word": "News Anchor",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A news presenter – also known as a newsreader, newscaster, anchorman or anchorwoman, news anchor or simply an anchor – is a person who presents news during a news program on TV..."
     },
     {
@@ -11629,7 +22383,7 @@ const categories = {
     },
     {
       "word": "Baker",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Professional who makes bread, cakes, and pastries."
     },
     {
@@ -11649,7 +22403,7 @@ const categories = {
     },
     {
       "word": "Fisherman",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A fisherman or fisher is someone who captures fish and other animals from a body of water, or gathers shellfish."
     },
     {
@@ -11659,7 +22413,7 @@ const categories = {
     },
     {
       "word": "Geologist",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Scientist studying rocks, minerals, and earth processes."
     },
     {
@@ -11689,7 +22443,7 @@ const categories = {
     },
     {
       "word": "Bus Driver",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Professional transporting passengers on fixed routes."
     },
     {
@@ -11709,7 +22463,7 @@ const categories = {
     },
     {
       "word": "Retail Cashier",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A dead-end job is a job where there is little or no chance of career development and advancement into a better position."
     },
     {
@@ -11769,7 +22523,7 @@ const categories = {
     },
     {
       "word": "Fashion Designer",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Creator who designs clothing styles and collections."
     },
     {
@@ -11789,7 +22543,7 @@ const categories = {
     },
     {
       "word": "Choreographer",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "The art of designing sequences of movements of physical bodies in which motion or form or both are specified."
     },
     {
@@ -11804,12 +22558,12 @@ const categories = {
     },
     {
       "word": "Referee",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A referee is an official, in a variety of sports and competition, responsible for enforcing the rules of the sport, including sportsmanship decisions such as ejection."
     },
     {
       "word": "Scientist",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A scientist is an expert who conducts scientific research to advance knowledge in science."
     },
     {
@@ -11829,19 +22583,469 @@ const categories = {
     },
     {
       "word": "Librarian",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "A librarian is a person who professionally works with information management."
     },
     {
       "word": "Park Ranger",
       "difficulty": "easy",
       "description": "Official who protects parks and helps visitors."
+    },
+    {
+      "word": "Barber",
+      "difficulty": "easy",
+      "description": "Person who cuts hair and trims beards."
+    },
+    {
+      "word": "Hairdresser",
+      "difficulty": "easy",
+      "description": "Person who cuts, colours and styles people's hair."
+    },
+    {
+      "word": "Makeup Artist",
+      "difficulty": "easy",
+      "description": "Professional applying cosmetics for events or productions."
+    },
+    {
+      "word": "Nail Technician",
+      "difficulty": "easy",
+      "description": "Professional performing manicures and pedicures."
+    },
+    {
+      "word": "Tattoo Artist",
+      "difficulty": "easy",
+      "description": "Professional creating permanent ink designs on skin."
+    },
+    {
+      "word": "Beautician",
+      "difficulty": "easy",
+      "description": "Worker offering cosmetic treatments and grooming services."
+    },
+    {
+      "word": "Massage Therapist",
+      "difficulty": "easy",
+      "description": "Professional using hands to work on muscles and soft tissue."
+    },
+    {
+      "word": "Optometrist",
+      "difficulty": "easy",
+      "description": "Professional examining eyesight and prescribing corrective lenses."
+    },
+    {
+      "word": "Optician",
+      "difficulty": "easy",
+      "description": "Professional fitting and supplying spectacles."
+    },
+    {
+      "word": "Midwife",
+      "difficulty": "easy",
+      "description": "Professional supporting pregnancy, birth and early newborn care."
+    },
+    {
+      "word": "Doula",
+      "difficulty": "easy",
+      "description": "Non-medical support person assisting someone through childbirth."
+    },
+    {
+      "word": "Radiographer",
+      "difficulty": "easy",
+      "description": "Professional producing medical images such as X-rays."
+    },
+    {
+      "word": "Sonographer",
+      "difficulty": "easy",
+      "description": "Professional creating diagnostic images with sound waves."
+    },
+    {
+      "word": "Dietitian",
+      "difficulty": "easy",
+      "description": "Qualified professional advising on nutrition and eating plans."
+    },
+    {
+      "word": "Speech Therapist",
+      "difficulty": "easy",
+      "description": "Professional helping with communication and swallowing difficulties."
+    },
+    {
+      "word": "Occupational Therapist",
+      "difficulty": "easy",
+      "description": "Professional helping people manage practical daily activities."
+    },
+    {
+      "word": "Audiologist",
+      "difficulty": "easy",
+      "description": "Professional assessing hearing and balance disorders."
+    },
+    {
+      "word": "Podiatrist",
+      "difficulty": "easy",
+      "description": "Healthcare professional treating feet and lower-limb problems."
+    },
+    {
+      "word": "Chiropractor",
+      "difficulty": "easy",
+      "description": "Practitioner associated with manual treatment of the spine."
+    },
+    {
+      "word": "Ambulance Driver",
+      "difficulty": "easy",
+      "description": "Person transporting emergency patients in a medical vehicle."
+    },
+    {
+      "word": "Lifeguard",
+      "difficulty": "easy",
+      "description": "Person watching swimmers and performing water rescues."
+    },
+    {
+      "word": "Coastguard",
+      "difficulty": "easy",
+      "description": "Service assisting people in trouble at sea."
+    },
+    {
+      "word": "Security Guard",
+      "difficulty": "easy",
+      "description": "Person protecting a property or controlling entry."
+    },
+    {
+      "word": "Bodyguard",
+      "difficulty": "easy",
+      "description": "Person employed to protect an individual."
+    },
+    {
+      "word": "Bouncer",
+      "difficulty": "easy",
+      "description": "Security worker controlling entry to a nightclub."
+    },
+    {
+      "word": "Traffic Officer",
+      "difficulty": "easy",
+      "description": "Official enforcing road rules and directing vehicles."
+    },
+    {
+      "word": "Parking Attendant",
+      "difficulty": "easy",
+      "description": "Person helping motorists find or use a space."
+    },
+    {
+      "word": "Car Guard",
+      "difficulty": "easy",
+      "description": "South African worker watching vehicles for tips."
+    },
+    {
+      "word": "Petrol Attendant",
+      "difficulty": "easy",
+      "description": "Worker filling vehicles at a service station."
+    },
+    {
+      "word": "Toll Collector",
+      "difficulty": "easy",
+      "description": "Worker receiving payment at a road checkpoint."
+    },
+    {
+      "word": "Courier",
+      "difficulty": "easy",
+      "description": "Person delivering parcels or documents."
+    },
+    {
+      "word": "Postman",
+      "difficulty": "easy",
+      "description": "Worker delivering letters to homes and businesses."
+    },
+    {
+      "word": "Delivery Rider",
+      "difficulty": "easy",
+      "description": "Worker bringing orders by bicycle or motorbike."
+    },
+    {
+      "word": "Bellhop",
+      "difficulty": "easy",
+      "description": "Hotel worker carrying guests' luggage."
+    },
+    {
+      "word": "Concierge",
+      "difficulty": "easy",
+      "description": "Hotel employee arranging services and local recommendations."
+    },
+    {
+      "word": "Receptionist",
+      "difficulty": "easy",
+      "description": "Worker greeting visitors and handling front-desk enquiries."
+    },
+    {
+      "word": "Housekeeper",
+      "difficulty": "easy",
+      "description": "Person responsible for cleaning and maintaining accommodation."
+    },
+    {
+      "word": "Au Pair",
+      "difficulty": "easy",
+      "description": "Young person living with a family while helping with childcare."
+    },
+    {
+      "word": "Nanny",
+      "difficulty": "easy",
+      "description": "Person employed to care for children in a home."
+    },
+    {
+      "word": "Babysitter",
+      "difficulty": "easy",
+      "description": "Person temporarily looking after children while parents are away."
+    },
+    {
+      "word": "Dog Walker",
+      "difficulty": "easy",
+      "description": "Person paid to exercise other people's pets."
+    },
+    {
+      "word": "Pet Groomer",
+      "difficulty": "easy",
+      "description": "Professional washing and trimming animals' coats."
+    },
+    {
+      "word": "Zookeeper",
+      "difficulty": "easy",
+      "description": "Person caring for animals in a wildlife collection."
+    },
+    {
+      "word": "Game Ranger",
+      "difficulty": "easy",
+      "description": "Conservation worker protecting wildlife and guiding safari visitors."
+    },
+    {
+      "word": "Tour Guide",
+      "difficulty": "easy",
+      "description": "Person leading visitors and explaining local attractions."
+    },
+    {
+      "word": "Travel Agent",
+      "difficulty": "easy",
+      "description": "Professional arranging journeys and accommodation."
+    },
+    {
+      "word": "Auctioneer",
+      "difficulty": "easy",
+      "description": "Person taking bids and selling to the highest offer."
+    },
+    {
+      "word": "Florist",
+      "difficulty": "easy",
+      "description": "Person arranging and selling cut flowers."
+    },
+    {
+      "word": "Butcher",
+      "difficulty": "easy",
+      "description": "Person preparing and selling cuts of meat."
+    },
+    {
+      "word": "Fishmonger",
+      "difficulty": "easy",
+      "description": "Person selling edible aquatic animals."
+    },
+    {
+      "word": "Greengrocer",
+      "difficulty": "easy",
+      "description": "Retailer selling fruit and vegetables."
+    },
+    {
+      "word": "Cheesemaker",
+      "difficulty": "easy",
+      "description": "Person producing a food from coagulated milk."
+    },
+    {
+      "word": "Brewer",
+      "difficulty": "easy",
+      "description": "Person producing beer by fermentation."
+    },
+    {
+      "word": "Winemaker",
+      "difficulty": "easy",
+      "description": "Person producing an alcoholic drink from fermented grapes."
+    },
+    {
+      "word": "Beekeeper",
+      "difficulty": "easy",
+      "description": "Person managing hives for honey and pollination."
+    },
+    {
+      "word": "Shepherd",
+      "difficulty": "easy",
+      "description": "Person tending a flock of sheep."
+    },
+    {
+      "word": "Farrier",
+      "difficulty": "easy",
+      "description": "Professional fitting metal protection to horses' hooves."
+    },
+    {
+      "word": "Blacksmith",
+      "difficulty": "easy",
+      "description": "Craftsperson shaping heated metal with a hammer."
+    },
+    {
+      "word": "Locksmith",
+      "difficulty": "easy",
+      "description": "Professional making keys and repairing security mechanisms."
+    },
+    {
+      "word": "Chimney Sweep",
+      "difficulty": "easy",
+      "description": "Worker cleaning soot from fireplaces' exhaust passages."
+    },
+    {
+      "word": "Actuary",
+      "difficulty": "hard",
+      "description": "Professional calculating financial risks using statistics."
+    },
+    {
+      "word": "Economist",
+      "difficulty": "hard",
+      "description": "Expert studying production, consumption and resource allocation."
+    },
+    {
+      "word": "Urban Planner",
+      "difficulty": "hard",
+      "description": "Professional designing how towns and neighbourhoods develop."
+    },
+    {
+      "word": "Quantity Surveyor",
+      "difficulty": "hard",
+      "description": "Construction professional managing costs and contracts."
+    },
+    {
+      "word": "Town Clerk",
+      "difficulty": "hard",
+      "description": "Administrative officer serving a local authority."
+    },
+    {
+      "word": "Court Reporter",
+      "difficulty": "hard",
+      "description": "Person making a verbatim record of legal proceedings."
+    },
+    {
+      "word": "Notary",
+      "difficulty": "hard",
+      "description": "Authorised professional certifying signatures and certain documents."
+    },
+    {
+      "word": "Patent Attorney",
+      "difficulty": "hard",
+      "description": "Lawyer specialising in legal protection for inventions."
+    },
+    {
+      "word": "Mediator",
+      "difficulty": "hard",
+      "description": "Neutral person helping parties reach an agreement."
+    },
+    {
+      "word": "Arbitrator",
+      "difficulty": "hard",
+      "description": "Independent person deciding a dispute outside ordinary court proceedings."
+    },
+    {
+      "word": "Forensic Accountant",
+      "difficulty": "hard",
+      "description": "Financial investigator tracing suspicious transactions."
+    },
+    {
+      "word": "Taxidermist",
+      "difficulty": "hard",
+      "description": "Craftsperson preserving animal skins for lifelike display."
+    },
+    {
+      "word": "Embalmer",
+      "difficulty": "hard",
+      "description": "Professional preserving bodies before burial or viewing."
+    },
+    {
+      "word": "Undertaker",
+      "difficulty": "hard",
+      "description": "Professional organising funerals and preparing the deceased."
+    },
+    {
+      "word": "Pallbearer",
+      "difficulty": "hard",
+      "description": "Person helping carry a coffin at a funeral."
+    },
+    {
+      "word": "Stunt Performer",
+      "difficulty": "hard",
+      "description": "Person doing dangerous actions for film or television."
+    },
+    {
+      "word": "Foley Artist",
+      "difficulty": "hard",
+      "description": "Sound specialist recreating everyday noises for screen productions."
+    },
+    {
+      "word": "Prop Master",
+      "difficulty": "hard",
+      "description": "Production worker responsible for objects handled by actors."
+    },
+    {
+      "word": "Set Designer",
+      "difficulty": "hard",
+      "description": "Professional creating the physical environment for a performance."
+    },
+    {
+      "word": "Lighting Technician",
+      "difficulty": "hard",
+      "description": "Worker installing and operating illumination for productions."
+    },
+    {
+      "word": "Boom Operator",
+      "difficulty": "hard",
+      "description": "Sound worker holding a microphone above performers."
+    },
+    {
+      "word": "Gaffer",
+      "difficulty": "hard",
+      "description": "Chief electrician on a film production."
+    },
+    {
+      "word": "Grip",
+      "difficulty": "hard",
+      "description": "Film crew member supporting camera and lighting equipment."
+    },
+    {
+      "word": "Location Scout",
+      "difficulty": "hard",
+      "description": "Production worker finding suitable places to film."
+    },
+    {
+      "word": "Casting Director",
+      "difficulty": "hard",
+      "description": "Professional selecting performers for roles."
+    },
+    {
+      "word": "Talent Agent",
+      "difficulty": "hard",
+      "description": "Representative finding work for performers."
+    },
+    {
+      "word": "Literary Agent",
+      "difficulty": "hard",
+      "description": "Representative helping writers sell manuscripts to publishers."
+    },
+    {
+      "word": "Copywriter",
+      "difficulty": "hard",
+      "description": "Writer creating advertising and promotional text."
+    },
+    {
+      "word": "Proofreader",
+      "difficulty": "hard",
+      "description": "Person checking text for spelling and typographical errors."
+    },
+    {
+      "word": "Technical Writer",
+      "difficulty": "hard",
+      "description": "Person explaining complex products through manuals and instructions."
     }
   ],
   "Travel, Transport, and Aviation": [
     {
       "word": "Passport",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Government booklet proving identity and nationality for international travel."
     },
     {
@@ -11856,12 +23060,12 @@ const categories = {
     },
     {
       "word": "Check-in",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Process of registering arrival at airport or accommodation."
     },
     {
       "word": "Carry-on",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Bag you keep with you in the cabin, not in checked hold."
     },
     {
@@ -11881,7 +23085,7 @@ const categories = {
     },
     {
       "word": "Terminal",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Airport building where departures and arrivals are processed."
     },
     {
@@ -11891,7 +23095,7 @@ const categories = {
     },
     {
       "word": "Runway",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Long strip used by aircraft for takeoff and landing."
     },
     {
@@ -11901,7 +23105,7 @@ const categories = {
     },
     {
       "word": "Cockpit",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Pilot control area at the front of an aircraft."
     },
     {
@@ -11921,7 +23125,7 @@ const categories = {
     },
     {
       "word": "Emergency Exit",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Marked route or door used for rapid evacuation."
     },
     {
@@ -11941,12 +23145,12 @@ const categories = {
     },
     {
       "word": "First Class",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Highest-luxury seating category on many flights."
     },
     {
       "word": "Frequent Flyer",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Loyal traveler earning miles and airline rewards."
     },
     {
@@ -11961,7 +23165,7 @@ const categories = {
     },
     {
       "word": "Duty Free",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Airport shopping where certain taxes are not charged."
     },
     {
@@ -11981,7 +23185,7 @@ const categories = {
     },
     {
       "word": "Roundabout",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Circular road junction where traffic exits by chosen turn."
     },
     {
@@ -12001,7 +23205,7 @@ const categories = {
     },
     {
       "word": "Metro",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Urban rapid-transit rail system, often underground."
     },
     {
@@ -12011,12 +23215,12 @@ const categories = {
     },
     {
       "word": "High-speed Rail",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Fast intercity train service on dedicated tracks."
     },
     {
       "word": "Bullet Train",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Very fast train, famously associated with Japan."
     },
     {
@@ -12036,7 +23240,7 @@ const categories = {
     },
     {
       "word": "Cruise Ship",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Large leisure passenger vessel with onboard amenities."
     },
     {
@@ -12056,12 +23260,12 @@ const categories = {
     },
     {
       "word": "Canal",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Artificial waterway connecting rivers, lakes, or seas."
     },
     {
       "word": "Bridge",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Structure carrying road or rail over an obstacle."
     },
     {
@@ -12076,12 +23280,12 @@ const categories = {
     },
     {
       "word": "Ride-share",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "App-based shared or private passenger ride service."
     },
     {
       "word": "E-hailing",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Requesting transport through a mobile app."
     },
     {
@@ -12096,7 +23300,7 @@ const categories = {
     },
     {
       "word": "Scooter",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Small two-wheeled transport, manual or electric."
     },
     {
@@ -12116,7 +23320,7 @@ const categories = {
     },
     {
       "word": "Camping Site",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Designated area where travelers pitch tents or park caravans."
     },
     {
@@ -12131,12 +23335,12 @@ const categories = {
     },
     {
       "word": "Bed and Breakfast",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Small accommodation that includes breakfast."
     },
     {
       "word": "Hotel Concierge",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Hotel staff member arranging bookings, transport, and recommendations."
     },
     {
@@ -12156,7 +23360,7 @@ const categories = {
     },
     {
       "word": "Currency Exchange",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Converting one country's money into another's."
     },
     {
@@ -12181,7 +23385,7 @@ const categories = {
     },
     {
       "word": "Seaplane",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Aircraft designed to take off from and land on water."
     },
     {
@@ -12196,7 +23400,7 @@ const categories = {
     },
     {
       "word": "Parachute",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Fabric canopy that slows descent from height."
     },
     {
@@ -12226,27 +23430,27 @@ const categories = {
     },
     {
       "word": "Aisle Seat",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Seat located beside the cabin walkway."
     },
     {
       "word": "Overhead Bin",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Storage compartment above airline seats for cabin bags."
     },
     {
       "word": "Baggage Claim",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Airport area where checked luggage is collected."
     },
     {
       "word": "Lost Luggage",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Checked bag that does not arrive with its owner."
     },
     {
       "word": "Travel Adapter",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Plug converter for different foreign power sockets."
     },
     {
@@ -12261,7 +23465,7 @@ const categories = {
     },
     {
       "word": "Tourist Trap",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Overpriced attraction targeted mainly at visitors."
     },
     {
@@ -12283,6 +23487,456 @@ const categories = {
       "word": "Safari Vehicle",
       "difficulty": "easy",
       "description": "Open or modified 4x4 used for wildlife viewing drives."
+    },
+    {
+      "word": "Boarding Queue",
+      "difficulty": "easy",
+      "description": "Line of passengers waiting to enter a vehicle."
+    },
+    {
+      "word": "Middle Seat",
+      "difficulty": "easy",
+      "description": "Airline position squeezed between two other passengers."
+    },
+    {
+      "word": "Legroom",
+      "difficulty": "easy",
+      "description": "Space available to stretch your lower limbs while seated."
+    },
+    {
+      "word": "Reclining Seat",
+      "difficulty": "easy",
+      "description": "Passenger chair whose back tilts towards the person behind."
+    },
+    {
+      "word": "Tray Table",
+      "difficulty": "easy",
+      "description": "Small folding surface in front of an airline passenger."
+    },
+    {
+      "word": "Seat Pocket",
+      "difficulty": "easy",
+      "description": "Storage pouch on the back of the chair ahead."
+    },
+    {
+      "word": "Oxygen Mask",
+      "difficulty": "easy",
+      "description": "Emergency breathing aid that may drop from an overhead panel."
+    },
+    {
+      "word": "Life Jacket",
+      "difficulty": "easy",
+      "description": "Flotation vest worn during a water emergency."
+    },
+    {
+      "word": "Emergency Slide",
+      "difficulty": "easy",
+      "description": "Inflatable ramp used to evacuate an aircraft."
+    },
+    {
+      "word": "Safety Demonstration",
+      "difficulty": "easy",
+      "description": "Pre-departure explanation of emergency equipment and procedures."
+    },
+    {
+      "word": "Cabin Crew",
+      "difficulty": "easy",
+      "description": "Airline staff caring for passengers during a flight."
+    },
+    {
+      "word": "Co-pilot",
+      "difficulty": "easy",
+      "description": "Second aviator assisting the captain in a cockpit."
+    },
+    {
+      "word": "Control Tower",
+      "difficulty": "easy",
+      "description": "Elevated airport building directing aircraft movements."
+    },
+    {
+      "word": "Radar Screen",
+      "difficulty": "easy",
+      "description": "Display showing aircraft positions from reflected signals."
+    },
+    {
+      "word": "Landing Gear",
+      "difficulty": "easy",
+      "description": "Wheels and supports extended before an aircraft touches down."
+    },
+    {
+      "word": "Propeller",
+      "difficulty": "easy",
+      "description": "Rotating blades that generate thrust for some aircraft."
+    },
+    {
+      "word": "Jet Engine",
+      "difficulty": "easy",
+      "description": "Aircraft power unit producing thrust through fast exhaust gases."
+    },
+    {
+      "word": "Wing",
+      "difficulty": "easy",
+      "description": "Aircraft surface producing most of the lift."
+    },
+    {
+      "word": "Tail Fin",
+      "difficulty": "easy",
+      "description": "Vertical stabilising surface at the rear of an aircraft."
+    },
+    {
+      "word": "Departure Lounge",
+      "difficulty": "easy",
+      "description": "Airport seating area used before a flight leaves."
+    },
+    {
+      "word": "Arrivals Hall",
+      "difficulty": "easy",
+      "description": "Airport area where travellers emerge after landing."
+    },
+    {
+      "word": "Luggage Carousel",
+      "difficulty": "easy",
+      "description": "Moving belt where passengers collect checked bags."
+    },
+    {
+      "word": "Lost Property",
+      "difficulty": "easy",
+      "description": "Service holding items people have left behind."
+    },
+    {
+      "word": "Duty-free Shop",
+      "difficulty": "easy",
+      "description": "Airport retailer selling goods with certain tax exemptions."
+    },
+    {
+      "word": "Travel Pillow",
+      "difficulty": "easy",
+      "description": "Cushion supporting the neck on long journeys."
+    },
+    {
+      "word": "Eye Mask",
+      "difficulty": "easy",
+      "description": "Fabric cover blocking light while sleeping."
+    },
+    {
+      "word": "Earplugs",
+      "difficulty": "easy",
+      "description": "Small inserts used to reduce unwanted noise."
+    },
+    {
+      "word": "Compression Socks",
+      "difficulty": "easy",
+      "description": "Leg garments designed to help circulation during travel."
+    },
+    {
+      "word": "Luggage Tag",
+      "difficulty": "easy",
+      "description": "Identification label attached to a suitcase."
+    },
+    {
+      "word": "Combination Lock",
+      "difficulty": "easy",
+      "description": "Security device opened by entering a sequence of numbers."
+    },
+    {
+      "word": "Packing Cubes",
+      "difficulty": "easy",
+      "description": "Small zippered containers organising clothes inside luggage."
+    },
+    {
+      "word": "Toiletry Bag",
+      "difficulty": "easy",
+      "description": "Small travel pouch for washing and grooming products."
+    },
+    {
+      "word": "Hand Luggage",
+      "difficulty": "easy",
+      "description": "Bags carried with you into an aircraft cabin."
+    },
+    {
+      "word": "Checked Baggage",
+      "difficulty": "easy",
+      "description": "Suitcases placed in an aircraft's cargo hold."
+    },
+    {
+      "word": "Excess Baggage",
+      "difficulty": "easy",
+      "description": "Luggage exceeding an airline's weight or size allowance."
+    },
+    {
+      "word": "One-way Ticket",
+      "difficulty": "easy",
+      "description": "Travel booking that covers an outward journey only."
+    },
+    {
+      "word": "Return Ticket",
+      "difficulty": "easy",
+      "description": "Travel booking including the journey back."
+    },
+    {
+      "word": "Travel Voucher",
+      "difficulty": "easy",
+      "description": "Credit or document redeemable against a future journey."
+    },
+    {
+      "word": "Package Holiday",
+      "difficulty": "easy",
+      "description": "Trip sold with accommodation and transport bundled together."
+    },
+    {
+      "word": "All-inclusive Resort",
+      "difficulty": "easy",
+      "description": "Holiday accommodation with meals and selected extras included."
+    },
+    {
+      "word": "Self-catering",
+      "difficulty": "easy",
+      "description": "Accommodation where guests prepare their own meals."
+    },
+    {
+      "word": "Youth Hostel",
+      "difficulty": "easy",
+      "description": "Budget accommodation often featuring shared dormitories."
+    },
+    {
+      "word": "Penthouse Suite",
+      "difficulty": "easy",
+      "description": "Luxury accommodation on a building's highest floor."
+    },
+    {
+      "word": "Honeymoon Suite",
+      "difficulty": "easy",
+      "description": "Hotel accommodation marketed to newly married couples."
+    },
+    {
+      "word": "Do Not Disturb Sign",
+      "difficulty": "easy",
+      "description": "Door notice asking hotel staff to leave you alone."
+    },
+    {
+      "word": "Mini Bar",
+      "difficulty": "easy",
+      "description": "Small hotel-room selection of drinks and snacks."
+    },
+    {
+      "word": "Key Card",
+      "difficulty": "easy",
+      "description": "Plastic access credential used to unlock a hotel room."
+    },
+    {
+      "word": "Wake-up Call",
+      "difficulty": "easy",
+      "description": "Hotel service ringing a guest at a requested time."
+    },
+    {
+      "word": "Tour Bus",
+      "difficulty": "easy",
+      "description": "Large vehicle carrying a group between attractions."
+    },
+    {
+      "word": "Open-top Bus",
+      "difficulty": "easy",
+      "description": "Sightseeing vehicle with uncovered upper-deck seating."
+    },
+    {
+      "word": "Double-decker",
+      "difficulty": "easy",
+      "description": "Vehicle with two passenger levels."
+    },
+    {
+      "word": "Rickshaw",
+      "difficulty": "easy",
+      "description": "Small passenger vehicle traditionally pulled by a person."
+    },
+    {
+      "word": "Tuk-tuk",
+      "difficulty": "easy",
+      "description": "Motorised three-wheeled passenger vehicle common in Asian cities."
+    },
+    {
+      "word": "Gondola",
+      "difficulty": "easy",
+      "description": "Venetian passenger boat propelled with a long oar."
+    },
+    {
+      "word": "Cable Car",
+      "difficulty": "easy",
+      "description": "Passenger cabin suspended from overhead wires."
+    },
+    {
+      "word": "Funicular",
+      "difficulty": "easy",
+      "description": "Steep railway using counterbalanced cars connected by a cable."
+    },
+    {
+      "word": "Monorail",
+      "difficulty": "easy",
+      "description": "Train system running on a single beam or track."
+    },
+    {
+      "word": "Maglev",
+      "difficulty": "easy",
+      "description": "Train technology using magnetic levitation."
+    },
+    {
+      "word": "Steam Train",
+      "difficulty": "easy",
+      "description": "Rail vehicle powered by heated water vapour."
+    },
+    {
+      "word": "Locomotive",
+      "difficulty": "easy",
+      "description": "Powered rail vehicle that pulls passenger or freight cars."
+    },
+    {
+      "word": "Standby Passenger",
+      "difficulty": "hard",
+      "description": "Traveller waiting for an available place on a flight."
+    },
+    {
+      "word": "Overbooking",
+      "difficulty": "hard",
+      "description": "Selling more reservations than there are available spaces."
+    },
+    {
+      "word": "Denied Boarding",
+      "difficulty": "hard",
+      "description": "Refusal to let a ticketed passenger enter a flight."
+    },
+    {
+      "word": "No-show",
+      "difficulty": "hard",
+      "description": "Booked guest or traveller who fails to arrive."
+    },
+    {
+      "word": "Open-jaw Ticket",
+      "difficulty": "hard",
+      "description": "Itinerary arriving in one city and departing from another."
+    },
+    {
+      "word": "Round-the-world Ticket",
+      "difficulty": "hard",
+      "description": "Booking designed for a journey circling the globe."
+    },
+    {
+      "word": "Codeshare",
+      "difficulty": "hard",
+      "description": "Airline arrangement selling seats on another carrier's service."
+    },
+    {
+      "word": "Interline Agreement",
+      "difficulty": "hard",
+      "description": "Airline arrangement enabling connected journeys across carriers."
+    },
+    {
+      "word": "Hub Airport",
+      "difficulty": "hard",
+      "description": "Major connection point where an airline concentrates routes."
+    },
+    {
+      "word": "Tailwind",
+      "difficulty": "hard",
+      "description": "Air movement from behind that can shorten a flight."
+    },
+    {
+      "word": "Headwind",
+      "difficulty": "hard",
+      "description": "Air movement from ahead that can slow a flight."
+    },
+    {
+      "word": "Crosswind",
+      "difficulty": "hard",
+      "description": "Air movement across a runway's direction."
+    },
+    {
+      "word": "Holding Pattern",
+      "difficulty": "hard",
+      "description": "Repeated flight path used while awaiting permission to land."
+    },
+    {
+      "word": "Go-around",
+      "difficulty": "hard",
+      "description": "Aborted landing followed by another approach attempt."
+    },
+    {
+      "word": "Touch-and-go",
+      "difficulty": "hard",
+      "description": "Landing immediately followed by takeoff without a full stop."
+    },
+    {
+      "word": "Hard Landing",
+      "difficulty": "hard",
+      "description": "Unusually forceful touchdown of an aircraft."
+    },
+    {
+      "word": "Water Landing",
+      "difficulty": "hard",
+      "description": "Aircraft touchdown on a lake or sea."
+    },
+    {
+      "word": "Mayday",
+      "difficulty": "hard",
+      "description": "International radio distress call used in a life-threatening emergency."
+    },
+    {
+      "word": "Pan-pan",
+      "difficulty": "hard",
+      "description": "Urgent aviation or maritime call below immediate distress level."
+    },
+    {
+      "word": "Squawk Code",
+      "difficulty": "hard",
+      "description": "Four-digit identifier assigned to an aircraft's transponder."
+    },
+    {
+      "word": "Contrail",
+      "difficulty": "hard",
+      "description": "White streak formed behind some high-flying aircraft."
+    },
+    {
+      "word": "Cabin Pressure",
+      "difficulty": "hard",
+      "description": "Controlled air conditions maintained for aircraft occupants."
+    },
+    {
+      "word": "Cruising Altitude",
+      "difficulty": "hard",
+      "description": "Height at which an aircraft travels during its main flight segment."
+    },
+    {
+      "word": "Great-circle Route",
+      "difficulty": "hard",
+      "description": "Shortest path between two points on a globe."
+    },
+    {
+      "word": "Nautical Mile",
+      "difficulty": "hard",
+      "description": "Distance unit based on one minute of latitude."
+    },
+    {
+      "word": "Knot",
+      "difficulty": "hard",
+      "description": "Speed unit equal to one nautical mile per hour."
+    },
+    {
+      "word": "Starboard",
+      "difficulty": "hard",
+      "description": "Right-hand side of a vessel when facing forward."
+    },
+    {
+      "word": "Port Side",
+      "difficulty": "hard",
+      "description": "Left half of a vessel when facing forward."
+    },
+    {
+      "word": "Bow",
+      "difficulty": "easy",
+      "description": "Forward end of a ship."
+    },
+    {
+      "word": "Stern",
+      "difficulty": "hard",
+      "description": "Rear end of a ship."
     }
   ],
   "Internet Culture and Social Media": [
@@ -12578,7 +24232,7 @@ const categories = {
     },
     {
       "word": "Spoiler Alert",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Warning that major plot details are about to be revealed."
     },
     {
@@ -12735,6 +24389,506 @@ const categories = {
       "word": "Mute Button",
       "difficulty": "easy",
       "description": "Control that silences microphone or speaker audio."
+    },
+    {
+      "word": "Rickroll",
+      "difficulty": "easy",
+      "description": "Tricking someone into watching Never Gonna Give You Up."
+    },
+    {
+      "word": "Keyboard Warrior",
+      "difficulty": "easy",
+      "description": "Person who argues aggressively from behind a screen."
+    },
+    {
+      "word": "Internet Rabbit Hole",
+      "difficulty": "easy",
+      "description": "Long chain of links that consumes far more time than intended."
+    },
+    {
+      "word": "Doomscrolling",
+      "difficulty": "easy",
+      "description": "Compulsively browsing a stream of distressing news."
+    },
+    {
+      "word": "Ghosting",
+      "difficulty": "easy",
+      "description": "Suddenly ending communication without explanation."
+    },
+    {
+      "word": "Left on Read",
+      "difficulty": "easy",
+      "description": "Your message was opened but received no reply."
+    },
+    {
+      "word": "Typing Indicator",
+      "difficulty": "easy",
+      "description": "Animated dots revealing that someone is composing a message."
+    },
+    {
+      "word": "Read Receipt",
+      "difficulty": "easy",
+      "description": "Message status showing that the recipient opened it."
+    },
+    {
+      "word": "Voice Note",
+      "difficulty": "easy",
+      "description": "Recorded spoken message sent through a chat app."
+    },
+    {
+      "word": "Group Chat",
+      "difficulty": "easy",
+      "description": "Shared messaging conversation with several participants."
+    },
+    {
+      "word": "Family WhatsApp Group",
+      "difficulty": "easy",
+      "description": "Shared phone conversation notorious for forwards from relatives."
+    },
+    {
+      "word": "Wrong Chat",
+      "difficulty": "easy",
+      "description": "Embarrassing destination for a message intended for someone else."
+    },
+    {
+      "word": "Reply All",
+      "difficulty": "easy",
+      "description": "Email action that can accidentally involve the entire office."
+    },
+    {
+      "word": "Unsubscribe",
+      "difficulty": "easy",
+      "description": "Action intended to stop future marketing messages."
+    },
+    {
+      "word": "Spam Folder",
+      "difficulty": "easy",
+      "description": "Inbox section where suspicious or unwanted messages are sent."
+    },
+    {
+      "word": "Out of Office",
+      "difficulty": "easy",
+      "description": "Automatic email response announcing that someone is away."
+    },
+    {
+      "word": "Forgot Password",
+      "difficulty": "easy",
+      "description": "Login link used when you cannot remember your secret credentials."
+    },
+    {
+      "word": "Loading Bar",
+      "difficulty": "easy",
+      "description": "Onscreen progress indicator that always seems to pause near completion."
+    },
+    {
+      "word": "Buffering",
+      "difficulty": "easy",
+      "description": "Playback delay while a stream waits for more data."
+    },
+    {
+      "word": "Frozen Screen",
+      "difficulty": "easy",
+      "description": "Display that stops responding or updating."
+    },
+    {
+      "word": "Poor Connection",
+      "difficulty": "easy",
+      "description": "Weak internet link causing interrupted calls or slow loading."
+    },
+    {
+      "word": "You're on Mute",
+      "difficulty": "easy",
+      "description": "Phrase said when someone talks silently during a call."
+    },
+    {
+      "word": "Unmute",
+      "difficulty": "easy",
+      "description": "Enable your microphone so others can hear you."
+    },
+    {
+      "word": "Camera Off",
+      "difficulty": "easy",
+      "description": "Video-call setting that hides your live image."
+    },
+    {
+      "word": "Virtual Background",
+      "difficulty": "easy",
+      "description": "Replacement scenery behind someone in a video meeting."
+    },
+    {
+      "word": "Accidental Like",
+      "difficulty": "easy",
+      "description": "Unintended reaction, often while browsing someone's old posts."
+    },
+    {
+      "word": "Double Tap",
+      "difficulty": "easy",
+      "description": "Gesture commonly used to react positively to an Instagram post."
+    },
+    {
+      "word": "Swipe Left",
+      "difficulty": "easy",
+      "description": "Dating-app gesture rejecting a potential match."
+    },
+    {
+      "word": "Swipe Right",
+      "difficulty": "easy",
+      "description": "Dating-app gesture expressing interest in a potential match."
+    },
+    {
+      "word": "Match",
+      "difficulty": "easy",
+      "description": "Dating-app result when two people express mutual interest."
+    },
+    {
+      "word": "Dating Profile",
+      "difficulty": "easy",
+      "description": "Online introduction used to attract potential romantic partners."
+    },
+    {
+      "word": "Profile Picture",
+      "difficulty": "easy",
+      "description": "Image representing your account to other users."
+    },
+    {
+      "word": "Display Name",
+      "difficulty": "easy",
+      "description": "Public label shown beside your account activity."
+    },
+    {
+      "word": "Username",
+      "difficulty": "easy",
+      "description": "Unique account identifier chosen when registering."
+    },
+    {
+      "word": "Bio",
+      "difficulty": "easy",
+      "description": "Brief self-description on a social account."
+    },
+    {
+      "word": "Pinned Post",
+      "difficulty": "easy",
+      "description": "Update kept at the top of an account's feed."
+    },
+    {
+      "word": "Archive",
+      "difficulty": "easy",
+      "description": "Store old online content out of immediate view."
+    },
+    {
+      "word": "Block Button",
+      "difficulty": "easy",
+      "description": "Control preventing an account from contacting you."
+    },
+    {
+      "word": "Unfollow",
+      "difficulty": "easy",
+      "description": "Stop receiving an account's updates in your feed."
+    },
+    {
+      "word": "Friend Request",
+      "difficulty": "easy",
+      "description": "Invitation to connect through a social platform."
+    },
+    {
+      "word": "Close Friends",
+      "difficulty": "easy",
+      "description": "Restricted social-media audience for selected trusted contacts."
+    },
+    {
+      "word": "Private Account",
+      "difficulty": "easy",
+      "description": "Profile whose content requires approval to view."
+    },
+    {
+      "word": "Public Account",
+      "difficulty": "easy",
+      "description": "Profile whose content anyone can view."
+    },
+    {
+      "word": "Fan Account",
+      "difficulty": "easy",
+      "description": "Profile dedicated to supporting a celebrity or fictional interest."
+    },
+    {
+      "word": "Parody Account",
+      "difficulty": "easy",
+      "description": "Profile imitating someone for comic effect."
+    },
+    {
+      "word": "Throwback Thursday",
+      "difficulty": "easy",
+      "description": "Weekly tradition of posting nostalgic photographs."
+    },
+    {
+      "word": "Before and After",
+      "difficulty": "easy",
+      "description": "Paired images showing a transformation."
+    },
+    {
+      "word": "Get Ready With Me",
+      "difficulty": "easy",
+      "description": "Video format showing someone's preparation routine."
+    },
+    {
+      "word": "Day in the Life",
+      "difficulty": "easy",
+      "description": "Video format following someone's daily routine."
+    },
+    {
+      "word": "Room Tour",
+      "difficulty": "easy",
+      "description": "Video showing viewers around a personal living space."
+    },
+    {
+      "word": "Haul Video",
+      "difficulty": "easy",
+      "description": "Content showing a collection of newly purchased items."
+    },
+    {
+      "word": "Mukbang",
+      "difficulty": "easy",
+      "description": "Video format centred on someone eating a large meal."
+    },
+    {
+      "word": "ASMR",
+      "difficulty": "easy",
+      "description": "Soft-sound content associated with relaxing tingling sensations."
+    },
+    {
+      "word": "Oddly Satisfying",
+      "difficulty": "easy",
+      "description": "Label for videos showing pleasingly neat or smooth processes."
+    },
+    {
+      "word": "Fail Compilation",
+      "difficulty": "easy",
+      "description": "Collection of clips showing things going comically wrong."
+    },
+    {
+      "word": "Try Not to Laugh",
+      "difficulty": "easy",
+      "description": "Challenge where participants attempt to resist amusing clips."
+    },
+    {
+      "word": "Roast",
+      "difficulty": "easy",
+      "description": "Comedic barrage of insults aimed at a willing target."
+    },
+    {
+      "word": "Doggo",
+      "difficulty": "easy",
+      "description": "Affectionate internet slang for a canine."
+    },
+    {
+      "word": "Zoomies",
+      "difficulty": "easy",
+      "description": "Sudden burst of energetic running by a pet."
+    },
+    {
+      "word": "Loaf Cat",
+      "difficulty": "easy",
+      "description": "Feline sitting with its paws tucked beneath its body."
+    },
+    {
+      "word": "Distracted Boyfriend",
+      "difficulty": "hard",
+      "description": "Stock-photo meme featuring a man looking away from his partner."
+    },
+    {
+      "word": "This Is Fine",
+      "difficulty": "hard",
+      "description": "Meme of a dog calmly sitting in a burning room."
+    },
+    {
+      "word": "Woman Yelling at a Cat",
+      "difficulty": "hard",
+      "description": "Meme pairing a reality-TV argument with a confused feline."
+    },
+    {
+      "word": "Drake Hotline Bling",
+      "difficulty": "hard",
+      "description": "Meme template contrasting rejection with approval."
+    },
+    {
+      "word": "Success Kid",
+      "difficulty": "hard",
+      "description": "Meme showing a determined toddler clenching his fist."
+    },
+    {
+      "word": "Disaster Girl",
+      "difficulty": "hard",
+      "description": "Meme of a child smiling in front of a burning house."
+    },
+    {
+      "word": "Hide the Pain Harold",
+      "difficulty": "hard",
+      "description": "Meme featuring a man whose smile looks strained."
+    },
+    {
+      "word": "Grumpy Cat",
+      "difficulty": "hard",
+      "description": "Internet-famous feline associated with a permanently displeased expression."
+    },
+    {
+      "word": "Doge",
+      "difficulty": "hard",
+      "description": "Shiba Inu meme associated with colourful broken-English captions."
+    },
+    {
+      "word": "Nyan Cat",
+      "difficulty": "hard",
+      "description": "Animated rainbow-trailing feline with a pastry body."
+    },
+    {
+      "word": "Keyboard Cat",
+      "difficulty": "hard",
+      "description": "Meme of a feline appearing to perform music."
+    },
+    {
+      "word": "Charlie Bit My Finger",
+      "difficulty": "hard",
+      "description": "Viral clip involving a toddler and his baby brother's teeth."
+    },
+    {
+      "word": "Ice Bucket Challenge",
+      "difficulty": "hard",
+      "description": "Viral fundraising activity involving dumping freezing water over yourself."
+    },
+    {
+      "word": "Mannequin Challenge",
+      "difficulty": "hard",
+      "description": "Video trend where everyone holds completely still."
+    },
+    {
+      "word": "Harlem Shake",
+      "difficulty": "hard",
+      "description": "Video trend shifting suddenly into chaotic dancing."
+    },
+    {
+      "word": "Planking",
+      "difficulty": "hard",
+      "description": "Trend involving lying rigidly face-down in unusual places."
+    },
+    {
+      "word": "Bottle Flip",
+      "difficulty": "hard",
+      "description": "Challenge landing a partly filled container upright after a toss."
+    },
+    {
+      "word": "Watermelon Challenge",
+      "difficulty": "hard",
+      "description": "Stunt using many elastic bands to burst a fruit."
+    },
+    {
+      "word": "NPC",
+      "difficulty": "hard",
+      "description": "Gaming abbreviation used online for someone behaving predictably."
+    },
+    {
+      "word": "Touch Grass",
+      "difficulty": "hard",
+      "description": "Online instruction to step away from the screen and reconnect with reality."
+    },
+    {
+      "word": "Rent-free",
+      "difficulty": "hard",
+      "description": "Slang for something occupying your thoughts excessively."
+    },
+    {
+      "word": "Living My Best Life",
+      "difficulty": "hard",
+      "description": "Caption celebrating personal enjoyment and freedom."
+    },
+    {
+      "word": "Soft Launch",
+      "difficulty": "hard",
+      "description": "Subtly revealing a relationship without fully identifying the partner."
+    },
+    {
+      "word": "Hard Launch",
+      "difficulty": "hard",
+      "description": "Publicly and explicitly revealing a relationship online."
+    },
+    {
+      "word": "Parasocial Relationship",
+      "difficulty": "hard",
+      "description": "One-sided emotional bond with a public figure."
+    },
+    {
+      "word": "Engagement Bait",
+      "difficulty": "hard",
+      "description": "Content designed mainly to provoke reactions and comments."
+    },
+    {
+      "word": "Rage Bait",
+      "difficulty": "hard",
+      "description": "Content deliberately designed to make viewers angry."
+    },
+    {
+      "word": "Astroturfing",
+      "difficulty": "hard",
+      "description": "Artificial campaign pretending to have grassroots support."
+    },
+    {
+      "word": "Sockpuppet",
+      "difficulty": "hard",
+      "description": "False online identity used to influence discussion."
+    },
+    {
+      "word": "Click Farm",
+      "difficulty": "hard",
+      "description": "Operation producing artificial online reactions at scale."
+    },
+    {
+      "word": "Echo Chamber",
+      "difficulty": "hard",
+      "description": "Environment repeatedly reinforcing the same views."
+    },
+    {
+      "word": "Filter Bubble",
+      "difficulty": "hard",
+      "description": "Personalised information environment limiting exposure to different perspectives."
+    },
+    {
+      "word": "Streisand Effect",
+      "difficulty": "hard",
+      "description": "Attempts to suppress information making it more widely known."
+    },
+    {
+      "word": "Copypasta",
+      "difficulty": "hard",
+      "description": "Block of text repeatedly reposted across online discussions."
+    },
+    {
+      "word": "TL;DR",
+      "difficulty": "hard",
+      "description": "Abbreviation introducing a short version of lengthy text."
+    },
+    {
+      "word": "FOMO",
+      "difficulty": "hard",
+      "description": "Anxiety that others are enjoying something you are missing."
+    },
+    {
+      "word": "JOMO",
+      "difficulty": "hard",
+      "description": "Pleasure in opting out of others' activities."
+    },
+    {
+      "word": "Humblebrag",
+      "difficulty": "hard",
+      "description": "Boast disguised as modesty or a complaint."
+    },
+    {
+      "word": "Vaguebooking",
+      "difficulty": "hard",
+      "description": "Posting an intentionally unclear update to invite questions."
+    },
+    {
+      "word": "Ratio",
+      "difficulty": "hard",
+      "description": "Online response pattern where replies overwhelm positive reactions."
     }
   ],
   "Crime, Law, and Justice": [
@@ -13187,6 +25341,441 @@ const categories = {
       "word": "Conviction",
       "difficulty": "easy",
       "description": "Outcome where the accused is found guilty by the court."
+    },
+    {
+      "word": "Police Station",
+      "difficulty": "easy",
+      "description": "Building where officers work and reports are made."
+    },
+    {
+      "word": "Prison",
+      "difficulty": "easy",
+      "description": "Secure institution holding convicted or detained people."
+    },
+    {
+      "word": "Jail Cell",
+      "difficulty": "easy",
+      "description": "Locked room used to confine a detainee."
+    },
+    {
+      "word": "Courtroom",
+      "difficulty": "easy",
+      "description": "Room where legal cases are heard."
+    },
+    {
+      "word": "Witness Stand",
+      "difficulty": "easy",
+      "description": "Place where someone gives evidence during a trial."
+    },
+    {
+      "word": "Jury Box",
+      "difficulty": "easy",
+      "description": "Designated seating for the people deciding a trial's facts."
+    },
+    {
+      "word": "Gavel",
+      "difficulty": "easy",
+      "description": "Small ceremonial hammer associated with judges and auctions."
+    },
+    {
+      "word": "Police Badge",
+      "difficulty": "easy",
+      "description": "Official emblem identifying a law-enforcement officer."
+    },
+    {
+      "word": "Police Car",
+      "difficulty": "easy",
+      "description": "Vehicle used by law-enforcement officers."
+    },
+    {
+      "word": "Speed Camera",
+      "difficulty": "easy",
+      "description": "Roadside device photographing vehicles travelling too fast."
+    },
+    {
+      "word": "Breathalyser",
+      "difficulty": "easy",
+      "description": "Device estimating alcohol levels from exhaled air."
+    },
+    {
+      "word": "Speeding Fine",
+      "difficulty": "easy",
+      "description": "Financial penalty for driving above the permitted limit."
+    },
+    {
+      "word": "Parking Ticket",
+      "difficulty": "easy",
+      "description": "Notice penalising a vehicle left in a prohibited place."
+    },
+    {
+      "word": "Traffic Court",
+      "difficulty": "easy",
+      "description": "Legal venue dealing with road-related offences."
+    },
+    {
+      "word": "Crime Tape",
+      "difficulty": "easy",
+      "description": "Barrier marking off an area under police investigation."
+    },
+    {
+      "word": "Evidence Bag",
+      "difficulty": "easy",
+      "description": "Sealed container used to preserve material for investigation."
+    },
+    {
+      "word": "Police Line-up",
+      "difficulty": "easy",
+      "description": "Group presented to a witness to identify a suspect."
+    },
+    {
+      "word": "Wanted Poster",
+      "difficulty": "easy",
+      "description": "Public notice seeking help locating a suspect."
+    },
+    {
+      "word": "Reward",
+      "difficulty": "easy",
+      "description": "Benefit offered for information or recovering something lost."
+    },
+    {
+      "word": "Anonymous Tip",
+      "difficulty": "easy",
+      "description": "Information provided without revealing the source's identity."
+    },
+    {
+      "word": "Eyewitness",
+      "difficulty": "easy",
+      "description": "Person who directly saw an event happen."
+    },
+    {
+      "word": "Sketch Artist",
+      "difficulty": "easy",
+      "description": "Person drawing a suspect from a witness's description."
+    },
+    {
+      "word": "Getaway Car",
+      "difficulty": "easy",
+      "description": "Vehicle used to escape after committing a crime."
+    },
+    {
+      "word": "Bank Heist",
+      "difficulty": "easy",
+      "description": "Planned robbery targeting a financial institution."
+    },
+    {
+      "word": "Jewel Thief",
+      "difficulty": "easy",
+      "description": "Criminal stealing precious stones and valuables."
+    },
+    {
+      "word": "Shoplifting",
+      "difficulty": "easy",
+      "description": "Taking goods from a store without paying."
+    },
+    {
+      "word": "Carjacking",
+      "difficulty": "easy",
+      "description": "Taking a vehicle by force from its occupant."
+    },
+    {
+      "word": "Hijacking",
+      "difficulty": "easy",
+      "description": "Unlawfully taking control of a vehicle or aircraft."
+    },
+    {
+      "word": "Hostage",
+      "difficulty": "easy",
+      "description": "Person held to force someone else to meet demands."
+    },
+    {
+      "word": "Ransom",
+      "difficulty": "easy",
+      "description": "Payment demanded for releasing a captive."
+    },
+    {
+      "word": "Safe",
+      "difficulty": "easy",
+      "description": "Secure metal container protecting valuables."
+    },
+    {
+      "word": "Vault",
+      "difficulty": "easy",
+      "description": "Highly secure room used to store valuables."
+    },
+    {
+      "word": "Burglar Alarm",
+      "difficulty": "easy",
+      "description": "Security system warning of unauthorised entry."
+    },
+    {
+      "word": "Security Camera",
+      "difficulty": "easy",
+      "description": "Device recording a location to help deter or investigate wrongdoing."
+    },
+    {
+      "word": "Metal Detector",
+      "difficulty": "easy",
+      "description": "Screening device that responds to conductive objects."
+    },
+    {
+      "word": "Lie Detector",
+      "difficulty": "easy",
+      "description": "Device associated with recording physiological responses during questioning."
+    },
+    {
+      "word": "Police Dog",
+      "difficulty": "easy",
+      "description": "Trained animal assisting officers with tracking or detection."
+    },
+    {
+      "word": "Sniffer Dog",
+      "difficulty": "easy",
+      "description": "Animal trained to locate substances by scent."
+    },
+    {
+      "word": "Search Party",
+      "difficulty": "easy",
+      "description": "Group organised to look for a missing person."
+    },
+    {
+      "word": "Missing Poster",
+      "difficulty": "easy",
+      "description": "Public notice seeking information about someone's whereabouts."
+    },
+    {
+      "word": "Citizen's Arrest",
+      "difficulty": "easy",
+      "description": "Detaining someone as a private individual rather than an officer."
+    },
+    {
+      "word": "Prison Break",
+      "difficulty": "easy",
+      "description": "Escape from a secure detention institution."
+    },
+    {
+      "word": "Fugitive",
+      "difficulty": "easy",
+      "description": "Person evading capture or legal custody."
+    },
+    {
+      "word": "Accomplice",
+      "difficulty": "easy",
+      "description": "Person helping someone commit an offence."
+    },
+    {
+      "word": "Informant",
+      "difficulty": "easy",
+      "description": "Person secretly giving information to investigators."
+    },
+    {
+      "word": "Bodycam",
+      "difficulty": "easy",
+      "description": "Small recording device worn by an officer."
+    },
+    {
+      "word": "Dashcam",
+      "difficulty": "easy",
+      "description": "Vehicle-mounted recorder capturing the road ahead."
+    },
+    {
+      "word": "Circumstantial Evidence",
+      "difficulty": "hard",
+      "description": "Indirect facts supporting an inference about what happened."
+    },
+    {
+      "word": "Reasonable Doubt",
+      "difficulty": "hard",
+      "description": "Uncertainty that prevents a criminal conviction under the relevant standard."
+    },
+    {
+      "word": "Burden of Proof",
+      "difficulty": "hard",
+      "description": "Responsibility to establish a claim in proceedings."
+    },
+    {
+      "word": "Beyond Reasonable Doubt",
+      "difficulty": "hard",
+      "description": "High criminal-trial standard for establishing guilt."
+    },
+    {
+      "word": "Balance of Probabilities",
+      "difficulty": "hard",
+      "description": "Civil standard asking which version is more likely."
+    },
+    {
+      "word": "Admissible Evidence",
+      "difficulty": "hard",
+      "description": "Material a court permits to be considered."
+    },
+    {
+      "word": "Hearsay",
+      "difficulty": "hard",
+      "description": "Statement repeated by someone other than its original speaker."
+    },
+    {
+      "word": "Leading Question",
+      "difficulty": "hard",
+      "description": "Enquiry that suggests its desired answer."
+    },
+    {
+      "word": "Hostile Witness",
+      "difficulty": "hard",
+      "description": "Person giving testimony in a manner adverse to the calling party."
+    },
+    {
+      "word": "Expert Witness",
+      "difficulty": "hard",
+      "description": "Specialist giving an opinion based on professional knowledge."
+    },
+    {
+      "word": "Character Witness",
+      "difficulty": "hard",
+      "description": "Person testifying about someone's reputation or conduct."
+    },
+    {
+      "word": "Opening Statement",
+      "difficulty": "hard",
+      "description": "Initial outline of a party's case at trial."
+    },
+    {
+      "word": "Closing Argument",
+      "difficulty": "hard",
+      "description": "Final presentation summarising why a party should prevail."
+    },
+    {
+      "word": "Objection",
+      "difficulty": "hard",
+      "description": "Formal challenge to a question or piece of evidence."
+    },
+    {
+      "word": "Overruled",
+      "difficulty": "hard",
+      "description": "Judge's response rejecting an objection."
+    },
+    {
+      "word": "Sustained",
+      "difficulty": "hard",
+      "description": "Judge's response accepting an objection."
+    },
+    {
+      "word": "Adjournment",
+      "difficulty": "hard",
+      "description": "Temporary suspension of a hearing or meeting."
+    },
+    {
+      "word": "Recess",
+      "difficulty": "easy",
+      "description": "Short break in court proceedings or school activities."
+    },
+    {
+      "word": "Injunction",
+      "difficulty": "hard",
+      "description": "Court order requiring or preventing an action."
+    },
+    {
+      "word": "Damages",
+      "difficulty": "hard",
+      "description": "Money awarded to compensate for legal harm."
+    },
+    {
+      "word": "Defamation",
+      "difficulty": "hard",
+      "description": "Wrongful communication harming another person's reputation."
+    },
+    {
+      "word": "Libel",
+      "difficulty": "hard",
+      "description": "Defamatory statement in a lasting published form."
+    },
+    {
+      "word": "Slander",
+      "difficulty": "hard",
+      "description": "Defamatory statement spoken rather than permanently recorded."
+    },
+    {
+      "word": "Negligence",
+      "difficulty": "hard",
+      "description": "Failure to exercise legally required reasonable care."
+    },
+    {
+      "word": "Malpractice",
+      "difficulty": "hard",
+      "description": "Professional misconduct or failure meeting a legal standard."
+    },
+    {
+      "word": "Liability",
+      "difficulty": "hard",
+      "description": "Legal responsibility for an act, debt or harm."
+    },
+    {
+      "word": "Restitution",
+      "difficulty": "hard",
+      "description": "Restoring property or compensating someone for a loss."
+    },
+    {
+      "word": "Probate",
+      "difficulty": "hard",
+      "description": "Legal process dealing with a deceased person's estate."
+    },
+    {
+      "word": "Power of Attorney",
+      "difficulty": "hard",
+      "description": "Document authorising someone to act for another person."
+    },
+    {
+      "word": "Last Will and Testament",
+      "difficulty": "hard",
+      "description": "Document directing how a person's estate should be distributed."
+    },
+    {
+      "word": "Inheritance",
+      "difficulty": "hard",
+      "description": "Property or money received after someone dies."
+    },
+    {
+      "word": "Executor",
+      "difficulty": "hard",
+      "description": "Person responsible for administering a deceased person's estate."
+    },
+    {
+      "word": "Trust Fund",
+      "difficulty": "hard",
+      "description": "Assets held and managed for named beneficiaries."
+    },
+    {
+      "word": "Prenuptial Agreement",
+      "difficulty": "hard",
+      "description": "Contract made by a couple before marriage."
+    },
+    {
+      "word": "Custody Battle",
+      "difficulty": "hard",
+      "description": "Legal dispute over a child's living arrangements."
+    },
+    {
+      "word": "Small Print",
+      "difficulty": "hard",
+      "description": "Easily overlooked contractual details in tiny lettering."
+    },
+    {
+      "word": "Loophole",
+      "difficulty": "hard",
+      "description": "Gap in rules allowing an unintended way around them."
+    },
+    {
+      "word": "Technicality",
+      "difficulty": "hard",
+      "description": "Minor procedural detail that can affect a legal outcome."
+    },
+    {
+      "word": "Legal Precedent",
+      "difficulty": "hard",
+      "description": "Earlier decision guiding how a later case is handled."
+    },
+    {
+      "word": "Amnesty",
+      "difficulty": "hard",
+      "description": "Official pardon covering a class of offences or people."
     }
   ],
   "Africa: People, Places, and Events": [
@@ -13233,12 +25822,12 @@ const categories = {
     {
       "word": "Paul Kagame",
       "difficulty": "hard",
-      "description": "Rwandan president associated with post-1994 rebuilding."
+      "description": "Rwandan leader associated with the country's post-1994 rebuilding."
     },
     {
       "word": "Cyril Ramaphosa",
       "difficulty": "easy",
-      "description": "South African president and former labor-union figure."
+      "description": "South African politician, businessman and former trade-union leader."
     },
     {
       "word": "Fela Kuti",
@@ -13332,7 +25921,7 @@ const categories = {
     },
     {
       "word": "Wole Soyinka",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Nigerian playwright and first African Nobel laureate in literature."
     },
     {
@@ -13366,7 +25955,7 @@ const categories = {
       "description": "Mountain range across Morocco, Algeria, and Tunisia."
     },
     {
-      "word": "Drakensberg",
+      "word": "Drakensberg Mountains",
       "difficulty": "easy",
       "description": "High escarpment range along eastern South Africa and Lesotho."
     },
@@ -13602,7 +26191,7 @@ const categories = {
     },
     {
       "word": "Robben Island",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Prison island where Nelson Mandela was incarcerated."
     },
     {
@@ -13624,6 +26213,506 @@ const categories = {
       "word": "Blue Nile",
       "difficulty": "hard",
       "description": "Ethiopian tributary providing much of the Nile's flow."
+    },
+    {
+      "word": "Big Five",
+      "difficulty": "easy",
+      "description": "Safari grouping of lion, leopard, elephant, rhino and buffalo."
+    },
+    {
+      "word": "Shisa Nyama",
+      "difficulty": "easy",
+      "description": "Township-style gathering centred on grilled meat."
+    },
+    {
+      "word": "Spaza Shop",
+      "difficulty": "easy",
+      "description": "Small informal neighbourhood convenience store."
+    },
+    {
+      "word": "Shebeen",
+      "difficulty": "easy",
+      "description": "Informal drinking establishment associated with township life."
+    },
+    {
+      "word": "Tuck Shop",
+      "difficulty": "easy",
+      "description": "Small retailer selling snacks, often at a school."
+    },
+    {
+      "word": "Tavern",
+      "difficulty": "easy",
+      "description": "Local drinking venue often serving food and music."
+    },
+    {
+      "word": "Township",
+      "difficulty": "easy",
+      "description": "South African urban residential area shaped by segregation history."
+    },
+    {
+      "word": "Ubuntu",
+      "difficulty": "easy",
+      "description": "Southern African philosophy emphasizing shared humanity."
+    },
+    {
+      "word": "Lekker",
+      "difficulty": "easy",
+      "description": "South African slang meaning enjoyable, nice or tasty."
+    },
+    {
+      "word": "Eish",
+      "difficulty": "easy",
+      "description": "South African exclamation expressing frustration or surprise."
+    },
+    {
+      "word": "Howzit",
+      "difficulty": "easy",
+      "description": "South African casual greeting asking how things are going."
+    },
+    {
+      "word": "Sharp Sharp",
+      "difficulty": "easy",
+      "description": "South African informal expression of agreement or farewell."
+    },
+    {
+      "word": "Just Now",
+      "difficulty": "easy",
+      "description": "South African expression for an uncertain time later."
+    },
+    {
+      "word": "Now Now",
+      "difficulty": "easy",
+      "description": "South African expression suggesting something will happen shortly."
+    },
+    {
+      "word": "Robot",
+      "difficulty": "easy",
+      "description": "South African term for a traffic light."
+    },
+    {
+      "word": "Takkies",
+      "difficulty": "easy",
+      "description": "South African term for sneakers."
+    },
+    {
+      "word": "Veld",
+      "difficulty": "easy",
+      "description": "Open southern African grassland or countryside."
+    },
+    {
+      "word": "Koppie",
+      "difficulty": "easy",
+      "description": "Small southern African hill."
+    },
+    {
+      "word": "Dorp",
+      "difficulty": "easy",
+      "description": "Small town in Afrikaans and South African usage."
+    },
+    {
+      "word": "Ouma",
+      "difficulty": "easy",
+      "description": "Afrikaans term for grandmother and a familiar rusk brand."
+    },
+    {
+      "word": "Oupa",
+      "difficulty": "easy",
+      "description": "Afrikaans term for grandfather."
+    },
+    {
+      "word": "Bra",
+      "difficulty": "easy",
+      "description": "South African informal term for a friend or brother."
+    },
+    {
+      "word": "San",
+      "difficulty": "easy",
+      "description": "Indigenous southern African peoples associated with rock art."
+    },
+    {
+      "word": "Khoikhoi",
+      "difficulty": "easy",
+      "description": "Indigenous southern African pastoral peoples."
+    },
+    {
+      "word": "Ndebele Art",
+      "difficulty": "easy",
+      "description": "Southern African tradition of bold geometric painted patterns."
+    },
+    {
+      "word": "Basotho Blanket",
+      "difficulty": "easy",
+      "description": "Distinctive woollen garment associated with Lesotho."
+    },
+    {
+      "word": "Mokorotlo",
+      "difficulty": "easy",
+      "description": "Conical woven hat depicted on Lesotho's flag."
+    },
+    {
+      "word": "Mokoro",
+      "difficulty": "easy",
+      "description": "Traditional dugout canoe associated with the Okavango."
+    },
+    {
+      "word": "Djembe",
+      "difficulty": "easy",
+      "description": "West African goblet-shaped hand drum."
+    },
+    {
+      "word": "Kora",
+      "difficulty": "easy",
+      "description": "West African string instrument combining harp and lute features."
+    },
+    {
+      "word": "Mbira",
+      "difficulty": "easy",
+      "description": "Southern African instrument played by plucking metal keys."
+    },
+    {
+      "word": "Marimba",
+      "difficulty": "easy",
+      "description": "Percussion instrument with wooden bars struck by mallets."
+    },
+    {
+      "word": "Talking Drum",
+      "difficulty": "easy",
+      "description": "West African instrument whose pitch can imitate speech patterns."
+    },
+    {
+      "word": "Gumboot Dance",
+      "difficulty": "easy",
+      "description": "South African performance using rhythmic slaps on rubber footwear."
+    },
+    {
+      "word": "Pantsula",
+      "difficulty": "easy",
+      "description": "Energetic township dance associated with quick footwork."
+    },
+    {
+      "word": "Gwara Gwara",
+      "difficulty": "easy",
+      "description": "South African dance featuring a distinctive swinging leg movement."
+    },
+    {
+      "word": "Jerusalema Dance",
+      "difficulty": "easy",
+      "description": "Global line-dancing phenomenon linked to Master KG's song."
+    },
+    {
+      "word": "Diski",
+      "difficulty": "easy",
+      "description": "South African township slang associated with football."
+    },
+    {
+      "word": "Kasi",
+      "difficulty": "easy",
+      "description": "South African slang for a township or neighbourhood."
+    },
+    {
+      "word": "Fynbos Biome",
+      "difficulty": "easy",
+      "description": "Cape ecological region famed for remarkable plant diversity."
+    },
+    {
+      "word": "West Coast National Park",
+      "difficulty": "easy",
+      "description": "South African reserve associated with Langebaan Lagoon and spring flowers."
+    },
+    {
+      "word": "Augrabies Falls",
+      "difficulty": "easy",
+      "description": "Northern Cape cascade on the Orange River."
+    },
+    {
+      "word": "Orange River",
+      "difficulty": "easy",
+      "description": "Major watercourse forming part of South Africa's northern border."
+    },
+    {
+      "word": "Limpopo River",
+      "difficulty": "easy",
+      "description": "Watercourse associated with South Africa's northeastern boundary."
+    },
+    {
+      "word": "Vaal River",
+      "difficulty": "easy",
+      "description": "Major tributary associated with Gauteng water supplies."
+    },
+    {
+      "word": "Lesedi Cultural Village",
+      "difficulty": "easy",
+      "description": "Gauteng visitor attraction showcasing traditional southern African lifestyles."
+    },
+    {
+      "word": "uShaka Marine World",
+      "difficulty": "easy",
+      "description": "Durban attraction combining an aquarium and water park."
+    },
+    {
+      "word": "Moses Mabhida Stadium",
+      "difficulty": "easy",
+      "description": "Durban arena with a distinctive arch."
+    },
+    {
+      "word": "FNB Stadium",
+      "difficulty": "easy",
+      "description": "Johannesburg arena nicknamed the Calabash."
+    },
+    {
+      "word": "Ellis Park",
+      "difficulty": "easy",
+      "description": "Johannesburg rugby ground that hosted the 1995 World Cup final."
+    },
+    {
+      "word": "Loftus Versfeld",
+      "difficulty": "easy",
+      "description": "Pretoria stadium associated with the Bulls."
+    },
+    {
+      "word": "Newlands",
+      "difficulty": "easy",
+      "description": "Cape Town suburb associated with historic cricket and rugby grounds."
+    },
+    {
+      "word": "Wanderers Stadium",
+      "difficulty": "easy",
+      "description": "Johannesburg cricket ground nicknamed the Bullring."
+    },
+    {
+      "word": "Kingsmead",
+      "difficulty": "easy",
+      "description": "Durban cricket ground."
+    },
+    {
+      "word": "Grahamstown",
+      "difficulty": "easy",
+      "description": "Former name of the Eastern Cape town Makhanda."
+    },
+    {
+      "word": "Makhanda",
+      "difficulty": "easy",
+      "description": "Eastern Cape town associated with the National Arts Festival."
+    },
+    {
+      "word": "Pietermaritzburg",
+      "difficulty": "easy",
+      "description": "KwaZulu-Natal capital linked to the Comrades route."
+    },
+    {
+      "word": "Polokwane",
+      "difficulty": "easy",
+      "description": "Limpopo provincial capital formerly called Pietersburg."
+    },
+    {
+      "word": "Mbombela",
+      "difficulty": "easy",
+      "description": "Mpumalanga capital formerly called Nelspruit."
+    },
+    {
+      "word": "Mahikeng",
+      "difficulty": "easy",
+      "description": "North West provincial capital formerly called Mafeking."
+    },
+    {
+      "word": "Esther Mahlangu",
+      "difficulty": "hard",
+      "description": "South African artist known for colourful geometric mural patterns."
+    },
+    {
+      "word": "Hugh Masekela",
+      "difficulty": "hard",
+      "description": "South African trumpeter associated with Grazing in the Grass."
+    },
+    {
+      "word": "Brenda Fassie",
+      "difficulty": "easy",
+      "description": "South African pop icon associated with Weekend Special."
+    },
+    {
+      "word": "Ladysmith Black Mambazo",
+      "difficulty": "easy",
+      "description": "Vocal group associated with isicathamiya and Paul Simon's Graceland."
+    },
+    {
+      "word": "Johnny Clegg",
+      "difficulty": "hard",
+      "description": "Musician associated with Juluka, Savuka and cross-cultural performances."
+    },
+    {
+      "word": "Lucky Dube",
+      "difficulty": "hard",
+      "description": "South African reggae singer associated with Prisoner."
+    },
+    {
+      "word": "Yvonne Chaka Chaka",
+      "difficulty": "hard",
+      "description": "South African singer nicknamed the Princess of Africa."
+    },
+    {
+      "word": "Lebo M",
+      "difficulty": "hard",
+      "description": "South African composer and vocalist associated with The Lion King."
+    },
+    {
+      "word": "Lebogang Mashile",
+      "difficulty": "hard",
+      "description": "South African poet and performer."
+    },
+    {
+      "word": "Lira",
+      "difficulty": "hard",
+      "description": "South African singer associated with Feel Good."
+    },
+    {
+      "word": "Sjava",
+      "difficulty": "hard",
+      "description": "South African singer and actor associated with Isina Muva."
+    },
+    {
+      "word": "Zahara",
+      "difficulty": "hard",
+      "description": "South African singer-songwriter whose debut album was Loliwe."
+    },
+    {
+      "word": "DJ Zinhle",
+      "difficulty": "hard",
+      "description": "South African DJ and businesswoman associated with Umlilo."
+    },
+    {
+      "word": "DJ Fresh",
+      "difficulty": "hard",
+      "description": "Botswana-born radio personality and house-music DJ."
+    },
+    {
+      "word": "Bonang Matheba",
+      "difficulty": "hard",
+      "description": "South African broadcaster and media personality nicknamed Queen B."
+    },
+    {
+      "word": "Pearl Thusi",
+      "difficulty": "hard",
+      "description": "South African actor who starred in Queen Sono."
+    },
+    {
+      "word": "Connie Ferguson",
+      "difficulty": "hard",
+      "description": "South African actor associated with Karabo in Generations."
+    },
+    {
+      "word": "Shona Ferguson",
+      "difficulty": "hard",
+      "description": "Actor and producer who co-founded a television production company."
+    },
+    {
+      "word": "Sello Maake kaNcube",
+      "difficulty": "hard",
+      "description": "South African actor associated with Generations and Scandal!."
+    },
+    {
+      "word": "John Kani",
+      "difficulty": "easy",
+      "description": "South African actor and playwright who played T'Chaka."
+    },
+    {
+      "word": "Winston Ntshona",
+      "difficulty": "hard",
+      "description": "South African actor and co-creator of The Island."
+    },
+    {
+      "word": "Leleti Khumalo",
+      "difficulty": "easy",
+      "description": "South African actor who starred in Sarafina!."
+    },
+    {
+      "word": "Nomzamo Mbatha",
+      "difficulty": "hard",
+      "description": "South African actor associated with Isibaya and Coming 2 America."
+    },
+    {
+      "word": "Thuso Mbedu",
+      "difficulty": "hard",
+      "description": "South African actor associated with The Underground Railroad."
+    },
+    {
+      "word": "Zozibini Tunzi",
+      "difficulty": "hard",
+      "description": "South African winner of Miss Universe 2019."
+    },
+    {
+      "word": "Demi-Leigh Tebow",
+      "difficulty": "hard",
+      "description": "South African winner of Miss Universe 2017."
+    },
+    {
+      "word": "Rolene Strauss",
+      "difficulty": "hard",
+      "description": "South African winner of Miss World 2014."
+    },
+    {
+      "word": "Tatjana Smith",
+      "difficulty": "hard",
+      "description": "South African Olympic breaststroke champion formerly known as Schoenmaker."
+    },
+    {
+      "word": "Chad le Clos",
+      "difficulty": "easy",
+      "description": "South African swimmer who beat Michael Phelps at London 2012."
+    },
+    {
+      "word": "Wayde van Niekerk",
+      "difficulty": "easy",
+      "description": "South African runner who broke the 400-metre world record in 2016."
+    },
+    {
+      "word": "Akani Simbine",
+      "difficulty": "hard",
+      "description": "South African sprinter associated with the 100 metres."
+    },
+    {
+      "word": "Luvo Manyonga",
+      "difficulty": "hard",
+      "description": "South African long jumper who won Olympic silver in 2016."
+    },
+    {
+      "word": "Letsile Tebogo",
+      "difficulty": "hard",
+      "description": "Botswana sprinter who won Olympic 200-metre gold in 2024."
+    },
+    {
+      "word": "Faith Kipyegon",
+      "difficulty": "hard",
+      "description": "Kenyan middle-distance runner and multiple Olympic champion."
+    },
+    {
+      "word": "David Rudisha",
+      "difficulty": "hard",
+      "description": "Kenyan runner who set the 800-metre world record at London 2012."
+    },
+    {
+      "word": "Haile Gebrselassie",
+      "difficulty": "hard",
+      "description": "Ethiopian distance-running legend associated with track and road records."
+    },
+    {
+      "word": "Kenenisa Bekele",
+      "difficulty": "hard",
+      "description": "Ethiopian distance runner associated with Olympic track doubles."
+    },
+    {
+      "word": "Samuel Eto'o",
+      "difficulty": "hard",
+      "description": "Cameroonian footballer associated with Barcelona and Inter Milan."
+    },
+    {
+      "word": "George Weah",
+      "difficulty": "hard",
+      "description": "Liberian football icon who later served as his country's president."
+    },
+    {
+      "word": "Roger Milla",
+      "difficulty": "hard",
+      "description": "Cameroonian footballer famous for dancing by the corner flag."
     }
   ]
 };
@@ -13658,7 +26747,7 @@ const themes = {
     {
       "word": "Vows",
       "difficulty": "easy",
-      "description": "Personal promises spoken by partners during the ceremony."
+      "description": "Promises a couple make during their marriage ceremony."
     },
     {
       "word": "Best Man",
@@ -13667,8 +26756,8 @@ const themes = {
     },
     {
       "word": "Maid of Honor",
-      "difficulty": "easy",
-      "description": "Chief attendant supporting the bride."
+      "difficulty": "hard",
+      "description": "Principal female attendant supporting the bride."
     },
     {
       "word": "Wedding Ring",
@@ -13682,13 +26771,8 @@ const themes = {
     },
     {
       "word": "First Dance",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Opening dance shared by newlyweds at the party."
-    },
-    {
-      "word": "Wedding Bells",
-      "difficulty": "hard",
-      "description": "Traditional celebratory sound linked to marriage day."
     },
     {
       "word": "Unity Candle",
@@ -13697,12 +26781,12 @@ const themes = {
     },
     {
       "word": "Wedding Planner",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Professional coordinating venue, schedule, and suppliers."
     },
     {
       "word": "Flower Girl",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Young attendant scattering petals before the processional."
     },
     {
@@ -13712,7 +26796,7 @@ const themes = {
     },
     {
       "word": "Tuxedo",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Black-tie formal suit often worn by the groom."
     },
     {
@@ -13722,12 +26806,12 @@ const themes = {
     },
     {
       "word": "Bridal Shower",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Pre-ceremony gathering where gifts are given to the bride."
     },
     {
       "word": "Bachelor Party",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Pre-ceremony celebration traditionally for the groom."
     },
     {
@@ -13746,13 +26830,8 @@ const themes = {
       "description": "Jewelry given during a proposal."
     },
     {
-      "word": "Floral Arrangement",
-      "difficulty": "hard",
-      "description": "Decorative flower display for ceremony or tables."
-    },
-    {
       "word": "Groomsmen",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Group of attendants standing with the groom."
     },
     {
@@ -13761,28 +26840,13 @@ const themes = {
       "description": "Official legal document proving a union."
     },
     {
-      "word": "Marriage Vows",
-      "difficulty": "hard",
-      "description": "Formal promises exchanged during the ceremony."
-    },
-    {
       "word": "Wedding Dress",
       "difficulty": "easy",
       "description": "Ceremony gown worn by the bride."
     },
     {
-      "word": "Wedding Venue",
-      "difficulty": "easy",
-      "description": "Booked location where ceremony or reception is held."
-    },
-    {
-      "word": "Wedding Vows",
-      "difficulty": "easy",
-      "description": "Public promises made by the couple at the altar."
-    },
-    {
       "word": "Aisle",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Central walkway for the processional entrance."
     },
     {
@@ -13792,18 +26856,13 @@ const themes = {
     },
     {
       "word": "Guest List",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Names of all invited attendees."
     },
     {
       "word": "Wedding Toast",
       "difficulty": "easy",
-      "description": "Congratulatory speech followed by raised glasses."
-    },
-    {
-      "word": "Reception Hall",
-      "difficulty": "hard",
-      "description": "Indoor space where post-ceremony event happens."
+      "description": "Reception speech raising a glass to the newlyweds."
     },
     {
       "word": "Photo Booth",
@@ -13812,23 +26871,373 @@ const themes = {
     },
     {
       "word": "Wedding Favors",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Small thank-you gifts handed to guests."
     },
     {
-      "word": "Bridal Veil",
+      "word": "Wedding Veil",
       "difficulty": "easy",
       "description": "Light head covering worn with a bridal gown."
-    },
-    {
-      "word": "Table Seating",
-      "difficulty": "hard",
-      "description": "Planned arrangement assigning guests to specific tables."
     },
     {
       "word": "Wedding Car",
       "difficulty": "easy",
       "description": "Decorated transport used for the couple's arrival or departure."
+    },
+    {
+      "word": "Proposal",
+      "difficulty": "easy",
+      "description": "Moment someone asks their partner to marry them."
+    },
+    {
+      "word": "Down on One Knee",
+      "difficulty": "easy",
+      "description": "Traditional posture when asking a partner to marry."
+    },
+    {
+      "word": "Save the Date",
+      "difficulty": "easy",
+      "description": "Early notice telling guests when a celebration will happen."
+    },
+    {
+      "word": "Invitation",
+      "difficulty": "easy",
+      "description": "Formal request to attend a celebration."
+    },
+    {
+      "word": "RSVP",
+      "difficulty": "easy",
+      "description": "Request asking guests to confirm whether they will attend."
+    },
+    {
+      "word": "Plus One",
+      "difficulty": "easy",
+      "description": "Additional guest accompanying an invited person."
+    },
+    {
+      "word": "Seating Plan",
+      "difficulty": "easy",
+      "description": "Arrangement deciding where guests will sit at a reception."
+    },
+    {
+      "word": "Top Table",
+      "difficulty": "easy",
+      "description": "Reception seating reserved for the couple and key guests."
+    },
+    {
+      "word": "Place Card",
+      "difficulty": "easy",
+      "description": "Small label showing a guest where to sit."
+    },
+    {
+      "word": "Centrepiece",
+      "difficulty": "easy",
+      "description": "Decorative arrangement in the middle of a reception surface."
+    },
+    {
+      "word": "Wedding Arch",
+      "difficulty": "easy",
+      "description": "Decorative structure beneath which a couple exchange promises."
+    },
+    {
+      "word": "Flower Crown",
+      "difficulty": "easy",
+      "description": "Wreath of blossoms worn on the head."
+    },
+    {
+      "word": "Buttonhole",
+      "difficulty": "easy",
+      "description": "Small floral decoration worn on a jacket lapel."
+    },
+    {
+      "word": "Corsage",
+      "difficulty": "easy",
+      "description": "Small floral arrangement worn on a wrist or clothing."
+    },
+    {
+      "word": "Train",
+      "difficulty": "easy",
+      "description": "Trailing length of fabric behind a formal gown."
+    },
+    {
+      "word": "Something Blue",
+      "difficulty": "easy",
+      "description": "Traditional lucky item a bride wears in a particular colour."
+    },
+    {
+      "word": "Something Borrowed",
+      "difficulty": "easy",
+      "description": "Traditional bridal item temporarily supplied by someone else."
+    },
+    {
+      "word": "Page Boy",
+      "difficulty": "easy",
+      "description": "Young attendant assisting during a marriage ceremony."
+    },
+    {
+      "word": "Confetti Cannon",
+      "difficulty": "easy",
+      "description": "Device launching tiny celebratory paper pieces into the air."
+    },
+    {
+      "word": "Champagne Tower",
+      "difficulty": "easy",
+      "description": "Stacked glasses filled from the top with sparkling wine."
+    },
+    {
+      "word": "Cake Topper",
+      "difficulty": "easy",
+      "description": "Decorative figures placed on a celebration's layered dessert."
+    },
+    {
+      "word": "Dance Floor",
+      "difficulty": "easy",
+      "description": "Area where reception guests show off their moves."
+    },
+    {
+      "word": "Live Band",
+      "difficulty": "easy",
+      "description": "Musicians performing in person at the reception."
+    },
+    {
+      "word": "DJ Booth",
+      "difficulty": "easy",
+      "description": "Area where a music selector runs the party soundtrack."
+    },
+    {
+      "word": "Wedding Photographer",
+      "difficulty": "easy",
+      "description": "Professional capturing images of a couple's marriage celebration."
+    },
+    {
+      "word": "Videographer",
+      "difficulty": "easy",
+      "description": "Person recording moving images of the celebration."
+    },
+    {
+      "word": "Wedding Album",
+      "difficulty": "easy",
+      "description": "Collection of photographs commemorating a marriage ceremony."
+    },
+    {
+      "word": "Flower Petals",
+      "difficulty": "easy",
+      "description": "Soft colourful blossom parts scattered along a ceremony aisle."
+    },
+    {
+      "word": "Sparkler Send-off",
+      "difficulty": "easy",
+      "description": "Guests holding tiny handheld fireworks as the couple leaves."
+    },
+    {
+      "word": "Getaway Car",
+      "difficulty": "easy",
+      "description": "Decorated vehicle used by newlyweds leaving the reception."
+    },
+    {
+      "word": "Cold Feet",
+      "difficulty": "hard",
+      "description": "Sudden nervous doubts before a major commitment."
+    },
+    {
+      "word": "Bridezilla",
+      "difficulty": "hard",
+      "description": "Slang for an excessively demanding woman planning her marriage."
+    },
+    {
+      "word": "Groomzilla",
+      "difficulty": "hard",
+      "description": "Slang for an excessively demanding man planning his marriage."
+    },
+    {
+      "word": "Wedding Crasher",
+      "difficulty": "hard",
+      "description": "Uninvited person who turns up to a marriage celebration."
+    },
+    {
+      "word": "Shotgun Wedding",
+      "difficulty": "hard",
+      "description": "Hasty marriage traditionally associated with an unexpected pregnancy."
+    },
+    {
+      "word": "Elopement",
+      "difficulty": "hard",
+      "description": "Secret or private marriage without a large planned celebration."
+    },
+    {
+      "word": "Destination Wedding",
+      "difficulty": "hard",
+      "description": "Marriage celebration requiring guests to travel to a holiday location."
+    },
+    {
+      "word": "Civil Ceremony",
+      "difficulty": "hard",
+      "description": "Non-religious legal marriage service."
+    },
+    {
+      "word": "Marriage Officer",
+      "difficulty": "hard",
+      "description": "Person legally authorised to solemnise a couple's union."
+    },
+    {
+      "word": "Officiant",
+      "difficulty": "hard",
+      "description": "Person conducting a ceremony."
+    },
+    {
+      "word": "Prenuptial Agreement",
+      "difficulty": "hard",
+      "description": "Contract signed by a couple before marriage."
+    },
+    {
+      "word": "Antenuptial Contract",
+      "difficulty": "hard",
+      "description": "South African legal arrangement made before marriage about property."
+    },
+    {
+      "word": "Community of Property",
+      "difficulty": "hard",
+      "description": "Marital arrangement generally combining spouses' estates."
+    },
+    {
+      "word": "Lobola",
+      "difficulty": "hard",
+      "description": "Southern African marriage custom involving a negotiated transfer between families."
+    },
+    {
+      "word": "Umabo",
+      "difficulty": "hard",
+      "description": "Zulu traditional ceremony involving gifts to the groom's family."
+    },
+    {
+      "word": "Nikah",
+      "difficulty": "hard",
+      "description": "Islamic marriage contract and associated ceremony."
+    },
+    {
+      "word": "Henna Night",
+      "difficulty": "hard",
+      "description": "Pre-marriage celebration involving decorative skin dye."
+    },
+    {
+      "word": "Mendhi",
+      "difficulty": "hard",
+      "description": "Decorative dye tradition often associated with South Asian bridal celebrations."
+    },
+    {
+      "word": "Chuppah",
+      "difficulty": "hard",
+      "description": "Canopy under which a Jewish marriage takes place."
+    },
+    {
+      "word": "Jumping the Broom",
+      "difficulty": "hard",
+      "description": "Marriage ritual where a couple leaps over a household sweeping tool."
+    },
+    {
+      "word": "Handfasting",
+      "difficulty": "hard",
+      "description": "Ceremonial binding of a couple's hands."
+    },
+    {
+      "word": "Unity Sand Ceremony",
+      "difficulty": "hard",
+      "description": "Ritual blending differently coloured grains into one container."
+    },
+    {
+      "word": "Bouquet Toss",
+      "difficulty": "easy",
+      "description": "Ritual where a bride throws flowers towards waiting guests."
+    },
+    {
+      "word": "Garter Toss",
+      "difficulty": "hard",
+      "description": "Reception custom involving flinging an elastic leg accessory."
+    },
+    {
+      "word": "Receiving Line",
+      "difficulty": "hard",
+      "description": "Newlyweds and relatives greeting guests in a row."
+    },
+    {
+      "word": "Rehearsal Dinner",
+      "difficulty": "hard",
+      "description": "Meal held after practising the marriage ceremony."
+    },
+    {
+      "word": "Toastmaster",
+      "difficulty": "hard",
+      "description": "Person coordinating speeches and announcements at a formal celebration."
+    },
+    {
+      "word": "Father-daughter Dance",
+      "difficulty": "hard",
+      "description": "Reception moment pairing the bride with her dad."
+    },
+    {
+      "word": "Anniversary",
+      "difficulty": "hard",
+      "description": "Annual commemoration of a marriage or other milestone."
+    },
+    {
+      "word": "Newlyweds",
+      "difficulty": "easy",
+      "description": "Couple who have just got married."
+    },
+    {
+      "word": "Bridal Suite",
+      "difficulty": "easy",
+      "description": "Hotel accommodation reserved for a bride or marrying couple."
+    },
+    {
+      "word": "Bridesmaid Dress",
+      "difficulty": "easy",
+      "description": "Matching gown worn by one of the principal female attendants."
+    },
+    {
+      "word": "Tie the Knot",
+      "difficulty": "easy",
+      "description": "Informal expression meaning to get married."
+    },
+    {
+      "word": "Wedding Registry",
+      "difficulty": "hard",
+      "description": "List of presents a marrying couple would like guests to buy."
+    },
+    {
+      "word": "Table for the Singles",
+      "difficulty": "hard",
+      "description": "Reception seating grouping guests who have no partner."
+    },
+    {
+      "word": "Unplugged Ceremony",
+      "difficulty": "hard",
+      "description": "Marriage service where guests are asked to put phones away."
+    },
+    {
+      "word": "First Look",
+      "difficulty": "hard",
+      "description": "Private moment when the couple see each other before the ceremony."
+    },
+    {
+      "word": "Order of Service",
+      "difficulty": "hard",
+      "description": "Printed sequence of a ceremony's events."
+    },
+    {
+      "word": "Marriage Banns",
+      "difficulty": "hard",
+      "description": "Public notice announcing a couple's intention to wed."
+    },
+    {
+      "word": "Confetti in Your Hair",
+      "difficulty": "hard",
+      "description": "Tiny celebratory paper pieces lingering on your head after the ceremony."
+    },
+    {
+      "word": "Speech That Goes on Forever",
+      "difficulty": "hard",
+      "description": "Reception address testing everyone's patience and bladder."
     }
   ],
   "Holiday Time": [
@@ -13954,7 +27363,7 @@ const themes = {
     },
     {
       "word": "Nutcracker",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Festive ballet tale featuring a magical toy soldier and fantasy kingdom."
     },
     {
@@ -14004,8 +27413,8 @@ const themes = {
     },
     {
       "word": "Winter Break",
-      "difficulty": "hard",
-      "description": "School or work pause around year-end holidays."
+      "difficulty": "easy",
+      "description": "Seasonal time off school during the coldest months."
     },
     {
       "word": "Gift Wrap",
@@ -14031,18 +27440,318 @@ const themes = {
       "word": "Festive Playlist",
       "difficulty": "easy",
       "description": "Collection of seasonal songs for parties and gatherings."
+    },
+    {
+      "word": "Easter Egg",
+      "difficulty": "hard",
+      "description": "Decorated or chocolate oval associated with a spring Christian festival."
+    },
+    {
+      "word": "Easter Bunny",
+      "difficulty": "easy",
+      "description": "Long-eared festive character said to deliver chocolate treats."
+    },
+    {
+      "word": "Hot Cross Bun",
+      "difficulty": "easy",
+      "description": "Spiced bread roll marked with intersecting lines."
+    },
+    {
+      "word": "Egg Hunt",
+      "difficulty": "easy",
+      "description": "Children's game searching for hidden festive chocolate treats."
+    },
+    {
+      "word": "New Year's Resolution",
+      "difficulty": "easy",
+      "description": "Promise to improve something after the calendar changes."
+    },
+    {
+      "word": "Countdown Clock",
+      "difficulty": "easy",
+      "description": "Display tracking the seconds before a celebration begins."
+    },
+    {
+      "word": "Fireworks",
+      "difficulty": "easy",
+      "description": "Colourful explosive displays lighting up the night sky."
+    },
+    {
+      "word": "Midnight Kiss",
+      "difficulty": "easy",
+      "description": "Affectionate gesture as the calendar turns to January first."
+    },
+    {
+      "word": "Valentine's Day",
+      "difficulty": "easy",
+      "description": "February celebration associated with hearts and romantic gifts."
+    },
+    {
+      "word": "Love Letter",
+      "difficulty": "easy",
+      "description": "Written message expressing romantic affection."
+    },
+    {
+      "word": "Red Roses",
+      "difficulty": "easy",
+      "description": "Classic bouquet associated with romantic gestures."
+    },
+    {
+      "word": "Mother's Day",
+      "difficulty": "easy",
+      "description": "Annual celebration honouring mums."
+    },
+    {
+      "word": "Father's Day",
+      "difficulty": "easy",
+      "description": "Annual celebration honouring dads."
+    },
+    {
+      "word": "Birthday Candles",
+      "difficulty": "easy",
+      "description": "Small flames blown out after making a wish."
+    },
+    {
+      "word": "Party Hat",
+      "difficulty": "easy",
+      "description": "Cone-shaped headwear worn at celebrations."
+    },
+    {
+      "word": "Balloon",
+      "difficulty": "easy",
+      "description": "Inflatable decoration associated with celebrations."
+    },
+    {
+      "word": "Piñata",
+      "difficulty": "easy",
+      "description": "Decorated container broken open to release sweets."
+    },
+    {
+      "word": "Goodie Bag",
+      "difficulty": "easy",
+      "description": "Small collection of treats given to departing party guests."
+    },
+    {
+      "word": "Public Holiday",
+      "difficulty": "easy",
+      "description": "Official day off observed by a community or nation."
+    },
+    {
+      "word": "Long Weekend",
+      "difficulty": "easy",
+      "description": "Extra days off created when a public break adjoins Saturday or Sunday."
+    },
+    {
+      "word": "School Holidays",
+      "difficulty": "easy",
+      "description": "Period when children do not attend classes."
+    },
+    {
+      "word": "Family Reunion",
+      "difficulty": "easy",
+      "description": "Gathering bringing relatives together after time apart."
+    },
+    {
+      "word": "Potluck",
+      "difficulty": "easy",
+      "description": "Shared meal where each guest brings a dish."
+    },
+    {
+      "word": "Picnic Basket",
+      "difficulty": "easy",
+      "description": "Woven container used to carry an outdoor meal."
+    },
+    {
+      "word": "Braai Day",
+      "difficulty": "easy",
+      "description": "Informal South African name associated with September's heritage celebration."
+    },
+    {
+      "word": "Beach Day",
+      "difficulty": "easy",
+      "description": "Leisure outing to a sandy coastline."
+    },
+    {
+      "word": "Staycation",
+      "difficulty": "easy",
+      "description": "Time off spent at or near home."
+    },
+    {
+      "word": "Roadside Padstal",
+      "difficulty": "easy",
+      "description": "Rural South African shop selling local produce and treats."
+    },
+    {
+      "word": "Souvenir",
+      "difficulty": "easy",
+      "description": "Small item bought as a reminder of a trip."
+    },
+    {
+      "word": "Postcard",
+      "difficulty": "easy",
+      "description": "Picture-bearing message traditionally sent from a holiday destination."
+    },
+    {
+      "word": "Eid al-Adha",
+      "difficulty": "hard",
+      "description": "Islamic festival associated with sacrifice and the Hajj period."
+    },
+    {
+      "word": "Eid al-Fitr",
+      "difficulty": "hard",
+      "description": "Islamic celebration marking the end of Ramadan."
+    },
+    {
+      "word": "Iftar",
+      "difficulty": "hard",
+      "description": "Meal breaking the daily fast during Ramadan."
+    },
+    {
+      "word": "Suhoor",
+      "difficulty": "hard",
+      "description": "Pre-dawn meal eaten before fasting during Ramadan."
+    },
+    {
+      "word": "Ramadan Moon",
+      "difficulty": "hard",
+      "description": "Crescent associated with determining the start of an Islamic fasting month."
+    },
+    {
+      "word": "Diwali",
+      "difficulty": "hard",
+      "description": "Festival associated with lamps, sweets and Hindu celebrations."
+    },
+    {
+      "word": "Holi",
+      "difficulty": "hard",
+      "description": "Festival associated with throwing brightly coloured powder."
+    },
+    {
+      "word": "Lunar New Year",
+      "difficulty": "hard",
+      "description": "Calendar celebration associated with red envelopes and zodiac animals."
+    },
+    {
+      "word": "Red Envelope",
+      "difficulty": "hard",
+      "description": "Festive cash gift traditionally given in several East Asian cultures."
+    },
+    {
+      "word": "Dragon Dance",
+      "difficulty": "hard",
+      "description": "Festive performance using a long mythical creature held on poles."
+    },
+    {
+      "word": "Mid-Autumn Festival",
+      "difficulty": "hard",
+      "description": "East Asian celebration associated with mooncakes."
+    },
+    {
+      "word": "Mooncake",
+      "difficulty": "hard",
+      "description": "Round filled pastry associated with an East Asian harvest celebration."
+    },
+    {
+      "word": "Thanksgiving",
+      "difficulty": "hard",
+      "description": "North American celebration associated with turkey and gratitude."
+    },
+    {
+      "word": "Juneteenth",
+      "difficulty": "hard",
+      "description": "US holiday commemorating the end of slavery."
+    },
+    {
+      "word": "Independence Day",
+      "difficulty": "hard",
+      "description": "Annual celebration of a country's political freedom."
+    },
+    {
+      "word": "Heritage Day",
+      "difficulty": "hard",
+      "description": "South African celebration of diverse cultural traditions."
+    },
+    {
+      "word": "Freedom Day",
+      "difficulty": "hard",
+      "description": "South African commemoration of the 1994 democratic election."
+    },
+    {
+      "word": "Africa Day",
+      "difficulty": "hard",
+      "description": "May celebration associated with continental unity."
+    },
+    {
+      "word": "Human Rights Day",
+      "difficulty": "hard",
+      "description": "South African observance recalling Sharpeville."
+    },
+    {
+      "word": "Day of Reconciliation",
+      "difficulty": "hard",
+      "description": "South African public holiday observed on December sixteenth."
+    },
+    {
+      "word": "Day of the Dead",
+      "difficulty": "hard",
+      "description": "Mexican remembrance celebration featuring decorated altars."
+    },
+    {
+      "word": "Saint Patrick's Day",
+      "difficulty": "hard",
+      "description": "Irish-associated celebration featuring shamrocks and green clothing."
+    },
+    {
+      "word": "Guy Fawkes Night",
+      "difficulty": "hard",
+      "description": "British November celebration associated with bonfires and fireworks."
+    },
+    {
+      "word": "April Fools' Day",
+      "difficulty": "hard",
+      "description": "Calendar occasion associated with practical jokes."
+    },
+    {
+      "word": "Leap Day",
+      "difficulty": "hard",
+      "description": "Extra February date added roughly every four years."
+    },
+    {
+      "word": "Bank Holiday",
+      "difficulty": "hard",
+      "description": "British term for an official public day off."
+    },
+    {
+      "word": "Bridge Day",
+      "difficulty": "hard",
+      "description": "Extra leave taken between a public break and a weekend."
+    },
+    {
+      "word": "Post-holiday Blues",
+      "difficulty": "hard",
+      "description": "Sluggish adjustment after returning from time off."
+    },
+    {
+      "word": "Festive Rush",
+      "difficulty": "hard",
+      "description": "Busy shopping and travel period before major celebrations."
+    },
+    {
+      "word": "Secret Santa Reveal",
+      "difficulty": "hard",
+      "description": "Moment participants learn who anonymously supplied their gifts."
     }
   ],
   "Sports Event": [
     {
       "word": "Olympic Games",
       "difficulty": "easy",
-      "description": "Global multi-sport competition held every four years."
+      "description": "Global sporting competition associated with five interlocking rings."
     },
     {
-      "word": "World Cup",
+      "word": "FIFA World Cup",
       "difficulty": "easy",
-      "description": "International tournament to crown a world champion."
+      "description": "International football tournament won by Argentina in 2022."
     },
     {
       "word": "Super Bowl",
@@ -14076,12 +27785,12 @@ const themes = {
     },
     {
       "word": "Ryder Cup",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Team golf contest between Europe and the USA."
     },
     {
       "word": "Kentucky Derby",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Famous US horse race known as the Run for the Roses."
     },
     {
@@ -14121,7 +27830,7 @@ const themes = {
     },
     {
       "word": "UEFA Champions League",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Elite European club football competition."
     },
     {
@@ -14191,7 +27900,7 @@ const themes = {
     },
     {
       "word": "Photo Finish",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Race decided by finish-line camera when margins are tiny."
     },
     {
@@ -14200,7 +27909,7 @@ const themes = {
       "description": "Additional period played after a draw."
     },
     {
-      "word": "Golden Medal",
+      "word": "Gold Medal",
       "difficulty": "hard",
       "description": "Top prize awarded for first place."
     },
@@ -14216,7 +27925,7 @@ const themes = {
     },
     {
       "word": "Match Officials",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Referees and umpires who enforce the rules."
     },
     {
@@ -14228,6 +27937,336 @@ const themes = {
       "word": "Victory Lap",
       "difficulty": "easy",
       "description": "Celebratory circuit after winning a race or title."
+    },
+    {
+      "word": "Stadium",
+      "difficulty": "easy",
+      "description": "Large venue with tiered seating around a playing area."
+    },
+    {
+      "word": "Grandstand",
+      "difficulty": "easy",
+      "description": "Large seating structure overlooking sporting action."
+    },
+    {
+      "word": "Turnstile",
+      "difficulty": "easy",
+      "description": "Rotating entry gate used to admit ticket holders."
+    },
+    {
+      "word": "Scoreboard",
+      "difficulty": "easy",
+      "description": "Display showing the teams' current points."
+    },
+    {
+      "word": "Whistle",
+      "difficulty": "easy",
+      "description": "Small instrument an official blows to stop play."
+    },
+    {
+      "word": "Referee",
+      "difficulty": "easy",
+      "description": "Official enforcing rules during a match."
+    },
+    {
+      "word": "Linesman",
+      "difficulty": "easy",
+      "description": "Assistant official watching boundaries and offside decisions."
+    },
+    {
+      "word": "Coach",
+      "difficulty": "easy",
+      "description": "Person preparing and directing a sporting team."
+    },
+    {
+      "word": "Substitute",
+      "difficulty": "easy",
+      "description": "Reserve player who enters during a match."
+    },
+    {
+      "word": "Bench",
+      "difficulty": "easy",
+      "description": "Sideline seating for reserve players and staff."
+    },
+    {
+      "word": "Mascot",
+      "difficulty": "easy",
+      "description": "Costumed character representing a sporting team."
+    },
+    {
+      "word": "Cheerleader",
+      "difficulty": "easy",
+      "description": "Performer encouraging supporters with chants and routines."
+    },
+    {
+      "word": "Vuvuzela",
+      "difficulty": "easy",
+      "description": "Plastic stadium horn associated with South African football."
+    },
+    {
+      "word": "Mexican Wave",
+      "difficulty": "easy",
+      "description": "Crowd action where successive sections stand and raise their arms."
+    },
+    {
+      "word": "Face Paint",
+      "difficulty": "easy",
+      "description": "Colour applied to supporters' skin in team patterns."
+    },
+    {
+      "word": "Team Jersey",
+      "difficulty": "easy",
+      "description": "Shirt worn to show which side you support."
+    },
+    {
+      "word": "Scarf",
+      "difficulty": "easy",
+      "description": "Supporter accessory held overhead while chanting."
+    },
+    {
+      "word": "Foam Finger",
+      "difficulty": "easy",
+      "description": "Oversized novelty hand worn by a supporter."
+    },
+    {
+      "word": "National Anthem",
+      "difficulty": "easy",
+      "description": "Patriotic song performed before an international match."
+    },
+    {
+      "word": "Coin Toss",
+      "difficulty": "easy",
+      "description": "Random method used to determine a team's initial choice."
+    },
+    {
+      "word": "Kick-off",
+      "difficulty": "easy",
+      "description": "Action starting a football match."
+    },
+    {
+      "word": "Half-time",
+      "difficulty": "easy",
+      "description": "Interval between the two main periods of a match."
+    },
+    {
+      "word": "Final Whistle",
+      "difficulty": "easy",
+      "description": "Signal that a match has ended."
+    },
+    {
+      "word": "Yellow Card",
+      "difficulty": "easy",
+      "description": "Official warning shown to a player."
+    },
+    {
+      "word": "Red Card",
+      "difficulty": "easy",
+      "description": "Official signal sending a player off."
+    },
+    {
+      "word": "Podium",
+      "difficulty": "easy",
+      "description": "Raised platforms used for medal presentations."
+    },
+    {
+      "word": "Trophy",
+      "difficulty": "easy",
+      "description": "Prize cup or object awarded to a winner."
+    },
+    {
+      "word": "Medal Ceremony",
+      "difficulty": "easy",
+      "description": "Presentation where leading competitors receive wearable awards."
+    },
+    {
+      "word": "Lap of Honour",
+      "difficulty": "easy",
+      "description": "Celebratory circuit acknowledging supporters after a success."
+    },
+    {
+      "word": "Pitch Invasion",
+      "difficulty": "easy",
+      "description": "Spectators entering the playing surface without permission."
+    },
+    {
+      "word": "Derby",
+      "difficulty": "hard",
+      "description": "Match between teams with a strong local rivalry."
+    },
+    {
+      "word": "Home Crowd",
+      "difficulty": "hard",
+      "description": "Supporters at their own team's venue."
+    },
+    {
+      "word": "Away Fixture",
+      "difficulty": "hard",
+      "description": "Match played at an opponent's venue."
+    },
+    {
+      "word": "Neutral Venue",
+      "difficulty": "hard",
+      "description": "Ground belonging to neither competing side."
+    },
+    {
+      "word": "Sell-out",
+      "difficulty": "hard",
+      "description": "Event where all available tickets have been purchased."
+    },
+    {
+      "word": "Ticket Scalper",
+      "difficulty": "hard",
+      "description": "Person reselling entry passes at inflated prices."
+    },
+    {
+      "word": "Season Ticket",
+      "difficulty": "hard",
+      "description": "Pass granting entry to multiple fixtures over a campaign."
+    },
+    {
+      "word": "Hospitality Box",
+      "difficulty": "hard",
+      "description": "Private spectator area offering premium food and service."
+    },
+    {
+      "word": "Press Box",
+      "difficulty": "hard",
+      "description": "Dedicated seating where journalists cover the event."
+    },
+    {
+      "word": "Mixed Zone",
+      "difficulty": "hard",
+      "description": "Area where athletes pass reporters after competing."
+    },
+    {
+      "word": "Post-match Interview",
+      "difficulty": "hard",
+      "description": "Questions asked of players after the final whistle."
+    },
+    {
+      "word": "Man of the Match",
+      "difficulty": "hard",
+      "description": "Award recognising a game's outstanding individual performer."
+    },
+    {
+      "word": "Player of the Tournament",
+      "difficulty": "hard",
+      "description": "Award recognising the best individual across a competition."
+    },
+    {
+      "word": "Golden Goal",
+      "difficulty": "hard",
+      "description": "Former football rule ending extra time at the next score."
+    },
+    {
+      "word": "Sudden Death",
+      "difficulty": "hard",
+      "description": "Tie-break format ending at the next decisive result."
+    },
+    {
+      "word": "Aggregate Score",
+      "difficulty": "hard",
+      "description": "Combined result across multiple legs of a fixture."
+    },
+    {
+      "word": "Away Goals Rule",
+      "difficulty": "hard",
+      "description": "Former tie-breaking method favouring scoring at the opponent's ground."
+    },
+    {
+      "word": "Penalty Spot",
+      "difficulty": "hard",
+      "description": "Marked place eleven metres from a football goal."
+    },
+    {
+      "word": "VAR Check",
+      "difficulty": "hard",
+      "description": "Video review of a potentially decisive football incident."
+    },
+    {
+      "word": "Hawk-Eye",
+      "difficulty": "hard",
+      "description": "Ball-tracking system used to assist sporting decisions."
+    },
+    {
+      "word": "Decision Review System",
+      "difficulty": "hard",
+      "description": "Cricket technology process challenging an umpire's ruling."
+    },
+    {
+      "word": "Third Umpire",
+      "difficulty": "hard",
+      "description": "Cricket official reviewing televised footage."
+    },
+    {
+      "word": "Duckworth-Lewis-Stern",
+      "difficulty": "hard",
+      "description": "Method revising targets in rain-affected limited-overs cricket."
+    },
+    {
+      "word": "Rain Delay",
+      "difficulty": "hard",
+      "description": "Pause in play because of wet weather."
+    },
+    {
+      "word": "Washout",
+      "difficulty": "hard",
+      "description": "Sporting event abandoned because of persistent wet conditions."
+    },
+    {
+      "word": "Walkover",
+      "difficulty": "hard",
+      "description": "Victory awarded when the opponent cannot compete."
+    },
+    {
+      "word": "Disqualification",
+      "difficulty": "hard",
+      "description": "Removal from a competition for breaking rules or failing requirements."
+    },
+    {
+      "word": "False Nine",
+      "difficulty": "hard",
+      "description": "Football forward who drops deep rather than staying up front."
+    },
+    {
+      "word": "Photo Finish Camera",
+      "difficulty": "hard",
+      "description": "Equipment deciding race placings too close for the naked eye."
+    },
+    {
+      "word": "Course Record",
+      "difficulty": "hard",
+      "description": "Best performance achieved at a particular sporting route or venue."
+    },
+    {
+      "word": "Ball Boy",
+      "difficulty": "easy",
+      "description": "Young assistant returning sporting equipment to players."
+    },
+    {
+      "word": "Ball Girl",
+      "difficulty": "easy",
+      "description": "Young female assistant returning sporting equipment to players."
+    },
+    {
+      "word": "Warm-up",
+      "difficulty": "easy",
+      "description": "Preparation exercises before competitive play begins."
+    },
+    {
+      "word": "Stoppage Time",
+      "difficulty": "hard",
+      "description": "Added football minutes compensating for interruptions."
+    },
+    {
+      "word": "Extra-time Substitute",
+      "difficulty": "hard",
+      "description": "Reserve player introduced during an additional match period."
+    },
+    {
+      "word": "Captain's Armband",
+      "difficulty": "hard",
+      "description": "Strip worn on the upper limb identifying a football leader."
     }
   ],
   "Summer Vacation": [
@@ -14307,11 +28346,6 @@ const themes = {
       "description": "Venue with rides, games, and roller coasters."
     },
     {
-      "word": "Bonfire Night",
-      "difficulty": "hard",
-      "description": "Evening gathering around a large outdoor fire."
-    },
-    {
       "word": "Island Hopping",
       "difficulty": "hard",
       "description": "Visiting multiple islands on one trip."
@@ -14348,7 +28382,7 @@ const themes = {
     },
     {
       "word": "Paragliding",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Gliding through air with a fabric wing."
     },
     {
@@ -14363,22 +28397,22 @@ const themes = {
     },
     {
       "word": "Wildlife Safari",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Guided drive to view wild animals in habitat."
     },
     {
       "word": "Scuba Diving",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Underwater diving using an air tank."
     },
     {
       "word": "Mountain Biking",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Cycling on rough trails and uneven terrain."
     },
     {
       "word": "Hot Air Balloon Ride",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Leisure flight in a basket beneath a heated balloon."
     },
     {
@@ -14387,7 +28421,7 @@ const themes = {
       "description": "Skin lotion with SPF for UV protection."
     },
     {
-      "word": "Flip Flops",
+      "word": "Flip-flops",
       "difficulty": "easy",
       "description": "Open-toe sandals worn at pools and beaches."
     },
@@ -14430,6 +28464,331 @@ const themes = {
       "word": "Seaside",
       "difficulty": "easy",
       "description": "Coastal area next to the sea."
+    },
+    {
+      "word": "Beach Towel",
+      "difficulty": "easy",
+      "description": "Large cloth spread on the sand for drying or lounging."
+    },
+    {
+      "word": "Deckchair",
+      "difficulty": "easy",
+      "description": "Folding outdoor seat with a fabric sling."
+    },
+    {
+      "word": "Sun Lounger",
+      "difficulty": "easy",
+      "description": "Reclining outdoor chair used beside a pool."
+    },
+    {
+      "word": "Hammock",
+      "difficulty": "easy",
+      "description": "Suspended fabric bed tied between two supports."
+    },
+    {
+      "word": "Swimming Costume",
+      "difficulty": "easy",
+      "description": "South African term for clothing worn in a pool."
+    },
+    {
+      "word": "Board Shorts",
+      "difficulty": "easy",
+      "description": "Loose swimwear associated with surfers."
+    },
+    {
+      "word": "Bikini",
+      "difficulty": "easy",
+      "description": "Two-piece swimwear."
+    },
+    {
+      "word": "Sarong",
+      "difficulty": "easy",
+      "description": "Wraparound cloth often worn over swimwear."
+    },
+    {
+      "word": "Goggles",
+      "difficulty": "easy",
+      "description": "Protective eyewear used underwater."
+    },
+    {
+      "word": "Flippers",
+      "difficulty": "easy",
+      "description": "Foot attachments helping a swimmer move through water."
+    },
+    {
+      "word": "Snorkel",
+      "difficulty": "easy",
+      "description": "Breathing tube used while floating face-down."
+    },
+    {
+      "word": "Beach Ball",
+      "difficulty": "easy",
+      "description": "Large lightweight inflatable sphere used beside the sea."
+    },
+    {
+      "word": "Pool Noodle",
+      "difficulty": "easy",
+      "description": "Long foam float used for play or swimming support."
+    },
+    {
+      "word": "Inflatable Flamingo",
+      "difficulty": "easy",
+      "description": "Pink bird-shaped pool float."
+    },
+    {
+      "word": "Lilo",
+      "difficulty": "easy",
+      "description": "Inflatable mattress used for floating on water."
+    },
+    {
+      "word": "Paddling Pool",
+      "difficulty": "easy",
+      "description": "Shallow portable basin for young children to splash in."
+    },
+    {
+      "word": "Water Slide",
+      "difficulty": "easy",
+      "description": "Slippery chute carrying riders into a pool."
+    },
+    {
+      "word": "Splash Park",
+      "difficulty": "easy",
+      "description": "Play area featuring fountains and spraying jets."
+    },
+    {
+      "word": "Lifeguard",
+      "difficulty": "easy",
+      "description": "Person watching swimmers and performing rescues."
+    },
+    {
+      "word": "Sand Bucket",
+      "difficulty": "easy",
+      "description": "Container used by children to shape seaside castles."
+    },
+    {
+      "word": "Spade",
+      "difficulty": "easy",
+      "description": "Small digging tool used by children on the shore."
+    },
+    {
+      "word": "Seashell",
+      "difficulty": "easy",
+      "description": "Hard marine-animal covering collected on the shore."
+    },
+    {
+      "word": "Rock Pool",
+      "difficulty": "easy",
+      "description": "Small seawater basin exposed among coastal stones."
+    },
+    {
+      "word": "Beachcombing",
+      "difficulty": "easy",
+      "description": "Searching the shoreline for interesting washed-up objects."
+    },
+    {
+      "word": "Skimming Stones",
+      "difficulty": "easy",
+      "description": "Throwing flat pebbles so they bounce across water."
+    },
+    {
+      "word": "Bodyboard",
+      "difficulty": "easy",
+      "description": "Short foam board ridden lying down in waves."
+    },
+    {
+      "word": "Surfboard",
+      "difficulty": "easy",
+      "description": "Long floating platform ridden while standing on waves."
+    },
+    {
+      "word": "Ice Lolly",
+      "difficulty": "easy",
+      "description": "Frozen flavoured treat eaten from a stick."
+    },
+    {
+      "word": "Soft Serve",
+      "difficulty": "easy",
+      "description": "Smooth frozen dessert dispensed in a spiral from a machine."
+    },
+    {
+      "word": "Sunstroke",
+      "difficulty": "hard",
+      "description": "Heat-related illness associated with prolonged hot-weather exposure."
+    },
+    {
+      "word": "Heat Exhaustion",
+      "difficulty": "hard",
+      "description": "Illness caused by overheating, often with heavy sweating."
+    },
+    {
+      "word": "Dehydration",
+      "difficulty": "hard",
+      "description": "Losing more body fluid than you replace."
+    },
+    {
+      "word": "Sunburn",
+      "difficulty": "hard",
+      "description": "Painful skin damage after too much ultraviolet exposure."
+    },
+    {
+      "word": "Tan Lines",
+      "difficulty": "hard",
+      "description": "Visible boundaries between exposed and covered skin."
+    },
+    {
+      "word": "After-sun",
+      "difficulty": "hard",
+      "description": "Skin product applied following ultraviolet exposure."
+    },
+    {
+      "word": "UV Index",
+      "difficulty": "hard",
+      "description": "Scale indicating the strength of skin-damaging sunlight."
+    },
+    {
+      "word": "Rip Current",
+      "difficulty": "hard",
+      "description": "Narrow flow of water moving strongly away from the shore."
+    },
+    {
+      "word": "Red Flag",
+      "difficulty": "hard",
+      "description": "Beach warning indicating dangerous swimming conditions."
+    },
+    {
+      "word": "Blue Flag Beach",
+      "difficulty": "hard",
+      "description": "Coastline recognised by an international environmental quality programme."
+    },
+    {
+      "word": "High Tide",
+      "difficulty": "hard",
+      "description": "Stage when the sea reaches its upper shoreline level."
+    },
+    {
+      "word": "Low Tide",
+      "difficulty": "hard",
+      "description": "Stage when the sea retreats to its lower shoreline level."
+    },
+    {
+      "word": "Spring Tide",
+      "difficulty": "hard",
+      "description": "Especially large sea-level range around new and full moons."
+    },
+    {
+      "word": "Tidal Pool",
+      "difficulty": "hard",
+      "description": "Coastal swimming enclosure refreshed by seawater."
+    },
+    {
+      "word": "Sea Breeze",
+      "difficulty": "hard",
+      "description": "Cool air moving inland from the ocean."
+    },
+    {
+      "word": "Heat Haze",
+      "difficulty": "hard",
+      "description": "Shimmering distortion seen above very hot surfaces."
+    },
+    {
+      "word": "Mirage",
+      "difficulty": "hard",
+      "description": "Optical illusion that can resemble distant water."
+    },
+    {
+      "word": "Mosquito Bite",
+      "difficulty": "hard",
+      "description": "Itchy mark left by a blood-feeding insect."
+    },
+    {
+      "word": "Jellyfish Sting",
+      "difficulty": "hard",
+      "description": "Painful encounter with a drifting sea creature's tentacles."
+    },
+    {
+      "word": "Bluebottle",
+      "difficulty": "hard",
+      "description": "Stinging floating marine organism with a blue gas-filled bladder."
+    },
+    {
+      "word": "Sea Urchin Spine",
+      "difficulty": "hard",
+      "description": "Sharp projection that can lodge in a swimmer's foot."
+    },
+    {
+      "word": "Waterproof Phone Pouch",
+      "difficulty": "hard",
+      "description": "Sealed protective cover for a mobile device near a pool."
+    },
+    {
+      "word": "Lost Flip-flop",
+      "difficulty": "hard",
+      "description": "Missing half of a pair of simple beach footwear."
+    },
+    {
+      "word": "Sand in Your Shoes",
+      "difficulty": "hard",
+      "description": "Annoying gritty reminder of a day by the sea."
+    },
+    {
+      "word": "Beach Hair",
+      "difficulty": "hard",
+      "description": "Tousled mop on your head after exposure to salt, wind and humidity."
+    },
+    {
+      "word": "Poolside Service",
+      "difficulty": "hard",
+      "description": "Food and drinks delivered to guests beside the water."
+    },
+    {
+      "word": "All-you-can-eat Buffet",
+      "difficulty": "hard",
+      "description": "Meal arrangement allowing repeated trips for unlimited servings."
+    },
+    {
+      "word": "Tourist Trap",
+      "difficulty": "easy",
+      "description": "Overpriced attraction aimed at visitors unfamiliar with the area."
+    },
+    {
+      "word": "Post-holiday Blues",
+      "difficulty": "hard",
+      "description": "Low mood after returning from a relaxing trip."
+    },
+    {
+      "word": "Seagull",
+      "difficulty": "easy",
+      "description": "Coastal bird notorious for stealing tourists' chips."
+    },
+    {
+      "word": "Beach Volleyball",
+      "difficulty": "easy",
+      "description": "Net sport played barefoot on sand."
+    },
+    {
+      "word": "Paddleboat",
+      "difficulty": "easy",
+      "description": "Small leisure craft propelled by the riders' feet."
+    },
+    {
+      "word": "Sundowner",
+      "difficulty": "hard",
+      "description": "Drink enjoyed while watching daylight fade."
+    },
+    {
+      "word": "Golden Hour",
+      "difficulty": "hard",
+      "description": "Period near sunrise or sunset prized for warm photographic light."
+    },
+    {
+      "word": "Off-season",
+      "difficulty": "hard",
+      "description": "Period outside a destination's busiest tourist months."
+    },
+    {
+      "word": "Peak Season",
+      "difficulty": "hard",
+      "description": "Period of highest demand at a holiday destination."
     }
   ],
   "Halloween Party": [
@@ -14524,39 +28883,9 @@ const themes = {
       "description": "Bubbling cauldron potion from spooky fantasy imagery."
     },
     {
-      "word": "Spooky Stories",
-      "difficulty": "hard",
-      "description": "Scary tales told at night to unsettle listeners."
-    },
-    {
-      "word": "Full Moon Night",
-      "difficulty": "hard",
-      "description": "Bright lunar phase often linked to werewolf legends."
-    },
-    {
-      "word": "Graveyard Shift",
-      "difficulty": "hard",
-      "description": "Overnight work hours, often used as a creepy phrase."
-    },
-    {
       "word": "Poltergeist",
       "difficulty": "hard",
       "description": "Noisy spirit said to move objects and cause disturbances."
-    },
-    {
-      "word": "Werewolf Transformation",
-      "difficulty": "hard",
-      "description": "Mythic change from human into wolf-like beast."
-    },
-    {
-      "word": "Creepy Crawlies",
-      "difficulty": "hard",
-      "description": "Insects and spiders used to create an unsettling mood."
-    },
-    {
-      "word": "Phantom of the Opera",
-      "difficulty": "hard",
-      "description": "Masked figure haunting a famous Paris music venue."
     },
     {
       "word": "Haunted Forest",
@@ -14584,11 +28913,6 @@ const themes = {
       "description": "Public costume procession with themed floats and performers."
     },
     {
-      "word": "Trick Bucket",
-      "difficulty": "hard",
-      "description": "Container children carry to collect sweets door to door."
-    },
-    {
       "word": "Fog Machine",
       "difficulty": "easy",
       "description": "Device that produces artificial mist for dramatic party effects."
@@ -14602,11 +28926,6 @@ const themes = {
       "word": "Candy Corn",
       "difficulty": "easy",
       "description": "Tri-color cone-shaped sweet sold around Halloween."
-    },
-    {
-      "word": "Spooky Playlist",
-      "difficulty": "hard",
-      "description": "Curated music set with eerie songs for themed events."
     },
     {
       "word": "Face Paint",
@@ -14629,9 +28948,364 @@ const themes = {
       "description": "Narrative about spirits, hauntings, and supernatural events."
     },
     {
-      "word": "Midnight Party",
+      "word": "Werewolf",
       "difficulty": "easy",
-      "description": "Late-night celebration that starts around twelve."
+      "description": "Person who transforms into a wolf in folklore."
+    },
+    {
+      "word": "Mummy",
+      "difficulty": "easy",
+      "description": "Preserved body wrapped in bandages, often a horror character."
+    },
+    {
+      "word": "Grim Reaper",
+      "difficulty": "easy",
+      "description": "Cloaked personification of death carrying a scythe."
+    },
+    {
+      "word": "Scythe",
+      "difficulty": "easy",
+      "description": "Long curved cutting tool associated with death's personification."
+    },
+    {
+      "word": "Cauldron",
+      "difficulty": "easy",
+      "description": "Large pot used by witches to prepare potions."
+    },
+    {
+      "word": "Broomstick",
+      "difficulty": "easy",
+      "description": "Witch's traditional flying household cleaning tool."
+    },
+    {
+      "word": "Pointy Hat",
+      "difficulty": "easy",
+      "description": "Tall tapered headwear associated with witches."
+    },
+    {
+      "word": "Crystal Ball",
+      "difficulty": "easy",
+      "description": "Transparent sphere used by fictional fortune-tellers."
+    },
+    {
+      "word": "Magic Wand",
+      "difficulty": "easy",
+      "description": "Handheld rod used to cast fictional spells."
+    },
+    {
+      "word": "Spell Book",
+      "difficulty": "easy",
+      "description": "Written collection of magical instructions."
+    },
+    {
+      "word": "Potion",
+      "difficulty": "easy",
+      "description": "Magical liquid mixed to produce a supernatural effect."
+    },
+    {
+      "word": "Vampire Cape",
+      "difficulty": "easy",
+      "description": "Flowing outer garment associated with Dracula."
+    },
+    {
+      "word": "Fangs",
+      "difficulty": "easy",
+      "description": "Long pointed teeth associated with blood-drinking monsters."
+    },
+    {
+      "word": "Fake Blood",
+      "difficulty": "easy",
+      "description": "Red stage liquid used to make costumes look gruesome."
+    },
+    {
+      "word": "Coffin",
+      "difficulty": "easy",
+      "description": "Box in which a deceased person is laid to rest."
+    },
+    {
+      "word": "Tombstone",
+      "difficulty": "easy",
+      "description": "Marker placed above a grave."
+    },
+    {
+      "word": "Graveyard",
+      "difficulty": "easy",
+      "description": "Burial ground associated with spooky nighttime stories."
+    },
+    {
+      "word": "Crypt",
+      "difficulty": "easy",
+      "description": "Underground chamber used for burials."
+    },
+    {
+      "word": "Cobweb",
+      "difficulty": "easy",
+      "description": "Dusty abandoned spider's silk structure."
+    },
+    {
+      "word": "Tarantula",
+      "difficulty": "easy",
+      "description": "Large hairy spider often used to frighten movie characters."
+    },
+    {
+      "word": "Crow",
+      "difficulty": "easy",
+      "description": "Black bird associated with ominous imagery."
+    },
+    {
+      "word": "Raven",
+      "difficulty": "easy",
+      "description": "Large black bird associated with Poe's Nevermore."
+    },
+    {
+      "word": "Owl",
+      "difficulty": "easy",
+      "description": "Nocturnal bird often linked with eerie calls."
+    },
+    {
+      "word": "Hoot",
+      "difficulty": "easy",
+      "description": "Sound associated with an owl at night."
+    },
+    {
+      "word": "Full Moon",
+      "difficulty": "easy",
+      "description": "Bright circular lunar phase associated with werewolf stories."
+    },
+    {
+      "word": "Lightning",
+      "difficulty": "easy",
+      "description": "Sudden bright electrical flash during a storm."
+    },
+    {
+      "word": "Thunder",
+      "difficulty": "easy",
+      "description": "Loud rumble following an atmospheric electrical flash."
+    },
+    {
+      "word": "Creaky Door",
+      "difficulty": "easy",
+      "description": "Entrance that makes a groaning noise when opened."
+    },
+    {
+      "word": "Trapdoor",
+      "difficulty": "easy",
+      "description": "Hidden hinged opening in a floor or ceiling."
+    },
+    {
+      "word": "Secret Passage",
+      "difficulty": "easy",
+      "description": "Concealed route through a building."
+    },
+    {
+      "word": "Jump Scare",
+      "difficulty": "hard",
+      "description": "Sudden frightening moment designed to make viewers jolt."
+    },
+    {
+      "word": "False Alarm",
+      "difficulty": "hard",
+      "description": "Warning that turns out to indicate no real danger."
+    },
+    {
+      "word": "Sixth Sense",
+      "difficulty": "hard",
+      "description": "Supposed ability to perceive things beyond ordinary awareness."
+    },
+    {
+      "word": "Séance",
+      "difficulty": "hard",
+      "description": "Gathering attempting to contact spirits."
+    },
+    {
+      "word": "Ouija Board",
+      "difficulty": "hard",
+      "description": "Lettered surface used with a pointer to supposedly contact spirits."
+    },
+    {
+      "word": "Planchette",
+      "difficulty": "hard",
+      "description": "Small pointer used on a spirit-contacting letter board."
+    },
+    {
+      "word": "Possession",
+      "difficulty": "hard",
+      "description": "Horror concept of an entity taking control of a person."
+    },
+    {
+      "word": "Exorcism",
+      "difficulty": "hard",
+      "description": "Ritual intended to expel an invading spirit."
+    },
+    {
+      "word": "Doppelgänger",
+      "difficulty": "hard",
+      "description": "Uncanny double resembling a living person."
+    },
+    {
+      "word": "Shapeshifter",
+      "difficulty": "hard",
+      "description": "Supernatural being able to change its physical form."
+    },
+    {
+      "word": "Changeling",
+      "difficulty": "hard",
+      "description": "Folkloric replacement secretly left in place of a child."
+    },
+    {
+      "word": "Banshee",
+      "difficulty": "hard",
+      "description": "Irish spirit whose wail foretells a death."
+    },
+    {
+      "word": "Bogeyman",
+      "difficulty": "hard",
+      "description": "Imaginary creature used to frighten children into behaving."
+    },
+    {
+      "word": "Headless Horseman",
+      "difficulty": "hard",
+      "description": "Spectral rider associated with Sleepy Hollow."
+    },
+    {
+      "word": "Wendigo",
+      "difficulty": "hard",
+      "description": "Figure from some Indigenous North American traditions associated with cannibalistic hunger."
+    },
+    {
+      "word": "Slender Man",
+      "difficulty": "hard",
+      "description": "Internet-created tall faceless horror figure."
+    },
+    {
+      "word": "Bloody Mary",
+      "difficulty": "hard",
+      "description": "Mirror-invoking urban legend about a terrifying apparition."
+    },
+    {
+      "word": "Candyman",
+      "difficulty": "hard",
+      "description": "Horror figure summoned by repeating his name in a mirror."
+    },
+    {
+      "word": "Beetlejuice",
+      "difficulty": "hard",
+      "description": "Mischievous supernatural character whose name is repeated three times."
+    },
+    {
+      "word": "Ghostbusters",
+      "difficulty": "hard",
+      "description": "Film team catching supernatural beings with proton packs."
+    },
+    {
+      "word": "Casper",
+      "difficulty": "hard",
+      "description": "Friendly cartoon spirit."
+    },
+    {
+      "word": "Chucky",
+      "difficulty": "hard",
+      "description": "Murderous doll from the Child's Play franchise."
+    },
+    {
+      "word": "Annabelle",
+      "difficulty": "hard",
+      "description": "Haunted doll associated with The Conjuring franchise."
+    },
+    {
+      "word": "Pennywise",
+      "difficulty": "hard",
+      "description": "Clown-shaped villain from Stephen King's It."
+    },
+    {
+      "word": "Freddy Krueger",
+      "difficulty": "hard",
+      "description": "Nightmare killer with a bladed glove."
+    },
+    {
+      "word": "Jason Voorhees",
+      "difficulty": "hard",
+      "description": "Hockey-mask killer associated with Camp Crystal Lake."
+    },
+    {
+      "word": "Michael Myers",
+      "difficulty": "hard",
+      "description": "Masked slasher associated with Haddonfield."
+    },
+    {
+      "word": "Ghostface",
+      "difficulty": "hard",
+      "description": "Masked killer persona from the Scream franchise."
+    },
+    {
+      "word": "Nosferatu",
+      "difficulty": "hard",
+      "description": "Silent-film vampire with pointed ears and elongated fingers."
+    },
+    {
+      "word": "Trick or Treat Bag",
+      "difficulty": "hard",
+      "description": "Container carried door to door to collect festive sweets."
+    },
+    {
+      "word": "Mad Scientist",
+      "difficulty": "easy",
+      "description": "Wild-haired experimenter creating dangerous inventions in horror stories."
+    },
+    {
+      "word": "Laboratory Monster",
+      "difficulty": "easy",
+      "description": "Frightening creature brought to life through an experiment."
+    },
+    {
+      "word": "Zombie Walk",
+      "difficulty": "easy",
+      "description": "Costumed public event where participants shuffle like the undead."
+    },
+    {
+      "word": "Pumpkin Patch",
+      "difficulty": "easy",
+      "description": "Field or attraction where visitors select orange autumn squash."
+    },
+    {
+      "word": "Glow-in-the-dark Skeleton",
+      "difficulty": "easy",
+      "description": "Luminous costume showing a body's bones after the lights go out."
+    },
+    {
+      "word": "Urban Legend",
+      "difficulty": "hard",
+      "description": "Widely circulated spooky story presented as though it really happened."
+    },
+    {
+      "word": "Curse",
+      "difficulty": "hard",
+      "description": "Supernatural misfortune supposedly imposed by magic."
+    },
+    {
+      "word": "Haunting",
+      "difficulty": "hard",
+      "description": "Repeated supernatural activity associated with a location."
+    },
+    {
+      "word": "Ectoplasm",
+      "difficulty": "hard",
+      "description": "Supposed substance produced during spiritual manifestations."
+    },
+    {
+      "word": "Familiar",
+      "difficulty": "hard",
+      "description": "Animal companion associated with a witch's magic."
+    },
+    {
+      "word": "Witching Hour",
+      "difficulty": "hard",
+      "description": "Time of night associated with heightened supernatural activity."
+    },
+    {
+      "word": "Dead Man's Switch",
+      "difficulty": "hard",
+      "description": "Mechanism activated when its operator stops responding."
     }
   ],
   "Christmas Celebration": [
@@ -14701,24 +29375,9 @@ const themes = {
       "description": "Rich spiced milk drink served in festive season."
     },
     {
-      "word": "New Year's Eve",
-      "difficulty": "easy",
-      "description": "Night before January 1 with a midnight countdown."
-    },
-    {
-      "word": "Hanukkah",
-      "difficulty": "easy",
-      "description": "Eight-night Jewish Festival of Lights."
-    },
-    {
       "word": "Advent Calendar",
       "difficulty": "hard",
       "description": "December countdown with daily doors or treats."
-    },
-    {
-      "word": "Kwanzaa",
-      "difficulty": "hard",
-      "description": "Week-long celebration of African heritage and unity."
     },
     {
       "word": "Yule Log",
@@ -14736,16 +29395,6 @@ const themes = {
       "description": "Christian feast marking the visit of the Magi."
     },
     {
-      "word": "Menorah",
-      "difficulty": "hard",
-      "description": "Nine-branched lamp lit over Hanukkah nights."
-    },
-    {
-      "word": "Dreidel",
-      "difficulty": "hard",
-      "description": "Four-sided spinning top used in Hanukkah games."
-    },
-    {
       "word": "Tinsel",
       "difficulty": "hard",
       "description": "Shiny decorative strands used on festive displays."
@@ -14757,28 +29406,13 @@ const themes = {
     },
     {
       "word": "Nutcracker",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Festive ballet tale featuring a magical toy soldier and fantasy kingdom."
     },
     {
       "word": "Krampus",
       "difficulty": "hard",
       "description": "Alpine folklore figure said to punish naughty children."
-    },
-    {
-      "word": "Solstice",
-      "difficulty": "hard",
-      "description": "Seasonal turning point with shortest or longest daylight."
-    },
-    {
-      "word": "Hogmanay",
-      "difficulty": "hard",
-      "description": "Scottish New Year celebration with street parties."
-    },
-    {
-      "word": "Black Friday",
-      "difficulty": "hard",
-      "description": "Major shopping discount day after Thanksgiving."
     },
     {
       "word": "Feast of Seven Fishes",
@@ -14834,6 +29468,361 @@ const themes = {
       "word": "Winter Garland",
       "difficulty": "easy",
       "description": "Decorative greenery strand used around doors and mantels."
+    },
+    {
+      "word": "Father Christmas",
+      "difficulty": "easy",
+      "description": "Traditional British name for the red-suited festive gift-giver."
+    },
+    {
+      "word": "Mrs. Claus",
+      "difficulty": "easy",
+      "description": "Partner of the red-suited North Pole gift-giver."
+    },
+    {
+      "word": "Elf",
+      "difficulty": "easy",
+      "description": "Pointy-eared helper working in a festive toy workshop."
+    },
+    {
+      "word": "Rudolph",
+      "difficulty": "easy",
+      "description": "Red-nosed member of Santa's flying animal team."
+    },
+    {
+      "word": "North Pole",
+      "difficulty": "easy",
+      "description": "Fictional home of Santa's workshop."
+    },
+    {
+      "word": "Santa's Grotto",
+      "difficulty": "easy",
+      "description": "Festive place where children meet a red-suited gift-giver."
+    },
+    {
+      "word": "Wish List",
+      "difficulty": "easy",
+      "description": "Collection of presents someone hopes to receive."
+    },
+    {
+      "word": "Letter to Santa",
+      "difficulty": "easy",
+      "description": "Message children send to a red-suited gift-giver."
+    },
+    {
+      "word": "Chimney",
+      "difficulty": "easy",
+      "description": "Route traditionally used by the festive visitor entering a home."
+    },
+    {
+      "word": "Milk and Cookies",
+      "difficulty": "easy",
+      "description": "Snack traditionally left out for a festive nighttime visitor."
+    },
+    {
+      "word": "Carrot for Rudolph",
+      "difficulty": "easy",
+      "description": "Vegetable snack left for a festive red-nosed animal."
+    },
+    {
+      "word": "Toy Workshop",
+      "difficulty": "easy",
+      "description": "Place where Santa's helpers make presents."
+    },
+    {
+      "word": "Wrapping Paper",
+      "difficulty": "easy",
+      "description": "Decorative sheets covering a present."
+    },
+    {
+      "word": "Gift Bag",
+      "difficulty": "easy",
+      "description": "Handled decorative container used instead of wrapping."
+    },
+    {
+      "word": "Ribbon",
+      "difficulty": "easy",
+      "description": "Narrow decorative strip tied around a present."
+    },
+    {
+      "word": "Bow",
+      "difficulty": "easy",
+      "description": "Looped decorative knot placed on a wrapped present."
+    },
+    {
+      "word": "Gift Tag",
+      "difficulty": "easy",
+      "description": "Small label showing who a present is for."
+    },
+    {
+      "word": "Stocking Filler",
+      "difficulty": "easy",
+      "description": "Small inexpensive present put in a hanging festive sock."
+    },
+    {
+      "word": "Christmas Cracker",
+      "difficulty": "easy",
+      "description": "Paper-covered table favour pulled apart with a bang."
+    },
+    {
+      "word": "Paper Crown",
+      "difficulty": "easy",
+      "description": "Flimsy festive headwear often found inside a table cracker."
+    },
+    {
+      "word": "Cracker Joke",
+      "difficulty": "easy",
+      "description": "Groan-inducing pun hidden in a festive table favour."
+    },
+    {
+      "word": "Mince Pie",
+      "difficulty": "easy",
+      "description": "Small pastry filled with sweet spiced dried fruit."
+    },
+    {
+      "word": "Christmas Pudding",
+      "difficulty": "easy",
+      "description": "Dense steamed festive dessert often served flaming."
+    },
+    {
+      "word": "Fruitcake",
+      "difficulty": "easy",
+      "description": "Dense baked treat containing dried produce and nuts."
+    },
+    {
+      "word": "Brandy Butter",
+      "difficulty": "easy",
+      "description": "Sweet alcoholic spread served with festive desserts."
+    },
+    {
+      "word": "Roast Turkey",
+      "difficulty": "easy",
+      "description": "Large poultry dish traditionally served at a festive meal."
+    },
+    {
+      "word": "Stuffing",
+      "difficulty": "easy",
+      "description": "Seasoned mixture served inside or alongside roasted poultry."
+    },
+    {
+      "word": "Brussels Sprouts",
+      "difficulty": "easy",
+      "description": "Small green cabbage-like vegetables dividing festive dinner guests."
+    },
+    {
+      "word": "Cranberry Sauce",
+      "difficulty": "easy",
+      "description": "Tart red condiment often served with roasted poultry."
+    },
+    {
+      "word": "Gravy Boat",
+      "difficulty": "easy",
+      "description": "Small pouring vessel holding a savoury roast accompaniment."
+    },
+    {
+      "word": "Scrooge",
+      "difficulty": "hard",
+      "description": "Dickens miser whose name became a term for festive stinginess."
+    },
+    {
+      "word": "Bah Humbug",
+      "difficulty": "hard",
+      "description": "Dismissive phrase associated with Dickens's festive miser."
+    },
+    {
+      "word": "Ghost of Christmas Past",
+      "difficulty": "hard",
+      "description": "Spirit showing Scrooge scenes from earlier in his life."
+    },
+    {
+      "word": "Ghost of Christmas Present",
+      "difficulty": "hard",
+      "description": "Spirit showing Scrooge current celebrations and hardship."
+    },
+    {
+      "word": "Ghost of Christmas Yet to Come",
+      "difficulty": "hard",
+      "description": "Silent spirit showing Scrooge a possible future."
+    },
+    {
+      "word": "Tiny Tim",
+      "difficulty": "hard",
+      "description": "Young Cratchit child in Dickens's festive ghost story."
+    },
+    {
+      "word": "The Grinch",
+      "difficulty": "hard",
+      "description": "Green Dr. Seuss character who tries to steal a celebration."
+    },
+    {
+      "word": "Whoville",
+      "difficulty": "hard",
+      "description": "Dr. Seuss town threatened by a green festive thief."
+    },
+    {
+      "word": "Kevin McCallister",
+      "difficulty": "hard",
+      "description": "Boy who defends his house from burglars over the holidays."
+    },
+    {
+      "word": "Buddy the Elf",
+      "difficulty": "hard",
+      "description": "Will Ferrell character raised by Santa's helpers."
+    },
+    {
+      "word": "The Polar Express",
+      "difficulty": "hard",
+      "description": "Story about a magical train journey to Santa's home."
+    },
+    {
+      "word": "A Charlie Brown Christmas",
+      "difficulty": "hard",
+      "description": "Animated special featuring a small unloved festive tree."
+    },
+    {
+      "word": "It's a Wonderful Life",
+      "difficulty": "hard",
+      "description": "Film where George Bailey learns the value of his existence."
+    },
+    {
+      "word": "Love Actually",
+      "difficulty": "hard",
+      "description": "Film weaving romantic stories around the festive season."
+    },
+    {
+      "word": "Die Hard",
+      "difficulty": "hard",
+      "description": "Action film whose holiday status prompts annual arguments."
+    },
+    {
+      "word": "Jingle Bells",
+      "difficulty": "hard",
+      "description": "Festive song involving a one-horse open sleigh."
+    },
+    {
+      "word": "Silent Night",
+      "difficulty": "hard",
+      "description": "Carolling standard associated with a peaceful holy evening."
+    },
+    {
+      "word": "Deck the Halls",
+      "difficulty": "hard",
+      "description": "Festive song with repeated fa-la-la refrains."
+    },
+    {
+      "word": "Joy to the World",
+      "difficulty": "hard",
+      "description": "Carol announcing glad tidings to the Earth."
+    },
+    {
+      "word": "The Twelve Days of Christmas",
+      "difficulty": "hard",
+      "description": "Cumulative song beginning with a partridge in a pear tree."
+    },
+    {
+      "word": "All I Want for Christmas Is You",
+      "difficulty": "hard",
+      "description": "Mariah Carey festive hit about a desired loved one."
+    },
+    {
+      "word": "Last Christmas",
+      "difficulty": "hard",
+      "description": "Wham! festive hit about a heart given away."
+    },
+    {
+      "word": "White Christmas",
+      "difficulty": "hard",
+      "description": "Bing Crosby standard longing for snowy festivities."
+    },
+    {
+      "word": "Little Drummer Boy",
+      "difficulty": "hard",
+      "description": "Carol about a child offering music to the newborn Jesus."
+    },
+    {
+      "word": "Bethlehem",
+      "difficulty": "hard",
+      "description": "Town traditionally associated with Jesus's birth."
+    },
+    {
+      "word": "Three Wise Men",
+      "difficulty": "hard",
+      "description": "Biblical visitors traditionally bearing gold, frankincense and myrrh."
+    },
+    {
+      "word": "Star of Bethlehem",
+      "difficulty": "hard",
+      "description": "Celestial guide associated with the biblical visitors from the East."
+    },
+    {
+      "word": "Midnight Mass",
+      "difficulty": "hard",
+      "description": "Late-night Catholic service held as December twenty-fifth begins."
+    },
+    {
+      "word": "Advent Wreath",
+      "difficulty": "hard",
+      "description": "Circular arrangement with candles lit in the weeks before December twenty-fifth."
+    },
+    {
+      "word": "Angel on the Tree",
+      "difficulty": "easy",
+      "description": "Winged figure placed at the top of festive greenery."
+    },
+    {
+      "word": "Christmas Wreath",
+      "difficulty": "easy",
+      "description": "Circular evergreen decoration hung on a front door."
+    },
+    {
+      "word": "Fairy Lights",
+      "difficulty": "easy",
+      "description": "Tiny decorative bulbs strung around a room or garden."
+    },
+    {
+      "word": "Tangled Lights",
+      "difficulty": "easy",
+      "description": "Festive electrical decorations that emerge from storage in knots."
+    },
+    {
+      "word": "Matching Pyjamas",
+      "difficulty": "easy",
+      "description": "Coordinated sleepwear worn by families for festive photographs."
+    },
+    {
+      "word": "Santa Hat",
+      "difficulty": "easy",
+      "description": "Red headwear with white trim and a bobble."
+    },
+    {
+      "word": "Carols by Candlelight",
+      "difficulty": "easy",
+      "description": "Community festive singing event illuminated by small flames."
+    },
+    {
+      "word": "Regifting",
+      "difficulty": "hard",
+      "description": "Passing on a present you previously received from someone else."
+    },
+    {
+      "word": "White Elephant Exchange",
+      "difficulty": "hard",
+      "description": "Party game swapping amusing or unwanted presents."
+    },
+    {
+      "word": "Christmas Beetle",
+      "difficulty": "hard",
+      "description": "Seasonal insect associated with warm December evenings in southern Africa."
+    },
+    {
+      "word": "Christmas in July",
+      "difficulty": "hard",
+      "description": "Midyear celebration recreating December festivities during another season."
+    },
+    {
+      "word": "Leftover Turkey",
+      "difficulty": "hard",
+      "description": "Roasted festive poultry appearing in sandwiches for several days."
     }
   ],
   "Back to School": [
@@ -14994,7 +29983,7 @@ const themes = {
     },
     {
       "word": "Homeroom",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Daily admin class with an assigned teacher."
     },
     {
@@ -15036,6 +30025,306 @@ const themes = {
       "word": "Group Project",
       "difficulty": "easy",
       "description": "Assignment completed collaboratively by multiple students."
+    },
+    {
+      "word": "School Bus",
+      "difficulty": "easy",
+      "description": "Vehicle carrying children between home and lessons."
+    },
+    {
+      "word": "Bus Stop",
+      "difficulty": "easy",
+      "description": "Designated place to wait for public transport."
+    },
+    {
+      "word": "Class Register",
+      "difficulty": "easy",
+      "description": "List used to check which pupils are present."
+    },
+    {
+      "word": "Name Badge",
+      "difficulty": "easy",
+      "description": "Small label identifying the person wearing it."
+    },
+    {
+      "word": "School Tie",
+      "difficulty": "easy",
+      "description": "Neckwear forming part of a pupil's uniform."
+    },
+    {
+      "word": "Blazer",
+      "difficulty": "easy",
+      "description": "Tailored jacket often bearing an educational crest."
+    },
+    {
+      "word": "School Shoes",
+      "difficulty": "easy",
+      "description": "Formal footwear worn as part of a pupil's uniform."
+    },
+    {
+      "word": "Tuck Shop",
+      "difficulty": "easy",
+      "description": "Small campus retailer selling snacks."
+    },
+    {
+      "word": "Lunch Break",
+      "difficulty": "easy",
+      "description": "Midday pause when pupils eat."
+    },
+    {
+      "word": "Packed Lunch",
+      "difficulty": "easy",
+      "description": "Meal brought from home in a container."
+    },
+    {
+      "word": "Juice Box",
+      "difficulty": "easy",
+      "description": "Small carton drink often packed with a child's meal."
+    },
+    {
+      "word": "Water Fountain",
+      "difficulty": "easy",
+      "description": "Fixture providing a stream for drinking."
+    },
+    {
+      "word": "Playground",
+      "difficulty": "easy",
+      "description": "Outdoor area where children spend break time."
+    },
+    {
+      "word": "Jungle Gym",
+      "difficulty": "easy",
+      "description": "Climbing structure used by children during outdoor play."
+    },
+    {
+      "word": "Swings",
+      "difficulty": "easy",
+      "description": "Suspended seats children move back and forth on."
+    },
+    {
+      "word": "Hopscotch",
+      "difficulty": "easy",
+      "description": "Playground game hopping through numbered squares."
+    },
+    {
+      "word": "Skipping Rope",
+      "difficulty": "easy",
+      "description": "Cord swung overhead while jumping over it."
+    },
+    {
+      "word": "Schoolbag",
+      "difficulty": "easy",
+      "description": "Container carried on the back to transport books."
+    },
+    {
+      "word": "Glue Stick",
+      "difficulty": "easy",
+      "description": "Twist-up solid adhesive used for classroom crafts."
+    },
+    {
+      "word": "Sharpener",
+      "difficulty": "easy",
+      "description": "Tool restoring a writing implement's pointed tip."
+    },
+    {
+      "word": "Crayons",
+      "difficulty": "easy",
+      "description": "Coloured wax sticks used for drawing."
+    },
+    {
+      "word": "Felt-tip Pens",
+      "difficulty": "easy",
+      "description": "Coloured writing tools with porous points."
+    },
+    {
+      "word": "Paintbrush",
+      "difficulty": "easy",
+      "description": "Handled tool used to apply colour in art lessons."
+    },
+    {
+      "word": "Compass",
+      "difficulty": "easy",
+      "description": "Geometry instrument drawing circles around a fixed point."
+    },
+    {
+      "word": "Protractor",
+      "difficulty": "easy",
+      "description": "Semicircular tool used to measure angles."
+    },
+    {
+      "word": "Set Square",
+      "difficulty": "easy",
+      "description": "Triangular geometry tool used to draw fixed angles."
+    },
+    {
+      "word": "Whiteboard",
+      "difficulty": "easy",
+      "description": "Smooth classroom surface written on with erasable markers."
+    },
+    {
+      "word": "Chalk",
+      "difficulty": "easy",
+      "description": "Soft stick used to write on a dark classroom surface."
+    },
+    {
+      "word": "Duster",
+      "difficulty": "easy",
+      "description": "Tool used to erase writing from a classroom board."
+    },
+    {
+      "word": "School Hall",
+      "difficulty": "easy",
+      "description": "Large indoor venue for assemblies and performances."
+    },
+    {
+      "word": "Pop Quiz",
+      "difficulty": "hard",
+      "description": "Short assessment given without prior warning."
+    },
+    {
+      "word": "Open-book Exam",
+      "difficulty": "hard",
+      "description": "Assessment where students may consult their texts."
+    },
+    {
+      "word": "Multiple Choice",
+      "difficulty": "hard",
+      "description": "Question format offering several possible answers."
+    },
+    {
+      "word": "True or False",
+      "difficulty": "hard",
+      "description": "Question format requiring a choice between two truth values."
+    },
+    {
+      "word": "Show Your Working",
+      "difficulty": "hard",
+      "description": "Instruction to include calculation steps rather than only an answer."
+    },
+    {
+      "word": "Mental Maths",
+      "difficulty": "hard",
+      "description": "Calculations performed without writing or a calculator."
+    },
+    {
+      "word": "Long Division",
+      "difficulty": "hard",
+      "description": "Written method for splitting one number by another."
+    },
+    {
+      "word": "Times Table",
+      "difficulty": "hard",
+      "description": "Memorised list of multiplication facts."
+    },
+    {
+      "word": "Spelling Bee",
+      "difficulty": "hard",
+      "description": "Competition involving correctly forming words letter by letter."
+    },
+    {
+      "word": "Show and Tell",
+      "difficulty": "hard",
+      "description": "Classroom activity presenting an object and explaining it."
+    },
+    {
+      "word": "Oral Presentation",
+      "difficulty": "hard",
+      "description": "Prepared spoken address delivered to classmates."
+    },
+    {
+      "word": "Book Report",
+      "difficulty": "hard",
+      "description": "Written account discussing a text a student has read."
+    },
+    {
+      "word": "Rough Draft",
+      "difficulty": "hard",
+      "description": "Early unfinished version of a written assignment."
+    },
+    {
+      "word": "Peer Assessment",
+      "difficulty": "hard",
+      "description": "Students evaluating one another's work."
+    },
+    {
+      "word": "Extra Credit",
+      "difficulty": "hard",
+      "description": "Optional work offering additional marks."
+    },
+    {
+      "word": "Catch-up Class",
+      "difficulty": "hard",
+      "description": "Additional lesson helping students recover missed material."
+    },
+    {
+      "word": "Learning Support",
+      "difficulty": "hard",
+      "description": "Additional assistance for pupils needing help accessing lessons."
+    },
+    {
+      "word": "Class Clown",
+      "difficulty": "hard",
+      "description": "Pupil who repeatedly tries to make everyone laugh."
+    },
+    {
+      "word": "Teacher's Pet",
+      "difficulty": "hard",
+      "description": "Pupil perceived as the instructor's favourite."
+    },
+    {
+      "word": "Late Slip",
+      "difficulty": "hard",
+      "description": "Written authorisation given to a tardy pupil."
+    },
+    {
+      "word": "Excuse Note",
+      "difficulty": "hard",
+      "description": "Written explanation from a parent for an absence."
+    },
+    {
+      "word": "Forgotten Homework",
+      "difficulty": "hard",
+      "description": "Classic classroom crisis involving an unsubmitted assignment."
+    },
+    {
+      "word": "Dog Ate My Homework",
+      "difficulty": "hard",
+      "description": "Famous implausible excuse for missing an assignment."
+    },
+    {
+      "word": "Head Boy",
+      "difficulty": "hard",
+      "description": "Senior male pupil appointed to a leadership position."
+    },
+    {
+      "word": "Head Girl",
+      "difficulty": "hard",
+      "description": "Senior female pupil appointed to a leadership position."
+    },
+    {
+      "word": "Prefect",
+      "difficulty": "hard",
+      "description": "Pupil given responsibility for helping enforce rules."
+    },
+    {
+      "word": "Matric Dance",
+      "difficulty": "hard",
+      "description": "South African final-year formal celebration."
+    },
+    {
+      "word": "Matric Results",
+      "difficulty": "hard",
+      "description": "Final school-leaving marks eagerly awaited in South Africa."
+    },
+    {
+      "word": "Valedictorian",
+      "difficulty": "hard",
+      "description": "Student selected to deliver a farewell graduation speech."
+    },
+    {
+      "word": "Gap Year",
+      "difficulty": "hard",
+      "description": "Break between school and further study or work."
     }
   ],
   "Music Festival": [
@@ -15101,12 +30390,12 @@ const themes = {
     },
     {
       "word": "Soundcheck",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Pre-show test to balance instruments and microphones."
     },
     {
       "word": "Setlist",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Planned order of songs in a performance."
     },
     {
@@ -15116,12 +30405,12 @@ const themes = {
     },
     {
       "word": "Backstage Pass",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Credential granting access behind performance areas."
     },
     {
       "word": "Crowd Surfing",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Attendee carried overhead by raised hands in the crowd."
     },
     {
@@ -15131,12 +30420,12 @@ const themes = {
     },
     {
       "word": "Festival Wristband",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Wearable band proving admission or access level."
     },
     {
       "word": "VIP Area",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Premium restricted section with added comfort and services."
     },
     {
@@ -15145,13 +30434,8 @@ const themes = {
       "description": "Performance with minimal amplification and stripped instrumentation."
     },
     {
-      "word": "Merchandise Stand",
-      "difficulty": "hard",
-      "description": "Booth selling shirts, posters, and artist memorabilia."
-    },
-    {
       "word": "Mosh Pit",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "High-energy dance zone near the front of certain shows."
     },
     {
@@ -15166,7 +30450,7 @@ const themes = {
     },
     {
       "word": "Tour Bus",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Vehicle used by artists and crew while traveling between shows."
     },
     {
@@ -15181,18 +30465,8 @@ const themes = {
     },
     {
       "word": "Food Truck",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Mobile kitchen serving meals at outdoor events."
-    },
-    {
-      "word": "Festival Vibes",
-      "difficulty": "hard",
-      "description": "Overall atmosphere and energy felt across the event."
-    },
-    {
-      "word": "Main Stage",
-      "difficulty": "hard",
-      "description": "Largest platform hosting the biggest scheduled acts."
     },
     {
       "word": "Sound Booth",
@@ -15201,18 +30475,8 @@ const themes = {
     },
     {
       "word": "Festival Lineup",
-      "difficulty": "easy",
-      "description": "Official list of artists and set times."
-    },
-    {
-      "word": "Late Night Set",
-      "difficulty": "easy",
-      "description": "Performance slot scheduled deep into the night."
-    },
-    {
-      "word": "Warm-up DJ",
       "difficulty": "hard",
-      "description": "Opening mixer who builds momentum before headline acts."
+      "description": "Official list of artists and set times."
     },
     {
       "word": "Crowd Chant",
@@ -15226,18 +30490,363 @@ const themes = {
     },
     {
       "word": "Bass Drop",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Sudden low-end beat release common in electronic music."
     },
     {
-      "word": "Live Mix",
-      "difficulty": "hard",
-      "description": "Real-time blending of tracks during a performance."
+      "word": "Ticket Scanner",
+      "difficulty": "easy",
+      "description": "Device checking entry passes at a venue."
     },
     {
-      "word": "Encore Song",
+      "word": "Turnstile",
       "difficulty": "easy",
-      "description": "Final extra track played after crowd demand."
+      "description": "Rotating entry gate admitting one person at a time."
+    },
+    {
+      "word": "Security Check",
+      "difficulty": "easy",
+      "description": "Screening process at an event entrance."
+    },
+    {
+      "word": "Bag Search",
+      "difficulty": "easy",
+      "description": "Inspection of belongings before entry."
+    },
+    {
+      "word": "Camping Chair",
+      "difficulty": "easy",
+      "description": "Portable folding seat used near a tent."
+    },
+    {
+      "word": "Sleeping Bag",
+      "difficulty": "easy",
+      "description": "Insulated zippered bedding used in a tent."
+    },
+    {
+      "word": "Gumboots",
+      "difficulty": "easy",
+      "description": "Waterproof boots useful in a muddy field."
+    },
+    {
+      "word": "Rain Poncho",
+      "difficulty": "easy",
+      "description": "Loose waterproof cover worn over clothes."
+    },
+    {
+      "word": "Earplugs",
+      "difficulty": "easy",
+      "description": "Small inserts reducing loud sound levels."
+    },
+    {
+      "word": "Portable Charger",
+      "difficulty": "easy",
+      "description": "Battery pack replenishing a phone away from a socket."
+    },
+    {
+      "word": "Festival Map",
+      "difficulty": "easy",
+      "description": "Guide showing stages, toilets and facilities around the venue."
+    },
+    {
+      "word": "Meeting Point",
+      "difficulty": "easy",
+      "description": "Agreed location where separated friends reunite."
+    },
+    {
+      "word": "Lost and Found",
+      "difficulty": "easy",
+      "description": "Place holding misplaced belongings for collection."
+    },
+    {
+      "word": "First Aid Tent",
+      "difficulty": "easy",
+      "description": "Event facility treating minor injuries and illness."
+    },
+    {
+      "word": "Portable Toilet",
+      "difficulty": "easy",
+      "description": "Temporary outdoor cubicle used at large events."
+    },
+    {
+      "word": "Queue",
+      "difficulty": "easy",
+      "description": "Line of people waiting for entry or service."
+    },
+    {
+      "word": "Food Stall",
+      "difficulty": "easy",
+      "description": "Small vendor stand selling meals and snacks."
+    },
+    {
+      "word": "Water Refill Station",
+      "difficulty": "easy",
+      "description": "Place where visitors replenish reusable drinking bottles."
+    },
+    {
+      "word": "Beer Tent",
+      "difficulty": "easy",
+      "description": "Covered area selling alcoholic drinks at an event."
+    },
+    {
+      "word": "Merch T-shirt",
+      "difficulty": "easy",
+      "description": "Branded top bought as a souvenir of a performer."
+    },
+    {
+      "word": "Glow Stick",
+      "difficulty": "easy",
+      "description": "Small tube producing light when its inner capsule breaks."
+    },
+    {
+      "word": "Glitter",
+      "difficulty": "easy",
+      "description": "Tiny reflective pieces worn on faces and clothes."
+    },
+    {
+      "word": "Flower Crown",
+      "difficulty": "easy",
+      "description": "Decorative ring of blossoms worn around the head."
+    },
+    {
+      "word": "Selfie Spot",
+      "difficulty": "easy",
+      "description": "Decorated place designed for taking personal photographs."
+    },
+    {
+      "word": "Crowd Barrier",
+      "difficulty": "easy",
+      "description": "Fence separating spectators from restricted areas."
+    },
+    {
+      "word": "Big Screen",
+      "difficulty": "easy",
+      "description": "Large display helping distant spectators see performers."
+    },
+    {
+      "word": "Spotlight",
+      "difficulty": "easy",
+      "description": "Concentrated beam following a performer."
+    },
+    {
+      "word": "Disco Ball",
+      "difficulty": "easy",
+      "description": "Mirrored sphere scattering reflected light around a venue."
+    },
+    {
+      "word": "Smoke Machine",
+      "difficulty": "easy",
+      "description": "Device producing theatrical vapour during a performance."
+    },
+    {
+      "word": "Front Row",
+      "difficulty": "hard",
+      "description": "Closest spectator position to the performers."
+    },
+    {
+      "word": "Wall of Death",
+      "difficulty": "hard",
+      "description": "Concert stunt where two groups run towards each other."
+    },
+    {
+      "word": "Circle Pit",
+      "difficulty": "hard",
+      "description": "Concert crowd running around a roughly circular space."
+    },
+    {
+      "word": "Stage Dive",
+      "difficulty": "hard",
+      "description": "Performer jumping from the platform into waiting spectators."
+    },
+    {
+      "word": "Mosh Etiquette",
+      "difficulty": "hard",
+      "description": "Informal rules encouraging safety during vigorous concert dancing."
+    },
+    {
+      "word": "Barrier Hugger",
+      "difficulty": "hard",
+      "description": "Fan staying pressed against the front fence throughout a show."
+    },
+    {
+      "word": "Set Time Clash",
+      "difficulty": "hard",
+      "description": "Two desired performers scheduled at the same hour."
+    },
+    {
+      "word": "Surprise Guest",
+      "difficulty": "hard",
+      "description": "Unannounced performer joining another artist's show."
+    },
+    {
+      "word": "Secret Set",
+      "difficulty": "hard",
+      "description": "Unpublicised performance revealed shortly before it happens."
+    },
+    {
+      "word": "Closing Act",
+      "difficulty": "hard",
+      "description": "Performer giving the final show of an event."
+    },
+    {
+      "word": "Sound Bleed",
+      "difficulty": "hard",
+      "description": "Audio from one performance area reaching another."
+    },
+    {
+      "word": "Feedback",
+      "difficulty": "hard",
+      "description": "High-pitched howl caused by a microphone-speaker loop."
+    },
+    {
+      "word": "Monitor Mix",
+      "difficulty": "hard",
+      "description": "Audio balance performers hear through their own speakers."
+    },
+    {
+      "word": "In-ear Monitors",
+      "difficulty": "hard",
+      "description": "Small earpieces delivering a performer's personalised audio feed."
+    },
+    {
+      "word": "Backline",
+      "difficulty": "hard",
+      "description": "Amplifiers and instruments supplied behind performers."
+    },
+    {
+      "word": "Rider",
+      "difficulty": "hard",
+      "description": "List of requirements requested by an artist's team."
+    },
+    {
+      "word": "Green Room",
+      "difficulty": "hard",
+      "description": "Private waiting area for performers before appearing."
+    },
+    {
+      "word": "All-access Pass",
+      "difficulty": "hard",
+      "description": "Credential granting entry to most restricted event areas."
+    },
+    {
+      "word": "Guest List",
+      "difficulty": "hard",
+      "description": "Names entitled to complimentary or reserved entry."
+    },
+    {
+      "word": "Sold Out",
+      "difficulty": "hard",
+      "description": "Status indicating all available tickets have been purchased."
+    },
+    {
+      "word": "Resale Ticket",
+      "difficulty": "hard",
+      "description": "Entry pass purchased from someone other than the original seller."
+    },
+    {
+      "word": "Silent Disco",
+      "difficulty": "hard",
+      "description": "Dance event where music reaches listeners through headphones."
+    },
+    {
+      "word": "Unplugged",
+      "difficulty": "hard",
+      "description": "Performance using mainly acoustic instruments."
+    },
+    {
+      "word": "Singalong",
+      "difficulty": "hard",
+      "description": "Moment where the audience joins in with the lyrics."
+    },
+    {
+      "word": "Call and Response",
+      "difficulty": "hard",
+      "description": "Musical exchange where a leader prompts an answering group."
+    },
+    {
+      "word": "Lighter in the Air",
+      "difficulty": "hard",
+      "description": "Traditional concert gesture during a slow emotional song."
+    },
+    {
+      "word": "Post-festival Blues",
+      "difficulty": "hard",
+      "description": "Low mood after returning home from a major music gathering."
+    },
+    {
+      "word": "Sunscreen",
+      "difficulty": "easy",
+      "description": "Skin product reducing damage from ultraviolet exposure."
+    },
+    {
+      "word": "Bucket Hat",
+      "difficulty": "easy",
+      "description": "Soft headwear with a downward-sloping brim."
+    },
+    {
+      "word": "Camping Mat",
+      "difficulty": "easy",
+      "description": "Thin insulated layer placed beneath a sleeping bag."
+    },
+    {
+      "word": "Tent Neighbour",
+      "difficulty": "easy",
+      "description": "Person staying in the shelter beside yours at the campsite."
+    },
+    {
+      "word": "Food Voucher",
+      "difficulty": "easy",
+      "description": "Token exchanged for a meal at a vendor."
+    },
+    {
+      "word": "Reusable Cup",
+      "difficulty": "easy",
+      "description": "Drinking container designed to be washed and used again."
+    },
+    {
+      "word": "Lost Voice",
+      "difficulty": "hard",
+      "description": "Hoarseness after hours of singing or shouting along."
+    },
+    {
+      "word": "Phone in the Air",
+      "difficulty": "hard",
+      "description": "Screen blocking the view of the concertgoer behind you."
+    },
+    {
+      "word": "Confetti Drop",
+      "difficulty": "easy",
+      "description": "Release of tiny coloured paper pieces above an audience."
+    },
+    {
+      "word": "Pyrotechnics",
+      "difficulty": "hard",
+      "description": "Stage effects involving controlled flames or fireworks."
+    },
+    {
+      "word": "Laser Show",
+      "difficulty": "hard",
+      "description": "Display using narrow coloured beams of light."
+    },
+    {
+      "word": "Stage Fright",
+      "difficulty": "hard",
+      "description": "Performance anxiety felt before facing an audience."
+    },
+    {
+      "word": "Setlist Souvenir",
+      "difficulty": "hard",
+      "description": "Printed running order fans try to obtain after a performance."
+    },
+    {
+      "word": "Weather Cancellation",
+      "difficulty": "hard",
+      "description": "Event called off because conditions make it unsafe."
+    },
+    {
+      "word": "Mud Bath",
+      "difficulty": "hard",
+      "description": "Festival ground transformed by heavy rain and many feet."
     }
   ],
   "Movie Night": [
@@ -15317,13 +30926,8 @@ const themes = {
       "description": "Main chain of events that drives the narrative."
     },
     {
-      "word": "Cinematic Experience",
-      "difficulty": "hard",
-      "description": "Immersive big-screen feeling created by visuals and sound."
-    },
-    {
       "word": "Red Carpet Event",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Premiere or awards arrival with photographers and formal attire."
     },
     {
@@ -15332,23 +30936,23 @@ const themes = {
       "description": "Production made outside major studio systems."
     },
     {
-      "word": "Blockbuster Hit",
-      "difficulty": "hard",
+      "word": "Blockbuster",
+      "difficulty": "easy",
       "description": "Release that earns huge ticket sales and broad popularity."
     },
     {
       "word": "Special Effects",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Techniques used to create visuals not possible in real life."
     },
     {
       "word": "Box Office",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Revenue from theatrical ticket sales."
     },
     {
       "word": "Movie Marathon",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Watching many related titles back-to-back."
     },
     {
@@ -15387,19 +30991,9 @@ const themes = {
       "description": "How a role's personality changes through the story."
     },
     {
-      "word": "Post-Credit Scene",
-      "difficulty": "hard",
-      "description": "Extra sequence shown after the end credits roll."
-    },
-    {
-      "word": "Cinema Ticket",
-      "difficulty": "hard",
-      "description": "Paid entry slip for a theater screening."
-    },
-    {
-      "word": "Box Office Hit",
+      "word": "Post-credit Scene",
       "difficulty": "easy",
-      "description": "Commercial success that sells a very high number of tickets."
+      "description": "Extra sequence shown after the end credits roll."
     },
     {
       "word": "Director's Cut",
@@ -15407,18 +31001,13 @@ const themes = {
       "description": "Edition restored to the filmmaker's preferred version."
     },
     {
-      "word": "Opening Scene",
-      "difficulty": "easy",
-      "description": "Very first sequence that sets tone and context."
-    },
-    {
       "word": "Movie Quote",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Memorable line repeated by fans."
     },
     {
       "word": "Film Score",
-      "difficulty": "easy",
+      "difficulty": "hard",
       "description": "Original background music composed for a release."
     },
     {
@@ -15432,14 +31021,354 @@ const themes = {
       "description": "Suspense-heavy genre built around tension and danger."
     },
     {
-      "word": "Mid-credit Scene",
-      "difficulty": "hard",
-      "description": "Bonus sequence shown during, not after, the credits."
-    },
-    {
       "word": "Sequel",
       "difficulty": "easy",
       "description": "Follow-up release continuing events from an earlier story."
+    },
+    {
+      "word": "Remote Control",
+      "difficulty": "easy",
+      "description": "Handheld device used to change channels or pause playback."
+    },
+    {
+      "word": "Streaming Service",
+      "difficulty": "easy",
+      "description": "Platform delivering films and programmes over the internet."
+    },
+    {
+      "word": "Subscription",
+      "difficulty": "easy",
+      "description": "Recurring payment granting access to a viewing platform."
+    },
+    {
+      "word": "Watchlist",
+      "difficulty": "easy",
+      "description": "Saved collection of things you plan to view later."
+    },
+    {
+      "word": "Play Button",
+      "difficulty": "easy",
+      "description": "Triangular onscreen control that starts a film or song."
+    },
+    {
+      "word": "Pause Button",
+      "difficulty": "easy",
+      "description": "Onscreen control temporarily stopping playback."
+    },
+    {
+      "word": "Rewind",
+      "difficulty": "easy",
+      "description": "Move playback back to an earlier moment."
+    },
+    {
+      "word": "Fast-forward",
+      "difficulty": "easy",
+      "description": "Move playback quickly towards a later moment."
+    },
+    {
+      "word": "Volume",
+      "difficulty": "easy",
+      "description": "Setting controlling how loud the audio plays."
+    },
+    {
+      "word": "Subtitles",
+      "difficulty": "easy",
+      "description": "Written dialogue appearing along the bottom of the picture."
+    },
+    {
+      "word": "Dubbing",
+      "difficulty": "easy",
+      "description": "Replacing original dialogue with another recorded language."
+    },
+    {
+      "word": "Surround Sound",
+      "difficulty": "easy",
+      "description": "Audio setup placing speakers around the audience."
+    },
+    {
+      "word": "Soundbar",
+      "difficulty": "easy",
+      "description": "Long compact speaker placed below a television."
+    },
+    {
+      "word": "Beanbag",
+      "difficulty": "easy",
+      "description": "Soft seat filled with small pellets."
+    },
+    {
+      "word": "Throw Blanket",
+      "difficulty": "easy",
+      "description": "Small covering used while curling up on a sofa."
+    },
+    {
+      "word": "Recliner",
+      "difficulty": "easy",
+      "description": "Armchair with a back that tilts and a footrest."
+    },
+    {
+      "word": "Popcorn Bucket",
+      "difficulty": "easy",
+      "description": "Large container holding a classic puffed cinema snack."
+    },
+    {
+      "word": "Nachos",
+      "difficulty": "easy",
+      "description": "Corn chips often served with melted cheese and salsa."
+    },
+    {
+      "word": "Slushie",
+      "difficulty": "easy",
+      "description": "Sweet partially frozen drink served through a straw."
+    },
+    {
+      "word": "Pick and Mix",
+      "difficulty": "easy",
+      "description": "Self-selected assortment of loose sweets."
+    },
+    {
+      "word": "Chocolate Raisins",
+      "difficulty": "easy",
+      "description": "Dried grapes coated in a sweet cocoa layer."
+    },
+    {
+      "word": "Cinema Seat",
+      "difficulty": "easy",
+      "description": "Individual chair in a film-viewing auditorium."
+    },
+    {
+      "word": "3D Glasses",
+      "difficulty": "easy",
+      "description": "Eyewear helping a projected film appear to have depth."
+    },
+    {
+      "word": "IMAX",
+      "difficulty": "easy",
+      "description": "Large-format cinema system associated with enormous screens."
+    },
+    {
+      "word": "Drive-in Cinema",
+      "difficulty": "easy",
+      "description": "Outdoor film venue watched from parked vehicles."
+    },
+    {
+      "word": "Double Feature",
+      "difficulty": "easy",
+      "description": "Programme screening two films in succession."
+    },
+    {
+      "word": "Matinee",
+      "difficulty": "easy",
+      "description": "Afternoon performance or screening."
+    },
+    {
+      "word": "Age Restriction",
+      "difficulty": "easy",
+      "description": "Rule limiting a film's audience by maturity."
+    },
+    {
+      "word": "Spoiler",
+      "difficulty": "easy",
+      "description": "Information revealing an important story development prematurely."
+    },
+    {
+      "word": "Movie Poster",
+      "difficulty": "easy",
+      "description": "Promotional image advertising a film."
+    },
+    {
+      "word": "Cold Open",
+      "difficulty": "hard",
+      "description": "Scene beginning before a programme's title sequence."
+    },
+    {
+      "word": "Opening Credits",
+      "difficulty": "hard",
+      "description": "Names displayed near the beginning of a film or programme."
+    },
+    {
+      "word": "End Credits",
+      "difficulty": "hard",
+      "description": "Names displayed after the main story finishes."
+    },
+    {
+      "word": "Jump Cut",
+      "difficulty": "hard",
+      "description": "Edit creating an abrupt visual change within a sequence."
+    },
+    {
+      "word": "Montage",
+      "difficulty": "hard",
+      "description": "Series of brief shots compressing events or time."
+    },
+    {
+      "word": "Flashback",
+      "difficulty": "hard",
+      "description": "Scene showing events from an earlier time."
+    },
+    {
+      "word": "Flash-forward",
+      "difficulty": "hard",
+      "description": "Scene showing events from a later time."
+    },
+    {
+      "word": "Time Loop",
+      "difficulty": "hard",
+      "description": "Story device where characters repeatedly relive the same period."
+    },
+    {
+      "word": "Unreliable Narrator",
+      "difficulty": "hard",
+      "description": "Storyteller whose account cannot be fully trusted."
+    },
+    {
+      "word": "Red Herring",
+      "difficulty": "hard",
+      "description": "Misleading detail distracting viewers from the real explanation."
+    },
+    {
+      "word": "MacGuffin",
+      "difficulty": "hard",
+      "description": "Object or goal motivating the plot despite limited intrinsic importance."
+    },
+    {
+      "word": "Fourth Wall",
+      "difficulty": "hard",
+      "description": "Imagined boundary between fictional characters and their audience."
+    },
+    {
+      "word": "Breaking Character",
+      "difficulty": "hard",
+      "description": "Performer slipping out of the role they are playing."
+    },
+    {
+      "word": "Outtake",
+      "difficulty": "hard",
+      "description": "Unused filmed material, often showing mistakes."
+    },
+    {
+      "word": "Blooper Reel",
+      "difficulty": "hard",
+      "description": "Compilation of amusing production errors."
+    },
+    {
+      "word": "Deleted Scene",
+      "difficulty": "hard",
+      "description": "Filmed sequence removed from the released version."
+    },
+    {
+      "word": "Extended Cut",
+      "difficulty": "hard",
+      "description": "Version of a film including additional footage."
+    },
+    {
+      "word": "Director's Commentary",
+      "difficulty": "hard",
+      "description": "Audio track where a filmmaker discusses the production."
+    },
+    {
+      "word": "Easter Egg",
+      "difficulty": "hard",
+      "description": "Hidden reference or detail planted for attentive viewers."
+    },
+    {
+      "word": "Continuity Error",
+      "difficulty": "hard",
+      "description": "Inconsistency between shots that should depict the same moment."
+    },
+    {
+      "word": "Plot Hole",
+      "difficulty": "hard",
+      "description": "Gap or contradiction in a story's internal logic."
+    },
+    {
+      "word": "Chekhov's Gun",
+      "difficulty": "hard",
+      "description": "Principle that a prominently introduced detail should matter later."
+    },
+    {
+      "word": "Deus Ex Machina",
+      "difficulty": "hard",
+      "description": "Unexpected outside intervention resolving a story's conflict."
+    },
+    {
+      "word": "Cliffhanger",
+      "difficulty": "hard",
+      "description": "Ending that leaves a crucial outcome unresolved."
+    },
+    {
+      "word": "Spoiler Alert",
+      "difficulty": "hard",
+      "description": "Warning that important story developments are about to be revealed."
+    },
+    {
+      "word": "Jump Scare",
+      "difficulty": "hard",
+      "description": "Sudden startling moment used in horror."
+    },
+    {
+      "word": "Tearjerker",
+      "difficulty": "hard",
+      "description": "Story designed to make viewers cry."
+    },
+    {
+      "word": "Guilty Pleasure",
+      "difficulty": "hard",
+      "description": "Film you enjoy despite feeling embarrassed to admit it."
+    },
+    {
+      "word": "So Bad It's Good",
+      "difficulty": "hard",
+      "description": "Description of a film enjoyed for its entertaining flaws."
+    },
+    {
+      "word": "Opening Weekend",
+      "difficulty": "easy",
+      "description": "First Friday-to-Sunday period of a film's cinema release."
+    },
+    {
+      "word": "Ticket Stub",
+      "difficulty": "easy",
+      "description": "Remaining paper proof of entry after an usher tears it."
+    },
+    {
+      "word": "Reserved Seating",
+      "difficulty": "easy",
+      "description": "Arrangement assigning each viewer a particular chair."
+    },
+    {
+      "word": "Front-row Neck Ache",
+      "difficulty": "easy",
+      "description": "Discomfort from looking sharply upward at a cinema screen."
+    },
+    {
+      "word": "Method Actor",
+      "difficulty": "hard",
+      "description": "Performer who immerses deeply in a role's circumstances."
+    },
+    {
+      "word": "Screen Test",
+      "difficulty": "hard",
+      "description": "Filmed audition checking a performer's suitability."
+    },
+    {
+      "word": "Table Read",
+      "difficulty": "hard",
+      "description": "Cast gathering to speak a script aloud before filming."
+    },
+    {
+      "word": "Cold Reading",
+      "difficulty": "hard",
+      "description": "Performing unfamiliar text with little preparation."
+    },
+    {
+      "word": "Fan Theory",
+      "difficulty": "hard",
+      "description": "Audience explanation speculating about hidden story meanings."
+    },
+    {
+      "word": "Retcon",
+      "difficulty": "hard",
+      "description": "Later story detail that revises established fictional history."
     }
   ],
   "Adventure Trip": [
@@ -15457,16 +31386,6 @@ const themes = {
       "word": "Camping",
       "difficulty": "easy",
       "description": "Staying outdoors in temporary shelters like tents."
-    },
-    {
-      "word": "Rafting",
-      "difficulty": "easy",
-      "description": "Navigating turbulent water using an inflatable boat."
-    },
-    {
-      "word": "Climbing",
-      "difficulty": "easy",
-      "description": "Ascending natural or man-made vertical surfaces."
     },
     {
       "word": "Road Trip",
@@ -15535,32 +31454,22 @@ const themes = {
     },
     {
       "word": "Rock Climbing",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Activity of scaling natural rock formations or climbing walls."
     },
     {
-      "word": "Glacier Hiking",
-      "difficulty": "hard",
-      "description": "Walking on ice formations using specialized equipment."
-    },
-    {
       "word": "Desert Safari",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Adventure tour in arid regions, often involving off-road driving."
     },
     {
       "word": "River Rafting",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Navigating rapids using an inflatable boat, requiring teamwork and skill."
     },
     {
-      "word": "Forest Trekking",
-      "difficulty": "hard",
-      "description": "Extended hike through wooded areas on less defined paths."
-    },
-    {
       "word": "Mountain Biking",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Cycling on rugged, off-road trails with technical challenges."
     },
     {
@@ -15570,32 +31479,22 @@ const themes = {
     },
     {
       "word": "Coastal Walk",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Walking along the shoreline, often with scenic views."
     },
     {
-      "word": "Off-Road Adventure",
-      "difficulty": "hard",
-      "description": "Activities on rough, unpaved terrain using vehicles or equipment."
-    },
-    {
-      "word": "High-Altitude Climb",
-      "difficulty": "hard",
-      "description": "Climbing at great heights, often requiring special acclimatization."
-    },
-    {
       "word": "Scuba Diving",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Underwater diving with self-contained breathing equipment."
     },
     {
       "word": "Paragliding",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Flying with a lightweight, free-flying wing in the air."
     },
     {
       "word": "Trail Map",
-      "difficulty": "hard",
+      "difficulty": "easy",
       "description": "Route guide showing paths, terrain, and landmarks."
     },
     {
@@ -15624,11 +31523,6 @@ const themes = {
       "description": "Suspended crossing made from ropes and planks."
     },
     {
-      "word": "Wild Camp",
-      "difficulty": "easy",
-      "description": "Overnight stay in nature away from formal campsites."
-    },
-    {
       "word": "Hiking Boots",
       "difficulty": "easy",
       "description": "Durable footwear designed for rough trails and ankle support."
@@ -15642,6 +31536,361 @@ const themes = {
       "word": "Night Safari",
       "difficulty": "easy",
       "description": "After-dark wildlife experience where visitors view animals on guided evening tours."
+    },
+    {
+      "word": "Sleeping Bag",
+      "difficulty": "easy",
+      "description": "Insulated zippered bedding for outdoor nights."
+    },
+    {
+      "word": "Tent Peg",
+      "difficulty": "easy",
+      "description": "Ground stake anchoring a portable shelter."
+    },
+    {
+      "word": "Groundsheet",
+      "difficulty": "easy",
+      "description": "Waterproof layer placed beneath a camping shelter."
+    },
+    {
+      "word": "Headlamp",
+      "difficulty": "easy",
+      "description": "Wearable light strapped around the forehead."
+    },
+    {
+      "word": "Lantern",
+      "difficulty": "easy",
+      "description": "Portable enclosed light useful around a campsite."
+    },
+    {
+      "word": "Pocket Knife",
+      "difficulty": "easy",
+      "description": "Small folding blade carried for practical tasks."
+    },
+    {
+      "word": "Multi-tool",
+      "difficulty": "easy",
+      "description": "Compact device combining pliers, blades and other implements."
+    },
+    {
+      "word": "Swiss Army Knife",
+      "difficulty": "easy",
+      "description": "Folding red-handled tool associated with many attachments."
+    },
+    {
+      "word": "Flask",
+      "difficulty": "easy",
+      "description": "Insulated container keeping drinks warm or cold."
+    },
+    {
+      "word": "Water Purifier",
+      "difficulty": "easy",
+      "description": "Device making untreated liquid safer to drink."
+    },
+    {
+      "word": "Walking Pole",
+      "difficulty": "easy",
+      "description": "Handheld support used on steep or uneven trails."
+    },
+    {
+      "word": "Rucksack",
+      "difficulty": "easy",
+      "description": "Large bag carried using shoulder straps."
+    },
+    {
+      "word": "Dry Bag",
+      "difficulty": "easy",
+      "description": "Sealed waterproof container protecting equipment near rivers."
+    },
+    {
+      "word": "Rain Cover",
+      "difficulty": "easy",
+      "description": "Waterproof outer layer protecting a pack or shelter."
+    },
+    {
+      "word": "Binoculars",
+      "difficulty": "easy",
+      "description": "Paired optical tubes used to view distant wildlife."
+    },
+    {
+      "word": "Bird Guide",
+      "difficulty": "easy",
+      "description": "Reference book used to identify feathered wildlife."
+    },
+    {
+      "word": "Trail Marker",
+      "difficulty": "easy",
+      "description": "Sign helping walkers follow the intended route."
+    },
+    {
+      "word": "Map Reading",
+      "difficulty": "easy",
+      "description": "Interpreting symbols and features on a geographic guide."
+    },
+    {
+      "word": "River Crossing",
+      "difficulty": "easy",
+      "description": "Moving from one bank of a watercourse to the other."
+    },
+    {
+      "word": "Stepping Stones",
+      "difficulty": "easy",
+      "description": "Raised rocks used to get across shallow water."
+    },
+    {
+      "word": "Suspension Bridge",
+      "difficulty": "easy",
+      "description": "Crossing supported by overhead cables."
+    },
+    {
+      "word": "Treehouse",
+      "difficulty": "easy",
+      "description": "Raised shelter built among branches."
+    },
+    {
+      "word": "Lookout Point",
+      "difficulty": "easy",
+      "description": "Scenic place offering a wide view of the landscape."
+    },
+    {
+      "word": "Sunrise Hike",
+      "difficulty": "easy",
+      "description": "Early walk timed to see daylight first appear."
+    },
+    {
+      "word": "Stargazing",
+      "difficulty": "easy",
+      "description": "Looking at celestial objects in the night sky."
+    },
+    {
+      "word": "Camp Stove",
+      "difficulty": "easy",
+      "description": "Portable burner used to cook outdoors."
+    },
+    {
+      "word": "Marshmallow",
+      "difficulty": "easy",
+      "description": "Soft sweet often toasted on a stick over flames."
+    },
+    {
+      "word": "S'mores",
+      "difficulty": "easy",
+      "description": "Campfire treat combining toasted sweets, chocolate and crackers."
+    },
+    {
+      "word": "Flint",
+      "difficulty": "easy",
+      "description": "Stone used to create sparks for lighting a fire."
+    },
+    {
+      "word": "Kindling",
+      "difficulty": "easy",
+      "description": "Small dry pieces used to help start a fire."
+    },
+    {
+      "word": "Leave No Trace",
+      "difficulty": "hard",
+      "description": "Outdoor ethic of minimising your impact on nature."
+    },
+    {
+      "word": "Pack In Pack Out",
+      "difficulty": "hard",
+      "description": "Rule requiring visitors to remove everything they brought."
+    },
+    {
+      "word": "Buddy System",
+      "difficulty": "hard",
+      "description": "Safety arrangement where partners look out for each other."
+    },
+    {
+      "word": "Search and Rescue",
+      "difficulty": "hard",
+      "description": "Organised effort locating and helping people in danger."
+    },
+    {
+      "word": "Distress Signal",
+      "difficulty": "hard",
+      "description": "Message or sign requesting urgent assistance."
+    },
+    {
+      "word": "SOS",
+      "difficulty": "hard",
+      "description": "International emergency signal associated with three short and three long pulses."
+    },
+    {
+      "word": "Emergency Beacon",
+      "difficulty": "hard",
+      "description": "Device transmitting a location to rescuers."
+    },
+    {
+      "word": "Altitude Sickness",
+      "difficulty": "hard",
+      "description": "Illness caused by ascending too high too quickly."
+    },
+    {
+      "word": "Acclimatisation",
+      "difficulty": "hard",
+      "description": "Gradual adjustment to a new environment or elevation."
+    },
+    {
+      "word": "Hypothermia",
+      "difficulty": "hard",
+      "description": "Dangerously low body temperature after prolonged cold exposure."
+    },
+    {
+      "word": "Heatstroke",
+      "difficulty": "hard",
+      "description": "Serious overheating condition requiring urgent medical help."
+    },
+    {
+      "word": "Frostbite",
+      "difficulty": "hard",
+      "description": "Tissue damage caused by extreme cold."
+    },
+    {
+      "word": "Blister",
+      "difficulty": "hard",
+      "description": "Fluid-filled skin pocket often caused by rubbing boots."
+    },
+    {
+      "word": "Tick Bite",
+      "difficulty": "hard",
+      "description": "Skin attachment from a small blood-feeding arachnid."
+    },
+    {
+      "word": "Leech",
+      "difficulty": "hard",
+      "description": "Blood-feeding worm sometimes encountered in wet environments."
+    },
+    {
+      "word": "Bushwhacking",
+      "difficulty": "hard",
+      "description": "Travelling through dense vegetation without a clear trail."
+    },
+    {
+      "word": "Scrambling",
+      "difficulty": "hard",
+      "description": "Ascending rough terrain using both hands and feet."
+    },
+    {
+      "word": "Abseiling",
+      "difficulty": "hard",
+      "description": "Controlled descent down a rope on a steep face."
+    },
+    {
+      "word": "Belay",
+      "difficulty": "hard",
+      "description": "Rope-management technique used to protect a climber."
+    },
+    {
+      "word": "Carabiner",
+      "difficulty": "hard",
+      "description": "Metal clip used to connect climbing equipment."
+    },
+    {
+      "word": "Harness",
+      "difficulty": "hard",
+      "description": "Strapped safety equipment securing a climber to a rope."
+    },
+    {
+      "word": "Crampons",
+      "difficulty": "hard",
+      "description": "Spiked attachments fitted to footwear for traction on ice."
+    },
+    {
+      "word": "Ice Axe",
+      "difficulty": "hard",
+      "description": "Mountaineering tool used for support and self-arrest."
+    },
+    {
+      "word": "Via Ferrata",
+      "difficulty": "hard",
+      "description": "Climbing route fitted with fixed cables, ladders and rungs."
+    },
+    {
+      "word": "Bivouac",
+      "difficulty": "hard",
+      "description": "Temporary outdoor overnight shelter or campsite."
+    },
+    {
+      "word": "Bothy",
+      "difficulty": "hard",
+      "description": "Basic unlocked shelter used by walkers in remote country."
+    },
+    {
+      "word": "Bear Canister",
+      "difficulty": "hard",
+      "description": "Rigid food-storage container designed to resist wildlife."
+    },
+    {
+      "word": "Food Hang",
+      "difficulty": "hard",
+      "description": "Suspending supplies from a branch to deter animals."
+    },
+    {
+      "word": "Summit Fever",
+      "difficulty": "hard",
+      "description": "Determination to reach the top despite growing danger."
+    },
+    {
+      "word": "Waterproof Matches",
+      "difficulty": "easy",
+      "description": "Fire-starting sticks protected against moisture."
+    },
+    {
+      "word": "Trail Mix",
+      "difficulty": "easy",
+      "description": "Portable snack combining nuts, dried fruit and other small bites."
+    },
+    {
+      "word": "Energy Bar",
+      "difficulty": "easy",
+      "description": "Compact snack eaten for fuel during exercise."
+    },
+    {
+      "word": "Walking Socks",
+      "difficulty": "easy",
+      "description": "Padded foot coverings worn inside hiking boots."
+    },
+    {
+      "word": "False Summit",
+      "difficulty": "hard",
+      "description": "Apparent mountaintop that hides a higher peak beyond it."
+    },
+    {
+      "word": "Switchback",
+      "difficulty": "hard",
+      "description": "Sharp bend in a zigzag route up a steep slope."
+    },
+    {
+      "word": "Scree",
+      "difficulty": "hard",
+      "description": "Loose rock fragments on a mountain slope."
+    },
+    {
+      "word": "Cairn",
+      "difficulty": "hard",
+      "description": "Pile of stones used as a landmark or trail marker."
+    },
+    {
+      "word": "Contour Line",
+      "difficulty": "hard",
+      "description": "Map marking linking points at the same elevation."
+    },
+    {
+      "word": "Magnetic North",
+      "difficulty": "hard",
+      "description": "Direction indicated by a compass needle."
+    },
+    {
+      "word": "True North",
+      "difficulty": "hard",
+      "description": "Direction towards Earth's geographic upper rotational pole."
+    },
+    {
+      "word": "Dead Reckoning",
+      "difficulty": "hard",
+      "description": "Estimating position from a previous location, speed and direction."
     }
   ]
 };

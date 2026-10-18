@@ -135,8 +135,13 @@ Prioritize quality over filler:
 - Avoid overly abstract/generic words.
 - Avoid near-duplicates and trivial rewordings.
 - Keep descriptions concise and useful.
-- Use `easy` for broadly recognizable entries.
-- Use `hard` for deeper or less obvious references.
+- Rate the effort of giving a legal clue, not word length, spelling, pronunciation, or how advanced the subject sounds.
+- Use `easy` when a distinctive function, scene, action, or association leads directly to the answer without saying its words or derivatives.
+- Use `hard` when the obvious clue is blocked, several plausible answers compete, or the explanation needs multiple steps.
+- Familiarity matters, but obscurity alone is not a reason to include a hard prompt.
+- For new entries, write a short legal starter clue as a practical check on playability.
+
+See [WORD_CURATION.md](WORD_CURATION.md) for examples, the October 2026 expansion audit, and maintenance rules.
 
 Duplicate policy used in this project:
 
@@ -153,13 +158,16 @@ node tools/validate-data.js
 Validator checks:
 
 - missing/invalid fields
-- invalid difficulty values
+- invalid difficulty values (including casing that the game would fail to load)
 - placeholder descriptions
-- intra-category duplicates
+- intra-category duplicates, including accent/punctuation/article variants (these fail validation)
 - inter-category duplicates
 - per-category/theme difficulty distribution
+- distinct-answer totals and difficulty pools too small to fill a 15-word card
 
 Use this after major data edits before release.
+
+Run the focused pool-loading checks with `node tools/test-word-data.js`. They exercise the actual game loading functions for every category/theme and difficulty, combined pools, training hints, and recent-history filtering without contacting online services.
 
 ## Troubleshooting
 

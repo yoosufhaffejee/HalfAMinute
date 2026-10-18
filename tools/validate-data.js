@@ -7,7 +7,13 @@ const vm = require("vm");
 const dataPath = path.resolve(__dirname, "..", "data.js");
 
 function normalizeWord(word) {
-  return String(word || "").trim().toLowerCase();
+  return String(word || "")
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase()
+    .replace(/^the\s+/, "")
+    .replace(/[^a-z0-9]/g, "");
 }
 
 function loadData(filePath) {
@@ -41,14 +47,15 @@ function scanBucket(bucketName, bucketData, issues) {
       const pointer = `${bucketName} -> ${categoryName}[${index}]`;
       categoryDifficulty[categoryName].total += 1;
 
-      if (!entry || typeof entry !== "object") {
+      if (!entry || typeof entry !== "object" || Array.isArray(entry)) {
         issues.missingFields.push(`${pointer}: item is not an object`);
         categoryDifficulty[categoryName].invalid += 1;
         return;
       }
 
       const word = typeof entry.word === "string" ? entry.word.trim() : "";
-      const difficulty = String(entry.difficulty || "").trim().toLowerCase();
+      // Runtime filtering uses exact values; "Easy" must not pass validation.
+      const difficulty = entry.difficulty;
       const description = typeof entry.description === "string" ? entry.description.trim() : "";
 
       if (!word) {
@@ -109,10 +116,21 @@ function scanBucket(bucketName, bucketData, issues) {
   intraCategoryDuplicates.sort((a, b) => b.count - a.count || a.category.localeCompare(b.category));
   interCategoryDuplicates.sort((a, b) => b.categories.length - a.categories.length || a.word.localeCompare(b.word));
 
+  Object.entries(categoryDifficulty).forEach(([name, counts]) => {
+    // Settings allow up to 15 words even in a single-difficulty game.
+    if (counts.easy < 15 || counts.hard < 15) {
+      issues.undersizedPools.push(
+        `${bucketName} -> ${name}: requires at least 15 of each difficulty (easy=${counts.easy}, hard=${counts.hard})`
+      );
+    }
+  });
+
   return {
     categoryDifficulty,
     intraCategoryDuplicates,
-    interCategoryDuplicates
+    interCategoryDuplicates,
+    total: Object.values(categoryDifficulty).reduce((sum, counts) => sum + counts.total, 0),
+    unique: globalWordToCategories.size
   };
 }
 
@@ -171,7 +189,8 @@ function main() {
     structure: [],
     missingFields: [],
     invalidDifficulty: [],
-    placeholderDescriptions: []
+    placeholderDescriptions: [],
+    undersizedPools: []
   };
 
   if (!parsed || typeof parsed !== "object") {
@@ -179,8 +198,16 @@ function main() {
     process.exit(1);
   }
 
-  const categories = parsed.categories || {};
-  const themes = parsed.themes || {};
+  for (const name of ["categories", "themes"]) {
+    const bucket = parsed[name];
+    if (!bucket || typeof bucket !== "object" || Array.isArray(bucket) || Object.keys(bucket).length === 0) {
+      console.error(`Invalid ${name}: expected a non-empty object of word arrays.`);
+      process.exitCode = 1;
+      return;
+    }
+  }
+
+  const { categories, themes } = parsed;
 
   const categoryResults = scanBucket("categories", categories, issues);
   const themeResults = scanBucket("themes", themes, issues);
@@ -189,6 +216,14 @@ function main() {
   printSection("Missing/Invalid Fields", issues.missingFields.slice(0, 200));
   printSection("Invalid Difficulty Values", issues.invalidDifficulty.slice(0, 200));
   printSection("Placeholder Descriptions", issues.placeholderDescriptions.slice(0, 200));
+  printSection("Undersized Difficulty Pools", issues.undersizedPools);
+
+  printSection("Vocabulary Totals", [
+    `Categories: ${categoryResults.total} entries, ${categoryResults.unique} distinct answers`,
+    `Themes: ${themeResults.total} entries, ${themeResults.unique} distinct answers`,
+    "Distinct answers ignore case, accents, punctuation and a leading 'The'.",
+    "Cross-category overlap is allowed; repeats within one pool fail validation."
+  ]);
 
   printDifficultyReport("Category", categoryResults.categoryDifficulty);
   printDifficultyReport("Theme", themeResults.categoryDifficulty);
@@ -200,7 +235,10 @@ function main() {
     issues.structure.length +
     issues.missingFields.length +
     issues.invalidDifficulty.length +
-    issues.placeholderDescriptions.length;
+    issues.placeholderDescriptions.length +
+    issues.undersizedPools.length +
+    categoryResults.intraCategoryDuplicates.length +
+    themeResults.intraCategoryDuplicates.length;
 
   console.log(`\n=== Validation Result ===`);
   if (criticalIssueCount > 0) {
