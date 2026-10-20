@@ -438,6 +438,8 @@ function initializeMenu() {
         themesSelect.value = 'None'; updateSetupSummary();
         document.getElementById("categoriesSection").style.display = 'block';
         document.getElementById("themesSection").style.display = 'none';
+        document.getElementById('selectCategoriesBtn').setAttribute('aria-expanded', 'true');
+        document.getElementById('selectThemeBtn').setAttribute('aria-expanded', 'false');
     });
 
     // Show themes dropdown
@@ -445,17 +447,21 @@ function initializeMenu() {
         Array.from(categoriesSelect.options).forEach(option => { option.selected = false; }); updateSetupSummary();
         document.getElementById("categoriesSection").style.display = 'none';
         document.getElementById("themesSection").style.display = 'block';
+        document.getElementById('selectCategoriesBtn').setAttribute('aria-expanded', 'false');
+        document.getElementById('selectThemeBtn').setAttribute('aria-expanded', 'true');
     });
 
-    document.getElementById("showAIWords").addEventListener("click", function () {
-        const p = document.getElementById('aiWords');
-        if (p.hidden) {
-            p.hidden = false;
-        }
-        else {
-            p.hidden = true;
-        }
+    document.getElementById("showAIWords").addEventListener("change", function () {
+        const show = Boolean(document.getElementById('showAIWords').checked);
+        document.getElementById('aiWords').hidden = !show;
+        document.getElementById('showAIWords').setAttribute('aria-expanded', String(show));
     });
+    document.getElementById('aiWords').addEventListener('input', () => { syncAiPack(); document.getElementById('aiFeedback').hidden = true; });
+    document.getElementById('topic').addEventListener('input', () => { document.getElementById('aiFeedback').hidden = true; });
+    document.getElementById('topic').addEventListener('keydown', event => {
+        if (event.key === 'Enter' && !document.getElementById('btnGenerate').disabled) { event.preventDefault(); generate(); }
+    });
+    syncAiPack();
 
     txtGameCode.addEventListener("keyup", function (event) {
         event.preventDefault();
@@ -472,30 +478,19 @@ function initializeMenu() {
     });
 
     document.getElementById("createLobbyButton").addEventListener("click", () => {
-        if (txtPlayerName.value) {
-            void createGameLobby(db);
-        }
-        else {
-            window.alert("Enter player name!");
-        }
+        if (validateOnlineEntry(false)) void createGameLobby(db);
     });
 
     document.getElementById("joinLobbyButton").addEventListener("click", () => {
-        if (txtPlayerName.value) {
-            if (txtGameCode.value) {
-                joinGameLobby();
-            }
-            else {
-                window.alert("Enter lobby code!");
-            }
-        }
-        else {
-            window.alert("Enter player name!");
-        }
+        if (validateOnlineEntry(true)) void joinGameLobby();
     });
+    [txtPlayerName, txtGameCode].forEach(input => input.addEventListener('input', () => {
+        input.setAttribute('aria-invalid', 'false'); document.getElementById('onlineFormStatus').hidden = true;
+    }));
 
     btnSettings.addEventListener('click', () => {
         document.getElementById('gameSetupSettings').hidden = !game.hidden;
+        document.getElementById('settingsIntro').textContent = game.hidden ? 'Make the game feel right for your group.' : 'Adjust sound and motion without interrupting the match.';
     });
     registerModal(btnSettings, "settingsModal");
     registerModal(btnAI, "aiModal");
@@ -1467,6 +1462,31 @@ function generate() {
     void run(document.getElementById("topic").value);
 }
 
+function validateOnlineEntry(joining) {
+    const status = document.getElementById('onlineFormStatus');
+    txtPlayerName.value = sanitizePlayerName(txtPlayerName.value);
+    txtGameCode.value = String(txtGameCode.value || '').trim().toUpperCase();
+    txtPlayerName.setAttribute('aria-invalid', 'false'); txtGameCode.setAttribute('aria-invalid', 'false');
+    const invalid = !txtPlayerName.value ? txtPlayerName : joining && !/^[A-Z]{4}$/.test(txtGameCode.value) ? txtGameCode : null;
+    status.hidden = !invalid; status.classList.add('is-error');
+    status.textContent = !invalid ? '' : invalid === txtPlayerName ? 'Enter your name to create or join a lobby.' : 'Enter the four-letter code from your host.';
+    if (invalid) { invalid.setAttribute('aria-invalid', 'true'); invalid.focus?.(); }
+    return !invalid;
+}
+
+function setAiFeedback(message, error = false) {
+    const status = document.getElementById('aiFeedback');
+    status.textContent = message; status.hidden = !message; status.classList.toggle('is-error', error);
+    status.setAttribute('role', error ? 'alert' : 'status');
+    status.setAttribute('aria-live', error ? 'assertive' : 'polite');
+}
+
+function syncAiPack() {
+    const count = extractUniqueAiWordsFromText(document.getElementById('aiWords').value).length;
+    document.getElementById('aiPackStatus').textContent = count ? `${count} ${count === 1 ? 'word' : 'words'} ready to play.` : 'No words yet. Generate a pack or paste your own.';
+    document.getElementById('btnAiGame').disabled = document.getElementById('btnGenerate').disabled || count === 0;
+}
+
 function extractUniqueAiWordsFromText(rawText = "") {
     const lines = String(rawText)
         .split("\n")
@@ -1512,23 +1532,21 @@ async function run(topic) {
     const btnGenerate = document.getElementById("btnGenerate");
     const btnAiGame = document.getElementById("btnAiGame");
     const textArea = document.getElementById("aiWords");
-    btnGenerate.disabled = true;
-    btnAiGame.disabled = true;
-
     const cleanTopic = String(topic || "").trim();
     const strictTopic = cleanTopic.startsWith('!') ? cleanTopic.slice(1).trim() : cleanTopic;
     if (!cleanTopic) {
-        showNotification("bg-warning", "text-dark", "Missing Topic", "Enter a topic first, then generate words.", 5);
-        btnGenerate.disabled = false;
-        btnAiGame.disabled = extractUniqueAiWordsFromText(textArea?.value || "").length === 0;
+        setAiFeedback('Enter a topic first, then generate words.', true);
+        syncAiPack();
         return;
     }
     if (cleanTopic.startsWith("!") && !strictTopic) {
-        showNotification("bg-warning", "text-dark", "Missing Focus", "After '!' enter a focused topic, then generate words.", 5);
-        btnGenerate.disabled = false;
-        btnAiGame.disabled = extractUniqueAiWordsFromText(textArea?.value || "").length === 0;
+        setAiFeedback("After '!' add a focused topic, such as !Football players.", true);
+        syncAiPack();
         return;
     }
+    btnGenerate.disabled = true; btnAiGame.disabled = true; textArea.disabled = true;
+    btnGenerate.textContent = 'Generating…'; btnGenerate.setAttribute('aria-busy', 'true');
+    setAiFeedback('Building your word pack…');
 
     try {
         let prompt = "";
@@ -1592,27 +1610,26 @@ Output format rules:
         }
 
         currentGameWords = shuffleArray([...uniqueGeneratedWords]);
-        showNotification("bg-success", "text-white", "Words Ready", `Generated ${uniqueGeneratedWords.length} unique words.`, 4);
+        setAiFeedback(`Your pack is ready. Review the words or jump straight in.`);
     } catch (error) {
         console.error("Gemini generation failed:", error);
-        showNotification("bg-danger", "text-white", "AI Generation Failed", getFriendlyGeminiErrorMessage(error), 8);
+        setAiFeedback(getFriendlyGeminiErrorMessage(error), true);
     } finally {
         btnGenerate.disabled = false;
-        const availableWords = extractUniqueAiWordsFromText(textArea?.value || "");
-        btnAiGame.disabled = availableWords.length === 0;
+        textArea.disabled = false; btnGenerate.textContent = 'Generate words'; btnGenerate.setAttribute('aria-busy', 'false');
+        syncAiPack();
     }
 }
 
 function startAIGame() {
-    isAiGame = true;
-
     // Read user added words on start
     let textArea = document.getElementById('aiWords');
     const uniqueAiWords = extractUniqueAiWordsFromText(textArea?.value || "");
     if (uniqueAiWords.length === 0) {
-        showNotification("bg-warning", "text-dark", "No Words Available", "Generate or paste words before starting AI mode.", 5);
+        setAiFeedback('Generate or paste words before starting a game.', true);
         return;
     }
+    isAiGame = true;
     currentGameWords = shuffleArray(uniqueAiWords);
     wordDescriptionLookup = new Map();
 
@@ -2335,6 +2352,7 @@ function registerModalFocusGuards(modalId) {
     }
 
     registeredModalFocusHandlers.add(modalId);
+    modalElement.addEventListener('keydown', event => cycleModalFocus(modalElement, event));
 
     modalElement.addEventListener("show.bs.modal", (event) => {
         modalElement.inert = false;
@@ -2374,6 +2392,19 @@ function registerModalFocusGuards(modalId) {
             focusElementSafely(returnTarget);
         }
     });
+}
+
+function cycleModalFocus(modalElement, event) {
+    if (event.key !== 'Tab' || !modalElement.classList.contains('show')) return;
+    const controls = Array.from(modalElement.querySelectorAll('a[href], button, input, select, textarea, [tabindex]'))
+        .filter(node => !node.disabled && node.tabIndex >= 0 && node.getClientRects().length && !node.closest('[inert]'));
+    if (!controls.length) { event.preventDefault(); modalElement.focus(); return; }
+    const first = controls[0], last = controls[controls.length - 1];
+    if (event.shiftKey && (document.activeElement === first || document.activeElement === modalElement)) {
+        event.preventDefault(); last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first.focus();
+    }
 }
 
 function hideModalById(modalId) {

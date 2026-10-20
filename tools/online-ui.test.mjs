@@ -374,6 +374,59 @@ test('menu initialization wires the setup and gameplay controls without a browse
     assert.equal(h.el('quickPreset').value, 'standard');
 });
 
+test('AI pack editing counts unique entries, controls visibility and guards an empty start', () => {
+    const h=ui();h.run('globalThis.HTMLElement=class{};initializeMenu()');
+    assert.equal(h.el('btnAiGame').disabled,true);
+    h.el('showAIWords').checked=true;h.el('showAIWords').emit('change');
+    assert.equal(h.el('aiWords').hidden,false);
+    h.el('aiWords').value='One\nTwo\none';h.el('aiWords').emit('input');
+    assert.equal(h.el('aiPackStatus').textContent,'2 words ready to play.');
+    assert.equal(h.el('btnAiGame').disabled,false);
+    h.el('aiWords').value='';h.el('aiWords').emit('input');h.run('startAIGame()');
+    assert.equal(h.el('btnAiGame').disabled,true);assert.equal(h.run('isAiGame'),false);
+    assert.equal(h.el('aiFeedback').hidden,false);
+});
+
+test('AI generation shows inline feedback and restores editing and play controls', async () => {
+    const h=ui();h.run('globalThis.HTMLElement=class{};initializeMenu()');
+    await h.run('run("")');
+    assert.match(h.el('aiFeedback').textContent,/Enter a topic/);
+    h.run('globalThis.finishGeneration=null;model.generateContent=()=>new Promise(resolve=>finishGeneration=resolve)');
+    const pending=h.run('run("Football players")');
+    assert.equal(h.el('btnGenerate').disabled,true);assert.equal(h.el('aiWords').disabled,true);
+    assert.equal(h.el('btnAiGame').disabled,true);
+    h.run('finishGeneration({response:{text:()=>"One\\nTwo\\none"}})');await pending;
+    assert.equal(h.el('btnGenerate').disabled,false);assert.equal(h.el('aiWords').disabled,false);
+    assert.equal(h.el('btnAiGame').disabled,false);
+    assert.equal(h.el('aiPackStatus').textContent,'2 words ready to play.');
+    assert.equal(h.el('aiFeedback').classList.contains('is-error'),false);
+});
+
+test('online dialog validates inline before joining and preserves the normalized lobby request', () => {
+    const h=ui();h.run('globalThis.HTMLElement=class{};initializeMenu();joinGameLobby=async()=>{metrics.joinAttempt={name:txtPlayerName.value,code:txtGameCode.value}}');
+    h.el('createLobbyButton').emit('click');
+    assert.equal(h.el('onlineFormStatus').hidden,false);assert.equal(h.el('playerName')['aria-invalid'],'true');
+    assert.equal(h.metrics.alerts.length,0);
+    h.el('playerName').value=' Pat ';h.el('joinLobbyCode').value='1234';h.el('joinLobbyButton').emit('click');
+    assert.equal(h.metrics.joinAttempt,undefined);assert.equal(h.el('joinLobbyCode')['aria-invalid'],'true');
+    h.el('joinLobbyCode').value='aBcD';h.el('joinLobbyButton').emit('click');
+    assert.equal(h.metrics.joinAttempt.name,'Pat');assert.equal(h.metrics.joinAttempt.code,'ABCD');
+    assert.equal(h.el('onlineFormStatus').hidden,true);
+});
+
+test('dialog Tab boundaries wrap in both directions and skip hidden or disabled controls', () => {
+    const h=ui();
+    h.run(`globalThis.modal=document.getElementById('testDialog');modal.classList.add('show');
+        globalThis.controls=['first','hidden','disabled','last'].map(id=>document.getElementById(id));
+        controls.forEach((node,index)=>{node.tabIndex=0;node.disabled=index===2;node.getClientRects=()=>index===1?[]:[{}];
+            node.closest=()=>null;node.focus=()=>document.activeElement=node});
+        modal.querySelectorAll=()=>controls;document.activeElement=controls[3];
+        cycleModalFocus(modal,{key:'Tab',shiftKey:false,preventDefault:()=>metrics.prevented=true})`);
+    assert.equal(h.run('document.activeElement.id'),'first');assert.equal(h.metrics.prevented,true);
+    h.run(`metrics.prevented=false;cycleModalFocus(modal,{key:'Tab',shiftKey:true,preventDefault:()=>metrics.prevented=true})`);
+    assert.equal(h.run('document.activeElement.id'),'last');assert.equal(h.metrics.prevented,true);
+});
+
 test('online ticking loops without restarting on renders and stops at the warning or disconnect', () => {
     const h = ui(); h.mount(act(game(), 'start-round', { seed: 1 }));
     assert.equal(h.el('tickSound').loop, true); assert.equal(h.el('tickSound').paused, false);

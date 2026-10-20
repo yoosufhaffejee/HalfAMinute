@@ -1,0 +1,465 @@
+{
+  "layout": [
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 10,
+      "width": 1384,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "onlineModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 1384,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "aiModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 1384,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "rulesModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 2,
+      "width": 1384,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 1024,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 12,
+      "width": 768,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 1024,
+      "id": "onlineModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 768,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 1024,
+      "id": "aiModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 768,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 1024,
+      "id": "rulesModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 2,
+      "width": 768,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 366,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 844,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 10,
+      "width": 390,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 366,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 844,
+      "id": "onlineModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 390,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 366,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 844,
+      "id": "aiModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 390,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 366,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 844,
+      "id": "rulesModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 2,
+      "width": 390,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 7,
+      "width": 320,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "onlineModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 5,
+      "width": 320,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "aiModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 320,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "rulesModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 2,
+      "width": 320,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 500,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 5,
+      "width": 780,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 500,
+      "id": "onlineModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 4,
+      "width": 780,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 500,
+      "id": "aiModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 780,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 500,
+      "id": "rulesModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 2,
+      "width": 780,
+      "label": "default"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 10,
+      "width": 1384,
+      "label": "categories expanded"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 8,
+      "width": 1384,
+      "label": "theme picker"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "aiModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 7,
+      "width": 1384,
+      "label": "manual word pack"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "onlineModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 1384,
+      "label": "name validation"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 8,
+      "width": 320,
+      "label": "categories expanded"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 6,
+      "width": 320,
+      "label": "theme picker"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "aiModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 5,
+      "width": 320,
+      "label": "manual word pack"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "onlineModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 4,
+      "width": 320,
+      "label": "name validation"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 296,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 720,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 5,
+      "width": 320,
+      "label": "in-match sound and motion"
+    },
+    {
+      "contentOverflow": false,
+      "contentWidth": 672,
+      "footerInView": true,
+      "headerInView": true,
+      "height": 830,
+      "id": "settingsModal",
+      "insideViewport": true,
+      "overlaps": [],
+      "visibleControls": 5,
+      "width": 1384,
+      "label": "in-match sound and motion"
+    }
+  ],
+  "keyboard": [
+    {
+      "dialog": "aiModal",
+      "focusReturned": "ai",
+      "tabBoundaryPass": true
+    },
+    {
+      "dialog": "settingsModal",
+      "focusReturned": "settings"
+    },
+    {
+      "dialog": "onlineModal",
+      "focusReturned": "online"
+    },
+    {
+      "dialog": "rulesModal",
+      "focusReturned": "rules"
+    }
+  ],
+  "focusTrail": [
+    {
+      "key": "shift+Tab",
+      "dialog": "aiModal",
+      "id": "Back"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "Close AI words"
+    },
+    {
+      "key": "shift+Tab",
+      "dialog": "aiModal",
+      "id": "Back"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "Close AI words"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "topic"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "btnGenerate"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "showAIWords"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "Back"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "Close AI words"
+    },
+    {
+      "key": "Tab",
+      "dialog": "aiModal",
+      "id": "topic"
+    }
+  ]
+}

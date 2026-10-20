@@ -2,6 +2,18 @@
 
 Implemented the high-priority gameplay work and requested follow-ups from the fun report. Existing online eligibility exceptions, team assignment, word visibility, reconnect protection, and team/speaker rotation remain in place. No Firebase firewall, origin, or access rules were changed.
 
+## Settings, online, AI and rules dialogs
+
+The four toolbar dialogs now share the game's restrained green/white design, consistent title/icon headers, labelled controls, 44-pixel actions, a single scrolling body, and footer actions that remain reachable. Toolbar launchers use quieter neutral/green styles. Settings groups audio, match setup, play options and word packs; opening it during a match shows sound/motion controls only. Categories and themes retain their existing mutually exclusive selection behavior and now expose their expanded state.
+
+Play online separates hosting from joining, with a shared player name and a clear four-letter code field. Empty names and malformed codes get inline feedback and focus the relevant input before any connection is attempted. AI words has a topic row, optional pack editing, a live unique-word count, inline generation feedback, and a disabled play action until a pack is ready. Editing/play remain disabled during generation. An invalid empty AI start no longer changes the game mode. The rules guide preserves the clue restrictions and explains the three-step turn, Chaos and online roles in scannable sections.
+
+Keyboard verification found that Tab could move beyond the final dialog control. Explicit forward/backward boundary wrapping now complements Bootstrap's focus handling. Escape closes each dialog and restores focus to its launcher.
+
+Verification: **84 automated tests pass**, including manual/generated pack readiness, inline lobby validation, and keyboard boundaries. **30 browser layout checks** passed at 1384×830, 768×1024, 390×844, 320×720 and 780×500, including expanded category/theme pickers, manual word editing, validation feedback and in-match settings. No control overlaps or horizontal overflow were found; headers and footers stayed within the viewport. Browser keyboard checks verified both Tab directions and all four Escape/focus-return paths. No browser warnings/errors were recorded. Geometry sweeps used reduced motion. AI success was tested with a stubbed model response; browser checks used manual words and local validation, without creating Firebase lobbies or sending generation requests.
+
+Previews: [Settings](reports/modal-settings.png), [Play online](reports/modal-online.png), [AI words](reports/modal-ai.png), [How to play](reports/modal-rules.png), [phone layout](reports/modal-mobile.png). [Layout and keyboard measurements](reports/modal-verification.json).
+
 ## Chaos presentation and starting-team clarity
 
 The missing local animation was a real visibility bug: resolution began while the answer controls still kept the board hidden. Local submission now closes the cards before resolution, and both local/online resolution and reroll choices own board focus. Tokens visibly hop between positions, a trail marks progress, the map is revealed on landing, and a landing highlight and impact pulse accompany the effect. A short **Move → Land → Chaos → Result** indicator explains the sequence; a safe landing skips the effect steps. The existing 650/2200/350 ms resolution budgets and all scoring/authority rules are unchanged. Reduced motion settles directly and keeps a textual explanation.

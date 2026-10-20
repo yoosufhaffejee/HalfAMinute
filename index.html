@@ -28,7 +28,7 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=20261020.6">
+    <link rel="stylesheet" href="style.css?v=20261020.7">
 </head>
 
 <body>
@@ -36,19 +36,19 @@
         <header class="app-header">
             <h1>Half A Minute</h1>
             <nav class="app-actions" aria-label="Game tools">
-                <button title="Settings" aria-label="Settings" class="btn btn-secondary" id="settings">
+                <button title="Settings" aria-label="Settings" aria-haspopup="dialog" aria-controls="settingsModal" class="btn btn-secondary" id="settings">
                     <i class="fas fa-cog" aria-hidden="true"></i><span>Settings</span>
                 </button>
                 <button title="Answer history" aria-label="Answer history" class="btn btn-warning" id="history" hidden>
                     <i class="fas fa-history" aria-hidden="true"></i><span>History</span>
                 </button>
-                <button title="Play Online" aria-label="Play Online" class="btn btn-success" id="online">
+                <button title="Play online" aria-label="Play online" aria-haspopup="dialog" aria-controls="onlineModal" class="btn btn-success" id="online">
                     <i class="fas fa-globe" aria-hidden="true"></i><span>Play online</span>
                 </button>
-                <button title="AI Mode" aria-label="AI Mode" class="btn btn-primary" id="ai">
+                <button title="AI words" aria-label="AI words" aria-haspopup="dialog" aria-controls="aiModal" class="btn btn-primary" id="ai">
                     <i class="fas fa-robot" aria-hidden="true"></i><span>AI words</span>
                 </button>
-                <button title="Game Rules" aria-label="Game Rules" class="btn btn-warning" id="rules">
+                <button title="How to play" aria-label="How to play" aria-haspopup="dialog" aria-controls="rulesModal" class="btn btn-warning" id="rules">
                     <i class="fas fa-book" aria-hidden="true"></i><span>How to play</span>
                 </button>
             </nav>
@@ -77,82 +77,51 @@
             </div>
         </div>
         
-        <!-- Advanced Options Modal -->
-        <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="advancedOptionsModalLabel" aria-hidden="true">
+        <!-- Settings -->
+        <div class="modal fade app-modal" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="advancedOptionsModalLabel" aria-describedby="settingsIntro" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="advancedOptionsModalLabel">Settings</h5>
+                        <span class="dialog-icon" aria-hidden="true"><i class="fas fa-cog"></i></span>
+                        <div class="dialog-heading"><h2 class="modal-title" id="advancedOptionsModalLabel">Settings</h2><p id="settingsIntro" class="dialog-subtitle">Make the game feel right for your group.</p></div>
+                        <button type="button" class="dialog-close" data-bs-dismiss="modal" aria-label="Close Settings"><i class="fas fa-times" aria-hidden="true"></i></button>
                     </div>
                     <div class="modal-body">
-        <section id="playPreferences" class="sound-settings" aria-labelledby="soundSettingsTitle"><h6 id="soundSettingsTitle">Sound &amp; motion</h6>
-            <div class="preference-controls">
-                <label for="soundMuted" class="mute-control"><input type="checkbox" id="soundMuted"> Mute sounds</label>
-                <div class="preference-field"><label for="soundVolume">Effects volume</label><input type="range" id="soundVolume" min="0" max="100" value="60"></div>
-                <div class="preference-field"><label for="motionPreference">Motion</label><select id="motionPreference"><option value="system">Use device preference</option><option value="reduced">Reduced</option><option value="full">Full</option></select></div>
-            </div>
-        </section>
-                        <fieldset id="gameSetupSettings">
-                        <h6>Game setup</h6>
-                        <div class="menu-section">
-                            <label for="difficulty">Select Difficulty:</label>
-                            <select id="difficulty">
-                                <option value="easy">Easy</option>
-                                <option value="normal" selected>Normal</option>
-                                <option value="hard">Hard</option>
-                            </select>
-                        </div>
-                        <div class="menu-section">
-                            <label for="pointsToWin">Points to Win:</label>
-                            <input type="number" id="pointsToWin" min="10" max="60" value="20">
-                        </div>
-                        <div class="menu-section">
-                            <label for="txtSeconds">Round Duration (Sec):</label>
-                            <input type="number" id="txtSeconds" min="5" max="300" value="30">
-                        </div>
-                        <div class="menu-section">
-                            <label for="txtWords">Words per Round:</label>
-                            <input type="number" id="txtWords" min="1" max="15" value="5">
-                        </div>
-                        <div class="menu-section">
-                            <label for="chkChaos">Chaos Mode:</label>
-                            <input type="checkbox" id="chkChaos" value="false">
-                            <small id="chaosModeHint" class="d-block text-muted">
-                                Earn points, land, resolve one effect. Bombs lose up to 3 points; one shield blocks one penalty or incoming steal.
-                            </small>
-                        </div>
-                        <div class="menu-section">
-                            <label for="chkReroll">Chaos reroll prototype (optional):</label>
-                            <input type="checkbox" id="chkReroll">
-                            <small class="d-block text-muted">One reroll per team per match. Accept the new result. Five seconds to choose; otherwise keep.</small>
-                        </div>
-                        <div class="menu-section">
-                            <label for="chkTraining">Training Mode (Show Description Hints):</label>
-                            <input type="checkbox" id="chkTraining" value="false">
-                        </div>
-                        <div class="menu-section">
-                            <button class="btn btn-primary" id="selectCategoriesBtn">Select Categories</button>
-                            <button class="btn btn-primary" id="selectThemeBtn">Select Theme</button>
-                        </div>
-                        <div id="categoriesSection" style="display:none;">
-                            <label for="categorySearch">Find categories</label>
-                            <input id="categorySearch" type="search" placeholder="Search categories">
-                            <div id="categoryChoices" role="group" aria-label="Categories"></div>
-                            <select id="categoriesSelect" multiple hidden aria-label="Selected categories"></select>
-                        </div>
-                        <div id="themesSection" style="display:none;">
-                            <label for="themesSelect">Themes:</label>
-                            <select id="themesSelect">
-                                <option value="None">None</option>
-                            </select>
-                        </div>
-                        <p id="advancedSetupSummary"></p>
+                        <section id="playPreferences" class="dialog-section" aria-labelledby="soundSettingsTitle">
+                            <h3 id="soundSettingsTitle">Sound &amp; motion</h3>
+                            <label class="toggle-row" for="soundMuted"><span class="toggle-copy"><strong>Mute sounds</strong><small>Turn off ticking and game effects.</small></span><input type="checkbox" id="soundMuted"></label>
+                            <div class="dialog-grid">
+                                <div class="form-field"><label for="soundVolume">Effects volume</label><input type="range" id="soundVolume" min="0" max="100" value="60"></div>
+                                <div class="form-field"><label for="motionPreference">Motion</label><select id="motionPreference"><option value="system">Use device preference</option><option value="reduced">Reduced</option><option value="full">Full</option></select></div>
+                            </div>
+                        </section>
+                        <fieldset id="gameSetupSettings" aria-label="Game setup">
+                            <section class="dialog-section" aria-labelledby="matchSettingsTitle">
+                                <h3 id="matchSettingsTitle">Match setup</h3>
+                                <div class="dialog-grid">
+                                    <div class="form-field"><label for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></div>
+                                    <div class="form-field"><label for="pointsToWin">Target score</label><input type="number" id="pointsToWin" min="10" max="60" value="20"></div>
+                                    <div class="form-field"><label for="txtSeconds">Round time <span class="field-unit">(seconds)</span></label><input type="number" id="txtSeconds" min="5" max="300" value="30"></div>
+                                    <div class="form-field"><label for="txtWords">Words per round</label><input type="number" id="txtWords" min="1" max="15" value="5"></div>
+                                </div>
+                            </section>
+                            <section class="dialog-section" aria-labelledby="playOptionsTitle">
+                                <h3 id="playOptionsTitle">Ways to play</h3>
+                                <label class="toggle-row" for="chkChaos"><span class="toggle-copy"><strong>Chaos mode</strong><small id="chaosModeHint">Landing effects add boosts, slips, shields and steals.</small></span><input type="checkbox" id="chkChaos" value="false"></label>
+                                <label class="toggle-row" for="chkReroll"><span class="toggle-copy"><strong>Team reroll <span class="feature-tag">Prototype</span></strong><small>In Chaos, each team can reroll one landing effect per match. Five seconds to choose.</small></span><input type="checkbox" id="chkReroll"></label>
+                                <label class="toggle-row" for="chkTraining"><span class="toggle-copy"><strong>Training hints</strong><small>Give the speaker optional descriptions to help build clues.</small></span><input type="checkbox" id="chkTraining" value="false"></label>
+                            </section>
+                            <section class="dialog-section" aria-labelledby="wordPacksTitle">
+                                <h3 id="wordPacksTitle">Word packs</h3>
+                                <p class="dialog-help">Pick categories or a theme. Leave them unselected to use all categories.</p>
+                                <div class="pack-actions"><button type="button" class="btn btn-outline-secondary" id="selectCategoriesBtn" aria-expanded="false" aria-controls="categoriesSection">Categories</button><button type="button" class="btn btn-outline-secondary" id="selectThemeBtn" aria-expanded="false" aria-controls="themesSection">Theme</button></div>
+                                <div id="categoriesSection" class="pack-picker" style="display:none;"><div class="form-field"><label for="categorySearch">Find categories</label><input id="categorySearch" type="search" placeholder="Search categories"></div><div id="categoryChoices" role="group" aria-label="Categories"></div><select id="categoriesSelect" multiple hidden aria-label="Selected categories"></select></div>
+                                <div id="themesSection" class="pack-picker" style="display:none;"><div class="form-field"><label for="themesSelect">Choose a theme</label><select id="themesSelect"><option value="None">None</option></select></div></div>
+                            </section>
+                            <p id="advancedSetupSummary" class="setup-preview" aria-live="polite"></p>
                         </fieldset>
-
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                    <div class="modal-footer"><small class="footer-note">Sound &amp; motion save automatically.</small><button type="button" class="btn btn-success" data-bs-dismiss="modal">Done</button></div>
                 </div>
             </div>
         </div>
@@ -184,130 +153,83 @@
             </div>
         </div>
 
-        <!-- AI Mode Modal -->
-        <div class="modal fade" id="aiModal" tabindex="-1" role="dialog" aria-labelledby="aiModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <!-- AI words -->
+        <div class="modal fade app-modal" id="aiModal" tabindex="-1" role="dialog" aria-labelledby="aiModalLabel" aria-describedby="aiIntro" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="aiModalLabel">AI Mode</h5>
+                        <span class="dialog-icon" aria-hidden="true"><i class="fas fa-robot"></i></span>
+                        <div class="dialog-heading"><h2 class="modal-title" id="aiModalLabel">AI words</h2><p id="aiIntro" class="dialog-subtitle">Build a word pack around something you love.</p></div>
+                        <button type="button" class="dialog-close" data-bs-dismiss="modal" aria-label="Close AI words"><i class="fas fa-times" aria-hidden="true"></i></button>
                     </div>
                     <div class="modal-body">
-                        <h6>Enter a topic to have AI generate game words, or manually input your own!</h6>
-                        <p>Start with an '<b>!</b>' to use strict mode. This will ensure that the generated words will not include sub topics.</p>
-                        <br>
-                        <label for="topic">Topic:</label>
-                        <input type="text" id="topic" placeholder="!Football Player Names">
-                        <button id="btnGenerate" class="btn btn-primary">Generate</button>
-                        <br>
-                        <button title="Start Game" id="btnAiGame" class="btn btn-success">Start Game</button>
-                        <br>
-                        <br>
-                        <label for="showAIWords">Show words:</label>
-                        <input type="checkbox" id="showAIWords" value="false">
-                        <br>
-                        <textarea id="aiWords" rows="20" cols="40" hidden></textarea>
+                        <section class="dialog-section" aria-labelledby="topicTitle">
+                            <h3 id="topicTitle">Choose a topic</h3>
+                            <div class="input-action-row"><div class="form-field"><label class="visually-hidden" for="topic">Topic</label><input type="text" id="topic" placeholder="Football players, 90s movies..." aria-describedby="topicHint"></div><button type="button" id="btnGenerate" class="btn btn-outline-success">Generate words</button></div>
+                            <p id="topicHint" class="dialog-help">Want a narrower focus? Start with <strong>!</strong>, for example <strong>!Football players</strong>.</p>
+                            <p id="aiFeedback" class="dialog-feedback" role="status" aria-live="polite" hidden></p>
+                        </section>
+                        <section class="dialog-section" aria-labelledby="wordPackTitle">
+                            <h3 id="wordPackTitle">Your word pack</h3>
+                            <p id="aiPackStatus" class="dialog-help" role="status" aria-live="polite">No words yet. Generate a pack or paste your own.</p>
+                            <label class="toggle-row" for="showAIWords"><span class="toggle-copy"><strong>Review or paste words</strong><small>Keep the pack hidden if you want to be surprised.</small></span><input type="checkbox" id="showAIWords" aria-controls="aiWords" aria-expanded="false"></label>
+                            <label class="visually-hidden" for="aiWords">Word pack, one word or phrase per line</label>
+                            <textarea id="aiWords" rows="7" placeholder="One word or phrase per line" aria-describedby="aiWordsHint" hidden></textarea>
+                            <p id="aiWordsHint" class="dialog-help">Edit freely. Duplicate entries count once.</p>
+                        </section>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                    <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Back</button><button type="button" id="btnAiGame" class="btn btn-success" disabled>Play with this pack</button></div>
                 </div>
             </div>
         </div>
 
-        <!-- Online Mode Modal -->
-        <div class="modal fade" id="onlineModal" tabindex="-1" role="dialog" aria-labelledby="onlineModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <!-- Play online -->
+        <div class="modal fade app-modal" id="onlineModal" tabindex="-1" role="dialog" aria-labelledby="onlineModalLabel" aria-describedby="onlineIntro" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="onlineModalLabel">Play Online</h5>
+                        <span class="dialog-icon" aria-hidden="true"><i class="fas fa-globe"></i></span>
+                        <div class="dialog-heading"><h2 class="modal-title" id="onlineModalLabel">Play online</h2><p id="onlineIntro" class="dialog-subtitle">Bring your group together in one lobby.</p></div>
+                        <button type="button" class="dialog-close" data-bs-dismiss="modal" aria-label="Close Play online"><i class="fas fa-times" aria-hidden="true"></i></button>
                     </div>
                     <div class="modal-body">
-                        <div id="lobbyMenu"
-                            style="max-width: 400px; margin: auto; padding: 20px;">
-                            <div class="menu-section" style="margin-bottom: 20px;">
-                                <label for="playerName" style="display: block; margin-bottom: 8px;">Player Name:</label>
-                                <input type="text" id="playerName" placeholder="Enter Online Name"
-                                    style="width: 100%; padding: 8px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px;">
-                            </div>
-                        
-                            <div class="menu-section" style="margin-bottom: 20px;">
-                                <button id="createLobbyButton" class="btn btn-success"
-                                    style="width: 100%; padding: 10px; font-size: 16px;">Create New Lobby</button>
-                            </div>
-                        
-                            <div class="menu-section" style="margin-bottom: 20px;">
-                                <label for="joinLobbyCode" style="display: block; margin-bottom: 8px;">Join Lobby:</label>
-                                <input type="text" id="joinLobbyCode" placeholder="Enter Lobby Code"
-                                    style="width: 100%; padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
-                                <button id="joinLobbyButton" class="btn btn-primary" style="width: 100%; padding: 10px; font-size: 16px;">Join
-                                    Lobby</button>
+                        <div id="lobbyMenu">
+                            <div class="form-field"><label for="playerName">Your name</label><input type="text" id="playerName" placeholder="What should we call you?" maxlength="24" autocomplete="nickname" aria-describedby="playerNameHint onlineFormStatus"><small id="playerNameHint" class="dialog-help">Use a name your friends will recognise.</small></div>
+                            <p id="onlineFormStatus" class="dialog-feedback" role="alert" hidden></p>
+                            <div class="online-choices">
+                                <section class="online-choice" aria-labelledby="hostTitle"><span class="choice-label">Start a group</span><h3 id="hostTitle">Host a game</h3><p>Create a lobby, then share its four-letter code with your friends.</p><button type="button" id="createLobbyButton" class="btn btn-success">Create lobby</button></section>
+                                <section class="online-choice" aria-labelledby="joinTitle"><span class="choice-label">Have a code?</span><h3 id="joinTitle">Join your friends</h3><div class="form-field"><label for="joinLobbyCode">Lobby code</label><input type="text" id="joinLobbyCode" placeholder="ABCD" maxlength="4" autocomplete="off" spellcheck="false" autocapitalize="characters" aria-describedby="joinCodeHint onlineFormStatus"><small id="joinCodeHint" class="dialog-help">Four letters from your host.</small></div><button type="button" id="joinLobbyButton" class="btn btn-outline-success">Join lobby</button></section>
                             </div>
                         </div>
-                        <div id="lobbyPlayers" hidden>
-                        </div>
+                        <div id="lobbyPlayers" hidden></div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                    <div class="modal-footer"><small class="footer-note">Teams and turns are managed in the lobby.</small><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Back</button></div>
                 </div>
             </div>
         </div>
 
-        <!-- Game Rules Modal -->
-        <div class="modal fade" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <!-- How to play -->
+        <div class="modal fade app-modal" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModalLabel" aria-describedby="rulesIntro" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="rulesModalLabel">Game Rules</h5>
+                        <span class="dialog-icon" aria-hidden="true"><i class="fas fa-book"></i></span>
+                        <div class="dialog-heading"><h2 class="modal-title" id="rulesModalLabel">How to play</h2><p id="rulesIntro" class="dialog-subtitle">Quick to learn. Better with a lively group.</p></div>
+                        <button type="button" class="dialog-close" data-bs-dismiss="modal" aria-label="Close How to play"><i class="fas fa-times" aria-hidden="true"></i></button>
                     </div>
                     <div class="modal-body">
-                        <h5>Objective</h5>
-                        <ul style="text-align: left;">
-                            <li><strong>Goal</strong>: Score as many points as possible to reach the end of the board.</li>
-                            <li><strong>Scoring</strong>: Earn points by correctly identifying words described by teammates.</li>
-                        </ul>
-                    
-                        <h5>Teams</h5>
-                        <ul style="text-align: left;">
-                            <li><strong>Roles</strong>: Each player alternates between being a <strong>Speaker</strong> and a <strong>Listener</strong>.</li>
-                            <li><strong>Rotation</strong>: The speaker role must rotate among team members each turn.</li>
-                        </ul>
-                    
-                        <h5>Gameplay</h5>
-                        <ul style="text-align: left;">
-                            <li><strong>Turns</strong>: During a turn, the Speaker describes the provided words to the Listeners.</li>
-                            <li><strong>Time Limit</strong>: Describe as many words as possible before time runs out.</li>
-                            <li><strong>Points</strong>: Earn 1 point for each correct guess.</li>
-                            <li><strong>Guesses</strong>: Listeners have unlimited guesses until the timer ends.</li>
-                        </ul>
-                    
-                        <h5>Speaker Guidelines</h5>
-                        <strong><p style="text-align: left;">Allowed Actions:</p></strong>
-                        <ul style="text-align: left;">
-                            <li>Describe using explanations, humming, or gestures.</li>
-                            <li>Describe words in any order.</li>
-                            <li>Use "and" and "the" if they appear.</li>
-                        </ul>
-                        <strong><p style="text-align: left;">Prohibited Actions:</p></strong>
-                        <ul style="text-align: left;">
-                            <li><b>DO NOT</b> say the actual word or name.</li>
-                            <li><b>DO NOT</b> use words related to or derived from the name.</li>
-                            <li><b>DO NOT</b> employ "sounds-like" or "rhymes-with" tactics.</li>
-                            <li><b>DO NOT</b> refer to any letters of the alphabet.</li>
-                            <li><b>DO NOT</b> indicate starting or ending letters.</li>
-                            <li><b>DO NOT</b> use translations or other languages.</li>
-                            <li><b>DO NOT</b> point to objects in the room.</li>
-                            <li><b>DO NOT</b> use acronyms, forward or reverse.</li>
-                        </ul>
-                    
-                        <h5>Winning</h5>
-                        <ul style="text-align: left;">
-                            <li><strong>Victory</strong>: The first team to reach the end of the board wins the game.</li>
-                        </ul>
+                        <div class="rules-goal"><strong>Describe. Guess. Race to the finish.</strong><p>The first team to reach the target score wins. Every correct guess earns one point.</p></div>
+                        <section class="dialog-section" aria-labelledby="turnGuideTitle"><h3 id="turnGuideTitle">A turn in three steps</h3>
+                            <ol class="rules-steps"><li><strong>Describe</strong><p>The speaker explains the words on the card, in any order, before time runs out.</p></li><li><strong>Guess</strong><p>The listeners guess aloud. Keep trying: guesses are unlimited while the timer runs.</p></li><li><strong>Score &amp; rotate</strong><p>Select the correctly guessed words, confirm the score, and pass to the next team. Rotate the speaker within your team each turn.</p></li></ol>
+                        </section>
+                        <section class="dialog-section" aria-labelledby="clueRulesTitle"><h3 id="clueRulesTitle">Give a great clue</h3>
+                            <div class="clue-rules"><div class="clue-rule-list"><h4>You can</h4><ul><li>Use explanations, humming or gestures.</li><li>Describe the words in any order.</li><li>Say “and” or “the” if they appear in the answer.</li></ul></div><div class="clue-rule-list"><h4>Leave these out</h4><ul><li>The actual word or name, and related or derived words.</li><li>“Sounds like” or “rhymes with” clues.</li><li>Alphabet letters, including starting or ending letters.</li><li>Translations or other languages.</li><li>Pointing to objects in the room.</li><li>Acronyms, forwards or backwards.</li></ul></div></div>
+                        </section>
+                        <section class="dialog-section" aria-labelledby="chaosGuideTitle"><h3 id="chaosGuideTitle">Add a little Chaos</h3><p>Earn your clue points, land, then resolve one effect. Boosts and steals help you move ahead; slips and bombs set you back. Bombs cost up to three points, and one shield blocks one penalty or incoming steal. Effects never chain.</p><p class="dialog-help">The map changes each turn. Winning moves, Start and the tile before Finish have no effect. Find the full effect guide below the board during a Chaos game.</p></section>
+                        <div class="dialog-note"><strong>Playing online?</strong><p>Join with a four-letter code. The game manages teams, speakers and turns. Follow your on-screen role: who can see the cards depends on the lobby size.</p></div>
+                        <p class="dialog-help starter-note">A fresh match draws the starting team at random. Rematches rotate the starter.</p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
+                    <div class="modal-footer"><button type="button" class="btn btn-success" data-bs-dismiss="modal">Got it</button></div>
                 </div>
             </div>
         </div>
@@ -420,6 +342,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261020.6" type="module"></script>
+    <script src="script.js?v=20261020.7" type="module"></script>
 </body>
 </html>
