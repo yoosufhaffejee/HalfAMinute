@@ -42,11 +42,21 @@ test('a refill remembers the answers already drawn on this card', () => {
     assert.equal(second.deck.easy.length, 3);
     assert.ok(second.words.every(word => second.deck.easy.includes(Rules.answerKey(word))));
 });
-test('presets preserve 30 second five-word play and resolutions have a bounded budget', () => {
+test('Chaos pacing gives movement, the reveal, the hit and the result time to read', () => {
     for (const value of Object.values(Rules.PRESETS)) { assert.equal(value.numWords, 5); assert.equal(value.numSeconds, 30); }
-    assert.ok(Rules.resolutionDuration(false) < 1000);
-    assert.ok(Rules.resolutionDuration(true) <= 3000);
-    assert.ok(Rules.resolutionDuration(false, true) < Rules.resolutionDuration(false));
+    for (const count of [0, 1, 5, 15]) {
+        const timing = Rules.resolutionTiming(true, false, count);
+        assert.ok(timing.moveMs >= Math.max(1000, count * 360));
+        assert.ok(timing.landingMs >= 1400);
+        assert.ok(timing.effectMs >= 1400);
+        assert.ok(timing.resultMs >= 2400);
+        assert.equal(Rules.resolutionDuration(true, false, count), timing.durationMs);
+        const safe = Rules.resolutionTiming(false, false, count);
+        assert.equal(safe.landingMs + safe.effectMs, 0);
+        assert.ok(safe.resultMs >= 1600);
+        assert.ok(safe.durationMs < timing.durationMs);
+        assert.ok(Rules.resolutionTiming(false, true, count).resultMs >= 2000);
+    }
 });
 
 test('turn messages use player language instead of score arithmetic', () => {

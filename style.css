@@ -216,10 +216,25 @@ body.layout-game .app-actions { justify-content: flex-end; }
 .chaos-legend-item { display: flex; align-items: flex-start; gap: 8px; }
 .chaos-legend-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; min-height: 22px; text-align: center; flex-shrink: 0; }
 .chaos-legend-details { min-width: 0; overflow-wrap: anywhere; }
-.resolution-status { order: 7; padding: 16px; border: 1px solid #e2a93d; border-radius: 12px; background: #fff8e8; }
+.resolution-status { order: 7; padding: 18px; border: 1px solid #e2a93d; border-radius: 12px; background: #fff8e8; text-align: left; }
+.resolution-status[data-phase='complete'] { order: 5; }
+.resolution-heading { display: flex; align-items: center; gap: 14px; }
+.resolution-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; background: #fef0b2; color: #7a4a00; font-size: 1.6rem; font-weight: 700; }
+.resolution-copy { min-width: 0; }
+.resolution-detail { margin: 12px 0 0; color: #475569; font-size: .95rem; line-height: 1.5; overflow-wrap: anywhere; }
+.resolution-detail:empty { display: none; }
+.resolution-scoreline { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #17203320; color: #475569; font-size: .9rem; }
+.resolution-scoreline strong { color: #172033; font-size: 1.15rem; }
 .resolution-step { margin: 0 0 4px; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #7a4a00; }
 #chaosMessage { margin: 0; font-size: 1.25rem; font-weight: 700; }
 .resolution-status[data-tone='negative'] { border-color: #dc9c9c; background: #fff1f2; }
+.resolution-status[data-tone='negative'] .resolution-icon { background: #ffe0e4; color: #9f1239; }
+.resolution-status[data-tone='positive'] { border-color: #b7d9c5; background: #effaf3; }
+.resolution-status[data-tone='positive'] .resolution-icon { background: #d7efdf; color: #166534; }
+.resolution-status[data-tone='protected'] { border-color: #b9d3fa; background: #eff6ff; }
+.resolution-status[data-tone='protected'] .resolution-icon { background: #dbeafe; color: #1e40af; }
+.resolution-status[data-phase='effect'] .resolution-icon { animation: chaos-icon-impact .65s ease-in-out 2; }
+@keyframes chaos-icon-impact { 50% { transform: scale(1.15) rotate(-8deg); } }
 .resolving-board .board-cell { overflow: visible; }
 body.chaos-active .board-cell-trail { background: #fff0b7; }
 .board-cell-moving { outline: 2px solid #b7791f; outline-offset: -2px; }

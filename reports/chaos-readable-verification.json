@@ -1,0 +1,146 @@
+{
+  "fullMotionMovement": [
+    {
+      "elapsedMs": 304,
+      "boardVisible": true,
+      "detail": "From space 3 to space 8.",
+      "message": "Team 1 moves 5 spaces…",
+      "panelBottom": 329.171875,
+      "panelTop": 203.1875,
+      "phase": "moving",
+      "tokenTransforms": [
+        "none",
+        "none"
+      ]
+    },
+    {
+      "elapsedMs": 539,
+      "boardVisible": true,
+      "detail": "From space 3 to space 8.",
+      "message": "Team 1 moves 5 spaces…",
+      "panelBottom": 329.171875,
+      "panelTop": 203.1875,
+      "phase": "moving",
+      "tokenTransforms": [
+        "none",
+        "matrix(1.059, 0, 0, 1.059, 195.351, -61.3336)"
+      ]
+    },
+    {
+      "elapsedMs": 2168,
+      "boardVisible": true,
+      "detail": "Team 1 landed on space 8.",
+      "message": "Safe landing!",
+      "panelBottom": 363.78125,
+      "panelTop": 183.1875,
+      "phase": "complete",
+      "tokenTransforms": [
+        "none",
+        "matrix(1.0431, 0, 0, 1.0431, 214.86, -65.975)"
+      ]
+    },
+    {
+      "elapsedMs": 2183,
+      "boardVisible": true,
+      "detail": "Team 1 landed on space 8.",
+      "message": "Safe landing!",
+      "panelBottom": 363.78125,
+      "panelTop": 183.1875,
+      "phase": "complete",
+      "tokenTransforms": [
+        "none",
+        "matrix(1.06223, 0, 0, 1.06223, 191.383, -60.5542)"
+      ]
+    },
+    {
+      "elapsedMs": 3749,
+      "boardVisible": true,
+      "detail": "Team 1 landed on space 8.",
+      "message": "Safe landing!",
+      "panelBottom": 387.78125,
+      "panelTop": 207.1875,
+      "phase": "complete",
+      "tokenTransforms": [
+        "none",
+        "none"
+      ]
+    }
+  ],
+  "shieldStages": [
+    {
+      "elapsedSinceLandingMs": 0,
+      "boardVisible": true,
+      "detail": "Team 2 landed on space 5. The effect is about to happen…",
+      "message": "🛡️ Shield!",
+      "panelBottom": 351.96875,
+      "panelTop": 203.1875,
+      "phase": "landing",
+      "tokenTransforms": [
+        "matrix(1.08935, 0, 0, 1.08935, -52.7015, -6.70103)",
+        "none"
+      ]
+    },
+    {
+      "elapsedSinceLandingMs": 1395,
+      "boardVisible": true,
+      "detail": "Team 2 landed on space 5.",
+      "message": "Shield ready for the next hit!",
+      "panelBottom": 359.171875,
+      "panelTop": 203.1875,
+      "phase": "effect",
+      "tokenTransforms": [
+        "none",
+        "none"
+      ]
+    },
+    {
+      "elapsedSinceLandingMs": 2726,
+      "boardVisible": true,
+      "detail": "Team 2 landed on space 5.",
+      "message": "Shield ready for the next hit!",
+      "panelBottom": 393.78125,
+      "panelTop": 183.1875,
+      "phase": "complete",
+      "tokenTransforms": [
+        "none",
+        "none"
+      ]
+    },
+    {
+      "elapsedSinceLandingMs": 5123,
+      "boardVisible": true,
+      "detail": "Team 2 landed on space 5.",
+      "message": "Shield ready for the next hit!",
+      "panelBottom": 417.78125,
+      "panelTop": 207.1875,
+      "phase": "complete",
+      "tokenTransforms": [
+        "none",
+        "none"
+      ]
+    }
+  ],
+  "reducedMotion": {
+    "elapsedMs": 316,
+    "resultCleared": true,
+    "canStartNext": true,
+    "details": "Team 1 landed on space 9.",
+    "message": "Safe landing!",
+    "phase": "complete",
+    "total": "9 points",
+    "transforms": [
+      "none",
+      "none"
+    ]
+  },
+  "narrowLayout": {
+    "horizontalOverflow": false,
+    "overlaps": [],
+    "panelFits": true,
+    "viewport": [
+      320,
+      720
+    ]
+  },
+  "logs": []
+}

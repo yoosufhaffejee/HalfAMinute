@@ -61,8 +61,17 @@ export function startingTeam(seed, teamCount, previous = null) {
     return previous === null ? Math.floor(random(seed)() * teamCount) : (previous + 1) % teamCount;
 }
 
-export function resolutionDuration(hasEffect, won = false) {
-    return won ? 350 : hasEffect ? 2200 : 650;
+export function resolutionTiming(hasEffect, won = false, moveCount = 5) {
+    // Give every tile a readable beat, then leave time to understand the result.
+    const moveMs = Math.max(1000, Math.min(15, Math.max(0, Number(moveCount) || 0)) * 360 + 300);
+    const landingMs = hasEffect && !won ? 1400 : 0;
+    const effectMs = hasEffect && !won ? 1400 : 0;
+    const resultMs = hasEffect && !won ? 2400 : won ? 2000 : 1600;
+    return { moveMs, landingMs, effectMs, resultMs, durationMs: moveMs + landingMs + effectMs + resultMs };
+}
+
+export function resolutionDuration(hasEffect, won = false, moveCount = 5) {
+    return resolutionTiming(hasEffect, won, moveCount).durationMs;
 }
 
 export function effectMessage(effect) {

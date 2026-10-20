@@ -247,12 +247,13 @@ test('bomb loss is capped and a shield blocks either a bomb or incoming steal lo
     assert.equal(duplicate.shields[0], 1); assert.match(duplicate.text, /already ready/);
 });
 
-test('a winning Chaos move skips effects and uses a short celebration budget', () => {
+test('a winning Chaos move skips effects and leaves time to see the finish', () => {
     const h = ui(), data = act(act(game(), 'start-round', { seed: 6 }), 'end-round');
     data.settings.chaosMode = true; data.turn.selectedIndexes = [0, 1, 2];
     h.mount(data);
     const plan = h.run('planOnlineChaos(data,[22,0])');
-    assert.equal(plan.landing, null); assert.equal(plan.points[0], 22); assert.equal(plan.durationMs, 350);
+    assert.equal(plan.landing, null); assert.equal(plan.points[0], 22);
+    assert.equal(plan.durationMs, Gameplay.resolutionDuration(false, true, 3));
 });
 
 test('Chaos frames move first, reveal the landing, then apply the effect without changing the plan', () => {
@@ -260,40 +261,50 @@ test('Chaos frames move first, reveal the landing, then apply the effect without
     h.run(`teams=[{points:2},{points:7}];pointsToWin=20;preferences.motion='full';
         globalThis.plan={actorIndex:0,moveCount:3,basePoints:[5,7],points:[2,7],shields:[0,0],
         powerups:{5:'bomb'},landing:{teamIndex:0,tileIndex:5,type:'bomb'},actorDelta:-3,victimDelta:0,
-        effect:{type:'bomb',actorDelta:-3},durationMs:2200};renderResolutionFrame(plan,0)`);
+        effect:{type:'bomb',actorDelta:-3},durationMs:Gameplay.resolutionDuration(true,false,3)};renderResolutionFrame(plan,0)`);
     const saved = h.run('JSON.stringify(plan)');
     assert.equal(h.run('teams[0].points'), 2);
     assert.equal(h.run('powerupRevealVisible'), false);
     assert.equal(h.el('chaosMessage').textContent, 'Team 1 moves 3 spaces…');
-    h.run('renderResolutionFrame(plan,1000)');
+    h.run('renderResolutionFrame(plan,1380)');
     assert.equal(h.run('teams[0].points'), 5);
     assert.equal(h.run('powerupRevealVisible'), true);
-    assert.equal(h.el('chaosStep').textContent, '2 · Land');
-    h.run('renderResolutionFrame(plan,1700)');
-    assert.equal(h.el('chaosStep').textContent, '3 · Chaos!');
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · Landed');
+    h.run('renderResolutionFrame(plan,2780)');
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · Chaos!');
     assert.match(h.el('chaosMessage').textContent, /Bomb!/);
-    h.run('renderResolutionFrame(plan,2200)');
+    h.run('renderResolutionFrame(plan,4180)');
     assert.equal(h.run('teams[0].points'), 2);
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · Turn result');
+    assert.equal(h.el('chaosTotal').textContent, '2 points');
+    assert.match(h.el('chaosDetail').textContent, /space 5.*space 2/);
+    h.run('renderResolutionFrame(plan,6579)');
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · Turn result');
     assert.equal(h.run('JSON.stringify(plan)'), saved);
     h.run('preferences.motion="reduced";onlineBoardSignature="";renderResolutionFrame(plan,0)');
     assert.equal(h.run('teams[0].points'), 2);
-    assert.equal(h.el('chaosStep').textContent, 'Result');
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · Turn result');
     assert.match(h.el('chaosMessage').textContent, /Bomb! Back 3 spaces/);
 });
 
-test('local submission shows the board before running Chaos and clears its presentation afterward', async () => {
+test('local Chaos retains a readable outcome until the next round starts', async () => {
     const h = ui();
     h.run(`teams=[{points:0},{points:0}];currentTeam=1;currentRound=0;isChaosMode=true;isRoundActive=false;
         btnNextRound.hidden=false;btnAnswers.hidden=false;document.querySelectorAll('.scoreButton')[0].hidden=false;
         setScoreButtonSelected(document.querySelectorAll('.scoreButton')[0],true);
         runChaosResolutionLocally=async()=>{metrics.wordsHidden=btnAnswers.hidden;metrics.wordsInFocus=areWordsInFocusPhase();
-        setChaosPresentation('moving','Moving');return {resolutionSummary:{type:null}}}`);
+        teams[0].points=1;setChaosPresentation('moving','Moving');return {resolutionSummary:{type:null}}}`);
     await h.run('nextRound()');
     assert.equal(h.metrics.wordsHidden, true);
     assert.equal(h.metrics.wordsInFocus, false);
-    assert.equal(h.el('chaosResolution').hidden, true);
+    assert.equal(h.el('chaosResolution').hidden, false);
+    assert.equal(h.el('chaosMessage').textContent, 'Safe landing!');
+    assert.equal(h.el('chaosTotal').textContent, '1 point');
+    assert.equal(h.el('turnRecap').hidden, true);
     assert.equal(h.el('game').classList.contains('resolving-board'), false);
     assert.equal(h.el('startRoundButton').hidden, false);
+    h.run(`playSound=async()=>{};currentGameWords=['One'];numWords=1;startRound()`);
+    assert.equal(h.el('chaosResolution').hidden, true);
 });
 
 test('online Chaos owns board focus and resets visual state after the authoritative result', () => {
@@ -307,8 +318,72 @@ test('online Chaos owns board focus and resets visual state after the authoritat
     assert.equal(h.el('chaosResolution').hidden, false);
     data = OnlineState.act(data, actor('A'), {type:'resolve-chaos',turnId:data.turn.id,hostEpoch:data.hostEpoch}, now + data.turn.resolution.durationMs);
     h.apply(data);
-    assert.equal(h.el('chaosResolution').hidden, true);
+    assert.equal(h.el('chaosResolution').hidden, false);
     assert.equal(h.run('chaosVisual'), null);
+    h.apply(data); // Roster/connection renders do not erase the result.
+    assert.equal(h.el('chaosResolution').hidden, false);
+    const speaker = data.turn.speakerId;
+    data = OnlineState.act(data, actor(speaker.slice(3)), {type:'start-round',turnId:data.turn.id,seed:2}, now + 10000, rules);
+    h.apply(data);
+    assert.equal(h.el('chaosResolution').hidden, true);
+});
+
+test('Chaos result cards explain hits, protection and steals without losing final scores', () => {
+    for (const [effect, after, tone, detail] of [
+        [{type:'bomb',actorDelta:-3},4,'negative',/space 7.*space 4/],
+        [{type:'bomb',actorDelta:0,blockedByShield:true},7,'protected',/shield was used/],
+        [{type:'steal1',actorDelta:1,victimTeamIndex:1,victimDelta:-1},8,'positive',/Team 2 moved back/],
+        [{type:'steal1',actorDelta:1,victimTeamIndex:1,victimDelta:0,victimBlocked:true},8,'protected',/shield blocked the steal/],
+        [{type:'shield',actorDelta:0},7,'positive',/landed on space 7/],
+        [{type:null,actorDelta:0},7,'positive',/landed on space 7/]
+    ]) {
+        const h=ui();
+        h.run(`showChaosOutcome(${JSON.stringify({teamIndex:0,earned:3,pointsBefore:4,pointsAfter:after,effect})})`);
+        assert.equal(h.el('chaosTotal').textContent, `${after} points`);
+        assert.equal(h.el('chaosEarned').textContent, '3 correct answers');
+        assert.equal(h.el('chaosResolution').dataset.tone, tone);
+        assert.match(h.el('chaosDetail').textContent, detail);
+        assert.equal(h.el('game').classList.contains('resolving-board'), false);
+    }
+});
+
+test('the longer Chaos deadline is authoritative and late viewers join its current stage', () => {
+    let data=act(act(game(), 'start-round', {seed:99}), 'end-round');
+    data.settings.chaosMode=true;data.turn.selectedIndexes=[0,1,2];
+    const h=ui();h.mount(data);
+    data=OnlineState.act(data,actor('A'),{type:'submit-round',turnId:data.turn.id},now,
+        {planChaos:(g,p)=>h.run(`planOnlineChaos(${JSON.stringify(g)},${JSON.stringify(p)})`)});
+    const plan=data.turn.resolution, deadline=now+plan.durationMs;
+    assert.ok(plan.durationMs>=2600);
+    assert.equal(OnlineState.act(data,actor('A'),{type:'resolve-chaos',turnId:data.turn.id,hostEpoch:data.hostEpoch},deadline-1),undefined);
+    h.now=deadline-1;h.apply(data);
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · Turn result');
+    assert.deepEqual(JSON.parse(h.run('JSON.stringify(teams.map(t=>t.points))')),[...plan.points]);
+    assert.ok(OnlineState.act(data,actor('A'),{type:'resolve-chaos',turnId:data.turn.id,hostEpoch:data.hostEpoch},deadline));
+});
+
+test('local resolution waits for its plan and settles exactly; reduced motion skips the wait', async () => {
+    for (const motion of ['full','reduced']) {
+        const h=ui();
+        h.run(`teams=[{points:4},{points:9}];pointsToWin=20;preferences.motion='${motion}';randomSeed=()=>99;
+            sleep=async ms=>{metrics.waitedMs=ms};`);
+        const result=await h.run('runChaosResolutionLocally({teamIndexForRound:0,selectedPoints:3,roundNumberForRound:1})');
+        assert.deepEqual(JSON.parse(h.run('JSON.stringify(teams.map(t=>t.points))')),[...result.plan.points]);
+        assert.equal(h.el('chaosResolution').dataset.phase,'complete');
+        if(motion==='full')assert.equal(h.metrics.waitedMs,result.plan.durationMs);
+        else assert.equal(h.metrics.waitedMs,undefined);
+    }
+});
+
+test('a stored short Chaos plan still reaches its own exact outcome at its deadline', () => {
+    const h=ui();
+    h.run(`teams=[{points:4},{points:9}];pointsToWin=20;preferences.motion='full';
+        globalThis.oldPlan={actorIndex:0,moveCount:3,basePoints:[7,9],points:[4,9],shields:[0,0],
+        powerups:{7:'bomb'},landing:{teamIndex:0,tileIndex:7,type:'bomb'},actorDelta:-3,victimDelta:0,
+        effect:{type:'bomb',actorDelta:-3},durationMs:2200};renderResolutionFrame(oldPlan,2200)`);
+    assert.equal(h.run('teams[0].points'),4);
+    assert.equal(h.el('chaosResolution').dataset.phase,'complete');
+    assert.equal(h.el('chaosTotal').textContent,'4 points');
 });
 
 test('Classic and Chaos both explain the randomized first team', () => {

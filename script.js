@@ -3,7 +3,7 @@ import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, s
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 import * as OnlineState from './online/state.js?v=20261020.4';
 import { OnlineClient } from './online/client.js?v=20261020.4';
-import * as Gameplay from './gameplay/rules.js?v=20261020.4';
+import * as Gameplay from './gameplay/rules.js?v=20261020.9';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -1818,6 +1818,7 @@ function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
 function startRound() {
     if (isOnlineGame) { void startOnlineRound(); return; }
     if (isRoundActive || isResolvingChaosMove || teams.some(team => team.points >= pointsToWin)) return;
+    clearChaosPresentation();
     showRecap('');
     stopRoundSounds();
     localTurnStartedAt = Date.now();
@@ -1912,6 +1913,7 @@ async function runChaosResolutionLocally({ teamIndexForRound, selectedPoints, ro
         const interval = setInterval(render, 50);
         try { await sleep(plan.durationMs); } finally { clearInterval(interval); }
     }
+    renderResolutionFrame(plan, plan.durationMs);
     teams.forEach((team, index) => { team.points = plan.points[index]; });
     teamShields = plan.shields;
     powerupRevealVisible = false; landedPowerupPreview = null;
@@ -1926,7 +1928,7 @@ async function nextRound() {
     const teamIndexForRound = getCurrentTeamIndex(currentTeam), roundNumberForRound = currentRound + 1;
     const before = teams[teamIndexForRound].points;
     const submittedAt = Date.now();
-    let chaosSummary, chaosEffect;
+    let chaosSummary, chaosEffect, completedEvent;
     isResolvingChaosMove = true; setNextRoundBusyState(true);
     document.querySelectorAll('.scoreButton').forEach(button => { button.disabled = true; });
     btnEndGame.hidden = true;
@@ -1941,11 +1943,12 @@ async function nextRound() {
         } else teams[teamIndexForRound].points += correctAnswers.length;
         const text = Gameplay.recap({ teamIndex: teamIndexForRound, earned: correctAnswers.length, before,
             after: teams[teamIndexForRound].points, effect: chaosEffect });
-        localAudit.push({ teamIndex: teamIndexForRound, roundNumber: roundNumberForRound, correctAnswers, earned: correctAnswers.length, recap: text,
-            chaosSummary, pointsBefore: before, pointsAfter: teams[teamIndexForRound].points,
+        completedEvent = { teamIndex: teamIndexForRound, roundNumber: roundNumberForRound, correctAnswers, earned: correctAnswers.length, recap: text,
+            chaosSummary, effect: chaosEffect, pointsBefore: before, pointsAfter: teams[teamIndexForRound].points,
             clueSeconds: Math.max(0, (localSelectingAt - localTurnStartedAt) / 1000),
             scoringSeconds: Math.max(0, (submittedAt - localSelectingAt) / 1000),
-            resolutionSeconds: Math.max(0, (Date.now() - submittedAt) / 1000) });
+            resolutionSeconds: Math.max(0, (Date.now() - submittedAt) / 1000) };
+        localAudit.push(completedEvent);
         showRecap(text);
         createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
         createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, { chaosSummary });
@@ -1953,7 +1956,11 @@ async function nextRound() {
         updateBoard(); updateCurrentTeamIndicator(); updateTeamScores();
         if (teams.some(team => team.points >= pointsToWin)) { renderMatchResults(); return; }
         btnStartRound.hidden = false; btnEndGame.hidden = false;
-    } finally { clearChaosPresentation(); isResolvingChaosMove = false; setNextRoundBusyState(false); updateMobileGameFocus(); }
+    } finally {
+        clearChaosPresentation();
+        if (completedEvent && isChaosMode && !game.classList.contains('match-finished')) showChaosOutcome(completedEvent);
+        isResolvingChaosMove = false; setNextRoundBusyState(false); updateMobileGameFocus();
+    }
 }
 
 async function endGame() {
@@ -2107,7 +2114,7 @@ function updateBoard({ animateMoves = false } = {}) {
             if (Math.abs(x) + Math.abs(y) < 1) continue;
             token.animate([{ transform: `translate(${x}px, ${y}px) scale(1)` },
                 { transform: `translate(${x * .45}px, ${y * .45 - 9}px) scale(1.12)`, offset: .55 },
-                { transform: 'translate(0, 0) scale(1)' }], { duration: 170, easing: 'ease-out' });
+                { transform: 'translate(0, 0) scale(1)' }], { duration: 280, easing: 'ease-out' });
         }
         const type = isChaosMode && powerupRevealVisible && position > 0 && position < pointsToWin - 1 ? sanitizeChaosPowerupType(roundPowerups[position]) : null;
         if (type) {
@@ -2572,7 +2579,7 @@ function planOnlineChaos(gameData, basePoints) {
         landing: type ? { teamIndex: actorIndex, tileIndex, type } : null,
         effect, summary: formatChaosSummaryForAudit(effect), moveCount,
         actorDelta: effect.actorDelta, victimTeamIndex: effect.victimTeamIndex, victimDelta: effect.victimDelta,
-        durationMs: Gameplay.resolutionDuration(Boolean(type), won)
+        durationMs: Gameplay.resolutionDuration(Boolean(type), won, moveCount)
     };
 }
 
@@ -2594,12 +2601,17 @@ function renderOnlineClock() {
 
 function renderResolutionFrame(plan, elapsed) {
     const actorIndex = plan.actorIndex ?? plan.landing?.teamIndex ?? (currentTeam - 1);
-    const duration = plan.durationMs, reduced = reducedMotion();
-    const movementEnd = plan.landing ? .4 : .75;
-    const baseRatio = reduced ? 1 : Math.min(1, Math.max(0, elapsed / (duration * movementEnd)));
-    const effectRatio = reduced ? 1 : Math.min(1, Math.max(0, (elapsed - duration * .65) / (duration * .25)));
-    const phase = reduced || elapsed >= duration * .9 ? 'complete' : baseRatio < 1 ? 'moving'
-        : !plan.landing ? 'complete' : elapsed < duration * .65 ? 'landing' : 'effect';
+    const reduced = reducedMotion();
+    const timing = Gameplay.resolutionTiming(Boolean(plan.landing), plan.basePoints[actorIndex] >= pointsToWin, plan.moveCount);
+    // Stored plans own their deadline, including plans made by an older client.
+    const scale = plan.durationMs / timing.durationMs;
+    const moveEnd = timing.moveMs * scale;
+    const effectStart = (timing.moveMs + timing.landingMs) * scale;
+    const effectEnd = (timing.moveMs + timing.landingMs + timing.effectMs) * scale;
+    const baseRatio = reduced ? 1 : Math.min(1, Math.max(0, elapsed / moveEnd));
+    const effectRatio = reduced || !plan.landing ? 1 : Math.min(1, Math.max(0, (elapsed - effectStart) / (timing.effectMs * scale)));
+    const phase = reduced || elapsed >= effectEnd ? 'complete' : baseRatio < 1 ? 'moving'
+        : elapsed < effectStart ? 'landing' : 'effect';
     const display = [...plan.basePoints];
     display[actorIndex] = plan.basePoints[actorIndex] - plan.moveCount + Math.floor(plan.moveCount * baseRatio)
         + Math.sign(plan.actorDelta) * Math.floor(Math.abs(plan.actorDelta) * effectRatio);
@@ -2615,19 +2627,54 @@ function renderResolutionFrame(plan, elapsed) {
     const effectName = CHAOS_POWERUP_TYPES[plan.landing?.type]?.legendLabel;
     const team = `Team ${actorIndex + 1}`;
     const outcome = Gameplay.effectMessage(plan.effect);
+    const result = chaosOutcomePresentation({ teamIndex: actorIndex, earned: plan.moveCount,
+        pointsBefore: plan.basePoints[actorIndex] - plan.moveCount, pointsAfter: plan.points[actorIndex], effect: plan.effect });
     const message = phase === 'moving' ? (plan.moveCount ? `${team} moves ${plan.moveCount} ${plan.moveCount === 1 ? 'space' : 'spaces'}…` : `${team} stays on this space…`)
         : phase === 'landing' ? `${effectName}!` : phase === 'effect' ? Gameplay.effectMessage(plan.effect)
-        : display[actorIndex] >= pointsToWin ? `${team} reached the finish!`
-        : `${outcome ? outcome + ' ' : ''}${team} now has ${display[actorIndex]} ${display[actorIndex] === 1 ? 'point' : 'points'}.${plan.landing ? '' : ' Safe landing!'}`;
-    setChaosPresentation(phase, message, ['effect', 'complete'].includes(phase) ? (plan.actorDelta < 0 ? 'negative' : 'positive') : 'neutral');
+        : display[actorIndex] >= pointsToWin ? `${team} reached the finish!` : outcome || 'Safe landing!';
+    setChaosPresentation(phase, message, ['effect', 'complete'].includes(phase) ? result.tone : 'neutral', {
+        teamIndex: actorIndex, icon: phase === 'moving' ? '→' : result.icon,
+        detail: phase === 'moving' ? `From space ${plan.basePoints[actorIndex] - plan.moveCount} to space ${Math.min(plan.basePoints[actorIndex], pointsToWin)}.`
+            : phase === 'landing' ? `${team} landed on space ${plan.basePoints[actorIndex]}. The effect is about to happen…` : result.detail,
+        earned: plan.moveCount, total: phase === 'complete' ? plan.points[actorIndex] : null
+    });
     updateBoard({ animateMoves: true });
 }
 
-function setChaosPresentation(phase, message, tone = 'neutral') {
-    game.classList.add('resolving-board');
-    const panel = document.getElementById('chaosResolution'); panel.hidden = false; panel.dataset.tone = tone;
-    document.getElementById('chaosStep').textContent = ({ moving: '1 · Move', landing: '2 · Land', effect: '3 · Chaos!', complete: 'Result', choice: 'Choose your effect' })[phase];
-    document.getElementById('chaosMessage').textContent = message;
+function chaosOutcomePresentation(event) {
+    const effect = event.effect || {}, team = `Team ${event.teamIndex + 1}`;
+    const landed = (event.pointsBefore || 0) + event.earned, after = event.pointsAfter;
+    const icon = effect.blockedByShield ? '🛡️' : ({ plus1: '↑', plus2: '↑', minus1: '↓', minus2: '↓', bomb: '💣', shield: '🛡️', steal1: '↔' })[effect.type] || '✓';
+    let detail = after !== landed ? `${team} landed on space ${landed} and ${after < landed ? 'moved back' : 'advanced'} to space ${after}.`
+        : event.earned ? `${team} landed on space ${Math.min(after, pointsToWin)}.` : `${team} stays on space ${after}.`;
+    if (effect.blockedByShield) detail += ' The shield was used to block the penalty.';
+    if (Number.isInteger(effect.victimTeamIndex)) detail += effect.victimBlocked
+        ? ` Team ${effect.victimTeamIndex + 1}'s shield blocked the steal and was used up.`
+        : effect.victimDelta < 0 ? ` Team ${effect.victimTeamIndex + 1} moved back one space.` : '';
+    return { message: Gameplay.effectMessage(effect) || 'Safe landing!', detail, icon,
+        tone: effect.blockedByShield || effect.victimBlocked ? 'protected' : effect.actorDelta < 0 ? 'negative' : 'positive' };
+}
+
+function showChaosOutcome(event) {
+    const result = chaosOutcomePresentation({ ...event, earned: event.earned ?? event.correctAnswers?.length ?? 0 });
+    showRecap('');
+    setChaosPresentation('complete', result.message, result.tone, { ...result, teamIndex: event.teamIndex,
+        earned: event.earned ?? event.correctAnswers?.length ?? 0, total: event.pointsAfter, persistent: true });
+}
+
+function setChaosPresentation(phase, message, tone = 'neutral', details = {}) {
+    game.classList.toggle('resolving-board', !details.persistent);
+    const panel = document.getElementById('chaosResolution'); panel.hidden = false; panel.dataset.tone = tone; panel.dataset.phase = phase;
+    panel.setAttribute('aria-label', phase === 'complete' ? 'Chaos turn result' : 'Chaos turn progress');
+    const step = ({ moving: 'Move', landing: 'Landed', effect: 'Chaos!', complete: 'Turn result', choice: 'Choose your effect' })[phase];
+    document.getElementById('chaosStep').textContent = `${Number.isInteger(details.teamIndex) ? 'Team ' + (details.teamIndex + 1) + ' · ' : ''}${step}`;
+    const node = document.getElementById('chaosMessage');
+    if (node.textContent !== message) node.textContent = message;
+    document.getElementById('chaosIcon').textContent = details.icon || '?';
+    document.getElementById('chaosDetail').textContent = details.detail || '';
+    document.getElementById('chaosScoreline').hidden = details.total == null;
+    document.getElementById('chaosEarned').textContent = `${details.earned || 0} correct ${details.earned === 1 ? 'answer' : 'answers'}`;
+    document.getElementById('chaosTotal').textContent = `${details.total} ${details.total === 1 ? 'point' : 'points'}`;
 }
 
 function showChaosChoicePreview(plan) {
@@ -2649,7 +2696,10 @@ function clearChaosPresentation() {
 function renderOnlineControls() {
     const data = onlineClient?.snapshot;
     if (!data || !isOnlineGame) return;
-    if (!['resolving', 'chaos-choice'].includes(data.phase)) clearChaosPresentation();
+    if (!['resolving', 'chaos-choice'].includes(data.phase)) {
+        clearChaosPresentation();
+        if (isChaosMode && data.auditEvent && ['idle', 'waiting'].includes(data.phase)) showChaosOutcome(data.auditEvent);
+    }
     const view = OnlineState.view(data, onlineClient.actor, onlineClient.serverNow());
     const active = view.active && onlineClient.connected && !onlineClient.suspended;
     document.getElementById('currentTeamIndicator').hidden = data.phase === 'finished';

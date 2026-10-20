@@ -15,7 +15,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - Round history/audit table (mobile-friendly vertical layout)
 - Anti-repetition behavior with recent-word suppression
 - Short / Standard / Long quick setup, with all existing advanced settings available
-- Chaos: capped bombs, shields, fast outcomes, and an optional once-per-team reroll
+- Chaos: capped bombs, shields, readable effect reveals, and an optional once-per-team reroll
 - Visible Chaos token movement, staged landing/effect reveals, and a reduced-motion alternative
 - Ranked final scores, a compact final board, relevant Chaos breakdowns, summary downloads, and rematches with rotating starters
 - Persistent mute, volume, and device/reduced/full motion preferences
@@ -108,7 +108,7 @@ The initial starter is randomized. Rematches keep the roster/settings and rotate
 - The map changes each turn. Start, the tile before the finish, and a winning earned move have no effect. Resolve one landing effect, without chaining. A zero-correct turn can still land on an effect.
 - Boosts add 1 or 2; slips lose 1 or 2; bombs lose **up to 3 points**, with a floor of zero. Effect weights remain unchanged.
 - One shield blocks a landing penalty or incoming steal loss, then is consumed. Shields do not stack. A blocked steal still gives the stealing team its +1; the victim keeps their point. Steals target the leading opponent, with seeded random ties.
-- Empty resolutions take 650 ms; effect resolutions take 2.2 seconds; winning moves take 350 ms. Reduced motion shows the outcome immediately while the online authoritative deadline still applies.
+- Movement allows 360 ms per space (at least one second), followed by a 1.4-second landing reveal, a 1.4-second effect, and 2.4 seconds to read the result. A typical effect turn takes 6–7 seconds. Safe landings skip the effect stages and hold the result for 1.6 seconds; wins hold it for two seconds. The result card remains until the next round starts. Reduced motion shows the outcome immediately while the online authoritative deadline still applies.
 - The **optional reroll prototype**, off by default, offers one reroll per team per match after an eligible effect. The speaker chooses within five seconds, must accept the new result, and cannot reroll again that match. No choice defaults to keep; the current host recovers the timeout if the speaker disconnects/leaves.
 
 Word dealing tracks normalized answers and separate easy/hard exhaustion cycles. A difficulty reshuffles only after its own pool runs out; the other difficulty's deck history stays intact. No card repeats the same normalized answer. Narrow packs may repeat after exhaustion. The explicit match-summary download includes counts, scores, effects, and phase timings, with no player names or answer text. Online phase timings live in the normal shared match history; no separate analytics service is used.
