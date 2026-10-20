@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
 import * as OnlineState from './online/state.js?v=20261020.11';
 import { OnlineClient } from './online/client.js?v=20261020.11';
 import * as Gameplay from './gameplay/rules.js?v=20261020.11';
+import * as AiErrors from './gameplay/ai-errors.js?v=20261020.12';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -1547,25 +1548,7 @@ function extractUniqueAiWordsFromText(rawText = "") {
 }
 
 function getFriendlyGeminiErrorMessage(error) {
-    const rawMessage = String(error?.message || "").toLowerCase();
-    const rawCode = String(error?.code || "").toLowerCase();
-
-    if (rawCode.includes("429") || rawMessage.includes("429") || rawMessage.includes("quota") || rawMessage.includes("rate")) {
-        return "The AI service is currently rate-limited. Please wait a few seconds and try again.";
-    }
-    if (rawCode.includes("403") || rawMessage.includes("permission") || rawMessage.includes("api key")) {
-        return "AI access is currently unavailable due to credentials or permission limits. Please check your Gemini API key/project setup.";
-    }
-    if (rawCode.includes("503") || rawCode.includes("500") || rawMessage.includes("unavailable") || rawMessage.includes("deadline")) {
-        return "The AI service is temporarily unavailable. Please try again shortly.";
-    }
-    if (rawMessage.includes("safety") || rawMessage.includes("blocked")) {
-        return "The request was blocked by safety filters. Try a clearer, game-safe topic.";
-    }
-    if (rawMessage.includes("network") || rawMessage.includes("fetch")) {
-        return "Network issue while contacting Gemini. Check your connection and try again.";
-    }
-    return "Could not generate words right now. Please try again.";
+    return AiErrors.describeGeminiError(error).message;
 }
 
 async function run(topic) {
@@ -1652,7 +1635,8 @@ Output format rules:
         currentGameWords = shuffleArray([...uniqueGeneratedWords]);
         setAiFeedback(`Your pack is ready. Review the words or jump straight in.`);
     } catch (error) {
-        console.error("Gemini generation failed:", error);
+        const failure = AiErrors.describeGeminiError(error);
+        console.error('AI generation failed:', { kind: failure.kind, status: failure.status });
         setAiFeedback(getFriendlyGeminiErrorMessage(error), true);
     } finally {
         btnGenerate.disabled = false;

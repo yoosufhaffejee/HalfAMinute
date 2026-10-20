@@ -6,6 +6,7 @@ import { webcrypto } from 'node:crypto';
 import * as OnlineState from '../online/state.js';
 import { OnlineClient } from '../online/client.js';
 import * as Gameplay from '../gameplay/rules.js';
+import * as AiErrors from '../gameplay/ai-errors.js';
 
 const source = fs.readFileSync(new URL('../script.js', import.meta.url), 'utf8').replace(/^import .*$/gm, '');
 const now = 1000000;
@@ -48,7 +49,7 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, Gameplay, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, AiErrors, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), GoogleGenerativeAI: class { getGenerativeModel() { return {}; } },
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
@@ -592,6 +593,18 @@ test('AI generation shows inline feedback and restores editing and play controls
     assert.equal(h.el('btnAiGame').disabled,false);
     assert.equal(h.el('aiPackStatus').textContent,'2 words ready to play.');
     assert.equal(h.el('aiFeedback').classList.contains('is-error'),false);
+});
+
+test('a rejected AI credential preserves a ready pack and restores all generation controls', async () => {
+    const h=ui();h.run(`globalThis.HTMLElement=class{};initializeMenu();document.getElementById('aiWords').value='One\\nTwo';
+        syncAiPack();model.generateContent=async()=>{throw {status:403,message:'Error fetching generateContent: Your API key was reported as leaked.'}}`);
+    await h.run('run("Football players")');
+    assert.equal(h.el('aiWords').value,'One\nTwo');
+    assert.equal(h.el('btnGenerate').disabled,false);
+    assert.equal(h.el('aiWords').disabled,false);
+    assert.equal(h.el('btnAiGame').disabled,false);
+    assert.match(h.el('aiFeedback').textContent,/game owner/);
+    assert.doesNotMatch(h.el('aiFeedback').textContent,/rate.limit|few seconds/i);
 });
 
 test('online dialog validates inline before joining and preserves the normalized lobby request', () => {
