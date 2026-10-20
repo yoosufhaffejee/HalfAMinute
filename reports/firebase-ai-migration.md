@@ -26,6 +26,8 @@ Configured through the authenticated Firebase CLI, Google Cloud CLI and Firebase
 - Official CDN modules load successfully. Source syntax and whitespace checks pass.
 - A temporary App Check debug registration successfully exchanged a limited-use token and generated ten football-player entries through the Firebase AI Logic proxy (finish reason `STOP`). The debug registration was deleted immediately afterward; no token was saved to the repository.
 - A request without an App Check token was rejected with HTTP 401 `UNAUTHENTICATED` / `Firebase App Check token is invalid.`
-- Production browser verification is recorded after deployment below.
+- GitHub Pages deployment of `c9ab555` completed successfully. The live site loaded cache version `20261020.13`.
+- A normal production browser (no debug token) generated a 50-word Football pack through reCAPTCHA Enterprise and Firebase AI Logic. Generate/play controls restored correctly, and **Play with this pack** opened a playable match. [Live success screenshot](ai-logic-live-success.png).
+- Final administration checks confirmed the original three domain referrers, the four intended API targets, App Check `ENFORCED`, zero temporary verification registrations and billing disabled.
 
 The original blocked Gemini credential was removed from current source. It is still present in historical commits and remains blocked by Google. No replacement Gemini secret was introduced.

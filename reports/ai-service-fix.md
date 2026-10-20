@@ -1,6 +1,6 @@
 # AI service diagnosis and error handling
 
-Update: the Firebase AI Logic migration below supersedes the original outstanding backend requirement. See [managed AI migration](firebase-ai-migration.md).
+Update: Firebase AI Logic now supplies managed authorization. See [managed AI migration](firebase-ai-migration.md) for the completed setup and live verification; it supersedes the original outstanding backend requirement.
 
 The live-origin provider check returned HTTP 403 with: "Your API key was reported as leaked. Please use another API key." The embedded credential is blocked. Changing the model cannot resolve this rejection. Google's model documentation still lists `gemini-flash-latest`: https://ai.google.dev/gemini-api/docs/models.
 
