@@ -4,8 +4,8 @@ import * as OnlineState from './online/state.js?v=20261020.11';
 import { OnlineClient } from './online/client.js?v=20261020.11';
 import * as Gameplay from './gameplay/rules.js?v=20261020.11';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
-import { createAiWordClient } from './gameplay/ai-client.js?v=20261020.14';
-import * as AiPacks from './gameplay/ai-packs.js?v=20261020.14';
+import { createAiWordClient } from './gameplay/ai-client.js?v=20261020.15';
+import * as AiPacks from './gameplay/ai-packs.js?v=20261020.15';
 
 // Initialize Firebase
 const firebaseConfig = {

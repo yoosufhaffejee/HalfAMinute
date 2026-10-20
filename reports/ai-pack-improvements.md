@@ -24,13 +24,15 @@ This is a small live sample with ordinary model variability, different requested
 
 | Topic | Previous prompt | Final prompt |
 | --- | --- | --- |
-| Football | 49 unique answers | 80 accepted; 50 easy / 30 hard |
+| Football | 49 unique answers | 149 accepted; 90 easy / 59 hard |
 | Strict planets in our solar system | 60 answers, including moons, dwarf planets and aliases | The eight planets; all easy |
-| Football again, excluding the previous accepted pack | No exclusion feature | 144 accepted; zero matching display/canonical identities from the preceding 80 |
+| Football again, excluding the previous accepted pack | No exclusion feature | 146 accepted after filtering three recent identities and one duplicate; zero matching identities from the preceding 149 |
 
-The larger target is a goal, not a promise that every request returns 150. The final samples took about 7.3 seconds, 1.7 seconds and 6.5 seconds respectively. Difficulty ratios are approximate model judgments: the second Football pack skewed harder than requested. Actual dealing still uses the selected difficulty and normal card split.
+The larger target is a goal, not a promise that every request returns 150. The final samples took about 11.7 seconds, 1.9 seconds and 10.3 seconds respectively. Difficulty ratios are approximate model judgments: the second Football pack skewed easier than requested (118 easy / 28 hard). Actual dealing still uses the selected difficulty and normal card split.
 
-Manual review found residual semantic issues in the repeat pack: `Signal Iduna Park` and `Westfalenstadion` were given different canonical labels despite referring to the same stadium; `Anfield Road` overlaps another stadium answer. One unusual person/name association also needs factual verification. The validator cannot detect these without a reliable external entity catalog. The improved instructions and canonical filtering reduce known repeats, but they cannot establish zero semantic repeats or factual accuracy. No automatic follow-up model call or external fact-check service was added.
+Manual review found residual semantic/variant issues: the first Football pack includes both `De Kuip` and `Stadion Feijenoord` with different canonical labels despite referring to the same stadium, and the repeat pack contains `Captain Armband` and `Captain's Armband` with different labels. The validator cannot reliably resolve all such identities without a catalog or more language-specific heuristics. The improved instructions and canonical filtering reduce known repeats, but they cannot establish zero semantic repeats or factual accuracy. No automatic follow-up model call or external fact-check service was added.
+
+Production testing of the first revision also returned only 50 answers for Movies. The final instruction explicitly requests the full target for broad topics with abundant answers, while preserving the smaller strict-topic exception. This count adjustment produced the near-150 final CLI results above.
 
 Evidence: [final samples](ai-pack-evaluation.json), [initial samples used during refinement](ai-pack-evaluation-initial.json), [mobile editor](ai-pack-mobile-editor.png). The plain editor, duplicate count, persistent footer and scrolling modal were verified at 390 × 844. Production SDK verification is recorded after publication.
 
