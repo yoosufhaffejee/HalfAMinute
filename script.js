@@ -3,8 +3,9 @@ import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, s
 import * as OnlineState from './online/state.js?v=20261020.11';
 import { OnlineClient } from './online/client.js?v=20261020.11';
 import * as Gameplay from './gameplay/rules.js?v=20261020.11';
-import * as AiErrors from './gameplay/ai-errors.js?v=20261020.13';
-import { createAiWordClient } from './gameplay/ai-client.js?v=20261020.13';
+import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
+import { createAiWordClient } from './gameplay/ai-client.js?v=20261020.14';
+import * as AiPacks from './gameplay/ai-packs.js?v=20261020.14';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -22,6 +23,8 @@ const db = getDatabase(app);
 
 // Firebase manages Gemini authorization; no Gemini credential is shipped to players.
 const model = createAiWordClient(app);
+let aiGeneratedEntries = [];
+let aiGenerationHistory = AiPacks.readHistory({ getItem: key => localStorage.getItem(key) });
 
 // Game state variables
 let teams = [];
@@ -500,6 +503,8 @@ function initializeMenu() {
     document.getElementById('topic').addEventListener('keydown', event => {
         if (event.key === 'Enter' && !document.getElementById('btnGenerate').disabled) { event.preventDefault(); generate(); }
     });
+    document.getElementById('aiModal').addEventListener('show.bs.modal', syncAiPack);
+    document.getElementById('difficulty').addEventListener('change', syncAiPack);
     syncAiPack();
 
     txtGameCode.addEventListener("keyup", function (event) {
@@ -628,8 +633,9 @@ function sanitizeSelectedCategories(categoryList) {
 }
 
 function getSanitizedSettingsFromInputs() {
+    const chosenDifficulty = document.getElementById('difficulty').value.toLowerCase();
     return {
-        difficulty: document.getElementById("difficulty").value.toLowerCase(),
+        difficulty: ['easy', 'normal', 'hard'].includes(chosenDifficulty) ? chosenDifficulty : 'normal',
         numTeams: clampInt(txtTeams.value, 2, 2, 4),
         pointsToWin: clampInt(document.getElementById("pointsToWin").value, 20, 10, 60),
         numWords: clampInt(txtWords.value, 5, 1, 15),
@@ -1520,33 +1526,34 @@ function setAiFeedback(message, error = false) {
     status.setAttribute('aria-live', error ? 'assertive' : 'polite');
 }
 
-function syncAiPack() {
-    const count = extractUniqueAiWordsFromText(document.getElementById('aiWords').value).length;
-    document.getElementById('aiPackStatus').textContent = count ? `${count} ${count === 1 ? 'word' : 'words'} ready to play.` : 'No words yet. Generate a pack or paste your own.';
-    document.getElementById('btnAiGame').disabled = document.getElementById('btnGenerate').disabled || count === 0;
+function getAiWordObjects(selectedDifficulty = getSanitizedSettingsFromInputs().difficulty) {
+    return AiPacks.reconcileEditedPack(document.getElementById('aiWords').value, aiGeneratedEntries, selectedDifficulty);
 }
 
-function extractUniqueAiWordsFromText(rawText = "") {
-    const lines = String(rawText)
-        .split("\n")
-        .map(line => line.replace(/^\s*(?:[-*\u2022]\s*|\d+[.)-]\s*)/, "").trim())
-        .filter(Boolean);
+function syncAiPack() {
+    const selectedDifficulty = getSanitizedSettingsFromInputs().difficulty;
+    const entries = getAiWordObjects(selectedDifficulty), count = entries.length;
+    const eligible = entries.filter(entry => selectedDifficulty === 'normal' || entry.difficulty === selectedDifficulty);
+    const easy = entries.filter(entry => entry.difficulty === 'easy').length;
+    const detail = aiGeneratedEntries.length && count ? ` ${easy} easy · ${count - easy} hard.` : '';
+    document.getElementById('aiPackStatus').textContent = count
+        ? `${count} ${count === 1 ? 'word' : 'words'}${eligible.length ? ' ready to play' : ''}.${detail}${eligible.length ? '' : ' No answers at the selected difficulty. Change difficulty or generate a new pack.'}`
+        : 'No words yet. Generate a pack or paste your own.';
+    document.getElementById('btnAiGame').disabled = document.getElementById('btnGenerate').disabled || !eligible.length;
+}
 
-    const uniqueWords = [];
-    const seenWords = new Set();
-    lines.forEach(word => {
-        const normalized = normalizeWord(word);
-        if (!normalized || seenWords.has(normalized)) {
-            return;
-        }
-        seenWords.add(normalized);
-        uniqueWords.push(word);
-    });
-    return uniqueWords;
+function extractUniqueAiWordsFromText(rawText = '') {
+    return AiPacks.parseManualWords(rawText);
 }
 
 function getFriendlyGeminiErrorMessage(error) {
     return AiErrors.describeGeminiError(error).message;
+}
+
+function refreshAiGenerationHistory() {
+    aiGenerationHistory = AiPacks.sanitizeHistory([...aiGenerationHistory,
+        ...AiPacks.readHistory({ getItem: key => localStorage.getItem(key) })]);
+    return aiGenerationHistory;
 }
 
 async function run(topic) {
@@ -1565,73 +1572,33 @@ async function run(topic) {
         syncAiPack();
         return;
     }
+    if (strictTopic.length > 240) {
+        setAiFeedback('Keep the topic to 240 characters or fewer.', true); return;
+    }
     btnGenerate.disabled = true; btnAiGame.disabled = true; textArea.disabled = true;
     btnGenerate.textContent = 'Generating…'; btnGenerate.setAttribute('aria-busy', 'true');
     setAiFeedback('Building your word pack…');
 
     try {
-        let prompt = "";
-        if (cleanTopic.startsWith('!')) {
-            prompt = `You are generating words for a 30 Seconds-style clue game.
-Create exactly 60 unique, high-quality entries focused ONLY on "${strictTopic}".
-
-Goal quality rules:
-- Prioritize clueable, specific terms that are fun under time pressure.
-- Include a balanced spread of EASY and HARD terms (roughly 65/35).
-- Include people, places, events, objects, organizations, and terminology only when they are naturally central to "${strictTopic}".
-- Avoid vague umbrella words, filler terms, generic category labels, and repetitive stem variants.
-- Avoid near-duplicates, singular/plural duplicates, alternate spellings of the same entity, and trivial rewordings.
-- Avoid predictable sequence lists unless the sequence itself is core to "${strictTopic}".
-- Most entries should be 1-4 words.
-
-Strict-scope rule:
-- Do NOT drift into broad neighboring themes.
-- Keep every entry tightly anchored to "${strictTopic}".
-
-Output format rules:
-1. Output only the 60 entries, one per line.
-2. No numbering, bullets, headings, explanations, or extra text.
-3. English only unless explicitly requested otherwise.`
-        }
-        else {
-            prompt = `You are generating words for a 30 Seconds-style clue game.
-Create exactly 50 unique, high-quality entries related to "${cleanTopic}".
-
-Goal quality rules:
-- Prioritize terms that are concrete, clueable, and fun to describe quickly.
-- Include a deliberate EASY/HARD blend (roughly 70/30).
-- Cover relevant sub-areas of "${cleanTopic}" such as notable people, places, events, objects, and key terminology.
-- Prefer culturally relevant, recognizable references with a few deeper challenge picks.
-- Avoid generic umbrella words, near-duplicates, singular/plural duplicates, and repetitive stem patterns.
-- Avoid low-value filler and overly abstract entries.
-- Most entries should be 1-4 words.
-
-Output format rules:
-1. Output only the 50 entries, one per line.
-2. No numbering, bullets, headings, explanations, or extra text.
-3. No duplicates.
-4. English only unless explicitly requested otherwise.`
-        }
-
+        const settings = getSanitizedSettingsFromInputs();
+        const prompt = AiPacks.buildPackRequest(cleanTopic, { difficulty: settings.difficulty,
+            numWords: settings.numWords, history: refreshAiGenerationHistory() });
         const result = await model.generateContent(prompt);
         const response = await result.response;
-        const text = String(response?.text?.() || "").trim();
-        if (!text) {
-            throw new Error("empty-response");
-        }
-
-        if (textArea) {
-            textArea.textContent = text;
-            textArea.value = text;
-        }
-
-        const uniqueGeneratedWords = extractUniqueAiWordsFromText(text);
-        if (uniqueGeneratedWords.length === 0) {
-            throw new Error("no-words-generated");
-        }
-
-        currentGameWords = shuffleArray([...uniqueGeneratedWords]);
-        setAiFeedback(`Your pack is ready. Review the words or jump straight in.`);
+        const pack = AiPacks.parseGeneratedPack(String(response?.text?.() || ''), {
+            history: refreshAiGenerationHistory(), finishReason: response?.candidates?.[0]?.finishReason,
+            difficulty: settings.difficulty
+        });
+        // Commit only a fully parsed, usable pack. A bad response never replaces edits.
+        aiGeneratedEntries = pack.entries;
+        const text = pack.entries.map(entry => entry.word).join('\n');
+        textArea.value = text; textArea.textContent = text;
+        currentGameWords = shuffleArray(pack.entries.map(entry => entry.word));
+        aiGenerationHistory = AiPacks.rememberPack(aiGenerationHistory, pack.entries,
+            { setItem: (key, value) => localStorage.setItem(key, value) });
+        setAiFeedback(pack.smaller
+            ? `${pack.entries.length} fresh ${pack.entries.length === 1 ? 'answer is' : 'answers are'} ready. Some topics have fewer than 150; broaden the topic for a larger pack.`
+            : 'Your 150-word pack is ready. Review the words or jump straight in.');
     } catch (error) {
         const failure = AiErrors.describeGeminiError(error);
         console.error('AI generation failed:', { kind: failure.kind, status: failure.status });
@@ -1651,6 +1618,11 @@ function startAIGame() {
         setAiFeedback('Generate or paste words before starting a game.', true);
         return;
     }
+    const selectedDifficulty = getSanitizedSettingsFromInputs().difficulty;
+    if (!getAiWordObjects(selectedDifficulty).some(entry => selectedDifficulty === 'normal' || entry.difficulty === selectedDifficulty)) {
+        setAiFeedback('This pack has no answers at the selected difficulty. Change difficulty in Settings or generate another pack.', true);
+        syncAiPack(); return;
+    }
     isAiGame = true;
     currentGameWords = shuffleArray(uniqueAiWords);
     wordDescriptionLookup = new Map();
@@ -1662,6 +1634,13 @@ function startAIGame() {
 }
 
 async function startGame({ rematch = false } = {}) {
+    if (isAiGame) {
+        const selectedDifficulty = getSanitizedSettingsFromInputs().difficulty;
+        if (!getAiWordObjects(selectedDifficulty).some(entry => selectedDifficulty === 'normal' || entry.difficulty === selectedDifficulty)) {
+            setAiFeedback('This pack has no answers at the selected difficulty. Change difficulty in Settings or generate another pack.', true);
+            syncAiPack(); getModalInstance('aiModal')?.show(); return;
+        }
+    }
     document.getElementById('menuNotice').hidden = true;
     // Play game start sound
     void playSound(startSound, () => false, 1.2);
@@ -1735,8 +1714,7 @@ async function startGame({ rematch = false } = {}) {
         currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
         localWordObjects = filterRecentlyUsedWords(getOnlineWordObjects(sanitizedSettings));
     }
-    if (isAiGame) localWordObjects = extractUniqueAiWordsFromText(document.getElementById('aiWords')?.value || '')
-        .map(word => ({ word, difficulty: 'easy' }));
+    if (isAiGame) localWordObjects = getAiWordObjects(difficulty);
 
     roundPowerups = {};
     powerupRevealVisible = false;
@@ -2002,7 +1980,7 @@ function endRound() {
 function displayCurrentWords() {
     lblAnswers.textContent = 'Describe these words in any order:';
     const objects = localWordObjects.length ? localWordObjects : currentGameWords.map(word => ({ word, difficulty: 'easy' }));
-    const draw = Gameplay.drawWords(objects, localDeck, isAiGame ? 'easy' : difficulty, numWords, randomSeed());
+    const draw = Gameplay.drawWords(objects, localDeck, difficulty, numWords, randomSeed());
     localDeck = draw.deck;
     const buttons = document.getElementsByClassName('scoreButton');
     Array.from(buttons).forEach((button, index) => {

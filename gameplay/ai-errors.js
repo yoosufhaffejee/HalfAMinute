@@ -10,6 +10,9 @@ export function describeGeminiError(error) {
     status ||= Number(message.match(/\[(4\d\d|5\d\d)\b/)?.[1]) || undefined;
     const result = (kind, playerMessage, extra = {}) => ({ kind, status, message: playerMessage, ...extra });
 
+    if (error?.code === 'ai-pack-empty') return result('pack', 'No fresh answers were found for this topic. Try a broader topic, or play with your existing pack.');
+    if (error?.code === 'ai-pack-truncated') return result('pack', 'The word pack was cut short. Your existing pack is unchanged. Please try again.');
+    if (error?.code === 'invalid-ai-pack') return result('pack', 'The generated pack could not be used. Your existing pack is unchanged. Try another topic or paste words below.');
     if (/app.?check|recaptcha|attestation/i.test(text)) {
         return result('verification', 'Could not verify this browser for AI generation. Refresh and try again, or paste a word pack below.');
     }

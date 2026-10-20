@@ -29,6 +29,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - `online/client.js`: Firebase connection lifecycle, presence, reconnects, and turn commands
 - `gameplay/rules.js`: deterministic word decks, presets, starting order, pacing, and recap helpers
 - `gameplay/ai-client.js`: lazy Firebase AI Logic client and App Check configuration
+- `gameplay/ai-packs.js`: game-specific system prompt, structured-pack validation, difficulty metadata and generation history
 - `gameplay/ai-errors.js`: safe, categorized generation feedback
 - `data.js`: categories, themes, word metadata
 - `style.css`: styling
@@ -84,12 +85,17 @@ Important:
 
 ## AI Mode
 
-- Enter topic and generate a playable list.
+- Enter a topic and generate up to **150** fresh answers. Narrow or exhausted topics may produce smaller packs; quality and topic boundaries take priority over padding.
 - Prefix topic with `!` for strict scope generation.
-- Generated entries are cleaned and deduped before play.
+- Requests separate the topic/exclusions from the game's permanent system instructions. The model returns structured JSON internally; players still edit a simple word list.
+- Generated answers carry easy/hard labels and canonical identities. Normal-mode mix targets match actual card dealing (3 easy / 2 hard for five-word cards); Easy and Hard filter/deal their respective answers. Smaller Normal packs may have any mix.
+- Normalized display/canonical identities remove duplicates and known aliases. The last 450 accepted generated answer identities are stored locally and excluded from later generations on the same browser/origin. Storage errors do not prevent play. This is not shared across devices, and model-missed synonyms can still slip through.
+- Editing an unchanged answer or its known canonical name keeps its generated difficulty. New/pasted answers use the selected difficulty (Easy for Normal). Manual editing can deliberately reuse answers. A pack with no eligible answers cannot start at that difficulty.
 - AI SDK loading and App Check initialization happen on the first generation request, so AI availability does not block local or online play.
-- The pinned text model is `gemini-3.5-flash-lite`, with a bounded output size and no automatic generation retries.
-- Failed requests keep an existing pack playable and restore generation/editing controls.
+- The pinned text model is `gemini-3.5-flash-lite`, with JSON output capped at 12288 tokens and no automatic generation retries. The application considers at most 150 entries, validates fields/difficulty and filters recent identities before accepting a pack.
+- Failed, malformed, truncated or exhausted responses keep the existing pack, edits and difficulty metadata intact and restore generation/editing controls. The UI reports the accepted count rather than claiming every request reached 150.
+
+Prompt samples and limitations are documented in [AI pack improvements](reports/ai-pack-improvements.md). Explicit live comparison: `node tools/evaluate-ai-packs.mjs --live` (requires authorized Google Cloud CLI access; uses a temporary App Check registration and deletes it afterward). This command makes real model requests; ordinary tests do not.
 
 ### Firebase AI setup
 
@@ -134,7 +140,7 @@ See [GAMEPLAY_CHANGES.md](GAMEPLAY_CHANGES.md) for the implementation and verifi
 ## Gameplay regression checks
 
 ```powershell
-node --test tools/ai-client.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
+node --test tools/ai-client.test.mjs tools/ai-packs.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
 node tools/test-word-data.js
 node tools/analyze-starting-order.mjs
 node tools/analyze-chaos.cjs 5000

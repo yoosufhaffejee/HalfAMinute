@@ -174,8 +174,8 @@
                     <div class="modal-body">
                         <section class="dialog-section" aria-labelledby="topicTitle">
                             <h3 id="topicTitle">Choose a topic</h3>
-                            <div class="input-action-row"><div class="form-field"><label class="visually-hidden" for="topic">Topic</label><input type="text" id="topic" placeholder="Football players, 90s movies..." aria-describedby="topicHint"></div><button type="button" id="btnGenerate" class="btn btn-outline-success">Generate words</button></div>
-                            <p id="topicHint" class="dialog-help">Want a narrower focus? Start with <strong>!</strong>, for example <strong>!Football players</strong>.</p>
+                            <div class="input-action-row"><div class="form-field"><label class="visually-hidden" for="topic">Topic</label><input type="text" id="topic" maxlength="241" placeholder="Football players, 90s movies..." aria-describedby="topicHint"></div><button type="button" id="btnGenerate" class="btn btn-outline-success">Generate words</button></div>
+                            <p id="topicHint" class="dialog-help">Aim for 150 fresh answers. Narrow topics may give fewer. Start with <strong>!</strong> for a strict focus, for example <strong>!Football players</strong>.</p>
                             <p id="aiFeedback" class="dialog-feedback" role="status" aria-live="polite" hidden></p>
                         </section>
                         <section class="dialog-section" aria-labelledby="wordPackTitle">
@@ -184,7 +184,7 @@
                             <label class="toggle-row" for="showAIWords"><span class="toggle-copy"><strong>Review or paste words</strong><small>Keep the pack hidden if you want to be surprised.</small></span><input type="checkbox" id="showAIWords" aria-controls="aiWords" aria-expanded="false"></label>
                             <label class="visually-hidden" for="aiWords">Word pack, one word or phrase per line</label>
                             <textarea id="aiWords" rows="7" placeholder="One word or phrase per line" aria-describedby="aiWordsHint" hidden></textarea>
-                            <p id="aiWordsHint" class="dialog-help">Edit freely. Duplicate entries count once.</p>
+                            <p id="aiWordsHint" class="dialog-help">Edit freely. Generated words keep their difficulty. New or pasted words use your selected difficulty (Easy in Normal). Duplicate entries count once.</p>
                         </section>
                     </div>
                     <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Back</button><button type="button" id="btnAiGame" class="btn btn-success" disabled>Play with this pack</button></div>
@@ -362,6 +362,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261020.13" type="module"></script>
+    <script src="script.js?v=20261020.14" type="module"></script>
 </body>
 </html>

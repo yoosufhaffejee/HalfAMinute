@@ -7,6 +7,7 @@ import * as OnlineState from '../online/state.js';
 import { OnlineClient } from '../online/client.js';
 import * as Gameplay from '../gameplay/rules.js';
 import * as AiErrors from '../gameplay/ai-errors.js';
+import * as AiPacks from '../gameplay/ai-packs.js';
 
 const source = fs.readFileSync(new URL('../script.js', import.meta.url), 'utf8').replace(/^import .*$/gm, '');
 const now = 1000000;
@@ -27,7 +28,7 @@ function act(data, type, extras = {}) {
 }
 function ui() {
     let clock = now + Gameplay.ROUND_COUNTDOWN_MS;
-    const nodes = new Map(), storage = new Map();
+    const nodes = new Map(), storage = new Map(), localStorageData = new Map();
     const metrics = { intervals: [], commands: [], alerts: [], reloads: 0, history: [], audioPlays: [] };
     function element(id = '') {
         const classes = new Set(), events = new Map();
@@ -49,13 +50,13 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, Gameplay, AiErrors, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), createAiWordClient: () => ({}),
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
         window: { addEventListener() {}, matchMedia: () => ({ matches: false }) },
         sessionStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value), removeItem: key => storage.delete(key) },
-        localStorage: { getItem: () => null, setItem() {} },
+        localStorage: { getItem: key => localStorageData.get(key), setItem: (key, value) => localStorageData.set(key, value) },
         Date: class extends Date { static now() { return clock; } },
         setInterval: callback => { metrics.intervals.push(callback); return metrics.intervals.length; }, clearInterval() {}, setTimeout: () => 1, clearTimeout() {},
         console, alert: message => metrics.alerts.push(message), location: { reload: () => metrics.reloads++ },
@@ -72,7 +73,7 @@ function ui() {
         updateBoard=()=>{};updateTeamScores=()=>{};updateCurrentTeamIndicator=()=>{};
         refreshChaosModeUi=()=>{};generateBoard=()=>{};createTeamAuditTables=()=>{};createTeamAuditColumns=()=>{};
         createTeamAuditRows=(...args)=>metrics.history.push(args);showNotification=()=>{};`);
-    return { run, el, buttons, metrics, storage,
+    return { run, el, buttons, metrics, storage, localStorageData,
         set now(value) { clock = value; },
         mount(data, who = actor('A')) {
             ctx.data = structuredClone(data); ctx.who = who; ctx.clock = () => clock;
@@ -588,10 +589,12 @@ test('AI generation shows inline feedback and restores editing and play controls
     const pending=h.run('run("Football players")');
     assert.equal(h.el('btnGenerate').disabled,true);assert.equal(h.el('aiWords').disabled,true);
     assert.equal(h.el('btnAiGame').disabled,true);
-    h.run('finishGeneration({response:{text:()=>"One\\nTwo\\none"}})');await pending;
+    h.run(`finishGeneration({response:{text:()=>JSON.stringify({entries:[
+        {word:'One',canonical:'One',difficulty:'easy'}, {word:'Two',canonical:'Two',difficulty:'hard'},
+        {word:'one',canonical:'One',difficulty:'easy'}]})}})`);await pending;
     assert.equal(h.el('btnGenerate').disabled,false);assert.equal(h.el('aiWords').disabled,false);
     assert.equal(h.el('btnAiGame').disabled,false);
-    assert.equal(h.el('aiPackStatus').textContent,'2 words ready to play.');
+    assert.match(h.el('aiPackStatus').textContent,/2 words ready to play.*1 easy.*1 hard/);
     assert.equal(h.el('aiFeedback').classList.contains('is-error'),false);
 });
 
@@ -605,6 +608,59 @@ test('a rejected AI credential preserves a ready pack and restores all generatio
     assert.equal(h.el('btnAiGame').disabled,false);
     assert.match(h.el('aiFeedback').textContent,/game owner/);
     assert.doesNotMatch(h.el('aiFeedback').textContent,/rate.limit|few seconds/i);
+});
+
+test('bad structured responses, truncation and exhausted topics preserve edits, metadata and history', async () => {
+    for (const response of [
+        { text: () => 'Broken JSON' },
+        { text: () => JSON.stringify({ entries: [] }) },
+        { text: () => JSON.stringify({ entries: [{ word: 'New', canonical: 'New', difficulty: 'easy' }] }), candidates: [{ finishReason: 'MAX_TOKENS' }] }
+    ]) {
+        const h=ui();h.run(`document.getElementById('aiWords').value='Existing';
+            aiGeneratedEntries=[{word:'Existing',canonical:'Existing',difficulty:'hard'}];syncAiPack()`);
+        h.run('model.generateContent=async()=>metrics.response');h.metrics.response=response;
+        await h.run('run("Football")');
+        assert.equal(h.el('aiWords').value,'Existing');
+        assert.equal(h.run('aiGeneratedEntries[0].difficulty'),'hard');
+        assert.equal(h.localStorageData.has(AiPacks.HISTORY_STORAGE_KEY),false);
+        assert.equal(h.el('btnGenerate').disabled,false);
+        assert.equal(h.el('btnAiGame').disabled,false);
+        assert.equal(h.el('aiFeedback').classList.contains('is-error'),true);
+    }
+});
+
+test('generation sends saved exclusions and excludes answers accepted by another tab while pending', async () => {
+    const h=ui();
+    h.localStorageData.set(AiPacks.HISTORY_STORAGE_KEY,JSON.stringify([{word:'Messi',canonical:'Lionel Messi'}]));
+    h.run('model.generateContent=prompt=>{metrics.request=JSON.parse(prompt);return new Promise(resolve=>metrics.finish=resolve)}');
+    const pending=h.run('run("Football")');
+    assert.equal(h.metrics.request.targetCount,150);
+    assert.equal(h.metrics.request.recentAnswers[0].canonical,'Lionel Messi');
+    h.localStorageData.set(AiPacks.HISTORY_STORAGE_KEY,JSON.stringify([
+        {word:'Messi',canonical:'Lionel Messi'},{word:'Venus',canonical:'Venus'}]));
+    h.metrics.finish({response:{text:()=>JSON.stringify({entries:[
+        {word:'Lionel Messi',canonical:'Lionel Messi',difficulty:'easy'},
+        {word:'Venus',canonical:'Venus',difficulty:'easy'},
+        {word:'Mars',canonical:'Mars',difficulty:'hard'}]})}});
+    await pending;
+    assert.equal(h.el('aiWords').value,'Mars');
+    assert.equal(h.run('aiGeneratedEntries[0].difficulty'),'hard');
+    assert.equal(JSON.parse(h.localStorageData.get(AiPacks.HISTORY_STORAGE_KEY)).length,3);
+    assert.match(h.el('aiFeedback').textContent,/1 fresh answer is/);
+});
+
+test('AI cards respect difficulty, retain generated metadata after editing and reject an ineligible start', () => {
+    const h=ui();h.run(`aiGeneratedEntries=[{word:'Earth',canonical:'Earth',difficulty:'easy'},
+        {word:'Neptune',canonical:'Neptune',difficulty:'hard'}];
+        document.getElementById('aiWords').value='Earth\\nNeptune\\nAdded';
+        document.getElementById('difficulty').value='hard';
+        localWordObjects=getAiWordObjects();difficulty='hard';isAiGame=true;numWords=5;displayCurrentWords()`);
+    const shown=h.buttons.filter(button=>!button.hidden).map(button=>button.textContent).sort();
+    assert.deepEqual(shown,['Added','Neptune']);
+    h.run(`isAiGame=false;document.getElementById('aiWords').value='Earth';syncAiPack();startAIGame()`);
+    assert.equal(h.el('btnAiGame').disabled,true);
+    assert.equal(h.run('isAiGame'),false);
+    assert.match(h.el('aiFeedback').textContent,/selected difficulty/);
 });
 
 test('online dialog validates inline before joining and preserves the normalized lobby request', () => {

@@ -32,7 +32,10 @@ test('AI is lazy and attestation is initialized before the protected backend', a
     assert.equal(h.calls[0][2].isTokenAutoRefreshEnabled, true);
     assert.ok(h.calls[1][2].backend instanceof h.sdk.GoogleAIBackend);
     assert.equal(h.calls[1][2].useLimitedUseAppCheckTokens, true);
-    assert.equal(h.calls[2][2].generationConfig.maxOutputTokens, 4096);
+    assert.equal(h.calls[2][2].generationConfig.maxOutputTokens, 12288);
+    assert.equal(h.calls[2][2].generationConfig.responseMimeType, 'application/json');
+    assert.deepEqual(h.calls[2][2].generationConfig.responseSchema.properties.entries.items.properties.difficulty.enum, ['easy', 'hard']);
+    assert.match(h.calls[2][2].systemInstruction, /Players describe answers/);
 });
 
 test('concurrent and later generations share a single App Check and model initialization', async () => {

@@ -1,0 +1,1632 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "promptHash": "2cd882fc5c60028fa72deaf3a8aa2d917d852327fc34bbe973c896c7d4ad03c2",
+  "generatedAt": "2026-10-20T21:01:13.625Z",
+  "baselineCommit": "5f5b205",
+  "caveat": "Small live sample, not a controlled playtest. Labels and factual relevance require human review. No retries.",
+  "cases": [
+    {
+      "topic": "Football",
+      "version": "before",
+      "durationMs": 3194,
+      "finishReason": "STOP",
+      "accepted": 49,
+      "easy": null,
+      "hard": null,
+      "usage": {
+        "promptTokenCount": 212,
+        "candidatesTokenCount": 153,
+        "totalTokenCount": 365,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 212
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Penalty kick"
+        },
+        {
+          "word": "Lionel Messi"
+        },
+        {
+          "word": "Red card"
+        },
+        {
+          "word": "Wembley Stadium"
+        },
+        {
+          "word": "Corner flag"
+        },
+        {
+          "word": "Cristiano Ronaldo"
+        },
+        {
+          "word": "Offside"
+        },
+        {
+          "word": "Goalkeeper"
+        },
+        {
+          "word": "World Cup"
+        },
+        {
+          "word": "Extra time"
+        },
+        {
+          "word": "Yellow card"
+        },
+        {
+          "word": "Pelé"
+        },
+        {
+          "word": "Free kick"
+        },
+        {
+          "word": "Hat-trick"
+        },
+        {
+          "word": "Premier League"
+        },
+        {
+          "word": "VAR"
+        },
+        {
+          "word": "Champions League"
+        },
+        {
+          "word": "Throw-in"
+        },
+        {
+          "word": "Golden boot"
+        },
+        {
+          "word": "Diego Maradona"
+        },
+        {
+          "word": "Half-time"
+        },
+        {
+          "word": "Manager"
+        },
+        {
+          "word": "Captain"
+        },
+        {
+          "word": "Clean sheet"
+        },
+        {
+          "word": "Header"
+        },
+        {
+          "word": "Stoppage time"
+        },
+        {
+          "word": "Tunnel"
+        },
+        {
+          "word": "Crossbar"
+        },
+        {
+          "word": "Substitution"
+        },
+        {
+          "word": "Handball"
+        },
+        {
+          "word": "Tackle"
+        },
+        {
+          "word": "Equalizer"
+        },
+        {
+          "word": "Boot"
+        },
+        {
+          "word": "Shin guards"
+        },
+        {
+          "word": "Sideline"
+        },
+        {
+          "word": "Dribble"
+        },
+        {
+          "word": "Assist"
+        },
+        {
+          "word": "UEFA"
+        },
+        {
+          "word": "Copa América"
+        },
+        {
+          "word": "Zinedine Zidane"
+        },
+        {
+          "word": "Kylian Mbappé"
+        },
+        {
+          "word": "Striker"
+        },
+        {
+          "word": "Midfielder"
+        },
+        {
+          "word": "Defender"
+        },
+        {
+          "word": "Full-time"
+        },
+        {
+          "word": "Scissor kick"
+        },
+        {
+          "word": "Goal line"
+        },
+        {
+          "word": "Kit"
+        },
+        {
+          "word": "Pitch"
+        }
+      ]
+    },
+    {
+      "topic": "!Planets in our solar system",
+      "version": "before",
+      "durationMs": 1476,
+      "finishReason": "STOP",
+      "accepted": 60,
+      "easy": null,
+      "hard": null,
+      "usage": {
+        "promptTokenCount": 266,
+        "candidatesTokenCount": 196,
+        "totalTokenCount": 462,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 266
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Mercury"
+        },
+        {
+          "word": "Venus"
+        },
+        {
+          "word": "Earth"
+        },
+        {
+          "word": "Mars"
+        },
+        {
+          "word": "Jupiter"
+        },
+        {
+          "word": "Saturn"
+        },
+        {
+          "word": "Uranus"
+        },
+        {
+          "word": "Neptune"
+        },
+        {
+          "word": "Red Planet"
+        },
+        {
+          "word": "Gas Giant"
+        },
+        {
+          "word": "Ice Giant"
+        },
+        {
+          "word": "Great Red Spot"
+        },
+        {
+          "word": "Olympus Mons"
+        },
+        {
+          "word": "Valles Marineris"
+        },
+        {
+          "word": "Phobos"
+        },
+        {
+          "word": "Deimos"
+        },
+        {
+          "word": "Io"
+        },
+        {
+          "word": "Europa"
+        },
+        {
+          "word": "Ganymede"
+        },
+        {
+          "word": "Callisto"
+        },
+        {
+          "word": "Titan"
+        },
+        {
+          "word": "Enceladus"
+        },
+        {
+          "word": "Rings of Saturn"
+        },
+        {
+          "word": "Asteroid Belt"
+        },
+        {
+          "word": "Kuiper Belt"
+        },
+        {
+          "word": "Oort Cloud"
+        },
+        {
+          "word": "Pluto"
+        },
+        {
+          "word": "Ceres"
+        },
+        {
+          "word": "Eris"
+        },
+        {
+          "word": "Haumea"
+        },
+        {
+          "word": "Makemake"
+        },
+        {
+          "word": "Triton"
+        },
+        {
+          "word": "Charon"
+        },
+        {
+          "word": "Miranda"
+        },
+        {
+          "word": "Ariel"
+        },
+        {
+          "word": "Umbriel"
+        },
+        {
+          "word": "Titania"
+        },
+        {
+          "word": "Oberon"
+        },
+        {
+          "word": "Mimas"
+        },
+        {
+          "word": "Rhea"
+        },
+        {
+          "word": "Iapetus"
+        },
+        {
+          "word": "Dione"
+        },
+        {
+          "word": "Tethys"
+        },
+        {
+          "word": "Hyperion"
+        },
+        {
+          "word": "Phoebe"
+        },
+        {
+          "word": "Amalthea"
+        },
+        {
+          "word": "Himalia"
+        },
+        {
+          "word": "Elara"
+        },
+        {
+          "word": "Pasiphae"
+        },
+        {
+          "word": "Sinope"
+        },
+        {
+          "word": "Carme"
+        },
+        {
+          "word": "Ananke"
+        },
+        {
+          "word": "Leda"
+        },
+        {
+          "word": "Thebe"
+        },
+        {
+          "word": "Adrastea"
+        },
+        {
+          "word": "Metis"
+        },
+        {
+          "word": "Prometheus"
+        },
+        {
+          "word": "Pandora"
+        },
+        {
+          "word": "Janus"
+        },
+        {
+          "word": "Epimetheus"
+        }
+      ]
+    },
+    {
+      "topic": "Football",
+      "version": "after",
+      "durationMs": 7294,
+      "finishReason": "STOP",
+      "accepted": 80,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 0,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 0
+      },
+      "easy": 50,
+      "hard": 30,
+      "usage": {
+        "promptTokenCount": 780,
+        "candidatesTokenCount": 2709,
+        "totalTokenCount": 3489,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 780
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Lionel Messi",
+          "canonical": "Lionel Messi",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cristiano Ronaldo",
+          "canonical": "Cristiano Ronaldo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pelé",
+          "canonical": "Pelé",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Diego Maradona",
+          "canonical": "Diego Maradona",
+          "difficulty": "easy"
+        },
+        {
+          "word": "World Cup",
+          "canonical": "FIFA World Cup",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Red Card",
+          "canonical": "Red Card",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Yellow Card",
+          "canonical": "Yellow Card",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Penalty Shootout",
+          "canonical": "Penalty Shootout",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Offside",
+          "canonical": "Offside",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Corner Kick",
+          "canonical": "Corner Kick",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Free Kick",
+          "canonical": "Free Kick",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Goalkeeper",
+          "canonical": "Goalkeeper",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Referee",
+          "canonical": "Referee",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Substitution",
+          "canonical": "Substitution",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Extra Time",
+          "canonical": "Extra Time",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hat Trick",
+          "canonical": "Hat Trick",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Wembley Stadium",
+          "canonical": "Wembley Stadium",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Maracanã",
+          "canonical": "Maracanã Stadium",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Camp Nou",
+          "canonical": "Camp Nou",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Santiago Bernabéu",
+          "canonical": "Santiago Bernabéu Stadium",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Real Madrid",
+          "canonical": "Real Madrid CF",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Barcelona",
+          "canonical": "FC Barcelona",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Manchester United",
+          "canonical": "Manchester United F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Liverpool",
+          "canonical": "Liverpool F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bayern Munich",
+          "canonical": "FC Bayern Munich",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Juventus",
+          "canonical": "Juventus F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Paris Saint Germain",
+          "canonical": "Paris Saint-Germain F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ajax",
+          "canonical": "AFC Ajax",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Boca Juniors",
+          "canonical": "Club Atlético Boca Juniors",
+          "difficulty": "easy"
+        },
+        {
+          "word": "AC Milan",
+          "canonical": "AC Milan",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Zinedine Zidane",
+          "canonical": "Zinedine Zidane",
+          "difficulty": "easy"
+        },
+        {
+          "word": "David Beckham",
+          "canonical": "David Beckham",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ronaldinho",
+          "canonical": "Ronaldinho",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ronaldo Nazário",
+          "canonical": "Ronaldo Nazário",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Thierry Henry",
+          "canonical": "Thierry Henry",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kylian Mbappé",
+          "canonical": "Kylian Mbappé",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Erling Haaland",
+          "canonical": "Erling Haaland",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kevin De Bruyne",
+          "canonical": "Kevin De Bruyne",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Neymar",
+          "canonical": "Neymar Jr.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mohamed Salah",
+          "canonical": "Mohamed Salah",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Champions League",
+          "canonical": "UEFA Champions League",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Premier League",
+          "canonical": "Premier League",
+          "difficulty": "easy"
+        },
+        {
+          "word": "La Liga",
+          "canonical": "La Liga",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Serie A",
+          "canonical": "Serie A",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bundesliga",
+          "canonical": "Bundesliga",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Copa América",
+          "canonical": "Copa América",
+          "difficulty": "easy"
+        },
+        {
+          "word": "European Championship",
+          "canonical": "UEFA European Championship",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ballon d'Or",
+          "canonical": "Ballon d'Or",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Boots",
+          "canonical": "Football Boots",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Shinguards",
+          "canonical": "Shinguards",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Captain's Armband",
+          "canonical": "Captain's Armband",
+          "difficulty": "hard"
+        },
+        {
+          "word": "VAR",
+          "canonical": "Video Assistant Referee",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Panenka",
+          "canonical": "Panenka Penalty",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tiki Taka",
+          "canonical": "Tiki-taka",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Catenaccio",
+          "canonical": "Catenaccio",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bicycle Kick",
+          "canonical": "Bicycle Kick",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gegenpressing",
+          "canonical": "Gegenpressing",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Cruyff Turn",
+          "canonical": "Cruyff Turn",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rabona",
+          "canonical": "Rabona",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Nutmeg",
+          "canonical": "Nutmeg",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Invincibles",
+          "canonical": "The Invincibles Arsenal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Miracle of Istanbul",
+          "canonical": "Miracle of Istanbul",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hand of God",
+          "canonical": "Hand of God",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bosman Ruling",
+          "canonical": "Bosman Ruling",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Golden Goal",
+          "canonical": "Golden Goal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sir Alex Ferguson",
+          "canonical": "Sir Alex Ferguson",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Arsène Wenger",
+          "canonical": "Arsène Wenger",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pep Guardiola",
+          "canonical": "Pep Guardiola",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Carlo Ancelotti",
+          "canonical": "Carlo Ancelotti",
+          "difficulty": "hard"
+        },
+        {
+          "word": "José Mourinho",
+          "canonical": "José Mourinho",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Johan Cruyff",
+          "canonical": "Johan Cruyff",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Michel Platini",
+          "canonical": "Michel Platini",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Franz Beckenbauer",
+          "canonical": "Franz Beckenbauer",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Paolo Maldini",
+          "canonical": "Paolo Maldini",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Lev Yashin",
+          "canonical": "Lev Yashin",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bobby Charlton",
+          "canonical": "Sir Bobby Charlton",
+          "difficulty": "hard"
+        },
+        {
+          "word": "George Best",
+          "canonical": "George Best",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ferenc Puskás",
+          "canonical": "Ferenc Puskás",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Just Fontaine",
+          "canonical": "Just Fontaine",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gerd Müller",
+          "canonical": "Gerd Müller",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "topic": "!Planets in our solar system",
+      "version": "after",
+      "durationMs": 1739,
+      "finishReason": "STOP",
+      "accepted": 8,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 0,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 0
+      },
+      "easy": 8,
+      "hard": 0,
+      "usage": {
+        "promptTokenCount": 785,
+        "candidatesTokenCount": 262,
+        "totalTokenCount": 1047,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 785
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Mercury",
+          "canonical": "Mercury",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Venus",
+          "canonical": "Venus",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Earth",
+          "canonical": "Earth",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mars",
+          "canonical": "Mars",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jupiter",
+          "canonical": "Jupiter",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Saturn",
+          "canonical": "Saturn",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Uranus",
+          "canonical": "Uranus",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Neptune",
+          "canonical": "Neptune",
+          "difficulty": "easy"
+        }
+      ]
+    },
+    {
+      "topic": "Football",
+      "version": "after-with-exclusions",
+      "durationMs": 6506,
+      "finishReason": "STOP",
+      "accepted": 144,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 0,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 0
+      },
+      "easy": 59,
+      "hard": 85,
+      "usage": {
+        "promptTokenCount": 1722,
+        "candidatesTokenCount": 2365,
+        "totalTokenCount": 4087,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1722
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Harry Kane",
+          "canonical": "Harry Kane",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Robert Lewandowski",
+          "canonical": "Robert Lewandowski",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Luka Modrić",
+          "canonical": "Luka Modrić",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Karim Benzema",
+          "canonical": "Karim Benzema",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Vinícius Júnior",
+          "canonical": "Vinícius Júnior",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jude Bellingham",
+          "canonical": "Jude Bellingham",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Antoine Griezmann",
+          "canonical": "Antoine Griezmann",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sadio Mané",
+          "canonical": "Sadio Mané",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Son Heung-min",
+          "canonical": "Son Heung-min",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Virgil van Dijk",
+          "canonical": "Virgil van Dijk",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Arsenal",
+          "canonical": "Arsenal F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chelsea",
+          "canonical": "Chelsea F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Manchester City",
+          "canonical": "Manchester City F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tottenham Hotspur",
+          "canonical": "Tottenham Hotspur F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Atlético Madrid",
+          "canonical": "Atlético Madrid",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Inter Milan",
+          "canonical": "Inter Milan",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Borussia Dortmund",
+          "canonical": "Borussia Dortmund",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Napoli",
+          "canonical": "SSC Napoli",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Porto",
+          "canonical": "FC Porto",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Benfica",
+          "canonical": "S.L. Benfica",
+          "difficulty": "easy"
+        },
+        {
+          "word": "San Siro",
+          "canonical": "San Siro",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Anfield",
+          "canonical": "Anfield",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Old Trafford",
+          "canonical": "Old Trafford",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Allianz Arena",
+          "canonical": "Allianz Arena",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stade de France",
+          "canonical": "Stade de France",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Estadio Monumental",
+          "canonical": "Estadio Monumental",
+          "difficulty": "hard"
+        },
+        {
+          "word": "La Bombonera",
+          "canonical": "La Bombonera",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ibrox Stadium",
+          "canonical": "Ibrox Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Celtic Park",
+          "canonical": "Celtic Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Signal Iduna Park",
+          "canonical": "Signal Iduna Park",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ligue 1",
+          "canonical": "Ligue 1",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Eredivisie",
+          "canonical": "Eredivisie",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Primeira Liga",
+          "canonical": "Primeira Liga",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Copa Libertadores",
+          "canonical": "Copa Libertadores",
+          "difficulty": "easy"
+        },
+        {
+          "word": "FA Cup",
+          "canonical": "FA Cup",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Coppa Italia",
+          "canonical": "Coppa Italia",
+          "difficulty": "hard"
+        },
+        {
+          "word": "DFB Pokal",
+          "canonical": "DFB Pokal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Copa del Rey",
+          "canonical": "Copa del Rey",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Europa League",
+          "canonical": "UEFA Europa League",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Super Cup",
+          "canonical": "UEFA Super Cup",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Goal Net",
+          "canonical": "Goal Net",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Corner Flag",
+          "canonical": "Corner Flag",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Whistle",
+          "canonical": "Referee Whistle",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tactics Board",
+          "canonical": "Tactics Board",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Goal Line Technology",
+          "canonical": "Goal Line Technology",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stoppage Time",
+          "canonical": "Stoppage Time",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Direct Free Kick",
+          "canonical": "Direct Free Kick",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Indirect Free Kick",
+          "canonical": "Indirect Free Kick",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Throw In",
+          "canonical": "Throw In",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Goal Kick",
+          "canonical": "Goal Kick",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jurgen Klopp",
+          "canonical": "Jürgen Klopp",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mikel Arteta",
+          "canonical": "Mikel Arteta",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Xavi Hernandez",
+          "canonical": "Xavi Hernández",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Diego Simeone",
+          "canonical": "Diego Simeone",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Didier Deschamps",
+          "canonical": "Didier Deschamps",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Roberto Mancini",
+          "canonical": "Roberto Mancini",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Luis Enrique",
+          "canonical": "Luis Enrique",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Unai Emery",
+          "canonical": "Unai Emery",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Antonio Conte",
+          "canonical": "Antonio Conte",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Julian Nagelsmann",
+          "canonical": "Julian Nagelsmann",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bobby Moore",
+          "canonical": "Bobby Moore",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Marco van Basten",
+          "canonical": "Marco van Basten",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ruud Gullit",
+          "canonical": "Ruud Gullit",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Franco Baresi",
+          "canonical": "Franco Baresi",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Roberto Baggio",
+          "canonical": "Roberto Baggio",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gabriel Batistuta",
+          "canonical": "Gabriel Batistuta",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hristo Stoichkov",
+          "canonical": "Hristo Stoichkov",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Lothar Matthäus",
+          "canonical": "Lothar Matthäus",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Eusébio",
+          "canonical": "Eusébio",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Cafu",
+          "canonical": "Cafu",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Roberto Carlos",
+          "canonical": "Roberto Carlos",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dani Alves",
+          "canonical": "Dani Alves",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Philipp Lahm",
+          "canonical": "Philipp Lahm",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Carles Puyol",
+          "canonical": "Carles Puyol",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sergio Ramos",
+          "canonical": "Sergio Ramos",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gerard Piqué",
+          "canonical": "Gerard Piqué",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Manuel Neuer",
+          "canonical": "Manuel Neuer",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gianluigi Buffon",
+          "canonical": "Gianluigi Buffon",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Iker Casillas",
+          "canonical": "Iker Casillas",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Peter Schmeichel",
+          "canonical": "Peter Schmeichel",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Thibaut Courtois",
+          "canonical": "Thibaut Courtois",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Alisson Becker",
+          "canonical": "Alisson Becker",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ederson",
+          "canonical": "Ederson Moraes",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hugo Lloris",
+          "canonical": "Hugo Lloris",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Jan Oblak",
+          "canonical": "Jan Oblak",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Marc ter Stegen",
+          "canonical": "Marc-André ter Stegen",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Paulo Dybala",
+          "canonical": "Paulo Dybala",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Lautaro Martínez",
+          "canonical": "Lautaro Martínez",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Romelu Lukaku",
+          "canonical": "Romelu Lukaku",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bruno Fernandes",
+          "canonical": "Bruno Fernandes",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Marcus Rashford",
+          "canonical": "Marcus Rashford",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bukayo Saka",
+          "canonical": "Bukayo Saka",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Phil Foden",
+          "canonical": "Phil Foden",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Declan Rice",
+          "canonical": "Declan Rice",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Jack Grealish",
+          "canonical": "Jack Grealish",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Raheem Sterling",
+          "canonical": "Raheem Sterling",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Trent Alexander-Arnold",
+          "canonical": "Trent Alexander-Arnold",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Andrew Robertson",
+          "canonical": "Andrew Robertson",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sonny Ramdeen",
+          "canonical": "Lanky Ball",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Libero",
+          "canonical": "Libero",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Trequartista",
+          "canonical": "Trequartista",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Regista",
+          "canonical": "Regista",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Box to Box Midfielder",
+          "canonical": "Box-to-Box Midfielder",
+          "difficulty": "hard"
+        },
+        {
+          "word": "False Nine",
+          "canonical": "False Nine",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Winger",
+          "canonical": "Winger",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sweeper Keeper",
+          "canonical": "Sweeper Keeper",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Target Man",
+          "canonical": "Target Man",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pivot",
+          "canonical": "Defensive Midfielder Pivot",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Estadio Centenario",
+          "canonical": "Estadio Centenario",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hampden Park",
+          "canonical": "Hampden Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stade Velodrome",
+          "canonical": "Stade Vélodrome",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Westfalenstadion",
+          "canonical": "Westfalenstadion",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Johan Cruyff Arena",
+          "canonical": "Johan Cruyff Arena",
+          "difficulty": "hard"
+        },
+        {
+          "word": "San Nicola Stadium",
+          "canonical": "San Nicola Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stadio Olimpico",
+          "canonical": "Stadio Olimpico",
+          "difficulty": "hard"
+        },
+        {
+          "word": "King Power Stadium",
+          "canonical": "King Power Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Goodison Park",
+          "canonical": "Goodison Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stamford Bridge",
+          "canonical": "Stamford Bridge",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Emirates Stadium",
+          "canonical": "Emirates Stadium",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Etihad Stadium",
+          "canonical": "Etihad Stadium",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Anfield Road",
+          "canonical": "Anfield Road",
+          "difficulty": "hard"
+        },
+        {
+          "word": "St James Park",
+          "canonical": "St James Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Villa Park",
+          "canonical": "Villa Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Molineux Stadium",
+          "canonical": "Molineux Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Elland Road",
+          "canonical": "Elland Road",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bramall Lane",
+          "canonical": "Bramall Lane",
+          "difficulty": "hard"
+        },
+        {
+          "word": "City Ground",
+          "canonical": "City Ground",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Craven Cottage",
+          "canonical": "Craven Cottage",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Selhurst Park",
+          "canonical": "Selhurst Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Amex Stadium",
+          "canonical": "Amex Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gtech Community Stadium",
+          "canonical": "Gtech Community Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Vitality Stadium",
+          "canonical": "Vitality Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Kenilworth Road",
+          "canonical": "Kenilworth Road",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Turf Moor",
+          "canonical": "Turf Moor",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Vicarage Road",
+          "canonical": "Vicarage Road",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Carrow Road",
+          "canonical": "Carrow Road",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Hawthorns",
+          "canonical": "The Hawthorns",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Riverside Stadium",
+          "canonical": "Riverside Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stadium of Light",
+          "canonical": "Stadium of Light",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ashton Gate",
+          "canonical": "Ashton Gate",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hillsborough Stadium",
+          "canonical": "Hillsborough Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pride Park",
+          "canonical": "Pride Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "St Andrew's",
+          "canonical": "St Andrew's",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Deepdale",
+          "canonical": "Deepdale",
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

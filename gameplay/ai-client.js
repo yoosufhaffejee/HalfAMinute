@@ -1,3 +1,5 @@
+import { PACK_SYSTEM_INSTRUCTION, PACK_RESPONSE_SCHEMA } from './ai-packs.js?v=20261020.14';
+
 // Public client configuration only. Gemini authorization stays in Firebase AI Logic.
 export const AI_SETTINGS = Object.freeze({
     siteKey: '6LfqzvgtAAAAABYZFIg-pG7eN_YJ99VDXawvJcpk',
@@ -34,7 +36,8 @@ export function createAiWordClient(app, { loadSdk = loadFirebaseAiSdk } = {}) {
                 });
                 return sdk.getGenerativeModel(ai, {
                     model: AI_SETTINGS.model,
-                    generationConfig: { maxOutputTokens: 4096, responseMimeType: 'text/plain' }
+                    systemInstruction: PACK_SYSTEM_INSTRUCTION,
+                    generationConfig: { maxOutputTokens: 12288, responseMimeType: 'application/json', responseSchema: PACK_RESPONSE_SCHEMA }
                 });
             }).catch(error => {
                 initialization = undefined;
