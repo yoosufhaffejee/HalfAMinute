@@ -86,10 +86,37 @@ body.layout-game .app-actions { justify-content: flex-end; }
 #selectionSummary { margin: 8px 0; font-weight: 700; }
 .round-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
 .turn-recap { padding: 0; margin: 4px 0; font-size: .95rem; color: #475569; }
-.choice-card, .results-card { padding: 14px; margin: 8px 0; border-radius: 10px; background: #eff6ff; border: 1px solid #93b4de; color: #172033; overflow-wrap: anywhere; }
-.results-card h2 { font-size: 1.6rem; }
-.results-card .btn, .choice-card .btn { margin: 4px; }
-.choice-card { background: #fff7e6; border-color: #b7791f; }
+.choice-card { padding: 14px; margin: 8px 0; border-radius: 10px; overflow-wrap: anywhere; }
+.choice-card .btn { margin: 4px; }
+.results-card { padding: 8px 0 12px; color: #172033; overflow-wrap: anywhere; }
+.results-eyebrow { margin: 0 0 6px; color: #64748b; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.results-card h2 { margin: 0; font-size: 2rem; font-weight: 700; }
+.results-context { margin: 8px 0 16px; color: #64748b; font-size: .9rem; }
+#resultsScores { list-style: none; padding: 0; margin: 0 auto 18px; max-width: 30rem; text-align: left; }
+.result-score { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 16px; border-bottom: 1px solid #e2e8f0; }
+.result-score.is-winner { background: #f0fdf4; border-radius: 10px; border-bottom-color: transparent; }
+.result-team { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.result-team .team-token { flex-shrink: 0; text-align: center; }
+.result-breakdown { display: block; padding-left: 29px; margin-top: 4px; color: #64748b; font-size: .8rem; }
+.result-points { flex-shrink: 0; font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+.result-points small { font-size: .8rem; font-weight: 400; color: #64748b; }
+.results-highlight { color: #475569; font-size: .9rem; margin: 0 0 22px; }
+.results-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+.results-actions .btn { min-width: 140px; }
+#rematchStatus { color: #64748b; font-size: .8rem; margin: 12px 0 0; }
+#exportMatchButton { font-size: .85rem; color: #475569; margin-top: 4px; }
+#finalBoardLabel { display: none; }
+#game.match-finished #roleInstruction, #game.match-finished #turnRecap, #game.match-finished #teamScores,
+#game.match-finished #chaosModeBanner, #game.match-finished #chaosHelp, #game.match-finished #leaveOnlineGame { display: none !important; }
+#game.match-finished #finalBoardLabel { display: block; order: 7; font-size: .85rem; font-weight: 600; text-align: left; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 20px; margin: 0; }
+#game.match-finished #gameBoard { max-width: none; gap: 4px; margin: 0; }
+#game.match-finished .board-cell { height: auto; min-height: 44px; border-color: #e2e8f0; background: #f8fafc; }
+#game.match-finished .cell-number { font-size: .65rem; color: #64748b; }
+#game.match-finished .board-powerup { display: none; }
+#game.match-finished .board-cell-landed-powerup { box-shadow: none; }
+#game.match-finished #roundControls { display: none; }
+#game.match-finished #roundControls:has(#rejoinOnlineGame:not([hidden])) { display: block; }
+.choice-card { background: #fff7e6; border: 1px solid #b7791f; }
 .board-cell { position: relative; height: 72px; min-width: 0; padding: 3px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; }
 .cell-number { display: block; font-size: .8rem; font-weight: 600; color: #334155; }
 .board-tokens { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }

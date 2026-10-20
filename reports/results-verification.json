@@ -1,0 +1,202 @@
+[
+  {
+    "boardVisible": true,
+    "contentWidth": 1369,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "2Team 22 pts",
+      "1Team 10 pts"
+    ],
+    "width": 1384,
+    "label": "Classic ended"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 753,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "2Team 22 pts",
+      "1Team 10 pts"
+    ],
+    "width": 768,
+    "label": "Classic ended"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 375,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "2Team 22 pts",
+      "1Team 10 pts"
+    ],
+    "width": 390,
+    "label": "Classic ended"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 305,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "2Team 22 pts",
+      "1Team 10 pts"
+    ],
+    "width": 320,
+    "label": "Classic ended"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 305,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "2Team 23 from clues · +1 from Chaos4 pts",
+      "1Team 10 from clues · +0 from Chaos0 pts",
+      "3Team 30 from clues · +0 from Chaos0 pts",
+      "4Team 40 from clues · +0 from Chaos0 pts"
+    ],
+    "width": 320,
+    "label": "Four-team Chaos long ended"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 305,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "3Team 30 pts",
+      "4Team 40 pts"
+    ],
+    "width": 320,
+    "label": "Four-team Chaos long ended, no rounds"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 375,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "3Team 30 pts",
+      "4Team 40 pts"
+    ],
+    "width": 390,
+    "label": "Four-team Chaos long ended, no rounds"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 753,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "3Team 30 pts",
+      "4Team 40 pts"
+    ],
+    "width": 768,
+    "label": "Four-team Chaos long ended, no rounds"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 1369,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "3Team 30 pts",
+      "4Team 40 pts"
+    ],
+    "width": 1384,
+    "label": "Four-team Chaos long ended, no rounds"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 1369,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "3Team 33 pts",
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "4Team 40 pts"
+    ],
+    "width": 1384,
+    "label": "Four-team Chaos long ended, scored"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 753,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "3Team 33 pts",
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "4Team 40 pts"
+    ],
+    "width": 768,
+    "label": "Four-team Chaos long ended, scored"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 375,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "3Team 33 pts",
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "4Team 40 pts"
+    ],
+    "width": 390,
+    "label": "Four-team Chaos long ended, scored"
+  },
+  {
+    "boardVisible": true,
+    "contentWidth": 305,
+    "duplicateScoresVisible": false,
+    "heading": "Match ended",
+    "overlaps": [],
+    "recapVisible": false,
+    "scores": [
+      "3Team 33 pts",
+      "1Team 10 pts",
+      "2Team 20 pts",
+      "4Team 40 pts"
+    ],
+    "width": 320,
+    "label": "Four-team Chaos long ended, scored"
+  }
+]

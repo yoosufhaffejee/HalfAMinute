@@ -318,6 +318,7 @@ function showRecap(text) {
 function renderMatchResults(data = null, forced = false) {
     const finished = forced || (data ? data.phase === 'finished' : teams.some(team => team.points >= pointsToWin));
     const card = document.getElementById('matchResults'); card.hidden = !finished;
+    game.classList.toggle('match-finished', finished);
     if (!finished) return;
     const active = !data || (onlineClient.connected && OnlineState.view(data, onlineClient.actor, onlineClient.serverNow()).active);
     const host = !data || data.hostId === onlineClient.actor.playerId;
@@ -330,21 +331,36 @@ function renderMatchResults(data = null, forced = false) {
     const events = data ? Object.values(data.auditEvents || {}) : localAudit;
     const winner = teams.findIndex(team => team.points >= pointsToWin);
     document.getElementById('resultsTitle').textContent = winner >= 0 ? `Team ${winner + 1} wins!` : 'Match ended';
+    document.getElementById('resultsContext').textContent = `${isChaosMode ? 'Chaos' : 'Classic'} · First to ${pointsToWin}`;
     const scores = document.getElementById('resultsScores'); scores.innerHTML = '';
-    teams.forEach((team, index) => {
+    teams.map((team, index) => ({ team, index })).sort((a, b) => b.team.points - a.team.points || a.index - b.index).forEach(({ team, index }) => {
         const earned = events.filter(event => event.teamIndex === index).reduce((sum, event) => sum + (event.earned ?? event.correctAnswers?.length ?? 0), 0);
-        const row = document.createElement('p');
-        row.textContent = `Team ${index + 1}: ${team.points} points · ${earned} earned${isChaosMode ? ` · ${team.points - earned >= 0 ? '+' : ''}${team.points - earned} Chaos` : ''}`;
+        const row = document.createElement('li'); row.className = `result-score${index === winner ? ' is-winner' : ''}`;
+        const identity = document.createElement('div');
+        const name = document.createElement('span'); name.className = 'result-team';
+        const token = document.createElement('span'); token.className = 'team-token'; token.style.backgroundColor = getTeamColor(index);
+        token.textContent = String(index + 1); token.setAttribute('aria-hidden', 'true'); name.appendChild(token);
+        const label = document.createElement('span'); label.textContent = `Team ${index + 1}`; name.appendChild(label); identity.appendChild(name);
+        if (isChaosMode && team.points !== earned) {
+            const detail = document.createElement('small'); detail.className = 'result-breakdown';
+            const chaos = team.points - earned;
+            detail.textContent = `${earned} from clues · ${chaos >= 0 ? '+' : ''}${chaos} from Chaos`; identity.appendChild(detail);
+        }
+        const points = document.createElement('strong'); points.className = 'result-points'; points.textContent = `${team.points} `;
+        const unit = document.createElement('small'); unit.textContent = 'pts'; points.appendChild(unit);
+        row.appendChild(identity); row.appendChild(points);
         scores.appendChild(row);
     });
     const best = [...events].sort((a, b) => (b.earned ?? b.correctAnswers?.length ?? 0) - (a.earned ?? a.correctAnswers?.length ?? 0))[0];
-    document.getElementById('resultsHighlights').textContent = best ? `Best clue round: Team ${best.teamIndex + 1}, ${best.earned ?? best.correctAnswers.length} correct.` : 'Ready for another round together?';
+    const bestCount = best?.earned ?? best?.correctAnswers?.length ?? 0;
+    const highlight = document.getElementById('resultsHighlights'); highlight.hidden = !bestCount;
+    highlight.textContent = bestCount ? `Best round: Team ${best.teamIndex + 1} guessed ${bestCount} ${bestCount === 1 ? 'word' : 'words'}.` : '';
     btnStartRound.hidden = btnNextRound.hidden = btnEndRound.hidden = btnEndGame.hidden = true;
     btnAnswers.hidden = timer.hidden = true;
     clearTrainingHints(); isRoundActive = false; updateMobileGameFocus();
     const rematch = document.getElementById('rematchButton'); rematch.hidden = !host; rematch.disabled = !active || Boolean(onlineClient?.busy);
-    document.getElementById('rematchStatus').textContent = host ? 'Rematch keeps the settings and rotates the starting team.' : 'Waiting for the host to choose a rematch. You can also leave.';
-    document.getElementById('changeSettingsButton').textContent = data ? 'Leave for new game settings' : 'Change settings';
+    document.getElementById('rematchStatus').textContent = host ? 'Same settings. A different team starts.' : 'Waiting for the host to play again.';
+    document.getElementById('changeSettingsButton').textContent = data ? 'Leave lobby' : 'New game';
 }
 
 async function returnToSetup() {
@@ -1616,6 +1632,7 @@ async function startGame({ rematch = false } = {}) {
     if (!rematch) localDeck = {};
     document.getElementById('matchResults').dataset.signature = '';
     document.getElementById('matchResults').hidden = true;
+    game.classList.remove('match-finished');
     document.getElementById('currentTeamIndicator').hidden = false;
     showRecap('');
     hideElement(document.getElementById('chaosChoice'));

@@ -260,6 +260,7 @@ test('a finished match renders results without closing the connection or reloadi
     data.teams[0].points = 19; data = act(data, 'toggle-answer', { index: 0 }); data = act(data, 'submit-round');
     const h = ui(); h.mount(data); h.apply(data);
     assert.equal(h.el('matchResults').hidden, false); assert.equal(h.el('resultsTitle').textContent, 'Team 1 wins!');
+    assert.equal(h.el('game').classList.contains('match-finished'), true);
     assert.equal(h.el('rematchButton').hidden, false); assert.equal(h.metrics.reloads, 0); assert.equal(h.metrics.alerts.length, 0);
     assert.ok(h.storage.size > 0); assert.equal(h.el('startRoundButton').hidden, true);
     const viewer = ui(); viewer.mount(data, actor('B')); assert.equal(viewer.el('rematchButton').hidden, true);
@@ -267,6 +268,30 @@ test('a finished match renders results without closing the connection or reloadi
     h.apply(replaced); assert.equal(h.el('rematchButton').disabled, true);
     const next = OnlineState.act(data, actor('A'), { type: 'rematch', matchId: data.matchId }, now);
     h.apply(next); assert.equal(h.el('matchResults').hidden, true); assert.equal(h.el('startOnlineGame').hidden, false);
+    assert.equal(h.el('game').classList.contains('match-finished'), false);
+});
+
+test('final scores rank teams by points and keep Chaos breakdowns secondary', () => {
+    const h = ui();
+    h.run(`teams=[{points:3},{points:8},{points:5}];pointsToWin=20;isChaosMode=true;
+        localAudit=[{teamIndex:0,earned:4},{teamIndex:1,earned:6}];renderMatchResults(null,true)`);
+    const rows = h.el('resultsScores').children;
+    assert.deepEqual(rows.map(row => row.children[1].textContent), ['8 ', '5 ', '3 ']);
+    assert.equal(rows[0].children[0].children[0].children[1].textContent, 'Team 2');
+    assert.equal(rows[0].children[0].children[1].textContent, '6 from clues · +2 from Chaos');
+    assert.equal(rows[2].children[0].children[1].textContent, '4 from clues · -1 from Chaos');
+    assert.equal(h.el('resultsTitle').textContent, 'Match ended'); // stopping early does not invent a winner
+    assert.equal(h.el('resultsContext').textContent, 'Chaos · First to 20');
+});
+
+test('Classic results omit repeated earned totals and empty best-round highlights', () => {
+    const h = ui();
+    h.run('teams=[{points:0},{points:0}];isChaosMode=false;localAudit=[];renderMatchResults(null,true)');
+    assert.equal(h.el('resultsHighlights').hidden, true);
+    assert.equal(h.el('resultsScores').children[0].children[0].children.length, 1);
+    const chaos = ui();
+    chaos.run('teams=[{points:0},{points:0}];isChaosMode=true;localAudit=[];renderMatchResults(null,true)');
+    assert.equal(chaos.el('resultsScores').children[0].children[0].children.length, 1);
 });
 
 test('online clue cards stay disabled while the role copy respects small-game guessing', () => {

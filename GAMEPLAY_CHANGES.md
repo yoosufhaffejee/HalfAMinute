@@ -2,6 +2,16 @@
 
 Implemented the high-priority gameplay work and requested follow-ups from the fun report. Existing online eligibility exceptions, team assignment, word visibility, reconnect protection, and team/speaker rotation remain in place. No Firebase firewall, origin, or access rules were changed.
 
+## End-of-match summary polish
+
+Results now have a single score list ordered by final points, aligned score columns, team-colored tokens, and a subtle winner highlight. Classic omits the duplicate earned total; Chaos adds a secondary breakdown only when an effect changed the total. Empty best-round highlights are omitted. An early end still says **Match ended**, without declaring a winner before the target is reached.
+
+**Play again** is the primary action, **New game** (or **Leave lobby** online) is secondary, and downloading the detailed summary is a quieter text action. The repeated last-turn recap, role message, live score strip, and Chaos instructions are hidden on the results screen. The final board stays visible below a divider, with smaller neutral tiles, no stale powerup badges, and enough height for stacked team tokens. Rejoining remains accessible when an online seat needs recovery. Rematches restore the normal gameplay layout.
+
+Verification: **76 automated tests pass**, including score ordering, positive/negative Chaos breakdowns, zero-detail suppression, host-only rematches, and exiting results mode. Browser checks covered Classic and four-team Chaos results at 320, 390, 768, and 1384 pixels wide, plus the rematch and return-to-setup flows. All 13 measurements found no intersecting controls or horizontal overflow; the board remained visible and duplicated score/recap elements were hidden. All four tokens fit within a shared cell at 320 pixels. No browser errors or warnings were recorded.
+
+Evidence: [desktop summary](reports/results-desktop.png), [mobile summary](reports/results-mobile.png), [measurements](reports/results-verification.json).
+
 ## Layout and audio correction
 
 The first implementation left absolutely positioned corner buttons on a page that now had more controls, and loaded app CSS before Bootstrap. This caused the overlaps and oversized desktop container reported in the screenshots. The layout now uses a dedicated 768-pixel maximum shell, a wrapping toolbar with text labels, grouped setup fields, and one consolidated stylesheet loaded after Bootstrap. Navigation no longer floats over other content.

@@ -28,7 +28,7 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=20261020.4">
+    <link rel="stylesheet" href="style.css?v=20261020.5">
 </head>
 
 <body>
@@ -345,15 +345,20 @@
                 <button id="rerollChaosButton" class="btn btn-outline-primary">Use team reroll</button>
             </section>
             <section id="matchResults" class="results-card" hidden aria-labelledby="resultsTitle">
+                <p class="results-eyebrow">Final scores</p>
                 <h2 id="resultsTitle">Match complete</h2>
-                <div id="resultsScores"></div>
-                <p id="resultsHighlights"></p>
-                <button id="rematchButton" class="btn btn-success">Rematch · rotate starter</button>
-                <button id="changeSettingsButton" class="btn btn-outline-secondary">Change settings</button>
-                <button id="exportMatchButton" class="btn btn-outline-secondary">Download match summary</button>
+                <p id="resultsContext" class="results-context"></p>
+                <ol id="resultsScores" aria-label="Final team scores"></ol>
+                <p id="resultsHighlights" class="results-highlight"></p>
+                <div class="results-actions">
+                    <button id="rematchButton" class="btn btn-success">Play again</button>
+                    <button id="changeSettingsButton" class="btn btn-outline-secondary">New game</button>
+                </div>
                 <p id="rematchStatus" role="status"></p>
+                <button id="exportMatchButton" class="btn btn-link">Download summary</button>
             </section>
-            <div id="gameBoard"></div>
+            <h3 id="finalBoardLabel">Final board</h3>
+            <div id="gameBoard" role="group" aria-label="Game board"></div>
             <div id="teamScores"></div>
             <details id="trainingHintsDrawer" hidden><summary>Training hints</summary><div id="currentWords" hidden></div></details>
             <div id="roundControls">
@@ -411,6 +416,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261020.4" type="module"></script>
+    <script src="script.js?v=20261020.5" type="module"></script>
 </body>
 </html>

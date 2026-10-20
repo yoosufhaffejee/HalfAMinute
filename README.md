@@ -16,7 +16,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - Anti-repetition behavior with recent-word suppression
 - Short / Standard / Long quick setup, with all existing advanced settings available
 - Chaos: capped bombs, shields, fast outcomes, and an optional once-per-team reroll
-- Results, earned/Chaos point breakdown, match-summary download, and rematches with rotating starters
+- Ranked final scores, a compact final board, relevant Chaos breakdowns, summary downloads, and rematches with rotating starters
 - Persistent mute, volume, and device/reduced/full motion preferences
 
 ## Project Files
