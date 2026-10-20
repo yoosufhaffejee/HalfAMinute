@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import * as State from '../online/state.js';
 
 const NOW = 1000000;
+const LEAD_IN = 4500;
 const actor = (name, connectionId = `connection-${name}`) => ({ playerId: `id-${name}`, playerName: name, connectionId });
 function lobby(teamCount = 2, extra = {}) {
     return {
@@ -20,7 +21,7 @@ const rules = {
     drawWords: () => ({ words: ['One', 'Two', 'Three'], pools: { easyWords: ['Four'], hardWords: ['Five'] } }),
     planChaos: (game, points) => ({ points, basePoints: points, shields: [1, 0], summary: 'shield gained', powerups: {}, durationMs: 3000 })
 };
-function act(game, name, type, extra = {}, now = NOW) {
+function act(game, name, type, extra = {}, now = Math.max(NOW, game.turn?.startedAt || 0, game.turn?.selectingAt || 0, game.turn?.submittedAt || 0)) {
     return State.act(game, typeof name === 'string' ? actor(name) : name,
         { type, turnId: game.turn?.id, ...extra }, now, rules);
 }
@@ -53,6 +54,65 @@ test('existing two/three player exceptions and four team eligibility are preserv
     }
     assert.equal(started(['A', 'B', 'C'], 3).phase, 'idle');
     assert.equal(act(withPlayers(['A', 'B', 'C', 'D'], 4), 'A', 'start-game'), undefined);
+});
+
+test('the server schedules Go before clue time and refuses early end/expiry commands', () => {
+    const game=act(started(['A','B','C','D']),'A','start-round',{seed:42},NOW);
+    assert.equal(game.turn.startedAt,NOW+LEAD_IN);
+    assert.equal(game.turn.deadline,game.turn.startedAt+30000);
+    for(const time of [NOW,NOW+LEAD_IN-1]) {
+        assert.equal(State.view(game,actor('A'),time).showWords,false);
+        assert.equal(State.view(game,actor('B'),time).showWords,false);
+        assert.equal(State.view(game,actor('A'),time).canEndRound,false);
+        assert.equal(act(game,'A','end-round',{},time),undefined);
+        assert.equal(act(game,'B','expire-round',{},time),undefined);
+    }
+    const go=State.view(game,actor('A'),game.turn.startedAt);
+    assert.equal(go.showWords,true);assert.equal(go.canEndRound,true);assert.equal(go.remainingSeconds,30);
+    assert.equal(State.view(game,actor('A'),game.turn.startedAt+1000).remainingSeconds,29);
+});
+
+test('a disconnected reserved seat cannot make starting a game or round eligible', () => {
+    let game=withPlayers();
+    State.connection(game,State.ownsSeat(game,actor('B'))).connected=false;
+    assert.equal(game.numPlayers,2); // Reconnect grace keeps the seat, not start permission.
+    assert.equal(State.view(game,actor('A'),NOW).canStartGame,false);
+    assert.equal(act(game,'A','start-game'),undefined);
+    game=State.join(game,actor('B','replacement'),NOW+1);
+    game=act(game,'A','start-game');
+    State.connection(game,State.ownsSeat(game,actor('B','replacement'))).connected=false;
+    assert.equal(State.view(game,actor('A'),NOW+2).canStartRound,false);
+    assert.equal(act(game,'A','start-round',{seed:1}),undefined);
+    assert.equal(game.teams[1].players.length,1);
+});
+
+test('connected-player exceptions retain word privacy and require a connected opposing team', () => {
+    let game=started(['A','B','C','D']);
+    for(const name of ['C','D'])State.connection(game,State.ownsSeat(game,actor(name))).connected=false;
+    assert.equal(State.rosterStatus(game,NOW).eligible,true);
+    game=act(game,'A','start-round',{seed:1});
+    assert.equal(State.view(game,actor('B'),game.turn.startedAt).showWords,false);
+    game=State.join(game,actor('C','returning'),NOW+1);
+    assert.equal(State.view(game,actor('B'),game.turn.startedAt).showWords,false); // Joining never exposes a small round's answers.
+    const sameTeam=started(['A','B','C','D']);
+    for(const name of ['B','D'])State.connection(sameTeam,State.ownsSeat(sameTeam,actor(name))).connected=false;
+    assert.equal(State.rosterStatus(sameTeam,NOW).connectedPlayers,2);
+    assert.equal(State.rosterStatus(sameTeam,NOW).eligible,false);
+});
+
+test('a temporary disconnect preserves a running round and sealed results but blocks the next start', () => {
+    let game=act(started(),'A','start-round',{seed:1});
+    const id=game.turn.id, deadline=game.turn.deadline;
+    State.connection(game,State.ownsSeat(game,actor('B'))).connected=false;
+    game=State.prune(game,actor('A'),NOW+1)||game;
+    assert.equal(game.turn.id,id);assert.equal(game.turn.deadline,deadline);
+    game=act(game,'A','end-round',{},game.turn.startedAt);
+    game=act(game,'A','toggle-answer',{index:0});game=act(game,'A','submit-round');
+    assert.equal(game.teams[0].points,1);
+    assert.equal(State.view(game,actor('A'),NOW+LEAD_IN).canStartRound,false);
+    game=State.join(game,actor('B','fresh'),NOW+LEAD_IN+1);
+    assert.equal(game.teams[0].points,1);
+    assert.equal(State.view(game,actor('B','fresh'),NOW+LEAD_IN+1).canStartRound,true);
 });
 
 test('joins balance teams without moving existing players', () => {
@@ -201,20 +261,17 @@ test('queues remain fair across joins and departures on four teams', () => {
     assert.equal(seen.size, 9);
 });
 
-test('empty teams are skipped and the speaker always matches the scoring team', () => {
+test('empty teams keep a coherent speaker queue but cannot start another round', () => {
     let game = started(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']);
     for (const name of ['A', 'C', 'E', 'G']) game = State.leave(game, actor(name), NOW);
     assert.deepEqual(game.teams.map(t => t.players.length), [0, 4]);
     coherent(game);
-    for (let index = 0; index < 12; index++) {
-        game = selection(game);
-        const speaker = State.members(game).find(p => p.playerId === game.turn.speakerId);
-        game = act(game, speaker, 'toggle-answer', { index: 0 });
-        game = act(game, speaker, 'submit-round');
-        assert.equal(game.teams[0].points, 0);
-        coherent(game);
-    }
-    assert.equal(game.teams[1].points, 12);
+    const speaker = State.members(game).find(p => p.playerId === game.turn.speakerId);
+    assert.equal(State.view(game, speaker, NOW).canStartRound, false);
+    assert.equal(act(game, speaker, 'start-round', {seed:1}), undefined);
+    game = State.join(game, actor('I'), NOW);
+    assert.equal(State.view(game, speaker, NOW).canStartRound, true);
+    coherent(selection(game));
 });
 
 test('pregame leave/rejoin always assigns an initial speaker on start', () => {
@@ -249,18 +306,18 @@ test('only the actual speaker can control a turn and only the actual host can st
 
 test('deadline expiry can be recovered by another client after a sleeping speaker', () => {
     let game = act(started(), 'A', 'start-round', { seed: 1 });
-    assert.equal(act(game, 'B', 'expire-round', {}, NOW + 29999), undefined);
-    game = act(game, 'B', 'expire-round', {}, NOW + 30000);
+    assert.equal(act(game, 'B', 'expire-round', {}, game.turn.deadline - 1), undefined);
+    game = act(game, 'B', 'expire-round', {}, game.turn.deadline);
     assert.equal(game.phase, 'selecting');
     assert.equal(game.roundActive, false);
-    assert.equal(State.view(game, actor('A'), NOW + 30000).canSelect, true);
+    assert.equal(State.view(game, actor('A'), game.turn.deadline).canSelect, true);
 });
 
 test('small-game words remain private; opponents in larger games can observe but not select', () => {
     let small = act(started(), 'A', 'start-round', { seed: 1 });
     assert.equal(State.view(small, actor('B'), NOW).showWords, false);
     let larger = act(started(['A', 'B', 'C', 'D']), 'A', 'start-round', { seed: 1 });
-    assert.equal(State.view(larger, actor('B'), NOW).showWords, true);
+    assert.equal(State.view(larger, actor('B'), larger.turn.startedAt).showWords, true);
     assert.equal(State.view(larger, actor('C'), NOW).showWords, false);
     larger = act(larger, 'A', 'end-round');
     assert.equal(State.view(larger, actor('B'), NOW).showWords, true);
@@ -277,7 +334,7 @@ test('Chaos result survives host/speaker departure and is finished once by the n
     assert.equal(game.hostId, 'id-C');
     assert.equal(State.act(game, actor('A'), { type: 'resolve-chaos', turnId: id, hostEpoch: oldEpoch }, NOW + 4000, rules), undefined);
     assert.equal(act(game, 'C', 'resolve-chaos', { hostEpoch: game.hostEpoch }, NOW + 2999), undefined);
-    game = act(game, 'C', 'resolve-chaos', { hostEpoch: game.hostEpoch }, NOW + 3000);
+    game = act(game, 'C', 'resolve-chaos', { hostEpoch: game.hostEpoch }, game.turn.resolution.startedAt + 3000);
     assert.equal(game.teams[0].points, 1);
     assert.equal(game.phase, 'waiting'); // three remaining players, original minimum preserved
     assert.equal(Object.keys(game.auditEvents).length, 1);

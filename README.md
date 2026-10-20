@@ -77,7 +77,7 @@ Important:
 - Disconnected seats have a 90-second reconnect grace period. A server-connected tab is not removed solely for delayed heartbeats.
 - Refresh restores the same player, team, turn, and answer selection using per-tab session storage.
 - `Leave Lobby` explicitly releases a seat; `Rejoin Lobby` can restore a lost or superseded connection.
-- Online protocol version 3 requires a newly created lobby; old-version lobbies show a message asking the host to recreate them.
+- Online protocol version 4 requires a newly created lobby; old-version lobbies show a message asking the host to recreate them. The new version keeps all clients on the same scheduled countdown start.
 - Each team rotates its own speaker queue. Empty teams are skipped safely without changing the player-count eligibility rules.
 
 ## AI Mode
@@ -94,7 +94,7 @@ Important:
 
 ## Gameplay Flow
 
-1. Speaker starts round.
+1. Speaker starts round. A visible 3, 2, 1, Go lead-in plays before any words or round time are shown. The full configured round duration starts afterward, using a shared scheduled time online.
 2. Timer runs (`Round Duration`).
 3. Speaker describes words without saying the target word.
 4. After timer/end-round, correct words are selected.
@@ -134,6 +134,8 @@ Online game can start only when team/player distribution is valid:
 - 2-team game with exactly 2 players: allowed
 - 3-team game with exactly 3 players: allowed
 - Otherwise: requires at least 2 players per configured team
+
+Start eligibility uses connected players, with at least one connected member on each configured team. Reserved disconnected seats do not satisfy the count. A round already underway can finish and its result is retained; the next round waits for a playable connected group and its assigned speaker. Disconnected seats keep their existing 90-second reconnect grace period. The lobby and board distinguish empty teams from reconnecting teams.
 
 ## Configuration
 

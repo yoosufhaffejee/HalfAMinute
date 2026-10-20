@@ -1,0 +1,70 @@
+{
+  "frames": [
+    {
+      "elapsedMs": 304,
+      "countdownVisible": true,
+      "label": "3",
+      "spokenAudioPaused": false,
+      "spokenAudioTime": 0.252189,
+      "tickingPaused": true,
+      "timer": "12",
+      "timerVisible": false,
+      "visibleWords": 0
+    },
+    {
+      "elapsedMs": 1196,
+      "countdownVisible": true,
+      "label": "2",
+      "spokenAudioPaused": false,
+      "spokenAudioTime": 1.137356,
+      "tickingPaused": true,
+      "timer": "12",
+      "timerVisible": false,
+      "visibleWords": 0
+    },
+    {
+      "elapsedMs": 2339,
+      "countdownVisible": true,
+      "label": "1",
+      "spokenAudioPaused": false,
+      "spokenAudioTime": 2.271609,
+      "tickingPaused": true,
+      "timer": "12",
+      "timerVisible": false,
+      "visibleWords": 0
+    },
+    {
+      "elapsedMs": 3452,
+      "countdownVisible": true,
+      "label": "Go!",
+      "spokenAudioPaused": false,
+      "spokenAudioTime": 3.393968,
+      "tickingPaused": true,
+      "timer": "12",
+      "timerVisible": false,
+      "visibleWords": 0
+    },
+    {
+      "elapsedMs": 4647,
+      "countdownVisible": false,
+      "label": "",
+      "spokenAudioPaused": true,
+      "spokenAudioTime": 0,
+      "tickingPaused": false,
+      "timer": "30",
+      "timerVisible": true,
+      "visibleWords": 5
+    }
+  ],
+  "phone": {
+    "countdownFits": true,
+    "historyColor": "rgb(255, 248, 219)",
+    "horizontalOverflow": false,
+    "settingsColor": "rgb(238, 242, 246)",
+    "viewport": [
+      390,
+      844
+    ]
+  },
+  "logs": []
+}

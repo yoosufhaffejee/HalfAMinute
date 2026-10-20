@@ -1,4 +1,4 @@
-import * as State from './state.js?v=20261020.4';
+import * as State from './state.js?v=20261020.11';
 
 // Firebase is injected so connection loss, retries and delayed commits can be
 // exercised without touching a production database.

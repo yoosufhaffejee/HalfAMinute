@@ -166,6 +166,7 @@ test('multiple clients and a retried turn commit preserve the latest roster', as
     // Joining the third player pauses; the fourth restores an idle, repaired turn.
     assert.equal(db.game.phase, 'idle');
     await a.client.command({ type: 'start-round', seed: 42 });
+    db.now = db.game.turn.startedAt;
     await a.client.command({ type: 'end-round' });
     await a.client.command({ type: 'toggle-answer', index: 0 });
     a.sdk.retryNext = true;
@@ -242,6 +243,7 @@ test('new host tick resumes pending Chaos work without another pending event', a
     for (const entry of [a, b, c, d]) await entry.client.connect();
     await a.client.command({ type: 'start-game' });
     await a.client.command({ type: 'start-round', seed: 7 });
+    db.now = db.game.turn.startedAt;
     await a.client.command({ type: 'end-round' });
     await a.client.command({ type: 'toggle-answer', index: 1 });
     await a.client.command({ type: 'submit-round' });
@@ -257,9 +259,26 @@ test('expiry is recovered by a connected non-speaker using the shared deadline',
     const db = new Database(), a = makeClient(t, db, 'A'), b = makeClient(t, db, 'B');
     await a.client.connect(); await b.client.connect();
     await a.client.command({ type: 'start-game' }); await a.client.command({ type: 'start-round', seed: 1 });
-    db.now += 30000; await b.client.tick(); await flush();
+    db.now = db.game.turn.deadline; await b.client.tick(); await flush();
     assert.equal(db.game.phase, 'selecting');
     assert.equal(a.client.snapshot.roundActive, false);
+});
+
+test('disconnect/reconnect blocks round starts without evicting the seat or losing the shared countdown', async t => {
+    const db=new Database(),a=makeClient(t,db,'A'),b=makeClient(t,db,'B');
+    await a.client.connect();await b.client.connect();await a.client.command({type:'start-game'});
+    b.client.suspend();await flush();
+    assert.equal(State.members(db.game).length,2);
+    assert.equal(await a.client.command({type:'start-round',seed:1}),false);
+    await b.client.resume();await flush();
+    assert.equal(await a.client.command({type:'start-round',seed:1}),true);
+    assert.equal(State.view(db.game,b.client.actor,db.now).countdownRemainingMs,4500);
+    db.now=db.game.turn.startedAt-1;
+    assert.equal(await a.client.command({type:'end-round'}),false);
+    assert.equal(State.view(db.game,a.client.actor,db.now).showWords,false);
+    db.now++;
+    assert.equal(State.view(db.game,a.client.actor,db.now).remainingSeconds,30);
+    assert.equal(State.view(db.game,a.client.actor,db.now).showWords,true);
 });
 
 test('closing disposes subscriptions and timers and marks only its own connection offline', async t => {
@@ -281,6 +300,7 @@ test('host tick auto-keeps an expired choice and resolves it after speaker/host 
         await entry.client.connect();
     }
     await a.client.command({ type: 'start-game' }); await a.client.command({ type: 'start-round', seed: 1 });
+    db.now = db.game.turn.startedAt;
     await a.client.command({ type: 'end-round' }); await a.client.command({ type: 'toggle-answer', index: 0 });
     await a.client.command({ type: 'submit-round' }); assert.equal(db.game.phase, 'chaos-choice');
     await a.client.close(true); await flush();

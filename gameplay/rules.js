@@ -1,4 +1,10 @@
 // Shared, deterministic rules. No browser, storage, clock or network access.
+// The spoken countdown clip is 4.344s; leave it a small lead-out before clues.
+export const ROUND_COUNTDOWN_MS = 4500;
+export function countdownLabel(remainingMs) {
+    const beat = Math.max(0, Math.min(3, Math.ceil(remainingMs / (ROUND_COUNTDOWN_MS / 4)) - 1));
+    return beat ? String(beat) : 'Go!';
+}
 export const PRESETS = {
     short: { pointsToWin: 10, numSeconds: 30, numWords: 5 },
     standard: { pointsToWin: 20, numSeconds: 30, numWords: 5 },

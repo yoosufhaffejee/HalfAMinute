@@ -21,10 +21,11 @@ function game(names = ['A', 'B', 'C', 'D']) {
     return data;
 }
 function act(data, type, extras = {}) {
-    return OnlineState.act(data, actor('A'), { type, turnId: data.turn.id, ...extras }, now, rules);
+    return OnlineState.act(data, actor('A'), { type, turnId: data.turn.id, ...extras },
+        Math.max(now, data.turn?.startedAt || 0, data.turn?.selectingAt || 0, data.turn?.submittedAt || 0), rules);
 }
 function ui() {
-    let clock = now;
+    let clock = now + Gameplay.ROUND_COUNTDOWN_MS;
     const nodes = new Map(), storage = new Map();
     const metrics = { intervals: [], commands: [], alerts: [], reloads: 0, history: [], audioPlays: [] };
     function element(id = '') {
@@ -54,6 +55,7 @@ function ui() {
         window: { addEventListener() {}, matchMedia: () => ({ matches: false }) },
         sessionStorage: { getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value), removeItem: key => storage.delete(key) },
         localStorage: { getItem: () => null, setItem() {} },
+        Date: class extends Date { static now() { return clock; } },
         setInterval: callback => { metrics.intervals.push(callback); return metrics.intervals.length; }, clearInterval() {}, setTimeout: () => 1, clearTimeout() {},
         console, alert: message => metrics.alerts.push(message), location: { reload: () => metrics.reloads++ },
         categories: { Sample: [
@@ -65,7 +67,8 @@ function ui() {
     });
     vm.runInContext(source, ctx);
     const run = value => vm.runInContext(value, ctx);
-    run(`updateBoard=()=>{};updateTeamScores=()=>{};updateCurrentTeamIndicator=()=>{};
+    run(`globalThis.actualUpdateBoard=updateBoard;globalThis.actualUpdateTeamScores=updateTeamScores;globalThis.actualGenerateBoard=generateBoard;
+        updateBoard=()=>{};updateTeamScores=()=>{};updateCurrentTeamIndicator=()=>{};
         refreshChaosModeUi=()=>{};generateBoard=()=>{};createTeamAuditTables=()=>{};createTeamAuditColumns=()=>{};
         createTeamAuditRows=(...args)=>metrics.history.push(args);showNotification=()=>{};`);
     return { run, el, buttons, metrics, storage,
@@ -104,7 +107,7 @@ test('selection highlights, count and controls survive roster refreshes', () => 
 test('late opposing join renders the current words and deadline from one snapshot', () => {
     let data = act(game(['A', 'B', 'C', 'D', 'E', 'F']), 'start-round', { seed: 1 });
     data = OnlineState.join(data, actor('G'), now); data = OnlineState.join(data, actor('H'), now);
-    const h = ui(); h.now = now + 12000; h.mount(data, actor('H'));
+    const h = ui(); h.now = now + Gameplay.ROUND_COUNTDOWN_MS + 12000; h.mount(data, actor('H'));
     assert.equal(h.buttons[0].textContent, 'One');
     assert.equal(h.el('scoreInput').hidden, false);
     assert.equal(h.el('timer').textContent, '18');
@@ -201,6 +204,7 @@ test('offline start, selection and score advance still work without online write
         teams=[{points:0},{points:0}];currentTeam=1;currentRound=0;currentGameWords=['One','Three','Four'];
         playSound=async()=>{};startRound()`);
     await Promise.resolve(); await Promise.resolve();
+    h.now = now + Gameplay.ROUND_COUNTDOWN_MS * 2; h.metrics.intervals.at(-1)();
     assert.ok(['One','Three','Four'].includes(h.buttons[0].textContent));
     assert.equal(h.el('timer').hidden, false);
     assert.equal(h.el('tickSound').paused, false);
@@ -210,6 +214,96 @@ test('offline start, selection and score advance still work without online write
     assert.equal(h.run('teams[0].points'), 1);
     assert.equal(h.run('currentTeam'), 2);
     assert.equal(h.metrics.commands.length, 0);
+});
+
+test('local 3-2-1-Go hides words and ticking, then grants the full timer independently of audio', async () => {
+    for (const audioMode of ['normal','muted','blocked']) {
+        const h=ui();h.now=now;
+        h.run(`isOnlineGame=false;teams=[{points:0},{points:0}];currentTeam=1;numSeconds=30;numWords=2;
+            currentGameWords=['One','Two','Three'];preferences.muted=${audioMode==='muted'};
+            ${audioMode==='blocked'?`countdownSound.play=()=>Promise.reject(new Error('blocked'));`:''}startRound()`);
+        const render=h.metrics.intervals.at(-1), count=h.metrics.intervals.length;
+        h.run('startRound();endRound()'); // No duplicate countdown or early completion.
+        assert.equal(h.metrics.intervals.length,count);
+        for(const [elapsed,label] of [[0,'3'],[1200,'2'],[2400,'1'],[3600,'Go!'],[4499,'Go!']]) {
+            h.now=now+elapsed;render();
+            assert.equal(h.el('roundCountdownValue').textContent,label);
+            assert.equal(h.el('timer').hidden,true);
+            assert.equal(h.el('scoreInput').hidden,true);
+            assert.ok(h.buttons.every(button=>button.hidden&&button.textContent===''));
+            assert.equal(h.el('tickSound').paused,true);
+            assert.equal(h.el('endRoundButton').hidden,true);
+        }
+        h.now=now+Gameplay.ROUND_COUNTDOWN_MS;render();
+        assert.equal(h.el('roundCountdown').hidden,true);
+        assert.equal(h.el('timer').textContent,'30');
+        assert.equal(h.el('timer').hidden,false);
+        assert.equal(h.buttons[0].hidden,false);
+        assert.equal(h.el('countdownSound').paused,true);
+        assert.equal(h.run('localTurnStartedAt'),now+Gameplay.ROUND_COUNTDOWN_MS);
+        h.now=now+Gameplay.ROUND_COUNTDOWN_MS+1000;render();
+        assert.equal(h.el('timer').textContent,'29');
+        await Promise.resolve();
+    }
+});
+
+test('online countdown reconnects seek the cue and reveal words only at the shared start', () => {
+    const data=act(game(), 'start-round', {seed:1}),h=ui();
+    data.settings.trainingMode=true;
+    h.now=now+2500;h.mount(data);
+    assert.equal(h.el('roundCountdownValue').textContent,'1');
+    assert.equal(h.el('countdownSound').currentTime,2.5);
+    assert.ok(h.buttons.every(button=>button.hidden&&button.textContent===''));
+    assert.equal(h.el('timer').hidden,true);
+    assert.equal(h.el('currentWords').hidden,true);
+    h.apply(data);
+    assert.equal(h.metrics.audioPlays.filter(id=>id==='countdownSound').length,1);
+    h.now=data.turn.startedAt;h.run('renderOnlineControls()');
+    assert.equal(h.el('roundCountdown').hidden,true);
+    assert.equal(h.el('timer').textContent,'30');
+    assert.equal(h.buttons[0].textContent,'One');
+    assert.equal(h.el('currentWords').hidden,false);
+    assert.equal(h.el('tickSound').paused,false);
+    assert.equal(h.el('countdownSound').paused,true);
+    h.now=data.turn.startedAt+2000;h.apply(data);
+    assert.equal(h.el('timer').textContent,'28');
+    assert.equal(h.metrics.audioPlays.filter(id=>id==='countdownSound').length,1);
+});
+
+test('ending during a local lead-in cancels its sound and cannot reveal words later', async () => {
+    const h=ui();h.now=now;
+    h.run(`isOnlineGame=false;teams=[{points:0},{points:0}];currentTeam=1;currentGameWords=['One'];
+        hideModalById=()=>{};startRound()`);
+    const queued=h.metrics.intervals.at(-1);
+    await h.run('endGame()');
+    assert.equal(h.el('roundCountdown').hidden,true);
+    assert.equal(h.el('countdownSound').paused,true);
+    h.now=now+10000;queued();
+    assert.equal(h.el('timer').hidden,true);
+    assert.ok(h.buttons.every(button=>button.hidden));
+});
+
+test('online lobby counts and actual board tokens reflect empty and disconnected teams', () => {
+    let data=game(['A','B']);data.isGameStarted=false;
+    data=OnlineState.leave(data,actor('B'),now);
+    const h=ui();h.mount(data);
+    h.run('actualGenerateBoard();actualUpdateBoard();actualUpdateTeamScores()');
+    const tokens=h.el('gameBoard').children[0].children.find(e=>e.className==='board-tokens').children;
+    assert.equal(tokens.length,1);
+    assert.equal(h.el('onlineLabel').textContent,'Lobby');
+    assert.equal(h.el('onlineModalLabel').textContent,'Lobby');
+    assert.match(h.el('lobbySummary').textContent,/1 player connected.*1 of 2 teams online/);
+    assert.equal(h.el('startOnlineGame').disabled,true);
+    assert.match(h.el('teamScores').children[1].textContent,/waiting for players/);
+    data=OnlineState.join(data,actor('B'),now);
+    OnlineState.connection(data,OnlineState.ownsSeat(data,actor('B'))).connected=false;
+    const disconnected=ui();disconnected.mount(data);
+    disconnected.run('actualGenerateBoard();actualUpdateBoard()');
+    const heldTokens=disconnected.el('gameBoard').children[0].children.find(e=>e.className==='board-tokens').children;
+    assert.equal(heldTokens.length,2);
+    assert.equal(heldTokens[1].classList.contains('team-token-disconnected'),true);
+    assert.match(disconnected.el('lobbySummary').textContent,/1 reconnecting/);
+    assert.equal(disconnected.el('startOnlineGame').disabled,true);
 });
 
 test('a fast join defers modal hiding until opening completes, without hiding the next opening', () => {
@@ -530,9 +624,9 @@ test('online ticking loops without restarting on renders and stops at the warnin
     assert.equal(h.el('tickSound').loop, true); assert.equal(h.el('tickSound').paused, false);
     for (let i = 0; i < 12; i++) h.run('renderOnlineControls()');
     assert.equal(h.metrics.audioPlays.filter(id => id === 'tickSound').length, 1);
-    h.now = now + 26000; h.run('renderOnlineControls()');
+    h.now = now + Gameplay.ROUND_COUNTDOWN_MS + 26000; h.run('renderOnlineControls()');
     assert.equal(h.el('tickSound').paused, true);
-    h.now = now + 1000; h.run('renderOnlineControls()');
+    h.now = now + Gameplay.ROUND_COUNTDOWN_MS + 1000; h.run('renderOnlineControls()');
     assert.equal(h.el('tickSound').paused, false);
     h.run('onlineClient.connected=false;renderOnlineControls()');
     assert.equal(h.el('tickSound').paused, true);

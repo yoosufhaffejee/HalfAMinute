@@ -1,9 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
-import * as OnlineState from './online/state.js?v=20261020.4';
-import { OnlineClient } from './online/client.js?v=20261020.4';
-import * as Gameplay from './gameplay/rules.js?v=20261020.9';
+import * as OnlineState from './online/state.js?v=20261020.11';
+import { OnlineClient } from './online/client.js?v=20261020.11';
+import * as Gameplay from './gameplay/rules.js?v=20261020.11';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -65,6 +65,7 @@ let activeSelectedCategories = [];
 let wordDescriptionLookup = new Map();
 let globalWordDescriptionLookup = null;
 let isRoundActive = false;
+let isPreparingRound = false;
 let onlineGameState = "waiting";
 let roundPowerups = {};
 let powerupRevealVisible = false;
@@ -189,7 +190,8 @@ const endSoundAlt = document.getElementById('endSoundAlt');
 function randomSeed() { return crypto.getRandomValues(new Uint32Array(1))[0]; }
 
 function stopRoundSounds() {
-    [countdownSound, tickSound, warningSound].forEach(audio => { try { audio.pause(); audio.currentTime = 0; } catch { /* Optional. */ } });
+    setRoundCountdown(0);
+    [startSound, countdownSound, tickSound, warningSound].forEach(audio => { try { audio.pause(); audio.currentTime = 0; } catch { /* Optional. */ } });
     tickSound.loop = false;
 }
 
@@ -408,6 +410,7 @@ async function returnToSetup() {
     hideElement(game); showElement(menu); showElement(btnSettings); showElement(btnOnline); showElement(btnAI); showElement(btnRules); hideElement(btnHistory);
     showElement(txtLobbyMenu); hideElement(txtLobbyPlayers);
     isAiGame = false; localStarter = null; localDeck = {}; setLayoutMode('menu'); updateSetupSummary();
+    updateLobbyPresentation();
 }
 
 function chooseChaos(reroll) {
@@ -794,7 +797,7 @@ function updateMobileGameFocus() {
         return;
     }
     game.classList.toggle('clue-phase', isRoundActive);
-    game.classList.toggle('word-phase', areWordsInFocusPhase());
+    game.classList.toggle('word-phase', isPreparingRound || areWordsInFocusPhase());
 
     game.classList.remove("mobile-focus-words", "mobile-focus-board");
     if (game.hidden || !isNarrowViewport()) {
@@ -1470,7 +1473,7 @@ function updatePlayerListUI(teamsData) {
 
     teamsData.forEach((team, teamIndex) => {
         const teamHeader = document.createElement('h6');
-        teamHeader.textContent = `Team ${teamIndex + 1}:`;
+        teamHeader.textContent = `Team ${teamIndex + 1}${(team.players || []).length ? ':' : ' · Waiting for players'}`;
         teamHeader.style.fontWeight = 'bold';
         txtLobbyPlayers.appendChild(teamHeader);
 
@@ -1858,11 +1861,10 @@ function startRound() {
     clearChaosPresentation();
     showRecap('');
     stopRoundSounds();
-    localTurnStartedAt = Date.now();
     btnStartRound.hidden = true;
     btnEndGame.hidden = true;
     isRoundActive = true;
-    document.getElementById('roleInstruction').textContent = `Team ${currentTeam}'s speaker: describe these words. Listeners: guess aloud.`;
+    document.getElementById('roleInstruction').textContent = `Team ${currentTeam}: get ready to describe and guess.`;
     powerupRevealVisible = false;
     landedPowerupPreview = null;
     updateBoard();
@@ -2004,12 +2006,13 @@ async function endGame() {
     hideModalById('endMatchModal');
     if (isOnlineGame) { await sendOnlineCommand({ type: 'end-game' }); return; }
     clearInterval(countdownTimer); finishLocalRound = null;
+    stopRoundSounds();
     renderMatchResults(null, true);
 }
 
 function endRound() {
     if (isOnlineGame) { void sendOnlineCommand({ type: 'end-round' }); return; }
-    if (!isRoundActive) return;
+    if (!isRoundActive || isPreparingRound) return;
     endRoundEarly = true;
     finishLocalRound?.();
 }
@@ -2055,31 +2058,40 @@ function updatePoints(points) {
     }
 }
 
-function playSound(audioElement, endCondition, playbackRate = 1.0) {
+function playSound(audioElement, endCondition, playbackRate = 1.0, offsetSeconds = 0) {
     if (!audioElement || preferences.muted || preferences.volume === 0 || endCondition?.()) return Promise.resolve();
     try {
         audioElement.volume = preferences.volume;
         audioElement.muted = false;
         audioElement.playbackRate = playbackRate;
-        audioElement.currentTime = 0;
+        audioElement.currentTime = offsetSeconds;
         const attempt = audioElement.play();
         attempt?.catch?.(() => {});
     } catch { /* Audio is optional and never controls game timing. */ }
     return Promise.resolve();
 }
 
+function setRoundCountdown(remainingMs) {
+    isPreparingRound = remainingMs > 0;
+    document.getElementById('roundCountdown').hidden = !isPreparingRound;
+    const label = isPreparingRound ? Gameplay.countdownLabel(remainingMs) : '';
+    const value = document.getElementById('roundCountdownValue');
+    if (value.textContent !== label) value.textContent = label;
+    game.classList.toggle('countdown-phase', isPreparingRound);
+}
+
 function startCountdown(seconds, callback) {
     clearInterval(countdownTimer);
-    void playSound(countdownSound, () => false, 1.1);
-    btnEndRound.hidden = false;
-    displayCurrentWords();
-    timer.hidden = false;
-    const deadline = Date.now() + seconds * 1000;
-    syncTickSound(seconds, true);
-    timer.textContent = String(seconds);
-    let finished = false, warned = false;
+    const startsAt = Date.now() + Gameplay.ROUND_COUNTDOWN_MS;
+    const deadline = startsAt + seconds * 1000;
+    btnEndRound.hidden = true; btnAnswers.hidden = true; timer.hidden = true;
+    document.querySelectorAll('.scoreButton').forEach(button => { button.hidden = true; button.textContent = ''; });
+    clearTrainingHints();
+    setRoundCountdown(Gameplay.ROUND_COUNTDOWN_MS); updateMobileGameFocus();
+    void playSound(countdownSound, () => false);
+    let finished = false, warned = false, cluesStarted = false;
     finishLocalRound = () => {
-        if (finished) return;
+        if (finished || !cluesStarted) return;
         finished = true; clearInterval(countdownTimer); finishLocalRound = null;
         localSelectingAt = Date.now(); stopRoundSounds();
         timer.hidden = true;
@@ -2087,13 +2099,25 @@ function startCountdown(seconds, callback) {
         selectedButtons = 0; callback(); updateSelectionSummary();
         document.getElementById('roleInstruction').textContent = 'Select the words guessed correctly, then confirm the score.';
     };
-    countdownTimer = setInterval(() => {
+    const render = () => {
+        if (finished || !isRoundActive) return;
+        const untilStart = startsAt - Date.now();
+        if (untilStart > 0) { setRoundCountdown(untilStart); return; }
+        if (!cluesStarted) {
+            cluesStarted = true; setRoundCountdown(0);
+            countdownSound.pause(); countdownSound.currentTime = 0;
+            localTurnStartedAt = startsAt;
+            document.getElementById('roleInstruction').textContent = `Team ${currentTeam}'s speaker: describe these words. Listeners: guess aloud.`;
+            btnEndRound.hidden = false; displayCurrentWords(); timer.hidden = false;
+            updateMobileGameFocus();
+        }
         const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
         syncTickSound(remaining, true);
         timer.textContent = String(remaining);
         if (remaining <= 5 && remaining > 0 && !warned) { warned = true; void playSound(warningSound, () => false, 1.2); }
         if (!remaining || endRoundEarly) finishLocalRound?.();
-    }, 100);
+    };
+    countdownTimer = setInterval(render, 50);
 }
 
 function generateBoard() {
@@ -2135,13 +2159,17 @@ function updateBoard({ animateMoves = false } = {}) {
         const number = document.createElement('span'); number.className = 'cell-number';
         number.textContent = position === 0 ? 'Start' : position === pointsToWin ? 'Finish' : String(position);
         cell.appendChild(number);
-        const occupying = teams.map((team, index) => ({ team, index })).filter(({ team }) => Math.min(team.points, pointsToWin) === position);
+        const occupying = teams.map((team, index) => ({ team, index })).filter(({ team }) => Math.min(team.points, pointsToWin) === position
+            && (!isOnlineGame || (team.players || []).length > 0));
         cell.setAttribute('aria-label', `${position === pointsToWin ? 'Finish' : 'Position'} ${position}${occupying.length ? ', Team ' + occupying.map(t => t.index + 1).join(', ') : ''}`);
         const tokens = document.createElement('div'); tokens.className = 'board-tokens';
         occupying.forEach(({ index }) => {
             const token = document.createElement('span'); token.className = 'team-token';
             token.dataset.team = String(index);
             token.style.backgroundColor = getTeamColor(index); token.textContent = String(index + 1);
+            if (isOnlineGame && !(teams[index].players || []).some(player => OnlineState.isConnected(onlineClient.snapshot, player, onlineClient.serverNow()))) {
+                token.classList.add('team-token-disconnected'); token.setAttribute('aria-label', `Team ${index + 1}, reconnecting`);
+            }
             tokens.appendChild(token);
         });
         cell.appendChild(tokens);
@@ -2171,6 +2199,11 @@ function updateTeamScores() {
     teams.forEach((team, index) => {
         const row = document.createElement('div'); row.className = 'team-score';
         row.textContent = `Team ${index + 1}: ${team.points}/${pointsToWin}`;
+        if (isOnlineGame && !(team.players || []).length) {
+            row.textContent = `Team ${index + 1}: waiting for players`; row.classList.add('is-empty');
+        } else if (isOnlineGame && !(team.players || []).some(player => OnlineState.isConnected(onlineClient.snapshot, player, onlineClient.serverNow()))) {
+            row.textContent += ' · Reconnecting'; row.classList.add('is-disconnected');
+        }
         if (isChaosMode && Number(teamShields[index]) > 0) {
             const badge = document.createElement('span'); badge.className = 'shield-indicator';
             badge.textContent = 'Shield ready (max 1)'; row.appendChild(badge);
@@ -2625,13 +2658,21 @@ function renderOnlineClock() {
     const data = onlineClient?.snapshot;
     if (!data || !isOnlineGame) return;
     const now = onlineClient.serverNow(), view = OnlineState.view(data, onlineClient.actor, now);
-    timer.hidden = !(onlineClient.connected && view.active && data.phase === 'describing');
+    setRoundCountdown(onlineClient.connected && view.active ? view.countdownRemainingMs : 0);
+    timer.hidden = !(onlineClient.connected && view.active && data.phase === 'describing' && !view.countdownRemainingMs);
     syncTickSound(view.remainingSeconds, !timer.hidden);
+    if (view.countdownRemainingMs && onlineClient.connected && view.active) {
+        const cue = `${data.matchId}:${data.turn.id}:countdown`;
+        if (cue !== lastOnlineCue) {
+            lastOnlineCue = cue;
+            void playSound(countdownSound, () => false, 1, Math.max(0, (now - data.turn.countdownAt) / 1000));
+        }
+    } else { countdownSound.pause(); countdownSound.currentTime = 0; }
     if (!timer.hidden) {
         const text = String(view.remainingSeconds);
         if (timer.textContent !== text) timer.textContent = text;
-        const cue = `${data.matchId}:${data.turn.id}:${view.remainingSeconds <= 5 ? 'warning' : 'start'}`;
-        if (cue !== lastOnlineCue) { lastOnlineCue = cue; void playSound(view.remainingSeconds <= 5 ? warningSound : countdownSound, () => false); }
+        const cue = `${data.matchId}:${data.turn.id}:warning`;
+        if (view.remainingSeconds <= 5 && cue !== lastOnlineCue) { lastOnlineCue = cue; void playSound(warningSound, () => false); }
     }
     if (data.phase !== 'resolving') return;
     renderResolutionFrame(data.turn.resolution, now - data.turn.resolution.startedAt);
@@ -2731,6 +2772,22 @@ function clearChaosPresentation() {
     if (hadVisual) updateBoard();
 }
 
+function updateLobbyPresentation(data = null, view = null) {
+    const joined = Boolean(data), label = joined ? 'Lobby' : 'Play online';
+    document.getElementById('onlineLabel').textContent = label;
+    btnOnline.title = label; btnOnline.setAttribute('aria-label', label);
+    document.getElementById('onlineModalLabel').textContent = label;
+    const summary = document.getElementById('lobbySummary'); summary.hidden = !joined;
+    let text = '';
+    if (joined) {
+        const roster = view.roster;
+        text = `${roster.connectedPlayers} ${roster.connectedPlayers === 1 ? 'player' : 'players'} connected · ${roster.connectedTeams} of ${data.teams.length} teams online`;
+        if (roster.reconnectingPlayers) text += ` · ${roster.reconnectingPlayers} reconnecting`;
+    }
+    if (summary.textContent !== text) summary.textContent = text;
+    document.getElementById('onlineIntro').textContent = joined ? text : 'Bring your group together in one lobby.';
+}
+
 function renderOnlineControls() {
     const data = onlineClient?.snapshot;
     if (!data || !isOnlineGame) return;
@@ -2739,6 +2796,8 @@ function renderOnlineControls() {
         if (isChaosMode && data.auditEvent && ['idle', 'waiting'].includes(data.phase)) showChaosOutcome(data.auditEvent);
     }
     const view = OnlineState.view(data, onlineClient.actor, onlineClient.serverNow());
+    updateLobbyPresentation(data, view);
+    setRoundCountdown(onlineClient.connected && view.active ? view.countdownRemainingMs : 0);
     const active = view.active && onlineClient.connected && !onlineClient.suspended;
     document.getElementById('currentTeamIndicator').hidden = data.phase === 'finished';
     isHost = active && view.host; isSpeaker = active && view.speaker;
@@ -2747,7 +2806,7 @@ function renderOnlineControls() {
     selectedButtons = (data.turn?.selectedIndexes || []).length;
     const busy = onlineClient.busy || onlineClient.registering;
     btnStartOnlineGame.hidden = !isHost || Boolean(data.isGameStarted);
-    btnStartOnlineGame.disabled = busy || data.phase !== 'ready';
+    btnStartOnlineGame.disabled = busy || !view.canStartGame;
     btnStartRound.hidden = !(active && view.canStartRound); btnStartRound.disabled = busy;
     btnEndRound.hidden = !(active && view.canEndRound); btnEndRound.disabled = busy;
     btnNextRound.hidden = !(active && view.canSelect); btnNextRound.disabled = busy;
@@ -2762,12 +2821,12 @@ function renderOnlineControls() {
     document.querySelectorAll('.scoreButton').forEach((button, index) => {
         button.hidden = btnAnswers.hidden || index >= words.length;
         button.disabled = busy || !view.canSelect;
-        button.textContent = words[index] || '';
+        button.textContent = view.showWords ? words[index] || '' : '';
         setScoreButtonSelected(button, selected.has(index));
     });
     const speaker = OnlineState.members(data).find(player => player.playerId === data.turn?.speakerId);
     const name = speaker?.playerName || 'The next speaker';
-    const smallGame = (data.teams.length === 2 && data.numPlayers === 2) || (data.teams.length === 3 && data.numPlayers === 3);
+    const smallGame = view.smallGame;
     let role = '';
     if (data.phase === 'describing') role = isSpeaker ? 'You are speaking. Describe these words in any order.'
         : smallGame ? `${name} is speaking. Guess aloud; answers stay hidden.`
@@ -2783,10 +2842,12 @@ function renderOnlineControls() {
     if (data.phase === 'resolving') role = `Watch Team ${data.turn.teamIndex + 1} on the board.`;
     if (data.phase === 'ready') role = `${data.starterTeam === undefined ? 'The starting team is drawn on start.' : `Team ${data.starterTeam + 1} starts.`} ${isHost ? 'Start when everyone is ready.' : 'Waiting for the host to start.'}`;
     if (data.phase === 'waiting') role = 'Waiting for enough players to continue.';
+    if (['ready', 'waiting', 'idle'].includes(data.phase) && !view.roster.eligible) role = 'Waiting for enough connected players, with someone on each team.';
+    if (view.countdownRemainingMs) role = `Team ${data.turn.teamIndex + 1}: get ready to describe and guess.`;
     if (data.phase === 'finished') role = 'Match complete. Compare scores or play again.';
     document.getElementById('roleInstruction').textContent = role;
     lblAnswers.textContent = data.phase === 'selecting' ? 'Correct answers:' : isSpeaker ? 'Describe these words:' : `${name}'s words:`;
-    if (active && isSpeaker && data.phase === 'describing') renderTrainingHints(words); else clearTrainingHints();
+    if (active && isSpeaker && data.phase === 'describing' && !view.countdownRemainingMs) renderTrainingHints(words); else clearTrainingHints();
     let status = '';
     if (!onlineClient.connected || onlineClient.suspended) status = 'Connection lost. Reconnecting…';
     else if (!view.player) status = 'Your seat is no longer active. Rejoin the lobby to play.';

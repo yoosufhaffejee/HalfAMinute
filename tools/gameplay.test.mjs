@@ -84,7 +84,7 @@ const rules = {
         basePoints: points, shields: [0, 0], summary: 'Boost +1', landing: { type: 'plus1' },
         powerups: { 1: 'plus1' }, durationMs: 2200, seed: game.turn.seed })
 };
-function act(game, who, type, extras = {}, time = now) {
+function act(game, who, type, extras = {}, time = Math.max(now, game.turn?.startedAt || 0, game.turn?.selectingAt || 0, game.turn?.submittedAt || 0)) {
     return State.act(game, actor(who), { type, turnId: game.turn?.id, matchId: game.matchId, ...extras }, time, rules);
 }
 function choice() {
@@ -131,7 +131,7 @@ test('host/speaker departure and refresh preserve a sealed choice and the new ho
 });
 test('rematch creates a new match, rotates the starter, resets resources and rejects stale attempts', () => {
     let game = choice(); game = act(game, 'A', 'keep-chaos');
-    game = act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch }, now + 2200);
+    game = act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch }, game.turn.resolution.startedAt + 2200);
     game = act(game, 'A', 'end-game'); const original = structuredClone(game), oldTurn = game.turn.id;
     assert.equal(act(game, 'B', 'rematch'), undefined);
     const result = act(game, 'A', 'rematch');
@@ -150,7 +150,7 @@ test('rematch creates a new match, rotates the starter, resets resources and rej
 
 test('a delayed start command cannot start a later rematch', () => {
     let game = choice(); game = act(game, 'A', 'keep-chaos');
-    game = act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch }, now + 2200);
+    game = act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch }, game.turn.resolution.startedAt + 2200);
     game = act(game, 'A', 'end-game'); const oldMatchId = game.matchId;
     game = act(game, 'A', 'rematch');
     assert.equal(act(game, 'A', 'start-game', { matchId: oldMatchId }), undefined);

@@ -1,8 +1,8 @@
 // All online mutations run against the transaction's current snapshot, never a
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
-import { startingTeam, recap } from '../gameplay/rules.js?v=20261020.4';
+import { startingTeam, recap, ROUND_COUNTDOWN_MS } from '../gameplay/rules.js?v=20261020.11';
 
-export const PROTOCOL_VERSION = 3;
+export const PROTOCOL_VERSION = 4;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -29,6 +29,14 @@ export function ownsSeat(game, actor) {
 export function isConnected(game, player, now, timeout = PLAYER_TIMEOUT_MS) {
     const entry = connection(game, player);
     return Boolean(entry?.connected && now - Number(entry.lastSeen) <= timeout);
+}
+
+export function rosterStatus(game, now) {
+    const connected = members(game).filter(player => isConnected(game, player, now));
+    const connectedTeams = new Set(connected.map(player => player.teamIndex)).size;
+    return { connectedPlayers: connected.length, connectedTeams,
+        reconnectingPlayers: members(game).length - connected.length,
+        eligible: connectedTeams === game.teams.length && canPlay(game.teams.length, connected.length) };
 }
 
 function chooseSpeaker(game, preferred = game.currentTeam - 1) {
@@ -113,7 +121,7 @@ function reconcile(game, now) {
     const speaker = roster.find(player => player.playerId === game.turn?.speakerId);
     if (!game.isGameStarted) {
         chooseSpeaker(game);
-        game.phase = eligible ? 'ready' : 'waiting';
+        game.phase = rosterStatus(game, now).eligible ? 'ready' : 'waiting';
     } else if (!eligible) {
         if (game.phase !== 'waiting') newTurn(game, 'waiting');
     } else if (game.phase === 'waiting' || !speaker) {
@@ -274,7 +282,7 @@ export function act(gameData, actor, action, now, rules = {}) {
         reconcile(game, now);
     } else if (action.type === 'start-game') {
         if ((action.matchId ?? 1) !== (game.matchId ?? 1)) return;
-        if (!host || game.phase !== 'ready' || game.isGameStarted || !canPlay(game.teams.length, members(game).length)) return;
+        if (!host || !['ready', 'waiting'].includes(game.phase) || game.isGameStarted || !rosterStatus(game, now).eligible) return;
         game.isGameStarted = true;
         game.matchId ||= 1;
         if (game.starterTeam === undefined) game.starterTeam = Number.isInteger(action.seed)
@@ -292,21 +300,24 @@ export function act(gameData, actor, action, now, rules = {}) {
     } else {
         if (!turn || turn.id !== action.turnId) return;
         if (action.type === 'start-round') {
-            if (!speaker || game.phase !== 'idle' || !Number.isInteger(action.seed)
+            if (!speaker || game.phase !== 'idle' || !rosterStatus(game, now).eligible || !Number.isInteger(action.seed)
                 || action.seed < 0 || action.seed > 0xFFFFFFFF) return;
             const draw = rules.drawWords?.(game, action.seed);
             if (!draw?.words?.length) return;
             turn.words = draw.words;
             turn.selectedIndexes = [];
             turn.seed = action.seed;
-            turn.startedAt = now;
-            turn.deadline = now + game.settings.numSeconds * 1000;
+            const count = rosterStatus(game, now).connectedPlayers;
+            turn.smallGame = (game.teams.length === 2 && count === 2) || (game.teams.length === 3 && count === 3);
+            turn.countdownAt = now;
+            turn.startedAt = now + ROUND_COUNTDOWN_MS;
+            turn.deadline = turn.startedAt + game.settings.numSeconds * 1000;
             Object.assign(game, draw.pools);
             game.words = turn.words;
             game.phase = 'describing';
             game.roundActive = true;
         } else if (action.type === 'end-round' || action.type === 'expire-round') {
-            if (game.phase !== 'describing') return;
+            if (game.phase !== 'describing' || now < turn.startedAt) return;
             if (action.type === 'end-round' ? !speaker : now < turn.deadline) return;
             game.phase = 'selecting';
             turn.selectingAt = now;
@@ -368,17 +379,20 @@ export function view(game, actor, now) {
     const player = ownsSeat(game, actor);
     const active = Boolean(player && isConnected(game, player, now));
     const speaker = active && game.turn?.speakerId === actor.playerId;
-    const smallGame = (game.teams.length === 2 && game.numPlayers === 2)
-        || (game.teams.length === 3 && game.numPlayers === 3);
-    const showWords = active && ['describing', 'selecting'].includes(game.phase)
+    const roster = rosterStatus(game, now);
+    const smallGame = Boolean(game.turn?.smallGame) || (game.teams.length === 2 && roster.connectedPlayers === 2)
+        || (game.teams.length === 3 && roster.connectedPlayers === 3);
+    const countdownRemainingMs = game.phase === 'describing' ? Math.max(0, (game.turn?.startedAt || now) - now) : 0;
+    const showWords = active && !countdownRemainingMs && ['describing', 'selecting'].includes(game.phase)
         && (speaker || (!smallGame && player.teamIndex !== game.turn?.teamIndex));
     return {
-        player, active, speaker,
+        player, active, speaker, roster, smallGame, countdownRemainingMs,
         host: active && game.hostId === actor.playerId,
         showWords,
-        canStartRound: speaker && game.phase === 'idle',
+        canStartGame: active && game.hostId === actor.playerId && !game.isGameStarted && roster.eligible && ['ready', 'waiting'].includes(game.phase),
+        canStartRound: speaker && game.phase === 'idle' && roster.eligible,
         canSelect: speaker && game.phase === 'selecting',
-        canEndRound: speaker && game.phase === 'describing',
-        remainingSeconds: Math.max(0, Math.ceil(((game.turn?.deadline || now) - now) / 1000))
+        canEndRound: speaker && game.phase === 'describing' && !countdownRemainingMs,
+        remainingSeconds: Math.max(0, Math.ceil(((game.turn?.deadline || now) - Math.max(now, game.turn?.startedAt || now)) / 1000))
     };
 }
