@@ -28,6 +28,8 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - `online/state.js`: transactional lobby membership, turn phases, host election, and speaker queues
 - `online/client.js`: Firebase connection lifecycle, presence, reconnects, and turn commands
 - `gameplay/rules.js`: deterministic word decks, presets, starting order, pacing, and recap helpers
+- `gameplay/ai-client.js`: lazy Firebase AI Logic client and App Check configuration
+- `gameplay/ai-errors.js`: safe, categorized generation feedback
 - `data.js`: categories, themes, word metadata
 - `style.css`: styling
 - `tools/validate-data.js`: word-data validation and quality audit utility
@@ -49,13 +51,13 @@ Runtime uses CDNs/services:
 
 - Bootstrap 5 (CSS + JS bundle)
 - Firebase Realtime Database (`firebase-app`, `firebase-database`)
-- Google Generative AI SDK (`@google/generative-ai`)
+- Firebase AI Logic and App Check (reCAPTCHA Enterprise), using the same Firebase JS SDK version as the database
 
 Important:
 
 - Online mode requires network access to Firebase.
-- AI generation requires a valid Gemini API key.
-- Current keys/config are inline in `script.js`; move to secure env/config before production deployment.
+- AI generation uses Firebase-managed Gemini authorization. Do not add a Gemini API key to the client, repository, or a frontend environment variable.
+- The Firebase configuration and reCAPTCHA site key in the client are public identifiers. API restrictions and App Check protect access; they do not make these identifiers private.
 
 ## Game Modes
 
@@ -85,6 +87,19 @@ Important:
 - Enter topic and generate a playable list.
 - Prefix topic with `!` for strict scope generation.
 - Generated entries are cleaned and deduped before play.
+- AI SDK loading and App Check initialization happen on the first generation request, so AI availability does not block local or online play.
+- The pinned text model is `gemini-3.5-flash-lite`, with a bounded output size and no automatic generation retries.
+- Failed requests keep an existing pack playable and restore generation/editing controls.
+
+### Firebase AI setup
+
+The existing project `halfaminute-01` uses the Gemini Developer API through Firebase AI Logic. Its web app has a score-based reCAPTCHA Enterprise App Check provider restricted to `yoosufhaffejee.github.io`. AI Logic App Check enforcement is enabled. The existing browser API key keeps its live-domain referrer restrictions and allows the Firebase App Check API in addition to its existing APIs. Database rules and enforcement were not changed.
+
+The project remains on Spark, with billing disabled. Free-tier availability and quotas still apply. See [Firebase AI Logic pricing](https://firebase.google.com/docs/ai-logic/pricing).
+
+Local gameplay and automated tests need no AI credentials. Live AI generation is intentionally restricted to the production origin. For local AI integration work, use a separately restricted development Firebase app/key and a registered private App Check debug token; never add localhost to the production reCAPTCHA domain list or commit a debug token. The CLI smoke test uses a temporary debug registration and removes it immediately afterward.
+
+See [Firebase setup](https://firebase.google.com/docs/ai-logic/get-started?platform=web) and [App Check](https://firebase.google.com/docs/ai-logic/app-check) for administrative changes. The App Check service identifier for AI Logic is `firebaseml.googleapis.com`; the runtime API is `firebasevertexai.googleapis.com`.
 
 ## Training Mode
 
@@ -119,7 +134,7 @@ See [GAMEPLAY_CHANGES.md](GAMEPLAY_CHANGES.md) for the implementation and verifi
 ## Gameplay regression checks
 
 ```powershell
-node --test tools/gameplay.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
+node --test tools/ai-client.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
 node tools/test-word-data.js
 node tools/analyze-starting-order.mjs
 node tools/analyze-chaos.cjs 5000

@@ -60,3 +60,20 @@ test('network, service and safety failures retain their own recovery guidance', 
     assert.equal(describeGeminiError({message:'Response blocked by safety filters'}).kind,'safety');
     assert.equal(describeGeminiError(null).kind,'unknown');
 });
+
+test('Firebase AI errors use customErrorData status and retry details', () => {
+    const result = describeGeminiError({code:'fetch-error',customErrorData:{status:429,errorDetails:[
+        {'@type':'type.googleapis.com/google.rpc.RetryInfo',retryDelay:'12s'}
+    ]}});
+    assert.equal(result.kind,'rate-limit');
+    assert.equal(result.retryAfterSeconds,12);
+    assert.equal(describeGeminiError({code:'fetch-error',customErrorData:{status:404}}).kind,'model');
+    assert.equal(describeGeminiError({code:'api-not-enabled'}).kind,'configuration');
+});
+
+test('App Check failures explain browser verification without blaming rate limits', () => {
+    const result=describeGeminiError({code:'fetch-error',customErrorData:{status:403},message:'Firebase App Check token is invalid'});
+    assert.equal(result.kind,'verification');
+    assert.match(result.message,/verify this browser/);
+    assert.doesNotMatch(result.message,/rate.limit|API key/);
+});

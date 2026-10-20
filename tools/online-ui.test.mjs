@@ -50,7 +50,7 @@ function ui() {
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
         OnlineState, OnlineClient, Gameplay, AiErrors, crypto: webcrypto,
-        initializeApp: () => ({}), getDatabase: () => ({}), GoogleGenerativeAI: class { getGenerativeModel() { return {}; } },
+        initializeApp: () => ({}), getDatabase: () => ({}), createAiWordClient: () => ({}),
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
         window: { addEventListener() {}, matchMedia: () => ({ matches: false }) },

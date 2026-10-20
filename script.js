@@ -1,10 +1,10 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
-import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
+import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
 import * as OnlineState from './online/state.js?v=20261020.11';
 import { OnlineClient } from './online/client.js?v=20261020.11';
 import * as Gameplay from './gameplay/rules.js?v=20261020.11';
-import * as AiErrors from './gameplay/ai-errors.js?v=20261020.12';
+import * as AiErrors from './gameplay/ai-errors.js?v=20261020.13';
+import { createAiWordClient } from './gameplay/ai-client.js?v=20261020.13';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -20,10 +20,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Initialize Google AI
-const GEMINI = "AIzaSyBdCn9zygj_C7_fAHWDUidARavos_8OaRw";
-const genAI = new GoogleGenerativeAI(GEMINI);
-const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
+// Firebase manages Gemini authorization; no Gemini credential is shipped to players.
+const model = createAiWordClient(app);
 
 // Game state variables
 let teams = [];
