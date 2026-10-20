@@ -1,0 +1,186 @@
+{
+  "assumptions": "Equal teams, independent 60% success for each of five words, immediate finish, Classic only. No human behavior or reroll model. 10,000 matches per configuration per mode.",
+  "conclusion": "Random starting identity distributes the existing first-slot advantage. Rotating starters across rematches gives each team that slot equally over a full cycle; the immediate-finish rule still advantages early turn slots within an individual match.",
+  "cases": [
+    {
+      "teamCount": 2,
+      "target": 10,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        69.41,
+        30.59
+      ],
+      "randomStarterWinPercentByTeam": [
+        49.85,
+        50.15
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        69.41,
+        30.59
+      ]
+    },
+    {
+      "teamCount": 2,
+      "target": 20,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        64.97,
+        35.03
+      ],
+      "randomStarterWinPercentByTeam": [
+        50.07,
+        49.93
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        64.97,
+        35.03
+      ]
+    },
+    {
+      "teamCount": 2,
+      "target": 40,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        60.11,
+        39.89
+      ],
+      "randomStarterWinPercentByTeam": [
+        50.43,
+        49.57
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        60.11,
+        39.89
+      ]
+    },
+    {
+      "teamCount": 3,
+      "target": 10,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        58.28,
+        27.12,
+        14.6
+      ],
+      "randomStarterWinPercentByTeam": [
+        33.76,
+        33.61,
+        32.63
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        58.28,
+        27.12,
+        14.6
+      ]
+    },
+    {
+      "teamCount": 3,
+      "target": 20,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        50.93,
+        29.53,
+        19.54
+      ],
+      "randomStarterWinPercentByTeam": [
+        32.99,
+        33.69,
+        33.32
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        50.93,
+        29.53,
+        19.54
+      ]
+    },
+    {
+      "teamCount": 3,
+      "target": 40,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        45.34,
+        31.23,
+        23.43
+      ],
+      "randomStarterWinPercentByTeam": [
+        33.08,
+        33.54,
+        33.38
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        45.34,
+        31.23,
+        23.43
+      ]
+    },
+    {
+      "teamCount": 4,
+      "target": 10,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        49.67,
+        26,
+        15.37,
+        8.96
+      ],
+      "randomStarterWinPercentByTeam": [
+        25.53,
+        24.81,
+        24.56,
+        25.1
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        49.67,
+        26,
+        15.37,
+        8.96
+      ]
+    },
+    {
+      "teamCount": 4,
+      "target": 20,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        42.35,
+        26.48,
+        18.34,
+        12.83
+      ],
+      "randomStarterWinPercentByTeam": [
+        25.11,
+        25.14,
+        24.93,
+        24.82
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        42.35,
+        26.48,
+        18.34,
+        12.83
+      ]
+    },
+    {
+      "teamCount": 4,
+      "target": 40,
+      "samplesPerMode": 10000,
+      "fixedStarterWinPercentByTeam": [
+        36.79,
+        26.11,
+        20.85,
+        16.25
+      ],
+      "randomStarterWinPercentByTeam": [
+        25.33,
+        25.1,
+        25.24,
+        24.33
+      ],
+      "randomStarterWinPercentByTurnSlot": [
+        36.79,
+        26.11,
+        20.85,
+        16.25
+      ]
+    }
+  ]
+}

@@ -560,3 +560,76 @@ th, td {
         margin-bottom: 12px;
     }
 }
+
+/* Gameplay hierarchy: the clue card takes priority while the clock is running. */
+[hidden] { display: none !important; }
+.quick-setup { display: grid; gap: 8px; padding: 16px; margin: 18px 0; border: 1px solid #cbd5e1; border-radius: 12px; text-align: left; }
+.quick-setup select, #motionPreference { min-height: 44px; padding: 6px 10px; border: 1px solid #64748b; border-radius: 6px; background: #fff; color: #172033; }
+#setupSummary { margin: 4px 0; font-weight: 600; }
+.menu-intro { color: #475569; }
+#categorySearch { width: 100%; min-height: 44px; padding: 8px; }
+#categoryChoices { max-height: 280px; overflow: auto; text-align: left; }
+#categoryChoices label { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px; }
+#categoryChoices input { width: 20px; height: 20px; }
+#trainingHintsDrawer { margin: 12px 0; text-align: left; }
+#roleInstruction { margin: 4px 0 12px; color: #334155; font-size: 1.05rem; }
+#progressSummary { display: none; font-size: .95rem; color: #334155; }
+.turn-recap, .choice-card, .results-card { padding: 14px; margin: 12px 0; border-radius: 10px; background: #eff6ff; border: 1px solid #93b4de; color: #172033; }
+.results-card h2 { font-size: 1.6rem; }
+.choice-card { background: #fff7e6; border-color: #b7791f; }
+#selectionSummary { margin: 8px 0; font-weight: 700; }
+#game #timer { font-size: 2.2rem; font-weight: 700; color: #172033; margin: 4px 0 12px; font-variant-numeric: tabular-nums; }
+#game.word-phase #gameBoard, #game.word-phase #teamScores, #game.word-phase #chaosModeBanner, #game.word-phase #chaosHelp { display: none !important; }
+#game.word-phase #progressSummary { display: block; margin: 0 0 8px; }
+#game #scoreButtons { display: grid; gap: 8px; max-height: none; overflow: visible; padding: 0; }
+#game .scoreButton { width: 100%; max-width: none; min-height: 48px; margin: 0; padding: 10px 14px; font-size: clamp(1.125rem, 3.6vw, 1.4rem); line-height: 1.25; border: 2px solid #64748b; border-radius: 10px; background: #fff; color: #172033; overflow-wrap: anywhere; }
+#game .scoreButton:disabled { opacity: 1; cursor: default; }
+#game.clue-phase .scoreButton { border-color: #cbd5e1; background: #f8fafc; text-align: left; }
+#game .scoreButton.score-button-selected { color: #134e32; background: #dcfce7; border-color: #15803d; }
+#game .scoreButton.score-button-selected::before { content: '✓ '; font-weight: 700; }
+.btn, summary { min-height: 44px; }
+summary { cursor: pointer; padding: 10px 4px; }
+button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid #174ea6; outline-offset: 3px; }
+.round-controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 12px; }
+#matchOptions { margin-top: 10px; font-size: .95rem; }
+#chaosHelp { margin: 8px 0; text-align: left; }
+#chaosHelp .chaos-legend { max-height: none; overflow: visible; }
+.play-preferences { margin: 16px 0 4px; border-top: 1px solid #cbd5e1; text-align: left; color: #334155; }
+.play-preferences label { display: block; margin: 10px 0; }
+.play-preferences input[type='range'] { width: 100%; min-height: 32px; }
+.play-preferences select { width: 100%; }
+#game #gameBoard { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+#game .board-cell { width: auto; min-width: 0; height: 62px; padding: 3px; background: #f1f5f9; border: 1px solid #cbd5e1; }
+.cell-number { display: block; font-size: .8rem; font-weight: 600; color: #334155; }
+.board-tokens { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
+.team-token { width: 19px; height: 19px; border-radius: 50%; color: #fff; font-size: 12px; line-height: 19px; font-weight: 700; }
+#game .board-powerup { font-size: 12px; top: auto; bottom: 1px; transform: translateX(-50%); padding: 1px 4px; }
+.reduced-motion *, .reduced-motion *::before, .reduced-motion *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+@media (prefers-reduced-motion: reduce) {
+    body:not(.full-motion) *, body:not(.full-motion) *::before, body:not(.full-motion) *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 768px) {
+    body.layout-game { padding: 0; }
+    body.layout-game > .container { padding: 10px 12px 16px; box-shadow: none; }
+    body.layout-game h1 { font-size: 1.2rem; margin: 2px 48px 14px; }
+    #game #gameBoard { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    #game .board-cell { height: 64px; }
+    #game #scoreButtons { max-height: none; overflow: visible; }
+    #game #currentWords { max-height: none; overflow: visible; }
+    #game > * { order: initial; }
+    #game #currentTeamIndicator { order: 1; }
+    #game #roleInstruction { order: 2; }
+    #game #timer { order: 3; }
+    #game #progressSummary { order: 4; }
+    #game #turnRecap, #game #chaosChoice, #game #matchResults { order: 5; }
+    #game #roundControls { order: 6; }
+    #game #currentWords, #game #trainingHintsDrawer { order: 7; }
+    #game #gameBoard { order: 8; }
+    #game #teamScores { order: 9; }
+    #game #chaosHelp { order: 10; }
+    #game .round-controls { margin-top: 10px; }
+    #game #timer { position: sticky; top: 0; z-index: 5; background: #fff; font-size: 1.8rem; margin: 0 0 4px; }
+    #game #roleInstruction { margin: 0 0 4px; font-size: 1rem; }
+    #history { position: absolute; top: 6px; right: 10px; bottom: auto; margin: 0; }
+    #game.mobile-focus-board .board-cell { width: auto; height: 64px; padding: 3px; }
+}

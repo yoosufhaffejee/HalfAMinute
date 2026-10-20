@@ -5,13 +5,14 @@ import vm from 'node:vm';
 import { webcrypto } from 'node:crypto';
 import * as OnlineState from '../online/state.js';
 import { OnlineClient } from '../online/client.js';
+import * as Gameplay from '../gameplay/rules.js';
 
 const source = fs.readFileSync(new URL('../script.js', import.meta.url), 'utf8').replace(/^import .*$/gm, '');
 const now = 1000000;
 const actor = name => ({ playerId: `id-${name}`, playerName: name, connectionId: `connection-${name}` });
 const rules = { drawWords: () => ({ words: ['One', 'Two', 'Three'], pools: {} }) };
 function game(names = ['A', 'B', 'C', 'D']) {
-    let data = { protocolVersion: 2, dateCreated: now, settings: {
+    let data = { protocolVersion: OnlineState.PROTOCOL_VERSION, dateCreated: now, settings: {
         numTeams: 2, numWords: 3, numSeconds: 30, pointsToWin: 20,
         difficulty: 'normal', selectedTheme: 'None', selectedCategories: [], chaosMode: false, trainingMode: false
     }, teams: [{ id: 0, points: 0 }, { id: 1, points: 0 }], phase: 'waiting', gameState: 'waiting', currentTeam: 1, currentRound: 0, hostId: '', hostEpoch: 0 };
@@ -28,9 +29,11 @@ function ui() {
     const metrics = { intervals: [], commands: [], alerts: [], reloads: 0, history: [] };
     function element(id = '') {
         const classes = new Set(), events = new Map();
-        return { id, hidden: true, disabled: false, value: '', textContent: '', innerHTML: '', style: {}, dataset: {}, children: [],
+        return { id, hidden: true, disabled: false, value: '', textContent: '', innerHTML: '', style: {}, dataset: {}, children: [], options: [], selectedOptions: [],
             classList: { contains: c => classes.has(c), add: (...cs) => cs.forEach(c => classes.add(c)), remove: (...cs) => cs.forEach(c => classes.delete(c)), toggle: (c, on) => on ? classes.add(c) : classes.delete(c) },
-            appendChild(child) { this.children.push(child); }, prepend() {},
+            setAttribute(name, value) { this[name] = value; },
+            appendChild(child) { this.children.push(child); if (['categoriesSelect', 'themesSelect', 'quickPreset'].includes(id)) this.options.push(child); }, prepend() {},
+            pause() {},
             addEventListener(name, callback, options) {
                 if (!events.has(name)) events.set(name, []);
                 events.get(name).push({ callback, once: options?.once });
@@ -42,7 +45,7 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), GoogleGenerativeAI: class { getGenerativeModel() { return {}; } },
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
@@ -70,7 +73,7 @@ function ui() {
             run(`isOnlineGame=true;gameCode='TEST';onlineClient={snapshot:data,actor:who,serverNow:clock,connected:true,busy:false,
                 close:async()=>{},command:async request=>{metrics.commands.push(request);return true}};renderOnlineSnapshot(data)`);
         },
-        apply(data) { ctx.data = structuredClone(data); run('onlineClient.snapshot=data;renderOnlineSnapshot(data)'); }
+        apply(data) { ctx.data = structuredClone(data); run('if(onlineClient)onlineClient.snapshot=data;renderOnlineSnapshot(data)'); }
     };
 }
 
@@ -154,11 +157,13 @@ test('late join restores the complete round history and does not duplicate it', 
     assert.equal(h.metrics.history[0][2][0], 'One');
 });
 
-test('terminal snapshot closes locally without sending deletion or resumed writes', () => {
+test('a removed lobby closes locally without sending deletion or resumed writes', () => {
     let data = game(); data = OnlineState.act(data, actor('A'), { type: 'end-game' }, now);
+    data.phase = 'ended';
     const h = ui(); h.mount(data); h.apply(data);
-    assert.equal(h.metrics.reloads, 1);
-    assert.equal(h.metrics.alerts.length, 1);
+    assert.equal(h.metrics.reloads, 0);
+    assert.equal(h.metrics.alerts.length, 0);
+    assert.match(h.el('menuNotice').textContent, /lobby has closed/);
     assert.equal(h.metrics.commands.length, 0);
     assert.equal(h.storage.size, 0);
 });
@@ -194,7 +199,7 @@ test('offline start, selection and score advance still work without online write
         teams=[{points:0},{points:0}];currentTeam=1;currentRound=0;currentGameWords=['One','Three','Four'];
         playSound=async()=>{};startRound()`);
     await Promise.resolve(); await Promise.resolve();
-    assert.equal(h.buttons[0].textContent, 'One');
+    assert.ok(['One','Three','Four'].includes(h.buttons[0].textContent));
     assert.equal(h.el('timer').hidden, false);
     h.run('endRound();setScoreButtonSelected(document.querySelectorAll(".scoreButton")[0],true)');
     await h.run('nextRound()');
@@ -215,4 +220,64 @@ test('a fast join defers modal hiding until opening completes, without hiding th
     assert.equal(h.metrics.hides, 2);
     modal.classList.add('show'); modal.emit('shown.bs.modal');
     assert.equal(modal.classList.contains('show'), true);
+});
+
+test('bomb loss is capped and a shield blocks either a bomb or incoming steal loss', () => {
+    const h = ui();
+    for (const points of [1, 18, 59]) {
+        const result = h.run(`(()=>{const teamsData=[{points:${points}},{points:0}],shields=[0,0];
+            const effect=applyChaosPowerupToState({teamsData,shields,actingTeamIndex:0,powerupType:'bomb'});
+            return {points:teamsData[0].points,delta:effect.actorDelta};})()`);
+        assert.equal(result.points, Math.max(0, points - 3));
+        assert.equal(result.delta, -Math.min(3, points));
+    }
+    const protectedBomb = h.run(`(()=>{const teamsData=[{points:18},{points:0}],shields=[1,0];
+        applyChaosPowerupToState({teamsData,shields,actingTeamIndex:0,powerupType:'bomb'});return {teamsData,shields};})()`);
+    assert.equal(protectedBomb.teamsData[0].points, 18); assert.equal(protectedBomb.shields[0], 0);
+    const steal = h.run(`(()=>{const teamsData=[{points:2},{points:8}],shields=[0,1];
+        const effect=applyChaosPowerupToState({teamsData,shields,actingTeamIndex:0,powerupType:'steal1',rng:()=>0});return {teamsData,shields,effect};})()`);
+    assert.equal(steal.teamsData[0].points, 3); assert.equal(steal.teamsData[1].points, 8);
+    assert.equal(steal.shields[1], 0); assert.equal(steal.effect.victimBlocked, true);
+    const duplicate = h.run(`(()=>{const shields=[1,0]; const effect=applyChaosPowerupToState({teamsData:[{points:1},{points:0}],shields,actingTeamIndex:0,powerupType:'shield'});
+        return {shields,text:formatChaosSummaryForAudit(effect)};})()`);
+    assert.equal(duplicate.shields[0], 1); assert.match(duplicate.text, /already ready/);
+});
+
+test('a winning Chaos move skips effects and uses a short celebration budget', () => {
+    const h = ui(), data = act(act(game(), 'start-round', { seed: 6 }), 'end-round');
+    data.settings.chaosMode = true; data.turn.selectedIndexes = [0, 1, 2];
+    h.mount(data);
+    const plan = h.run('planOnlineChaos(data,[22,0])');
+    assert.equal(plan.landing, null); assert.equal(plan.points[0], 22); assert.equal(plan.durationMs, 350);
+});
+
+test('a finished match renders results without closing the connection or reloading', () => {
+    let data = act(act(game(), 'start-round', { seed: 3 }), 'end-round');
+    data.teams[0].points = 19; data = act(data, 'toggle-answer', { index: 0 }); data = act(data, 'submit-round');
+    const h = ui(); h.mount(data); h.apply(data);
+    assert.equal(h.el('matchResults').hidden, false); assert.equal(h.el('resultsTitle').textContent, 'Team 1 wins!');
+    assert.equal(h.el('rematchButton').hidden, false); assert.equal(h.metrics.reloads, 0); assert.equal(h.metrics.alerts.length, 0);
+    assert.ok(h.storage.size > 0); assert.equal(h.el('startRoundButton').hidden, true);
+    const viewer = ui(); viewer.mount(data, actor('B')); assert.equal(viewer.el('rematchButton').hidden, true);
+    const replaced = OnlineState.join(data, { ...actor('A'), connectionId: 'replacement' }, now);
+    h.apply(replaced); assert.equal(h.el('rematchButton').disabled, true);
+    const next = OnlineState.act(data, actor('A'), { type: 'rematch', matchId: data.matchId }, now);
+    h.apply(next); assert.equal(h.el('matchResults').hidden, true); assert.equal(h.el('startOnlineGame').hidden, false);
+});
+
+test('online clue cards stay disabled while the role copy respects small-game guessing', () => {
+    const data = act(game(['A', 'B']), 'start-round', { seed: 8 });
+    const h = ui(); h.mount(data, actor('B'));
+    assert.match(h.el('roleInstruction').textContent, /Guess aloud; answers stay hidden/);
+    assert.equal(h.el('scoreInput').hidden, true);
+    h.mount(data, actor('A')); assert.equal(h.buttons[0].disabled, true);
+    assert.match(h.el('roleInstruction').textContent, /You are speaking/);
+});
+
+test('menu initialization wires the setup and gameplay controls without a browser network connection', () => {
+    const h = ui();
+    h.run('globalThis.HTMLElement=class{};initializeMenu()');
+    assert.equal(h.el('categoryChoices').children.length, 1);
+    assert.match(h.el('setupSummary').textContent, /2 teams/);
+    assert.equal(h.el('quickPreset').value, 'standard');
 });

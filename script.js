@@ -1,8 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
-import * as OnlineState from './online/state.js';
-import { OnlineClient } from './online/client.js';
+import * as OnlineState from './online/state.js?v=3';
+import { OnlineClient } from './online/client.js?v=3';
+import * as Gameplay from './gameplay/rules.js?v=3';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -70,14 +71,23 @@ let powerupRevealVisible = false;
 let landedPowerupPreview = null;
 let teamShields = [];
 let isResolvingChaosMove = false;
+let localDeck = {};
+let localWordObjects = [];
+let localRerollsUsed = [];
+let localStarter = null;
+let localMatchId = 0;
+let localAudit = [];
+let localChoice = null;
+let finishLocalRound = null;
+let trainingSignature = '';
+let preferences = { muted: false, volume: 0.6, motion: 'system' };
+let lastOnlineCue = '';
+let localTurnStartedAt = 0;
+let localSelectingAt = 0;
 
 const RECENT_WORDS_STORAGE_KEY = "half_a_minute_recent_words_v1";
 const MAX_RECENT_WORDS = 600;
 const LOBBY_EXPIRY_MS = 12 * 60 * 60 * 1000;
-const CHAOS_MOVE_STEP_DELAY_MS = 420;
-const CHAOS_PREMOVE_REVEAL_MS = 3000;
-const CHAOS_LANDED_PREVIEW_DELAY_MS = 2000;
-const CHAOS_CLEAR_PAUSE_MS = 450;
 let lastProcessedAuditEventId = 0;
 
 const registeredModalHandlers = new Set();
@@ -115,7 +125,7 @@ const CHAOS_POWERUP_TYPES = {
     bomb: {
         label: "💣",
         legendLabel: "💣 Bomb",
-        description: "Reset to start unless shielded.",
+        description: "Lose up to 3 points unless shielded.",
         weight: 2,
         cssClass: "powerup-bomb"
     },
@@ -175,6 +185,182 @@ const warningSound = document.getElementById('warningSound');
 const endSound = document.getElementById('endSound');
 const endSoundAlt = document.getElementById('endSoundAlt');
 
+function randomSeed() { return crypto.getRandomValues(new Uint32Array(1))[0]; }
+
+function stopRoundSounds() {
+    [countdownSound, tickSound, warningSound].forEach(audio => { try { audio.pause(); audio.currentTime = 0; } catch { /* Optional. */ } });
+}
+
+function exportMatchSummary() {
+    const data = isOnlineGame ? onlineClient?.snapshot : null;
+    const events = data ? Object.values(data.auditEvents || {}) : localAudit;
+    const summary = { version: 1, matchId: data?.matchId || localMatchId, starterTeam: data?.starterTeam ?? localStarter,
+        settings: { teams: teams.length, pointsToWin, numWords, numSeconds, difficulty, chaosMode: isChaosMode },
+        scores: teams.map(team => team.points), turns: events.map(event => ({ team: event.teamIndex, earned: event.earned ?? event.correctAnswers?.length ?? 0,
+            pointsBefore: event.pointsBefore, pointsAfter: event.pointsAfter, clueSeconds: event.clueSeconds,
+            scoringSeconds: event.scoringSeconds, resolutionSeconds: event.resolutionSeconds, effect: event.chaosSummary || 'No effect' })) };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(summary, null, 2)], { type: 'application/json' }));
+    const link = document.createElement('a'); link.href = url; link.download = `half-a-minute-match-${summary.matchId}.json`;
+    link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function reducedMotion() {
+    return preferences.motion === 'reduced' || (preferences.motion === 'system'
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
+
+function initializePlayPreferences() {
+    try {
+        const saved = JSON.parse(localStorage.getItem('half_a_minute_preferences') || '{}');
+        preferences = { muted: saved.muted === true, volume: Math.max(0, Math.min(1, Number.isFinite(saved.volume) ? saved.volume : 0.6)),
+            motion: ['system', 'reduced', 'full'].includes(saved.motion) ? saved.motion : 'system' };
+    } catch { /* Storage is optional. */ }
+    const muted = document.getElementById('soundMuted'), volume = document.getElementById('soundVolume'), motion = document.getElementById('motionPreference');
+    muted.checked = preferences.muted; volume.value = String(preferences.volume * 100); motion.value = preferences.motion;
+    const apply = () => {
+        document.body.classList.toggle('reduced-motion', reducedMotion());
+        document.body.classList.toggle('full-motion', preferences.motion === 'full');
+        [startSound, countdownSound, tickSound, warningSound, endSound, endSoundAlt].forEach(audio => {
+            audio.muted = preferences.muted; audio.volume = preferences.volume;
+            if (preferences.muted) audio.pause();
+        });
+    };
+    [muted, volume, motion].forEach(input => input.addEventListener('input', () => {
+        preferences = { muted: muted.checked, volume: Number(volume.value) / 100, motion: motion.value };
+        try { localStorage.setItem('half_a_minute_preferences', JSON.stringify(preferences)); } catch { /* Optional. */ }
+        apply();
+    }));
+    window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener?.('change', apply);
+    apply();
+}
+
+function initializeQuickSetup() {
+    const mode = document.getElementById('quickMode'), preset = document.getElementById('quickPreset');
+    mode.addEventListener('change', () => { chkChaos.checked = mode.value === 'chaos'; updateSetupSummary(); });
+    preset.addEventListener('change', () => {
+        const values = Gameplay.PRESETS[preset.value];
+        if (!values) return;
+        document.getElementById('pointsToWin').value = String(values.pointsToWin);
+        txtSeconds.value = String(values.numSeconds); txtWords.value = String(values.numWords);
+        updateSetupSummary();
+    });
+    document.getElementById('settingsModal').addEventListener('input', updateSetupSummary);
+    document.getElementById('settingsModal').addEventListener('change', updateSetupSummary);
+    txtTeams.addEventListener('input', updateSetupSummary);
+    updateSetupSummary();
+}
+
+function updateSetupSummary() {
+    const settings = getSanitizedSettingsFromInputs();
+    const pack = settings.selectedTheme !== 'None' ? settings.selectedTheme : settings.selectedCategories.join(', ') || 'All categories';
+    const text = `${settings.chaosMode ? 'Chaos' : 'Classic'} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
+    document.getElementById('setupSummary').textContent = text;
+    document.getElementById('advancedSetupSummary').textContent = text;
+    document.getElementById('quickMode').value = settings.chaosMode ? 'chaos' : 'classic';
+    const preset = Object.entries(Gameplay.PRESETS).find(([, p]) => p.pointsToWin === settings.pointsToWin && p.numSeconds === settings.numSeconds && p.numWords === settings.numWords);
+    const select = document.getElementById('quickPreset');
+    if (!select.querySelector?.('option[value="custom"]')) {
+        const option = document.createElement('option'); option.value = 'custom'; option.textContent = 'Custom'; select.appendChild(option);
+    }
+    select.value = preset?.[0] || 'custom';
+}
+
+function initializeCategoryPicker() {
+    const list = document.getElementById('categoryChoices');
+    const sync = () => list.querySelectorAll('input').forEach((input, index) => { input.checked = categoriesSelect.options[index].selected; });
+    Array.from(categoriesSelect.options).forEach((option, index) => {
+        const label = document.createElement('label'), input = document.createElement('input'), text = document.createElement('span');
+        input.type = 'checkbox'; input.value = option.value; text.textContent = option.textContent;
+        input.addEventListener('change', () => {
+            categoriesSelect.options[index].selected = input.checked; themesSelect.value = 'None'; updateSetupSummary();
+        });
+        label.appendChild(input); label.appendChild(text); list.appendChild(label);
+    });
+    document.getElementById('categorySearch').addEventListener('input', event => {
+        const search = event.target.value.trim().toLowerCase();
+        list.querySelectorAll('label').forEach(label => { label.hidden = !label.textContent.toLowerCase().includes(search); });
+    });
+    themesSelect.addEventListener('change', () => { Array.from(categoriesSelect.options).forEach(option => { option.selected = false; }); sync(); updateSetupSummary(); });
+    document.getElementById('selectThemeBtn').addEventListener('click', () => {
+        Array.from(categoriesSelect.options).forEach(option => { option.selected = false; }); sync();
+    });
+}
+
+function updateSelectionSummary() {
+    const count = getSelectedCorrectAnswers().length;
+    const summary = document.getElementById('selectionSummary');
+    const selecting = !btnAnswers.hidden && !isRoundActive && !isResolvingChaosMove;
+    summary.hidden = !selecting;
+    summary.textContent = `${count} of ${numWords} correct · +${count} earned`;
+    if (!btnNextRound.hidden && !btnNextRound.disabled) btnNextRound.textContent = `Confirm ${count} correct`;
+}
+
+function showRecap(text) {
+    const node = document.getElementById('turnRecap');
+    if (node.textContent !== text) node.textContent = text;
+    node.hidden = !text;
+}
+
+function renderMatchResults(data = null, forced = false) {
+    const finished = forced || (data ? data.phase === 'finished' : teams.some(team => team.points >= pointsToWin));
+    const card = document.getElementById('matchResults'); card.hidden = !finished;
+    if (!finished) return;
+    const active = !data || (onlineClient.connected && OnlineState.view(data, onlineClient.actor, onlineClient.serverNow()).active);
+    const host = !data || data.hostId === onlineClient.actor.playerId;
+    const signature = JSON.stringify([data?.matchId || localMatchId, data?.hostId, teams.map(team => team.points),
+        data?.auditEvents || localAudit, active, host, onlineClient?.connected, onlineClient?.busy, onlineClient?.actor?.connectionId]);
+    if (card.dataset.signature === signature) return;
+    card.dataset.signature = signature;
+    document.getElementById('currentTeamIndicator').hidden = true;
+    document.getElementById('roleInstruction').textContent = 'Match complete. Compare scores or play again.';
+    const events = data ? Object.values(data.auditEvents || {}) : localAudit;
+    const winner = teams.findIndex(team => team.points >= pointsToWin);
+    document.getElementById('resultsTitle').textContent = winner >= 0 ? `Team ${winner + 1} wins!` : 'Match ended';
+    const scores = document.getElementById('resultsScores'); scores.innerHTML = '';
+    teams.forEach((team, index) => {
+        const earned = events.filter(event => event.teamIndex === index).reduce((sum, event) => sum + (event.earned ?? event.correctAnswers?.length ?? 0), 0);
+        const row = document.createElement('p');
+        row.textContent = `Team ${index + 1}: ${team.points} points · ${earned} earned${isChaosMode ? ` · ${team.points - earned >= 0 ? '+' : ''}${team.points - earned} Chaos` : ''}`;
+        scores.appendChild(row);
+    });
+    const best = [...events].sort((a, b) => (b.earned ?? b.correctAnswers?.length ?? 0) - (a.earned ?? a.correctAnswers?.length ?? 0))[0];
+    document.getElementById('resultsHighlights').textContent = best ? `Best clue round: Team ${best.teamIndex + 1}, ${best.earned ?? best.correctAnswers.length} correct.` : 'Ready for another round together?';
+    btnStartRound.hidden = btnNextRound.hidden = btnEndRound.hidden = btnEndGame.hidden = true;
+    btnAnswers.hidden = timer.hidden = true;
+    clearTrainingHints(); isRoundActive = false; updateMobileGameFocus();
+    const rematch = document.getElementById('rematchButton'); rematch.hidden = !host; rematch.disabled = !active || Boolean(onlineClient?.busy);
+    document.getElementById('rematchStatus').textContent = host ? 'Rematch keeps the settings and rotates the starting team.' : 'Waiting for the host to choose a rematch. You can also leave.';
+    document.getElementById('changeSettingsButton').textContent = data ? 'Leave for new game settings' : 'Change settings';
+}
+
+async function returnToSetup() {
+    if (isOnlineGame) {
+        try { await onlineClient.close(true); } catch { alert('Unable to leave yet. Check your connection and retry.'); return; }
+        saveOnlineSession(null); onlineClient = null; isOnlineGame = false; gameCode = '';
+    }
+    clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds();
+    hideElement(game); showElement(menu); showElement(btnSettings); showElement(btnOnline); showElement(btnAI); showElement(btnRules); hideElement(btnHistory);
+    showElement(txtLobbyMenu); hideElement(txtLobbyPlayers);
+    isAiGame = false; localStarter = null; localDeck = {}; setLayoutMode('menu'); updateSetupSummary();
+}
+
+function chooseChaos(reroll) {
+    if (isOnlineGame) { void sendOnlineCommand({ type: reroll ? 'reroll-chaos' : 'keep-chaos' }); return; }
+    localChoice?.(reroll);
+}
+
+function offerLocalChaosChoice(type) {
+    document.getElementById('chaosChoiceText').textContent = `${CHAOS_POWERUP_TYPES[type].legendLabel}. Keep it or use your team's only reroll. Auto-keep in 5 seconds.`;
+    document.getElementById('chaosChoice').hidden = false;
+    document.getElementById('keepChaosButton').disabled = document.getElementById('rerollChaosButton').disabled = false;
+    return new Promise(resolve => {
+        const timeout = setTimeout(() => localChoice?.(false), 5000);
+        localChoice = reroll => {
+            clearTimeout(timeout); localChoice = null; document.getElementById('chaosChoice').hidden = true; resolve(reroll);
+        };
+    });
+}
+
 // CDN module imports can finish after DOMContentLoaded has already fired.
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeMenu, { once: true });
@@ -189,6 +375,8 @@ function setLayoutMode(mode = "menu") {
 }
 
 function initializeMenu() {
+    initializePlayPreferences();
+    initializeQuickSetup();
     setLayoutMode("menu");
     refreshChaosModeUi();
     window.addEventListener("resize", updateMobileGameFocus);
@@ -207,6 +395,7 @@ function initializeMenu() {
         option.textContent = theme;
         themesSelect.appendChild(option);
     });
+    initializeCategoryPicker();
 
     const inputs = document.querySelectorAll('input[type="number"]');
     inputs.forEach(input => {
@@ -215,12 +404,14 @@ function initializeMenu() {
 
     // Show categories dropdown
     document.getElementById("selectCategoriesBtn").addEventListener("click", () => {
+        themesSelect.value = 'None'; updateSetupSummary();
         document.getElementById("categoriesSection").style.display = 'block';
         document.getElementById("themesSection").style.display = 'none';
     });
 
     // Show themes dropdown
     document.getElementById("selectThemeBtn").addEventListener("click", () => {
+        Array.from(categoriesSelect.options).forEach(option => { option.selected = false; }); updateSetupSummary();
         document.getElementById("categoriesSection").style.display = 'none';
         document.getElementById("themesSection").style.display = 'block';
     });
@@ -251,10 +442,7 @@ function initializeMenu() {
 
     document.getElementById("createLobbyButton").addEventListener("click", () => {
         if (txtPlayerName.value) {
-            let confirmation = window.confirm(`Are you sure you want to create a lobby with ${txtTeams.value} teams?`);
-            if (confirmation) {
-                createGameLobby(db);
-            }
+            void createGameLobby(db);
         }
         else {
             window.alert("Enter player name!");
@@ -279,6 +467,7 @@ function initializeMenu() {
     registerModal(btnAI, "aiModal");
     registerModal(btnOnline, "onlineModal");
     registerModal(btnRules, "rulesModal");
+    registerModal(btnEndGame, 'endMatchModal');
     btnOnline.addEventListener("click", () => {
         void triggerOnlineHealthScan();
     });
@@ -287,7 +476,7 @@ function initializeMenu() {
     document.getElementById("startOnlineGame").addEventListener("click", startOnlineGame);
     document.getElementById("startRoundButton").addEventListener("click", startRound);
     document.getElementById("nextRoundButton").addEventListener("click", nextRound);
-    document.getElementById("endGameButton").addEventListener("click", endGame);
+    document.getElementById('confirmEndGameButton').addEventListener('click', endGame);
     document.getElementById("endRoundButton").addEventListener("click", endRound);
     document.getElementById("btnGenerate").addEventListener("click", generate);
     document.getElementById("btnAiGame").addEventListener("click", startAIGame);
@@ -295,6 +484,14 @@ function initializeMenu() {
     document.getElementById('rejoinOnlineGame').addEventListener('click', () => {
         void onlineClient?.resume(true).catch(error => console.error('Unable to rejoin:', error));
     });
+    document.getElementById('keepChaosButton').addEventListener('click', () => chooseChaos(false));
+    document.getElementById('rerollChaosButton').addEventListener('click', () => chooseChaos(true));
+    document.getElementById('rematchButton').addEventListener('click', () => {
+        if (isOnlineGame) void sendOnlineCommand({ type: 'rematch' });
+        else void startGame({ rematch: true });
+    });
+    document.getElementById('changeSettingsButton').addEventListener('click', returnToSetup);
+    document.getElementById('exportMatchButton').addEventListener('click', exportMatchSummary);
     void restoreOnlineSession();
 }
 
@@ -370,6 +567,7 @@ function getSanitizedSettingsFromInputs() {
         numWords: clampInt(txtWords.value, 5, 1, 15),
         numSeconds: clampInt(txtSeconds.value, 30, 5, 300),
         chaosMode: Boolean(chkChaos?.checked),
+        chaosReroll: Boolean(document.getElementById('chkReroll')?.checked),
         trainingMode: Boolean(chkTraining?.checked),
         selectedTheme: sanitizeSelectedTheme(themesSelect.value),
         selectedCategories: sanitizeSelectedCategories(Array.from(categoriesSelect.selectedOptions).map(option => option.value))
@@ -388,6 +586,7 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
         numWords: clampInt(settings.numWords, 5, 1, 15),
         numSeconds: clampInt(settings.numSeconds, 30, 5, 300),
         chaosMode: Boolean(settings.chaosMode),
+        chaosReroll: Boolean(settings.chaosReroll),
         trainingMode: Boolean(settings.trainingMode),
         selectedTheme,
         selectedCategories
@@ -405,13 +604,7 @@ function sleep(ms) {
 }
 
 function createSeededRandom(seed) {
-    let t = (Number(seed) || 0) >>> 0;
-    return () => {
-        t += 0x6D2B79F5;
-        let r = Math.imul(t ^ (t >>> 15), 1 | t);
-        r ^= r + Math.imul(r ^ (r >>> 7), 61 | r);
-        return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
-    };
+    return Gameplay.random(seed);
 }
 
 function createInitialTeamShields(teamCount = teams.length || numTeams || 2) {
@@ -484,6 +677,7 @@ function refreshChaosModeUi() {
             renderChaosLegend();
         }
     }
+    document.getElementById('chaosHelp').hidden = !chaosEnabledInGame;
 
     updateMobileGameFocus();
 }
@@ -512,7 +706,8 @@ function setScoreButtonSelected(button, isSelected) {
     }
 
     button.classList.toggle("score-button-selected", Boolean(isSelected));
-    button.style.background = isSelected ? "grey" : "";
+    button.setAttribute('aria-pressed', String(Boolean(isSelected)));
+    updateSelectionSummary();
 }
 
 function isNarrowViewport() {
@@ -531,6 +726,9 @@ function updateMobileGameFocus() {
     if (!game) {
         return;
     }
+    game.classList.toggle('clue-phase', isRoundActive);
+    game.classList.toggle('word-phase', areWordsInFocusPhase());
+    document.getElementById('matchOptions').hidden = btnEndGame.hidden;
 
     game.classList.remove("mobile-focus-words", "mobile-focus-board");
     if (game.hidden || !isNarrowViewport()) {
@@ -735,12 +933,13 @@ function applyChaosPowerupToState({
         case "bomb":
             if (!consumeShieldIfAvailable()) {
                 const currentPoints = Number(actor.points) || 0;
-                moveActor(-currentPoints);
+                moveActor(-Math.min(3, currentPoints));
             }
             break;
         case "shield":
             shields[actingTeamIndex] = 1;
             summary.grantedShield = true;
+            summary.shieldAlreadyReady = hasShield;
             break;
         case "steal1": {
             moveActor(1);
@@ -749,7 +948,10 @@ function applyChaosPowerupToState({
                 const victimTeamIndex = leaders[Math.floor(rng() * leaders.length)];
                 const victim = teamsData[victimTeamIndex];
                 const before = Number(victim?.points) || 0;
-                const after = Math.max(0, before - 1);
+                const blocked = before > 0 && Number(shields[victimTeamIndex]) > 0;
+                if (blocked) shields[victimTeamIndex] = 0;
+                summary.victimBlocked = blocked;
+                const after = blocked ? before : Math.max(0, before - 1);
                 victim.points = after;
                 summary.victimTeamIndex = victimTeamIndex;
                 summary.victimDelta = after - before;
@@ -778,12 +980,13 @@ function formatChaosSummaryForAudit(summary = null) {
         case "minus2":
             return summary.blockedByShield ? "🛡️ blocked -2" : "-2 setback";
         case "bomb":
-            return summary.blockedByShield ? "🛡️ blocked 💣 bomb" : "💣 bomb reset";
+            return summary.blockedByShield ? "Shield blocked bomb" : `Bomb: ${summary.actorDelta} points`;
         case "shield":
-            return "🛡️ shield gained";
+            return summary.shieldAlreadyReady ? 'Shield already ready (max 1)' : 'Shield gained';
         case "steal1":
             if (Number.isInteger(summary.victimTeamIndex) && summary.victimTeamIndex >= 0) {
-                return `🥷 steal 1 from Team ${summary.victimTeamIndex + 1}`;
+                return summary.victimBlocked ? `Steal +1; Team ${summary.victimTeamIndex + 1} blocked the loss with a shield`
+                    : `Steal +1; Team ${summary.victimTeamIndex + 1} loses ${Math.abs(summary.victimDelta)}`;
             }
             return "🥷 steal 1";
         default:
@@ -957,6 +1160,9 @@ function clearTrainingHints() {
         return;
     }
 
+    if (!trainingSignature && currentWordsContainer.hidden) return;
+    trainingSignature = '';
+    document.getElementById('trainingHintsDrawer').hidden = true;
     currentWordsContainer.innerHTML = "";
     currentWordsContainer.hidden = true;
     updateMobileGameFocus();
@@ -977,11 +1183,16 @@ function renderTrainingHints(words = []) {
         return;
     }
 
+    const signature = JSON.stringify(words);
+    if (trainingSignature === signature && !currentWordsContainer.hidden) return;
+    trainingSignature = signature;
+    document.getElementById('trainingHintsDrawer').hidden = false;
+
     currentWordsContainer.innerHTML = "";
 
     const header = document.createElement("div");
     header.className = "training-header";
-    header.textContent = "Training Mode: Easy clue ideas";
+    header.textContent = "Training hints · Check that your clue does not include the answer or its derivatives.";
     currentWordsContainer.appendChild(header);
 
     words.forEach(word => {
@@ -1115,7 +1326,7 @@ async function joinGameLobby() {
 }
 
 async function startOnlineGame() {
-    await sendOnlineCommand({ type: 'start-game' });
+    await sendOnlineCommand({ type: 'start-game', seed: randomSeed() });
 }
 
 function detectPlayerChanges(teams, teamsData) {
@@ -1377,9 +1588,22 @@ function startAIGame() {
     btnAI.hidden = true;
 }
 
-async function startGame() {
+async function startGame({ rematch = false } = {}) {
+    document.getElementById('menuNotice').hidden = true;
     // Play game start sound
-    await playSound(startSound, () => false, 1.2);
+    void playSound(startSound, () => false, 1.2);
+    clearInterval(countdownTimer); finishLocalRound = null;
+    localMatchId++;
+    localAudit = [];
+    localRerollsUsed = [];
+    onlineBoardSignature = '';
+    if (!rematch) localDeck = {};
+    document.getElementById('matchResults').dataset.signature = '';
+    document.getElementById('matchResults').hidden = true;
+    document.getElementById('currentTeamIndicator').hidden = false;
+    showRecap('');
+    hideElement(document.getElementById('chaosChoice'));
+    hideElement(lblGameState);
     setLayoutMode("game");
     clearTrainingHints();
 
@@ -1399,6 +1623,8 @@ async function startGame() {
     numSeconds = sanitizedSettings.numSeconds;
     isChaosMode = sanitizedSettings.chaosMode;
     isTrainingMode = sanitizedSettings.trainingMode;
+    isRoundActive = false;
+    isResolvingChaosMove = false;
 
     txtTeams.value = String(numTeams);
     document.getElementById("pointsToWin").value = String(pointsToWin);
@@ -1433,7 +1659,10 @@ async function startGame() {
     else {
         // Load game data
         currentGameWords = loadWords(selectedTheme, selectedCategories, difficulty);
+        localWordObjects = filterRecentlyUsedWords(getOnlineWordObjects(sanitizedSettings));
     }
+    if (isAiGame) localWordObjects = extractUniqueAiWordsFromText(document.getElementById('aiWords')?.value || '')
+        .map(word => ({ word, difficulty: 'easy' }));
 
     roundPowerups = {};
     powerupRevealVisible = false;
@@ -1457,8 +1686,8 @@ async function startGame() {
     document.querySelectorAll(".scoreButton").forEach(button => {
         if (count < numWords) {
             count++;
-            button.addEventListener("click", () => {
-                if (!btnNextRound.hidden) {
+            button.onclick = () => {
+                if (!isOnlineGame && !isRoundActive && !isResolvingChaosMove && !btnNextRound.hidden) {
                     if (isScoreButtonSelected(button)) {
                         selectedButtons--;
                         setScoreButtonSelected(button, false);
@@ -1468,12 +1697,14 @@ async function startGame() {
                         setScoreButtonSelected(button, true);
                     }
                 }
-            });
+            };
         }
     });
 
     // Set starting team
-    currentTeam = 1;
+    localStarter = Gameplay.startingTeam(randomSeed(), teams.length, rematch ? localStarter : null);
+    currentTeam = localStarter + 1;
+    currentRound = 0;
 
     createTeamAuditTables(teams.length, { forceReset: true });
 
@@ -1481,6 +1712,9 @@ async function startGame() {
     updateBoard();
     updateTeamScores();
     updateCurrentTeamIndicator();
+    btnStartRound.hidden = false; btnEndGame.hidden = false;
+    hideRoundInputUI();
+    updateSelectionSummary();
 }
 
 function getEasyWords(selectedObjects) {
@@ -1529,9 +1763,14 @@ function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
 
 function startRound() {
     if (isOnlineGame) { void startOnlineRound(); return; }
+    if (isRoundActive || isResolvingChaosMove || teams.some(team => team.points >= pointsToWin)) return;
+    showRecap('');
+    stopRoundSounds();
+    localTurnStartedAt = Date.now();
     btnStartRound.hidden = true;
     btnEndGame.hidden = true;
     isRoundActive = true;
+    document.getElementById('roleInstruction').textContent = `Team ${currentTeam}'s speaker: describe these words. Listeners: guess aloud.`;
     powerupRevealVisible = false;
     landedPowerupPreview = null;
     updateBoard();
@@ -1592,277 +1831,102 @@ function advanceRoundPointers() {
     }
 }
 
-async function animateTeamMovement(teamIndex, delta, animate = true) {
-    if (!Number.isInteger(teamIndex) || teamIndex < 0 || teamIndex >= teams.length || delta === 0) {
-        return;
-    }
 
-    const direction = delta > 0 ? 1 : -1;
-    const totalSteps = Math.abs(delta);
-    for (let step = 0; step < totalSteps; step++) {
-        const team = teams[teamIndex];
-        const currentPoints = Number(team?.points) || 0;
-        const nextPoints = Math.max(0, currentPoints + direction);
-        team.points = nextPoints;
-        updateBoard();
-        if (animate) {
-            await sleep(CHAOS_MOVE_STEP_DELAY_MS);
-        }
-    }
-}
 
-function getChaosLandingPowerup(teamIndex) {
-    if (!isChaosMode || !teams[teamIndex]) {
-        return null;
-    }
 
-    const teamPoints = Number(teams[teamIndex].points) || 0;
-    if (teamPoints >= pointsToWin) {
-        return null;
-    }
 
-    const tileIndex = getBoardCellIndexForPoints(teamPoints, pointsToWin);
-    return sanitizeChaosPowerupType(roundPowerups[tileIndex]);
-}
-
-function getChaosLandingPreview(teamIndex, powerupType) {
-    const type = sanitizeChaosPowerupType(powerupType);
-    if (!type || !teams[teamIndex]) {
-        return null;
-    }
-
-    return sanitizeChaosLandedPreview({
-        tileIndex: getBoardCellIndexForPoints(teams[teamIndex].points, pointsToWin),
-        type,
-        teamIndex
-    }, pointsToWin, teams.length);
-}
-
-async function resolveChaosPowerupLocally(
-    teamIndex,
-    powerupType,
-    rng = Math.random,
-    animate = true,
-    roundNumberForRound = currentRound + 1
-) {
-    if (!powerupType) {
-        landedPowerupPreview = null;
-        if (animate) {
-            await sleep(CHAOS_CLEAR_PAUSE_MS);
-        }
-        powerupRevealVisible = false;
-        updateBoard();
-        updateTeamScores();
-
-        return {
-            type: null
-        };
-    }
-
-    const tempTeams = teams.map(team => ({ points: Number(team?.points) || 0 }));
-    const tempShields = normalizeTeamShields(teamShields, teams.length);
-    const summary = applyChaosPowerupToState({
-        teamsData: tempTeams,
-        shields: tempShields,
-        actingTeamIndex: teamIndex,
-        powerupType,
-        rng
-    });
-
-    teamShields = tempShields;
-
-    landedPowerupPreview = getChaosLandingPreview(teamIndex, powerupType);
-    updateTeamScores();
-    updateBoard();
-    const powerupLabel = CHAOS_POWERUP_TYPES[powerupType]?.label || powerupType;
-    lblGameState.textContent = `Chaos: Team ${teamIndex + 1} landed on ${powerupLabel}. Applying...`;
-    showElement(lblGameState);
-    if (animate) {
-        await sleep(CHAOS_LANDED_PREVIEW_DELAY_MS);
-    }
-
-    // Keep indicators visible while applying the landed powerup.
-    landedPowerupPreview = null;
-    updateBoard();
-    updateTeamScores();
-
-    if (summary.actorDelta !== 0) {
-        await animateTeamMovement(teamIndex, summary.actorDelta, animate);
-    } else {
-        updateBoard();
-    }
-
-    if (Number.isInteger(summary.victimTeamIndex) && summary.victimDelta !== 0) {
-        await animateTeamMovement(summary.victimTeamIndex, summary.victimDelta, animate);
-    }
-
-    if (animate) {
-        await sleep(CHAOS_CLEAR_PAUSE_MS);
-    }
-
-    // Clear the map after powerup resolution is complete.
-    powerupRevealVisible = false;
-    landedPowerupPreview = null;
-    updateBoard();
-
-    updateTeamScores();
-    hideElement(lblGameState);
-    return summary;
-}
-
-async function runChaosResolutionLocally({
-    teamIndexForRound,
-    selectedPoints,
-    roundNumberForRound,
-    powerupsForRound = null,
-    rng = Math.random,
-    animate = true
-}) {
+async function runChaosResolutionLocally({ teamIndexForRound, selectedPoints, roundNumberForRound, animate = true }) {
     ensureLocalChaosState(teams.length);
-    const safeSelectedPoints = clampInt(selectedPoints, 0, 0, numWords);
-    roundPowerups = sanitizeRoundPowerups(
-        powerupsForRound || generateRoundPowerupsMap(pointsToWin, rng),
-        pointsToWin
-    );
-
-    // Reveal full round map first, then begin movement.
-    powerupRevealVisible = true;
-    updateBoard();
-    updateTeamScores();
-    if (animate) {
-        await sleep(CHAOS_PREMOVE_REVEAL_MS);
+    const basePoints = teams.map(team => team.points);
+    basePoints[teamIndexForRound] += selectedPoints;
+    const data = { settings: { pointsToWin }, teams: teams.map(team => ({ points: team.points })),
+        chaos: { teamShields }, turn: { seed: randomSeed(), teamIndex: teamIndexForRound,
+            selectedIndexes: Array.from({ length: selectedPoints }, (_, i) => i) } };
+    let plan = planOnlineChaos(data, basePoints);
+    if (document.getElementById('chkReroll').checked && plan.landing && !localRerollsUsed[teamIndexForRound]) {
+        if (await offerLocalChaosChoice(plan.landing.type)) {
+            localRerollsUsed[teamIndexForRound] = true;
+            data.turn.seed = (data.turn.seed ^ 0x9E3779B9) >>> 0;
+            plan = planOnlineChaos(data, basePoints);
+        }
     }
-
-    await animateTeamMovement(teamIndexForRound, safeSelectedPoints, animate);
-
-    const landedPowerup = getChaosLandingPowerup(teamIndexForRound);
-    const summary = await resolveChaosPowerupLocally(
-        teamIndexForRound,
-        landedPowerup,
-        rng,
-        animate,
-        roundNumberForRound
-    );
-
-    return {
-        roundId: roundNumberForRound,
-        powerups: { ...roundPowerups },
-        reveal: powerupRevealVisible,
-        resolutionSummary: summary
-    };
+    const startedAt = Date.now();
+    const render = () => renderResolutionFrame(plan, Date.now() - startedAt);
+    render();
+    if (animate && !reducedMotion()) {
+        const interval = setInterval(render, 50);
+        try { await sleep(plan.durationMs); } finally { clearInterval(interval); }
+    }
+    teams.forEach((team, index) => { team.points = plan.points[index]; });
+    teamShields = plan.shields;
+    powerupRevealVisible = false; landedPowerupPreview = null;
+    updateBoard(); updateTeamScores();
+    return { roundId: roundNumberForRound, resolutionSummary: plan.effect, plan };
 }
 
 async function nextRound() {
     if (isOnlineGame) { await sendOnlineCommand({ type: 'submit-round' }); return; }
-    if (isResolvingChaosMove) return;
+    if (isResolvingChaosMove || isRoundActive || btnNextRound.hidden) return;
     const correctAnswers = getSelectedCorrectAnswers();
-    const teamIndexForRound = getCurrentTeamIndex(currentTeam);
-    const roundNumberForRound = currentRound + 1;
+    const teamIndexForRound = getCurrentTeamIndex(currentTeam), roundNumberForRound = currentRound + 1;
+    const before = teams[teamIndexForRound].points;
+    const submittedAt = Date.now();
     let chaosSummary;
-    if (isChaosMode) {
-        isResolvingChaosMove = true;
-        setNextRoundBusyState(true);
-        try {
+    isResolvingChaosMove = true; setNextRoundBusyState(true);
+    document.querySelectorAll('.scoreButton').forEach(button => { button.disabled = true; });
+    btnEndGame.hidden = true;
+    try {
+        if (isChaosMode) {
             const result = await runChaosResolutionLocally({ teamIndexForRound, selectedPoints: correctAnswers.length, roundNumberForRound });
             chaosSummary = formatChaosSummaryForAudit(result.resolutionSummary);
-        } finally {
-            isResolvingChaosMove = false;
-            setNextRoundBusyState(false);
-        }
-    } else updatePoints(correctAnswers.length);
-    createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
-    createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, { chaosSummary });
-    advanceRoundPointers();
-    hideRoundInputUI();
-    if (teams.some(team => team.points >= pointsToWin)) { await endGame(); return; }
-    btnStartRound.hidden = false;
-    btnEndGame.hidden = false;
-    updateCurrentTeamIndicator();
-    updateTeamScores();
+        } else teams[teamIndexForRound].points += correctAnswers.length;
+        const text = Gameplay.recap({ teamIndex: teamIndexForRound, earned: correctAnswers.length, before,
+            after: teams[teamIndexForRound].points, effect: chaosSummary || 'No effect' });
+        localAudit.push({ teamIndex: teamIndexForRound, roundNumber: roundNumberForRound, correctAnswers, earned: correctAnswers.length, recap: text,
+            chaosSummary, pointsBefore: before, pointsAfter: teams[teamIndexForRound].points,
+            clueSeconds: Math.max(0, (localSelectingAt - localTurnStartedAt) / 1000),
+            scoringSeconds: Math.max(0, (submittedAt - localSelectingAt) / 1000),
+            resolutionSeconds: Math.max(0, (Date.now() - submittedAt) / 1000) });
+        showRecap(text);
+        createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
+        createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, { chaosSummary });
+        advanceRoundPointers(); hideRoundInputUI();
+        updateBoard(); updateCurrentTeamIndicator(); updateTeamScores();
+        if (teams.some(team => team.points >= pointsToWin)) { renderMatchResults(); return; }
+        btnStartRound.hidden = false; btnEndGame.hidden = false;
+    } finally { isResolvingChaosMove = false; setNextRoundBusyState(false); updateMobileGameFocus(); }
 }
 
 async function endGame() {
+    hideModalById('endMatchModal');
     if (isOnlineGame) { await sendOnlineCommand({ type: 'end-game' }); return; }
-    alert('Game over! Team scores:\n' + teams.map((team, index) => `Team ${index + 1}: ${team.points} points`).join('\n'));
-    clearInterval(countdownTimer);
-    clearTrainingHints();
-    location.reload();
+    clearInterval(countdownTimer); finishLocalRound = null;
+    renderMatchResults(null, true);
 }
 
 function endRound() {
     if (isOnlineGame) { void sendOnlineCommand({ type: 'end-round' }); return; }
-    btnEndRound.hidden = true;
-    btnNextRound.hidden = false;
-    setNextRoundBusyState(false);
+    if (!isRoundActive) return;
     endRoundEarly = true;
-    clearTrainingHints();
-    isRoundActive = false;
-    updateMobileGameFocus();
+    finishLocalRound?.();
 }
 
 function displayCurrentWords() {
-    lblAnswers.textContent = "Describe the below words:"
-
-    const scoreButtons = document.getElementsByClassName("scoreButton");
-    for (let index = 0; index < scoreButtons.length; index++) {
-        if (index < numWords) {
-            const element = scoreButtons[index];
-            element.hidden = false;
-        }
-    }
-
+    lblAnswers.textContent = 'Describe these words in any order:';
+    const objects = localWordObjects.length ? localWordObjects : currentGameWords.map(word => ({ word, difficulty: 'easy' }));
+    const draw = Gameplay.drawWords(objects, localDeck, isAiGame ? 'easy' : difficulty, numWords, randomSeed());
+    localDeck = draw.deck;
+    const buttons = document.getElementsByClassName('scoreButton');
+    Array.from(buttons).forEach((button, index) => {
+        button.hidden = index >= draw.words.length;
+        button.textContent = draw.words[index] || '';
+        button.disabled = true;
+        setScoreButtonSelected(button, false);
+    });
     btnAnswers.hidden = false;
-    updateMobileGameFocus();
-    const wordButtons = document.getElementsByClassName("scoreButton");
-
-    // We need to evenly mix easy and hard to make the game fair
-    if (difficulty === "normal" && !isAiGame) {
-        let numEasy = Math.ceil(numWords / 2);
-        let numHard = numWords - numEasy;
-
-        if (easyWords.length < numEasy || hardWords.length < numHard) {
-            alert("Word pool exhausted, reloading the selected pool.");
-            currentGameWords = loadWords(activeSelectedTheme, [...activeSelectedCategories], difficulty);
-            numEasy = Math.ceil(numWords / 2);
-            numHard = numWords - numEasy;
-        }
-
-        let normalWords = [];
-        normalWords = easyWords.slice(0, numEasy).concat(hardWords.slice(0, numHard));
-        normalWords = shuffleArray(normalWords);
-
-        for (let i = 0; i < normalWords.length; i++) {
-            wordButtons[i].textContent = normalWords[i];
-        }
-        renderTrainingHints(normalWords);
-
-        rememberUsedWords(normalWords);
-
-        easyWords = easyWords.slice(numEasy);
-        hardWords = hardWords.slice(numHard);
-    }
-    else {
-        if (currentGameWords.length < numWords) {
-            if (isAiGame) {
-                const dedupedAiWords = extractUniqueAiWordsFromText(document.getElementById("aiWords")?.value || "");
-                currentGameWords = shuffleArray(dedupedAiWords);
-            }
-            else {
-                currentGameWords = loadWords(activeSelectedTheme, [...activeSelectedCategories], difficulty);
-            }
-        }
-
-        let words = currentGameWords.slice(0, numWords);
-        currentGameWords = currentGameWords.slice(numWords);
-
-        words.forEach((word, index) => {
-            wordButtons[index].textContent = word;
-        });
-        renderTrainingHints(words);
-
-        rememberUsedWords(words);
-    }
-
+    renderTrainingHints(draw.words);
+    rememberUsedWords(draw.words);
+    if (draw.recycled.length) showRecap('This pack has run through its ' + draw.recycled.join(' and ') + ' answers; that difficulty is reshuffled.');
     updateMobileGameFocus();
 }
 
@@ -1889,167 +1953,52 @@ function updatePoints(points) {
 }
 
 function playSound(audioElement, endCondition, playbackRate = 1.0) {
-    return new Promise((resolve) => {
-        if (!audioElement) {
-            resolve();
-            return;
-        }
-
-        let settled = false;
-        let checkInterval = null;
-        let failsafeTimeout = null;
-
-        const cleanupAndResolve = () => {
-            if (settled) {
-                return;
-            }
-            settled = true;
-
-            if (checkInterval) {
-                clearInterval(checkInterval);
-            }
-            if (failsafeTimeout) {
-                clearTimeout(failsafeTimeout);
-            }
-
-            audioElement.onended = null;
-            audioElement.onerror = null;
-            resolve();
-        };
-
-        try {
-            audioElement.playbackRate = playbackRate;
-            audioElement.currentTime = 0;
-        } catch (_) {
-            cleanupAndResolve();
-            return;
-        }
-
-        const durationMs = Number.isFinite(audioElement.duration) && audioElement.duration > 0
-            ? Math.ceil((audioElement.duration / Math.max(0.1, playbackRate)) * 1000)
-            : 0;
-        const fallbackMs = Math.max(1200, Math.min(6000, durationMs > 0 ? durationMs + 800 : 3200));
-
-        failsafeTimeout = setTimeout(() => {
-            cleanupAndResolve();
-        }, fallbackMs);
-
-        checkInterval = setInterval(() => {
-            let shouldEnd = false;
-            try {
-                shouldEnd = Boolean(endCondition && endCondition());
-            } catch (_) {
-                shouldEnd = true;
-            }
-
-            if (shouldEnd) {
-                try {
-                    audioElement.pause();
-                    audioElement.currentTime = 0;
-                } catch (_) {
-                    // Ignore pause/reset failures and continue resolving.
-                }
-                cleanupAndResolve();
-            }
-        }, 100);
-
-        audioElement.onended = () => {
-            cleanupAndResolve();
-        };
-        audioElement.onerror = () => {
-            cleanupAndResolve();
-        };
-
-        try {
-            const playAttempt = audioElement.play();
-            if (playAttempt && typeof playAttempt.then === "function") {
-                playAttempt.catch(() => {
-                    cleanupAndResolve();
-                });
-            }
-        } catch (_) {
-            cleanupAndResolve();
-        }
-    });
+    if (!audioElement || preferences.muted || preferences.volume === 0 || endCondition?.()) return Promise.resolve();
+    try {
+        audioElement.volume = preferences.volume;
+        audioElement.muted = false;
+        audioElement.playbackRate = playbackRate;
+        audioElement.currentTime = 0;
+        const attempt = audioElement.play();
+        attempt?.catch?.(() => {});
+    } catch { /* Audio is optional and never controls game timing. */ }
+    return Promise.resolve();
 }
 
-async function startCountdown(seconds, callback) {
-    countdownSoundPlaying = true;
-    // Wait for the countdown sound to finish playing for its duration
-    await playSound(countdownSound, () => false, 1.1);
-    countdownSoundPlaying = false;
-
+function startCountdown(seconds, callback) {
+    clearInterval(countdownTimer);
+    void playSound(countdownSound, () => false, 1.1);
     btnEndRound.hidden = false;
     displayCurrentWords();
-
     timer.hidden = false;
-    let remainingTime = seconds;
-    timer.textContent = remainingTime;
-
-    const warningTime = 5;
-    let tickPlaying = false;
-    let warningPlaying = false;
-    let roundFinished = false;
-
-    const finishRound = (audioToPlay) => {
-        if (roundFinished) {
-            return;
-        }
-
-        roundFinished = true;
-        clearInterval(countdownTimer);
-        playSound(audioToPlay, () => false, 1.0).then(() => {
-            selectedButtons = 0;
-            callback();
-        });
+    const deadline = Date.now() + seconds * 1000;
+    timer.textContent = String(seconds);
+    let finished = false, warned = false;
+    finishLocalRound = () => {
+        if (finished) return;
+        finished = true; clearInterval(countdownTimer); finishLocalRound = null;
+        localSelectingAt = Date.now(); stopRoundSounds();
+        timer.hidden = true;
+        void playSound(endRoundEarly ? endSoundAlt : endSound, () => false);
+        selectedButtons = 0; callback(); updateSelectionSummary();
+        document.getElementById('roleInstruction').textContent = 'Select the words guessed correctly, then confirm the score.';
     };
-
-    countdownTimer = setInterval(async () => {
-        // Play the tick sound every second if not already playing
-        if (remainingTime > warningTime && !tickPlaying) {
-            tickPlaying = true;
-            playSound(tickSound, () => remainingTime <= warningTime || endRoundEarly, 1.0).then(() => tickPlaying = false);
-        }
-
-        remainingTime--;
-        timer.textContent = remainingTime;
-        if (remainingTime < 0) {
-            timer.textContent = 0;
-        }
-
-        // Play the warning sound 5 seconds before the end if not already playing
-        if (remainingTime <= warningTime && remainingTime > 0 && !warningPlaying) {
-            warningPlaying = true;
-            playSound(warningSound, () => remainingTime < 0 || endRoundEarly, 1.2).then(() => warningPlaying = false);
-        }
-
-        if (remainingTime < 0) {
-            remainingTime = 0;
-            finishRound(endSound);
-        }
-
-        if (endRoundEarly === true) {
-            finishRound(endSoundAlt);
-        }
-    }, 1000);
+    countdownTimer = setInterval(() => {
+        const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+        timer.textContent = String(remaining);
+        if (remaining <= 5 && remaining > 0 && !warned) { warned = true; void playSound(warningSound, () => false, 1.2); }
+        if (!remaining || endRoundEarly) finishLocalRound?.();
+    }, 100);
 }
 
 function generateBoard() {
-    const boardSize = pointsToWin;
-
-    let columns = 5;
-    if (isMobileDevice()) {
-        columns = 4;
-    }
-    const rows = Math.ceil(boardSize / columns);
-    const gameBoard = document.getElementById("gameBoard");
-    gameBoard.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
-    gameBoard.innerHTML = "";
-
-    for (let i = 0; i < boardSize; i++) {
-        const cell = document.createElement("div");
-        cell.className = "board-cell";
-        gameBoard.appendChild(cell);
+    const board = document.getElementById('gameBoard');
+    board.innerHTML = '';
+    board.style.gridTemplateColumns = '';
+    for (let i = 0; i <= pointsToWin; i++) {
+        const cell = document.createElement('div'); cell.className = 'board-cell';
+        cell.dataset.position = String(i);
+        board.appendChild(cell);
     }
 }
 
@@ -2061,113 +2010,56 @@ function isMobileDevice() {
 }
 
 function updateBoard() {
-    const gameBoard = document.getElementById("gameBoard");
-    const boardCells = gameBoard.children;
-
-    // Clear previous state
-    Array.from(boardCells).forEach(cell => {
-        cell.innerHTML = "";
-        cell.style.backgroundColor = "";
-        cell.classList.remove("board-cell-powerup");
-        cell.classList.remove("board-cell-landed-powerup");
-    });
-
-    // Track team positions on the board
-    let cellTeams = new Array(boardCells.length).fill(null).map(() => []);
-
-    teams.forEach((team, index) => {
-        const position = Math.min(team.points, boardCells.length - 1);
-        cellTeams[position].push(index);
-    });
-
-    // Update board cells with team colors.
-    cellTeams.forEach((teamIndexes, cellIndex) => {
-        const cell = boardCells[cellIndex];
-        if (teamIndexes.length === 0) {
-            return;
-        }
-
-        // If there's only one team, just set the background color
-        if (teamIndexes.length === 1) {
-            cell.style.backgroundColor = getTeamColor(teamIndexes[0]);
-        } else {
-            const segmentWidth = 100 / teamIndexes.length;
-            const segmentsContainer = document.createElement("div");
-            segmentsContainer.className = "board-cell-segments";
-
-            teamIndexes.forEach((teamIndex, index) => {
-                const segment = document.createElement("div");
-                segment.className = "board-team-segment";
-                segment.style.width = `${segmentWidth}%`;
-                segment.style.height = "100%";
-                segment.style.float = "left";
-                segment.style.backgroundColor = getTeamColor(teamIndex);
-                segment.style.borderRadius = "4px";
-                segmentsContainer.appendChild(segment);
-            });
-
-            cell.appendChild(segmentsContainer);
-        }
-    });
-
-    // Reveal powerups across the full board map.
-    if (isChaosMode && powerupRevealVisible) {
-        Array.from(boardCells).forEach((cell, cellIndex) => {
-            const powerupType = sanitizeChaosPowerupType(roundPowerups[cellIndex]);
-            if (!powerupType) {
-                return;
-            }
-            const powerupConfig = CHAOS_POWERUP_TYPES[powerupType];
-            const badge = document.createElement("div");
-            badge.className = `board-powerup ${powerupConfig.cssClass}`;
-            badge.textContent = powerupConfig.label;
-            const isLandedCell = landedPowerupPreview
-                && landedPowerupPreview.tileIndex === cellIndex
-                && landedPowerupPreview.type === powerupType;
-            if (isLandedCell) {
-                badge.classList.add("board-powerup-landed");
-                cell.classList.add("board-cell-landed-powerup");
-            }
-            cell.classList.add("board-cell-powerup");
-            cell.appendChild(badge);
+    const cells = Array.from(document.getElementById('gameBoard').children);
+    cells.forEach((cell, position) => {
+        cell.innerHTML = '';
+        cell.classList.remove('board-cell-powerup', 'board-cell-landed-powerup');
+        const number = document.createElement('span'); number.className = 'cell-number';
+        number.textContent = position === 0 ? 'Start' : position === pointsToWin ? 'Finish' : String(position);
+        cell.appendChild(number);
+        const occupying = teams.map((team, index) => ({ team, index })).filter(({ team }) => Math.min(team.points, pointsToWin) === position);
+        cell.setAttribute('aria-label', `${position === pointsToWin ? 'Finish' : 'Position'} ${position}${occupying.length ? ', Team ' + occupying.map(t => t.index + 1).join(', ') : ''}`);
+        const tokens = document.createElement('div'); tokens.className = 'board-tokens';
+        occupying.forEach(({ index }) => {
+            const token = document.createElement('span'); token.className = 'team-token';
+            token.style.backgroundColor = getTeamColor(index); token.textContent = String(index + 1);
+            tokens.appendChild(token);
         });
-    }
-
+        cell.appendChild(tokens);
+        const type = isChaosMode && powerupRevealVisible && position > 0 && position < pointsToWin - 1 ? sanitizeChaosPowerupType(roundPowerups[position]) : null;
+        if (type) {
+            const badge = document.createElement('span'); badge.className = `board-powerup ${CHAOS_POWERUP_TYPES[type].cssClass}`;
+            badge.textContent = CHAOS_POWERUP_TYPES[type].label;
+            cell.appendChild(badge); cell.classList.add('board-cell-powerup');
+            if (landedPowerupPreview?.tileIndex === position) cell.classList.add('board-cell-landed-powerup');
+        }
+    });
     updateTeamScores();
 }
 
 function updateTeamScores() {
-    const teamScoresContainer = document.getElementById("teamScores");
-    teamScoresContainer.innerHTML = "";
+    const container = document.getElementById('teamScores'); container.innerHTML = '';
     ensureLocalChaosState(teams.length || numTeams || 2);
     teams.forEach((team, index) => {
-        const teamScoreDiv = document.createElement("div");
-        teamScoreDiv.className = "team-score";
-        teamScoreDiv.textContent = `Team ${index + 1}: ${team.points} points`;
+        const row = document.createElement('div'); row.className = 'team-score';
+        row.textContent = `Team ${index + 1}: ${team.points}/${pointsToWin}`;
         if (isChaosMode && Number(teamShields[index]) > 0) {
-            const shieldBadge = document.createElement("span");
-            shieldBadge.className = "shield-indicator";
-            shieldBadge.textContent = "Shield: Ready";
-            teamScoreDiv.appendChild(shieldBadge);
+            const badge = document.createElement('span'); badge.className = 'shield-indicator';
+            badge.textContent = 'Shield ready (max 1)'; row.appendChild(badge);
         }
-        teamScoreDiv.style.color = getTeamColor(index);
-        teamScoresContainer.appendChild(teamScoreDiv);
+        const rerollEnabled = isOnlineGame ? onlineClient?.snapshot?.settings?.chaosReroll : document.getElementById('chkReroll').checked;
+        if (isChaosMode && rerollEnabled) {
+            const used = isOnlineGame ? onlineClient.snapshot.chaos?.rerollsUsed?.[index] : localRerollsUsed[index];
+            const badge = document.createElement('span'); badge.className = 'shield-indicator';
+            badge.textContent = used ? 'Reroll used' : 'Reroll ready'; row.appendChild(badge);
+        }
+        row.style.color = getTeamColor(index); container.appendChild(row);
     });
+    document.getElementById('progressSummary').textContent = teams.map((team, index) => `Team ${index + 1}: ${team.points}/${pointsToWin}`).join(' · ');
 }
 
 function getTeamColor(teamIndex) {
-    switch (teamIndex) {
-        case 0:
-            return "blue";
-        case 1:
-            return "red";
-        case 2:
-            return "green";
-        case 3:
-            return "orange";
-        default:
-            return "black";
-    }
+    return ['#174ea6', '#b91c1c', '#166534', '#92400e'][teamIndex] || '#222222';
 }
 
 function shuffleArray(array) {
@@ -2179,6 +2071,7 @@ function shuffleArray(array) {
 }
 
 function updateCurrentTeamIndicator() {
+    if (!isOnlineGame && !isRoundActive && btnAnswers.hidden) document.getElementById('roleInstruction').textContent = `Team ${currentTeam}'s next speaker: start when everyone is ready.`;
     const currentTeamIndicator = document.getElementById("currentTeamIndicator");
     const speakerName = isOnlineGame ? getSpeakerName() : null;
     const indicatorText = isOnlineGame
@@ -2561,35 +2454,9 @@ function getOnlineWordObjects(settings) {
 
 function drawOnlineWords(gameData, seed) {
     const settings = sanitizeGameSettingsFromDb(gameData.settings, gameData.teams.length);
-    const rng = createSeededRandom(seed);
-    const shuffle = values => {
-        const result = [...values];
-        for (let i = result.length - 1; i > 0; i--) {
-            const j = Math.floor(rng() * (i + 1));
-            [result[i], result[j]] = [result[j], result[i]];
-        }
-        return result;
-    };
-    let easy = [...(gameData.easyWords || [])];
-    let hard = [...(gameData.hardWords || [])];
-    let all = [...(gameData.currentGameWords || [])];
-    if (settings.difficulty === 'normal') {
-        const numEasy = Math.ceil(settings.numWords / 2), numHard = settings.numWords - numEasy;
-        if (easy.length < numEasy || hard.length < numHard) {
-            const full = getOnlineWordObjects(settings);
-            easy = shuffle(full.filter(word => word.difficulty === 'easy').map(word => word.word));
-            hard = shuffle(full.filter(word => word.difficulty === 'hard').map(word => word.word));
-        }
-        const chosen = [...easy.slice(0, numEasy), ...hard.slice(0, numHard)];
-        const remaining = [...easy, ...hard].filter(word => !chosen.includes(word));
-        chosen.push(...remaining.slice(0, Math.max(0, settings.numWords - chosen.length)));
-        const selected = new Set(chosen);
-        return { words: shuffle(chosen), pools: {
-            easyWords: easy.filter(word => !selected.has(word)), hardWords: hard.filter(word => !selected.has(word))
-        } };
-    }
-    if (all.length < settings.numWords) all = shuffle(getOnlineWordObjects(settings).map(word => word.word));
-    return { words: all.slice(0, settings.numWords), pools: { currentGameWords: all.slice(settings.numWords) } };
+    const draw = Gameplay.drawWords(getOnlineWordObjects(settings), gameData.deck || {}, settings.difficulty, settings.numWords, seed);
+    return { words: draw.words, pools: { deck: draw.deck, deckRecycled: draw.recycled,
+        easyWords: [], hardWords: [], currentGameWords: [] } };
 }
 
 function planOnlineChaos(gameData, basePoints) {
@@ -2599,54 +2466,51 @@ function planOnlineChaos(gameData, basePoints) {
     const temporaryTeams = basePoints.map(points => ({ points }));
     const shields = normalizeTeamShields(gameData.chaos?.teamShields || [], gameData.teams.length);
     const tileIndex = getBoardCellIndexForPoints(basePoints[actorIndex], gameData.settings.pointsToWin);
-    const type = basePoints[actorIndex] >= gameData.settings.pointsToWin ? null : powerups[tileIndex] || null;
-    const summary = applyChaosPowerupToState({ teamsData: temporaryTeams, shields, actingTeamIndex: actorIndex, powerupType: type, rng });
+    const won = basePoints[actorIndex] >= gameData.settings.pointsToWin;
+    const type = won ? null : powerups[tileIndex] || null;
+    const effect = applyChaosPowerupToState({ teamsData: temporaryTeams, shields, actingTeamIndex: actorIndex, powerupType: type, rng });
     const moveCount = (gameData.turn.selectedIndexes || []).length;
     return {
-        basePoints, points: temporaryTeams.map(team => team.points), shields, powerups,
+        basePoints, points: temporaryTeams.map(team => team.points), shields, powerups, actorIndex,
         landing: type ? { teamIndex: actorIndex, tileIndex, type } : null,
-        summary: formatChaosSummaryForAudit(summary), moveCount,
-        actorDelta: summary.actorDelta, victimTeamIndex: summary.victimTeamIndex, victimDelta: summary.victimDelta,
-        durationMs: CHAOS_PREMOVE_REVEAL_MS + moveCount * CHAOS_MOVE_STEP_DELAY_MS
-            + (type ? CHAOS_LANDED_PREVIEW_DELAY_MS : 0)
-            + (Math.abs(summary.actorDelta) + Math.abs(summary.victimDelta)) * CHAOS_MOVE_STEP_DELAY_MS
-            + CHAOS_CLEAR_PAUSE_MS
+        effect, summary: formatChaosSummaryForAudit(effect), moveCount,
+        actorDelta: effect.actorDelta, victimTeamIndex: effect.victimTeamIndex, victimDelta: effect.victimDelta,
+        durationMs: Gameplay.resolutionDuration(Boolean(type), won)
     };
 }
 
 function renderOnlineClock() {
     const data = onlineClient?.snapshot;
     if (!data || !isOnlineGame) return;
-    const now = onlineClient.serverNow();
-    const view = OnlineState.view(data, onlineClient.actor, now);
+    const now = onlineClient.serverNow(), view = OnlineState.view(data, onlineClient.actor, now);
     timer.hidden = !(onlineClient.connected && view.active && data.phase === 'describing');
-    timer.textContent = String(view.remainingSeconds);
+    if (!timer.hidden) {
+        const text = String(view.remainingSeconds);
+        if (timer.textContent !== text) timer.textContent = text;
+        const cue = `${data.matchId}:${data.turn.id}:${view.remainingSeconds <= 5 ? 'warning' : 'start'}`;
+        if (cue !== lastOnlineCue) { lastOnlineCue = cue; void playSound(view.remainingSeconds <= 5 ? warningSound : countdownSound, () => false); }
+    }
     if (data.phase !== 'resolving') return;
-    const plan = data.turn.resolution;
-    const actorIndex = data.turn.teamIndex;
-    const elapsed = Math.max(0, now - plan.startedAt);
-    const baseFinishedAt = CHAOS_PREMOVE_REVEAL_MS + plan.moveCount * CHAOS_MOVE_STEP_DELAY_MS;
-    const effectStartsAt = baseFinishedAt + (plan.landing ? CHAOS_LANDED_PREVIEW_DELAY_MS : 0);
-    const display = data.teams.map(team => Number(team.points) || 0);
-    const steps = Math.max(0, Math.floor((elapsed - CHAOS_PREMOVE_REVEAL_MS) / CHAOS_MOVE_STEP_DELAY_MS) + 1);
-    display[actorIndex] += Math.min(plan.moveCount, steps);
-    const actorSteps = Math.max(0, Math.floor((elapsed - effectStartsAt) / CHAOS_MOVE_STEP_DELAY_MS) + 1);
-    display[actorIndex] += Math.sign(plan.actorDelta) * Math.min(Math.abs(plan.actorDelta), actorSteps);
-    if (Number.isInteger(plan.victimTeamIndex)) {
-        const victimSteps = Math.max(0, Math.floor((elapsed - effectStartsAt - Math.abs(plan.actorDelta) * CHAOS_MOVE_STEP_DELAY_MS) / CHAOS_MOVE_STEP_DELAY_MS) + 1);
-        display[plan.victimTeamIndex] += Math.sign(plan.victimDelta) * Math.min(Math.abs(plan.victimDelta), victimSteps);
-    }
-    landedPowerupPreview = elapsed >= baseFinishedAt && elapsed < effectStartsAt ? plan.landing : null;
-    powerupRevealVisible = true;
-    roundPowerups = plan.powerups;
-    teamShields = elapsed >= effectStartsAt ? plan.shields : normalizeTeamShields(data.chaos?.teamShields || [], data.teams.length);
-    const signature = JSON.stringify([display, landedPowerupPreview, teamShields]);
-    if (signature !== onlineBoardSignature) {
-        onlineBoardSignature = signature;
-        teams.forEach((team, index) => { team.points = Math.max(0, display[index]); });
-        updateBoard();
-        updateTeamScores();
-    }
+    renderResolutionFrame(data.turn.resolution, now - data.turn.resolution.startedAt);
+}
+
+function renderResolutionFrame(plan, elapsed) {
+    const actorIndex = plan.actorIndex ?? plan.landing?.teamIndex ?? (currentTeam - 1);
+    const duration = plan.durationMs;
+    const baseRatio = reducedMotion() ? 1 : Math.min(1, Math.max(0, elapsed / (duration * 0.35)));
+    const effectRatio = reducedMotion() ? 1 : Math.min(1, Math.max(0, (elapsed - duration * 0.6) / (duration * 0.3)));
+    const display = [...plan.basePoints];
+    display[actorIndex] = plan.basePoints[actorIndex] - plan.moveCount + Math.floor(plan.moveCount * baseRatio)
+        + Math.sign(plan.actorDelta) * Math.floor(Math.abs(plan.actorDelta) * effectRatio);
+    if (Number.isInteger(plan.victimTeamIndex)) display[plan.victimTeamIndex] += Math.sign(plan.victimDelta) * Math.floor(Math.abs(plan.victimDelta) * effectRatio);
+    const signature = JSON.stringify([display, effectRatio === 1, plan.landing]);
+    if (signature === onlineBoardSignature) return;
+    onlineBoardSignature = signature;
+    teams.forEach((team, index) => { team.points = display[index]; });
+    if (effectRatio === 1) teamShields = [...plan.shields];
+    roundPowerups = plan.powerups; powerupRevealVisible = true; landedPowerupPreview = plan.landing;
+    updateBoard();
+    showRecap(`+${plan.moveCount} earned · ${plan.summary}`);
 }
 
 function renderOnlineControls() {
@@ -2654,56 +2518,64 @@ function renderOnlineControls() {
     if (!data || !isOnlineGame) return;
     const view = OnlineState.view(data, onlineClient.actor, onlineClient.serverNow());
     const active = view.active && onlineClient.connected && !onlineClient.suspended;
-    isHost = active && view.host;
-    isSpeaker = active && view.speaker;
+    document.getElementById('currentTeamIndicator').hidden = data.phase === 'finished';
+    isHost = active && view.host; isSpeaker = active && view.speaker;
     isRoundActive = data.phase === 'describing';
     endRoundEarly = Boolean(data.endRoundEarly);
     selectedButtons = (data.turn?.selectedIndexes || []).length;
     const busy = onlineClient.busy || onlineClient.registering;
     btnStartOnlineGame.hidden = !isHost || Boolean(data.isGameStarted);
     btnStartOnlineGame.disabled = busy || data.phase !== 'ready';
-    btnStartRound.hidden = !(active && view.canStartRound);
-    btnStartRound.disabled = busy;
-    btnEndRound.hidden = !(active && view.canEndRound);
-    btnEndRound.disabled = busy;
-    btnNextRound.hidden = !(active && view.canSelect);
-    btnNextRound.disabled = busy;
-    btnNextRound.textContent = 'Next Round';
-    btnEndGame.hidden = !isHost || data.phase === 'ended';
+    btnStartRound.hidden = !(active && view.canStartRound); btnStartRound.disabled = busy;
+    btnEndRound.hidden = !(active && view.canEndRound); btnEndRound.disabled = busy;
+    btnNextRound.hidden = !(active && view.canSelect); btnNextRound.disabled = busy;
+    btnEndGame.hidden = !isHost || ['ended', 'finished', 'resolving', 'chaos-choice'].includes(data.phase);
     btnEndGame.disabled = busy;
     document.getElementById('leaveOnlineGame').hidden = false;
     const rejoin = document.getElementById('rejoinOnlineGame');
     rejoin.hidden = Boolean((view.active && !onlineClient.error) || data.phase === 'ended' || onlineClient.registering);
     rejoin.disabled = busy;
     btnAnswers.hidden = !(active && view.showWords);
-    const words = data.turn?.words || [];
-    const selected = new Set(data.turn?.selectedIndexes || []);
+    const words = data.turn?.words || [], selected = new Set(data.turn?.selectedIndexes || []);
     document.querySelectorAll('.scoreButton').forEach((button, index) => {
         button.hidden = btnAnswers.hidden || index >= words.length;
         button.disabled = busy || !view.canSelect;
         button.textContent = words[index] || '';
         setScoreButtonSelected(button, selected.has(index));
     });
-    lblAnswers.textContent = data.phase === 'selecting'
-        ? (isSpeaker ? 'Click the correct answers:' : "The 'Speaker' is selecting the correct answers:")
-        : (isSpeaker ? 'Describe the below words:' : "The 'Speaker' is describing the following words:");
-    if (active && isSpeaker && data.phase === 'describing') renderTrainingHints(words);
-    else clearTrainingHints();
+    const speaker = OnlineState.members(data).find(player => player.playerId === data.turn?.speakerId);
+    const name = speaker?.playerName || 'The next speaker';
+    const smallGame = (data.teams.length === 2 && data.numPlayers === 2) || (data.teams.length === 3 && data.numPlayers === 3);
+    let role = '';
+    if (data.phase === 'describing') role = isSpeaker ? 'You are speaking. Describe these words in any order.'
+        : smallGame ? `${name} is speaking. Guess aloud; answers stay hidden.`
+        : view.player?.teamIndex === data.turn?.teamIndex ? `${name} is speaking for your team. Guess aloud; answers stay hidden.`
+        : `${name} is speaking for Team ${data.turn.teamIndex + 1}. Watch the clues and the timer.`;
+    if (data.phase === 'selecting') role = isSpeaker ? 'Select the words guessed correctly, then confirm.' : `${name} is confirming the correct answers.`;
+    if (data.phase === 'idle') role = isSpeaker ? 'You are the next speaker. Start when everyone is ready.' : `${name} speaks next for Team ${data.turn.teamIndex + 1}.`;
+    if (data.phase === 'ready') role = `${data.starterTeam === undefined ? 'The starting team is drawn on start.' : `Team ${data.starterTeam + 1} starts.`} ${isHost ? 'Start when everyone is ready.' : 'Waiting for the host to start.'}`;
+    if (data.phase === 'waiting') role = 'Waiting for enough players to continue.';
+    if (data.phase === 'finished') role = 'Match complete. Compare scores or play again.';
+    document.getElementById('roleInstruction').textContent = role;
+    lblAnswers.textContent = data.phase === 'selecting' ? 'Correct answers:' : isSpeaker ? 'Describe these words:' : `${name}'s words:`;
+    if (active && isSpeaker && data.phase === 'describing') renderTrainingHints(words); else clearTrainingHints();
     let status = '';
-    if (!onlineClient.connected || onlineClient.suspended) status = 'Status: Connection lost. Reconnecting...';
-    else if (!view.player) status = 'Status: Your seat is no longer active. Rejoin the lobby to play.';
-    else if (!view.active) status = 'Status: Rejoin the lobby to restore your connection.';
-    else if (data.phase === 'waiting') status = 'Status: Waiting for players!';
-    else if (data.phase === 'ready') status = 'Status: Waiting for host to start game!';
-    else if (data.phase === 'resolving') status = 'Status: Resolving chaos turn...';
-    else {
-        const speaker = OnlineState.members(data).find(player => player.playerId === data.turn?.speakerId);
-        if (speaker && !OnlineState.isConnected(data, speaker, onlineClient.serverNow())) status = 'Status: Waiting for the speaker to reconnect...';
+    if (!onlineClient.connected || onlineClient.suspended) status = 'Connection lost. Reconnecting…';
+    else if (!view.player) status = 'Your seat is no longer active. Rejoin the lobby to play.';
+    else if (!view.active) status = 'Rejoin the lobby to restore your connection.';
+    else if (speaker && !OnlineState.isConnected(data, speaker, onlineClient.serverNow()) && ['idle', 'describing', 'selecting'].includes(data.phase)) status = 'Waiting for the speaker to reconnect…';
+    else if (data.phase === 'resolving') status = 'Resolving Chaos…';
+    else if (data.phase === 'describing' && data.deckRecycled?.length) status = `This pack has exhausted its ${data.deckRecycled.join(' and ')} answers; that difficulty is reshuffled.`;
+    lblGameState.hidden = !status; lblGameState.textContent = status;
+    const choice = document.getElementById('chaosChoice'); choice.hidden = data.phase !== 'chaos-choice';
+    if (!choice.hidden) {
+        const remaining = Math.max(0, Math.ceil((data.turn.choiceDeadline - onlineClient.serverNow()) / 1000));
+        const effect = data.turn.resolution.landing?.type;
+        document.getElementById('chaosChoiceText').textContent = `${CHAOS_POWERUP_TYPES[effect]?.legendLabel || 'Chaos effect'}: ${data.turn.resolution.summary}. ${isSpeaker ? 'Keep or reroll once for your team.' : name + ' is choosing.'} Auto-keep in ${remaining}s.`;
+        document.getElementById('keepChaosButton').disabled = document.getElementById('rerollChaosButton').disabled = !active || !isSpeaker || busy || !remaining;
     }
-    lblGameState.hidden = !status;
-    lblGameState.textContent = status;
-    updateMobileGameFocus();
-    renderOnlineClock();
+    updateSelectionSummary(); updateMobileGameFocus(); renderOnlineClock();
+    renderMatchResults(data);
 }
 
 function renderOnlineSnapshot(data) {
@@ -2713,9 +2585,12 @@ function renderOnlineSnapshot(data) {
         isSpeaker = isHost = isRoundActive = false;
         clearInterval(countdownTimer);
         saveOnlineSession(null);
-        void onlineClient?.close().catch(error => console.error('Failed to close connection:', error));
-        alert(data ? 'Game over! Team scores:\n' + data.teams.map((team, index) => `Team ${index + 1}: ${team.points || 0} points`).join('\n') : 'Lobby has been closed.');
-        location.reload();
+        const previousClient = onlineClient;
+        onlineClient = null; isOnlineGame = false;
+        void previousClient?.close().catch(error => console.error('Failed to close connection:', error));
+        void returnToSetup();
+        const notice = document.getElementById('menuNotice');
+        notice.textContent = 'The lobby has closed. Create or join a new game.'; notice.hidden = false;
         return;
     }
     const settings = sanitizeGameSettingsFromDb(data.settings, data.teams.length);
@@ -2748,7 +2623,15 @@ function renderOnlineSnapshot(data) {
     teamShields = chaos.teamShields;
     onlineBoardSignature = '';
     updatePlayerListUI(teams);
-    const boardKey = `${numTeams}:${pointsToWin}`;
+    document.getElementById('matchResults').hidden = data.phase !== 'finished';
+    if (data.auditEvent?.recap && data.phase !== 'describing') showRecap(data.auditEvent.recap);
+    else if (data.phase === 'describing' || !data.auditEvent) showRecap('');
+    if (onlineClient.lastPhase === 'describing' && data.phase !== 'describing') {
+        stopRoundSounds();
+        if (data.phase === 'selecting') void playSound(endSound, () => false);
+    }
+    onlineClient.lastPhase = data.phase;
+    const boardKey = `${data.matchId || 1}:${numTeams}:${pointsToWin}`;
     if (onlineClient.boardKey !== boardKey) {
         onlineClient.boardKey = boardKey;
         generateBoard();
@@ -2769,12 +2652,7 @@ function renderOnlineSnapshot(data) {
 
 async function startOnlineRound() {
     if (!onlineClient?.snapshot || !onlineClient.connected || onlineClient.busy || !OnlineState.view(onlineClient.snapshot, onlineClient.actor, onlineClient.serverNow()).canStartRound) return;
-    const turnId = onlineClient.snapshot.turn.id;
-    onlineClient.busy = true;
-    renderOnlineControls();
-    try { await playSound(countdownSound, () => !onlineClient.connected || onlineClient.snapshot?.turn?.id !== turnId, 1.1); }
-    finally { onlineClient.busy = false; }
-    await sendOnlineCommand({ type: 'start-round', turnId, seed: crypto.getRandomValues(new Uint32Array(1))[0] });
+    await sendOnlineCommand({ type: 'start-round', seed: randomSeed() });
 }
 
 async function handleOnlineJoinError(error) {

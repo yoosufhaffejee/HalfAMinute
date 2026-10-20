@@ -1,6 +1,8 @@
 // All online mutations run against the transaction's current snapshot, never a
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
-export const PROTOCOL_VERSION = 2;
+import { startingTeam, recap } from '../gameplay/rules.js?v=3';
+
+export const PROTOCOL_VERSION = 3;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -101,7 +103,8 @@ function reconcile(game, now) {
         game.endedAt = now;
         return;
     }
-    if (game.phase === 'resolving') {
+    if (game.phase === 'finished') return;
+    if (game.phase === 'resolving' || game.phase === 'chaos-choice') {
         game.gameState = 'resumed';
         return;
     }
@@ -205,8 +208,15 @@ export function prune(gameData, actor, now) {
 function completeTurn(game, now, points, chaosSummary = null) {
     const turn = game.turn;
     const correctAnswers = (turn.selectedIndexes || []).map(index => turn.words[index]);
+    const before = Number(game.teams[turn.teamIndex].points) || 0;
     game.teams.forEach((team, index) => { team.points = points[index]; });
-    const event = { id: turn.id, teamIndex: turn.teamIndex, roundNumber: turn.roundNumber, correctAnswers };
+    const event = { id: turn.id, teamIndex: turn.teamIndex, roundNumber: turn.roundNumber, correctAnswers,
+        earned: correctAnswers.length, recap: recap({ teamIndex: turn.teamIndex, earned: correctAnswers.length,
+            before, after: points[turn.teamIndex], effect: chaosSummary || 'No effect' }),
+        pointsBefore: before, pointsAfter: points[turn.teamIndex],
+        clueSeconds: Math.max(0, ((turn.selectingAt || now) - (turn.startedAt || now)) / 1000),
+        scoringSeconds: Math.max(0, ((turn.submittedAt || now) - (turn.selectingAt || now)) / 1000),
+        resolutionSeconds: Math.max(0, (now - (turn.submittedAt || now)) / 1000) };
     if (chaosSummary !== null) event.chaosSummary = chaosSummary;
     game.auditEvents ||= {};
     game.auditEvents[`turn_${turn.id}`] = event;
@@ -215,16 +225,17 @@ function completeTurn(game, now, points, chaosSummary = null) {
     game.chaos.pending = null;
     game.chaos.reveal = false;
     game.chaos.landed = null;
+    const team = game.teams[turn.teamIndex];
+    const index = (team.players || []).findIndex(player => player.playerId === turn.speakerId);
+    if (index >= 0) team.nextSpeakerId = team.players[(index + 1) % team.players.length].playerId;
     if (points.some(value => value >= game.settings.pointsToWin)) {
-        game.phase = game.gameState = 'ended';
+        game.phase = game.gameState = 'finished';
+        game.finishReason = 'winner';
         game.roundActive = false;
         game.endedAt = now;
         return;
     }
 
-    const team = game.teams[turn.teamIndex];
-    const index = (team.players || []).findIndex(player => player.playerId === turn.speakerId);
-    if (index >= 0) team.nextSpeakerId = team.players[(index + 1) % team.players.length].playerId;
     const previousTeam = turn.teamIndex;
     let nextTeam = (previousTeam + 1) % game.teams.length;
     for (let offset = 0; offset < game.teams.length; offset++) {
@@ -247,14 +258,34 @@ export function act(gameData, actor, action, now, rules = {}) {
     const host = game.hostId === actor.playerId;
     const turn = game.turn;
     const speaker = turn?.speakerId === actor.playerId;
-    if (action.type === 'start-game') {
-        if (!host || game.isGameStarted || !canPlay(game.teams.length, members(game).length)) return;
+    if (action.type === 'rematch') {
+        if (!host || game.phase !== 'finished' || action.matchId !== game.matchId) return;
+        game.matchId = (Number(game.matchId) || 1) + 1;
+        game.starterTeam = startingTeam(0, game.teams.length, Number(game.starterTeam) || 0);
+        game.currentTeam = game.starterTeam + 1;
+        game.currentRound = 0;
+        game.isGameStarted = false;
+        game.teams.forEach(team => { team.points = 0; });
+        game.auditEvents = {}; game.auditEvent = null;
+        game.chaos = { teamShields: game.teams.map(() => 0), rerollsUsed: game.teams.map(() => false) };
+        game.finishReason = null; game.endedAt = null;
+        newTurn(game, 'ready');
+        reconcile(game, now);
+    } else if (action.type === 'start-game') {
+        if ((action.matchId ?? 1) !== (game.matchId ?? 1)) return;
+        if (!host || game.phase !== 'ready' || game.isGameStarted || !canPlay(game.teams.length, members(game).length)) return;
         game.isGameStarted = true;
+        game.matchId ||= 1;
+        if (game.starterTeam === undefined) game.starterTeam = Number.isInteger(action.seed)
+            ? startingTeam(action.seed, game.teams.length) : Math.max(0, game.currentTeam - 1);
+        game.currentTeam = game.starterTeam + 1;
         game.currentTeam = Math.max(1, Number(game.currentTeam) || 1);
         newTurn(game, 'idle');
     } else if (action.type === 'end-game') {
-        if (!host) return;
-        game.phase = game.gameState = 'ended';
+        if ((action.matchId ?? 1) !== (game.matchId ?? 1)) return;
+        if (!host || game.phase === 'finished') return;
+        game.phase = game.gameState = 'finished';
+        game.finishReason = 'stopped';
         game.roundActive = false;
         game.endedAt = now;
     } else {
@@ -267,6 +298,7 @@ export function act(gameData, actor, action, now, rules = {}) {
             turn.words = draw.words;
             turn.selectedIndexes = [];
             turn.seed = action.seed;
+            turn.startedAt = now;
             turn.deadline = now + game.settings.numSeconds * 1000;
             Object.assign(game, draw.pools);
             game.words = turn.words;
@@ -276,6 +308,7 @@ export function act(gameData, actor, action, now, rules = {}) {
             if (game.phase !== 'describing') return;
             if (action.type === 'end-round' ? !speaker : now < turn.deadline) return;
             game.phase = 'selecting';
+            turn.selectingAt = now;
             game.roundActive = false;
             game.endRoundEarly = action.type === 'end-round';
         } else if (action.type === 'toggle-answer') {
@@ -286,18 +319,37 @@ export function act(gameData, actor, action, now, rules = {}) {
             turn.selectedIndexes = [...selected].sort((a, b) => a - b);
         } else if (action.type === 'submit-round') {
             if (!speaker || game.phase !== 'selecting') return;
+            turn.submittedAt = now;
             const points = game.teams.map(team => Number(team.points) || 0);
             points[turn.teamIndex] += (turn.selectedIndexes || []).length;
             if (game.settings.chaosMode) {
                 const plan = rules.planChaos?.(game, points);
                 if (!plan) return;
                 turn.resolution = { ...plan, startedAt: now };
-                game.phase = 'resolving';
+                const choice = game.settings.chaosReroll && plan.landing && !game.chaos?.rerollsUsed?.[turn.teamIndex];
+                game.phase = choice ? 'chaos-choice' : 'resolving';
+                if (choice) turn.choiceDeadline = now + 5000;
                 game.chaos ||= {};
                 game.chaos.pending = { id: turn.id };
                 game.chaos.powerups = plan.powerups;
                 game.chaos.reveal = true;
             } else completeTurn(game, now, points);
+        } else if (action.type === 'keep-chaos' || action.type === 'reroll-chaos' || action.type === 'expire-choice') {
+            if (game.phase !== 'chaos-choice') return;
+            if (action.type === 'expire-choice') {
+                if (!host || action.hostEpoch !== game.hostEpoch || now < turn.choiceDeadline) return;
+            } else if (!speaker || now >= turn.choiceDeadline) return;
+            if (action.type === 'reroll-chaos') {
+                if (!game.settings.chaosReroll || game.chaos?.rerollsUsed?.[turn.teamIndex]) return;
+                const rerolled = rules.planChaos?.({ ...game, turn: { ...turn, seed: (turn.seed ^ 0x9E3779B9) >>> 0 } }, turn.resolution.basePoints);
+                if (!rerolled) return;
+                game.chaos.rerollsUsed ||= game.teams.map(() => false);
+                game.chaos.rerollsUsed[turn.teamIndex] = true;
+                turn.resolution = rerolled;
+            }
+            turn.resolution.startedAt = now;
+            game.phase = 'resolving';
+            game.chaos.powerups = turn.resolution.powerups;
         } else if (action.type === 'resolve-chaos') {
             if (!host || action.hostEpoch !== game.hostEpoch || game.phase !== 'resolving'
                 || now < turn.resolution.startedAt + turn.resolution.durationMs) return;
@@ -307,7 +359,7 @@ export function act(gameData, actor, action, now, rules = {}) {
             completeTurn(game, now, result.points, result.summary);
         } else return;
     }
-    if (game.phase !== 'ended') game.gameState = game.phase === 'waiting' ? 'waiting' : 'resumed';
+    if (!['ended', 'finished'].includes(game.phase)) game.gameState = game.phase === 'waiting' ? 'waiting' : 'resumed';
     return game;
 }
 

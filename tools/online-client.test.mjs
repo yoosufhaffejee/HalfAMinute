@@ -7,7 +7,7 @@ const clone = value => value == null ? value : structuredClone(value);
 const flush = async () => { for (let i = 0; i < 12; i++) await Promise.resolve(); };
 const actor = name => ({ playerId: `id-${name}`, playerName: name, connectionId: 'initial' });
 function initial() {
-    return { protocolVersion: 2, dateCreated: 1000000,
+    return { protocolVersion: State.PROTOCOL_VERSION, dateCreated: 1000000,
         settings: { numTeams: 2, numWords: 5, numSeconds: 30, pointsToWin: 20 },
         teams: [{ id: 0, points: 0 }, { id: 1, points: 0 }], numPlayers: 0,
         currentTeam: 1, currentRound: 0, phase: 'waiting', gameState: 'waiting', hostId: '', hostEpoch: 0 };
@@ -271,4 +271,22 @@ test('closing disposes subscriptions and timers and marks only its own connectio
     assert.equal(db.markers.size, 0);
     assert.equal(State.connection(db.game, State.ownsSeat(db.game, actor)).connected, false);
     assert.equal(await a.client.command({ type: 'start-game' }), false);
+});
+
+test('host tick auto-keeps an expired choice and resolves it after speaker/host departure', async t => {
+    const db = new Database(); db.game.settings.chaosMode = db.game.settings.chaosReroll = true;
+    const a = makeClient(t, db, 'A'), b = makeClient(t, db, 'B'), c = makeClient(t, db, 'C'), d = makeClient(t, db, 'D');
+    for (const entry of [a, b, c, d]) {
+        entry.client.rules.planChaos = (_, points) => ({ basePoints: points, points, shields: [0, 0], landing: { type: 'plus1' }, summary: 'Boost', powerups: {}, durationMs: 2200 });
+        await entry.client.connect();
+    }
+    await a.client.command({ type: 'start-game' }); await a.client.command({ type: 'start-round', seed: 1 });
+    await a.client.command({ type: 'end-round' }); await a.client.command({ type: 'toggle-answer', index: 0 });
+    await a.client.command({ type: 'submit-round' }); assert.equal(db.game.phase, 'chaos-choice');
+    await a.client.close(true); await flush();
+    db.now += 4999; await c.client.tick(); assert.equal(db.game.phase, 'chaos-choice');
+    db.now++; await c.client.tick(); await flush(); assert.equal(db.game.phase, 'resolving');
+    db.now += 2200; await c.client.tick(); await flush();
+    assert.equal(db.game.teams[0].points, 1); assert.equal(db.game.phase, 'waiting');
+    assert.equal(Object.keys(db.game.auditEvents).length, 1);
 });

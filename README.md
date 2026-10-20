@@ -14,6 +14,10 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - Configurable team count, points-to-win, round time, and words per round
 - Round history/audit table (mobile-friendly vertical layout)
 - Anti-repetition behavior with recent-word suppression
+- Short / Standard / Long quick setup, with all existing advanced settings available
+- Chaos: capped bombs, shields, fast outcomes, and an optional once-per-team reroll
+- Results, earned/Chaos point breakdown, match-summary download, and rematches with rotating starters
+- Persistent mute, volume, and device/reduced/full motion preferences
 
 ## Project Files
 
@@ -21,6 +25,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - `script.js`: core game logic, online sync, prompts, gameplay state
 - `online/state.js`: transactional lobby membership, turn phases, host election, and speaker queues
 - `online/client.js`: Firebase connection lifecycle, presence, reconnects, and turn commands
+- `gameplay/rules.js`: deterministic word decks, presets, starting order, pacing, and recap helpers
 - `data.js`: categories, themes, word metadata
 - `style.css`: styling
 - `tools/validate-data.js`: word-data validation and quality audit utility
@@ -70,7 +75,7 @@ Important:
 - Disconnected seats have a 90-second reconnect grace period. A server-connected tab is not removed solely for delayed heartbeats.
 - Refresh restores the same player, team, turn, and answer selection using per-tab session storage.
 - `Leave Lobby` explicitly releases a seat; `Rejoin Lobby` can restore a lost or superseded connection.
-- Online protocol version 2 requires a newly created lobby; old-version lobbies show a message asking the host to recreate them.
+- Online protocol version 3 requires a newly created lobby; old-version lobbies show a message asking the host to recreate them.
 - Each team rotates its own speaker queue. Empty teams are skipped safely without changing the player-count eligibility rules.
 
 ## AI Mode
@@ -94,6 +99,31 @@ Important:
 5. Team gains one point per correct answer.
 6. Speaker rotates and next team/round continues.
 7. First team to `Points to Win` wins.
+
+The initial starter is randomized. Rematches keep the roster/settings and rotate the starter; immediate victory on reaching the target is unchanged. Scores and Chaos resources reset for the new match identity. Word exhaustion history carries across rematches for the same group.
+
+## Chaos rules
+
+- The map changes each turn. Start, the tile before the finish, and a winning earned move have no effect. Resolve one landing effect, without chaining. A zero-correct turn can still land on an effect.
+- Boosts add 1 or 2; slips lose 1 or 2; bombs lose **up to 3 points**, with a floor of zero. Effect weights remain unchanged.
+- One shield blocks a landing penalty or incoming steal loss, then is consumed. Shields do not stack. A blocked steal still gives the stealing team its +1; the victim keeps their point. Steals target the leading opponent, with seeded random ties.
+- Empty resolutions take 650 ms; effect resolutions take 2.2 seconds; winning moves take 350 ms. Reduced motion shows the outcome immediately while the online authoritative deadline still applies.
+- The **optional reroll prototype**, off by default, offers one reroll per team per match after an eligible effect. The speaker chooses within five seconds, must accept the new result, and cannot reroll again that match. No choice defaults to keep; the current host recovers the timeout if the speaker disconnects/leaves.
+
+Word dealing tracks normalized answers and separate easy/hard exhaustion cycles. A difficulty reshuffles only after its own pool runs out; the other difficulty's deck history stays intact. No card repeats the same normalized answer. Narrow packs may repeat after exhaustion. The explicit match-summary download includes counts, scores, effects, and phase timings, with no player names or answer text. Online phase timings live in the normal shared match history; no separate analytics service is used.
+
+See [GAMEPLAY_CHANGES.md](GAMEPLAY_CHANGES.md) for the implementation and verification notes, and [GAMEPLAY_FUN_REPORT.md](GAMEPLAY_FUN_REPORT.md) for the original prioritized assessment.
+
+## Gameplay regression checks
+
+```powershell
+node --test tools/gameplay.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
+node tools/test-word-data.js
+node tools/analyze-starting-order.mjs
+node tools/analyze-chaos.cjs 5000
+```
+
+The analysis scripts are isolated simulations and never connect to Firebase. They write `reports/starting-order-results.json` and `reports/chaos-current-results.json`. The earlier `chaos-balance-results.json` preserves the pre-change report baseline. Simulation is not a substitute for group playtesting.
 
 ## Lobby Rules and Start Eligibility
 

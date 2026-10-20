@@ -1,0 +1,141 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import * as Rules from '../gameplay/rules.js';
+import * as State from '../online/state.js';
+
+const entries = (count, type) => Array.from({ length: count }, (_, i) => ({ word: `${type} ${i}`, difficulty: type }));
+test('dealing is deterministic, normalized and does not mutate the saved deck', () => {
+    const objects = [...entries(12, 'easy'), ...entries(8, 'hard'), { word: 'The EASY-0', difficulty: 'hard' }];
+    const deck = { easy: ['easy1'], hard: [] }, before = structuredClone(deck);
+    assert.deepEqual(Rules.drawWords(objects, deck, 'normal', 15, 9), Rules.drawWords(objects, deck, 'normal', 15, 9));
+    const result = Rules.drawWords(objects, deck, 'normal', 15, 9);
+    assert.equal(new Set(result.words.map(Rules.answerKey)).size, 15);
+    assert.deepEqual(deck, before);
+    assert.equal(Rules.answerKey('The Café-au-lait'), Rules.answerKey('Cafe au lait'));
+});
+test('every answer in a difficulty is used before recycling and other difficulty stays consumed', () => {
+    const objects = [...entries(6, 'easy'), ...entries(12, 'hard')];
+    let deck = {}, easy = new Set(), hard = new Set();
+    for (let turn = 0; turn < 4; turn++) {
+        const result = Rules.drawWords(objects, deck, 'normal', 5, turn); deck = result.deck;
+        for (const word of result.words) {
+            const set = word.startsWith('easy') ? easy : hard;
+            if (word.startsWith('hard') || turn < 2) assert.equal(set.has(word), false);
+            set.add(word);
+        }
+        if (turn === 2) assert.deepEqual(result.recycled, ['easy']);
+    }
+    assert.equal(easy.size, 6); assert.equal(hard.size, 8);
+});
+test('small and single-difficulty packs never duplicate a word on a card', () => {
+    for (const difficulty of ['easy', 'hard', 'normal']) {
+        const result = Rules.drawWords([...entries(2, 'easy'), ...entries(3, 'hard')], {}, difficulty, 15, 4);
+        assert.equal(new Set(result.words).size, result.words.length);
+        assert.equal(result.words.length, difficulty === 'normal' ? 5 : difficulty === 'easy' ? 2 : 3);
+    }
+});
+test('a refill remembers the answers already drawn on this card', () => {
+    const objects = entries(5, 'easy');
+    const first = Rules.drawWords(objects, {}, 'easy', 3, 1);
+    const second = Rules.drawWords(objects, first.deck, 'easy', 3, 2);
+    assert.ok(second.recycled.includes('easy'));
+    assert.equal(second.deck.easy.length, 3);
+    assert.ok(second.words.every(word => second.deck.easy.includes(Rules.answerKey(word))));
+});
+test('presets preserve 30 second five-word play and resolutions have a bounded budget', () => {
+    for (const value of Object.values(Rules.PRESETS)) { assert.equal(value.numWords, 5); assert.equal(value.numSeconds, 30); }
+    assert.ok(Rules.resolutionDuration(false) < 1000);
+    assert.ok(Rules.resolutionDuration(true) <= 3000);
+    assert.ok(Rules.resolutionDuration(false, true) < Rules.resolutionDuration(false));
+});
+test('random starters are distributed and rematches give every team the first turn', () => {
+    for (const teams of [2, 3, 4]) {
+        const counts = Array(teams).fill(0);
+        for (let seed = 0; seed < 12000; seed++) counts[Rules.startingTeam(seed, teams)]++;
+        assert.ok(counts.every(n => Math.abs(n / 12000 - 1 / teams) < 0.02));
+        let starter = Rules.startingTeam(19, teams); const seen = new Set();
+        for (let i = 0; i < teams; i++) { seen.add(starter); starter = Rules.startingTeam(0, teams, starter); }
+        assert.equal(seen.size, teams);
+    }
+});
+
+const now = 1000000;
+const actor = name => ({ playerId: name, playerName: name, connectionId: `c-${name}` });
+const rules = {
+    drawWords: () => ({ words: ['One', 'Two'], pools: { deck: { easy: ['one', 'two'], hard: [] } } }),
+    planChaos: (game, points) => ({ actorIndex: game.turn.teamIndex, points: points.map((p, i) => p + (i === game.turn.teamIndex ? 1 : 0)),
+        basePoints: points, shields: [0, 0], summary: 'Boost +1', landing: { type: 'plus1' },
+        powerups: { 1: 'plus1' }, durationMs: 2200, seed: game.turn.seed })
+};
+function act(game, who, type, extras = {}, time = now) {
+    return State.act(game, actor(who), { type, turnId: game.turn?.id, matchId: game.matchId, ...extras }, time, rules);
+}
+function choice() {
+    let game = { protocolVersion: State.PROTOCOL_VERSION, teams: [{ points: 0 }, { points: 0 }], settings: { numTeams: 2, numSeconds: 30,
+        pointsToWin: 20, chaosMode: true, chaosReroll: true }, currentTeam: 1, currentRound: 0, phase: 'waiting', hostEpoch: 0,
+        chaos: { teamShields: [0, 0] } };
+    for (const name of ['A', 'B', 'C', 'D']) game = State.join(game, actor(name), now);
+    game = act(game, 'A', 'start-game'); game = act(game, 'A', 'start-round', { seed: 17 });
+    game = act(game, 'A', 'end-round'); game = act(game, 'A', 'toggle-answer', { index: 0 });
+    return act(game, 'A', 'submit-round');
+}
+test('only the current speaker can choose; reroll is deterministic and spends one team resource', () => {
+    const game = choice(), original = structuredClone(game);
+    assert.equal(game.phase, 'chaos-choice');
+    assert.equal(act(game, 'B', 'reroll-chaos'), undefined);
+    const result = act(game, 'A', 'reroll-chaos');
+    assert.deepEqual(result, act(game, 'A', 'reroll-chaos'));
+    assert.deepEqual(game, original);
+    assert.equal(result.phase, 'resolving'); assert.equal(result.chaos.rerollsUsed[0], true);
+    assert.deepEqual(result.turn.resolution.basePoints, [1, 0]);
+    assert.equal(result.turn.resolution.seed, (17 ^ 0x9E3779B9) >>> 0);
+    assert.equal(act(result, 'A', 'reroll-chaos'), undefined);
+});
+test('choice expiry is host/epoch/deadline guarded and commits the kept result once', () => {
+    const game = choice(), deadline = game.turn.choiceDeadline;
+    assert.equal(act(game, 'A', 'expire-choice', { hostEpoch: game.hostEpoch }, deadline - 1), undefined);
+    assert.equal(act(game, 'B', 'expire-choice', { hostEpoch: game.hostEpoch }, deadline), undefined);
+    assert.equal(act(game, 'A', 'expire-choice', { hostEpoch: game.hostEpoch - 1 }, deadline), undefined);
+    assert.equal(act(game, 'A', 'reroll-chaos', {}, deadline), undefined);
+    let result = act(game, 'A', 'expire-choice', { hostEpoch: game.hostEpoch }, deadline);
+    assert.equal(result.phase, 'resolving'); assert.equal(result.chaos.rerollsUsed, undefined);
+    result = act(result, 'A', 'resolve-chaos', { hostEpoch: result.hostEpoch }, deadline + 2200);
+    assert.equal(result.teams[0].points, 2); assert.equal(Object.keys(result.auditEvents).length, 1);
+});
+test('host/speaker departure and refresh preserve a sealed choice and the new host can recover it', () => {
+    let game = choice(); const deadline = game.turn.choiceDeadline;
+    game = State.join(game, { ...actor('A'), connectionId: 'refresh' }, now + 1);
+    assert.equal(game.phase, 'chaos-choice'); assert.equal(act(game, 'A', 'reroll-chaos'), undefined);
+    game = State.leave(game, { ...actor('A'), connectionId: 'refresh' }, now + 2);
+    assert.equal(game.phase, 'chaos-choice'); assert.equal(game.hostId, 'C');
+    game = act(game, 'C', 'expire-choice', { hostEpoch: game.hostEpoch }, deadline);
+    game = act(game, 'C', 'resolve-chaos', { hostEpoch: game.hostEpoch }, deadline + 2200);
+    assert.equal(game.teams[0].points, 2); assert.equal(game.phase, 'waiting');
+});
+test('rematch creates a new match, rotates the starter, resets resources and rejects stale attempts', () => {
+    let game = choice(); game = act(game, 'A', 'keep-chaos');
+    game = act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch }, now + 2200);
+    game = act(game, 'A', 'end-game'); const original = structuredClone(game), oldTurn = game.turn.id;
+    assert.equal(act(game, 'B', 'rematch'), undefined);
+    const result = act(game, 'A', 'rematch');
+    assert.equal(result.matchId, game.matchId + 1); assert.equal(result.currentTeam, 2);
+    assert.equal(result.phase, 'ready'); assert.equal(result.isGameStarted, false);
+    assert.deepEqual(result.teams.map(t => t.points), [0, 0]);
+    assert.deepEqual(State.members(result).map(p => p.playerId), State.members(game).map(p => p.playerId));
+    assert.deepEqual(result.deck, game.deck); assert.deepEqual(result.chaos.rerollsUsed, [false, false]);
+    assert.deepEqual(result.auditEvents, {}); assert.ok(result.turn.id > oldTurn);
+    assert.deepEqual(game, original);
+    let next = act(result, 'A', 'start-game'); next = act(next, 'A', 'end-game');
+    assert.equal(act(next, 'A', 'rematch', { matchId: game.matchId }), undefined);
+    assert.equal(act(next, 'A', 'end-game', { matchId: game.matchId }), undefined);
+    assert.equal(act(next, 'A', 'submit-round', { turnId: oldTurn }), undefined);
+});
+
+test('a delayed start command cannot start a later rematch', () => {
+    let game = choice(); game = act(game, 'A', 'keep-chaos');
+    game = act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch }, now + 2200);
+    game = act(game, 'A', 'end-game'); const oldMatchId = game.matchId;
+    game = act(game, 'A', 'rematch');
+    assert.equal(act(game, 'A', 'start-game', { matchId: oldMatchId }), undefined);
+    assert.equal(act(game, 'A', 'start-game').phase, 'idle');
+});

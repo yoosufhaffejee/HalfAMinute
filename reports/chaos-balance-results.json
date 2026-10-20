@@ -1,0 +1,365 @@
+{
+  "generatedFor": "Half A Minute gameplay report, 18 October 2026",
+  "source": "script.js current Chaos functions, extracted at run time",
+  "sourceSha256": "c1127f7d801c82d75a0188d9d176a130a209521664db2514c4307d27e9ee4a58",
+  "assumptions": {
+    "wordsPerTurn": 5,
+    "secondsPerClueRound": 30,
+    "assumedSecondsScoringAndHandoff": 6,
+    "independentBinomialWordSuccess": true,
+    "scoreSuccessEqual": 0.6,
+    "startingTeam": 0,
+    "notes": "Synthetic outcomes, not measured player behavior. No early ending, disconnects, word familiarity effects, player decisions, or sound startup time. Current finish immunity, persistent shields, automatic steal targeting and terminal scoring are included."
+  },
+  "eligibleLandingProbabilities": {
+    "none": 0.6,
+    "plus1": 0.136,
+    "plus2": 0.028000000000000004,
+    "minus1": 0.11200000000000002,
+    "minus2": 0.020000000000000004,
+    "bomb": 0.008,
+    "shield": 0.05600000000000001,
+    "steal1": 0.04000000000000001
+  },
+  "shieldStealCheck": {
+    "victimDelta": -1,
+    "blockedByShield": false
+  },
+  "cases": [
+    {
+      "teamCount": 2,
+      "target": 10,
+      "chaos": false,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 6,
+      "p90Turns": 7,
+      "medianEstimatedMinutes": 3.6,
+      "p90EstimatedMinutes": 4.2,
+      "winnerPercent": [
+        69.12,
+        30.88
+      ],
+      "gamesWithUnblockedBombPercent": 0,
+      "unblockedBombHits": 0,
+      "backwardTurnsPercent": 0,
+      "meanResolutionSecondsPerGame": 0,
+      "effectTurnsPercent": 0,
+      "resolutionSeconds": null
+    },
+    {
+      "teamCount": 2,
+      "target": 10,
+      "chaos": true,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 6,
+      "p90Turns": 7,
+      "medianEstimatedMinutes": 4.11,
+      "p90EstimatedMinutes": 4.9,
+      "winnerPercent": [
+        68.16,
+        31.84
+      ],
+      "gamesWithUnblockedBombPercent": 3.36,
+      "unblockedBombHits": 170,
+      "backwardTurnsPercent": 0.48,
+      "meanResolutionSecondsPerGame": 32.33,
+      "effectTurnsPercent": 29.94,
+      "resolutionSeconds": {
+        "median": 5.13,
+        "p95": 7.55,
+        "p99": 7.97,
+        "max": 10.91
+      }
+    },
+    {
+      "teamCount": 2,
+      "target": 20,
+      "chaos": false,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 13,
+      "p90Turns": 14,
+      "medianEstimatedMinutes": 7.8,
+      "p90EstimatedMinutes": 8.4,
+      "winnerPercent": [
+        64.92,
+        35.08
+      ],
+      "gamesWithUnblockedBombPercent": 0,
+      "unblockedBombHits": 0,
+      "backwardTurnsPercent": 0,
+      "meanResolutionSecondsPerGame": 0,
+      "effectTurnsPercent": 0,
+      "resolutionSeconds": null
+    },
+    {
+      "teamCount": 2,
+      "target": 20,
+      "chaos": true,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 12,
+      "p90Turns": 14,
+      "medianEstimatedMinutes": 8.34,
+      "p90EstimatedMinutes": 9.8,
+      "winnerPercent": [
+        62.34,
+        37.66
+      ],
+      "gamesWithUnblockedBombPercent": 7.34,
+      "unblockedBombHits": 385,
+      "backwardTurnsPercent": 0.72,
+      "meanResolutionSecondsPerGame": 68.11,
+      "effectTurnsPercent": 35.02,
+      "resolutionSeconds": {
+        "median": 5.13,
+        "p95": 7.55,
+        "p99": 7.97,
+        "max": 15.11
+      }
+    },
+    {
+      "teamCount": 2,
+      "target": 40,
+      "chaos": false,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 25,
+      "p90Turns": 28,
+      "medianEstimatedMinutes": 15,
+      "p90EstimatedMinutes": 16.8,
+      "winnerPercent": [
+        61.04,
+        38.96
+      ],
+      "gamesWithUnblockedBombPercent": 0,
+      "unblockedBombHits": 0,
+      "backwardTurnsPercent": 0,
+      "meanResolutionSecondsPerGame": 0,
+      "effectTurnsPercent": 0,
+      "resolutionSeconds": null
+    },
+    {
+      "teamCount": 2,
+      "target": 40,
+      "chaos": true,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 25,
+      "p90Turns": 28,
+      "medianEstimatedMinutes": 17.28,
+      "p90EstimatedMinutes": 19.47,
+      "winnerPercent": [
+        58.52,
+        41.48
+      ],
+      "gamesWithUnblockedBombPercent": 14.32,
+      "unblockedBombHits": 784,
+      "backwardTurnsPercent": 0.78,
+      "meanResolutionSecondsPerGame": 141.06,
+      "effectTurnsPercent": 37.6,
+      "resolutionSeconds": {
+        "median": 5.13,
+        "p95": 7.55,
+        "p99": 8.39,
+        "max": 23.09
+      }
+    },
+    {
+      "teamCount": 2,
+      "target": 60,
+      "chaos": false,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 38,
+      "p90Turns": 42,
+      "medianEstimatedMinutes": 22.8,
+      "p90EstimatedMinutes": 25.2,
+      "winnerPercent": [
+        59.18,
+        40.82
+      ],
+      "gamesWithUnblockedBombPercent": 0,
+      "unblockedBombHits": 0,
+      "backwardTurnsPercent": 0,
+      "meanResolutionSecondsPerGame": 0,
+      "effectTurnsPercent": 0,
+      "resolutionSeconds": null
+    },
+    {
+      "teamCount": 2,
+      "target": 60,
+      "chaos": true,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 37,
+      "p90Turns": 42,
+      "medianEstimatedMinutes": 25.87,
+      "p90EstimatedMinutes": 29.06,
+      "winnerPercent": [
+        56.38,
+        43.62
+      ],
+      "gamesWithUnblockedBombPercent": 20.1,
+      "unblockedBombHits": 1128,
+      "backwardTurnsPercent": 0.77,
+      "meanResolutionSecondsPerGame": 215.03,
+      "effectTurnsPercent": 38.48,
+      "resolutionSeconds": {
+        "median": 5.13,
+        "p95": 7.55,
+        "p99": 8.39,
+        "max": 31.49
+      }
+    },
+    {
+      "teamCount": 3,
+      "target": 20,
+      "chaos": false,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 17,
+      "p90Turns": 20,
+      "medianEstimatedMinutes": 10.2,
+      "p90EstimatedMinutes": 12,
+      "winnerPercent": [
+        49.8,
+        30.18,
+        20.02
+      ],
+      "gamesWithUnblockedBombPercent": 0,
+      "unblockedBombHits": 0,
+      "backwardTurnsPercent": 0,
+      "meanResolutionSecondsPerGame": 0,
+      "effectTurnsPercent": 0,
+      "resolutionSeconds": null
+    },
+    {
+      "teamCount": 3,
+      "target": 20,
+      "chaos": true,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 17,
+      "p90Turns": 20,
+      "medianEstimatedMinutes": 11.81,
+      "p90EstimatedMinutes": 13.84,
+      "winnerPercent": [
+        46.88,
+        31.24,
+        21.88
+      ],
+      "gamesWithUnblockedBombPercent": 9.76,
+      "unblockedBombHits": 521,
+      "backwardTurnsPercent": 0.68,
+      "meanResolutionSecondsPerGame": 96.86,
+      "effectTurnsPercent": 36.56,
+      "resolutionSeconds": {
+        "median": 5.13,
+        "p95": 7.55,
+        "p99": 8.39,
+        "max": 15.11
+      }
+    },
+    {
+      "teamCount": 4,
+      "target": 20,
+      "chaos": false,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 22,
+      "p90Turns": 26,
+      "medianEstimatedMinutes": 13.2,
+      "p90EstimatedMinutes": 15.6,
+      "winnerPercent": [
+        42.72,
+        26.4,
+        18.1,
+        12.78
+      ],
+      "gamesWithUnblockedBombPercent": 0,
+      "unblockedBombHits": 0,
+      "backwardTurnsPercent": 0,
+      "meanResolutionSecondsPerGame": 0,
+      "effectTurnsPercent": 0,
+      "resolutionSeconds": null
+    },
+    {
+      "teamCount": 4,
+      "target": 20,
+      "chaos": true,
+      "skillModel": "all teams 0.60",
+      "sampleCount": 5000,
+      "medianTurns": 22,
+      "p90Turns": 25,
+      "medianEstimatedMinutes": 15.22,
+      "p90EstimatedMinutes": 17.48,
+      "winnerPercent": [
+        39.54,
+        25.84,
+        19.52,
+        15.1
+      ],
+      "gamesWithUnblockedBombPercent": 13.4,
+      "unblockedBombHits": 709,
+      "backwardTurnsPercent": 0.69,
+      "meanResolutionSecondsPerGame": 124.3,
+      "effectTurnsPercent": 37.14,
+      "resolutionSeconds": {
+        "median": 5.13,
+        "p95": 7.55,
+        "p99": 8.39,
+        "max": 15.11
+      }
+    },
+    {
+      "teamCount": 2,
+      "target": 20,
+      "chaos": false,
+      "skillModel": "first team 0.70, other teams 0.55",
+      "sampleCount": 5000,
+      "medianTurns": 11,
+      "p90Turns": 13,
+      "medianEstimatedMinutes": 6.6,
+      "p90EstimatedMinutes": 7.8,
+      "winnerPercent": [
+        94.5,
+        5.5
+      ],
+      "gamesWithUnblockedBombPercent": 0,
+      "unblockedBombHits": 0,
+      "backwardTurnsPercent": 0,
+      "meanResolutionSecondsPerGame": 0,
+      "effectTurnsPercent": 0,
+      "resolutionSeconds": null
+    },
+    {
+      "teamCount": 2,
+      "target": 20,
+      "chaos": true,
+      "skillModel": "first team 0.70, other teams 0.55",
+      "sampleCount": 5000,
+      "medianTurns": 11,
+      "p90Turns": 13,
+      "medianEstimatedMinutes": 7.63,
+      "p90EstimatedMinutes": 9.05,
+      "winnerPercent": [
+        90.26,
+        9.74
+      ],
+      "gamesWithUnblockedBombPercent": 6.5,
+      "unblockedBombHits": 340,
+      "backwardTurnsPercent": 0.64,
+      "meanResolutionSecondsPerGame": 62.49,
+      "effectTurnsPercent": 35.07,
+      "resolutionSeconds": {
+        "median": 5.13,
+        "p95": 7.97,
+        "p99": 8.39,
+        "max": 14.69
+      }
+    }
+  ]
+}

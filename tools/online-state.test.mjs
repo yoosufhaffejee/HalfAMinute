@@ -289,16 +289,16 @@ test('same host with an obsolete host epoch cannot finish a Chaos turn', () => {
     assert.equal(act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch - 1 }, NOW + 3000), undefined);
 });
 
-test('winning is terminal and cannot be followed by a resumed write or a join', () => {
+test('winning seals scoring while keeping the roster connected for a new match', () => {
     let game = selection(started()); game.teams[0].points = 19;
     game = act(game, 'A', 'toggle-answer', { index: 0 });
     game = act(game, 'A', 'submit-round');
-    assert.equal(game.phase, 'ended');
-    assert.equal(game.gameState, 'ended');
+    assert.equal(game.phase, 'finished');
+    assert.equal(game.gameState, 'finished');
     assert.ok(game.settings);
     for (const type of ['start-game', 'start-round', 'end-game', 'submit-round']) assert.equal(act(game, 'A', type), undefined);
-    assert.equal(State.join(game, actor('C'), NOW), undefined);
-    assert.equal(State.heartbeat(game, actor('A'), NOW), undefined);
+    assert.equal(State.join(game, actor('C'), NOW).phase, 'finished');
+    assert.equal(State.heartbeat(game, actor('A'), NOW).phase, 'finished');
 });
 
 test('null snapshots and old protocol lobbies are never resurrected by a reducer', () => {

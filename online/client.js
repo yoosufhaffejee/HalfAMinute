@@ -1,4 +1,4 @@
-import * as State from './state.js';
+import * as State from './state.js?v=3';
 
 // Firebase is injected so connection loss, retries and delayed commits can be
 // exercised without touching a production database.
@@ -129,7 +129,7 @@ export class OnlineClient {
         if (this.busy || !this.connected || this.closed) return false;
         // Capture the rendered turn before any network delay. A stale click may
         // never apply to a subsequent turn, even when the same person speaks.
-        const request = { turnId: this.snapshot?.turn?.id, ...action };
+        const request = { turnId: this.snapshot?.turn?.id, matchId: this.snapshot?.matchId, ...action };
         const actor = { ...this.actor };
         this.busy = true;
         this.onStatus?.();
@@ -165,6 +165,9 @@ export class OnlineClient {
         const { phase, turn, hostId, hostEpoch } = this.snapshot;
         let action;
         if (phase === 'describing' && this.serverNow() >= turn.deadline) action = { type: 'expire-round', turnId: turn.id };
+        if (phase === 'chaos-choice' && hostId === this.actor.playerId && this.serverNow() >= turn.choiceDeadline) {
+            action = { type: 'expire-choice', turnId: turn.id, hostEpoch };
+        }
         if (phase === 'resolving' && hostId === this.actor.playerId
             && this.serverNow() >= turn.resolution.startedAt + turn.resolution.durationMs) {
             action = { type: 'resolve-chaos', turnId: turn.id, hostEpoch };
