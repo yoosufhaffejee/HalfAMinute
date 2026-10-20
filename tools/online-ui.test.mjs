@@ -255,6 +255,69 @@ test('a winning Chaos move skips effects and uses a short celebration budget', (
     assert.equal(plan.landing, null); assert.equal(plan.points[0], 22); assert.equal(plan.durationMs, 350);
 });
 
+test('Chaos frames move first, reveal the landing, then apply the effect without changing the plan', () => {
+    const h = ui();
+    h.run(`teams=[{points:2},{points:7}];pointsToWin=20;preferences.motion='full';
+        globalThis.plan={actorIndex:0,moveCount:3,basePoints:[5,7],points:[2,7],shields:[0,0],
+        powerups:{5:'bomb'},landing:{teamIndex:0,tileIndex:5,type:'bomb'},actorDelta:-3,victimDelta:0,
+        effect:{type:'bomb',actorDelta:-3},durationMs:2200};renderResolutionFrame(plan,0)`);
+    const saved = h.run('JSON.stringify(plan)');
+    assert.equal(h.run('teams[0].points'), 2);
+    assert.equal(h.run('powerupRevealVisible'), false);
+    assert.equal(h.el('chaosMessage').textContent, 'Team 1 moves 3 spaces…');
+    h.run('renderResolutionFrame(plan,1000)');
+    assert.equal(h.run('teams[0].points'), 5);
+    assert.equal(h.run('powerupRevealVisible'), true);
+    assert.equal(h.el('chaosStep').textContent, '2 · Land');
+    h.run('renderResolutionFrame(plan,1700)');
+    assert.equal(h.el('chaosStep').textContent, '3 · Chaos!');
+    assert.match(h.el('chaosMessage').textContent, /Bomb!/);
+    h.run('renderResolutionFrame(plan,2200)');
+    assert.equal(h.run('teams[0].points'), 2);
+    assert.equal(h.run('JSON.stringify(plan)'), saved);
+    h.run('preferences.motion="reduced";onlineBoardSignature="";renderResolutionFrame(plan,0)');
+    assert.equal(h.run('teams[0].points'), 2);
+    assert.equal(h.el('chaosStep').textContent, 'Result');
+    assert.match(h.el('chaosMessage').textContent, /Bomb! Back 3 spaces/);
+});
+
+test('local submission shows the board before running Chaos and clears its presentation afterward', async () => {
+    const h = ui();
+    h.run(`teams=[{points:0},{points:0}];currentTeam=1;currentRound=0;isChaosMode=true;isRoundActive=false;
+        btnNextRound.hidden=false;btnAnswers.hidden=false;document.querySelectorAll('.scoreButton')[0].hidden=false;
+        setScoreButtonSelected(document.querySelectorAll('.scoreButton')[0],true);
+        runChaosResolutionLocally=async()=>{metrics.wordsHidden=btnAnswers.hidden;metrics.wordsInFocus=areWordsInFocusPhase();
+        setChaosPresentation('moving','Moving');return {resolutionSummary:{type:null}}}`);
+    await h.run('nextRound()');
+    assert.equal(h.metrics.wordsHidden, true);
+    assert.equal(h.metrics.wordsInFocus, false);
+    assert.equal(h.el('chaosResolution').hidden, true);
+    assert.equal(h.el('game').classList.contains('resolving-board'), false);
+    assert.equal(h.el('startRoundButton').hidden, false);
+});
+
+test('online Chaos owns board focus and resets visual state after the authoritative result', () => {
+    let data = act(act(game(), 'start-round', { seed: 99 }), 'end-round');
+    data.settings.chaosMode = true;
+    const h = ui(); h.mount(data);
+    data = OnlineState.act(data, actor('A'), { type:'submit-round',turnId:data.turn.id }, now,
+        {planChaos:(g,points)=>h.run(`planOnlineChaos(${JSON.stringify(g)},${JSON.stringify(points)})`)});
+    h.apply(data);
+    assert.equal(h.run('areWordsInFocusPhase()'), false);
+    assert.equal(h.el('chaosResolution').hidden, false);
+    data = OnlineState.act(data, actor('A'), {type:'resolve-chaos',turnId:data.turn.id,hostEpoch:data.hostEpoch}, now + data.turn.resolution.durationMs);
+    h.apply(data);
+    assert.equal(h.el('chaosResolution').hidden, true);
+    assert.equal(h.run('chaosVisual'), null);
+});
+
+test('Classic and Chaos both explain the randomized first team', () => {
+    for (const chaos of [false,true]) {
+        const data=game();data.settings.chaosMode=chaos;const h=ui();h.mount(data);
+        assert.match(h.el('roleInstruction').textContent, new RegExp(`Team ${data.starterTeam+1} was drawn to start`));
+    }
+});
+
 test('a finished match renders results without closing the connection or reloading', () => {
     let data = act(act(game(), 'start-round', { seed: 3 }), 'end-round');
     data.teams[0].points = 19; data = act(data, 'toggle-answer', { index: 0 }); data = act(data, 'submit-round');

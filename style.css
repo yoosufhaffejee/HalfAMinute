@@ -117,14 +117,15 @@ body.layout-game .app-actions { justify-content: flex-end; }
 #game.match-finished #roundControls { display: none; }
 #game.match-finished #roundControls:has(#rejoinOnlineGame:not([hidden])) { display: block; }
 .choice-card { background: #fff7e6; border: 1px solid #b7791f; }
-.board-cell { position: relative; height: 72px; min-width: 0; padding: 3px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; }
+.board-cell { position: relative; display: flex; flex-direction: column; align-items: center; gap: 3px; min-height: 72px; min-width: 0; padding: 3px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 6px; overflow: hidden; }
 .cell-number { display: block; font-size: .8rem; font-weight: 600; color: #334155; }
 .board-tokens { display: flex; flex-wrap: wrap; gap: 2px; justify-content: center; }
-.team-token { width: 19px; height: 19px; border-radius: 50%; color: #fff; font-size: 12px; line-height: 19px; font-weight: 700; }
-.board-powerup { position: absolute; left: 50%; bottom: 1px; transform: translateX(-50%); font-size: 12px; line-height: 1; font-weight: 700; padding: 2px 4px; border-radius: 999px; border: 1px solid rgba(0,0,0,.15); background: #fff; color: #111; z-index: 3; pointer-events: none; white-space: nowrap; }
+.team-token { position: relative; z-index: 4; width: 19px; height: 19px; flex-shrink: 0; border-radius: 50%; color: #fff; font-size: 12px; line-height: 19px; font-weight: 700; }
+.board-powerup, .chaos-legend-badge { font-size: 12px; line-height: 1; font-weight: 700; padding: 3px 6px; border-radius: 999px; border: 1px solid rgba(0,0,0,.15); color: #111; white-space: nowrap; }
+.board-powerup { position: relative; margin-top: auto; background: #fff; z-index: 3; pointer-events: none; }
 .board-powerup-landed { animation: landed-powerup-pulse .8s ease-in-out infinite alternate; }
 .board-cell-landed-powerup { box-shadow: inset 0 0 0 2px #b7791f; }
-@keyframes landed-powerup-pulse { from { transform: translateX(-50%) scale(1); } to { transform: translateX(-50%) scale(1.1); } }
+@keyframes landed-powerup-pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
 .powerup-plus { background: #d4f5dd; }
 .powerup-plus-rare { background: #b7ebff; }
 .powerup-minus { background: #ffe3cc; }
@@ -144,7 +145,17 @@ body.layout-game .app-actions { justify-content: flex-end; }
 .chaos-legend-title { font-weight: 700; margin-bottom: 8px; color: #6a4303; }
 .chaos-legend-list { display: grid; gap: 8px; }
 .chaos-legend-item { display: flex; align-items: flex-start; gap: 8px; }
-.chaos-legend-badge { position: static; transform: none; min-width: 34px; text-align: center; flex-shrink: 0; }
+.chaos-legend-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; min-height: 22px; text-align: center; flex-shrink: 0; }
+.chaos-legend-details { min-width: 0; overflow-wrap: anywhere; }
+.resolution-status { order: 7; padding: 16px; border: 1px solid #e2a93d; border-radius: 12px; background: #fff8e8; }
+.resolution-step { margin: 0 0 4px; font-size: .8rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #7a4a00; }
+#chaosMessage { margin: 0; font-size: 1.25rem; font-weight: 700; }
+.resolution-status[data-tone='negative'] { border-color: #dc9c9c; background: #fff1f2; }
+.resolving-board .board-cell { overflow: visible; }
+body.chaos-active .board-cell-trail { background: #fff0b7; }
+.board-cell-moving { outline: 2px solid #b7791f; outline-offset: -2px; }
+.board-cell-effect { animation: chaos-impact .5s ease-in-out 2; }
+@keyframes chaos-impact { 50% { box-shadow: 0 0 0 4px #e2a93d80; transform: scale(1.04); } }
 .chaos-legend-label { font-weight: 700; font-size: .9rem; color: #3a2a12; }
 .chaos-legend-description { font-size: .85rem; color: #6b5a42; }
 body.chaos-active .board-cell { border-color: #f0cf94; background: #f9f4e7; }

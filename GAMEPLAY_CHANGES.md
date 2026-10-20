@@ -2,6 +2,16 @@
 
 Implemented the high-priority gameplay work and requested follow-ups from the fun report. Existing online eligibility exceptions, team assignment, word visibility, reconnect protection, and team/speaker rotation remain in place. No Firebase firewall, origin, or access rules were changed.
 
+## Chaos presentation and starting-team clarity
+
+The missing local animation was a real visibility bug: resolution began while the answer controls still kept the board hidden. Local submission now closes the cards before resolution, and both local/online resolution and reroll choices own board focus. Tokens visibly hop between positions, a trail marks progress, the map is revealed on landing, and a landing highlight and impact pulse accompany the effect. A short **Move → Land → Chaos → Result** indicator explains the sequence; a safe landing skips the effect steps. The existing 650/2200/350 ms resolution budgets and all scoring/authority rules are unchanged. Reduced motion settles directly and keeps a textual explanation.
+
+The legend was already corrected by the consolidated stylesheet, but its icons still shared the board marker class. They now have independent layout styles. Board markers occupy their own space within each tile, and cells grow when stacked tokens require it, preventing marker/token overlaps. Fresh Classic and Chaos games still draw a random starting team; rematches still rotate it. The menu and opening turn now explain that behavior.
+
+Verification: **80 automated tests pass**, covering staged score interpolation, delayed effect reveal, board focus before local resolution, online phase cleanup, reduced motion, and starter copy for both modes. Real local browser turns showed actual non-identity token transforms, all four visual stages, a visible board with hidden cards throughout resolution, and exact final scores. An additional reduced-motion turn settled without token transforms and showed its steal result. Expanded legend checks passed at 320, 390, 768, and 1384 pixels with all seven icons inside their rows and no horizontal overflow. No browser warnings/errors were recorded. Online behavior was checked through the reducer/client/UI tests; this change did not create live Firebase lobbies.
+
+Evidence: [movement](reports/chaos-moving.png), [landing reveal](reports/chaos-landing.png), [effect](reports/chaos-effect.png), [legend](reports/chaos-legend-fixed.png), [browser frame and layout measurements](reports/chaos-animation-frames.json).
+
 ## End-of-match summary polish
 
 Results now have a single score list ordered by final points, aligned score columns, team-colored tokens, and a subtle winner highlight. Classic omits the duplicate earned total; Chaos adds a secondary breakdown only when an effect changed the total. Empty best-round highlights are omitted. An early end still says **Match ended**, without declaring a winner before the target is reached.

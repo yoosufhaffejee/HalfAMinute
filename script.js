@@ -69,6 +69,7 @@ let onlineGameState = "waiting";
 let roundPowerups = {};
 let powerupRevealVisible = false;
 let landedPowerupPreview = null;
+let chaosVisual = null;
 let teamShields = [];
 let isResolvingChaosMove = false;
 let localDeck = {};
@@ -368,7 +369,7 @@ async function returnToSetup() {
         try { await onlineClient.close(true); } catch { alert('Unable to leave yet. Check your connection and retry.'); return; }
         saveOnlineSession(null); onlineClient = null; isOnlineGame = false; gameCode = '';
     }
-    clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds();
+    clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds(); clearChaosPresentation();
     hideElement(game); showElement(menu); showElement(btnSettings); showElement(btnOnline); showElement(btnAI); showElement(btnRules); hideElement(btnHistory);
     showElement(txtLobbyMenu); hideElement(txtLobbyPlayers);
     isAiGame = false; localStarter = null; localDeck = {}; setLayoutMode('menu'); updateSetupSummary();
@@ -676,7 +677,7 @@ function renderChaosLegend() {
         item.className = "chaos-legend-item";
 
         const badge = document.createElement("span");
-        badge.className = `chaos-legend-badge board-powerup ${powerupConfig.cssClass}`;
+        badge.className = `chaos-legend-badge ${powerupConfig.cssClass}`;
         badge.textContent = powerupConfig.label;
 
         const details = document.createElement("div");
@@ -748,6 +749,7 @@ function isNarrowViewport() {
 }
 
 function areWordsInFocusPhase() {
+    if (isResolvingChaosMove || (isOnlineGame && ['resolving', 'chaos-choice'].includes(onlineGameState))) return false;
     const hasTrainingHintsVisible = Boolean(currentWordsContainer && !currentWordsContainer.hidden);
     const answersVisible = Boolean(btnAnswers && !btnAnswers.hidden);
     const hasVisibleWordButtons = Array.from(document.getElementsByClassName("scoreButton"))
@@ -1748,6 +1750,8 @@ async function startGame({ rematch = false } = {}) {
     btnStartRound.hidden = false; btnEndGame.hidden = false;
     hideRoundInputUI();
     updateSelectionSummary();
+    clearChaosPresentation();
+    showRecap(rematch ? `Team ${currentTeam} starts this rematch.` : `Team ${currentTeam} was drawn to start.`);
 }
 
 function getEasyWords(selectedObjects) {
@@ -1877,6 +1881,7 @@ async function runChaosResolutionLocally({ teamIndexForRound, selectedPoints, ro
             selectedIndexes: Array.from({ length: selectedPoints }, (_, i) => i) } };
     let plan = planOnlineChaos(data, basePoints);
     if (document.getElementById('chkReroll').checked && plan.landing && !localRerollsUsed[teamIndexForRound]) {
+        showChaosChoicePreview(plan);
         if (await offerLocalChaosChoice(plan.landing.type)) {
             localRerollsUsed[teamIndexForRound] = true;
             data.turn.seed = (data.turn.seed ^ 0x9E3779B9) >>> 0;
@@ -1910,6 +1915,9 @@ async function nextRound() {
     btnEndGame.hidden = true;
     try {
         if (isChaosMode) {
+            hideRoundInputUI();
+            showRecap('');
+            document.getElementById('roleInstruction').textContent = `Watch Team ${teamIndexForRound + 1} on the board.`;
             const result = await runChaosResolutionLocally({ teamIndexForRound, selectedPoints: correctAnswers.length, roundNumberForRound });
             chaosEffect = result.resolutionSummary;
             chaosSummary = formatChaosSummaryForAudit(result.resolutionSummary);
@@ -1928,7 +1936,7 @@ async function nextRound() {
         updateBoard(); updateCurrentTeamIndicator(); updateTeamScores();
         if (teams.some(team => team.points >= pointsToWin)) { renderMatchResults(); return; }
         btnStartRound.hidden = false; btnEndGame.hidden = false;
-    } finally { isResolvingChaosMove = false; setNextRoundBusyState(false); updateMobileGameFocus(); }
+    } finally { clearChaosPresentation(); isResolvingChaosMove = false; setNextRoundBusyState(false); updateMobileGameFocus(); }
 }
 
 async function endGame() {
@@ -2045,11 +2053,23 @@ function isMobileDevice() {
     return mobileKeywords.some(keyword => userAgent.includes(keyword));
 }
 
-function updateBoard() {
-    const cells = Array.from(document.getElementById('gameBoard').children);
+function updateBoard({ animateMoves = false } = {}) {
+    const board = document.getElementById('gameBoard');
+    const previous = new Map(Array.from(board.querySelectorAll('.team-token')).map(token => [token.dataset.team, token.getBoundingClientRect()]));
+    const cells = Array.from(board.children);
     cells.forEach((cell, position) => {
         cell.innerHTML = '';
-        cell.classList.remove('board-cell-powerup', 'board-cell-landed-powerup');
+        cell.classList.remove('board-cell-powerup', 'board-cell-landed-powerup', 'board-cell-trail', 'board-cell-moving', 'board-cell-effect');
+        if (chaosVisual) {
+            const current = Math.min(teams[chaosVisual.actorIndex].points, pointsToWin);
+            const from = chaosVisual.from;
+            if (position >= Math.min(from, current) && position <= Math.max(from, current)) cell.classList.add('board-cell-trail');
+            if (position === current) cell.classList.add('board-cell-moving');
+            if (chaosVisual.phase !== 'moving' && position === chaosVisual.landing?.tileIndex) {
+                cell.classList.add('board-cell-landed-powerup');
+                if (chaosVisual.phase === 'effect') cell.classList.add('board-cell-effect');
+            }
+        }
         const number = document.createElement('span'); number.className = 'cell-number';
         number.textContent = position === 0 ? 'Start' : position === pointsToWin ? 'Finish' : String(position);
         cell.appendChild(number);
@@ -2058,16 +2078,26 @@ function updateBoard() {
         const tokens = document.createElement('div'); tokens.className = 'board-tokens';
         occupying.forEach(({ index }) => {
             const token = document.createElement('span'); token.className = 'team-token';
+            token.dataset.team = String(index);
             token.style.backgroundColor = getTeamColor(index); token.textContent = String(index + 1);
             tokens.appendChild(token);
         });
         cell.appendChild(tokens);
+        for (const token of tokens.children) {
+            const before = previous.get(token.dataset.team);
+            if (!animateMoves || reducedMotion() || !before || typeof token.animate !== 'function') continue;
+            const after = token.getBoundingClientRect(), x = before.left - after.left, y = before.top - after.top;
+            if (Math.abs(x) + Math.abs(y) < 1) continue;
+            token.animate([{ transform: `translate(${x}px, ${y}px) scale(1)` },
+                { transform: `translate(${x * .45}px, ${y * .45 - 9}px) scale(1.12)`, offset: .55 },
+                { transform: 'translate(0, 0) scale(1)' }], { duration: 170, easing: 'ease-out' });
+        }
         const type = isChaosMode && powerupRevealVisible && position > 0 && position < pointsToWin - 1 ? sanitizeChaosPowerupType(roundPowerups[position]) : null;
         if (type) {
             const badge = document.createElement('span'); badge.className = `board-powerup ${CHAOS_POWERUP_TYPES[type].cssClass}`;
             badge.textContent = CHAOS_POWERUP_TYPES[type].label;
             cell.appendChild(badge); cell.classList.add('board-cell-powerup');
-            if (landedPowerupPreview?.tileIndex === position) cell.classList.add('board-cell-landed-powerup');
+            if (chaosVisual?.phase !== 'moving' && landedPowerupPreview?.tileIndex === position) cell.classList.add('board-cell-landed-powerup');
         }
     });
     updateTeamScores();
@@ -2533,26 +2563,62 @@ function renderOnlineClock() {
 
 function renderResolutionFrame(plan, elapsed) {
     const actorIndex = plan.actorIndex ?? plan.landing?.teamIndex ?? (currentTeam - 1);
-    const duration = plan.durationMs;
-    const baseRatio = reducedMotion() ? 1 : Math.min(1, Math.max(0, elapsed / (duration * 0.35)));
-    const effectRatio = reducedMotion() ? 1 : Math.min(1, Math.max(0, (elapsed - duration * 0.6) / (duration * 0.3)));
+    const duration = plan.durationMs, reduced = reducedMotion();
+    const movementEnd = plan.landing ? .4 : .75;
+    const baseRatio = reduced ? 1 : Math.min(1, Math.max(0, elapsed / (duration * movementEnd)));
+    const effectRatio = reduced ? 1 : Math.min(1, Math.max(0, (elapsed - duration * .65) / (duration * .25)));
+    const phase = reduced || elapsed >= duration * .9 ? 'complete' : baseRatio < 1 ? 'moving'
+        : !plan.landing ? 'complete' : elapsed < duration * .65 ? 'landing' : 'effect';
     const display = [...plan.basePoints];
     display[actorIndex] = plan.basePoints[actorIndex] - plan.moveCount + Math.floor(plan.moveCount * baseRatio)
         + Math.sign(plan.actorDelta) * Math.floor(Math.abs(plan.actorDelta) * effectRatio);
     if (Number.isInteger(plan.victimTeamIndex)) display[plan.victimTeamIndex] += Math.sign(plan.victimDelta) * Math.floor(Math.abs(plan.victimDelta) * effectRatio);
-    const signature = JSON.stringify([display, effectRatio === 1, plan.landing]);
+    showRecap('');
+    const signature = JSON.stringify([display, phase, effectRatio === 1, plan.landing]);
     if (signature === onlineBoardSignature) return;
     onlineBoardSignature = signature;
     teams.forEach((team, index) => { team.points = display[index]; });
     if (effectRatio === 1) teamShields = [...plan.shields];
+    chaosVisual = { actorIndex, phase, from: plan.basePoints[actorIndex] - plan.moveCount, landing: plan.landing };
+    roundPowerups = plan.powerups; powerupRevealVisible = phase !== 'moving'; landedPowerupPreview = phase === 'moving' ? null : plan.landing;
+    const effectName = CHAOS_POWERUP_TYPES[plan.landing?.type]?.legendLabel;
+    const team = `Team ${actorIndex + 1}`;
+    const outcome = Gameplay.effectMessage(plan.effect);
+    const message = phase === 'moving' ? (plan.moveCount ? `${team} moves ${plan.moveCount} ${plan.moveCount === 1 ? 'space' : 'spaces'}…` : `${team} stays on this space…`)
+        : phase === 'landing' ? `${effectName}!` : phase === 'effect' ? Gameplay.effectMessage(plan.effect)
+        : display[actorIndex] >= pointsToWin ? `${team} reached the finish!`
+        : `${outcome ? outcome + ' ' : ''}${team} now has ${display[actorIndex]} ${display[actorIndex] === 1 ? 'point' : 'points'}.${plan.landing ? '' : ' Safe landing!'}`;
+    setChaosPresentation(phase, message, ['effect', 'complete'].includes(phase) ? (plan.actorDelta < 0 ? 'negative' : 'positive') : 'neutral');
+    updateBoard({ animateMoves: true });
+}
+
+function setChaosPresentation(phase, message, tone = 'neutral') {
+    game.classList.add('resolving-board');
+    const panel = document.getElementById('chaosResolution'); panel.hidden = false; panel.dataset.tone = tone;
+    document.getElementById('chaosStep').textContent = ({ moving: '1 · Move', landing: '2 · Land', effect: '3 · Chaos!', complete: 'Result', choice: 'Choose your effect' })[phase];
+    document.getElementById('chaosMessage').textContent = message;
+}
+
+function showChaosChoicePreview(plan) {
+    const actorIndex = plan.actorIndex;
+    chaosVisual = { actorIndex, phase: 'choice', from: plan.basePoints[actorIndex] - plan.moveCount, landing: plan.landing };
     roundPowerups = plan.powerups; powerupRevealVisible = true; landedPowerupPreview = plan.landing;
+    setChaosPresentation('choice', `Team ${actorIndex + 1}'s landing: ${CHAOS_POWERUP_TYPES[plan.landing.type].legendLabel}`);
     updateBoard();
-    showRecap(Gameplay.recap({ teamIndex: actorIndex, earned: plan.moveCount, effect: plan.effect }));
+}
+
+function clearChaosPresentation() {
+    const hadVisual = Boolean(chaosVisual);
+    chaosVisual = null; onlineBoardSignature = '';
+    game.classList.remove('resolving-board');
+    document.getElementById('chaosResolution').hidden = true;
+    if (hadVisual) updateBoard();
 }
 
 function renderOnlineControls() {
     const data = onlineClient?.snapshot;
     if (!data || !isOnlineGame) return;
+    if (!['resolving', 'chaos-choice'].includes(data.phase)) clearChaosPresentation();
     const view = OnlineState.view(data, onlineClient.actor, onlineClient.serverNow());
     const active = view.active && onlineClient.connected && !onlineClient.suspended;
     document.getElementById('currentTeamIndicator').hidden = data.phase === 'finished';
@@ -2589,7 +2655,13 @@ function renderOnlineControls() {
         : view.player?.teamIndex === data.turn?.teamIndex ? `${name} is speaking for your team. Guess aloud; answers stay hidden.`
         : `${name} is speaking for Team ${data.turn.teamIndex + 1}. Watch the clues and the timer.`;
     if (data.phase === 'selecting') role = isSpeaker ? 'Select the words guessed correctly, then confirm.' : `${name} is confirming the correct answers.`;
-    if (data.phase === 'idle') role = isSpeaker ? 'You are the next speaker. Start when everyone is ready.' : `${name} speaks next for Team ${data.turn.teamIndex + 1}.`;
+    if (data.phase === 'idle') {
+        const opening = !Object.keys(data.auditEvents || {}).length;
+        const starterTeam = data.starterTeam ?? data.turn.teamIndex;
+        const starter = opening ? `Team ${starterTeam + 1} ${data.matchId > 1 ? 'starts this rematch' : 'was drawn to start'}. ` : '';
+        role = starter + (isSpeaker ? 'You are the next speaker. Start when everyone is ready.' : `${name} speaks next for Team ${data.turn.teamIndex + 1}.`);
+    }
+    if (data.phase === 'resolving') role = `Watch Team ${data.turn.teamIndex + 1} on the board.`;
     if (data.phase === 'ready') role = `${data.starterTeam === undefined ? 'The starting team is drawn on start.' : `Team ${data.starterTeam + 1} starts.`} ${isHost ? 'Start when everyone is ready.' : 'Waiting for the host to start.'}`;
     if (data.phase === 'waiting') role = 'Waiting for enough players to continue.';
     if (data.phase === 'finished') role = 'Match complete. Compare scores or play again.';
@@ -2601,11 +2673,11 @@ function renderOnlineControls() {
     else if (!view.player) status = 'Your seat is no longer active. Rejoin the lobby to play.';
     else if (!view.active) status = 'Rejoin the lobby to restore your connection.';
     else if (speaker && !OnlineState.isConnected(data, speaker, onlineClient.serverNow()) && ['idle', 'describing', 'selecting'].includes(data.phase)) status = 'Waiting for the speaker to reconnect…';
-    else if (data.phase === 'resolving') status = 'Resolving Chaos…';
     else if (data.phase === 'describing' && data.deckRecycled?.length) status = `This pack has exhausted its ${data.deckRecycled.join(' and ')} answers; that difficulty is reshuffled.`;
     lblGameState.hidden = !status; lblGameState.textContent = status;
     const choice = document.getElementById('chaosChoice'); choice.hidden = data.phase !== 'chaos-choice';
     if (!choice.hidden) {
+        showChaosChoicePreview(data.turn.resolution);
         const remaining = Math.max(0, Math.ceil((data.turn.choiceDeadline - onlineClient.serverNow()) / 1000));
         const effect = data.turn.resolution.landing?.type;
         document.getElementById('chaosChoiceText').textContent = `${CHAOS_POWERUP_TYPES[effect]?.legendLabel || 'Chaos effect'}: ${data.turn.resolution.summary}. ${isSpeaker ? 'Keep or reroll once for your team.' : name + ' is choosing.'} Auto-keep in ${remaining}s.`;
@@ -2681,7 +2753,7 @@ function renderOnlineSnapshot(data) {
         createTeamAuditRows(event.teamIndex, event.roundNumber, event.correctAnswers || [], { chaosSummary: event.chaosSummary });
         lastProcessedAuditEventId = event.id;
     }
-    updateBoard();
+    if (data.phase !== 'resolving') updateBoard();
     updateTeamScores();
     updateCurrentTeamIndicator();
     refreshChaosModeUi();

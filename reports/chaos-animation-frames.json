@@ -1,0 +1,2167 @@
+{
+  "movingTurn": [
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "0",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "1",
+          "team": "1",
+          "transform": "matrix(1.10674, 0, 0, 1.10674, -51.7104, -8.00548)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "1",
+          "team": "1",
+          "transform": "matrix(1.01412, 0, 0, 1.01412, -6.84011, -1.05894)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "2",
+          "team": "1",
+          "transform": "matrix(1.06093, 0, 0, 1.06093, -94.7779, -4.85346)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "2",
+          "team": "1",
+          "transform": "matrix(1.07311, 0, 0, 1.07311, -36.0556, -5.59149)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "2",
+          "team": "1",
+          "transform": "matrix(1.01411, 0, 0, 1.01411, -6.95858, -1.07913)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "3",
+          "team": "1",
+          "transform": "matrix(1, 0, 0, 1, -129.203, 0)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "3",
+          "team": "1",
+          "transform": "matrix(1.1159, 0, 0, 1.1159, -60.5712, -8.69226)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "3",
+          "team": "1",
+          "transform": "matrix(1.04463, 0, 0, 1.04463, -21.6225, -3.34706)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "3",
+          "team": "1",
+          "transform": "matrix(1.00466, 0, 0, 1.00466, -2.25889, -0.349664)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "4",
+          "team": "1",
+          "transform": "matrix(1, 0, 0, 1, -129.203, 0)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "4",
+          "team": "1",
+          "transform": "matrix(1.0977, 0, 0, 1.0977, -71.3466, -7.32756)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 5 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "4",
+          "team": "1",
+          "transform": "matrix(1.05202, 0, 0, 1.05202, -25.2052, -3.90163)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 10,
+      "boardVisible": true,
+      "landed": [
+        "5"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "5",
+          "team": "1",
+          "transform": "matrix(1, 0, 0, 1, 512.418, -78.7491)"
+        },
+        {
+          "cell": "7",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    }
+  ],
+  "noEffectTurn": [
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "8",
+          "team": "0",
+          "transform": "matrix(1.01459, 0, 0, 1.01459, -120.563, -1.09422)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "8",
+          "team": "0",
+          "transform": "matrix(1.06452, 0, 0, 1.06452, -31.2596, -4.83883)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "9",
+          "team": "0",
+          "transform": "matrix(1.0148, 0, 0, 1.0148, -126.943, -2.22193)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "9",
+          "team": "0",
+          "transform": "matrix(1.11966, 0, 0, 1.11966, -61.109, -9.51025)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "9",
+          "team": "0",
+          "transform": "matrix(1.04099, 0, 0, 1.04099, -20.9318, -3.25756)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": true,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "matrix(1.04268, 0, 0, 1.04268, 412.022, -66.723)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": true,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "matrix(1.02867, 0, 0, 1.02867, 164.65, -34.9399)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 1 now has 10 points. Safe landing!",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    }
+  ],
+  "effectTurn": [
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "6",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "7",
+          "team": "1",
+          "transform": "matrix(1.07882, 0, 0, 1.07882, -82.5295, -5.91124)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "7",
+          "team": "1",
+          "transform": "matrix(1.0776, 0, 0, 1.0776, -37.5984, -5.82004)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "7",
+          "team": "1",
+          "transform": "matrix(1.01403, 0, 0, 1.01403, -6.79844, -1.05236)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "7",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "7",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "7",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "8",
+          "team": "1",
+          "transform": "matrix(1.0788, 0, 0, 1.0788, -82.5369, -5.9103)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "8",
+          "team": "1",
+          "transform": "matrix(1.07761, 0, 0, 1.07761, -37.6039, -5.8209)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "8",
+          "team": "1",
+          "transform": "matrix(1.01404, 0, 0, 1.01404, -6.80127, -1.0528)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "8",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "8",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 moves 3 spaces…",
+      "panelVisible": true,
+      "step": "1 · Move",
+      "tokens": [
+        {
+          "cell": "8",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "matrix(1.01475, 0, 0, 1.01475, -120.469, -1.10618)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "matrix(1.0644, 0, 0, 1.0644, -31.2025, -4.83)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "matrix(1.00874, 0, 0, 1.00874, -4.23573, -0.655671)"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "+1 Boost!",
+      "panelVisible": true,
+      "step": "2 · Land",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Bonus point!",
+      "panelVisible": true,
+      "step": "3 · Chaos!",
+      "tokens": [
+        {
+          "cell": "9",
+          "team": "1",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": true,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "matrix(1.0149, 0, 0, 1.0149, 9.78282, -0.942984)"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "matrix(1.0149, 0, 0, 1.0149, 471.68, -73.8276)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": true,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "matrix(1.0753, 0, 0, 1.0753, 2.96491, -5.59451)"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "matrix(1.0753, 0, 0, 1.0753, 142.954, -27.6839)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 8,
+      "boardVisible": true,
+      "landed": [
+        "9"
+      ],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": true,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "matrix(1.00883, 0, 0, 1.00883, 0.347611, -0.655908)"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "matrix(1.00883, 0, 0, 1.00883, 16.7601, -3.2457)"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    },
+    {
+      "badges": 0,
+      "boardVisible": true,
+      "landed": [],
+      "message": "Team 2 now has 10 points.",
+      "panelVisible": false,
+      "step": "Result",
+      "tokens": [
+        {
+          "cell": "10",
+          "team": "0",
+          "transform": "none"
+        },
+        {
+          "cell": "10",
+          "team": "1",
+          "transform": "none"
+        }
+      ],
+      "wordButtonsVisible": false
+    }
+  ],
+  "legendLayout": [
+    {
+      "absoluteIcons": 0,
+      "contentWidth": 305,
+      "iconOverflows": [],
+      "icons": 7,
+      "iconsVisible": true,
+      "width": 320
+    },
+    {
+      "absoluteIcons": 0,
+      "contentWidth": 375,
+      "iconOverflows": [],
+      "icons": 7,
+      "iconsVisible": true,
+      "width": 390
+    },
+    {
+      "absoluteIcons": 0,
+      "contentWidth": 753,
+      "iconOverflows": [],
+      "icons": 7,
+      "iconsVisible": true,
+      "width": 768
+    },
+    {
+      "absoluteIcons": 0,
+      "contentWidth": 1369,
+      "iconOverflows": [],
+      "icons": 7,
+      "iconsVisible": true,
+      "width": 1384
+    }
+  ]
+}
