@@ -34,7 +34,9 @@ Manual review found residual semantic/variant issues: the first Football pack in
 
 Production testing of the first revision also returned only 50 answers for Movies. The final instruction explicitly requests the full target for broad topics with abundant answers, while preserving the smaller strict-topic exception. This count adjustment produced the near-150 final CLI results above.
 
-Evidence: [final samples](ai-pack-evaluation.json), [initial samples used during refinement](ai-pack-evaluation-initial.json), [mobile editor](ai-pack-mobile-editor.png). The plain editor, duplicate count, persistent footer and scrolling modal were verified at 390 × 844. Production SDK verification is recorded after publication.
+Evidence: [final samples](ai-pack-evaluation.json), [initial samples used during refinement](ai-pack-evaluation-initial.json), [mobile editor](ai-pack-mobile-editor.png). The plain editor, duplicate count, persistent footer and scrolling modal were verified at 390 × 844.
+
+The Pages deployment of `80b2d95` completed successfully. A production browser loaded cache revision `20261020.15`, passed normal App Check and generated **147 fresh Movies answers** (101 easy / 46 hard), with the previous browser pack included in exclusions. Generate/edit/play controls restored. The pack started a match and dealt five actual film answers only after the 3, 2, 1, Go countdown. [Live success screenshot](ai-pack-live-success.png).
 
 ## Automated validation
 
