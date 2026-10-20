@@ -1,0 +1,209 @@
+{
+  "layoutAndColors": [
+    {
+      "action": {
+        "background": "rgb(71, 85, 105)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "horizontalOverflow": false,
+      "icon": {
+        "background": "rgb(238, 242, 246)",
+        "color": "rgb(51, 65, 85)"
+      },
+      "id": "settings",
+      "inViewport": true,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "background": "rgb(226, 232, 240)",
+      "color": "rgb(51, 65, 85)",
+      "hovered": true,
+      "id": "settings",
+      "state": "launcher hover"
+    },
+    {
+      "action": {
+        "background": "rgb(25, 135, 84)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "horizontalOverflow": false,
+      "icon": {
+        "background": "rgb(234, 247, 240)",
+        "color": "rgb(22, 101, 52)"
+      },
+      "id": "online",
+      "inViewport": true,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "background": "rgb(215, 239, 223)",
+      "color": "rgb(22, 101, 52)",
+      "hovered": true,
+      "id": "online",
+      "state": "launcher hover"
+    },
+    {
+      "action": {
+        "background": "rgb(37, 99, 235)",
+        "color": "rgb(255, 255, 255)"
+      },
+      "horizontalOverflow": false,
+      "icon": {
+        "background": "rgb(239, 246, 255)",
+        "color": "rgb(30, 64, 175)"
+      },
+      "id": "ai",
+      "inViewport": true,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "background": "rgb(219, 234, 254)",
+      "color": "rgb(30, 64, 175)",
+      "hovered": true,
+      "id": "ai",
+      "state": "launcher hover"
+    },
+    {
+      "action": {
+        "background": "rgb(250, 204, 21)",
+        "color": "rgb(66, 32, 6)"
+      },
+      "horizontalOverflow": false,
+      "icon": {
+        "background": "rgb(255, 248, 219)",
+        "color": "rgb(133, 77, 14)"
+      },
+      "id": "rules",
+      "inViewport": true,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "background": "rgb(254, 240, 178)",
+      "color": "rgb(133, 77, 14)",
+      "hovered": true,
+      "id": "rules",
+      "state": "launcher hover"
+    },
+    {
+      "horizontalOverflow": false,
+      "iconColor": "rgb(51, 65, 85)",
+      "id": "settings",
+      "inViewport": true,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "horizontalOverflow": false,
+      "iconColor": "rgb(22, 101, 52)",
+      "id": "online",
+      "inViewport": true,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "horizontalOverflow": false,
+      "iconColor": "rgb(30, 64, 175)",
+      "id": "ai",
+      "inViewport": true,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "horizontalOverflow": false,
+      "iconColor": "rgb(133, 77, 14)",
+      "id": "rules",
+      "inViewport": true,
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  ],
+  "keyboardFocus": [
+    {
+      "id": "settings",
+      "ring": "rgb(51, 65, 85)",
+      "shadow": "none",
+      "visible": true,
+      "width": "3px"
+    },
+    {
+      "id": "online",
+      "ring": "rgb(22, 101, 52)",
+      "shadow": "none",
+      "visible": true,
+      "width": "3px"
+    },
+    {
+      "id": "ai",
+      "ring": "rgb(30, 64, 175)",
+      "shadow": "none",
+      "visible": true,
+      "width": "3px"
+    },
+    {
+      "id": "rules",
+      "ring": "rgb(133, 77, 14)",
+      "shadow": "none",
+      "visible": true,
+      "width": "3px"
+    }
+  ],
+  "contrast": [
+    {
+      "id": "settings",
+      "launcher": 9.2,
+      "primaryAction": 7.58
+    },
+    {
+      "id": "settings",
+      "hover": 8.4
+    },
+    {
+      "id": "online",
+      "launcher": 6.47,
+      "primaryAction": 4.53
+    },
+    {
+      "id": "online",
+      "hover": 5.87
+    },
+    {
+      "id": "ai",
+      "launcher": 8.01,
+      "primaryAction": 5.17
+    },
+    {
+      "id": "ai",
+      "hover": 7.15
+    },
+    {
+      "id": "rules",
+      "launcher": 6.43,
+      "primaryAction": 9.52
+    },
+    {
+      "id": "rules",
+      "hover": 5.98
+    }
+  ],
+  "logs": []
+}

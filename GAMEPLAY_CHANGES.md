@@ -2,9 +2,17 @@
 
 Implemented the high-priority gameplay work and requested follow-ups from the fun report. Existing online eligibility exceptions, team assignment, word visibility, reconnect protection, and team/speaker rotation remain in place. No Firebase firewall, origin, or access rules were changed.
 
+## Tool accent colors
+
+Restored soft grey for Settings, green for Play online, blue for AI words, and yellow for How to play. Each accent carries through the launcher, hover/pressed states, keyboard focus ring, dialog icon and primary actions. Settings controls use slate, and the rules goal/step markers use amber. Shared spacing and the clearer guide format are unchanged. The guide was checked against the original: scoring, speaker rotation, allowed clues and all prohibited clue types remain; repeated wording was consolidated.
+
+Verification: **84 automated tests pass**. All four dialogs fit at 1280×720 and 390×844 without horizontal overflow. Browser checks confirmed four distinct hover colors and visible 3-pixel keyboard focus rings. Launcher, hover and enabled primary-action text contrast ranges from **4.53:1 to 9.52:1**. No browser warnings/errors were recorded.
+
+Previews: [menu](reports/menu-accents.png), [phone menu](reports/menu-accents-mobile.png), [How to play](reports/rules-accents.png). [Color, contrast and layout measurements](reports/accent-verification.json).
+
 ## Settings, online, AI and rules dialogs
 
-The four toolbar dialogs now share the game's restrained green/white design, consistent title/icon headers, labelled controls, 44-pixel actions, a single scrolling body, and footer actions that remain reachable. Toolbar launchers use quieter neutral/green styles. Settings groups audio, match setup, play options and word packs; opening it during a match shows sound/motion controls only. Categories and themes retain their existing mutually exclusive selection behavior and now expose their expanded state.
+The four toolbar dialogs share the game's white surfaces, consistent title/icon headers, labelled controls, 44-pixel actions, a single scrolling body, and footer actions that remain reachable. Launchers and dialogs use the matching accents described above. Settings groups audio, match setup, play options and word packs; opening it during a match shows sound/motion controls only. Categories and themes retain their existing mutually exclusive selection behavior and now expose their expanded state.
 
 Play online separates hosting from joining, with a shared player name and a clear four-letter code field. Empty names and malformed codes get inline feedback and focus the relevant input before any connection is attempted. AI words has a topic row, optional pack editing, a live unique-word count, inline generation feedback, and a disabled play action until a pack is ready. Editing/play remain disabled during generation. An invalid empty AI start no longer changes the game mode. The rules guide preserves the clue restrictions and explains the three-step turn, Chaos and online roles in scannable sections.
 
