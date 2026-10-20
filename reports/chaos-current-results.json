@@ -1,8 +1,8 @@
 {
   "generatedFor": "Half A Minute gameplay report, 20 October 2026",
   "source": "script.js current Chaos functions, extracted at run time",
-  "sourceSha256": "d3d932753c2559427bd0f94bcbc49f31cdc6f844345c6c5b6d7fead37dbb5674",
-  "gameplaySha256": "19e1f748532dab159e464b77e54da5f06645c9ae2699ae2d7ac90d5f8deb9e76",
+  "sourceSha256": "86c2dc8fb407091953e38463f8f102724bb6e07946f1975589e5a69bff8320ac",
+  "gameplaySha256": "39f25bad6e4f9c133e4837298c4cd17e558dadda698b7edef45c7d25bab0c01a",
   "assumptions": {
     "wordsPerTurn": 5,
     "secondsPerClueRound": 30,

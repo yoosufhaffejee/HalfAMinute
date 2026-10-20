@@ -1,9 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js"
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai"
-import * as OnlineState from './online/state.js?v=3';
-import { OnlineClient } from './online/client.js?v=3';
-import * as Gameplay from './gameplay/rules.js?v=3';
+import * as OnlineState from './online/state.js?v=20261020.4';
+import { OnlineClient } from './online/client.js?v=20261020.4';
+import * as Gameplay from './gameplay/rules.js?v=20261020.4';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -189,6 +189,20 @@ function randomSeed() { return crypto.getRandomValues(new Uint32Array(1))[0]; }
 
 function stopRoundSounds() {
     [countdownSound, tickSound, warningSound].forEach(audio => { try { audio.pause(); audio.currentTime = 0; } catch { /* Optional. */ } });
+    tickSound.loop = false;
+}
+
+function syncTickSound(remaining, active) {
+    try {
+        if (!active || remaining <= 5 || preferences.muted || preferences.volume === 0) {
+            if (!tickSound.paused) tickSound.pause();
+            return;
+        }
+        tickSound.loop = true;
+        tickSound.muted = false;
+        tickSound.volume = preferences.volume;
+        if (tickSound.paused) tickSound.play()?.catch?.(() => {});
+    } catch { /* Audio failure never blocks the timer. */ }
 }
 
 function exportMatchSummary() {
@@ -463,6 +477,9 @@ function initializeMenu() {
         }
     });
 
+    btnSettings.addEventListener('click', () => {
+        document.getElementById('gameSetupSettings').hidden = !game.hidden;
+    });
     registerModal(btnSettings, "settingsModal");
     registerModal(btnAI, "aiModal");
     registerModal(btnOnline, "onlineModal");
@@ -728,7 +745,6 @@ function updateMobileGameFocus() {
     }
     game.classList.toggle('clue-phase', isRoundActive);
     game.classList.toggle('word-phase', areWordsInFocusPhase());
-    document.getElementById('matchOptions').hidden = btnEndGame.hidden;
 
     game.classList.remove("mobile-focus-words", "mobile-focus-board");
     if (game.hidden || !isNarrowViewport()) {
@@ -1223,7 +1239,7 @@ async function onLobbyJoined(actor = onlineIdentity(gameCode)) {
     isSpeaker = isHost = false;
     clearInterval(countdownTimer);
     hideElement(menu);
-    hideElement(btnSettings);
+    showElement(btnSettings);
     hideElement(btnAI);
     hideElement(btnRules);
     hideElement(txtLobbyMenu);
@@ -1671,7 +1687,7 @@ async function startGame({ rematch = false } = {}) {
 
     // Show/Hide UI elements
     hideElement(menu);
-    hideElement(btnSettings);
+    showElement(btnSettings);
     hideElement(btnAI);
     hideElement(btnRules);
     showElement(game);
@@ -1871,17 +1887,18 @@ async function nextRound() {
     const teamIndexForRound = getCurrentTeamIndex(currentTeam), roundNumberForRound = currentRound + 1;
     const before = teams[teamIndexForRound].points;
     const submittedAt = Date.now();
-    let chaosSummary;
+    let chaosSummary, chaosEffect;
     isResolvingChaosMove = true; setNextRoundBusyState(true);
     document.querySelectorAll('.scoreButton').forEach(button => { button.disabled = true; });
     btnEndGame.hidden = true;
     try {
         if (isChaosMode) {
             const result = await runChaosResolutionLocally({ teamIndexForRound, selectedPoints: correctAnswers.length, roundNumberForRound });
+            chaosEffect = result.resolutionSummary;
             chaosSummary = formatChaosSummaryForAudit(result.resolutionSummary);
         } else teams[teamIndexForRound].points += correctAnswers.length;
         const text = Gameplay.recap({ teamIndex: teamIndexForRound, earned: correctAnswers.length, before,
-            after: teams[teamIndexForRound].points, effect: chaosSummary || 'No effect' });
+            after: teams[teamIndexForRound].points, effect: chaosEffect });
         localAudit.push({ teamIndex: teamIndexForRound, roundNumber: roundNumberForRound, correctAnswers, earned: correctAnswers.length, recap: text,
             chaosSummary, pointsBefore: before, pointsAfter: teams[teamIndexForRound].points,
             clueSeconds: Math.max(0, (localSelectingAt - localTurnStartedAt) / 1000),
@@ -1972,6 +1989,7 @@ function startCountdown(seconds, callback) {
     displayCurrentWords();
     timer.hidden = false;
     const deadline = Date.now() + seconds * 1000;
+    syncTickSound(seconds, true);
     timer.textContent = String(seconds);
     let finished = false, warned = false;
     finishLocalRound = () => {
@@ -1985,6 +2003,7 @@ function startCountdown(seconds, callback) {
     };
     countdownTimer = setInterval(() => {
         const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+        syncTickSound(remaining, true);
         timer.textContent = String(remaining);
         if (remaining <= 5 && remaining > 0 && !warned) { warned = true; void playSound(warningSound, () => false, 1.2); }
         if (!remaining || endRoundEarly) finishLocalRound?.();
@@ -2484,6 +2503,7 @@ function renderOnlineClock() {
     if (!data || !isOnlineGame) return;
     const now = onlineClient.serverNow(), view = OnlineState.view(data, onlineClient.actor, now);
     timer.hidden = !(onlineClient.connected && view.active && data.phase === 'describing');
+    syncTickSound(view.remainingSeconds, !timer.hidden);
     if (!timer.hidden) {
         const text = String(view.remainingSeconds);
         if (timer.textContent !== text) timer.textContent = text;
@@ -2510,7 +2530,7 @@ function renderResolutionFrame(plan, elapsed) {
     if (effectRatio === 1) teamShields = [...plan.shields];
     roundPowerups = plan.powerups; powerupRevealVisible = true; landedPowerupPreview = plan.landing;
     updateBoard();
-    showRecap(`+${plan.moveCount} earned · ${plan.summary}`);
+    showRecap(Gameplay.recap({ teamIndex: actorIndex, earned: plan.moveCount, effect: plan.effect }));
 }
 
 function renderOnlineControls() {
@@ -2624,7 +2644,8 @@ function renderOnlineSnapshot(data) {
     onlineBoardSignature = '';
     updatePlayerListUI(teams);
     document.getElementById('matchResults').hidden = data.phase !== 'finished';
-    if (data.auditEvent?.recap && data.phase !== 'describing') showRecap(data.auditEvent.recap);
+    if (data.auditEvent && data.phase !== 'describing') showRecap(Gameplay.recap({ teamIndex: data.auditEvent.teamIndex,
+        earned: data.auditEvent.earned ?? data.auditEvent.correctAnswers?.length ?? 0, effect: data.auditEvent.effect || data.auditEvent.chaosSummary }));
     else if (data.phase === 'describing' || !data.auditEvent) showRecap('');
     if (onlineClient.lastPhase === 'describing' && data.phase !== 'describing') {
         stopRoundSounds();

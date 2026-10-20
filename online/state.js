@@ -1,6 +1,6 @@
 // All online mutations run against the transaction's current snapshot, never a
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
-import { startingTeam, recap } from '../gameplay/rules.js?v=3';
+import { startingTeam, recap } from '../gameplay/rules.js?v=20261020.4';
 
 export const PROTOCOL_VERSION = 3;
 export const HOST_TIMEOUT_MS = 10000;
@@ -205,19 +205,20 @@ export function prune(gameData, actor, now) {
     if (changed || before !== JSON.stringify([game.hostId, game.phase, game.turn])) return game;
 }
 
-function completeTurn(game, now, points, chaosSummary = null) {
+function completeTurn(game, now, points, chaosSummary = null, effect = null) {
     const turn = game.turn;
     const correctAnswers = (turn.selectedIndexes || []).map(index => turn.words[index]);
     const before = Number(game.teams[turn.teamIndex].points) || 0;
     game.teams.forEach((team, index) => { team.points = points[index]; });
     const event = { id: turn.id, teamIndex: turn.teamIndex, roundNumber: turn.roundNumber, correctAnswers,
         earned: correctAnswers.length, recap: recap({ teamIndex: turn.teamIndex, earned: correctAnswers.length,
-            before, after: points[turn.teamIndex], effect: chaosSummary || 'No effect' }),
+            before, after: points[turn.teamIndex], effect: effect || chaosSummary }),
         pointsBefore: before, pointsAfter: points[turn.teamIndex],
         clueSeconds: Math.max(0, ((turn.selectingAt || now) - (turn.startedAt || now)) / 1000),
         scoringSeconds: Math.max(0, ((turn.submittedAt || now) - (turn.selectingAt || now)) / 1000),
         resolutionSeconds: Math.max(0, (now - (turn.submittedAt || now)) / 1000) };
     if (chaosSummary !== null) event.chaosSummary = chaosSummary;
+    if (effect) event.effect = effect;
     game.auditEvents ||= {};
     game.auditEvents[`turn_${turn.id}`] = event;
     game.auditEvent = event;
@@ -356,7 +357,7 @@ export function act(gameData, actor, action, now, rules = {}) {
             const result = turn.resolution;
             game.chaos.teamShields = result.shields;
             game.chaos.resolutionId = turn.id;
-            completeTurn(game, now, result.points, result.summary);
+            completeTurn(game, now, result.points, result.summary, result.effect);
         } else return;
     }
     if (!['ended', 'finished'].includes(game.phase)) game.gameState = game.phase === 'waiting' ? 'waiting' : 'resumed';

@@ -1,0 +1,164 @@
+[
+  {
+    "label": "1384x830 menu",
+    "contentWidth": 1384,
+    "controlCount": 8,
+    "height": 830,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1384
+  },
+  {
+    "label": "1384x830 settings",
+    "contentWidth": 1384,
+    "controlCount": 8,
+    "height": 830,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1384
+  },
+  {
+    "label": "1384x730 menu",
+    "contentWidth": 1384,
+    "controlCount": 8,
+    "height": 730,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1384
+  },
+  {
+    "label": "1384x730 settings",
+    "contentWidth": 1384,
+    "controlCount": 7,
+    "height": 730,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1384
+  },
+  {
+    "label": "1024x768 menu",
+    "contentWidth": 1024,
+    "controlCount": 8,
+    "height": 768,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1024
+  },
+  {
+    "label": "1024x768 settings",
+    "contentWidth": 1024,
+    "controlCount": 7,
+    "height": 768,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1024
+  },
+  {
+    "label": "768x1024 menu",
+    "contentWidth": 768,
+    "controlCount": 8,
+    "height": 1024,
+    "overlaps": [],
+    "shellWidth": 720,
+    "width": 768
+  },
+  {
+    "label": "768x1024 settings",
+    "contentWidth": 768,
+    "controlCount": 11,
+    "height": 1024,
+    "overlaps": [],
+    "shellWidth": 720,
+    "width": 768
+  },
+  {
+    "label": "390x844 menu",
+    "contentWidth": 390,
+    "controlCount": 8,
+    "height": 844,
+    "overlaps": [],
+    "shellWidth": 366,
+    "width": 390
+  },
+  {
+    "label": "390x844 settings",
+    "contentWidth": 390,
+    "controlCount": 8,
+    "height": 844,
+    "overlaps": [],
+    "shellWidth": 366,
+    "width": 390
+  },
+  {
+    "label": "320x720 menu",
+    "contentWidth": 305,
+    "controlCount": 8,
+    "height": 720,
+    "overlaps": [],
+    "shellWidth": 281,
+    "width": 305
+  },
+  {
+    "label": "320x720 settings",
+    "contentWidth": 320,
+    "controlCount": 6,
+    "height": 720,
+    "overlaps": [],
+    "shellWidth": 281,
+    "width": 320
+  },
+  {
+    "label": "1384 game between turns",
+    "contentWidth": 1384,
+    "controlCount": 4,
+    "height": 830,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1384
+  },
+  {
+    "label": "1384 game sound settings",
+    "contentWidth": 1384,
+    "controlCount": 4,
+    "height": 830,
+    "overlaps": [],
+    "shellWidth": 768,
+    "width": 1384
+  },
+  {
+    "label": "390 game between turns",
+    "contentWidth": 390,
+    "controlCount": 4,
+    "height": 844,
+    "overlaps": [],
+    "shellWidth": 390,
+    "width": 390
+  },
+  {
+    "label": "390 game sound settings",
+    "contentWidth": 390,
+    "controlCount": 4,
+    "height": 844,
+    "overlaps": [],
+    "shellWidth": 390,
+    "width": 390
+  },
+  {
+    "label": "320 game between turns",
+    "contentWidth": 305,
+    "controlCount": 4,
+    "height": 720,
+    "overlaps": [],
+    "shellWidth": 305,
+    "width": 305
+  },
+  {
+    "label": "320 game sound settings",
+    "contentWidth": 320,
+    "controlCount": 4,
+    "height": 720,
+    "overlaps": [],
+    "shellWidth": 305,
+    "width": 320
+  }
+]

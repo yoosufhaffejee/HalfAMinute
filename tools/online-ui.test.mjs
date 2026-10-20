@@ -26,14 +26,16 @@ function act(data, type, extras = {}) {
 function ui() {
     let clock = now;
     const nodes = new Map(), storage = new Map();
-    const metrics = { intervals: [], commands: [], alerts: [], reloads: 0, history: [] };
+    const metrics = { intervals: [], commands: [], alerts: [], reloads: 0, history: [], audioPlays: [] };
     function element(id = '') {
         const classes = new Set(), events = new Map();
         return { id, hidden: true, disabled: false, value: '', textContent: '', innerHTML: '', style: {}, dataset: {}, children: [], options: [], selectedOptions: [],
             classList: { contains: c => classes.has(c), add: (...cs) => cs.forEach(c => classes.add(c)), remove: (...cs) => cs.forEach(c => classes.delete(c)), toggle: (c, on) => on ? classes.add(c) : classes.delete(c) },
             setAttribute(name, value) { this[name] = value; },
             appendChild(child) { this.children.push(child); if (['categoriesSelect', 'themesSelect', 'quickPreset'].includes(id)) this.options.push(child); }, prepend() {},
-            pause() {},
+            paused: true,
+            play() { this.paused = false; metrics.audioPlays.push(id); return Promise.resolve(); },
+            pause() { this.paused = true; },
             addEventListener(name, callback, options) {
                 if (!events.has(name)) events.set(name, []);
                 events.get(name).push({ callback, once: options?.once });
@@ -201,7 +203,9 @@ test('offline start, selection and score advance still work without online write
     await Promise.resolve(); await Promise.resolve();
     assert.ok(['One','Three','Four'].includes(h.buttons[0].textContent));
     assert.equal(h.el('timer').hidden, false);
+    assert.equal(h.el('tickSound').paused, false);
     h.run('endRound();setScoreButtonSelected(document.querySelectorAll(".scoreButton")[0],true)');
+    assert.equal(h.el('tickSound').paused, true);
     await h.run('nextRound()');
     assert.equal(h.run('teams[0].points'), 1);
     assert.equal(h.run('currentTeam'), 2);
@@ -280,4 +284,36 @@ test('menu initialization wires the setup and gameplay controls without a browse
     assert.equal(h.el('categoryChoices').children.length, 1);
     assert.match(h.el('setupSummary').textContent, /2 teams/);
     assert.equal(h.el('quickPreset').value, 'standard');
+});
+
+test('online ticking loops without restarting on renders and stops at the warning or disconnect', () => {
+    const h = ui(); h.mount(act(game(), 'start-round', { seed: 1 }));
+    assert.equal(h.el('tickSound').loop, true); assert.equal(h.el('tickSound').paused, false);
+    for (let i = 0; i < 12; i++) h.run('renderOnlineControls()');
+    assert.equal(h.metrics.audioPlays.filter(id => id === 'tickSound').length, 1);
+    h.now = now + 26000; h.run('renderOnlineControls()');
+    assert.equal(h.el('tickSound').paused, true);
+    h.now = now + 1000; h.run('renderOnlineControls()');
+    assert.equal(h.el('tickSound').paused, false);
+    h.run('onlineClient.connected=false;renderOnlineControls()');
+    assert.equal(h.el('tickSound').paused, true);
+});
+
+test('mute and zero volume suppress ticking and unmute can resume it during the round', () => {
+    const h = ui();
+    h.run('preferences.muted=true;syncTickSound(20,true)'); assert.equal(h.metrics.audioPlays.length, 0);
+    h.run('preferences.muted=false;preferences.volume=0;syncTickSound(20,true)'); assert.equal(h.metrics.audioPlays.length, 0);
+    h.run('preferences.volume=0.4;syncTickSound(20,true)'); assert.equal(h.el('tickSound').paused, false);
+    assert.equal(h.el('tickSound').volume, 0.4);
+    h.run('preferences.muted=true;syncTickSound(20,true)'); assert.equal(h.el('tickSound').paused, true);
+    h.run('preferences.muted=false;syncTickSound(20,true)'); assert.equal(h.metrics.audioPlays.length, 2);
+    h.run('syncTickSound(20,false)'); assert.equal(h.el('tickSound').paused, true);
+});
+
+test('legacy detailed audit recaps are presented as a simple player result', () => {
+    let data = act(act(game(), 'start-round', { seed: 1 }), 'end-round');
+    data = act(data, 'toggle-answer', { index: 0 }); data = act(data, 'submit-round');
+    data.auditEvent.recap = 'Team 1: 1 correct · +1 earned · No effect · net +1 · 1 points';
+    const h = ui(); h.mount(data);
+    assert.equal(h.el('turnRecap').textContent, 'Team 1 scored 1 point.');
 });

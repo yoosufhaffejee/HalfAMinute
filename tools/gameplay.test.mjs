@@ -48,6 +48,13 @@ test('presets preserve 30 second five-word play and resolutions have a bounded b
     assert.ok(Rules.resolutionDuration(true) <= 3000);
     assert.ok(Rules.resolutionDuration(false, true) < Rules.resolutionDuration(false));
 });
+
+test('turn messages use player language instead of score arithmetic', () => {
+    assert.equal(Rules.recap({ teamIndex: 1, earned: 2, before: 0, after: 2 }), 'Team 2 scored 2 points.');
+    assert.equal(Rules.recap({ teamIndex: 0, earned: 1, effect: 'No powerup' }), 'Team 1 scored 1 point.');
+    assert.equal(Rules.recap({ teamIndex: 0, earned: 3, effect: { type: 'plus1' } }), 'Team 1 scored 3 points. Bonus point!');
+    assert.equal(Rules.effectMessage({ type: 'bomb', actorDelta: -3 }), 'Bomb! Back 3 spaces.');
+});
 test('random starters are distributed and rematches give every team the first turn', () => {
     for (const teams of [2, 3, 4]) {
         const counts = Array(teams).fill(0);

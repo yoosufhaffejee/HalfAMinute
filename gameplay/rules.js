@@ -65,7 +65,24 @@ export function resolutionDuration(hasEffect, won = false) {
     return won ? 350 : hasEffect ? 2200 : 650;
 }
 
-export function recap({ teamIndex, earned, before, after, effect = 'No effect' }) {
-    const net = after - before;
-    return `Team ${teamIndex + 1}: ${earned} correct · +${earned} earned · ${effect} · net ${net >= 0 ? '+' : ''}${net} · ${after} points`;
+export function effectMessage(effect) {
+    if (!effect) return '';
+    if (typeof effect === 'string') return /^(no effect|no powerup)$/i.test(effect) ? '' : effect;
+    if (effect.blockedByShield) return 'Your shield blocked the hit!';
+    switch (effect.type) {
+        case 'plus1': return 'Bonus point!';
+        case 'plus2': return 'Two bonus points!';
+        case 'minus1': case 'minus2': return `Slipped back ${Math.abs(effect.actorDelta)} ${Math.abs(effect.actorDelta) === 1 ? 'space' : 'spaces'}.`;
+        case 'bomb': return `Bomb! Back ${Math.abs(effect.actorDelta)} ${Math.abs(effect.actorDelta) === 1 ? 'space' : 'spaces'}.`;
+        case 'shield': return effect.shieldAlreadyReady ? 'Your shield is still ready.' : 'Shield ready for the next hit!';
+        case 'steal1': return effect.victimBlocked ? `Bonus point! Team ${effect.victimTeamIndex + 1}'s shield protected them.`
+            : effect.victimDelta < 0 ? `Stole a point from Team ${effect.victimTeamIndex + 1}!` : 'Bonus point!';
+        default: return '';
+    }
+}
+
+export function recap({ teamIndex, earned, effect = null }) {
+    const score = `Team ${teamIndex + 1} scored ${earned} ${earned === 1 ? 'point' : 'points'}.`;
+    const extra = effectMessage(effect);
+    return extra ? `${score} ${extra}` : score;
 }

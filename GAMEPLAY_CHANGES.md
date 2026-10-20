@@ -2,13 +2,27 @@
 
 Implemented the high-priority gameplay work and requested follow-ups from the fun report. Existing online eligibility exceptions, team assignment, word visibility, reconnect protection, and team/speaker rotation remain in place. No Firebase firewall, origin, or access rules were changed.
 
+## Layout and audio correction
+
+The first implementation left absolutely positioned corner buttons on a page that now had more controls, and loaded app CSS before Bootstrap. This caused the overlaps and oversized desktop container reported in the screenshots. The layout now uses a dedicated 768-pixel maximum shell, a wrapping toolbar with text labels, grouped setup fields, and one consolidated stylesheet loaded after Bootstrap. Navigation no longer floats over other content.
+
+Sound/motion controls are in a single Settings dialog, available during play. The game setup fields are hidden there once playing, so sound can change without altering a live match. The extra Match options and Sound & motion drawers have been removed from the game screen. End Game is a direct secondary action with its existing confirmation.
+
+Ticking was mistakenly removed in the audio refactor. It now loops during both local and online countdowns, stops for the five-second warning/end/disconnect, respects mute/volume, and can resume after unmuting. Browser playback was verified as running (`paused: false`, advancing playback time), paused on mute, resumed on unmute, and stopped at round end.
+
+The verbose score-arithmetic banner is replaced by a quiet player-facing result, such as **“Team 2 scored 2 points.”** Chaos adds a short message such as **“Bonus point!”** Existing detailed audit records remain available, and older saved recap strings are not shown verbatim.
+
+Final verification: **74 automated tests pass** plus the word-data checks. Browser geometry checks found no intersecting visible controls or horizontal overflow in 18 foreground menu/settings/game states, across 1384×830, 1384×730, 1024×768, 768×1024, 390×844, and 320×720. Modal background controls are excluded while a dialog is open, and clipped offscreen controls are measured only within their visible scroll bounds. Size sweeps used reduced motion to avoid measuring transition frames; the normal-motion menu and dialog were also inspected visually. End Game cancellation was checked in the browser.
+
+Evidence: [desktop menu](reports/layout-desktop-fixed.png), [phone menu](reports/layout-mobile-fixed.png), [simplified game screen](reports/layout-game-fixed.png), [geometry measurements](reports/layout-verification.json).
+
 ## What changed
 
 - The clue/scoring screen prioritizes words, timer, role, and the primary action. The full board and legend are hidden during the card phase. Cards remain full contrast while read-only, selections have checkmarks and accessible pressed state, and scoring shows the selected count before confirmation.
 - Personal online role copy handles the existing two-player and three-player variants. Between turns, the next speaker is named. A numbered board now has a separate finish at the actual target and labeled team tokens that work without color alone.
 - Chaos keeps its existing effect weights. Bombs lose at most three points. A shield blocks a landing penalty or an incoming steal loss, then is consumed; the stealing team still receives its +1. Duplicate shields explicitly say they are already ready. Protected positions and no-chaining rules are unchanged.
 - Resolution budgets are 650 ms for no effect, 2.2 seconds for an effect, and 350 ms for a winning move. Movement duration no longer grows with distance. Reduced-motion users see results immediately, while online commands still respect the authoritative shared deadline. Network delay, a sleeping host, and reconnect recovery can add waiting beyond the animation budget.
-- Recaps separate earned points, the effect, net movement, and the resulting score. Results show final scores, earned/Chaos totals, and a best clue round. A host-controlled online rematch creates a new match identity, resets scores/resources/history, preserves the roster and deck history, and rotates the starting team. Winning turns also advance that team's speaker queue for the next match.
+- Turns show a short score result and a brief Chaos message when relevant. Results show final scores, earned/Chaos totals, and a best clue round. A host-controlled online rematch creates a new match identity, resets scores/resources/history, preserves the roster and deck history, and rotates the starting team. Winning turns also advance that team's speaker queue for the next match.
 - Initial starters are randomized; rematches rotate the starter. The immediate-finish rule remains unchanged. This distributes first-slot advantage across matches rather than removing it within an individual match.
 - Separate normalized easy/hard deck histories prevent repeats until each difficulty exhausts its own pool. Recycling one difficulty does not reset the other. Cards never contain the same normalized answer twice. Deck history carries across rematches with the same group; narrow pools still recycle when genuinely exhausted.
 - Short/Standard/Long presets keep five words and 30-second rounds, with targets of 10/20/40. Advanced settings remain available, show a setup summary, and include a searchable category checklist. Category/theme selection is mutually exclusive through the UI.
@@ -26,7 +40,7 @@ The five-second choice adds time when enabled. This is a prototype to playtest, 
 
 ## Verification
 
-- **70 automated tests pass** across shared gameplay, online state, client lifecycle, and UI integration. Coverage includes separate deck exhaustion, normalized duplicates, capped bombs, shield/steal interactions, winning-move pacing, role privacy, results, rematch identity/reset, stale commands, and choice recovery after host/speaker departure.
+- **74 automated tests pass** across shared gameplay, online state, client lifecycle, and UI integration. Coverage includes separate deck exhaustion, normalized duplicates, capped bombs, shield/steal interactions, winning-move pacing, role privacy, results, rematch identity/reset, stale commands, choice recovery after host/speaker departure, audio lifecycle, and concise messages.
 - The existing word-data check passes **125 real pool selections**, training hints/recent-history checks, and six invalid-data cases.
 - A local browser playthrough at **390 × 844** verified five clues plus the round action without the old nested scroll, score confirmation and recap, victory, persistent mute/reduced motion, and starter rotation on rematch. Screenshot: [updated mobile clue view](reports/gameplay-mobile-after.png).
 - Live two-client Firebase UI verification was attempted but did not complete: the browser tool became stuck on the earlier native creation confirmation and subsequent clicks did not reliably open dialogs. No live test lobby was successfully created in this turn. Automated client/state/UI tests provide coverage; a manual two-device smoke test remains advisable before deployment. The redundant native creation confirmation has been removed in the final build.
