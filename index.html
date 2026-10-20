@@ -28,7 +28,7 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=20261020.9">
+    <link rel="stylesheet" href="style.css?v=20261020.10">
 </head>
 
 <body>
@@ -116,7 +116,16 @@
                                 <p class="dialog-help">Pick categories or a theme. Leave them unselected to use all categories.</p>
                                 <div class="pack-actions"><button type="button" class="btn btn-outline-secondary" id="selectCategoriesBtn" aria-expanded="false" aria-controls="categoriesSection">Categories</button><button type="button" class="btn btn-outline-secondary" id="selectThemeBtn" aria-expanded="false" aria-controls="themesSection">Theme</button></div>
                                 <div id="categoriesSection" class="pack-picker" style="display:none;"><div class="form-field"><label for="categorySearch">Find categories</label><input id="categorySearch" type="search" placeholder="Search categories"></div><div id="categoryChoices" role="group" aria-label="Categories"></div><select id="categoriesSelect" multiple hidden aria-label="Selected categories"></select></div>
-                                <div id="themesSection" class="pack-picker" style="display:none;"><div class="form-field"><label for="themesSelect">Choose a theme</label><select id="themesSelect"><option value="None">None</option></select></div></div>
+                                <div id="themesSection" class="pack-picker" style="display:none;">
+                                    <fieldset class="theme-picker">
+                                        <legend>Choose a theme</legend>
+                                        <label class="visually-hidden" for="themeSearch">Find a theme</label>
+                                        <input id="themeSearch" type="search" placeholder="Search themes" aria-controls="themeChoices" autocomplete="off">
+                                        <div id="themeChoices" class="theme-choices" role="group" aria-label="Themes"></div>
+                                        <p id="themeEmpty" class="dialog-help" role="status" hidden>No themes match. Try another search.</p>
+                                    </fieldset>
+                                    <select id="themesSelect" hidden aria-label="Selected theme"><option value="None">None</option></select>
+                                </div>
                             </section>
                             <p id="advancedSetupSummary" class="setup-preview" aria-live="polite"></p>
                         </fieldset>
@@ -349,6 +358,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261020.9" type="module"></script>
+    <script src="script.js?v=20261020.10" type="module"></script>
 </body>
 </html>

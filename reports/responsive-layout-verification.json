@@ -1,0 +1,253 @@
+{
+  "boards": [
+    {
+      "label": "20 point phone",
+      "board": {
+        "height": 462,
+        "width": 366
+      },
+      "cells": 21,
+      "columns": 4,
+      "horizontalOverflow": false,
+      "layout": "standard",
+      "outsideCells": [],
+      "rows": 6,
+      "shellWidth": 390,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "label": "20 point standard",
+      "board": {
+        "height": 384,
+        "width": 640
+      },
+      "cells": 21,
+      "columns": 5,
+      "horizontalOverflow": false,
+      "layout": "standard",
+      "outsideCells": [],
+      "rows": 5,
+      "shellWidth": 720,
+      "viewport": [
+        768,
+        1024
+      ]
+    },
+    {
+      "label": "20 point standard",
+      "board": {
+        "height": 384,
+        "width": 640
+      },
+      "cells": 21,
+      "columns": 5,
+      "horizontalOverflow": false,
+      "layout": "standard",
+      "outsideCells": [],
+      "rows": 5,
+      "shellWidth": 768,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "label": "60 point desktop",
+      "board": {
+        "height": 462,
+        "width": 1166
+      },
+      "cells": 61,
+      "columns": 12,
+      "horizontalOverflow": false,
+      "layout": "expanded",
+      "outsideCells": [],
+      "rows": 6,
+      "shellWidth": 1216,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "label": "60 point responsive",
+      "board": {
+        "height": 540,
+        "width": 911
+      },
+      "cells": 61,
+      "columns": 10,
+      "horizontalOverflow": false,
+      "layout": "expanded",
+      "outsideCells": [],
+      "rows": 7,
+      "shellWidth": 961,
+      "viewport": [
+        1024,
+        768
+      ]
+    },
+    {
+      "label": "60 point responsive",
+      "board": {
+        "height": 618,
+        "width": 655
+      },
+      "cells": 61,
+      "columns": 8,
+      "horizontalOverflow": false,
+      "layout": "expanded",
+      "outsideCells": [],
+      "rows": 8,
+      "shellWidth": 705,
+      "viewport": [
+        768,
+        1024
+      ]
+    },
+    {
+      "label": "60 point responsive",
+      "board": {
+        "height": 852,
+        "width": 561
+      },
+      "cells": 61,
+      "columns": 6,
+      "horizontalOverflow": false,
+      "layout": "expanded",
+      "outsideCells": [],
+      "rows": 11,
+      "shellWidth": 585,
+      "viewport": [
+        600,
+        900
+      ]
+    },
+    {
+      "label": "60 point responsive",
+      "board": {
+        "height": 1242,
+        "width": 351
+      },
+      "cells": 61,
+      "columns": 4,
+      "horizontalOverflow": false,
+      "layout": "expanded",
+      "outsideCells": [],
+      "rows": 16,
+      "shellWidth": 375,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "label": "60 point responsive",
+      "board": {
+        "height": 1242,
+        "width": 281
+      },
+      "cells": 61,
+      "columns": 4,
+      "horizontalOverflow": false,
+      "layout": "expanded",
+      "outsideCells": [],
+      "rows": 16,
+      "shellWidth": 305,
+      "viewport": [
+        320,
+        720
+      ]
+    }
+  ],
+  "themeScroll": {
+    "footerInViewport": true,
+    "height": 286,
+    "lastOptionVisible": true,
+    "scrollHeight": 528,
+    "scrollTop": 242
+  },
+  "themeSelection": {
+    "checked": [
+      "Adventure Trip"
+    ],
+    "summary": "Classic · 2 teams · 20 points · 30s · 5 words · normal · Adventure Trip",
+    "value": "Adventure Trip"
+  },
+  "themeKeyboard": {
+    "focused": "Movie Night",
+    "value": "Movie Night"
+  },
+  "themeEmptyState": true,
+  "smallTheme": {
+    "contained": true,
+    "footer": {
+      "bottom": 555,
+      "top": 482
+    },
+    "horizontalOverflow": false,
+    "list": {
+      "bottom": 481.828125,
+      "height": 197,
+      "scrollHeight": 549,
+      "top": 283.03125
+    },
+    "viewport": [
+      320,
+      568
+    ]
+  },
+  "smallThemeSelected": "Adventure Trip",
+  "wordCards": {
+    "shellWidth": 768,
+    "wordPhase": true
+  },
+  "chaosMarkers": {
+    "boardVisible": true,
+    "columns": 12,
+    "markers": 26,
+    "markersOutside": 0,
+    "phase": "complete",
+    "shellWidth": 1216
+  },
+  "logs": [],
+  "finalGameContainerChecks": [
+    {
+      "columns": 12,
+      "container": "inline-size",
+      "height": 462,
+      "overflow": false,
+      "viewport": [
+        1920,
+        1080
+      ],
+      "width": 1166
+    },
+    {
+      "columns": 8,
+      "container": "inline-size",
+      "height": 618,
+      "overflow": false,
+      "viewport": [
+        768,
+        1024
+      ],
+      "width": 655
+    },
+    {
+      "columns": 4,
+      "container": "inline-size",
+      "height": 1242,
+      "overflow": false,
+      "viewport": [
+        320,
+        720
+      ],
+      "width": 281
+    }
+  ],
+  "inMatchDialogFits": true
+}

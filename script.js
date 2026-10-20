@@ -267,6 +267,7 @@ function initializeQuickSetup() {
 
 function updateSetupSummary() {
     const settings = getSanitizedSettingsFromInputs();
+    syncThemePicker();
     const pack = settings.selectedTheme !== 'None' ? settings.selectedTheme : settings.selectedCategories.join(', ') || 'All categories';
     const text = `${settings.chaosMode ? 'Chaos' : 'Classic'} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
     document.getElementById('setupSummary').textContent = text;
@@ -295,9 +296,43 @@ function initializeCategoryPicker() {
         const search = event.target.value.trim().toLowerCase();
         list.querySelectorAll('label').forEach(label => { label.hidden = !label.textContent.toLowerCase().includes(search); });
     });
-    themesSelect.addEventListener('change', () => { Array.from(categoriesSelect.options).forEach(option => { option.selected = false; }); sync(); updateSetupSummary(); });
+    themesSelect.addEventListener('change', () => chooseTheme(themesSelect.value));
     document.getElementById('selectThemeBtn').addEventListener('click', () => {
         Array.from(categoriesSelect.options).forEach(option => { option.selected = false; }); sync();
+    });
+}
+
+function syncThemePicker() {
+    document.getElementById('themeChoices').querySelectorAll('input').forEach(input => {
+        input.checked = input.value === themesSelect.value;
+    });
+}
+
+function chooseTheme(value) {
+    themesSelect.value = value;
+    Array.from(categoriesSelect.options).forEach(option => { option.selected = false; });
+    document.getElementById('categoryChoices').querySelectorAll('input').forEach(input => { input.checked = false; });
+    updateSetupSummary();
+}
+
+function initializeThemePicker() {
+    const list = document.getElementById('themeChoices'), rows = [];
+    Array.from(themesSelect.options).forEach(option => {
+        const label = document.createElement('label'), input = document.createElement('input'), text = document.createElement('span');
+        input.type = 'radio'; input.name = 'word-theme'; input.value = option.value;
+        input.checked = option.value === themesSelect.value;
+        text.textContent = option.value === 'None' ? 'All categories (no theme)' : option.textContent;
+        input.addEventListener('input', () => {
+            if (!input.checked) return;
+            chooseTheme(input.value);
+        });
+        label.appendChild(input); label.appendChild(text); list.appendChild(label);
+        rows.push({ label, text: text.textContent.toLowerCase() });
+    });
+    document.getElementById('themeSearch').addEventListener('input', event => {
+        const search = event.target.value.trim().toLowerCase();
+        rows.forEach(row => { row.label.hidden = !row.text.includes(search); });
+        document.getElementById('themeEmpty').hidden = rows.some(row => !row.label.hidden);
     });
 }
 
@@ -427,6 +462,7 @@ function initializeMenu() {
         themesSelect.appendChild(option);
     });
     initializeCategoryPicker();
+    initializeThemePicker();
 
     const inputs = document.querySelectorAll('input[type="number"]');
     inputs.forEach(input => {
@@ -449,6 +485,7 @@ function initializeMenu() {
         document.getElementById("themesSection").style.display = 'block';
         document.getElementById('selectCategoriesBtn').setAttribute('aria-expanded', 'false');
         document.getElementById('selectThemeBtn').setAttribute('aria-expanded', 'true');
+        document.getElementById('themesSection').scrollIntoView?.({ block: 'nearest' });
     });
 
     document.getElementById("showAIWords").addEventListener("change", function () {
@@ -2063,6 +2100,7 @@ function generateBoard() {
     const board = document.getElementById('gameBoard');
     board.innerHTML = '';
     board.style.gridTemplateColumns = '';
+    board.dataset.layout = pointsToWin > 30 ? 'expanded' : 'standard';
     for (let i = 0; i <= pointsToWin; i++) {
         const cell = document.createElement('div'); cell.className = 'board-cell';
         cell.dataset.position = String(i);

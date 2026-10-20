@@ -24,6 +24,8 @@ body {
     box-shadow: 0 4px 20px rgba(23, 32, 51, .06);
     text-align: center;
 }
+/* Widen the map, while word cards and setup retain their reading width. */
+body.layout-game .app-shell:has(#gameBoard[data-layout='expanded']):not(:has(#game.word-phase)) { max-width: 76rem; }
 .app-header { display: grid; gap: 16px; margin-bottom: 16px; }
 .app-header h1 { margin: 0; font-size: 2rem; font-weight: 700; line-height: 1.2; }
 .app-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; min-width: 0; }
@@ -132,7 +134,7 @@ button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-
 body.layout-game .app-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
 body.layout-game .app-header h1 { font-size: 1.35rem; text-align: left; }
 body.layout-game .app-actions { justify-content: flex-end; }
-#game { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+#game { display: flex; flex-direction: column; gap: 8px; min-width: 0; container-type: inline-size; }
 #game > * { min-width: 0; }
 #currentTeamIndicator { order: 1; font-size: 1.1rem; font-weight: 700; margin: 0; }
 #roleInstruction { order: 2; margin: 0; color: #334155; }
@@ -142,6 +144,19 @@ body.layout-game .app-actions { justify-content: flex-end; }
 #roundControls { order: 6; }
 #trainingHintsDrawer { order: 7; margin: 8px 0; text-align: left; }
 #gameBoard { order: 8; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; width: 100%; max-width: 40rem; margin: 8px auto; }
+#gameBoard[data-layout='expanded'] { max-width: none; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@container (min-width: 480px) {
+    #gameBoard[data-layout='expanded'] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+@container (min-width: 640px) {
+    #gameBoard[data-layout='expanded'] { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+}
+@container (min-width: 820px) {
+    #gameBoard[data-layout='expanded'] { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+}
+@container (min-width: 1000px) {
+    #gameBoard[data-layout='expanded'] { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+}
 #teamScores { order: 9; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 20px; margin: 4px 0; }
 #chaosHelp { order: 10; margin: 8px 0; text-align: left; }
 #game.word-phase #gameBoard, #game.word-phase #teamScores, #game.word-phase #chaosModeBanner, #game.word-phase #chaosHelp { display: none !important; }
@@ -216,7 +231,7 @@ body.layout-game .app-actions { justify-content: flex-end; }
 .chaos-legend-item { display: flex; align-items: flex-start; gap: 8px; }
 .chaos-legend-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; min-height: 22px; text-align: center; flex-shrink: 0; }
 .chaos-legend-details { min-width: 0; overflow-wrap: anywhere; }
-.resolution-status { order: 7; padding: 18px; border: 1px solid #e2a93d; border-radius: 12px; background: #fff8e8; text-align: left; }
+.resolution-status { order: 7; width: 100%; max-width: 48rem; margin-inline: auto; padding: 18px; border: 1px solid #e2a93d; border-radius: 12px; background: #fff8e8; text-align: left; }
 .resolution-status[data-phase='complete'] { order: 5; }
 .resolution-heading { display: flex; align-items: center; gap: 14px; }
 .resolution-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; background: #fef0b2; color: #7a4a00; font-size: 1.6rem; font-weight: 700; }
@@ -272,7 +287,7 @@ th, td { padding: 8px; text-align: left; }
 .form-field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .form-field > label { margin: 0; font-weight: 600; font-size: .9rem; }
 .field-unit { color: #64748b; font-size: .8rem; font-weight: 400; }
-.app-modal input:not([type='checkbox']):not([type='range']), .app-modal select, .app-modal textarea { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #b9c7d5; border-radius: 8px; color: #172033; background: #fff; font: inherit; }
+.app-modal input:not([type='checkbox']):not([type='range']):not([type='radio']), .app-modal select, .app-modal textarea { width: 100%; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #b9c7d5; border-radius: 8px; color: #172033; background: #fff; font: inherit; }
 .app-modal select { padding-right: 28px; }
 .app-modal input[type='checkbox'], .app-modal input[type='range'] { accent-color: var(--tool-solid); }
 .app-modal textarea { resize: vertical; line-height: 1.6; }
@@ -292,6 +307,15 @@ th, td { padding: 8px; text-align: left; }
 .pack-actions { display: flex; gap: 10px; margin-top: 14px; }
 .pack-actions .btn[aria-expanded='true'] { color: var(--tool-ink); border-color: var(--tool-hover-border); background: var(--tool-tint); }
 .pack-picker { margin-top: 16px; }
+.theme-picker { min-width: 0; margin: 0; padding: 0; border: 0; }
+.theme-picker legend { float: none; width: auto; margin-bottom: 10px; font-size: .9rem; font-weight: 600; }
+.theme-choices { max-height: min(18rem, 35dvh); margin-top: 10px; overflow-y: auto; overscroll-behavior: contain; scrollbar-gutter: stable; border: 1px solid #b9c7d5; border-radius: 8px; }
+.theme-choices label { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 10px 12px; margin: 0; border-bottom: 1px solid #edf1f5; cursor: pointer; }
+.theme-choices label:last-child { border-bottom: 0; }
+.theme-choices label:has(:checked) { background: var(--tool-tint); color: var(--tool-ink); font-weight: 600; }
+.theme-choices label:focus-within { outline: 2px solid var(--tool-ink); outline-offset: -2px; }
+.theme-choices input[type='radio'] { width: 20px; height: 20px; min-height: 0; padding: 0; margin: 0; flex-shrink: 0; accent-color: var(--tool-solid); }
+.theme-choices span { min-width: 0; overflow-wrap: anywhere; }
 .app-modal #categoryChoices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; margin-top: 12px; }
 .app-modal #categoryChoices label { border-bottom: 1px solid #edf1f5; font-size: .9rem; }
 .app-modal #categoryChoices label span { min-width: 0; overflow-wrap: anywhere; }

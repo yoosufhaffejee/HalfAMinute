@@ -41,7 +41,7 @@ function ui() {
                 events.get(name).push({ callback, once: options?.once });
             },
             removeEventListener(name, callback) { events.set(name, (events.get(name) || []).filter(item => item.callback !== callback)); },
-            emit(name) { for (const item of [...events.get(name) || []]) { item.callback(); if (item.once) this.removeEventListener(name, item.callback); } },
+            emit(name, event = { target: this }) { for (const item of [...events.get(name) || []]) { item.callback(event); if (item.once) this.removeEventListener(name, item.callback); } },
             querySelectorAll: () => [] };
     }
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
@@ -447,6 +447,29 @@ test('menu initialization wires the setup and gameplay controls without a browse
     assert.equal(h.el('categoryChoices').children.length, 1);
     assert.match(h.el('setupSummary').textContent, /2 teams/);
     assert.equal(h.el('quickPreset').value, 'standard');
+});
+
+test('theme choices search, select one pack and clear conflicting categories', () => {
+    const h=ui();
+    h.run(`themes['Adventure Trip']=[];themes['Winter Sports']=[];
+        themesSelect.options.push(...['None','Adventure Trip','Winter Sports'].map(value=>({value,textContent:value})));
+        themesSelect.value='None';categoriesSelect.options.push({value:'Sample',selected:true});
+        initializeThemePicker();globalThis.themeRows=document.getElementById('themeChoices').children;
+        globalThis.themeRadios=themeRows.map(row=>row.children[0]);
+        document.getElementById('themeChoices').querySelectorAll=()=>themeRadios;`);
+    const rows=h.el('themeChoices').children;
+    rows[2].children[0].checked=true;rows[2].children[0].emit('input');
+    assert.equal(h.el('themesSelect').value,'Winter Sports');
+    assert.equal(h.el('categoriesSelect').options[0].selected,false);
+    assert.deepEqual(rows.map(row=>row.children[0].checked),[false,false,true]);
+    h.el('themeSearch').value='WiNtEr';h.el('themeSearch').emit('input');
+    assert.deepEqual(rows.map(row=>row.hidden),[true,true,false]);
+    assert.equal(h.el('themeEmpty').hidden,true);
+    h.el('themeSearch').value='no matching pack';h.el('themeSearch').emit('input');
+    assert.equal(h.el('themeEmpty').hidden,false);
+    assert.equal(h.el('themesSelect').value,'Winter Sports'); // Filtering never changes the selection.
+    h.run(`themesSelect.value='None';updateSetupSummary()`);
+    assert.deepEqual(rows.map(row=>row.children[0].checked),[true,false,false]);
 });
 
 test('AI pack editing counts unique entries, controls visibility and guards an empty start', () => {

@@ -12,6 +12,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - Category and theme filtering
 - Difficulty selection (`easy`, `normal`, `hard`)
 - Configurable team count, points-to-win, round time, and words per round
+- Searchable, scrollable theme selection; long boards expand across tablet/desktop widths while keeping phones vertical
 - Round history/audit table (mobile-friendly vertical layout)
 - Anti-repetition behavior with recent-word suppression
 - Short / Standard / Long quick setup, with all existing advanced settings available
