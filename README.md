@@ -114,6 +114,8 @@ See [Firebase setup](https://firebase.google.com/docs/ai-logic/get-started?platf
 
 - Enable `Training Mode` in settings.
 - During a speaker turn, the game shows each active word with its short description.
+- Only words with an available description appear in the hints drawer. Missing descriptions do not receive generic fallback text, and a round with no descriptions hides the drawer.
+- AI-generated and pasted packs have no training hints, so the drawer stays hidden even when Training Mode is enabled. The preference is preserved for later built-in games.
 - Hints are hidden when the round moves to answer selection.
 
 ## Gameplay Flow

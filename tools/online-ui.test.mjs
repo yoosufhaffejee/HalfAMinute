@@ -272,6 +272,50 @@ test('online countdown reconnects seek the cue and reveal words only at the shar
     assert.equal(h.metrics.audioPlays.filter(id=>id==='countdownSound').length,1);
 });
 
+test('AI and pasted packs hide training hints even for words that match the built-in dictionary', () => {
+    const h=ui();
+    h.run(`isTrainingMode=true;isAiGame=false;renderTrainingHints(['One'])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,false);
+    assert.equal(h.el('currentWords').hidden,false);
+    assert.match(h.el('currentWords').children[1].children[1].textContent,/First number/);
+    h.run(`isAiGame=true;renderTrainingHints(['One','Molecular Formula'])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,true);
+    assert.equal(h.el('currentWords').hidden,true);
+    assert.equal(h.el('currentWords').innerHTML,'');
+    assert.equal(h.run('isTrainingMode'),true); // Preserve the preference for built-in games.
+    h.run(`isAiGame=false;renderTrainingHints(['Two'])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,false);
+});
+
+test('training hints omit missing descriptions and hide the drawer when none are available', () => {
+    const h=ui();
+    h.run(`isTrainingMode=true;renderTrainingHints(['One','Unknown answer'])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,false);
+    const cards=h.el('currentWords').children.slice(1);
+    assert.equal(cards.length,1);
+    assert.equal(cards[0].children[0].textContent,'One');
+    assert.equal(h.run(`getTrainingDescription('Unknown answer')`),'');
+    h.run(`renderTrainingHints(['Molecular Formula',"Huygens' Principle"])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,true);
+    assert.equal(h.el('currentWords').hidden,true);
+    assert.equal(h.el('currentWords').innerHTML,'');
+    assert.equal(h.run('trainingSignature'),'');
+});
+
+test('training hint cache follows description changes and respects speaker access', () => {
+    const h=ui();
+    h.run(`isTrainingMode=true;setWordDescriptionsFromObjects([{word:'One',description:'Original hint'}]);renderTrainingHints(['One'])`);
+    const before=h.run('trainingSignature');
+    h.run(`setWordDescriptionsFromObjects([{word:'One',description:'Updated hint'}]);renderTrainingHints(['One'])`);
+    assert.notEqual(h.run('trainingSignature'),before);
+    h.run(`isOnlineGame=true;isSpeaker=false;renderTrainingHints(['One'])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,true);
+    h.run(`isSpeaker=true;renderTrainingHints(['One'])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,false);
+    h.run(`isTrainingMode=false;renderTrainingHints(['One'])`);
+    assert.equal(h.el('trainingHintsDrawer').hidden,true);
+});
+
 test('ending during a local lead-in cancels its sound and cannot reveal words later', async () => {
     const h=ui();h.now=now;
     h.run(`isOnlineGame=false;teams=[{points:0},{points:0}];currentTeam=1;currentGameWords=['One'];

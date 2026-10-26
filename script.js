@@ -1227,7 +1227,7 @@ function getTrainingDescription(word) {
 
     return wordDescriptionLookup.get(key)
         || buildGlobalWordDescriptionLookup().get(key)
-        || "Start broad, then narrow down with role, place, time period, and a distinctive trait.";
+        || "";
 }
 
 function clearTrainingHints() {
@@ -1235,9 +1235,9 @@ function clearTrainingHints() {
         return;
     }
 
+    document.getElementById('trainingHintsDrawer').hidden = true;
     if (!trainingSignature && currentWordsContainer.hidden) return;
     trainingSignature = '';
-    document.getElementById('trainingHintsDrawer').hidden = true;
     currentWordsContainer.innerHTML = "";
     currentWordsContainer.hidden = true;
     updateMobileGameFocus();
@@ -1248,7 +1248,7 @@ function renderTrainingHints(words = []) {
         return;
     }
 
-    if (!isTrainingMode || !Array.isArray(words) || words.length === 0) {
+    if (!isTrainingMode || isAiGame || !Array.isArray(words) || words.length === 0) {
         clearTrainingHints();
         return;
     }
@@ -1258,7 +1258,13 @@ function renderTrainingHints(words = []) {
         return;
     }
 
-    const signature = JSON.stringify(words);
+    const hints = words.map(word => ({ word, description: getTrainingDescription(word) }))
+        .filter(hint => hint.description);
+    if (!hints.length) {
+        clearTrainingHints();
+        return;
+    }
+    const signature = JSON.stringify(hints);
     if (trainingSignature === signature && !currentWordsContainer.hidden) return;
     trainingSignature = signature;
     document.getElementById('trainingHintsDrawer').hidden = false;
@@ -1270,17 +1276,17 @@ function renderTrainingHints(words = []) {
     header.textContent = "Training hints · Check that your clue does not include the answer or its derivatives.";
     currentWordsContainer.appendChild(header);
 
-    words.forEach(word => {
+    hints.forEach(hint => {
         const card = document.createElement("div");
         card.className = "training-card";
 
         const wordLabel = document.createElement("div");
         wordLabel.className = "training-word";
-        wordLabel.textContent = word;
+        wordLabel.textContent = hint.word;
 
         const description = document.createElement("div");
         description.className = "training-description";
-        description.textContent = getTrainingDescription(word);
+        description.textContent = hint.description;
 
         card.appendChild(wordLabel);
         card.appendChild(description);
