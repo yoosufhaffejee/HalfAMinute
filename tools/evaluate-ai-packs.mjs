@@ -23,10 +23,12 @@ const clientHeaders = { Referer: 'https://yoosufhaffejee.github.io/HalfAMinute/'
 const appCheckRoot = `https://firebaseappcheck.googleapis.com/v1/projects/${projectNumber}/apps/${appId}`;
 const baseline = JSON.parse(readFileSync(new URL('./fixtures/ai-prompts-before.json', import.meta.url), 'utf8'));
 const promptHash = createHash('sha256').update(Packs.PACK_SYSTEM_INSTRUCTION).digest('hex');
+const scopeEvaluation = process.argv.includes('--scope');
+const reportUrl = new URL(scopeEvaluation ? '../reports/ai-scope-evaluation.json' : '../reports/ai-pack-evaluation.json', import.meta.url);
 const report = { model: AI_SETTINGS.model, promptHash, generatedAt: new Date().toISOString(), baselineCommit: baseline.sourceCommit,
     caveat: 'Small live sample, not a controlled playtest. Labels and factual relevance require human review. No retries.', cases: [] };
 if (process.argv.includes('--resume')) {
-    const saved = JSON.parse(readFileSync(new URL('../reports/ai-pack-evaluation.json', import.meta.url), 'utf8'));
+    const saved = JSON.parse(readFileSync(reportUrl, 'utf8'));
     report.cases = saved.cases.filter(item => item.version === 'before' || saved.promptHash === promptHash);
 }
 
@@ -47,14 +49,14 @@ try {
     const debugToken = randomUUID();
     registration = await request(`${appCheckRoot}/debugTokens`, 'POST', adminHeaders,
         { displayName: 'Temporary CLI AI pack evaluation', token: debugToken });
-    async function generate(topic, version, history = []) {
+    async function generate(topic, version, history = [], strict = false) {
         const saved = report.cases.find(item => item.topic === topic && item.version === version);
         if (saved) return saved.entries;
         const attestation = await request(`${appCheckRoot}:exchangeDebugToken`, 'POST', clientHeaders,
             { debugToken, limitedUse: true });
         const modern = version !== 'before';
-        const prompt = modern ? Packs.buildPackRequest(topic, { history })
-            : (topic.startsWith('!') ? baseline.strict.replaceAll('${strictTopic}', topic.slice(1))
+        const prompt = modern ? Packs.buildPackRequest(topic, { history, strict })
+            : (strict ? baseline.strict.replaceAll('${strictTopic}', topic)
                 : baseline.broad.replaceAll('${cleanTopic}', topic));
         const started = performance.now();
         const response = await request(`https://firebasevertexai.googleapis.com/v1beta/projects/${projectId}/models/${AI_SETTINGS.model}:generateContent`,
@@ -73,21 +75,29 @@ try {
             report.failedSample = { topic, version, finishReason, validationError: error.code, rawOutput: text };
             throw error;
         }
-        const result = { topic, version, durationMs: Math.round(performance.now() - started), finishReason,
+        const result = { topic, version, scope: strict ? 'strict' : 'adaptive', durationMs: Math.round(performance.now() - started), finishReason,
             accepted: pack.entries.length, rejected: pack.rejected,
             easy: modern ? pack.entries.filter(entry => entry.difficulty === 'easy').length : null,
             hard: modern ? pack.entries.filter(entry => entry.difficulty === 'hard').length : null,
+            ...(modern ? { groups: JSON.parse(text).groups?.map(group => ({ label: group.label, count: group.entries.length })) } : {}),
             usage: response.usageMetadata, entries: pack.entries };
         report.cases.push(result);
         console.log(JSON.stringify({ topic, version, accepted: result.accepted, easy: result.easy, hard: result.hard,
             rejected: result.rejected, durationMs: result.durationMs }));
         return pack.entries;
     }
-    {
+    if (scopeEvaluation) {
+        const selectedTopic = process.argv.find(arg => arg.startsWith('--topic='))?.slice('--topic='.length);
+        const cases = [['Movies', false], ['Movies', true], ['football player names', false],
+            ['Hollywood', false], ['South African general knowledge', false]];
+        for (const [topic, strict] of cases) {
+            if (!selectedTopic || selectedTopic === topic) await generate(topic, strict ? 'strict' : 'adaptive', [], strict);
+        }
+    } else {
         await generate('Football', 'before');
         const football = await generate('Football', 'after');
-        await generate('!Planets in our solar system', 'before');
-        await generate('!Planets in our solar system', 'after');
+        await generate('Planets in our solar system', 'before', [], true);
+        await generate('Planets in our solar system', 'after', [], true);
         await generate('Football', 'after-with-exclusions', football);
     }
 } finally {
@@ -95,5 +105,5 @@ try {
         await request(`https://firebaseappcheck.googleapis.com/v1/${registration.name}`, 'DELETE', adminHeaders);
         console.log('Temporary evaluation registration removed.');
     }
-    writeFileSync(new URL('../reports/ai-pack-evaluation.json', import.meta.url), JSON.stringify(report, null, 2) + '\n');
+    writeFileSync(reportUrl, JSON.stringify(report, null, 2) + '\n');
 }

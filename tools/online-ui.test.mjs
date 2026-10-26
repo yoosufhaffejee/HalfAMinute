@@ -588,14 +588,40 @@ test('AI generation shows inline feedback and restores editing and play controls
     h.run('globalThis.finishGeneration=null;model.generateContent=()=>new Promise(resolve=>finishGeneration=resolve)');
     const pending=h.run('run("Football players")');
     assert.equal(h.el('btnGenerate').disabled,true);assert.equal(h.el('aiWords').disabled,true);
+    assert.equal(h.el('topic').disabled,true);assert.equal(h.el('strictAiTopic').disabled,true);
     assert.equal(h.el('btnAiGame').disabled,true);
-    h.run(`finishGeneration({response:{text:()=>JSON.stringify({entries:[
+    h.run(`finishGeneration({response:{text:()=>JSON.stringify({groups:[{label:'Answers',entries:[
         {word:'One',canonical:'One',difficulty:'easy'}, {word:'Two',canonical:'Two',difficulty:'hard'},
-        {word:'one',canonical:'One',difficulty:'easy'}]})}})`);await pending;
+        {word:'one',canonical:'One',difficulty:'easy'}]}]})}})`);await pending;
     assert.equal(h.el('btnGenerate').disabled,false);assert.equal(h.el('aiWords').disabled,false);
+    assert.equal(h.el('topic').disabled,false);assert.equal(h.el('strictAiTopic').disabled,false);
     assert.equal(h.el('btnAiGame').disabled,false);
     assert.match(h.el('aiPackStatus').textContent,/2 words ready to play.*1 easy.*1 hard/);
     assert.equal(h.el('aiFeedback').classList.contains('is-error'),false);
+});
+
+test('AI scope checkbox controls requests without rewriting the topic, including Enter submission', async () => {
+    const h=ui();h.run('globalThis.HTMLElement=class{};initializeMenu()');
+    h.run(`model.generateContent=async prompt=>{
+        metrics.request=JSON.parse(prompt);
+        const word=metrics.request.topic+' '+metrics.request.scope;
+        return {response:{text:()=>JSON.stringify({entries:[{word,canonical:word,difficulty:'easy'}]})}};
+    }`);
+    h.el('topic').value='Movies';
+    h.run('generate()'); await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(h.metrics.request.scope,'adaptive');
+    assert.equal(h.metrics.request.topic,'Movies');
+    h.el('strictAiTopic').checked=true;h.el('strictAiTopic').emit('change');
+    assert.equal(h.el('aiFeedback').hidden,true);
+    assert.equal(h.el('topic').value,'Movies');
+    h.el('topic').emit('keydown',{key:'Enter',preventDefault(){}});
+    await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(h.metrics.request.scope,'strict');
+    assert.equal(h.metrics.request.topic,'Movies');
+    h.el('strictAiTopic').checked=false;
+    await h.run('run("!Movies")');
+    assert.equal(h.metrics.request.scope,'adaptive');
+    assert.equal(h.metrics.request.topic,'!Movies');
 });
 
 test('a rejected AI credential preserves a ready pack and restores all generation controls', async () => {
@@ -605,6 +631,7 @@ test('a rejected AI credential preserves a ready pack and restores all generatio
     assert.equal(h.el('aiWords').value,'One\nTwo');
     assert.equal(h.el('btnGenerate').disabled,false);
     assert.equal(h.el('aiWords').disabled,false);
+    assert.equal(h.el('topic').disabled,false);assert.equal(h.el('strictAiTopic').disabled,false);
     assert.equal(h.el('btnAiGame').disabled,false);
     assert.match(h.el('aiFeedback').textContent,/game owner/);
     assert.doesNotMatch(h.el('aiFeedback').textContent,/rate.limit|few seconds/i);

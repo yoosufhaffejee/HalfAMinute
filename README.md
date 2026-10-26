@@ -86,8 +86,9 @@ Important:
 ## AI Mode
 
 - Enter a topic and generate up to **150** fresh answers. Narrow or exhausted topics may produce smaller packs; quality and topic boundaries take priority over padding.
-- Prefix topic with `!` for strict scope generation.
-- Requests separate the topic/exclusions from the game's permanent system instructions. The model returns structured JSON internally; players still edit a simple word list.
+- Broad topics adapt naturally: Movies includes mostly titles plus related people and ideas; Hollywood and South African general knowledge cover varied relevant subtopics. Specific requests such as football player names stay within that answer type.
+- Check **Keep to the exact topic** for direct examples only (Movies becomes titles only). Scope is independent of difficulty. Topics are plain text; punctuation has no special mode-switching meaning.
+- Requests separate the topic/exclusions from the game's permanent system instructions. The model builds named groups internally to budget variety across answer types, then the app interleaves them into a simple editable word list. Strict and specific topics keep all groups within the requested answer type.
 - Generated answers carry easy/hard labels and canonical identities. Normal-mode mix targets match actual card dealing (3 easy / 2 hard for five-word cards); Easy and Hard filter/deal their respective answers. Smaller Normal packs may have any mix.
 - Normalized display/canonical identities remove duplicates and known aliases. The last 450 accepted generated answer identities are stored locally and excluded from later generations on the same browser/origin. Storage errors do not prevent play. This is not shared across devices, and model-missed synonyms can still slip through.
 - Editing an unchanged answer or its known canonical name keeps its generated difficulty. New/pasted answers use the selected difficulty (Easy for Normal). Manual editing can deliberately reuse answers. A pack with no eligible answers cannot start at that difficulty.
@@ -96,6 +97,8 @@ Important:
 - Failed, malformed, truncated or exhausted responses keep the existing pack, edits and difficulty metadata intact and restore generation/editing controls. The UI reports the accepted count rather than claiming every request reached 150.
 
 Prompt samples and limitations are documented in [AI pack improvements](reports/ai-pack-improvements.md). Explicit live comparison: `node tools/evaluate-ai-packs.mjs --live` (requires authorized Google Cloud CLI access; uses a temporary App Check registration and deletes it afterward). This command makes real model requests; ordinary tests do not.
+
+Adaptive/strict scope samples and responsive dialog checks are documented in [AI topic scope](reports/ai-topic-scope.md). Run that live evaluation with `node tools/evaluate-ai-packs.mjs --live --scope`.
 
 ### Firebase AI setup
 

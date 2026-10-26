@@ -34,7 +34,7 @@ test('AI is lazy and attestation is initialized before the protected backend', a
     assert.equal(h.calls[1][2].useLimitedUseAppCheckTokens, true);
     assert.equal(h.calls[2][2].generationConfig.maxOutputTokens, 12288);
     assert.equal(h.calls[2][2].generationConfig.responseMimeType, 'application/json');
-    assert.deepEqual(h.calls[2][2].generationConfig.responseSchema.properties.entries.items.properties.difficulty.enum, ['easy', 'hard']);
+    assert.deepEqual(h.calls[2][2].generationConfig.responseSchema.properties.groups.items.properties.entries.items.properties.difficulty.enum, ['easy', 'hard']);
     assert.match(h.calls[2][2].systemInstruction, /Players describe answers/);
 });
 

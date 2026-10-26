@@ -7,7 +7,7 @@ const entry = (word, difficulty = 'easy', canonical = word) => ({ word, canonica
 const json = entries => JSON.stringify({ entries });
 
 test('requests separate topic data, strict scope and the actual card difficulty mix', () => {
-    const request = JSON.parse(Packs.buildPackRequest('!Football players', { numWords: 5 }));
+    const request = JSON.parse(Packs.buildPackRequest('Football players', { strict: true, numWords: 5 }));
     assert.equal(request.targetCount, 150);
     assert.equal(request.scope, 'strict');
     assert.deepEqual(request.targetMix, { easy: 90, hard: 60 });
@@ -20,6 +20,19 @@ test('requests separate topic data, strict scope and the actual card difficulty 
     assert.throws(() => Packs.buildPackRequest('x'.repeat(241)));
 });
 
+test('scope is an explicit option; topic text is preserved without punctuation shortcuts', () => {
+    for (const topic of ['Movies', 'Hollywood', 'football player names', 'South African general knowledge', '!Movies']) {
+        const adaptive = JSON.parse(Packs.buildPackRequest(topic));
+        const strict = JSON.parse(Packs.buildPackRequest(topic, { strict: true }));
+        assert.equal(adaptive.scope, 'adaptive');
+        assert.equal(strict.scope, 'strict');
+        assert.equal(adaptive.topic, topic);
+        assert.equal(strict.topic, topic);
+        assert.deepEqual(adaptive.targetMix, strict.targetMix);
+    }
+    for (const topic of ['', '   ', '!!!']) assert.throws(() => Packs.buildPackRequest(topic));
+});
+
 test('canonical identities remove nicknames, casing and accent duplicates within a pack', () => {
     const pack = Packs.parseGeneratedPack(json([
         entry('Messi', 'easy', 'Lionel Messi'), entry('Lionel Messi', 'hard'),
@@ -27,6 +40,23 @@ test('canonical identities remove nicknames, casing and accent duplicates within
     ]));
     assert.deepEqual(pack.entries.map(item => item.word), ['Messi', 'Café', 'The Moon', 'Mars']);
     assert.equal(pack.rejected.duplicate, 3);
+});
+
+test('grouped packs interleave answer types before applying the cap, duplicate and recent filters', () => {
+    const pack = Packs.parseGeneratedPack(JSON.stringify({ groups: [
+        { label: 'Titles', entries: Array.from({ length: 150 }, (_, i) => entry(`Film ${i}`)) },
+        { label: 'People', entries: [entry('Spielberg', 'hard', 'Steven Spielberg'), entry('Tom Hanks')] },
+        { label: 'Objects', entries: [entry('Lightsaber'), entry('Film 0')] }
+    ] }), { history: [entry('Steven Spielberg')] });
+    assert.deepEqual(pack.entries.slice(0, 4).map(item => item.word), ['Film 0', 'Lightsaber', 'Film 1', 'Tom Hanks']);
+    assert.equal(pack.rejected.recent, 1);
+    assert.equal(pack.rejected.duplicate, 1);
+    assert.equal(pack.rejected.excess, 4);
+    assert.equal(pack.entries.length, 148);
+    for (const groups of [null, [{}], [{ label: 'Titles', entries: {} }], Array(13).fill({ label: 'Group', entries: [] })]) {
+        assert.throws(() => Packs.parseGeneratedPack(JSON.stringify({ groups })), error => error.code === 'invalid-ai-pack');
+    }
+    assert.throws(() => Packs.parseGeneratedPack(JSON.stringify({ groups: [] })), error => error.code === 'ai-pack-empty');
 });
 
 test('fresh generation excludes both previous display names and canonical aliases', () => {

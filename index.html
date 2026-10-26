@@ -174,8 +174,9 @@
                     <div class="modal-body">
                         <section class="dialog-section" aria-labelledby="topicTitle">
                             <h3 id="topicTitle">Choose a topic</h3>
-                            <div class="input-action-row"><div class="form-field"><label class="visually-hidden" for="topic">Topic</label><input type="text" id="topic" maxlength="241" placeholder="Football players, 90s movies..." aria-describedby="topicHint"></div><button type="button" id="btnGenerate" class="btn btn-outline-success">Generate words</button></div>
-                            <p id="topicHint" class="dialog-help">Aim for 150 fresh answers. Narrow topics may give fewer. Start with <strong>!</strong> for a strict focus, for example <strong>!Football players</strong>.</p>
+                            <div class="input-action-row"><div class="form-field"><label class="visually-hidden" for="topic">Topic</label><input type="text" id="topic" maxlength="240" placeholder="Movies, Hollywood, football player names…" aria-describedby="topicHint"></div><button type="button" id="btnGenerate" class="btn btn-outline-success">Generate words</button></div>
+                            <p id="topicHint" class="dialog-help">Get up to 150 clue-friendly answers, mostly familiar with a few challenges. Broad topics like Movies include related people and ideas; specific topics like football player names stay focused. Narrow topics may give fewer.</p>
+                            <label class="toggle-row border-0" for="strictAiTopic"><span class="toggle-copy"><strong>Keep to the exact topic</strong><small>Only direct examples. For Movies, get titles without actors or filmmaking terms.</small></span><input type="checkbox" id="strictAiTopic"></label>
                             <p id="aiFeedback" class="dialog-feedback" role="status" aria-live="polite" hidden></p>
                         </section>
                         <section class="dialog-section" aria-labelledby="wordPackTitle">
@@ -362,6 +363,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261020.15" type="module"></script>
+    <script src="script.js?v=20261026.1" type="module"></script>
 </body>
 </html>

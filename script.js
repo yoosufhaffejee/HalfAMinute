@@ -4,8 +4,8 @@ import * as OnlineState from './online/state.js?v=20261020.11';
 import { OnlineClient } from './online/client.js?v=20261020.11';
 import * as Gameplay from './gameplay/rules.js?v=20261020.11';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
-import { createAiWordClient } from './gameplay/ai-client.js?v=20261020.15';
-import * as AiPacks from './gameplay/ai-packs.js?v=20261020.15';
+import { createAiWordClient } from './gameplay/ai-client.js?v=20261026.1';
+import * as AiPacks from './gameplay/ai-packs.js?v=20261026.1';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -500,6 +500,7 @@ function initializeMenu() {
     });
     document.getElementById('aiWords').addEventListener('input', () => { syncAiPack(); document.getElementById('aiFeedback').hidden = true; });
     document.getElementById('topic').addEventListener('input', () => { document.getElementById('aiFeedback').hidden = true; });
+    document.getElementById('strictAiTopic').addEventListener('change', () => { document.getElementById('aiFeedback').hidden = true; });
     document.getElementById('topic').addEventListener('keydown', event => {
         if (event.key === 'Enter' && !document.getElementById('btnGenerate').disabled) { event.preventDefault(); generate(); }
     });
@@ -1560,28 +1561,25 @@ async function run(topic) {
     const btnGenerate = document.getElementById("btnGenerate");
     const btnAiGame = document.getElementById("btnAiGame");
     const textArea = document.getElementById("aiWords");
+    const topicInput = document.getElementById('topic');
+    const strictToggle = document.getElementById('strictAiTopic');
     const cleanTopic = String(topic || "").trim();
-    const strictTopic = cleanTopic.startsWith('!') ? cleanTopic.slice(1).trim() : cleanTopic;
-    if (!cleanTopic) {
+    if (!/[\p{L}\p{N}]/u.test(cleanTopic)) {
         setAiFeedback('Enter a topic first, then generate words.', true);
         syncAiPack();
         return;
     }
-    if (cleanTopic.startsWith("!") && !strictTopic) {
-        setAiFeedback("After '!' add a focused topic, such as !Football players.", true);
-        syncAiPack();
-        return;
-    }
-    if (strictTopic.length > 240) {
+    if (cleanTopic.length > 240) {
         setAiFeedback('Keep the topic to 240 characters or fewer.', true); return;
     }
     btnGenerate.disabled = true; btnAiGame.disabled = true; textArea.disabled = true;
+    topicInput.disabled = true; strictToggle.disabled = true;
     btnGenerate.textContent = 'Generating…'; btnGenerate.setAttribute('aria-busy', 'true');
     setAiFeedback('Building your word pack…');
 
     try {
         const settings = getSanitizedSettingsFromInputs();
-        const prompt = AiPacks.buildPackRequest(cleanTopic, { difficulty: settings.difficulty,
+        const prompt = AiPacks.buildPackRequest(cleanTopic, { strict: Boolean(strictToggle.checked), difficulty: settings.difficulty,
             numWords: settings.numWords, history: refreshAiGenerationHistory() });
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -1605,6 +1603,7 @@ async function run(topic) {
         setAiFeedback(getFriendlyGeminiErrorMessage(error), true);
     } finally {
         btnGenerate.disabled = false;
+        topicInput.disabled = false; strictToggle.disabled = false;
         textArea.disabled = false; btnGenerate.textContent = 'Generate words'; btnGenerate.setAttribute('aria-busy', 'false');
         syncAiPack();
     }

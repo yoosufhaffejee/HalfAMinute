@@ -1,0 +1,3858 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "promptHash": "c7a9ae662d7d069dee56c273beefc02bc8ca234b8e0974ee38a512c6e8f86897",
+  "generatedAt": "2026-10-26T11:28:06.006Z",
+  "baselineCommit": "5f5b205",
+  "caveat": "Small live sample, not a controlled playtest. Labels and factual relevance require human review. No retries.",
+  "cases": [
+    {
+      "topic": "Movies",
+      "version": "adaptive",
+      "scope": "adaptive",
+      "durationMs": 12732,
+      "finishReason": "STOP",
+      "accepted": 149,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 1,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 10
+      },
+      "easy": 90,
+      "hard": 59,
+      "groups": [
+        {
+          "label": "Movie Titles",
+          "count": 90
+        },
+        {
+          "label": "Directors and Actors",
+          "count": 25
+        },
+        {
+          "label": "Characters and Objects",
+          "count": 25
+        },
+        {
+          "label": "Filmmaking Concepts",
+          "count": 20
+        }
+      ],
+      "usage": {
+        "promptTokenCount": 1263,
+        "candidatesTokenCount": 3941,
+        "totalTokenCount": 5204,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1263
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "The Godfather",
+          "canonical": "The Godfather",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Steven Spielberg",
+          "canonical": "Steven Spielberg",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Darth Vader",
+          "canonical": "Darth Vader",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Academy Award",
+          "canonical": "Academy Award",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Titanic",
+          "canonical": "Titanic",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Martin Scorsese",
+          "canonical": "Martin Scorsese",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Indiana Jones",
+          "canonical": "Indiana Jones",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cannes Film Festival",
+          "canonical": "Cannes Film Festival",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jurassic Park",
+          "canonical": "Jurassic Park",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Quentin Tarantino",
+          "canonical": "Quentin Tarantino",
+          "difficulty": "easy"
+        },
+        {
+          "word": "James Bond",
+          "canonical": "James Bond",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Director",
+          "canonical": "Film Director",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jaws",
+          "canonical": "Jaws",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Christopher Nolan",
+          "canonical": "Christopher Nolan",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Harry Potter",
+          "canonical": "Harry Potter",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cinematography",
+          "canonical": "Cinematography",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Star Wars",
+          "canonical": "Star Wars",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Alfred Hitchcock",
+          "canonical": "Alfred Hitchcock",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jack Sparrow",
+          "canonical": "Jack Sparrow",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Screenplay",
+          "canonical": "Screenplay",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Avatar",
+          "canonical": "Avatar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stanley Kubrick",
+          "canonical": "Stanley Kubrick",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Terminator",
+          "canonical": "The Terminator",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Soundtrack",
+          "canonical": "Film Score",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Inception",
+          "canonical": "Inception",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Leonardo DiCaprio",
+          "canonical": "Leonardo DiCaprio",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Yoda",
+          "canonical": "Yoda",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Special Effects",
+          "canonical": "Special Effects",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gladiator",
+          "canonical": "Gladiator",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tom Hanks",
+          "canonical": "Tom Hanks",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sherlock Holmes",
+          "canonical": "Sherlock Holmes",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Box Office",
+          "canonical": "Box Office",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Matrix",
+          "canonical": "The Matrix",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Meryl Streep",
+          "canonical": "Meryl Streep",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Rocky Balboa",
+          "canonical": "Rocky Balboa",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sequel",
+          "canonical": "Sequel",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Forrest Gump",
+          "canonical": "Forrest Gump",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Brad Pitt",
+          "canonical": "Brad Pitt",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Katniss Everdeen",
+          "canonical": "Katniss Everdeen",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Animation",
+          "canonical": "Animation",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pulp Fiction",
+          "canonical": "Pulp Fiction",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Denzel Washington",
+          "canonical": "Denzel Washington",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lightsaber",
+          "canonical": "Lightsaber",
+          "difficulty": "easy"
+        },
+        {
+          "word": "CGI",
+          "canonical": "Computer-generated Imagery",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Dark Knight",
+          "canonical": "The Dark Knight",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Audrey Hepburn",
+          "canonical": "Audrey Hepburn",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ruby Slippers",
+          "canonical": "Ruby Slippers",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Montage",
+          "canonical": "Montage",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Schindler's List",
+          "canonical": "Schindler's List",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Marlon Brando",
+          "canonical": "Marlon Brando",
+          "difficulty": "easy"
+        },
+        {
+          "word": "DeLorean",
+          "canonical": "DeLorean Time Machine",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Foley Art",
+          "canonical": "Foley",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Lion King",
+          "canonical": "The Lion King",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Robert De Niro",
+          "canonical": "Robert De Niro",
+          "difficulty": "easy"
+        },
+        {
+          "word": "One Ring",
+          "canonical": "One Ring",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mise-en-scene",
+          "canonical": "Mise-en-scene",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Back to the Future",
+          "canonical": "Back to the Future",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jack Nicholson",
+          "canonical": "Jack Nicholson",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cinderella's Glass Slipper",
+          "canonical": "Glass Slipper",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stop Motion",
+          "canonical": "Stop Motion",
+          "difficulty": "hard"
+        },
+        {
+          "word": "E.T. the Extra-Terrestrial",
+          "canonical": "E.T. the Extra-Terrestrial",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Denis Villeneuve",
+          "canonical": "Denis Villeneuve",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Travis Bickle",
+          "canonical": "Travis Bickle",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Dolly Zoom",
+          "canonical": "Dolly Zoom",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Alien",
+          "canonical": "Alien",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Greta Gerwig",
+          "canonical": "Greta Gerwig",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hannibal Lecter",
+          "canonical": "Hannibal Lecter",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Boom Microphone",
+          "canonical": "Boom Microphone",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Raiders of the Lost Ark",
+          "canonical": "Raiders of the Lost Ark",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bong Joon-ho",
+          "canonical": "Bong Joon-ho",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Norma Desmond",
+          "canonical": "Norma Desmond",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Storyboard",
+          "canonical": "Storyboard",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Braveheart",
+          "canonical": "Braveheart",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Wong Kar-wai",
+          "canonical": "Wong Kar-wai",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Atticus Finch",
+          "canonical": "Atticus Finch",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gaffer",
+          "canonical": "Gaffer",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Terminator 2",
+          "canonical": "Terminator 2: Judgment Day",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Agnes Varda",
+          "canonical": "Agnes Varda",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Michael Corleone",
+          "canonical": "Michael Corleone",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Best Boy",
+          "canonical": "Best Boy",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Silence of the Lambs",
+          "canonical": "The Silence of the Lambs",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Akira Kurosawa",
+          "canonical": "Akira Kurosawa",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rosebud",
+          "canonical": "Rosebud",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Saving Private Ryan",
+          "canonical": "Saving Private Ryan",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Federico Fellini",
+          "canonical": "Federico Fellini",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Palantir",
+          "canonical": "Palantir",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Fight Club",
+          "canonical": "Fight Club",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ingmar Bergman",
+          "canonical": "Ingmar Bergman",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Excalibur",
+          "canonical": "Excalibur",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Interstellar",
+          "canonical": "Interstellar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Toshiro Mifune",
+          "canonical": "Toshiro Mifune",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Nakatomi Plaza",
+          "canonical": "Nakatomi Plaza",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Parasite",
+          "canonical": "Parasite",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Daniel Day-Lewis",
+          "canonical": "Daniel Day-Lewis",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Maltese Falcon",
+          "canonical": "The Maltese Falcon",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Casablanca",
+          "canonical": "Casablanca",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Citizen Kane",
+          "canonical": "Citizen Kane",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Wizard of Oz",
+          "canonical": "The Wizard of Oz",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Psycho",
+          "canonical": "Psycho",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Lord of the Rings",
+          "canonical": "The Lord of the Rings: The Fellowship of the Ring",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Frozen",
+          "canonical": "Frozen",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Toy Story",
+          "canonical": "Toy Story",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Finding Nemo",
+          "canonical": "Finding Nemo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Up",
+          "canonical": "Up",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Avengers",
+          "canonical": "The Avengers",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Black Panther",
+          "canonical": "Black Panther",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Rocky",
+          "canonical": "Rocky",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Die Hard",
+          "canonical": "Die Hard",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Goodfellas",
+          "canonical": "Goodfellas",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Departed",
+          "canonical": "The Departed",
+          "difficulty": "easy"
+        },
+        {
+          "word": "La La Land",
+          "canonical": "La La Land",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Whiplash",
+          "canonical": "Whiplash",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Blade Runner",
+          "canonical": "Blade Runner",
+          "difficulty": "easy"
+        },
+        {
+          "word": "2001: A Space Odyssey",
+          "canonical": "2001: A Space Odyssey",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Vertigo",
+          "canonical": "Vertigo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ghostbusters",
+          "canonical": "Ghostbusters",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Home Alone",
+          "canonical": "Home Alone",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Grease",
+          "canonical": "Grease",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dirty Dancing",
+          "canonical": "Dirty Dancing",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Top Gun",
+          "canonical": "Top Gun",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Memento",
+          "canonical": "Memento",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mulholland Drive",
+          "canonical": "Mulholland Drive",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stalker",
+          "canonical": "Stalker",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Persona",
+          "canonical": "Persona",
+          "difficulty": "hard"
+        },
+        {
+          "word": "8½",
+          "canonical": "8½",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Seventh Seal",
+          "canonical": "The Seventh Seal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Breathless",
+          "canonical": "Breathless",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Blue Velvet",
+          "canonical": "Blue Velvet",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Treasure of the Sierra Madre",
+          "canonical": "The Treasure of the Sierra Madre",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sunset Boulevard",
+          "canonical": "Sunset Boulevard",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Double Indemnity",
+          "canonical": "Double Indemnity",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Third Man",
+          "canonical": "The Third Man",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rashomon",
+          "canonical": "Rashomon",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Seven Samurai",
+          "canonical": "Seven Samurai",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Amélie",
+          "canonical": "Amélie",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pan's Labyrinth",
+          "canonical": "Pan's Labyrinth",
+          "difficulty": "hard"
+        },
+        {
+          "word": "City of God",
+          "canonical": "City of God",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Chungking Express",
+          "canonical": "Chungking Express",
+          "difficulty": "hard"
+        },
+        {
+          "word": "In the Mood for Love",
+          "canonical": "In the Mood for Love",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Drive My Car",
+          "canonical": "Drive My Car",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Cranes Are Flying",
+          "canonical": "The Cranes Are Flying",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Come and See",
+          "canonical": "Come and See",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Battle of Algiers",
+          "canonical": "The Battle of Algiers",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Aguirre, the Wrath of God",
+          "canonical": "Aguirre, the Wrath of God",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Wings of Desire",
+          "canonical": "Wings of Desire",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The 400 Blows",
+          "canonical": "The 400 Blows",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Playtime",
+          "canonical": "Playtime",
+          "difficulty": "hard"
+        },
+        {
+          "word": "La Dolce Vita",
+          "canonical": "La Dolce Vita",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Beau Travail",
+          "canonical": "Beau Travail",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "topic": "Movies",
+      "version": "strict",
+      "scope": "strict",
+      "durationMs": 13171,
+      "finishReason": "STOP",
+      "accepted": 140,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 0,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 0
+      },
+      "easy": 90,
+      "hard": 50,
+      "groups": [
+        {
+          "label": "Movie Titles",
+          "count": 140
+        }
+      ],
+      "usage": {
+        "promptTokenCount": 1263,
+        "candidatesTokenCount": 4806,
+        "totalTokenCount": 6069,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1263
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Titanic",
+          "canonical": "Titanic",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Avatar",
+          "canonical": "Avatar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Inception",
+          "canonical": "Inception",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gladiator",
+          "canonical": "Gladiator",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jaws",
+          "canonical": "Jaws",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jurassic Park",
+          "canonical": "Jurassic Park",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Matrix",
+          "canonical": "The Matrix",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Star Wars",
+          "canonical": "Star Wars",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Godfather",
+          "canonical": "The Godfather",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pulp Fiction",
+          "canonical": "Pulp Fiction",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Forrest Gump",
+          "canonical": "Forrest Gump",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Dark Knight",
+          "canonical": "The Dark Knight",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Interstellar",
+          "canonical": "Interstellar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Frozen",
+          "canonical": "Frozen",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Shrek",
+          "canonical": "Shrek",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Lion King",
+          "canonical": "The Lion King",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Toy Story",
+          "canonical": "Toy Story",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Up",
+          "canonical": "Up",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Alien",
+          "canonical": "Alien",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Aliens",
+          "canonical": "Aliens",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Terminator",
+          "canonical": "The Terminator",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Rocky",
+          "canonical": "Rocky",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Die Hard",
+          "canonical": "Die Hard",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ghostbusters",
+          "canonical": "Ghostbusters",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Back to the Future",
+          "canonical": "Back to the Future",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Raiders of the Lost Ark",
+          "canonical": "Raiders of the Lost Ark",
+          "difficulty": "easy"
+        },
+        {
+          "word": "E.T.",
+          "canonical": "E.T. the Extra-Terrestrial",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Home Alone",
+          "canonical": "Home Alone",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Braveheart",
+          "canonical": "Braveheart",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Casablanca",
+          "canonical": "Casablanca",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Psycho",
+          "canonical": "Psycho",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Vertigo",
+          "canonical": "Vertigo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Citizen Kane",
+          "canonical": "Citizen Kane",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Goodfellas",
+          "canonical": "Goodfellas",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Fight Club",
+          "canonical": "Fight Club",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Seven",
+          "canonical": "Se7en",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Silence of the Lambs",
+          "canonical": "The Silence of the Lambs",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Schindler's List",
+          "canonical": "Schindler's List",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Saving Private Ryan",
+          "canonical": "Saving Private Ryan",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Wizard of Oz",
+          "canonical": "The Wizard of Oz",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Singin in the Rain",
+          "canonical": "Singin' in the Rain",
+          "difficulty": "easy"
+        },
+        {
+          "word": "La La Land",
+          "canonical": "La La Land",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Whiplash",
+          "canonical": "Whiplash",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Parasite",
+          "canonical": "Parasite",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Amelie",
+          "canonical": "Amélie",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pan's Labyrinth",
+          "canonical": "Pan's Labyrinth",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Good the Bad and the Ugly",
+          "canonical": "The Good, the Bad and the Ugly",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Blade Runner",
+          "canonical": "Blade Runner",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mad Max Fury Road",
+          "canonical": "Mad Max: Fury Road",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Top Gun",
+          "canonical": "Top Gun",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Speed",
+          "canonical": "Speed",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Truman Show",
+          "canonical": "The Truman Show",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Groundhog Day",
+          "canonical": "Groundhog Day",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Sixth Sense",
+          "canonical": "The Sixth Sense",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Memento",
+          "canonical": "Memento",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Departed",
+          "canonical": "The Departed",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Django Unchained",
+          "canonical": "Django Unchained",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Inglourious Basterds",
+          "canonical": "Inglourious Basterds",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Arrival",
+          "canonical": "Arrival",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gravity",
+          "canonical": "Gravity",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Shape of Water",
+          "canonical": "The Shape of Water",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Birdman",
+          "canonical": "Birdman",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Moonlight",
+          "canonical": "Moonlight",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Nomadland",
+          "canonical": "Nomadland",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dune",
+          "canonical": "Dune",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Oppenheimer",
+          "canonical": "Oppenheimer",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Barbie",
+          "canonical": "Barbie",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Everything Everywhere All at Once",
+          "canonical": "Everything Everywhere All at Once",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Knives Out",
+          "canonical": "Knives Out",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Get Out",
+          "canonical": "Get Out",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Us",
+          "canonical": "Us",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hereditary",
+          "canonical": "Hereditary",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Midsommar",
+          "canonical": "Midsommar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Shining",
+          "canonical": "The Shining",
+          "difficulty": "easy"
+        },
+        {
+          "word": "A Clockwork Orange",
+          "canonical": "A Clockwork Orange",
+          "difficulty": "easy"
+        },
+        {
+          "word": "2001 A Space Odyssey",
+          "canonical": "2001: A Space Odyssey",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Apocalypse Now",
+          "canonical": "Apocalypse Now",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Taxi Driver",
+          "canonical": "Taxi Driver",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Raging Bull",
+          "canonical": "Raging Bull",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chinatown",
+          "canonical": "Chinatown",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Network",
+          "canonical": "Network",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dog Day Afternoon",
+          "canonical": "Dog Day Afternoon",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Deer Hunter",
+          "canonical": "The Deer Hunter",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Platoon",
+          "canonical": "Platoon",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Full Metal Jacket",
+          "canonical": "Full Metal Jacket",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Usual Suspects",
+          "canonical": "The Usual Suspects",
+          "difficulty": "easy"
+        },
+        {
+          "word": "L.A. Confidential",
+          "canonical": "L.A. Confidential",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Big Lebowski",
+          "canonical": "The Big Lebowski",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Fargo",
+          "canonical": "Fargo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "No Country for Old Men",
+          "canonical": "No Country for Old Men",
+          "difficulty": "easy"
+        },
+        {
+          "word": "There Will Be Blood",
+          "canonical": "There Will Be Blood",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Master",
+          "canonical": "The Master",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Phantom Thread",
+          "canonical": "Phantom Thread",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Magnolia",
+          "canonical": "Magnolia",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Punch Drunk Love",
+          "canonical": "Punch-Drunk Love",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Synecdoche New York",
+          "canonical": "Synecdoche, New York",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Eternal Sunshine of the Spotless Mind",
+          "canonical": "Eternal Sunshine of the Spotless Mind",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Being John Malkovich",
+          "canonical": "Being John Malkovich",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mulholland Drive",
+          "canonical": "Mulholland Drive",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Blue Velvet",
+          "canonical": "Blue Velvet",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Eraserhead",
+          "canonical": "Eraserhead",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stalker",
+          "canonical": "Stalker",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Solaris",
+          "canonical": "Solaris",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Persona",
+          "canonical": "Persona",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Seventh Seal",
+          "canonical": "The Seventh Seal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "8 and a Half",
+          "canonical": "8½",
+          "difficulty": "hard"
+        },
+        {
+          "word": "La Dolce Vita",
+          "canonical": "La Dolce Vita",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Breathless",
+          "canonical": "Breathless",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The 400 Blows",
+          "canonical": "The 400 Blows",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rashomon",
+          "canonical": "Rashomon",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Seven Samurai",
+          "canonical": "Seven Samurai",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tokyo Story",
+          "canonical": "Tokyo Story",
+          "difficulty": "hard"
+        },
+        {
+          "word": "In the Mood for Love",
+          "canonical": "In the Mood for Love",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Chungking Express",
+          "canonical": "Chungking Express",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Yi Yi",
+          "canonical": "Yi Yi",
+          "difficulty": "hard"
+        },
+        {
+          "word": "A Brighter Summer Day",
+          "canonical": "A Brighter Summer Day",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Cries and Whispers",
+          "canonical": "Cries and Whispers",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Tree of Life",
+          "canonical": "The Tree of Life",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Thin Red Line",
+          "canonical": "The Thin Red Line",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Days of Heaven",
+          "canonical": "Days of Heaven",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Badlands",
+          "canonical": "Badlands",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stroszek",
+          "canonical": "Stroszek",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Aguirre the Wrath of God",
+          "canonical": "Aguirre, the Wrath of God",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Fitzcarraldo",
+          "canonical": "Fitzcarraldo",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Leopard",
+          "canonical": "The Leopard",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Battle of Algiers",
+          "canonical": "The Battle of Algiers",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Army of Shadows",
+          "canonical": "Army of Shadows",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Z",
+          "canonical": "Z",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Playtime",
+          "canonical": "Playtime",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Rules of the Game",
+          "canonical": "The Rules of the Game",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Grand Illusion",
+          "canonical": "Grand Illusion",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bicycle Thieves",
+          "canonical": "Bicycle Thieves",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rome Open City",
+          "canonical": "Rome, Open City",
+          "difficulty": "hard"
+        },
+        {
+          "word": "La Strada",
+          "canonical": "La Strada",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Nights of Cabiria",
+          "canonical": "Nights of Cabiria",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Close-Up",
+          "canonical": "Close-Up",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Taste of Cherry",
+          "canonical": "Taste of Cherry",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Portrait of a Lady on Fire",
+          "canonical": "Portrait of a Lady on Fire",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Handmaiden",
+          "canonical": "The Handmaiden",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Oldboy",
+          "canonical": "Oldboy",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "topic": "football player names",
+      "version": "adaptive",
+      "scope": "adaptive",
+      "durationMs": 16317,
+      "finishReason": "STOP",
+      "accepted": 149,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 1,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 0
+      },
+      "easy": 84,
+      "hard": 65,
+      "groups": [
+        {
+          "label": "Modern Legends",
+          "count": 50
+        },
+        {
+          "label": "Historical Icons",
+          "count": 50
+        },
+        {
+          "label": "Global Talents and Specialists",
+          "count": 50
+        }
+      ],
+      "usage": {
+        "promptTokenCount": 1265,
+        "candidatesTokenCount": 5379,
+        "totalTokenCount": 6644,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1265
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Lionel Messi",
+          "canonical": "Lionel Messi",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pelé",
+          "canonical": "Pelé",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sadio Mané",
+          "canonical": "Sadio Mané",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Cristiano Ronaldo",
+          "canonical": "Cristiano Ronaldo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Diego Maradona",
+          "canonical": "Diego Maradona",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Riyad Mahrez",
+          "canonical": "Riyad Mahrez",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Neymar",
+          "canonical": "Neymar Jr",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Johan Cruyff",
+          "canonical": "Johan Cruyff",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Didier Drogba",
+          "canonical": "Didier Drogba",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kylian Mbappé",
+          "canonical": "Kylian Mbappé",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Zinedine Zidane",
+          "canonical": "Zinedine Zidane",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Samuel Eto'o",
+          "canonical": "Samuel Eto'o",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kevin De Bruyne",
+          "canonical": "Kevin De Bruyne",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ronaldo Nazário",
+          "canonical": "Ronaldo Nazário",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Yaya Touré",
+          "canonical": "Yaya Touré",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mohamed Salah",
+          "canonical": "Mohamed Salah",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ronaldinho",
+          "canonical": "Ronaldinho",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Michael Essien",
+          "canonical": "Michael Essien",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Robert Lewandowski",
+          "canonical": "Robert Lewandowski",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Michel Platini",
+          "canonical": "Michel Platini",
+          "difficulty": "easy"
+        },
+        {
+          "word": "George Weah",
+          "canonical": "George Weah",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Luka Modrić",
+          "canonical": "Luka Modrić",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Franz Beckenbauer",
+          "canonical": "Franz Beckenbauer",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jay-Jay Okocha",
+          "canonical": "Jay-Jay Okocha",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Karim Benzema",
+          "canonical": "Karim Benzema",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bobby Charlton",
+          "canonical": "Bobby Charlton",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Nwankwo Kanu",
+          "canonical": "Nwankwo Kanu",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Erling Haaland",
+          "canonical": "Erling Haaland",
+          "difficulty": "easy"
+        },
+        {
+          "word": "George Best",
+          "canonical": "George Best",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Park Ji-sung",
+          "canonical": "Park Ji-sung",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Harry Kane",
+          "canonical": "Harry Kane",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Paolo Maldini",
+          "canonical": "Paolo Maldini",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Shunsuke Nakamura",
+          "canonical": "Shunsuke Nakamura",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Franco Baresi",
+          "canonical": "Franco Baresi",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tim Cahill",
+          "canonical": "Tim Cahill",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Virgil van Dijk",
+          "canonical": "Virgil van Dijk",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gerd Müller",
+          "canonical": "Gerd Müller",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mark Schwarzer",
+          "canonical": "Mark Schwarzer",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Antoine Griezmann",
+          "canonical": "Antoine Griezmann",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Marco van Basten",
+          "canonical": "Marco van Basten",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lucas Radebe",
+          "canonical": "Lucas Radebe",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Son Heung-min",
+          "canonical": "Son Heung-min",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ruud Gullit",
+          "canonical": "Ruud Gullit",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Steven Pienaar",
+          "canonical": "Steven Pienaar",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Toni Kroos",
+          "canonical": "Toni Kroos",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Roberto Baggio",
+          "canonical": "Roberto Baggio",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Benni McCarthy",
+          "canonical": "Benni McCarthy",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Casemiro",
+          "canonical": "Casemiro",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Thierry Henry",
+          "canonical": "Thierry Henry",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chilavert",
+          "canonical": "José Luis Chilavert",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Thibaut Courtois",
+          "canonical": "Thibaut Courtois",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cafu",
+          "canonical": "Cafu",
+          "difficulty": "easy"
+        },
+        {
+          "word": "René Higuita",
+          "canonical": "René Higuita",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Manuel Neuer",
+          "canonical": "Manuel Neuer",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Roberto Carlos",
+          "canonical": "Roberto Carlos",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Carlos Valderrama",
+          "canonical": "Carlos Valderrama",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Raheem Sterling",
+          "canonical": "Raheem Sterling",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lev Yashin",
+          "canonical": "Lev Yashin",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Enzo Francescoli",
+          "canonical": "Enzo Francescoli",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bruno Fernandes",
+          "canonical": "Bruno Fernandes",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bobby Moore",
+          "canonical": "Bobby Moore",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Javier Zanetti",
+          "canonical": "Javier Zanetti",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Paulo Dybala",
+          "canonical": "Paulo Dybala",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Eusébio",
+          "canonical": "Eusébio",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hernán Crespo",
+          "canonical": "Hernán Crespo",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Marcus Rashford",
+          "canonical": "Marcus Rashford",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ferenc Puskás",
+          "canonical": "Ferenc Puskás",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Claudio Pizarro",
+          "canonical": "Claudio Pizarro",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Joshua Kimmich",
+          "canonical": "Joshua Kimmich",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Alfredo Di Stéfano",
+          "canonical": "Alfredo Di Stéfano",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Alexis Sánchez",
+          "canonical": "Alexis Sánchez",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Trent Alexander-Arnold",
+          "canonical": "Trent Alexander-Arnold",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sócrates",
+          "canonical": "Sócrates",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Arturo Vidal",
+          "canonical": "Arturo Vidal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Jude Bellingham",
+          "canonical": "Jude Bellingham",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Zico",
+          "canonical": "Zico",
+          "difficulty": "hard"
+        },
+        {
+          "word": "James Rodríguez",
+          "canonical": "James Rodríguez",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Vinícius Júnior",
+          "canonical": "Vinícius Júnior",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Karl-Heinz Rummenigge",
+          "canonical": "Karl-Heinz Rummenigge",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Radamel Falcao",
+          "canonical": "Radamel Falcao",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pedri",
+          "canonical": "Pedri",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lothar Matthäus",
+          "canonical": "Lothar Matthäus",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Guillermo Ochoa",
+          "canonical": "Guillermo Ochoa",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gavi",
+          "canonical": "Gavi",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hristo Stoichkov",
+          "canonical": "Hristo Stoichkov",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Javier Hernández",
+          "canonical": "Javier Hernández",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bukayo Saka",
+          "canonical": "Bukayo Saka",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gabriel Batistuta",
+          "canonical": "Gabriel Batistuta",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Clint Dempsey",
+          "canonical": "Clint Dempsey",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Martin Ødegaard",
+          "canonical": "Martin Ødegaard",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dennis Bergkamp",
+          "canonical": "Dennis Bergkamp",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Landon Donovan",
+          "canonical": "Landon Donovan",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Declan Rice",
+          "canonical": "Declan Rice",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Alessandro Del Piero",
+          "canonical": "Alessandro Del Piero",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tim Howard",
+          "canonical": "Tim Howard",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Achraf Hakimi",
+          "canonical": "Achraf Hakimi",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Francesco Totti",
+          "canonical": "Francesco Totti",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hakan Şükür",
+          "canonical": "Hakan Şükür",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Alisson Becker",
+          "canonical": "Alisson Becker",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gianluigi Buffon",
+          "canonical": "Gianluigi Buffon",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Andriy Shevchenko",
+          "canonical": "Andriy Shevchenko",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bernardo Silva",
+          "canonical": "Bernardo Silva",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Iker Casillas",
+          "canonical": "Iker Casillas",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dejan Stanković",
+          "canonical": "Dejan Stanković",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rúben Dias",
+          "canonical": "Rúben Dias",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Carles Puyol",
+          "canonical": "Carles Puyol",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Nemanja Vidić",
+          "canonical": "Nemanja Vidić",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Phil Foden",
+          "canonical": "Phil Foden",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Xavi",
+          "canonical": "Xavi Hernández",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Branislav Ivanović",
+          "canonical": "Branislav Ivanović",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Jack Grealish",
+          "canonical": "Jack Grealish",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Andrés Iniesta",
+          "canonical": "Andrés Iniesta",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jan Oblak",
+          "canonical": "Jan Oblak",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ángel Di María",
+          "canonical": "Ángel Di María",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Andrea Pirlo",
+          "canonical": "Andrea Pirlo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Edin Džeko",
+          "canonical": "Edin Džeko",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gianluigi Donnarumma",
+          "canonical": "Gianluigi Donnarumma",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kaká",
+          "canonical": "Kaká",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Miralem Pjanić",
+          "canonical": "Miralem Pjanić",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Thomas Müller",
+          "canonical": "Thomas Müller",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Fabio Cannavaro",
+          "canonical": "Fabio Cannavaro",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gheorghe Hagi",
+          "canonical": "Gheorghe Hagi",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Marco Reus",
+          "canonical": "Marco Reus",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Paolo Rossi",
+          "canonical": "Paolo Rossi",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Dimitar Berbatov",
+          "canonical": "Dimitar Berbatov",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ciro Immobile",
+          "canonical": "Ciro Immobile",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dino Zoff",
+          "canonical": "Dino Zoff",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Petr Čech",
+          "canonical": "Petr Čech",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Dusan Vlahovic",
+          "canonical": "Dusan Vlahovic",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Giacinto Facchetti",
+          "canonical": "Giacinto Facchetti",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pavel Nedvěd",
+          "canonical": "Pavel Nedvěd",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Federico Chiesa",
+          "canonical": "Federico Chiesa",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sven-Göran Eriksson",
+          "canonical": "Sven-Göran Eriksson",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tomáš Rosický",
+          "canonical": "Tomáš Rosický",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Lautaro Martínez",
+          "canonical": "Lautaro Martínez",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kenny Dalglish",
+          "canonical": "Kenny Dalglish",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Henrik Larsson",
+          "canonical": "Henrik Larsson",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Romelu Lukaku",
+          "canonical": "Romelu Lukaku",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ian Rush",
+          "canonical": "Ian Rush",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Zlatan Ibrahimović",
+          "canonical": "Zlatan Ibrahimović",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Christian Pulisic",
+          "canonical": "Christian Pulisic",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ryan Giggs",
+          "canonical": "Ryan Giggs",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Michael Laudrup",
+          "canonical": "Michael Laudrup",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Alphonso Davies",
+          "canonical": "Alphonso Davies",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Paul Scholes",
+          "canonical": "Paul Scholes",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Brian Laudrup",
+          "canonical": "Brian Laudrup",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Keylor Navas",
+          "canonical": "Keylor Navas",
+          "difficulty": "easy"
+        },
+        {
+          "word": "David Beckham",
+          "canonical": "David Beckham",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Peter Schmeichel",
+          "canonical": "Peter Schmeichel",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "topic": "Hollywood",
+      "version": "adaptive",
+      "scope": "adaptive",
+      "durationMs": 15281,
+      "finishReason": "STOP",
+      "accepted": 137,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 2,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 0
+      },
+      "easy": 93,
+      "hard": 44,
+      "groups": [
+        {
+          "label": "Films",
+          "count": 69
+        },
+        {
+          "label": "People",
+          "count": 30
+        },
+        {
+          "label": "Landmarks and Studios",
+          "count": 20
+        },
+        {
+          "label": "Concepts and Objects",
+          "count": 20
+        }
+      ],
+      "usage": {
+        "promptTokenCount": 1263,
+        "candidatesTokenCount": 4784,
+        "totalTokenCount": 6047,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1263
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Titanic",
+          "canonical": "Titanic",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Steven Spielberg",
+          "canonical": "Steven Spielberg",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hollywood Sign",
+          "canonical": "Hollywood Sign",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Director",
+          "canonical": "Film director",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Avatar",
+          "canonical": "Avatar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tom Hanks",
+          "canonical": "Tom Hanks",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Walk of Fame",
+          "canonical": "Hollywood Walk of Fame",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Producer",
+          "canonical": "Film producer",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Godfather",
+          "canonical": "The Godfather",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Meryl Streep",
+          "canonical": "Meryl Streep",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chinese Theatre",
+          "canonical": "TCL Chinese Theatre",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Screenplay",
+          "canonical": "Screenplay",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Star Wars",
+          "canonical": "Star Wars",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Leonardo DiCaprio",
+          "canonical": "Leonardo DiCaprio",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dolby Theatre",
+          "canonical": "Dolby Theatre",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Box Office",
+          "canonical": "Box office",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jaws",
+          "canonical": "Jaws",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Brad Pitt",
+          "canonical": "Brad Pitt",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Universal Studios",
+          "canonical": "Universal Studios",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Blockbuster",
+          "canonical": "Blockbuster",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jurassic Park",
+          "canonical": "Jurassic Park",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Angelina Jolie",
+          "canonical": "Angelina Jolie",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Paramount Pictures",
+          "canonical": "Paramount Pictures",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Casting",
+          "canonical": "Casting",
+          "difficulty": "easy"
+        },
+        {
+          "word": "E.T.",
+          "canonical": "E.T. the Extra-Terrestrial",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Will Smith",
+          "canonical": "Will Smith",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Warner Bros.",
+          "canonical": "Warner Bros.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cinematography",
+          "canonical": "Cinematography",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Wizard of Oz",
+          "canonical": "The Wizard of Oz",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Harrison Ford",
+          "canonical": "Harrison Ford",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Walt Disney Studios",
+          "canonical": "Walt Disney Studios",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Special Effects",
+          "canonical": "Special effects",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Casablanca",
+          "canonical": "Casablanca",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Robert De Niro",
+          "canonical": "Robert De Niro",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Metro-Goldwyn-Mayer",
+          "canonical": "Metro-Goldwyn-Mayer",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Soundtrack",
+          "canonical": "Soundtrack",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Citizen Kane",
+          "canonical": "Citizen Kane",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Al Pacino",
+          "canonical": "Al Pacino",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Academy Award",
+          "canonical": "Academy Award",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Animation",
+          "canonical": "Animation",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pulp Fiction",
+          "canonical": "Pulp Fiction",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Martin Scorsese",
+          "canonical": "Martin Scorsese",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stunt Double",
+          "canonical": "Stunt double",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Forrest Gump",
+          "canonical": "Forrest Gump",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Quentin Tarantino",
+          "canonical": "Quentin Tarantino",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Golden Globe",
+          "canonical": "Golden Globe Award",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Red Carpet",
+          "canonical": "Red carpet",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Matrix",
+          "canonical": "The Matrix",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Christopher Nolan",
+          "canonical": "Christopher Nolan",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Rodeo Drive",
+          "canonical": "Rodeo Drive",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sequel",
+          "canonical": "Sequel",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gladiator",
+          "canonical": "Gladiator",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Marilyn Monroe",
+          "canonical": "Marilyn Monroe",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sunset Boulevard",
+          "canonical": "Sunset Boulevard",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Prequel",
+          "canonical": "Prequel",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Inception",
+          "canonical": "Inception",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Audrey Hepburn",
+          "canonical": "Audrey Hepburn",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Griffith Observatory",
+          "canonical": "Griffith Observatory",
+          "difficulty": "hard"
+        },
+        {
+          "word": "CGI",
+          "canonical": "Computer-generated imagery",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Interstellar",
+          "canonical": "Interstellar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "John Wayne",
+          "canonical": "John Wayne",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Roosevelt Hotel",
+          "canonical": "Hollywood Roosevelt Hotel",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Film Studio",
+          "canonical": "Film studio",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Dark Knight",
+          "canonical": "The Dark Knight",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Clint Eastwood",
+          "canonical": "Clint Eastwood",
+          "difficulty": "easy"
+        },
+        {
+          "word": "El Capitan Theatre",
+          "canonical": "El Capitan Theatre",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Storyboard",
+          "canonical": "Storyboard",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Fight Club",
+          "canonical": "Fight Club",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Marlon Brando",
+          "canonical": "Marlon Brando",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Paramount Gates",
+          "canonical": "Paramount Pictures Studio Tour",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Foley",
+          "canonical": "Foley",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Goodfellas",
+          "canonical": "Goodfellas",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jack Nicholson",
+          "canonical": "Jack Nicholson",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Academy Museum",
+          "canonical": "Academy Museum of Motion Pictures",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Key Grip",
+          "canonical": "Key grip",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Schindler's List",
+          "canonical": "Schindler's List",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Denzel Washington",
+          "canonical": "Denzel Washington",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Grauman's Egyptian Theatre",
+          "canonical": "Grauman's Egyptian Theatre",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Best Boy",
+          "canonical": "Best boy",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Silence of the Lambs",
+          "canonical": "The Silence of the Lambs",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stanley Kubrick",
+          "canonical": "Stanley Kubrick",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Saving Private Ryan",
+          "canonical": "Saving Private Ryan",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Alfred Hitchcock",
+          "canonical": "Alfred Hitchcock",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Lord of the Rings",
+          "canonical": "The Lord of the Rings: The Fellowship of the Ring",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Orson Welles",
+          "canonical": "Orson Welles",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Back to the Future",
+          "canonical": "Back to the Future",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Katharine Hepburn",
+          "canonical": "Katharine Hepburn",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Raiders of the Lost Ark",
+          "canonical": "Raiders of the Lost Ark",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bette Davis",
+          "canonical": "Bette Davis",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Terminator 2",
+          "canonical": "Terminator 2: Judgment Day",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Humphrey Bogart",
+          "canonical": "Humphrey Bogart",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Alien",
+          "canonical": "Alien",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cary Grant",
+          "canonical": "Cary Grant",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Blade Runner",
+          "canonical": "Blade Runner",
+          "difficulty": "easy"
+        },
+        {
+          "word": "James Stewart",
+          "canonical": "James Stewart",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Die Hard",
+          "canonical": "Die Hard",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Billy Wilder",
+          "canonical": "Billy Wilder",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ghostbusters",
+          "canonical": "Ghostbusters",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Francis Ford Coppola",
+          "canonical": "Francis Ford Coppola",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rocky",
+          "canonical": "Rocky",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Lion King",
+          "canonical": "The Lion King",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Toy Story",
+          "canonical": "Toy Story",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Frozen",
+          "canonical": "Frozen",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Finding Nemo",
+          "canonical": "Finding Nemo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Shrek",
+          "canonical": "Shrek",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Home Alone",
+          "canonical": "Home Alone",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mrs. Doubtfire",
+          "canonical": "Mrs. Doubtfire",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Speed",
+          "canonical": "Speed",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Twister",
+          "canonical": "Twister",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Armageddon",
+          "canonical": "Armageddon",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Independence Day",
+          "canonical": "Independence Day",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Men in Black",
+          "canonical": "Men in Black",
+          "difficulty": "easy"
+        },
+        {
+          "word": "The Truman Show",
+          "canonical": "The Truman Show",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Groundhog Day",
+          "canonical": "Groundhog Day",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Taxi Driver",
+          "canonical": "Taxi Driver",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Apocalypse Now",
+          "canonical": "Apocalypse Now",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Chinatown",
+          "canonical": "Chinatown",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Raging Bull",
+          "canonical": "Raging Bull",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Vertigo",
+          "canonical": "Vertigo",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rear Window",
+          "canonical": "Rear Window",
+          "difficulty": "hard"
+        },
+        {
+          "word": "North by Northwest",
+          "canonical": "North by Northwest",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Some Like It Hot",
+          "canonical": "Some Like It Hot",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Singin' in the Rain",
+          "canonical": "Singin' in the Rain",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Graduate",
+          "canonical": "The Graduate",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Easy Rider",
+          "canonical": "Easy Rider",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bonnie and Clyde",
+          "canonical": "Bonnie and Clyde",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The French Connection",
+          "canonical": "The French Connection",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Network",
+          "canonical": "Network",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Deer Hunter",
+          "canonical": "The Deer Hunter",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Platoon",
+          "canonical": "Platoon",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Blade Runner 2049",
+          "canonical": "Blade Runner 2049",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mulholland Drive",
+          "canonical": "Mulholland Drive",
+          "difficulty": "hard"
+        },
+        {
+          "word": "There Will Be Blood",
+          "canonical": "There Will Be Blood",
+          "difficulty": "hard"
+        },
+        {
+          "word": "No Country for Old Men",
+          "canonical": "No Country for Old Men",
+          "difficulty": "hard"
+        },
+        {
+          "word": "A Clockwork Orange",
+          "canonical": "A Clockwork Orange",
+          "difficulty": "hard"
+        },
+        {
+          "word": "2001: A Space Odyssey",
+          "canonical": "2001: A Space Odyssey",
+          "difficulty": "hard"
+        },
+        {
+          "word": "The Shining",
+          "canonical": "The Shining",
+          "difficulty": "hard"
+        }
+      ]
+    },
+    {
+      "topic": "South African general knowledge",
+      "version": "adaptive",
+      "scope": "adaptive",
+      "durationMs": 19428,
+      "finishReason": "STOP",
+      "accepted": 149,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 1,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 2
+      },
+      "easy": 78,
+      "hard": 71,
+      "groups": [
+        {
+          "label": "People and History",
+          "count": 39
+        },
+        {
+          "label": "Places and Nature",
+          "count": 38
+        },
+        {
+          "label": "Culture, Food, and Language",
+          "count": 36
+        },
+        {
+          "label": "Sport, Science, and Everyday Life",
+          "count": 39
+        }
+      ],
+      "usage": {
+        "promptTokenCount": 1266,
+        "candidatesTokenCount": 5472,
+        "totalTokenCount": 6738,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1266
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Nelson Mandela",
+          "canonical": "Nelson Mandela",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Table Mountain",
+          "canonical": "Table Mountain",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Braai",
+          "canonical": "Braai",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Springboks",
+          "canonical": "Springboks",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Desmond Tutu",
+          "canonical": "Desmond Tutu",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kruger National Park",
+          "canonical": "Kruger National Park",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Biltong",
+          "canonical": "Biltong",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Proteas",
+          "canonical": "South Africa national cricket team",
+          "difficulty": "easy"
+        },
+        {
+          "word": "F. W. de Klerk",
+          "canonical": "F. W. de Klerk",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Johannesburg",
+          "canonical": "Johannesburg",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Boerewors",
+          "canonical": "Boerewors",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bafana Bafana",
+          "canonical": "South Africa men's national soccer team",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Mahatma Gandhi",
+          "canonical": "Mahatma Gandhi",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cape Town",
+          "canonical": "Cape Town",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bobotie",
+          "canonical": "Bobotie",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Comrades Marathon",
+          "canonical": "Comrades Marathon",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Shaka Zulu",
+          "canonical": "Shaka Zulu",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Durban",
+          "canonical": "Durban",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Melktert",
+          "canonical": "Melktert",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Two Oceans Marathon",
+          "canonical": "Two Oceans Marathon",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Steve Biko",
+          "canonical": "Steve Biko",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pretoria",
+          "canonical": "Pretoria",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bunny Chow",
+          "canonical": "Bunny Chow",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kyalami",
+          "canonical": "Kyalami",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Cyril Ramaphosa",
+          "canonical": "Cyril Ramaphosa",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bloemfontein",
+          "canonical": "Bloemfontein",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Koeksister",
+          "canonical": "Koeksister",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lerato Chabangu",
+          "canonical": "Lerato Chabangu",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Thabo Mbeki",
+          "canonical": "Thabo Mbeki",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Robben Island",
+          "canonical": "Robben Island",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Roosterkoek",
+          "canonical": "Roosterkoek",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Wayde van Niekerk",
+          "canonical": "Wayde van Niekerk",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jacob Zuma",
+          "canonical": "Jacob Zuma",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cape of Good Hope",
+          "canonical": "Cape of Good Hope",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Potjiekos",
+          "canonical": "Potjiekos",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Caster Semenya",
+          "canonical": "Caster Semenya",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Helen Zille",
+          "canonical": "Helen Zille",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Drakensberg",
+          "canonical": "Drakensberg",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Amarula",
+          "canonical": "Amarula",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chad le Clos",
+          "canonical": "Chad le Clos",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chris Hani",
+          "canonical": "Chris Hani",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Limpopo",
+          "canonical": "Limpopo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ubuntu",
+          "canonical": "Ubuntu",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Percy Tau",
+          "canonical": "Percy Tau",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Oliver Tambo",
+          "canonical": "Oliver Tambo",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Soweto",
+          "canonical": "Soweto",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Apartheid",
+          "canonical": "Apartheid",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Siya Kolisi",
+          "canonical": "Siya Kolisi",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Winnie Madikizela-Mandela",
+          "canonical": "Winnie Madikizela-Mandela",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Garden Route",
+          "canonical": "Garden Route",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Springbok",
+          "canonical": "Springbok",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Francois Pienaar",
+          "canonical": "Francois Pienaar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jan van Riebeeck",
+          "canonical": "Jan van Riebeeck",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Blyde River Canyon",
+          "canonical": "Blyde River Canyon",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Protea",
+          "canonical": "Protea",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Joost van der Westhuizen",
+          "canonical": "Joost van der Westhuizen",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Paul Kruger",
+          "canonical": "Paul Kruger",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Stellenbosch",
+          "canonical": "Stellenbosch",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Vuvuzela",
+          "canonical": "Vuvuzela",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bryan Habana",
+          "canonical": "Bryan Habana",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cecil John Rhodes",
+          "canonical": "Cecil John Rhodes",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Franschhoek",
+          "canonical": "Franschhoek",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Gqom",
+          "canonical": "Gqom",
+          "difficulty": "hard"
+        },
+        {
+          "word": "AB de Villiers",
+          "canonical": "AB de Villiers",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bram Fischer",
+          "canonical": "Bram Fischer",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Karoo",
+          "canonical": "Karoo",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kwaito",
+          "canonical": "Kwaito",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Jacques Kallis",
+          "canonical": "Jacques Kallis",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Albert LUTHULI",
+          "canonical": "Albert Luthuli",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Kalahari Desert",
+          "canonical": "Kalahari Desert",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Amapiano",
+          "canonical": "Amapiano",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dale Steyn",
+          "canonical": "Dale Steyn",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pixley ka Isaka Seme",
+          "canonical": "Pixley ka Isaka Seme",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Vredefort Dome",
+          "canonical": "Vredefort Dome",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Afrikaans",
+          "canonical": "Afrikaans",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Kagiso Rabada",
+          "canonical": "Kagiso Rabada",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chief Albert Luthuli",
+          "canonical": "Chief Albert Luthuli",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Cradle of Humankind",
+          "canonical": "Cradle of Humankind",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Zulu language",
+          "canonical": "Zulu",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gary Player",
+          "canonical": "Gary Player",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Miriam Makeba",
+          "canonical": "Miriam Makeba",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Augrabies Falls",
+          "canonical": "Augrabies Falls",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Xhosa language",
+          "canonical": "Xhosa",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ernie Els",
+          "canonical": "Ernie Els",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hugh Masekela",
+          "canonical": "Hugh Masekela",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tsitsikamma",
+          "canonical": "Tsitsikamma",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sotho language",
+          "canonical": "Sesotho",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Retief Goosen",
+          "canonical": "Retief Goosen",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Charlize Theron",
+          "canonical": "Charlize Theron",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Hluhluwe–Imfolozi Park",
+          "canonical": "Hluhluwe–Imfolozi Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tsotsitaal",
+          "canonical": "Tsotsitaal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Soweto Derby",
+          "canonical": "Soweto Derby",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Trevor Noah",
+          "canonical": "Trevor Noah",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Golden Gate Highlands National Park",
+          "canonical": "Golden Gate Highlands National Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pangolin",
+          "canonical": "Pangolin",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Kaizer Chiefs",
+          "canonical": "Kaizer Chiefs F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "J. M. Coetzee",
+          "canonical": "J. M. Coetzee",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Knysna",
+          "canonical": "Knysna",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Aardvark",
+          "canonical": "Aardvark",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Orlando Pirates",
+          "canonical": "Orlando Pirates F.C.",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Nadine Gordimer",
+          "canonical": "Nadine Gordimer",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Oudtshoorn",
+          "canonical": "Oudtshoorn",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Marula tree",
+          "canonical": "Marula",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mamelodi Sundowns",
+          "canonical": "Mamelodi Sundowns F.C.",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Athol Fugard",
+          "canonical": "Athol Fugard",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Cango Caves",
+          "canonical": "Cango Caves",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Baobab tree",
+          "canonical": "Baobab",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Shark Tank",
+          "canonical": "Kings Park Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "William Kentridge",
+          "canonical": "William Kentridge",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mapungubwe",
+          "canonical": "Mapungubwe",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rooibos",
+          "canonical": "Rooibos",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ellis Park",
+          "canonical": "Ellis Park Stadium",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Alan Paton",
+          "canonical": "Alan Paton",
+          "difficulty": "hard"
+        },
+        {
+          "word": "iSimangaliso Wetland Park",
+          "canonical": "iSimangaliso Wetland Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Shweshwe",
+          "canonical": "Shweshwe",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Loftus Versfeld",
+          "canonical": "Loftus Versfeld Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Breyten Breytenbach",
+          "canonical": "Breyten Breytenbach",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Richtersveld",
+          "canonical": "Richtersveld",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pram",
+          "canonical": "Pram",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Moses Mabhida Stadium",
+          "canonical": "Moses Mabhida Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sol Plaatje",
+          "canonical": "Sol Plaatje",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Namaqualand",
+          "canonical": "Namaqualand",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Kopanong",
+          "canonical": "Kopanong",
+          "difficulty": "hard"
+        },
+        {
+          "word": "FNB Stadium",
+          "canonical": "FNB Stadium",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ukhahlamba Drakensberg Park",
+          "canonical": "Ukhahlamba Drakensberg Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ndebele art",
+          "canonical": "Ndebele art",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Green Point Stadium",
+          "canonical": "Cape Town Stadium",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Christiaan Barnard",
+          "canonical": "Christiaan Barnard",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sterkfontein Caves",
+          "canonical": "Sterkfontein Caves",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Isicathamiya",
+          "canonical": "Isicathamiya",
+          "difficulty": "hard"
+        },
+        {
+          "word": "South African Rand",
+          "canonical": "South African rand",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Max Theiler",
+          "canonical": "Max Theiler",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Robberg Nature Reserve",
+          "canonical": "Robberg Nature Reserve",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Skomotana",
+          "canonical": "Skomotana",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Eskom",
+          "canonical": "Eskom",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Allan McLeod Cormack",
+          "canonical": "Allan McLeod Cormack",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Augrabies Falls National Park",
+          "canonical": "Augrabies Falls National Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Venda",
+          "canonical": "Venda",
+          "difficulty": "hard"
+        },
+        {
+          "word": "SAA",
+          "canonical": "South African Airways",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sydney Brenner",
+          "canonical": "Sydney Brenner",
+          "difficulty": "hard"
+        },
+        {
+          "word": "West Coast National Park",
+          "canonical": "West Coast National Park",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tsonga",
+          "canonical": "Tsonga",
+          "difficulty": "hard"
+        },
+        {
+          "word": "SASSA",
+          "canonical": "South African Social Security Agency",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Patrick Lekota",
+          "canonical": "Patrick Lekota",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pilanesberg National Park",
+          "canonical": "Pilanesberg National Park",
+          "difficulty": "easy"
+        },
+        {
+          "word": "SANParks",
+          "canonical": "South African National Parks",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ahmed Kathrada",
+          "canonical": "Ahmed Kathrada",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sun City",
+          "canonical": "Sun City",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Square Kilometre Array",
+          "canonical": "Square Kilometre Array",
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}
