@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebas
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
 import * as OnlineState from './online/state.js?v=20261020.11';
 import { OnlineClient } from './online/client.js?v=20261020.11';
-import * as Gameplay from './gameplay/rules.js?v=20261020.11';
+import * as Gameplay from './gameplay/rules.js?v=20261026.3';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261026.1';
 import * as AiPacks from './gameplay/ai-packs.js?v=20261026.1';
@@ -2116,7 +2116,7 @@ function updateBoard({ animateMoves = false } = {}) {
             const from = chaosVisual.from;
             if (position >= Math.min(from, current) && position <= Math.max(from, current)) cell.classList.add('board-cell-trail');
             if (position === current) cell.classList.add('board-cell-moving');
-            if (chaosVisual.phase !== 'moving' && position === chaosVisual.landing?.tileIndex) {
+            if (['landing', 'effect', 'complete', 'choice'].includes(chaosVisual.phase) && position === chaosVisual.landing?.tileIndex) {
                 cell.classList.add('board-cell-landed-powerup');
                 if (chaosVisual.phase === 'effect') cell.classList.add('board-cell-effect');
             }
@@ -2150,9 +2150,10 @@ function updateBoard({ animateMoves = false } = {}) {
         const type = isChaosMode && powerupRevealVisible && position > 0 && position < pointsToWin - 1 ? sanitizeChaosPowerupType(roundPowerups[position]) : null;
         if (type) {
             const badge = document.createElement('span'); badge.className = `board-powerup ${CHAOS_POWERUP_TYPES[type].cssClass}`;
+            if (chaosVisual?.phase === 'reveal') badge.classList.add('board-powerup-reveal');
             badge.textContent = CHAOS_POWERUP_TYPES[type].label;
             cell.appendChild(badge); cell.classList.add('board-cell-powerup');
-            if (chaosVisual?.phase !== 'moving' && landedPowerupPreview?.tileIndex === position) cell.classList.add('board-cell-landed-powerup');
+            if (landedPowerupPreview?.tileIndex === position) cell.classList.add('board-cell-landed-powerup');
         }
     });
     updateTeamScores();
@@ -2649,12 +2650,15 @@ function renderResolutionFrame(plan, elapsed) {
     const timing = Gameplay.resolutionTiming(Boolean(plan.landing), plan.basePoints[actorIndex] >= pointsToWin, plan.moveCount);
     // Stored plans own their deadline, including plans made by an older client.
     const scale = plan.durationMs / timing.durationMs;
-    const moveEnd = timing.moveMs * scale;
-    const effectStart = (timing.moveMs + timing.landingMs) * scale;
-    const effectEnd = (timing.moveMs + timing.landingMs + timing.effectMs) * scale;
-    const baseRatio = reduced ? 1 : Math.min(1, Math.max(0, elapsed / moveEnd));
+    const revealStart = timing.boardMs * scale;
+    const moveStart = (timing.boardMs + timing.revealMs) * scale;
+    const moveEnd = moveStart + timing.moveMs * scale;
+    const effectStart = moveEnd + timing.landingMs * scale;
+    const effectEnd = effectStart + timing.effectMs * scale;
+    const baseRatio = reduced ? 1 : Math.min(1, Math.max(0, (elapsed - moveStart) / (timing.moveMs * scale)));
     const effectRatio = reduced || !plan.landing ? 1 : Math.min(1, Math.max(0, (elapsed - effectStart) / (timing.effectMs * scale)));
-    const phase = reduced || elapsed >= effectEnd ? 'complete' : baseRatio < 1 ? 'moving'
+    const phase = reduced || elapsed >= effectEnd ? 'complete' : elapsed < revealStart ? 'board'
+        : elapsed < moveStart ? 'reveal' : baseRatio < 1 ? 'moving'
         : elapsed < effectStart ? 'landing' : 'effect';
     const display = [...plan.basePoints];
     display[actorIndex] = plan.basePoints[actorIndex] - plan.moveCount + Math.floor(plan.moveCount * baseRatio)
@@ -2667,18 +2671,21 @@ function renderResolutionFrame(plan, elapsed) {
     teams.forEach((team, index) => { team.points = display[index]; });
     if (effectRatio === 1) teamShields = [...plan.shields];
     chaosVisual = { actorIndex, phase, from: plan.basePoints[actorIndex] - plan.moveCount, landing: plan.landing };
-    roundPowerups = plan.powerups; powerupRevealVisible = phase !== 'moving'; landedPowerupPreview = phase === 'moving' ? null : plan.landing;
+    roundPowerups = plan.powerups; powerupRevealVisible = phase !== 'board';
+    landedPowerupPreview = ['landing', 'effect', 'complete'].includes(phase) ? plan.landing : null;
     const effectName = CHAOS_POWERUP_TYPES[plan.landing?.type]?.legendLabel;
     const team = `Team ${actorIndex + 1}`;
     const outcome = Gameplay.effectMessage(plan.effect);
     const result = chaosOutcomePresentation({ teamIndex: actorIndex, earned: plan.moveCount,
         pointsBefore: plan.basePoints[actorIndex] - plan.moveCount, pointsAfter: plan.points[actorIndex], effect: plan.effect });
-    const message = phase === 'moving' ? (plan.moveCount ? `${team} moves ${plan.moveCount} ${plan.moveCount === 1 ? 'space' : 'spaces'}…` : `${team} stays on this space…`)
+    const message = phase === 'board' ? 'Watch the board…' : phase === 'reveal' ? 'Power-ups revealed!'
+        : phase === 'moving' ? (plan.moveCount ? `${team} moves ${plan.moveCount} ${plan.moveCount === 1 ? 'space' : 'spaces'}…` : `${team} stays on this space…`)
         : phase === 'landing' ? `${effectName}!` : phase === 'effect' ? Gameplay.effectMessage(plan.effect)
         : display[actorIndex] >= pointsToWin ? `${team} reached the finish!` : outcome || 'Safe landing!';
     setChaosPresentation(phase, message, ['effect', 'complete'].includes(phase) ? result.tone : 'neutral', {
-        teamIndex: actorIndex, icon: phase === 'moving' ? '→' : result.icon,
-        detail: phase === 'moving' ? `From space ${plan.basePoints[actorIndex] - plan.moveCount} to space ${Math.min(plan.basePoints[actorIndex], pointsToWin)}.`
+        teamIndex: actorIndex, icon: ['board', 'reveal'].includes(phase) ? '✦' : phase === 'moving' ? '→' : result.icon,
+        detail: ['board', 'reveal'].includes(phase) ? `${team} is about to move. Watch where they land.`
+            : phase === 'moving' ? `From space ${plan.basePoints[actorIndex] - plan.moveCount} to space ${Math.min(plan.basePoints[actorIndex], pointsToWin)}.`
             : phase === 'landing' ? `${team} landed on space ${plan.basePoints[actorIndex]}. The effect is about to happen…` : result.detail,
         earned: plan.moveCount, total: phase === 'complete' ? plan.points[actorIndex] : null
     });
@@ -2710,7 +2717,7 @@ function setChaosPresentation(phase, message, tone = 'neutral', details = {}) {
     game.classList.toggle('resolving-board', !details.persistent);
     const panel = document.getElementById('chaosResolution'); panel.hidden = false; panel.dataset.tone = tone; panel.dataset.phase = phase;
     panel.setAttribute('aria-label', phase === 'complete' ? 'Chaos turn result' : 'Chaos turn progress');
-    const step = ({ moving: 'Move', landing: 'Landed', effect: 'Chaos!', complete: 'Turn result', choice: 'Choose your effect' })[phase];
+    const step = ({ board: 'The board', reveal: 'Power-ups', moving: 'Move', landing: 'Landed', effect: 'Chaos!', complete: 'Turn result', choice: 'Choose your effect' })[phase];
     document.getElementById('chaosStep').textContent = `${Number.isInteger(details.teamIndex) ? 'Team ' + (details.teamIndex + 1) + ' · ' : ''}${step}`;
     const node = document.getElementById('chaosMessage');
     if (node.textContent !== message) node.textContent = message;

@@ -396,7 +396,7 @@ test('a winning Chaos move skips effects and leaves time to see the finish', () 
     assert.equal(plan.durationMs, Gameplay.resolutionDuration(false, true, 3));
 });
 
-test('Chaos frames move first, reveal the landing, then apply the effect without changing the plan', () => {
+test('Chaos frames settle, reveal power-ups before moving, then keep the same landing and effect sequence', () => {
     const h = ui();
     h.run(`teams=[{points:2},{points:7}];pointsToWin=20;preferences.motion='full';
         globalThis.plan={actorIndex:0,moveCount:3,basePoints:[5,7],points:[2,7],shields:[0,0],
@@ -405,26 +405,74 @@ test('Chaos frames move first, reveal the landing, then apply the effect without
     const saved = h.run('JSON.stringify(plan)');
     assert.equal(h.run('teams[0].points'), 2);
     assert.equal(h.run('powerupRevealVisible'), false);
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · The board');
+    h.run('renderResolutionFrame(plan,349)');
+    assert.equal(h.run('powerupRevealVisible'), false);
+    h.run('renderResolutionFrame(plan,350)');
+    assert.equal(h.run('powerupRevealVisible'), true);
+    assert.equal(h.run('teams[0].points'), 2);
+    assert.equal(h.run('landedPowerupPreview'), null);
+    assert.equal(h.el('chaosMessage').textContent, 'Power-ups revealed!');
+    h.run('renderResolutionFrame(plan,799)');
+    assert.equal(h.run('teams[0].points'), 2);
+    assert.equal(h.el('chaosStep').textContent, 'Team 1 · Power-ups');
+    h.run('renderResolutionFrame(plan,800)');
     assert.equal(h.el('chaosMessage').textContent, 'Team 1 moves 3 spaces…');
-    h.run('renderResolutionFrame(plan,1380)');
+    h.run('renderResolutionFrame(plan,1260)');
+    assert.equal(h.run('teams[0].points'), 3);
+    assert.equal(h.run('powerupRevealVisible'), true);
+    assert.equal(h.run('landedPowerupPreview'), null);
+    h.run('renderResolutionFrame(plan,2180)');
     assert.equal(h.run('teams[0].points'), 5);
     assert.equal(h.run('powerupRevealVisible'), true);
     assert.equal(h.el('chaosStep').textContent, 'Team 1 · Landed');
-    h.run('renderResolutionFrame(plan,2780)');
+    h.run('renderResolutionFrame(plan,3580)');
     assert.equal(h.el('chaosStep').textContent, 'Team 1 · Chaos!');
     assert.match(h.el('chaosMessage').textContent, /Bomb!/);
-    h.run('renderResolutionFrame(plan,4180)');
+    h.run('renderResolutionFrame(plan,4980)');
     assert.equal(h.run('teams[0].points'), 2);
     assert.equal(h.el('chaosStep').textContent, 'Team 1 · Turn result');
     assert.equal(h.el('chaosTotal').textContent, '2 points');
     assert.match(h.el('chaosDetail').textContent, /space 5.*space 2/);
-    h.run('renderResolutionFrame(plan,6579)');
+    h.run('renderResolutionFrame(plan,7379)');
     assert.equal(h.el('chaosStep').textContent, 'Team 1 · Turn result');
     assert.equal(h.run('JSON.stringify(plan)'), saved);
     h.run('preferences.motion="reduced";onlineBoardSignature="";renderResolutionFrame(plan,0)');
     assert.equal(h.run('teams[0].points'), 2);
     assert.equal(h.el('chaosStep').textContent, 'Team 1 · Turn result');
     assert.match(h.el('chaosMessage').textContent, /Bomb! Back 3 spaces/);
+});
+
+test('board badges pop only during the reveal and do not highlight the landing before arrival', () => {
+    for (const [elapsed, shown, popping, landed] of [[0,false,false,false], [349,false,false,false],
+        [350,true,true,false], [799,true,true,false], [800,true,false,false], [1260,true,false,false], [2180,true,false,true]]) {
+        const h=ui();
+        h.run(`teams=[{points:2},{points:7}];pointsToWin=20;isChaosMode=true;preferences.motion='full';
+            actualGenerateBoard();updateBoard=actualUpdateBoard;
+            renderResolutionFrame({actorIndex:0,moveCount:3,basePoints:[5,7],points:[2,7],shields:[0,0],
+                powerups:{5:'bomb'},landing:{teamIndex:0,tileIndex:5,type:'bomb'},actorDelta:-3,victimDelta:0,
+                effect:{type:'bomb',actorDelta:-3},durationMs:Gameplay.resolutionDuration(true,false,3)},${elapsed})`);
+        const cell=h.el('gameBoard').children[5],badge=cell.children.find(node=>node.className?.startsWith('board-powerup '));
+        assert.equal(Boolean(badge),shown,`badge at ${elapsed}ms`);
+        if(badge)assert.equal(badge.classList.contains('board-powerup-reveal'),popping);
+        assert.equal(cell.classList.contains('board-cell-landed-powerup'),landed,`landing at ${elapsed}ms`);
+    }
+});
+
+test('online viewers share the board pause, reveal and movement schedule, including late joins', () => {
+    let data=act(act(game(), 'start-round', {seed:99}), 'end-round');
+    data.settings.chaosMode=true;data.turn.selectedIndexes=[0,1,2];
+    const planner=ui();
+    data=OnlineState.act(data,actor('A'),{type:'submit-round',turnId:data.turn.id},now,
+        {planChaos:(g,p)=>planner.run(`planOnlineChaos(${JSON.stringify(g)},${JSON.stringify(p)})`)});
+    for(const [elapsed,phase,shown] of [[0,'board',false],[349,'board',false],[350,'reveal',true],
+        [799,'reveal',true],[800,'moving',true],[1260,'moving',true]]) {
+        const h=ui();h.now=data.turn.resolution.startedAt+elapsed;h.mount(data,actor('B'));
+        assert.equal(h.el('chaosResolution').dataset.phase,phase);
+        assert.equal(h.run('powerupRevealVisible'),shown);
+        assert.equal(h.el('scoreInput').hidden,true);
+        if(elapsed<800)assert.equal(h.run('teams[0].points'),0);
+    }
 });
 
 test('local Chaos retains a readable outcome until the next round starts', async () => {

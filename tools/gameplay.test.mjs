@@ -42,15 +42,18 @@ test('a refill remembers the answers already drawn on this card', () => {
     assert.equal(second.deck.easy.length, 3);
     assert.ok(second.words.every(word => second.deck.easy.includes(Rules.answerKey(word))));
 });
-test('Chaos pacing gives movement, the reveal, the hit and the result time to read', () => {
+test('Chaos pacing settles the board and reveals its map before the unchanged move and effect beats', () => {
     for (const value of Object.values(Rules.PRESETS)) { assert.equal(value.numWords, 5); assert.equal(value.numSeconds, 30); }
     for (const count of [0, 1, 5, 15]) {
         const timing = Rules.resolutionTiming(true, false, count);
+        assert.equal(timing.boardMs, 350);
+        assert.equal(timing.revealMs, 450);
         assert.ok(timing.moveMs >= Math.max(1000, count * 360));
         assert.ok(timing.landingMs >= 1400);
         assert.ok(timing.effectMs >= 1400);
         assert.ok(timing.resultMs >= 2400);
         assert.equal(Rules.resolutionDuration(true, false, count), timing.durationMs);
+        assert.equal(timing.durationMs, 800 + timing.moveMs + timing.landingMs + timing.effectMs + timing.resultMs);
         const safe = Rules.resolutionTiming(false, false, count);
         assert.equal(safe.landingMs + safe.effectMs, 0);
         assert.ok(safe.resultMs >= 1600);

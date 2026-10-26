@@ -215,6 +215,8 @@ body.layout-game .app-actions { justify-content: flex-end; }
 .team-token { position: relative; z-index: 4; width: 19px; height: 19px; flex-shrink: 0; border-radius: 50%; color: #fff; font-size: 12px; line-height: 19px; font-weight: 700; }
 .board-powerup, .chaos-legend-badge { font-size: 12px; line-height: 1; font-weight: 700; padding: 3px 6px; border-radius: 999px; border: 1px solid rgba(0,0,0,.15); color: #111; white-space: nowrap; }
 .board-powerup { position: relative; margin-top: auto; background: #fff; z-index: 3; pointer-events: none; }
+.board-powerup-reveal { animation: chaos-map-pop .24s ease-out both; }
+@keyframes chaos-map-pop { from { opacity: 0; transform: translateY(4px) scale(.65); } to { opacity: 1; transform: translateY(0) scale(1); } }
 .board-powerup-landed { animation: landed-powerup-pulse .8s ease-in-out infinite alternate; }
 .board-cell-landed-powerup { box-shadow: inset 0 0 0 2px #b7791f; }
 @keyframes landed-powerup-pulse { from { transform: scale(1); } to { transform: scale(1.1); } }
