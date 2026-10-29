@@ -1,0 +1,99 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "checks": [
+    "boost: local bank/risk/preview/resource/rematch",
+    "double: local bank/risk/preview/resource/rematch",
+    "table: local name validation, private device passes, untimed draft, equal turns, shared points, PNG and rematch",
+    "case: local private handoff, actual timer expiry, cumulative evidence, solvable profiles, accusation and reset",
+    "local custom packs: long typed-answer validation, editable recovery, 160-answer local pack, and return to Classic",
+    "boost: two real browser clients, shared transactions, roles/word privacy, scoring",
+    "double: two real browser clients, shared transactions, roles/word privacy, scoring",
+    "table: three real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch",
+    "case: two real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch"
+  ],
+  "layouts": [
+    {
+      "label": "boost local",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "boost local",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "boost local",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "boost local large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "double local",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "double local",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "double local",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "double local large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "table review",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "table review",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "table review",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "table review large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "case accusation",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "case accusation",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "case accusation",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "case accusation large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 107,
+  "completed": true
+}

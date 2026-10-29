@@ -1,0 +1,53 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "checks": [
+    "table: local name validation, private device passes, untimed draft, equal turns, shared points, PNG and rematch",
+    "case: local private handoff, actual timer expiry, cumulative evidence, solvable profiles, accusation and reset",
+    "local custom packs: long typed-answer validation, editable recovery, 160-answer local pack, and return to Classic"
+  ],
+  "layouts": [
+    {
+      "label": "table review",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "table review",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "table review",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "table review large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "case accusation",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "case accusation",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "case accusation",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "case accusation large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 0,
+  "completed": true
+}

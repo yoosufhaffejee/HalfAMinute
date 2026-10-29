@@ -1,0 +1,13 @@
+{
+  "backend": "Live Firebase; temporary UI-created test lobbies, explicitly left afterward; no AI requests",
+  "checks": [
+    "boost: two real browser clients, shared transactions, roles/word privacy, scoring",
+    "double: two real browser clients, shared transactions, roles/word privacy, scoring",
+    "table: three real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch",
+    "case: two real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch"
+  ],
+  "layouts": [],
+  "errors": [],
+  "cleanup": "Each temporary test player explicitly left through the game UI.",
+  "completed": true
+}

@@ -43,7 +43,8 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=20261029.4">
+    <link rel="stylesheet" href="style.css?v=20261030.1">
+    <link rel="stylesheet" href="gameplay/modes.css?v=20261030.1">
 </head>
 
 <body>
@@ -71,21 +72,28 @@
         <div id="menu">
             <p id="menuNotice" role="status" hidden></p>
             <p class="menu-intro">Describe. Guess. Race to the finish.</p>
-            <div class="quick-setup">
+            <div id="quickSetup" class="quick-setup">
                 <div class="setup-field">
                     <label for="quickMode">Game</label>
-                    <select id="quickMode"><option value="classic">Classic</option><option value="chaos">Chaos</option></select>
+                    <select id="quickMode"><option value="classic">Classic</option><option value="chaos">Chaos</option><option value="boost">Boost Stakes</option><option value="double">Double Stakes</option><option value="table">Open Table</option><option value="case">Case Files</option></select>
                 </div>
-                <div class="setup-field">
+                <div class="setup-field" id="quickLengthField">
                     <label for="quickPreset">Length</label>
                     <select id="quickPreset"><option value="short">Short · 10 points</option><option value="standard" selected>Standard · 20 points</option><option value="long">Long · 40 points</option></select>
                 </div>
-                <div class="setup-field">
+                <div class="setup-field" id="teamCountField">
                     <label for="numTeams">Teams</label>
                     <input type="number" id="numTeams" min="2" max="4" value="2">
                 </div>
                 <p id="setupSummary" aria-live="polite"></p>
-                <small>The starting team is drawn at random. Rematches rotate the starter. Customize cards, packs, and timing in Settings.</small>
+                <p id="modeDescription" class="mode-description"></p>
+                <small id="setupStarterNote">The starting team is drawn at random. Rematches rotate the starter. Customize cards, packs, and timing in Settings.</small>
+                <div id="partySetup" class="party-setup" hidden>
+                    <div class="form-field" id="tableCyclesField"><label for="tableCycles">Speaking turns per player</label><select id="tableCycles"><option value="1">1 · A quick introduction</option><option value="2" selected>2 · Standard</option><option value="3">3 · A longer table</option></select></div>
+                    <div class="form-field" id="caseIdField"><label for="caseId">Investigation</label><select id="caseId"><option value="trophy">The Missing Trophy</option><option value="blackout">Blackout at the Observatory</option><option value="blueprint">The Vanishing Blueprint</option></select></div>
+                    <div class="form-field" id="caseTurnsField"><label for="caseTurns">Turns to investigate</label><input type="number" id="caseTurns" min="4" max="12" value="6"></div>
+                    <div class="form-field"><label for="localPlayerNames">Players on this device</label><textarea id="localPlayerNames" rows="3" maxlength="320" placeholder="One name per line" aria-describedby="localNamesHint localNamesError"></textarea><small id="localNamesHint">For local play, enter 2–12 different names. Online, each friend joins from their own device.</small><p id="localNamesError" class="dialog-feedback is-error" role="alert" hidden></p></div>
+                </div>
             </div>
             <div class="start-game-row">
                 <button class="btn btn-success" id="startGameButton">Start Game</button>
@@ -111,21 +119,22 @@
                             </div>
                         </section>
                         <fieldset id="gameSetupSettings" aria-label="Game setup">
+                            <p id="modeSettingsNote" class="dialog-note" hidden></p>
                             <section class="dialog-section" aria-labelledby="matchSettingsTitle">
                                 <h3 id="matchSettingsTitle">Match setup</h3>
                                 <div class="dialog-grid">
                                     <div class="form-field"><label for="difficulty">Difficulty</label><select id="difficulty"><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select></div>
-                                    <div class="form-field"><label for="pointsToWin">Target score</label><input type="number" id="pointsToWin" min="10" max="60" value="20"></div>
-                                    <div class="form-field"><label for="txtSeconds">Round time <span class="field-unit">(seconds)</span></label><input type="number" id="txtSeconds" min="5" max="300" value="30"></div>
-                                    <div class="form-field"><label for="txtWords">Words per round</label><input type="number" id="txtWords" min="1" max="15" value="5"></div>
+                                    <div class="form-field" id="targetSetting"><label for="pointsToWin">Target score</label><input type="number" id="pointsToWin" min="10" max="60" value="20"></div>
+                                    <div class="form-field" id="timeSetting"><label for="txtSeconds">Round time <span class="field-unit">(seconds)</span></label><input type="number" id="txtSeconds" min="5" max="300" value="30"></div>
+                                    <div class="form-field" id="wordsSetting"><label for="txtWords">Words per round</label><input type="number" id="txtWords" min="1" max="15" value="5"></div>
                                 </div>
                             </section>
-                            <section class="dialog-section" aria-labelledby="playOptionsTitle">
+                            <section id="modePlayOptions" class="dialog-section" aria-labelledby="playOptionsTitle">
                                 <h3 id="playOptionsTitle">Ways to play</h3>
-                                <label class="toggle-row" for="chkChaos"><span class="toggle-copy"><strong>Chaos mode</strong><small id="chaosModeHint">Landing effects add boosts, slips, shields and steals.</small></span><input type="checkbox" id="chkChaos" value="false"></label>
-                                <label class="toggle-row" for="chkReroll"><span class="toggle-copy"><strong>Team reroll <span class="feature-tag">Prototype</span></strong><small>In Chaos, each team can reroll one landing effect per match. Five seconds to choose.</small></span><input type="checkbox" id="chkReroll"></label>
-                                <label class="toggle-row" for="chkTraining"><span class="toggle-copy"><strong>Training hints</strong><small>Optional descriptions for built-in words. AI and pasted packs do not include hints.</small></span><input type="checkbox" id="chkTraining" value="false"></label>
-                                <label class="toggle-row" for="chkSeries"><span class="toggle-copy"><strong>Track rematches</strong><small>Keep a session win tally. A new game or a change of teams resets it.</small></span><input type="checkbox" id="chkSeries"></label>
+                                <label id="chaosOption" class="toggle-row" for="chkChaos"><span class="toggle-copy"><strong>Chaos mode</strong><small id="chaosModeHint">Landing effects add boosts, slips, shields and steals.</small></span><input type="checkbox" id="chkChaos" value="false"></label>
+                                <label id="rerollOption" class="toggle-row" for="chkReroll"><span class="toggle-copy"><strong>Team reroll <span class="feature-tag">Prototype</span></strong><small>In Chaos, each team can reroll one landing effect per match. Five seconds to choose.</small></span><input type="checkbox" id="chkReroll"></label>
+                                <label id="trainingOption" class="toggle-row" for="chkTraining"><span class="toggle-copy"><strong>Training hints</strong><small>Optional descriptions for built-in words. AI and pasted packs do not include hints.</small></span><input type="checkbox" id="chkTraining" value="false"></label>
+                                <label id="seriesOption" class="toggle-row" for="chkSeries"><span class="toggle-copy"><strong>Track rematches</strong><small>Keep a session win tally. A new game or a change of teams resets it.</small></span><input type="checkbox" id="chkSeries"></label>
                             </section>
                             <section class="dialog-section" aria-labelledby="wordPacksTitle">
                                 <h3 id="wordPacksTitle">Word packs</h3>
@@ -240,7 +249,7 @@
                         </div>
                         <div id="lobbyPlayers" hidden></div>
                     </div>
-                    <div class="modal-footer"><small class="footer-note">Teams and turns are managed in the lobby.</small><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Back</button></div>
+                    <div class="modal-footer"><small class="footer-note">Players and turns are managed in the lobby.</small><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Back</button></div>
                 </div>
             </div>
         </div>
@@ -255,16 +264,17 @@
                         <button type="button" class="dialog-close" data-bs-dismiss="modal" aria-label="Close How to play"><i class="fas fa-times" aria-hidden="true"></i></button>
                     </div>
                     <div class="modal-body">
-                        <div class="rules-goal"><strong>Describe. Guess. Race to the finish.</strong><p>Every correct guess earns one point. Reaching the target starts the final round: every team gets the same number of turns, then the highest score wins. Equal highest scores are a draw.</p></div>
-                        <section class="dialog-section" aria-labelledby="turnGuideTitle"><h3 id="turnGuideTitle">A turn in three steps</h3>
+                        <section id="modeHowToPlay" class="dialog-section" hidden><h3 id="modeRulesTitle"></h3><p id="modeRulesText"></p></section>
+                        <div id="standardRulesGoal" class="rules-goal"><strong>Describe. Guess. Race to the finish.</strong><p>Every correct guess earns one point. Reaching the target starts the final round: every team gets the same number of turns, then the highest score wins. Equal highest scores are a draw.</p></div>
+                        <section id="standardRulesTurns" class="dialog-section" aria-labelledby="turnGuideTitle"><h3 id="turnGuideTitle">A turn in three steps</h3>
                             <ol class="rules-steps"><li><strong>Describe</strong><p>The speaker explains the words on the card, in any order, before time runs out.</p></li><li><strong>Guess</strong><p>The listeners guess aloud. Keep trying: guesses are unlimited while the timer runs.</p></li><li><strong>Score &amp; rotate</strong><p>Select the correctly guessed words, confirm the score, and pass to the next team. Rotate the speaker within your team each turn.</p></li></ol>
                         </section>
                         <section class="dialog-section" aria-labelledby="clueRulesTitle"><h3 id="clueRulesTitle">Give a great clue</h3>
                             <div class="clue-rules"><div class="clue-rule-list"><h4>You can</h4><ul><li>Use explanations, humming or gestures.</li><li>Describe the words in any order.</li><li>Say “and” or “the” if they appear in the answer.</li></ul></div><div class="clue-rule-list"><h4>Leave these out</h4><ul><li>The actual word or name, and related or derived words.</li><li>“Sounds like” or “rhymes with” clues.</li><li>Alphabet letters, including starting or ending letters.</li><li>Translations or other languages.</li><li>Pointing to objects in the room.</li><li>Acronyms, forwards or backwards.</li></ul></div></div>
                         </section>
-                        <section class="dialog-section" aria-labelledby="chaosGuideTitle"><h3 id="chaosGuideTitle">Add a little Chaos</h3><p>Earn your clue points, land, then resolve one effect. Boosts and steals help you move ahead; slips and bombs set you back. Bombs cost up to three points, and one shield blocks one penalty or incoming steal. Effects never chain.</p><p class="dialog-help">The map changes each turn. Winning moves, Start and the tile before Finish have no effect. Find the full effect guide below the board during a Chaos game.</p></section>
-                        <div class="dialog-note"><strong>Playing online?</strong><p>Join with a four-letter code. The game manages teams, speakers and turns. Follow your on-screen role: who can see the cards depends on the lobby size.</p></div>
-                        <p class="dialog-help starter-note">A fresh match draws the starting team at random. Rematches rotate the starter.</p>
+                        <section id="chaosRulesSection" class="dialog-section" aria-labelledby="chaosGuideTitle"><h3 id="chaosGuideTitle">Add a little Chaos</h3><p>Earn your clue points, land, then resolve one effect. Boosts and steals help you move ahead; slips and bombs set you back. Bombs cost up to three points, and one shield blocks one penalty or incoming steal. Effects never chain.</p><p class="dialog-help">The map changes each turn. Winning moves, Start and the tile before Finish have no effect. Find the full effect guide below the board during a Chaos game.</p></section>
+                        <div class="dialog-note"><strong>Playing online?</strong><p id="onlineRulesText">Join with a four-letter code. The game manages teams, speakers and turns. Follow your on-screen role: who can see the cards depends on the lobby size.</p></div>
+                        <p id="starterRulesNote" class="dialog-help starter-note">A fresh match draws the starting team at random. Rematches rotate the starter.</p>
                     </div>
                     <div class="modal-footer"><button type="button" class="btn btn-success" data-bs-dismiss="modal">Got it</button></div>
                 </div>
@@ -284,6 +294,8 @@
             </div>
         </div>
 
+        <div id="partyGame" hidden aria-label="Game"></div>
+        <p id="partyAnnouncement" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></p>
         <div id="game" hidden>
             <h5 id="lblGameCode" hidden>Game Code: </h5>
             <h6 id="gameState" hidden>Status: Waiting for players!</h6>
@@ -348,6 +360,7 @@
             </section>
             <details id="trainingHintsDrawer" hidden><summary>Training hints</summary><div id="currentWords" hidden></div></details>
             <div id="roundControls">
+                <section id="stakesPanel" class="stakes-panel" hidden><p id="stakesInstruction" role="status" aria-live="polite"></p><small id="stakesAvailability"></small></section>
                 <div id="scoreInput" hidden>
                     <label id="answers">Click the correct answers:</label>
                     <p id="selectionSummary" role="status" aria-live="polite" hidden></p>
@@ -372,6 +385,7 @@
                 </div>
                 <div class="round-controls">
                     <button class="btn btn-success" id="startRoundButton">Start Round</button>
+                    <button id="riskRoundButton" type="button" class="btn btn-outline-success" hidden>Risk this turn</button>
                     <button class="btn btn-success" id="startOnlineGame" hidden>Start Game</button>
                     <button class="btn btn-primary" id="nextRoundButton" hidden>Next Round</button>
                     <button class="btn btn-warning" id="endRoundButton" hidden>End Round</button>
@@ -402,6 +416,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261029.4" type="module"></script>
+    <script src="script.js?v=20261030.1" type="module"></script>
 </body>
 </html>

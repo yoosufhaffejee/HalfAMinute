@@ -1,4 +1,4 @@
-import * as State from './state.js?v=20261029.4';
+import * as State from './state.js?v=20261030.1';
 
 // Firebase is injected so connection loss, retries and delayed commits can be
 // exercised without touching a production database.
@@ -164,7 +164,7 @@ export class OnlineClient {
         if (this.autoBusy || !this.connected || this.closed || this.suspended || !this.snapshot?.turn) return;
         const { phase, turn, hostId, hostEpoch } = this.snapshot;
         let action;
-        if (phase === 'describing' && this.serverNow() >= turn.deadline) action = { type: 'expire-round', turnId: turn.id };
+        if (phase === 'describing' && Number.isFinite(turn.deadline) && this.serverNow() >= turn.deadline) action = { type: 'expire-round', turnId: turn.id };
         if (phase === 'chaos-choice' && hostId === this.actor.playerId && this.serverNow() >= turn.choiceDeadline) {
             action = { type: 'expire-choice', turnId: turn.id, hostEpoch };
         }

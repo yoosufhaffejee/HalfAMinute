@@ -112,6 +112,34 @@ function makeClient(t, db, name, options = {}) {
     return { client, sdk, errors, snapshots };
 }
 
+test('Open Table client never expires an untimed answer and reconnect keeps sealed guesses', async t => {
+    const db = new Database(); db.game.settings = { ...db.game.settings, mode: 'table', tableCycles: 1 };
+    const a = makeClient(t, db, 'A'), b = makeClient(t, db, 'B'), c = makeClient(t, db, 'C');
+    for (const entry of [a, b, c]) { entry.client.rules.drawWords = () => ({ words: ['Apple'], pools: {} }); await entry.client.connect(); }
+    await a.client.command({ type: 'start-game', seed: 0 }); await flush();
+    await a.client.command({ type: 'start-round', seed: 1 }); db.now += 5000; await flush();
+    await b.client.command({ type: 'lock-guess', text: 'Apple' }); await flush();
+    await b.sdk.disconnect(); await b.sdk.reconnect(); await flush();
+    assert.equal(db.game.turn.guesses['id-B'].text, 'Apple'); assert.equal(db.game.phase, 'describing');
+    const count = db.operations.filter(operation => operation.type === 'transaction').length;
+    db.now += 300000; await a.client.tick();
+    assert.equal(db.operations.filter(operation => operation.type === 'transaction').length, count);
+    assert.equal(db.game.phase, 'describing');
+});
+
+test('Case Files expires on the shared clock and the replacement host recovers review without losing evidence', async t => {
+    const db = new Database(); db.game.settings = { ...db.game.settings, mode: 'case', caseTurns: 4, caseId: 'trophy' };
+    const a = makeClient(t, db, 'A'), b = makeClient(t, db, 'B'); await a.client.connect(); await b.client.connect();
+    await a.client.command({ type: 'start-game', seed: 0 }); await flush();
+    await a.client.command({ type: 'start-round', seed: 1 }); await flush();
+    db.now = db.game.turn.deadline - 1; await b.client.tick(); assert.equal(db.game.phase, 'describing');
+    db.now++; await b.client.tick(); await flush(); assert.equal(db.game.phase, 'selecting');
+    await a.client.command({ type: 'toggle-answer', index: 0 }); await a.sdk.disconnect(); await b.client.health(); await flush();
+    assert.equal(db.game.hostId, 'id-B'); assert.deepEqual(db.game.turn.selectedIndexes, [0]);
+    await b.client.command({ type: 'submit-round' }); await flush();
+    assert.equal(db.game.party.totalCorrect, 1); assert.equal(db.game.party.history.length, 1);
+});
+
 test('disconnect is registered before membership is advertised and uses server timestamps', async t => {
     const db = new Database(), { client } = makeClient(t, db, 'A');
     await client.connect();

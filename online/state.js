@@ -3,8 +3,10 @@
 import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261029.2';
 import { normalizeOnlinePack } from '../gameplay/online-packs.js?v=20261029.3';
 import { REACTIONS, REACTION_TTL_MS, rosterKey, freshSeries, recordSeries } from '../gameplay/experience.js?v=20261029.4';
+import * as Modes from '../gameplay/modes.js?v=20261030.1';
+import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261030.1';
 
-export const PROTOCOL_VERSION = 7;
+export const PROTOCOL_VERSION = 8;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -36,6 +38,8 @@ export function isConnected(game, player, now, timeout = PLAYER_TIMEOUT_MS) {
 export function rosterStatus(game, now) {
     const connected = members(game).filter(player => isConnected(game, player, now));
     const connectedTeams = new Set(connected.map(player => player.teamIndex)).size;
+    if (Modes.isParty(game.settings)) return { connectedPlayers: connected.length, connectedTeams, reconnectingPlayers: members(game).length - connected.length,
+        eligible: connected.length >= Modes.minimumPlayers(game.settings) && connected.length <= 12 };
     return { connectedPlayers: connected.length, connectedTeams,
         reconnectingPlayers: members(game).length - connected.length,
         eligible: connectedTeams === game.teams.length && canPlay(game.teams.length, connected.length) };
@@ -121,6 +125,12 @@ function reconcile(game, now) {
         return;
     }
     if (game.phase === 'finished') return;
+    if (Modes.isParty(game.settings)) {
+        reconcileParty(game, roster, roster.filter(player => isConnected(game, player, now)).map(player => player.playerId), now);
+        game.gameState = game.phase === 'waiting' ? 'waiting' : game.phase === 'finished' ? 'finished' : 'resumed';
+        if (game.phase === 'finished') game.endedAt ||= now;
+        return;
+    }
     if (game.phase === 'resolving' || game.phase === 'chaos-choice') {
         game.gameState = 'resumed';
         return;
@@ -160,8 +170,10 @@ function usableWordPack(game) {
 export function joinReason(game, actor) {
     if (!game || game.phase === 'ended' || game.gameState === 'ended') return 'lobby-unavailable';
     if (game.protocolVersion !== PROTOCOL_VERSION) return 'incompatible-lobby';
+    if (game.settings?.mode && !Object.hasOwn(Modes.MODES, game.settings.mode)) return 'invalid-game-mode';
     if (!usableWordPack(game)) return 'invalid-word-pack';
     if (!actor.playerId || !actor.connectionId || !actor.playerName?.trim()) return 'invalid-player-name';
+    if (Modes.isParty(game.settings) && members(game).length >= 12 && !members(game).some(player => player.playerId === actor.playerId)) return 'lobby-full';
     if (members(game).some(player => player.playerId !== actor.playerId
         && player.playerName.trim().toLowerCase() === actor.playerName.trim().toLowerCase())) return 'duplicate-player-name';
     return null;
@@ -258,6 +270,12 @@ function completeTurn(game, now, points, chaosSummary = null, effect = null) {
     game.auditEvents ||= {};
     game.auditEvents[`turn_${turn.id}`] = event;
     game.auditEvent = event;
+    if (Modes.isStakes(game.settings)) {
+        event.stakes = Modes.stakesScore(game.settings, before, event.earned, turn.words.length, turn.risky);
+        event.recap = `Team ${turn.teamIndex + 1}: ${event.stakes.message}`;
+        game.stakes ||= {};
+        game.stakes[turn.teamIndex] = Modes.nextRiskResource(game.settings, turn.risky, game.stakes[turn.teamIndex]);
+    }
     game.chaos ||= {};
     game.chaos.pending = null;
     game.chaos.reveal = false;
@@ -295,8 +313,13 @@ export function act(gameData, actor, action, now, rules = {}) {
     if (['start-game', 'start-round'].includes(action.type) && !usableWordPack(gameData)) return;
     const player = ownsSeat(gameData, actor);
     if (!player || !isConnected(gameData, player, now)) return;
+    if (Modes.isParty(gameData.settings) && action.type !== 'react') {
+        const people = members(gameData), connectedIds = people.filter(member => isConnected(gameData, member, now)).map(member => member.playerId);
+        return actParty(gameData, actor, action, now, rules, { people, connectedIds });
+    }
     const game = structuredClone(gameData);
     const host = game.hostId === actor.playerId;
+    if (Modes.isStakes(game.settings)) game.settings = Modes.normalizeModeSettings(game.settings);
     const turn = game.turn;
     const speaker = turn?.speakerId === actor.playerId;
     if (action.type === 'react') {
@@ -304,7 +327,7 @@ export function act(gameData, actor, action, now, rules = {}) {
         const review = ['resolving', 'chaos-choice'].includes(game.phase) ? turn : game.roundReview;
         const reviewId = review?.turnId ?? review?.id;
         if (action.matchId !== game.matchId || action.turnId !== turn?.id || !review || action.reviewId !== reviewId
-            || !['resolving', 'chaos-choice', 'idle', 'waiting', 'finished'].includes(game.phase)
+            || !['resolving', 'chaos-choice', 'idle', 'waiting', 'accusing', 'finished'].includes(game.phase)
             || !Object.hasOwn(REACTIONS, action.reaction)) return;
         const previous = game.reactions?.[actor.playerId];
         if (previous && now - previous.at < 1800) return;
@@ -321,6 +344,7 @@ export function act(gameData, actor, action, now, rules = {}) {
         game.teams.forEach(team => { team.points = 0; });
         game.auditEvents = {}; game.auditEvent = null; game.roundReview = null;
         game.reactions = null;
+        game.stakes = {};
         game.chaos = { teamShields: game.teams.map(() => 0), rerollsUsed: game.teams.map(() => false) };
         game.finishReason = null; game.endedAt = null; game.finalTurnCount = null;
         newTurn(game, 'ready');
@@ -348,6 +372,8 @@ export function act(gameData, actor, action, now, rules = {}) {
         if (action.type === 'start-round') {
             if (!speaker || game.phase !== 'idle' || !rosterStatus(game, now).eligible || !Number.isInteger(action.seed)
                 || action.seed < 0 || action.seed > 0xFFFFFFFF) return;
+            if (action.risky === true && (!Modes.isStakes(game.settings)
+                || !Modes.riskAvailability(game.settings, game.teams[turn.teamIndex].points, game.stakes?.[turn.teamIndex]).allowed)) return;
             const draw = rules.drawWords?.(game, action.seed);
             if (!draw?.words?.length) return;
             game.roundReview = null;
@@ -355,6 +381,7 @@ export function act(gameData, actor, action, now, rules = {}) {
             turn.words = draw.words;
             turn.selectedIndexes = [];
             turn.seed = action.seed;
+            turn.risky = action.risky === true;
             const count = rosterStatus(game, now).connectedPlayers;
             turn.smallGame = (game.teams.length === 2 && count === 2) || (game.teams.length === 3 && count === 3);
             turn.countdownAt = now;
@@ -382,6 +409,8 @@ export function act(gameData, actor, action, now, rules = {}) {
             turn.submittedAt = now;
             const points = game.teams.map(team => Number(team.points) || 0);
             points[turn.teamIndex] += (turn.selectedIndexes || []).length;
+            if (Modes.isStakes(game.settings)) points[turn.teamIndex] = Modes.stakesScore(game.settings,
+                game.teams[turn.teamIndex].points, (turn.selectedIndexes || []).length, turn.words.length, turn.risky).after;
             if (game.settings.chaosMode) {
                 const plan = rules.planChaos?.(game, points);
                 if (!plan) return;
@@ -426,6 +455,10 @@ export function act(gameData, actor, action, now, rules = {}) {
 export function view(game, actor, now) {
     const player = ownsSeat(game, actor);
     const active = Boolean(player && isConnected(game, player, now));
+    if (Modes.isParty(game.settings)) {
+        const people = members(game);
+        return partyView(game, actor, now, { player, active, people, connectedIds: people.filter(member => isConnected(game, member, now)).map(member => member.playerId) });
+    }
     const speaker = active && game.turn?.speakerId === actor.playerId;
     const roster = rosterStatus(game, now);
     const smallGame = Boolean(game.turn?.smallGame) || (game.teams.length === 2 && roster.connectedPlayers === 2)

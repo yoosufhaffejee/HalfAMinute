@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261029.4';
-import { OnlineClient } from './online/client.js?v=20261029.4';
+import * as OnlineState from './online/state.js?v=20261030.1';
+import { OnlineClient } from './online/client.js?v=20261030.1';
 import * as Gameplay from './gameplay/rules.js?v=20261029.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
@@ -10,6 +10,10 @@ import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
 import * as Experience from './gameplay/experience.js?v=20261029.4';
 import * as PackLibrary from './gameplay/saved-packs.js?v=20261029.5';
 import { createScreenAwake } from './gameplay/screen-awake.js?v=20261029.4';
+import * as Modes from './gameplay/modes.js?v=20261030.1';
+import { createPartySurface } from './gameplay/party-ui.js?v=20261030.1';
+import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.1';
+import { partySnapshot } from './gameplay/party-state.js?v=20261030.1';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -105,6 +109,203 @@ const celebratedTurns = new Set();
 let reactionContext = '';
 const seenReactions = new Set();
 let resultShareBusy = false;
+let activeMode = 'classic';
+let localStakes = {}, localTurnRisky = false, localTurnCardSize = 5;
+let partySurface = null, localPartyGame = null, partyTick = null, localPartySeat = '', localPartyPassed = false, localPartyTurnKey = '';
+let partyLastPhase = '', partyWarningCue = '';
+let presentedMode = '';
+let isReturningToSetup = false;
+
+function modeSettingsPresentation(settings) {
+    const mode = Modes.modeOf(settings), party = Modes.isParty(settings);
+    if (presentedMode === mode) return;
+    presentedMode = mode;
+    document.getElementById('modeDescription').textContent = Modes.MODES[mode].description;
+    document.getElementById('teamCountField').hidden = party;
+    document.getElementById('quickLengthField').hidden = party;
+    document.getElementById('quickSetup')?.classList.toggle('party-mode-setup', party);
+    document.getElementById('partySetup').hidden = !party;
+    document.getElementById('localNamesHint').textContent = `For local play, enter ${mode === 'table' ? '3' : '2'}–12 different names. Online, each friend joins from their own device.${mode === 'table' ? ' Three players are needed so shared credit can produce different scores.' : ''}`;
+    document.getElementById('localNamesError').hidden = true;
+    document.getElementById('tableCyclesField').hidden = mode !== 'table';
+    document.getElementById('caseIdField').hidden = document.getElementById('caseTurnsField').hidden = mode !== 'case';
+    document.getElementById('setupStarterNote').textContent = party ? 'Local play passes one device between named players. Online play gives each player their own private screen.'
+        : 'The starting team is drawn at random. Rematches rotate the starter. Customize cards, packs, and timing in Settings.';
+    document.getElementById('targetSetting').hidden = party;
+    document.getElementById('timeSetting').hidden = document.getElementById('wordsSetting').hidden = mode === 'table';
+    txtSeconds.disabled = txtWords.disabled = mode === 'table';
+    document.getElementById('pointsToWin').disabled = txtTeams.disabled = party;
+    chkChaos.disabled = mode !== 'classic' && mode !== 'chaos';
+    document.getElementById('chkReroll').disabled = mode !== 'chaos';
+    document.getElementById('chkSeries').disabled = party;
+    chkTraining.disabled = mode === 'table';
+    document.getElementById('chaosOption').hidden = party || Modes.isStakes(settings);
+    document.getElementById('rerollOption').hidden = mode !== 'chaos';
+    document.getElementById('trainingOption').hidden = mode === 'table';
+    document.getElementById('seriesOption').hidden = party;
+    document.getElementById('modePlayOptions').hidden = mode === 'table';
+    const message = party ? mode === 'table' ? 'Open Table uses one untimed answer, individual scores and equal speaking turns. Team targets, training hints, Chaos and session team tallies do not apply.'
+        : 'Case Files uses one crew and the investigation turn budget. Team score targets, Chaos and session team tallies do not apply.'
+        : Modes.isStakes(settings) ? 'Stakes has its own scoring. Chaos effects and rerolls do not apply. The risk target follows the actual eligible card size.' : '';
+    document.getElementById('modeSettingsNote').textContent = message; document.getElementById('modeSettingsNote').hidden = !message;
+    const rules = {
+        boost: 'Choose a normal turn or risk before the words appear. Get at least 60% correct (3 of 5) to add 2 to your clue points; miss and subtract 2, with a floor of zero. Bank 2 points first. After risking, complete one normal turn before risking again. Every team still gets equal turns at the finish.',
+        double: 'Once per team per match, risk before seeing the card. Meet the 60% target (3 of 5) to double your clue points. Miss and lose 3 banked points, earning no clue points. Bank 3 points first. The finish still gives teams equal turns.',
+        table: 'One speaker sees one answer after Go. Everyone else asks questions and privately locks a guess or passes; there is no time limit. Guesses reveal together. Review correct wording together, then the speaker confirms. Each correct guess earns its author and the speaker 1 point. Everyone gets the chosen number of speaking turns. Late arrivals watch until rematch. On one device, hide the answer and pass to each guesser.',
+        case: 'Everyone joins one crew. The speaker describes words while the crew guesses aloud; only the speaker sees live answers. Confirm correct words after each timed round. Each evidence threshold unlocks a fact, with spare progress carried forward. Inspect suspect profiles and discuss the clues. When all evidence is unlocked or the turn budget ends, agree on one suspect and confirm a final accusation (the host confirms online). Solve the case together.'
+    };
+    document.getElementById('modeHowToPlay').hidden = !rules[mode];
+    document.getElementById('modeRulesTitle').textContent = Modes.MODES[mode].name;
+    document.getElementById('modeRulesText').textContent = rules[mode] || '';
+    document.getElementById('standardRulesGoal').hidden = party || Modes.isStakes(settings);
+    document.getElementById('standardRulesTurns').hidden = party;
+    document.getElementById('chaosRulesSection').hidden = party || Modes.isStakes(settings);
+    document.getElementById('starterRulesNote').hidden = party;
+    document.getElementById('onlineRulesText').textContent = party ? 'Join with a four-letter code. Everyone joins the same table or crew. Follow your private role screen; late Open Table arrivals join the next rematch.'
+        : 'Join with a four-letter code. The game manages teams, speakers and turns. Follow your on-screen role: who can see the cards depends on the lobby size.';
+}
+
+function renderStakesUi(data = null) {
+    const settings = data?.settings || { mode: activeMode }, panel = document.getElementById('stakesPanel');
+    panel.hidden = !Modes.isStakes(settings) || (data ? !data.isGameStarted || data.phase === 'finished' : localMatchFinished);
+    if (panel.hidden) return;
+    const index = data?.turn?.teamIndex ?? currentTeam - 1, risky = data?.turn?.risky ?? localTurnRisky;
+    const selecting = data ? data.phase === 'selecting' : !btnAnswers.hidden && !isRoundActive;
+    const idle = data ? data.phase === 'idle' : !isRoundActive && !btnStartRound.hidden && !isResolvingChaosMove;
+    let size = data?.turn?.words?.length;
+    if (!size && data) {
+        const key = JSON.stringify([data.matchId, settings]);
+        if (onlineClient.stakesSizeKey !== key) { onlineClient.stakesSizeKey = key; onlineClient.stakesSize = Modes.eligibleCardSize(getOnlineWordObjects(settings, data.wordPack), { ...settings, numWords, difficulty }); }
+        size = onlineClient.stakesSize;
+    }
+    size ||= idle ? Modes.eligibleCardSize(localWordObjects, { numWords, difficulty }) : localTurnCardSize;
+    const target = Modes.riskTarget(size), availability = Modes.riskAvailability(settings, teams[index]?.points || 0, data?.stakes?.[index] || localStakes[index]);
+    const mode = Modes.modeOf(settings);
+    document.getElementById('stakesInstruction').textContent = idle ? `Risk target: ${target} of ${size}. ${mode === 'boost' ? 'Clue points +2 if met, −2 if missed.' : 'Double clue points if met; lose 3 with no clue points if missed.'}`
+        : risky ? `Risk turn · Target ${target} of ${size}${selecting ? ' · Review your score below.' : ''}` : 'Normal turn · One point per correct answer.';
+    const button = document.getElementById('riskRoundButton'); button.hidden = !idle || (data && !isSpeaker);
+    button.disabled = !availability.allowed || Boolean(data && (onlineClient.busy || !onlineClient.connected));
+    button.textContent = mode === 'boost' ? `Risk this turn · +2 / −2` : 'Risk this turn · double / −3';
+    const detail = document.getElementById('stakesAvailability'); detail.hidden = !idle; detail.textContent = availability.reason;
+}
+
+function ensurePartySurface() {
+    if (partySurface) return;
+    partySurface = createPartySurface(document.getElementById('partyGame'), {
+        send: action => { void partyCommand(action); }, exit: () => { void returnToSetup(); }, share: sharePartyResult, summary: partySummary,
+        rejoin: () => { void onlineClient?.resume(true); },
+        invite: async () => {
+            const url = Experience.inviteLink(location.href, gameCode);
+            if (navigator.share) { try { await navigator.share({ title: 'Join Half A Minute', url }); return 'Invitation shared.'; } catch (error) { if (error.name === 'AbortError') return ''; } }
+            try { if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(url); return 'Invite link copied.'; } } catch { /* Selectable text fallback below. */ }
+            return `Invite link: ${url}`;
+        }
+    });
+}
+function partyPeople(gameData) { return OnlineState.members(gameData); }
+function renderPartyGame(data = localPartyGame) {
+    if (!data || isReturningToSetup) return;
+    data = partySnapshot(data);
+    ensurePartySurface();
+    const local = !isOnlineGame, now = local ? Date.now() : onlineClient.serverNow();
+    if (local) for (const record of Object.values(data.presence)) for (const value of Object.values(record.connections)) value.lastSeen = now;
+    let gateName = '', gateId = '';
+    if (local) {
+        const key = `${data.matchId}:${data.turn.id}`;
+        if (localPartyTurnKey !== key) { localPartyTurnKey = key; localPartySeat = ''; localPartyPassed = false; }
+        if (data.phase === 'selecting' || data.phase === 'accusing' || data.phase === 'finished') localPartySeat = data.phase === 'selecting' ? data.turn.speakerId : data.hostId;
+        else {
+            const desired = Modes.modeOf(data.settings) === 'table' && localPartyPassed && data.phase === 'describing'
+                ? data.turn.guesserIds.find(id => !data.turn.guesses[id]) : data.turn.speakerId;
+            if (desired && localPartySeat !== desired) {
+                gateId = desired; gateName = data.party.players.find(player => player.id === desired)?.name || 'the next player';
+            }
+        }
+    }
+    const actor = local ? partyPeople(data).find(player => player.playerId === (gateId || localPartySeat || data.hostId)) : onlineClient.actor;
+    const view = OnlineState.view(data, actor, now), connectedIds = partyPeople(data).filter(player => local || OnlineState.isConnected(data, player, now)).map(player => player.playerId);
+    game.hidden = true; menu.hidden = true; document.getElementById('partyGame').hidden = false;
+    btnHistory.hidden = true; btnAI.hidden = true; btnRules.hidden = false; btnOnline.hidden = local;
+    const connected = local || onlineClient.connected && !onlineClient.suspended;
+    partySurface.render({ game: data, actor, view, now, local, code: gameCode, gateId, gateName, connectedIds, connected, busy: !local && (onlineClient.busy || onlineClient.registering),
+        hints: !data.wordPack && !data.customWords && data.settings.trainingMode && view.speaker && view.showWords ? data.turn.words.map(word => ({ word, description: getTrainingDescription(word) })).filter(item => item.description) : [] });
+    screenAwake?.setActive(connected && data.isGameStarted && data.phase !== 'finished');
+    if (local && data.phase === 'describing' && data.turn.deadline && now >= data.turn.deadline) { void partyCommand({ type: 'expire-round' }); return; }
+    const cue = `${isOnlineGame ? gameCode : 'local'}:${data.matchId || 1}:${data.turn?.id || 0}`;
+    if (data.phase !== 'describing') {
+        stopRoundSounds();
+        if (partyLastPhase === `${cue}:describing` && data.phase === 'selecting') void playSound(endSound, () => false);
+    }
+    partyLastPhase = `${cue}:${data.phase}`;
+    if (view.countdownRemainingMs && cue !== lastOnlineCue) { lastOnlineCue = cue; void playSound(countdownSound, () => false, 1, Math.max(0, (now - data.turn.countdownAt) / 1000)); }
+    if (connected && data.phase === 'describing' && Modes.modeOf(data.settings) === 'case' && !view.countdownRemainingMs
+        && view.remainingSeconds > 0 && view.remainingSeconds <= 5 && partyWarningCue !== cue) { partyWarningCue = cue; void playSound(warningSound, () => false); }
+    syncTickSound(view.remainingSeconds, Modes.modeOf(data.settings) === 'case' && data.phase === 'describing' && !view.countdownRemainingMs && connected);
+    if (!partyTick) partyTick = setInterval(() => { const next = isOnlineGame ? onlineClient?.snapshot : localPartyGame; if (next && Modes.isParty(next.settings)) renderPartyGame(next); }, 200);
+}
+async function partyCommand(action) {
+    if (action.type === 'local-ready') { localPartySeat = action.playerId; renderPartyGame(); return; }
+    if (action.type === 'pass-device') { localPartyPassed = true; localPartySeat = ''; renderPartyGame(); return; }
+    if (action.type === 'request-end') { getModalInstance('endMatchModal')?.show(); return; }
+    const request = ['start-game', 'start-round', 'rematch'].includes(action.type) ? { ...action, seed: randomSeed() } : action;
+    if (isOnlineGame) { await sendOnlineCommand(request); return; }
+    if (!localPartyGame) return;
+    const now = Date.now();
+    for (const record of Object.values(localPartyGame.presence)) for (const value of Object.values(record.connections)) value.lastSeen = now;
+    const identity = ['rematch', 'end-game', 'accuse', 'choose-suspect'].includes(action.type) ? localPartyGame.hostId : localPartySeat || localPartyGame.turn.speakerId;
+    const actor = partyPeople(localPartyGame).find(player => player.playerId === identity);
+    const next = OnlineState.act(localPartyGame, actor, { ...request, turnId: localPartyGame.turn?.id, matchId: localPartyGame.matchId }, now,
+        { drawWords: drawOnlineWords, planChaos: planOnlineChaos });
+    if (next) {
+        localPartyGame = next;
+        if (action.type === 'start-round') rememberUsedWords(next.turn.words);
+        if (action.type === 'lock-guess') localPartySeat = '';
+        renderPartyGame();
+    }
+}
+function startLocalParty(settings) {
+    const names = document.getElementById('localPlayerNames').value.split('\n').map(name => sanitizePlayerName(name)).filter(Boolean);
+    const error = names.length < Modes.minimumPlayers(settings) || names.length > 12 ? `Enter ${Modes.minimumPlayers(settings)}–12 player names, one per line.` : new Set(names.map(name => name.toLowerCase())).size !== names.length ? 'Give every player a different name.' : '';
+    const namesError = document.getElementById('localNamesError'); namesError.hidden = !error; namesError.textContent = error;
+    document.getElementById('localPlayerNames').setAttribute('aria-invalid', String(Boolean(error)));
+    if (error) { document.getElementById('localPlayerNames').focus(); return; }
+    const localEntries = isAiGame ? getAiWordObjects(settings.difficulty) : null;
+    if (settings.mode === 'table' && localEntries?.some(entry => entry.word.length > 80)) {
+        const node = document.getElementById('menuNotice'); node.textContent = 'Open Table uses typed guesses. Keep each custom answer to 80 characters or fewer.'; node.hidden = false; return;
+    }
+    localWordObjects = localEntries ? localEntries.filter(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty) : filterRecentlyUsedWords(getOnlineWordObjects(settings));
+    setWordDescriptionsFromObjects(localEntries ? [] : localWordObjects);
+    clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds();
+    isRoundActive = false; isChaosMode = false; isResolvingChaosMove = false;
+    numWords = settings.numWords; numSeconds = settings.numSeconds; difficulty = settings.difficulty;
+    let data = { protocolVersion: OnlineState.PROTOCOL_VERSION, settings, localEntries: localWordObjects, customWords: Boolean(localEntries), teams: [{ points: 0, players: [] }, { points: 0, players: [] }],
+        phase: 'waiting', currentTeam: 1, hostId: '', hostEpoch: 0, dateCreated: Date.now(), matchId: 1 };
+    names.forEach((name, index) => { data = OnlineState.join(data, { playerId: `local-${index}`, connectionId: `local-connection-${index}`, playerName: name }, Date.now()); });
+    localPartyGame = data; activeMode = settings.mode; localPartySeat = data.hostId; lastOnlineCue = ''; partyLastPhase = '';
+    document.getElementById('menuNotice').hidden = true; setLayoutMode('game');
+    void partyCommand({ type: 'start-game' });
+}
+function renderPartyOnline(data) {
+    activeMode = Modes.modeOf(data.settings); isGameStarted = Boolean(data.isGameStarted);
+    isChaosMode = false; isRoundActive = data.phase === 'describing';
+    const settings = sanitizeGameSettingsFromDb(data.settings, data.teams.length);
+    numWords = settings.numWords; numSeconds = settings.numSeconds; difficulty = settings.difficulty;
+    teams = data.teams.map(team => ({ ...team, players: (team.players || []).map(player => ({ ...player })) }));
+    const view = OnlineState.view(data, onlineClient.actor, onlineClient.serverNow());
+    isHost = view.host; isSpeaker = view.speaker;
+    if (view.player) { playerName = view.player.playerName; saveOnlineSession({ code: gameCode, playerId: view.player.playerId, playerName }); }
+    updateLobbyPresentation(data, view); modeSettingsPresentation(settings);
+    const list = document.getElementById('lobbyPlayers'); list.innerHTML = '';
+    for (const person of OnlineState.members(data)) {
+        const row = document.createElement('p'); row.textContent = `${person.playerName}${person.playerId === data.hostId ? ' · Host' : ''}${OnlineState.isConnected(data, person, onlineClient.serverNow()) ? '' : ' · Reconnecting'}`; list.appendChild(row);
+    }
+    const hintsKey = JSON.stringify([data.matchId, settings.difficulty, settings.selectedTheme, settings.selectedCategories, Boolean(data.wordPack)]);
+    if (onlineClient.partyHintsKey !== hintsKey) {
+        onlineClient.partyHintsKey = hintsKey;
+        if (!data.wordPack) setWordDescriptionsFromObjects(getOnlineWordObjects(settings)); else wordDescriptionLookup = new Map();
+    }
+    renderPartyGame(data);
+}
 
 function playCelebrationChime() {
     if (preferences.muted || !preferences.volume) return;
@@ -148,6 +349,7 @@ function renderRoundHighlight(event, events, points, context, animate = true) {
 }
 
 function renderTurnExperience(data = null, view = null) {
+    renderStakesUi(data);
     const active = data ? onlineClient.connected && view.active && !onlineClient.suspended : !game.hidden;
     const idle = data ? data.phase === 'idle' && view.canStartRound : !isRoundActive && !isResolvingChaosMove && !btnStartRound.hidden;
     const role = document.getElementById('roleInstruction');
@@ -508,10 +710,10 @@ function exportMatchSummary() {
     const data = isOnlineGame ? onlineClient?.snapshot : null;
     const events = data ? Object.values(data.auditEvents || {}) : localAudit;
     const summary = { version: 1, matchId: data?.matchId || localMatchId, starterTeam: data?.starterTeam ?? localStarter,
-        settings: { teams: teams.length, pointsToWin, numWords, numSeconds, difficulty, chaosMode: isChaosMode },
+        settings: { mode: activeMode, teams: teams.length, pointsToWin, numWords, numSeconds, difficulty, chaosMode: isChaosMode },
         scores: teams.map(team => team.points), turns: events.map(event => ({ team: event.teamIndex, earned: event.earned ?? event.correctAnswers?.length ?? 0,
             pointsBefore: event.pointsBefore, pointsAfter: event.pointsAfter, clueSeconds: event.clueSeconds,
-            scoringSeconds: event.scoringSeconds, resolutionSeconds: event.resolutionSeconds, effect: event.chaosSummary || 'No effect' })) };
+            scoringSeconds: event.scoringSeconds, resolutionSeconds: event.resolutionSeconds, effect: event.chaosSummary || 'No effect', ...(event.stakes ? { stakes: event.stakes } : {}) })) };
     const url = URL.createObjectURL(new Blob([JSON.stringify(summary, null, 2)], { type: 'application/json' }));
     const link = document.createElement('a'); link.href = url; link.download = `half-a-minute-match-${summary.matchId}.json`;
     link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -550,6 +752,9 @@ function initializePlayPreferences() {
 function initializeQuickSetup() {
     const mode = document.getElementById('quickMode'), preset = document.getElementById('quickPreset');
     mode.addEventListener('change', () => { chkChaos.checked = mode.value === 'chaos'; updateSetupSummary(); });
+    chkChaos.addEventListener('change', () => { mode.value = chkChaos.checked ? 'chaos' : 'classic'; updateSetupSummary(); });
+    ['tableCycles', 'caseId', 'caseTurns'].forEach(id => document.getElementById(id).addEventListener('change', updateSetupSummary));
+    document.getElementById('localPlayerNames').addEventListener('input', () => { document.getElementById('localNamesError').hidden = true; document.getElementById('localPlayerNames').setAttribute('aria-invalid', 'false'); });
     preset.addEventListener('change', () => {
         const values = Gameplay.PRESETS[preset.value];
         if (!values) return;
@@ -566,11 +771,14 @@ function initializeQuickSetup() {
 function updateSetupSummary() {
     const settings = getSanitizedSettingsFromInputs();
     syncThemePicker();
+    modeSettingsPresentation(settings);
     const pack = settings.selectedTheme !== 'None' ? settings.selectedTheme : settings.selectedCategories.join(', ') || 'All categories';
-    const text = `${settings.chaosMode ? 'Chaos' : 'Classic'} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
+    const text = Modes.isParty(settings) ? `${Modes.MODES[settings.mode].name} · ${settings.mode === 'table' ? settings.tableCycles + ' speaking turns each · No timer' : settings.caseTurns + ' turns · ' + settings.numSeconds + 's · ' + settings.numWords + ' words'} · ${settings.difficulty} · ${pack}`
+        : `${Modes.MODES[settings.mode].name} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
     document.getElementById('setupSummary').textContent = text;
     document.getElementById('advancedSetupSummary').textContent = text;
-    document.getElementById('quickMode').value = settings.chaosMode ? 'chaos' : 'classic';
+    document.getElementById('quickMode').value = settings.mode;
+    document.getElementById('quickPreset').disabled = Modes.isParty(settings);
     const preset = Object.entries(Gameplay.PRESETS).find(([, p]) => p.pointsToWin === settings.pointsToWin && p.numSeconds === settings.numSeconds && p.numWords === settings.numWords);
     const select = document.getElementById('quickPreset');
     if (!select.querySelector?.('option[value="custom"]')) {
@@ -640,6 +848,11 @@ function updateSelectionSummary() {
     const selecting = !btnAnswers.hidden && !isRoundActive && !isResolvingChaosMove;
     summary.hidden = !selecting;
     summary.textContent = `${count} of ${numWords} correct · +${count} earned`;
+    if (Modes.isStakes({ mode: activeMode })) {
+        const data = isOnlineGame ? onlineClient?.snapshot : null, index = data?.turn?.teamIndex ?? currentTeam - 1;
+        const result = Modes.stakesScore({ mode: activeMode }, teams[index]?.points || 0, count, data?.turn?.words?.length || localTurnCardSize, data?.turn?.risky ?? localTurnRisky);
+        summary.textContent = `${count} selected · ${result.message}`;
+    }
     if (!btnNextRound.hidden && !btnNextRound.disabled) btnNextRound.textContent = `Confirm ${count} correct`;
 }
 
@@ -673,7 +886,7 @@ function renderMatchResults(data = null, forced = false) {
     series.textContent = Experience.seriesLabel(data ? data.series : localSeries); series.hidden = !series.textContent;
     document.getElementById('resultsTitle').textContent = winners.length > 1 ? "It's a draw!"
         : winners.length === 1 ? `Team ${winners[0] + 1} wins!` : 'Match ended';
-    document.getElementById('resultsContext').textContent = `${isChaosMode ? 'Chaos' : 'Classic'} · Target ${pointsToWin} · Equal turns`;
+    document.getElementById('resultsContext').textContent = `${Modes.MODES[isChaosMode ? 'chaos' : activeMode].name} · Target ${pointsToWin} · Equal turns`;
     document.getElementById('finalRoundNotice').hidden = true;
     const scores = document.getElementById('resultsScores'); scores.innerHTML = '';
     teams.map((team, index) => ({ team, index })).sort((a, b) => b.team.points - a.team.points || a.index - b.index).forEach(({ team, index }) => {
@@ -684,10 +897,10 @@ function renderMatchResults(data = null, forced = false) {
         const token = document.createElement('span'); token.className = 'team-token'; token.style.backgroundColor = getTeamColor(index);
         token.textContent = String(index + 1); token.setAttribute('aria-hidden', 'true'); name.appendChild(token);
         const label = document.createElement('span'); label.textContent = `Team ${index + 1}`; name.appendChild(label); identity.appendChild(name);
-        if (isChaosMode && team.points !== earned) {
+        if ((isChaosMode || Modes.isStakes({ mode: activeMode })) && team.points !== earned) {
             const detail = document.createElement('small'); detail.className = 'result-breakdown';
             const chaos = team.points - earned;
-            detail.textContent = `${earned} from clues · ${chaos >= 0 ? '+' : ''}${chaos} from Chaos`; identity.appendChild(detail);
+            detail.textContent = `${earned} from clues · ${chaos >= 0 ? '+' : ''}${chaos} from ${isChaosMode ? 'Chaos' : 'stakes'}`; identity.appendChild(detail);
         }
         const points = document.createElement('strong'); points.className = 'result-points'; points.textContent = `${team.points} `;
         const unit = document.createElement('small'); unit.textContent = 'pts'; points.appendChild(unit);
@@ -707,19 +920,27 @@ function renderMatchResults(data = null, forced = false) {
 }
 
 async function returnToSetup() {
-    if (isOnlineGame) {
-        try { await onlineClient.close(true); } catch { alert('Unable to leave yet. Check your connection and retry.'); return; }
-        saveOnlineSession(null); onlineClient = null; isOnlineGame = false; gameCode = '';
-    }
-    clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds(); clearChaosPresentation();
-    renderOnlineRoundReview(null);
-    hideElement(game); showElement(menu); showElement(btnSettings); showElement(btnOnline); showElement(btnAI); showElement(btnRules); hideElement(btnHistory);
-    showElement(txtLobbyMenu); hideElement(txtLobbyPlayers);
-    isAiGame = false; localStarter = null; localDeck = {}; setLayoutMode('menu'); updateSetupSummary();
-    updateLobbyPresentation();
-    screenAwake?.setActive(false); localSeries = null;
-    document.getElementById('roundHighlight').hidden = document.getElementById('roundReactions').hidden = document.getElementById('lobbyInvite').hidden = true;
-    document.getElementById('roleInstruction').classList.remove('turn-handoff');
+    if (isReturningToSetup) return;
+    isReturningToSetup = true;
+    game.inert = document.getElementById('partyGame').inert = true;
+    try {
+        if (isOnlineGame) {
+            try { await onlineClient.close(true); } catch { alert('Unable to leave yet. Check your connection and retry.'); return; }
+            saveOnlineSession(null); onlineClient = null; isOnlineGame = false; gameCode = '';
+        }
+        clearInterval(partyTick); partyTick = null; localPartyGame = null; localPartySeat = ''; localPartyTurnKey = ''; partyLastPhase = ''; partyWarningCue = '';
+        document.getElementById('partyGame').hidden = true; partySurface?.reset();
+        document.getElementById('partyAnnouncement').textContent = '';
+        clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds(); clearChaosPresentation();
+        renderOnlineRoundReview(null);
+        hideElement(game); showElement(menu); showElement(btnSettings); showElement(btnOnline); showElement(btnAI); showElement(btnRules); hideElement(btnHistory);
+        showElement(txtLobbyMenu); hideElement(txtLobbyPlayers);
+        isAiGame = false; localStarter = null; localDeck = {}; setLayoutMode('menu'); updateSetupSummary();
+        updateLobbyPresentation();
+        screenAwake?.setActive(false); localSeries = null;
+        document.getElementById('roundHighlight').hidden = document.getElementById('roundReactions').hidden = document.getElementById('lobbyInvite').hidden = true;
+        document.getElementById('roleInstruction').classList.remove('turn-handoff');
+    } finally { isReturningToSetup = false; game.inert = document.getElementById('partyGame').inert = false; }
 }
 
 function chooseChaos(reroll) {
@@ -757,6 +978,7 @@ function initializeMenu() {
     initializeAiPacks();
     initializePlayPreferences();
     initializeQuickSetup();
+    document.getElementById('riskRoundButton').addEventListener('click', () => { startRound({ risky: true }); });
     setLayoutMode("menu");
     refreshChaosModeUi();
     window.addEventListener("resize", updateMobileGameFocus);
@@ -847,8 +1069,9 @@ function initializeMenu() {
     }));
 
     btnSettings.addEventListener('click', () => {
-        document.getElementById('gameSetupSettings').hidden = !game.hidden;
-        document.getElementById('settingsIntro').textContent = game.hidden ? 'Make the game feel right for your group.' : 'Adjust sound and motion without interrupting the match.';
+        const playing = !game.hidden || !document.getElementById('partyGame').hidden;
+        document.getElementById('gameSetupSettings').hidden = playing;
+        document.getElementById('settingsIntro').textContent = !playing ? 'Make the game feel right for your group.' : 'Adjust sound and motion without interrupting the match.';
     });
     registerModal(btnSettings, "settingsModal");
     registerModal(btnAI, "aiModal");
@@ -949,7 +1172,12 @@ function sanitizeSelectedCategories(categoryList) {
 
 function getSanitizedSettingsFromInputs() {
     const chosenDifficulty = document.getElementById('difficulty').value.toLowerCase();
-    return {
+    const selectedMode = document.getElementById('quickMode').value;
+    return Modes.normalizeModeSettings({
+        mode: ['boost', 'double', 'table', 'case'].includes(selectedMode) ? selectedMode : chkChaos?.checked ? 'chaos' : 'classic',
+        tableCycles: document.getElementById('tableCycles').value,
+        caseTurns: document.getElementById('caseTurns').value,
+        caseId: document.getElementById('caseId').value,
         difficulty: ['easy', 'normal', 'hard'].includes(chosenDifficulty) ? chosenDifficulty : 'normal',
         numTeams: clampInt(txtTeams.value, 2, 2, 4),
         pointsToWin: clampInt(document.getElementById("pointsToWin").value, 20, 10, 60),
@@ -961,13 +1189,14 @@ function getSanitizedSettingsFromInputs() {
         trackSeries: Boolean(document.getElementById('chkSeries')?.checked),
         selectedTheme: sanitizeSelectedTheme(themesSelect.value),
         selectedCategories: sanitizeSelectedCategories(Array.from(categoriesSelect.selectedOptions).map(option => option.value))
-    };
+    });
 }
 
 function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
     const selectedTheme = sanitizeSelectedTheme(settings.selectedTheme || "None");
     const selectedCategories = sanitizeSelectedCategories(settings.selectedCategories);
     const sanitized = {
+        mode: Modes.modeOf(settings), tableCycles: settings.tableCycles, caseTurns: settings.caseTurns, caseId: settings.caseId,
         difficulty: ["easy", "normal", "hard"].includes((settings.difficulty || "").toLowerCase())
             ? settings.difficulty.toLowerCase()
             : "normal",
@@ -987,7 +1216,7 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
         sanitized.selectedCategories = [];
     }
 
-    return sanitized;
+    return Modes.normalizeModeSettings(sanitized);
 }
 
 function sleep(ms) {
@@ -1622,6 +1851,8 @@ async function onLobbyJoined(actor = onlineIdentity(gameCode)) {
     document.getElementById('inviteLinkField').value = '';
     document.getElementById('inviteLinkField').hidden = true;
     clearInterval(countdownTimer);
+    stopRoundSounds(); hideTimerAndAnswers(); showRecap('');
+    document.getElementById('partyGame').hidden = true;
     hideElement(menu);
     showElement(btnSettings);
     hideElement(btnAI);
@@ -1925,7 +2156,7 @@ async function run(topic) {
     try {
         const settings = getSanitizedSettingsFromInputs();
         const prompt = AiPacks.buildPackRequest(cleanTopics, { strict: Boolean(strictToggle.checked), difficulty: settings.difficulty,
-            numWords: settings.numWords, history: refreshAiGenerationHistory() });
+            numWords: settings.mode === 'table' ? 5 : settings.numWords, history: refreshAiGenerationHistory() });
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const pack = AiPacks.parseGeneratedPack(String(response?.text?.() || ''), {
@@ -2009,10 +2240,12 @@ function startAIGame() {
     startGame();
     
     hideModalById("aiModal");
-    btnAI.hidden = true;
+    btnAI.hidden = menu.hidden;
 }
 
 async function startGame({ rematch = false } = {}) {
+    const modeSettings = getSanitizedSettingsFromInputs();
+    activeMode = modeSettings.mode; localStakes = {}; localTurnRisky = false;
     if (isAiGame) {
         const selectedDifficulty = getSanitizedSettingsFromInputs().difficulty;
         if (!getAiWordObjects(selectedDifficulty).some(entry => selectedDifficulty === 'normal' || entry.difficulty === selectedDifficulty)) {
@@ -2021,6 +2254,7 @@ async function startGame({ rematch = false } = {}) {
         }
     }
     document.getElementById('menuNotice').hidden = true;
+    if (Modes.isParty(modeSettings)) { startLocalParty(modeSettings); return; }
     // Play game start sound
     void playSound(startSound, () => false, 1.2);
     clearInterval(countdownTimer); finishLocalRound = null;
@@ -2080,7 +2314,7 @@ async function startGame({ rematch = false } = {}) {
     }
 
     // Ai game
-    if (isAiGame) {
+    if (isAiGame && !Modes.isStakes(modeSettings)) {
         // Only 2 teams allowed
         teams = Array.from({ length: 2 }, () => ({ points: 0 }));
 
@@ -2131,6 +2365,7 @@ async function startGame({ rematch = false } = {}) {
                         selectedButtons++;
                         setScoreButtonSelected(button, true);
                     }
+                    updateSelectionSummary();
                 }
             };
         }
@@ -2200,9 +2435,12 @@ function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
     return selectedObjects.map(obj => obj.word);
 }
 
-function startRound() {
-    if (isOnlineGame) { void startOnlineRound(); return; }
+function startRound(options = {}) {
+    const risky = options.risky === true;
+    if (isOnlineGame) { void startOnlineRound(risky); return; }
     if (isRoundActive || isResolvingChaosMove || localMatchFinished) return;
+    if (risky && !Modes.riskAvailability({ mode: activeMode }, teams[currentTeam - 1].points, localStakes[currentTeam - 1]).allowed) return;
+    localTurnRisky = risky; localTurnCardSize = Modes.eligibleCardSize(localWordObjects, { numWords, difficulty });
     clearChaosPresentation();
     showRecap('');
     stopRoundSounds();
@@ -2225,6 +2463,7 @@ function startRound() {
         setNextRoundBusyState(false);
         clearTrainingHints();
         isRoundActive = false;
+        renderStakesUi();
         updateMobileGameFocus();
 
         let count = 0;
@@ -2331,20 +2570,23 @@ async function nextRound() {
             chaosEffect = result.resolutionSummary;
             chaosSummary = formatChaosSummaryForAudit(result.resolutionSummary);
         } else teams[teamIndexForRound].points += correctAnswers.length;
-        const text = Gameplay.recap({ teamIndex: teamIndexForRound, earned: correctAnswers.length, before,
+        const stakeResult = Modes.isStakes({ mode: activeMode }) ? Modes.stakesScore({ mode: activeMode }, before, correctAnswers.length, wordCount, localTurnRisky) : null;
+        if (stakeResult) { teams[teamIndexForRound].points = stakeResult.after; localStakes[teamIndexForRound] = Modes.nextRiskResource({ mode: activeMode }, localTurnRisky, localStakes[teamIndexForRound]); }
+        const text = stakeResult ? `Team ${teamIndexForRound + 1}: ${stakeResult.message}` : Gameplay.recap({ teamIndex: teamIndexForRound, earned: correctAnswers.length, before,
             after: teams[teamIndexForRound].points, effect: chaosEffect });
         completedEvent = { id: localAudit.length + 1, teamIndex: teamIndexForRound, roundNumber: roundNumberForRound, correctAnswers, earned: correctAnswers.length, wordCount, pointsBeforeAll, recap: text,
             chaosSummary, effect: chaosEffect, pointsBefore: before, pointsAfter: teams[teamIndexForRound].points,
             clueSeconds: Math.max(0, (localSelectingAt - localTurnStartedAt) / 1000),
             scoringSeconds: Math.max(0, (submittedAt - localSelectingAt) / 1000),
             resolutionSeconds: Math.max(0, (Date.now() - submittedAt) / 1000) };
+        if (stakeResult) completedEvent.stakes = stakeResult;
         localAudit.push(completedEvent);
         const progress = Gameplay.matchProgress(teams.map(team => team.points), pointsToWin, localAudit, localFinalTurnCount);
         localFinalTurnCount = progress.finalTurnCount; localMatchFinished = progress.finished;
         renderFinalRoundNotice(progress);
         showRecap(text);
         createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
-        createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, { chaosSummary });
+        createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, { chaosSummary, modeSummary: stakeResult?.message });
         advanceRoundPointers(); hideRoundInputUI();
         updateBoard(); updateCurrentTeamIndicator(); updateTeamScores();
         if (localMatchFinished) { renderMatchResults(); return; }
@@ -2360,6 +2602,7 @@ async function nextRound() {
 
 async function endGame() {
     hideModalById('endMatchModal');
+    if (localPartyGame) { await partyCommand({ type: 'end-game' }); return; }
     if (isOnlineGame) { await sendOnlineCommand({ type: 'end-game' }); return; }
     clearInterval(countdownTimer); finishLocalRound = null;
     stopRoundSounds();
@@ -2377,6 +2620,7 @@ function displayCurrentWords() {
     lblAnswers.textContent = 'Describe these words in any order:';
     const objects = localWordObjects.length ? localWordObjects : currentGameWords.map(word => ({ word, difficulty: 'easy' }));
     const draw = Gameplay.drawWords(objects, localDeck, difficulty, numWords, randomSeed());
+    localTurnCardSize = draw.words.length;
     localDeck = draw.deck;
     const buttons = document.getElementsByClassName('scoreButton');
     Array.from(buttons).forEach((button, index) => {
@@ -2694,6 +2938,7 @@ function createTeamAuditRows(tableIndex, roundNumber = currentRound + 1, correct
             ? ` | Chaos: ${options.chaosSummary.trim()}`
             : "";
         answersCell.textContent = `${answersText}${chaosText}`;
+        if (options.modeSummary) answersCell.textContent += ` | ${options.modeSummary}`;
     } else {
         console.error(`Table with index ${tableIndex} does not exist.`);
     }
@@ -2974,17 +3219,30 @@ async function sendOnlineCommand(action) {
 
 function getOnlineWordObjects(settings, wordPack = null) {
     const shared = normalizeOnlinePack(wordPack);
-    const objects = shared ? shared.entries : settings.selectedTheme !== 'None'
-        ? (themes[settings.selectedTheme] || [])
-        : (settings.selectedCategories.length ? settings.selectedCategories : Object.keys(categories))
+    const selectedCategories = Array.isArray(settings.selectedCategories) ? settings.selectedCategories : [];
+    const selectedTheme = settings.selectedTheme || 'None';
+    const objects = shared ? shared.entries : selectedTheme !== 'None'
+        ? (themes[selectedTheme] || [])
+        : (selectedCategories.length ? selectedCategories : Object.keys(categories))
             .flatMap(category => categories[category] || []);
-    return dedupeWordObjects(objects).filter(word => settings.difficulty === 'normal' || word.difficulty === settings.difficulty);
+    return dedupeWordObjects(objects).filter(word => !settings.difficulty || settings.difficulty === 'normal' || word.difficulty === settings.difficulty);
 }
 
 function drawOnlineWords(gameData, seed) {
     const settings = sanitizeGameSettingsFromDb(gameData.settings, gameData.teams.length);
-    const draw = Gameplay.drawWords(getOnlineWordObjects(settings, gameData.wordPack), gameData.deck || {}, settings.difficulty, settings.numWords, seed);
-    return { words: draw.words, pools: { deck: draw.deck, deckRecycled: draw.recycled,
+    const entries = !isOnlineGame && Array.isArray(gameData.localEntries) ? gameData.localEntries : getOnlineWordObjects(settings, gameData.wordPack);
+    let dealDifficulty = settings.difficulty;
+    if (settings.mode === 'table' && dealDifficulty === 'normal') {
+        const preferred = Gameplay.random(seed)() < .6 ? 'easy' : 'hard';
+        dealDifficulty = entries.some(entry => entry.difficulty === preferred) ? preferred : preferred === 'easy' ? 'hard' : 'easy';
+    }
+    const draw = Gameplay.drawWords(entries, gameData.deck || {}, dealDifficulty, settings.numWords, seed);
+    if (settings.mode === 'table') {
+        const other = dealDifficulty === 'easy' ? 'hard' : 'easy';
+        draw.deck[other] = [...(gameData.deck?.[other] || [])];
+    }
+    const aliases = draw.words.flatMap(word => { const entry = entries.find(item => Gameplay.answerKey(item.word) === Gameplay.answerKey(word)); return entry?.canonical ? [word, entry.canonical] : [word]; });
+    return { words: draw.words, aliases, pools: { deck: draw.deck, deckRecycled: draw.recycled,
         easyWords: [], hardWords: [], currentGameWords: [] } };
 }
 
@@ -3142,6 +3400,7 @@ function updateLobbyPresentation(data = null, view = null) {
     if (joined) {
         const roster = view.roster;
         text = `${roster.connectedPlayers} ${roster.connectedPlayers === 1 ? 'player' : 'players'} connected · ${roster.connectedTeams} of ${data.teams.length} teams online`;
+        if (Modes.isParty(data.settings)) text = `${Modes.MODES[Modes.modeOf(data.settings)].name} · ${roster.connectedPlayers} players connected`;
         if (roster.reconnectingPlayers) text += ` · ${roster.reconnectingPlayers} reconnecting`;
         if (data.wordPack) text += ` · Custom pack: ${data.wordPack.entries.length} ${data.wordPack.entries.length === 1 ? 'word' : 'words'}`;
     }
@@ -3154,7 +3413,7 @@ function renderFinalRoundNotice(progress) {
     const data = isOnlineGame ? onlineClient?.snapshot : null;
     const pack = data?.wordPack?.entries || (!data ? localWordObjects : null);
     const available = pack ? pack.filter(entry => difficulty === 'normal' || entry.difficulty === difficulty).length : numWords;
-    const context = Experience.finishContext(progress, teams.map(team => team.points), currentTeam - 1, isChaosMode, Math.min(numWords, available));
+    const context = Experience.finishContext(progress, teams.map(team => team.points), currentTeam - 1, isChaosMode || Modes.isStakes({ mode: activeMode }), Math.min(numWords, available));
     const text = [Gameplay.finalRoundMessage(progress), context].filter(Boolean).join(' ');
     node.hidden = !text;
     if (node.textContent !== text) node.textContent = text;
@@ -3192,8 +3451,10 @@ function renderOnlineRoundReview(review) {
 }
 
 function renderOnlineControls() {
+    if (isReturningToSetup) return;
     const data = onlineClient?.snapshot;
     if (!data || !isOnlineGame) return;
+    if (Modes.isParty(data.settings)) { renderPartyOnline(data); return; }
     if (!['resolving', 'chaos-choice'].includes(data.phase)) {
         clearChaosPresentation();
         if (isChaosMode && data.auditEvent && ['idle', 'waiting'].includes(data.phase)) showChaosOutcome(data.auditEvent);
@@ -3275,6 +3536,7 @@ function renderOnlineControls() {
 }
 
 function renderOnlineSnapshot(data) {
+    if (isReturningToSetup) return;
     if (!data || data.phase === 'ended') {
         if (onlineEndedHandled) return;
         onlineEndedHandled = true;
@@ -3289,7 +3551,9 @@ function renderOnlineSnapshot(data) {
         notice.textContent = 'The lobby has closed. Create or join a new game.'; notice.hidden = false;
         return;
     }
+    if (Modes.isParty(data.settings)) { renderPartyOnline(data); return; }
     const settings = sanitizeGameSettingsFromDb(data.settings, data.teams.length);
+    activeMode = settings.mode;
     numTeams = settings.numTeams;
     pointsToWin = settings.pointsToWin;
     numWords = settings.numWords;
@@ -3322,6 +3586,7 @@ function renderOnlineSnapshot(data) {
     document.getElementById('matchResults').hidden = data.phase !== 'finished';
     if (data.auditEvent && data.phase !== 'describing') showRecap(Gameplay.recap({ teamIndex: data.auditEvent.teamIndex,
         earned: data.auditEvent.earned ?? data.auditEvent.correctAnswers?.length ?? 0, effect: data.auditEvent.effect || data.auditEvent.chaosSummary }));
+    if (data.auditEvent?.stakes && data.phase !== 'describing') showRecap(`Team ${data.auditEvent.teamIndex + 1}: ${data.auditEvent.stakes.message}`);
     else if (data.phase === 'describing' || !data.auditEvent) showRecap('');
     if (onlineClient.lastPhase === 'describing' && data.phase !== 'describing') {
         stopRoundSounds();
@@ -3337,7 +3602,7 @@ function renderOnlineSnapshot(data) {
     }
     for (const event of Object.values(data.auditEvents || {}).sort((a, b) => a.id - b.id)) {
         if (event.id <= lastProcessedAuditEventId) continue;
-        createTeamAuditRows(event.teamIndex, event.roundNumber, event.correctAnswers || [], { chaosSummary: event.chaosSummary });
+        createTeamAuditRows(event.teamIndex, event.roundNumber, event.correctAnswers || [], { chaosSummary: event.chaosSummary, modeSummary: event.stakes?.message });
         lastProcessedAuditEventId = event.id;
     }
     if (data.phase !== 'resolving') updateBoard();
@@ -3347,9 +3612,9 @@ function renderOnlineSnapshot(data) {
     renderOnlineControls();
 }
 
-async function startOnlineRound() {
+async function startOnlineRound(risky = false) {
     if (!onlineClient?.snapshot || !onlineClient.connected || onlineClient.busy || !OnlineState.view(onlineClient.snapshot, onlineClient.actor, onlineClient.serverNow()).canStartRound) return;
-    await sendOnlineCommand({ type: 'start-round', seed: randomSeed() });
+    await sendOnlineCommand({ type: 'start-round', seed: randomSeed(), risky });
 }
 
 async function handleOnlineJoinError(error) {
@@ -3358,6 +3623,8 @@ async function handleOnlineJoinError(error) {
         'duplicate-player-name': 'Player name is already in use in this lobby.',
         'incompatible-lobby': "This lobby uses a different online version. Reload every player's tab and create a new lobby.",
         'invalid-word-pack': 'This lobby has an invalid word pack. Ask the host to create a new lobby with a valid pack.',
+        'invalid-game-mode': 'This lobby uses an unknown game mode. Reload and create a new lobby.',
+        'lobby-full': 'This mode supports up to 12 players. Wait for a seat to be released, or create another lobby.',
         'lobby-unavailable': 'This lobby is unavailable or has ended.'
     };
     if (messages[error.message]) saveOnlineSession(null);
@@ -3371,6 +3638,9 @@ async function handleOnlineJoinError(error) {
     showElement(txtLobbyMenu);
     hideElement(txtLobbyPlayers);
     hideElement(game);
+    document.getElementById('partyGame').hidden = true;
+    clearInterval(partyTick); partyTick = null; screenAwake?.setActive(false);
     setLayoutMode('menu');
+    updateSetupSummary();
     alert(messages[error.message] || 'Unable to connect to the lobby. Check your connection and try again.');
 }

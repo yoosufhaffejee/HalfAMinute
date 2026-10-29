@@ -12,6 +12,7 @@ import { normalizeOnlinePack } from '../gameplay/online-packs.js';
 import * as Experience from '../gameplay/experience.js';
 import * as PackLibrary from '../gameplay/saved-packs.js';
 import { createScreenAwake } from '../gameplay/screen-awake.js';
+import * as Modes from '../gameplay/modes.js';
 
 const source = fs.readFileSync(new URL('../script.js', import.meta.url), 'utf8').replace(/^import .*$/gm, '');
 const now = 1000000;
@@ -54,7 +55,7 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, Experience, PackLibrary, createScreenAwake, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, Experience, PackLibrary, createScreenAwake, Modes, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), createAiWordClient: () => ({}),
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
@@ -1117,4 +1118,66 @@ test('online reactions expire, stay out of clues and do not replay after refresh
     const restored = ui(); restored.mount(data); assert.equal(restored.el('reactionFeed').textContent, '');
     h.now = now + Gameplay.ROUND_COUNTDOWN_MS + 4000; h.run('renderOnlineControls()');
     assert.equal(h.el('reactionFeed').textContent, '');
+});
+
+test('new mode setup disables incompatible options while retaining ordinary setup preferences', () => {
+    const h = ui();
+    h.run(`initializeQuickSetup();document.getElementById('quickMode').value='table';chkChaos.checked=true;chkTraining.checked=true;
+        document.getElementById('chkSeries').checked=true;txtWords.value='5';updateSetupSummary()`);
+    const table = h.run('getSanitizedSettingsFromInputs()');
+    assert.equal(table.mode, 'table'); assert.equal(table.numWords, 1); assert.equal(table.chaosMode, false);
+    assert.equal(table.trainingMode, false); assert.equal(table.trackSeries, false);
+    assert.equal(h.el('txtSeconds').disabled, true); assert.equal(h.el('targetSetting').hidden, true);
+    h.run(`document.getElementById('quickMode').value='classic';chkChaos.checked=false;updateSetupSummary()`);
+    assert.equal(h.el('txtWords').value, '5'); assert.equal(h.el('txtWords').disabled, false);
+    assert.equal(h.run('getSanitizedSettingsFromInputs().trainingMode'), true);
+});
+
+test('local Boost Stakes previews and scores the actual short card instead of the configured five words', async () => {
+    const h = ui();
+    h.run(`registerModal=()=>{};document.getElementById('quickMode').value='boost';txtWords.value='5';document.getElementById('difficulty').value='normal';
+        isAiGame=true;document.getElementById('aiWords').value='Apple\\nPear';`);
+    await h.run('startGame()');
+    h.run(`teams[currentTeam-1].points=2;renderStakesUi()`);
+    assert.match(h.el('stakesInstruction').textContent, /2 of 2/);
+    assert.equal(h.el('riskRoundButton').disabled, false);
+    h.run('startRound({risky:true})'); h.now = now + 9000; h.metrics.intervals.at(-1)();
+    h.run('endRound()'); h.buttons[0].onclick();
+    assert.match(h.el('selectionSummary').textContent, /− 2 stakes/);
+    const index = h.run('currentTeam-1'); await h.run('nextRound()');
+    assert.equal(h.run(`teams[${index}].points`), 1);
+    assert.equal(h.run(`localStakes[${index}].cooldown`), true);
+    assert.match(h.el('turnRecap').textContent, new RegExp(`^Team ${index + 1}:`));
+});
+
+test('a failed leave preserves the active game and releases the exit guard so the player can retry', async () => {
+    const h = ui(); h.mount(game());
+    h.run(`game.hidden=false;menu.hidden=true;onlineClient.close=async()=>{throw new Error('offline')}`);
+    await h.run('returnToSetup()');
+    assert.equal(h.run('isOnlineGame'), true); assert.equal(h.el('game').hidden, false); assert.equal(h.el('menu').hidden, true);
+    assert.equal(h.el('game').inert, false); assert.equal(h.run('isReturningToSetup'), false);
+    assert.match(h.metrics.alerts[0], /Unable to leave/);
+});
+
+test('Open Table alternates difficulty without resetting the other exhaustion deck', () => {
+    const h = ui();
+    h.run(`globalThis.tableGame={settings:{mode:'table',numWords:1,difficulty:'normal',selectedTheme:'None',selectedCategories:[]},teams:[{},{}],deck:{}};
+        globalThis.easySeed=Array.from({length:100},(_,i)=>i).find(seed=>Gameplay.random(seed)()<.6);
+        globalThis.hardSeed=Array.from({length:100},(_,i)=>i).find(seed=>Gameplay.random(seed)()>=.6);
+        globalThis.firstEasy=drawOnlineWords(tableGame,easySeed);tableGame.deck=firstEasy.pools.deck;
+        globalThis.firstHard=drawOnlineWords(tableGame,hardSeed);tableGame.deck=firstHard.pools.deck`);
+    assert.equal(h.run('tableGame.deck.easy.length'), 1); assert.equal(h.run('tableGame.deck.hard.length'), 1);
+    h.run('globalThis.secondEasy=drawOnlineWords(tableGame,easySeed)');
+    assert.notEqual(h.run('secondEasy.words[0]'), h.run('firstEasy.words[0]'));
+    assert.equal(h.run('secondEasy.pools.deck.hard.length'), 1);
+});
+
+test('a local Open Table validation failure keeps AI words accessible for editing', () => {
+    const h = ui();
+    h.run(`hideModalById=()=>{};menu.hidden=false;document.getElementById('quickMode').value='table';
+        document.getElementById('difficulty').value='normal';document.getElementById('localPlayerNames').value='Alice\\nBob\\nCara';
+        document.getElementById('aiWords').value='x'.repeat(81);startAIGame()`);
+    assert.equal(h.el('ai').hidden, false); assert.equal(h.el('menu').hidden, false);
+    assert.match(h.el('menuNotice').textContent, /80 characters/);
+    assert.equal(h.el('aiWords').value.length, 81);
 });
