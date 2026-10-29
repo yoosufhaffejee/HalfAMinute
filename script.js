@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261020.11';
-import { OnlineClient } from './online/client.js?v=20261020.11';
+import * as OnlineState from './online/state.js?v=20261029.1';
+import { OnlineClient } from './online/client.js?v=20261029.1';
 import * as Gameplay from './gameplay/rules.js?v=20261026.3';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261026.1';
@@ -409,6 +409,7 @@ async function returnToSetup() {
         saveOnlineSession(null); onlineClient = null; isOnlineGame = false; gameCode = '';
     }
     clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds(); clearChaosPresentation();
+    renderOnlineRoundReview(null);
     hideElement(game); showElement(menu); showElement(btnSettings); showElement(btnOnline); showElement(btnAI); showElement(btnRules); hideElement(btnHistory);
     showElement(txtLobbyMenu); hideElement(txtLobbyPlayers);
     isAiGame = false; localStarter = null; localDeck = {}; setLayoutMode('menu'); updateSetupSummary();
@@ -1664,6 +1665,7 @@ async function startGame({ rematch = false } = {}) {
     hideElement(lblGameState);
     setLayoutMode("game");
     clearTrainingHints();
+    renderOnlineRoundReview(null);
 
     // Read and sanitize game settings
     const sanitizedSettings = getSanitizedSettingsFromInputs();
@@ -2760,6 +2762,37 @@ function updateLobbyPresentation(data = null, view = null) {
     document.getElementById('onlineIntro').textContent = joined ? text : 'Bring your group together in one lobby.';
 }
 
+function renderOnlineRoundReview(review) {
+    const section = document.getElementById('onlineRoundReview');
+    const words = review?.words || [];
+    section.hidden = !words.length;
+    if (section.hidden) {
+        if (section.dataset.signature) {
+            document.getElementById('roundReviewTitle').textContent = '';
+            document.getElementById('roundReviewSummary').textContent = '';
+            document.getElementById('roundReviewAnswers').innerHTML = '';
+        }
+        section.dataset.signature = ''; return;
+    }
+    const signature = JSON.stringify([review.teamIndex, words, review.selectedIndexes]);
+    if (section.dataset.signature === signature) return;
+    section.dataset.signature = signature;
+    const selected = new Set(review.selectedIndexes || []);
+    document.getElementById('roundReviewTitle').textContent = `Team ${review.teamIndex + 1}'s answers`;
+    document.getElementById('roundReviewSummary').textContent = `${selected.size} of ${words.length} marked correct · Confirmed`;
+    const list = document.getElementById('roundReviewAnswers'); list.innerHTML = '';
+    words.forEach((word, index) => {
+        const row = document.createElement('li'); row.className = 'review-answer';
+        row.classList.toggle('is-correct', selected.has(index));
+        const mark = document.createElement('span'); mark.className = 'review-answer-mark';
+        mark.textContent = selected.has(index) ? '✓' : '—'; mark.setAttribute('aria-hidden', 'true');
+        const label = document.createElement('span'); label.textContent = word;
+        const status = document.createElement('span'); status.className = 'visually-hidden';
+        status.textContent = selected.has(index) ? 'Marked correct' : 'Not marked correct';
+        row.appendChild(mark); row.appendChild(label); row.appendChild(status); list.appendChild(row);
+    });
+}
+
 function renderOnlineControls() {
     const data = onlineClient?.snapshot;
     if (!data || !isOnlineGame) return;
@@ -2771,6 +2804,7 @@ function renderOnlineControls() {
     updateLobbyPresentation(data, view);
     setRoundCountdown(onlineClient.connected && view.active ? view.countdownRemainingMs : 0);
     const active = view.active && onlineClient.connected && !onlineClient.suspended;
+    renderOnlineRoundReview(active && data.phase !== 'selecting' ? view.review : null);
     document.getElementById('currentTeamIndicator').hidden = data.phase === 'finished';
     isHost = active && view.host; isSpeaker = active && view.speaker;
     isRoundActive = data.phase === 'describing';
@@ -2804,7 +2838,7 @@ function renderOnlineControls() {
         : smallGame ? `${name} is speaking. Guess aloud; answers stay hidden.`
         : view.player?.teamIndex === data.turn?.teamIndex ? `${name} is speaking for your team. Guess aloud; answers stay hidden.`
         : `${name} is speaking for Team ${data.turn.teamIndex + 1}. Watch the clues and the timer.`;
-    if (data.phase === 'selecting') role = isSpeaker ? 'Select the words guessed correctly, then confirm.' : `${name} is confirming the correct answers.`;
+    if (data.phase === 'selecting') role = isSpeaker ? 'Select the words guessed correctly, then confirm.' : `${name} is selecting the correct answers. Watch the selections below.`;
     if (data.phase === 'idle') {
         const opening = !Object.keys(data.auditEvents || {}).length;
         const starterTeam = data.starterTeam ?? data.turn.teamIndex;

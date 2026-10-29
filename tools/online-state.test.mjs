@@ -341,6 +341,60 @@ test('Chaos result survives host/speaker departure and is finished once by the n
     assert.equal(State.act(game, actor('C'), { type: 'resolve-chaos', turnId: id, hostEpoch: game.hostEpoch }, NOW + 4000, rules), undefined);
 });
 
+test('every team sees live scoring selections while only the speaker can change or confirm them', () => {
+    for (const [names, teamCount] of [[['A','B'],2], [['A','B','C'],3], [['A','B','C','D'],2],
+        [['A','B','C','D','E','F'],3]]) {
+        let game=selection(started(names,teamCount));
+        game=act(game,'A','toggle-answer',{index:1});
+        for(const name of names) {
+            const view=State.view(game,actor(name),game.turn.selectingAt);
+            assert.equal(view.showWords,true,`${name} in ${names.length}-player game`);
+            assert.equal(view.canSelect,name==='A');
+            if(name!=='A') {
+                assert.equal(act(game,name,'toggle-answer',{index:0}),undefined);
+                assert.equal(act(game,name,'submit-round'),undefined);
+            }
+        }
+        assert.equal(State.view(game,actor('outsider'),NOW).showWords,false);
+    }
+});
+
+test('confirmed review keeps every option and its selections across refresh/join, then clears at the next countdown', () => {
+    for(const indexes of [[],[0,2]]) {
+        let game=selection(started());
+        for(const index of indexes)game=act(game,'A','toggle-answer',{index});
+        game=act(game,'A','submit-round');
+        assert.deepEqual(game.roundReview.words,['One','Two','Three']);
+        assert.deepEqual(game.roundReview.selectedIndexes,indexes);
+        const refreshed=actor('B','refreshed');
+        game=State.join(game,refreshed,NOW+LEAD_IN+1);
+        assert.deepEqual(State.view(game,refreshed,NOW+LEAD_IN+1).review,game.roundReview);
+        assert.equal(State.view(game,actor('B'),NOW+LEAD_IN+1).review,null);
+        game=State.join(game,actor('C'),NOW+LEAD_IN+2);
+        assert.deepEqual(State.view(game,actor('C'),NOW+LEAD_IN+2).review.words,['One','Two','Three']);
+        game=State.join(game,actor('D'),NOW+LEAD_IN+3);
+        game=act(game,refreshed,'start-round',{seed:2},NOW+LEAD_IN+4);
+        assert.equal(game.roundReview,null);
+        assert.equal(State.view(game,refreshed,NOW+LEAD_IN+4).review,null);
+        assert.equal(State.view(game,actor('A'),NOW+LEAD_IN+4).showWords,false);
+    }
+});
+
+test('Chaos review survives resolution and a match finish, but never carries into a rematch', () => {
+    let game=selection(started(['A','B'],2,{chaosMode:true}));
+    game=act(game,'A','toggle-answer',{index:2});
+    game=act(game,'A','submit-round');
+    assert.deepEqual(State.view(game,actor('B'),NOW+LEAD_IN).review.selectedIndexes,[2]);
+    assert.deepEqual(State.view(game,actor('B'),NOW+LEAD_IN).review.words,['One','Two','Three']);
+    game=act(game,'A','resolve-chaos',{hostEpoch:game.hostEpoch},game.turn.resolution.startedAt+3000);
+    assert.deepEqual(State.view(game,actor('B'),NOW+LEAD_IN+3000).review.selectedIndexes,[2]);
+    game=act(game,'A','end-game',{matchId:game.matchId},NOW+LEAD_IN+3001);
+    assert.deepEqual(State.view(game,actor('B'),NOW+LEAD_IN+3001).review.words,['One','Two','Three']);
+    game=act(game,'A','rematch',{matchId:game.matchId},NOW+LEAD_IN+3002);
+    assert.equal(game.roundReview,null);
+    assert.equal(State.view(game,actor('B'),NOW+LEAD_IN+3002).review,null);
+});
+
 test('same host with an obsolete host epoch cannot finish a Chaos turn', () => {
     let game = act(selection(started(['A', 'B'], 2, { chaosMode: true })), 'A', 'submit-round');
     assert.equal(act(game, 'A', 'resolve-chaos', { hostEpoch: game.hostEpoch - 1 }, NOW + 3000), undefined);

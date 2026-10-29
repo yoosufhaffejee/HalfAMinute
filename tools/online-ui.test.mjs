@@ -116,11 +116,73 @@ test('late opposing join renders the current words and deadline from one snapsho
     assert.equal(h.buttons[0].disabled, true);
 });
 
-test('two-player spectators and teammates never receive visible words', () => {
+test('two-player guessers and teammates do not see words during the live round', () => {
     const small = ui(); small.mount(act(game(['A', 'B']), 'start-round', { seed: 1 }), actor('B'));
     assert.equal(small.el('scoreInput').hidden, true);
     const teammate = ui(); teammate.mount(act(game(), 'start-round', { seed: 1 }), actor('C'));
     assert.equal(teammate.el('scoreInput').hidden, true);
+});
+
+test('all players see live selection changes, including small-game guessers and the speaker teammate', () => {
+    for(const names of [['A','B'],['A','B','C','D']]) {
+        let data=act(act(game(names),'start-round',{seed:1}),'end-round');
+        const viewers=names.map(name=>{const h=ui();h.mount(data,actor(name));return h;});
+        for(const h of viewers)assert.equal(h.el('scoreInput').hidden,false);
+        data=act(data,'toggle-answer',{index:1});
+        viewers.forEach((h,index)=>{
+            h.apply(data);
+            assert.equal(h.buttons[1].classList.contains('score-button-selected'),true);
+            assert.equal(h.buttons[1]['aria-pressed'],'true');
+            assert.equal(h.buttons[0].textContent,'One');
+            assert.equal(h.buttons[0].disabled,index!==0);
+            assert.equal(h.el('nextRoundButton').hidden,index!==0);
+            assert.equal(h.el('onlineRoundReview').hidden,true);
+        });
+        data=act(data,'toggle-answer',{index:1});
+        for(const h of viewers){h.apply(data);assert.equal(h.buttons[1].classList.contains('score-button-selected'),false);}
+    }
+});
+
+test('confirmed review shows all options without stealing board focus and clears before the next round', () => {
+    let data=act(act(game(['A','B']),'start-round',{seed:1}),'end-round');
+    data=act(data,'toggle-answer',{index:1});
+    data=act(data,'submit-round');
+    const h=ui();h.mount(data,actor('B'));
+    assert.equal(h.el('scoreInput').hidden,true);
+    assert.equal(h.el('onlineRoundReview').hidden,false);
+    assert.equal(h.el('roundReviewTitle').textContent,"Team 1's answers");
+    const rows=h.el('roundReviewAnswers').children;
+    assert.deepEqual(rows.map(row=>row.children[1].textContent),['One','Two','Three']);
+    assert.deepEqual(rows.map(row=>row.classList.contains('is-correct')),[false,true,false]);
+    assert.equal(h.run('areWordsInFocusPhase()'),false);
+    assert.equal(h.el('nextRoundButton').hidden,true);
+    const signature=h.el('onlineRoundReview').dataset.signature;
+    h.apply(data);assert.equal(h.el('onlineRoundReview').dataset.signature,signature);
+    data=OnlineState.act(data,actor('B'),{type:'start-round',turnId:data.turn.id,seed:2},now+10000,rules);
+    h.now=now+10000;h.apply(data);
+    assert.equal(h.el('onlineRoundReview').hidden,true);
+    assert.equal(h.el('roundReviewTitle').textContent,'');
+    assert.equal(h.el('roundReviewAnswers').innerHTML,'');
+    assert.equal(h.el('scoreInput').hidden,true);
+    assert.equal(h.el('roundCountdown').hidden,false);
+});
+
+test('confirmed review remains visible through Chaos and hides when the viewer loses access', () => {
+    let data=act(act(game(['A','B']),'start-round',{seed:99}),'end-round');
+    data.settings.chaosMode=true;data.turn.selectedIndexes=[0,1];
+    const h=ui();h.mount(data,actor('B'));
+    data=OnlineState.act(data,actor('A'),{type:'submit-round',turnId:data.turn.id},now,
+        {planChaos:(g,p)=>h.run(`planOnlineChaos(${JSON.stringify(g)},${JSON.stringify(p)})`)});
+    h.apply(data);
+    assert.equal(h.el('onlineRoundReview').hidden,false);
+    assert.equal(h.el('scoreInput').hidden,true);
+    assert.equal(h.run('areWordsInFocusPhase()'),false);
+    data=OnlineState.act(data,actor('A'),{type:'resolve-chaos',turnId:data.turn.id,hostEpoch:data.hostEpoch},now+data.turn.resolution.durationMs);
+    h.apply(data);assert.equal(h.el('onlineRoundReview').hidden,false);
+    h.run('onlineClient.connected=false;renderOnlineControls()');
+    assert.equal(h.el('onlineRoundReview').hidden,true);
+    h.run('onlineClient.connected=true;renderOnlineControls()');
+    assert.equal(h.el('onlineRoundReview').hidden,false);
 });
 
 test('opponents can observe selection but only the speaker has enabled answer controls', () => {

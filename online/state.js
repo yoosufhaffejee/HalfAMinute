@@ -215,6 +215,8 @@ export function prune(gameData, actor, now) {
 
 function completeTurn(game, now, points, chaosSummary = null, effect = null) {
     const turn = game.turn;
+    game.roundReview = { turnId: turn.id, teamIndex: turn.teamIndex,
+        words: [...turn.words], selectedIndexes: [...(turn.selectedIndexes || [])] };
     const correctAnswers = (turn.selectedIndexes || []).map(index => turn.words[index]);
     const before = Number(game.teams[turn.teamIndex].points) || 0;
     game.teams.forEach((team, index) => { team.points = points[index]; });
@@ -275,7 +277,7 @@ export function act(gameData, actor, action, now, rules = {}) {
         game.currentRound = 0;
         game.isGameStarted = false;
         game.teams.forEach(team => { team.points = 0; });
-        game.auditEvents = {}; game.auditEvent = null;
+        game.auditEvents = {}; game.auditEvent = null; game.roundReview = null;
         game.chaos = { teamShields: game.teams.map(() => 0), rerollsUsed: game.teams.map(() => false) };
         game.finishReason = null; game.endedAt = null;
         newTurn(game, 'ready');
@@ -304,6 +306,7 @@ export function act(gameData, actor, action, now, rules = {}) {
                 || action.seed < 0 || action.seed > 0xFFFFFFFF) return;
             const draw = rules.drawWords?.(game, action.seed);
             if (!draw?.words?.length) return;
+            game.roundReview = null;
             turn.words = draw.words;
             turn.selectedIndexes = [];
             turn.seed = action.seed;
@@ -383,12 +386,15 @@ export function view(game, actor, now) {
     const smallGame = Boolean(game.turn?.smallGame) || (game.teams.length === 2 && roster.connectedPlayers === 2)
         || (game.teams.length === 3 && roster.connectedPlayers === 3);
     const countdownRemainingMs = game.phase === 'describing' ? Math.max(0, (game.turn?.startedAt || now) - now) : 0;
-    const showWords = active && !countdownRemainingMs && ['describing', 'selecting'].includes(game.phase)
-        && (speaker || (!smallGame && player.teamIndex !== game.turn?.teamIndex));
+    const showWords = active && (game.phase === 'selecting' || (game.phase === 'describing' && !countdownRemainingMs
+        && (speaker || (!smallGame && player.teamIndex !== game.turn?.teamIndex))));
+    const review = !active || game.phase === 'describing' ? null
+        : ['resolving', 'chaos-choice'].includes(game.phase) ? game.turn
+        : game.roundReview || null;
     return {
         player, active, speaker, roster, smallGame, countdownRemainingMs,
         host: active && game.hostId === actor.playerId,
-        showWords,
+        showWords, review,
         canStartGame: active && game.hostId === actor.playerId && !game.isGameStarted && roster.eligible && ['ready', 'waiting'].includes(game.phase),
         canStartRound: speaker && game.phase === 'idle' && roster.eligible,
         canSelect: speaker && game.phase === 'selecting',

@@ -130,6 +130,8 @@ See [Firebase setup](https://firebase.google.com/docs/ai-logic/get-started?platf
 
 The initial starter is randomized. Rematches keep the roster/settings and rotate the starter; immediate victory on reaching the target is unchanged. Scores and Chaos resources reset for the new match identity. Word exhaustion history carries across rematches for the same group.
 
+Online answer review is shared by all connected players once a round ends, including small-game guessers and the speaker's teammates. Only the speaker can change selections or confirm. Confirmed options and checkmarks remain in a read-only review below the board through Chaos and between turns, including after refreshing or rejoining. The review clears when the next round's countdown starts and on rematch. Live-round answer visibility and team-size rules are unchanged.
+
 ## Chaos rules
 
 - The map changes each turn. Start, the tile before the finish, and a winning earned move have no effect. Resolve one landing effect, without chaining. A zero-correct turn can still land on an effect.

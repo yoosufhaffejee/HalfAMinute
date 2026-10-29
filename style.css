@@ -166,6 +166,14 @@ body.layout-game .app-actions { justify-content: flex-end; }
     #gameBoard[data-layout='expanded'] { grid-template-columns: repeat(12, minmax(0, 1fr)); }
 }
 #teamScores { order: 9; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 20px; margin: 4px 0; }
+.round-review { order: 10; margin-top: 16px; padding: 16px; border: 1px solid #cbd5e1; border-radius: 12px; background: #f8fafc; text-align: left; }
+.round-review h3 { margin: 0; font-size: 1rem; font-weight: 700; }
+.round-review > p { margin: 6px 0 12px; color: #475569; font-size: .9rem; }
+.round-review-answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.review-answer { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow-wrap: anywhere; }
+.review-answer.is-correct { border-color: #a9d3b8; background: #eef8f1; }
+.review-answer-mark { flex-shrink: 0; color: #64748b; }
+.review-answer.is-correct .review-answer-mark { color: #166534; font-weight: 700; }
 #chaosHelp { order: 10; margin: 8px 0; text-align: left; }
 #game.word-phase #gameBoard, #game.word-phase #teamScores, #game.word-phase #chaosModeBanner, #game.word-phase #chaosHelp { display: none !important; }
 #game.word-phase #progressSummary { display: block; }
