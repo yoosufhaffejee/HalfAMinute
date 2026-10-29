@@ -1,12 +1,12 @@
 // All online mutations run against the transaction's current snapshot, never a
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
-import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261029.2';
+import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261030.2';
 import { normalizeOnlinePack } from '../gameplay/online-packs.js?v=20261029.3';
 import { REACTIONS, REACTION_TTL_MS, rosterKey, freshSeries, recordSeries } from '../gameplay/experience.js?v=20261029.4';
 import * as Modes from '../gameplay/modes.js?v=20261030.1';
 import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261030.1';
 
-export const PROTOCOL_VERSION = 8;
+export const PROTOCOL_VERSION = 9;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -49,7 +49,7 @@ function chooseSpeaker(game, preferred = game.currentTeam - 1) {
     for (const team of game.teams) for (const player of team.players || []) player.isSpeaker = false;
     const count = game.teams.length;
     const pending = game.finalTurnCount ? matchProgress(game.teams.map(team => team.points), game.settings.pointsToWin,
-        Object.values(game.auditEvents || {}), game.finalTurnCount).pendingTeams : null;
+        Object.values(game.auditEvents || {}), game.finalTurnCount, game.settings.winRule).pendingTeams : null;
     for (let offset = 0; offset < count; offset++) {
         const teamIndex = ((preferred + offset) % count + count) % count;
         if (pending && !pending.includes(teamIndex)) continue;
@@ -140,7 +140,7 @@ function reconcile(game, now) {
     const speaker = roster.find(player => player.playerId === game.turn?.speakerId);
     if (game.finalTurnCount) {
         const pending = matchProgress(game.teams.map(team => team.points), game.settings.pointsToWin,
-            Object.values(game.auditEvents || {}), game.finalTurnCount).pendingTeams;
+            Object.values(game.auditEvents || {}), game.finalTurnCount, game.settings.winRule).pendingTeams;
         if (pending.length && !pending.some(index => game.teams[index].players?.length)) {
             if (game.phase !== 'waiting' || game.turn?.teamIndex !== pending[0] || game.turn?.speakerId) newTurn(game, 'waiting');
             game.gameState = 'waiting'; return;
@@ -283,7 +283,7 @@ function completeTurn(game, now, points, chaosSummary = null, effect = null) {
     const team = game.teams[turn.teamIndex];
     const index = (team.players || []).findIndex(player => player.playerId === turn.speakerId);
     if (index >= 0) team.nextSpeakerId = team.players[(index + 1) % team.players.length].playerId;
-    const progress = matchProgress(points, game.settings.pointsToWin, Object.values(game.auditEvents), game.finalTurnCount);
+    const progress = matchProgress(points, game.settings.pointsToWin, Object.values(game.auditEvents), game.finalTurnCount, game.settings.winRule);
     game.finalTurnCount = progress.finalTurnCount;
     if (progress.finished) {
         if (game.settings.trackSeries) game.series = recordSeries(game.series, game.matchId || 1, progress.winners);

@@ -1,0 +1,9 @@
+# Team win rule — 30 October 2026
+
+Settings → Match setup now offers **Equal turns** (default) and **First to target**. The latter ends a team match when a completed turn's resolved score reaches or passes the target; there are no reply turns. Chaos animation/effects and Stakes scoring complete first. A missing or invalid rule retains the existing fair finish. Open Table and Case Files keep their own completion rules and hide this control.
+
+Both local and online games use the same shared progress function. The chosen rule travels with lobby settings and survives rematches. Setup and lobby summaries, results, exported settings and How to play reflect the choice. The settings presentation cache includes the win rule, so changing it without changing mode updates the help text immediately. The dropdown occupies a full grid row to keep its label readable on phones.
+
+Online protocol 9 prevents older clients from resolving a first-to-target lobby with equal-turn logic. Reload all players and create a new lobby after updating. Existing team eligibility, rotations, answer visibility, word sources and party-mode rules are unchanged.
+
+Verification: all 205 tests passed across AI, saved packs, gameplay, online state/client/UI, experience and modes. Focused additions cover target/overshoot, no premature finish below target, invalid defaults, immediate Classic/Stakes wins, delayed Chaos-effect wins, series tally/rematch preservation, local finish, settings serialization, two-client rendering and hiding the setting for party modes. A browser match reached 10 on its first confirmed turn and ended with the opponent still on zero; the result correctly showed First to target. The setting was visually checked at 390 px. Screenshots: [setting](win-rule-mobile.png), [result](first-to-target-result.png).

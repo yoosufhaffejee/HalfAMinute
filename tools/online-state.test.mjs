@@ -452,6 +452,32 @@ test('winning seals scoring while keeping the roster connected for a new match',
     assert.equal(State.heartbeat(game, actor('A'), NOW).phase, 'finished');
 });
 
+test('first-to-target ends on confirmation, records the winner once, and retains its rule through rematch', () => {
+    for(const mode of ['classic','boost','double']) {
+        let game=selection(started(['A','B'],2,{mode,winRule:'first-to-target',trackSeries:true}));
+        game.teams[0].points=19;
+        game=act(game,'A','toggle-answer',{index:0});game=act(game,'A','submit-round');
+        assert.equal(game.phase,'finished');assert.equal(game.finishReason,'winner');assert.equal(game.finalTurnCount,null);
+        assert.equal(Object.values(game.auditEvents).length,1);assert.deepEqual(game.series.wins,[1,0]);
+        assert.equal(act(game,'B','start-round'),undefined);assert.equal(act(game,'A','submit-round'),undefined);
+        const matchId=game.matchId;
+        game=act(game,'A','rematch',{matchId});
+        assert.equal(game.settings.winRule,'first-to-target');assert.deepEqual(game.teams.map(team=>team.points),[0,0]);
+        assert.equal(game.finalTurnCount,null);
+    }
+});
+
+test('first-to-target waits for the Chaos resolution and can win from an effect', () => {
+    let game=selection(started(['A','B'],2,{chaosMode:true,winRule:'first-to-target'}));
+    game.teams[0].points=19;
+    const chaosRules={...rules,planChaos:(game,points)=>({points:[20,points[1]],basePoints:points,shields:[0,0],
+        effect:{type:'plus1',actorDelta:1},powerups:{},durationMs:3000})};
+    game=State.act(game,actor('A'),{type:'submit-round',turnId:game.turn.id},NOW+LEAD_IN,chaosRules);
+    assert.equal(game.phase,'resolving');assert.equal(game.teams[0].points,19);
+    game=State.act(game,actor('A'),{type:'resolve-chaos',turnId:game.turn.id,hostEpoch:game.hostEpoch},game.turn.resolution.startedAt+3000,chaosRules);
+    assert.equal(game.phase,'finished');assert.equal(game.teams[0].points,20);assert.equal(game.finalTurnCount,null);
+});
+
 test('the last team can lose, draw, or beat the first team after it reaches 21', () => {
     for(const [correct,expected,reason] of [[0,[21,19],'winner'],[2,[21,21],'draw'],[3,[21,22],'winner']]) {
         let game=started();game.teams.forEach(team=>team.points=19);

@@ -294,6 +294,7 @@ test('hosting a shared pack retains normal online team/target settings and never
             {word:'Custom easy',canonical:'Custom easy',difficulty:'easy'},
             {word:'Custom hard',canonical:'Custom hard',difficulty:'hard'}]});
         txtPlayerName.value='Pack Host';txtTeams.value='4';document.getElementById('pointsToWin').value='40';
+        document.getElementById('winRule').value='first-to-target';
         document.getElementById('chkTraining').checked=true;
         loadWords=()=>{throw new Error('Built-in words must not be loaded')};
         ref=(db,path)=>({path});onValue=(ref,callback)=>callback({val:()=>0});get=async()=>({});
@@ -303,6 +304,7 @@ test('hosting a shared pack retains normal online team/target settings and never
     await h.run('createGameLobby()');
     const initial=h.metrics.initial;
     assert.equal(initial.settings.numTeams,4);assert.equal(initial.settings.pointsToWin,40);
+    assert.equal(initial.settings.winRule,'first-to-target');
     assert.equal(initial.settings.trainingMode,false);assert.equal(initial.settings.selectedTheme,'None');
     assert.equal(initial.wordPack.entries.length,2);
     assert.deepEqual([...initial.easyWords],['Custom easy']);assert.deepEqual([...initial.hardWords],['Custom hard']);
@@ -804,6 +806,42 @@ test('a local team can start its final turn even when another team has passed th
     const h=ui();h.run(`teams=[{points:21},{points:19}];currentTeam=2;pointsToWin=20;
         localFinalTurnCount=1;localMatchFinished=false;currentGameWords=['One'];startRound()`);
     assert.equal(h.run('isRoundActive'),true);assert.equal(h.el('roundCountdown').hidden,false);
+});
+
+test('local first-to-target ends without an equalizing turn and labels the result', async () => {
+    const h=ui();h.run(`teams=[{points:19},{points:19}];pointsToWin=20;winRule='first-to-target';currentTeam=1;numWords=3;
+        localAudit=[];btnNextRound.hidden=false;btnAnswers.hidden=false;
+        document.querySelectorAll('.scoreButton').slice(0,3).forEach((button,index)=>{button.hidden=false;button.textContent=['One','Two','Three'][index];setScoreButtonSelected(button,index===0)})`);
+    await h.run('nextRound()');
+    assert.equal(h.run('localMatchFinished'),true);assert.equal(h.run('localFinalTurnCount'),null);
+    assert.equal(h.el('resultsTitle').textContent,'Team 1 wins!');assert.equal(h.el('finalRoundNotice').hidden,true);
+    assert.equal(h.el('resultsContext').textContent,'Classic · Target 20 · First to target');
+});
+
+test('win-rule settings default safely, apply to lobby creation, and hide for party modes', () => {
+    const h=ui();h.el('winRule').value='first-to-target';
+    assert.equal(h.run('getSanitizedSettingsFromInputs().winRule'),'first-to-target');
+    assert.equal(h.run("sanitizeGameSettingsFromDb({winRule:'first-to-target'}).winRule"),'first-to-target');
+    assert.equal(h.run("sanitizeGameSettingsFromDb({winRule:'bad'}).winRule"),'equal-turns');
+    h.el('quickMode').value='table';h.run('updateSetupSummary()');
+    assert.equal(h.el('winRuleSetting').hidden,true);assert.equal(h.el('winRule').disabled,true);
+    h.el('quickMode').value='classic';h.run('updateSetupSummary()');
+    assert.equal(h.el('winRuleSetting').hidden,false);assert.equal(h.el('winRule').disabled,false);
+    assert.match(h.el('setupSummary').textContent,/First to target/);
+    assert.match(h.el('standardWinRule').textContent,/do not get a reply turn/);
+    h.el('winRule').value='equal-turns';h.run('updateSetupSummary()');
+    assert.match(h.el('winRuleHint').textContent,/same number of turns/);
+    assert.match(h.el('standardWinRule').textContent,/highest score wins/);
+    h.el('winRule').value='first-to-target';h.run('updateSetupSummary()');
+    assert.match(h.el('winRuleHint').textContent,/first team to reach/);
+});
+
+test('online first-to-target uses the shared rule and hides final-round reply notices for all clients', () => {
+    let data=game(['A','B']);data.settings.winRule='first-to-target';data.teams[0].points=19;
+    const host=ui(),guest=ui();host.mount(data);guest.mount(data,actor('B'));
+    for(const h of [host,guest]) {assert.equal(h.run('winRule'),'first-to-target');assert.match(h.el('lobbySummary').textContent,/First to target/);}
+    data=act(act(data,'start-round',{seed:1}),'end-round');data=act(data,'toggle-answer',{index:0});data=act(data,'submit-round');
+    for(const h of [host,guest]) {h.apply(data);assert.equal(h.el('matchResults').hidden,false);assert.equal(h.el('finalRoundNotice').hidden,true);assert.match(h.el('resultsContext').textContent,/First to target/);}
 });
 
 test('Classic results omit repeated earned totals and empty best-round highlights', () => {

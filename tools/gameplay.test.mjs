@@ -113,6 +113,19 @@ test('equal-skill turns remove the starting-slot advantage across all determinis
     }
 });
 
+test('first-to-target finishes at the resolved target without reply turns, while unknown rules keep equal turns', () => {
+    for (const points of [[20,19],[21,19],[0,20,18],[0,1,2,23]]) {
+        const progress=Rules.matchProgress(points,20,[{teamIndex:points.indexOf(Math.max(...points))}],2,'first-to-target');
+        assert.equal(progress.finished,true);assert.equal(progress.finalTurnCount,null);
+        assert.deepEqual(progress.pendingTeams,[]);assert.deepEqual(progress.winners,Rules.scoreLeaders(points));
+        assert.equal(Rules.finalRoundMessage(progress),'');
+    }
+    assert.equal(Rules.matchProgress([19,18],20,[],null,'first-to-target').finished,false);
+    assert.equal(Rules.matchProgress([20,19],20,[{teamIndex:0}],null,'bad').finished,false);
+    assert.equal(Rules.normalizeWinRule(undefined),'equal-turns');
+    assert.equal(Rules.winRuleLabel('first-to-target'),'First to target');
+});
+
 const now = 1000000;
 const actor = name => ({ playerId: name, playerName: name, connectionId: `c-${name}` });
 const rules = {

@@ -75,17 +75,17 @@ Important:
 
 ## Game Modes
 
-The Game selector explains each mode and shows only the setup that applies. How to play follows the chosen mode; live instructions explain the current turn. All modes support local and online play. Reload every player and create a new lobby for **online protocol 8**.
+The Game selector explains each mode and shows only the setup that applies. How to play follows the chosen mode; live instructions explain the current turn. All modes support local and online play. Reload every player and create a new lobby for **online protocol 9**.
 
 | Mode | Players / scoring | Length and special rules |
 | --- | --- | --- |
-| Classic / Chaos | Existing 2–4 team rules, including the existing 2/3-player online exceptions | Score target, equal-turn finish; Chaos alone has effects/rerolls |
+| Classic / Chaos | Existing 2–4 team rules, including the existing 2/3-player online exceptions | Score target with equal turns (default) or first to target; Chaos alone has effects/rerolls |
 | Boost Stakes | Existing team rules; normal clue points plus 2 on success or minus 2 on failure, floor zero | Bank 2 points to risk; complete one normal team turn before risking again |
 | Double Stakes | Existing team rules; meet the target to double clue points, otherwise lose 3 banked points and earn no clue points | Bank 3 points; one risk per team per match |
 | Open Table | **3–12 individuals**; each correct guess gives its author and speaker 1 point | One untimed answer; 1–3 speaking turns each; private guesses reveal together |
 | Case Files | **2–12 players in one crew** | Three illustrated investigations; 4–12 timed turns; correct words unlock evidence and the host confirms a final accusation |
 
-Both stakes modes lock the choice before the countdown and use a target of 60% of the actual distinct eligible card, rounded up (3 of 5). Risk resources are spent only when a turn is scored. Cancelled turns spend nothing. Their normal turns retain ordinary clue scoring, and both modes retain the equal-turn finish. They do not combine with Chaos.
+Both stakes modes lock the choice before the countdown and use a target of 60% of the actual distinct eligible card, rounded up (3 of 5). Risk resources are spent only when a turn is scored. Cancelled turns spend nothing. Their normal turns retain ordinary clue scoring, and both modes use the selected team win rule. They do not combine with Chaos.
 
 Open Table requires three players because two-player shared credit would always keep both scores equal. Online, each listener privately locks a typed guess or passes. Exact normalized answers are preselected in shared review; the speaker can accept wording alternatives before confirming. A connected host can recover review if the speaker disconnects. Everyone in the starting roster gets equal speaking opportunities; late arrivals watch until rematch. Removed players keep their history but leave the ranking. A host may explicitly pass a disconnected guesser. Local play masks the device between the speaker and each guesser. Custom answers must fit the 80-character guess field.
 
@@ -171,7 +171,9 @@ See [Firebase setup](https://firebase.google.com/docs/ai-logic/get-started?platf
 
 The initial starter is randomized. Rematches keep the roster/settings and rotate the starter. A final-round notice names the teams still owed turns. The final round remains active even if Chaos lowers a score below the target; compare the full final totals, including points beyond the board's finish. Completed-turn counts come from scored turn events, so cancelled turns do not consume a team's final opportunity. A missing team keeps its owed turns and the existing connection/roster requirements still apply. Scores, final-round state and Chaos resources reset for the new match identity. Word exhaustion history carries across rematches for the same group. This finish rule applies online and locally.
 
-Current matches use online protocol 8, including the equal-turn team finish introduced in protocol 5. Reload every player's tab and create a new lobby; older clients/lobbies are incompatible, so an old client cannot end a new match early or apply different mode/visibility rules.
+**Settings → Match setup → Win rule** chooses the team finish. **Equal turns** remains the default and keeps the fair final cycle described above. **First to target** ends the match as soon as a completed turn's final score reaches or passes the target; other teams do not get reply turns. Chaos movement/effects and Stakes scoring finish before deciding the winner. The selection is shared online and retained on rematch; missing or invalid values default to Equal turns. Open Table and Case Files keep their own finish rules and hide this setting.
+
+Current matches use online protocol 9, including the equal-turn team finish introduced in protocol 5 and selectable first-to-target finish. Reload every player's tab and create a new lobby; older clients/lobbies are incompatible, so an old client cannot apply a different win rule or mode/visibility rules.
 
 Online answer review is shared by all connected players once a round ends, including small-game guessers and the speaker's teammates. Only the speaker can change selections or confirm. Confirmed options and checkmarks remain in a read-only review below the board through Chaos and between turns, including after refreshing or rejoining. The review clears when the next round's countdown starts and on rematch. Live-round answer visibility and team-size rules are unchanged.
 

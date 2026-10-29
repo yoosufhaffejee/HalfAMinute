@@ -78,8 +78,15 @@ export function scoreLeaders(points) {
     return points.flatMap((score, index) => score === highest ? [index] : []);
 }
 
-export function matchProgress(points, target, events, finalTurnCount = null) {
+export function normalizeWinRule(value) { return value === 'first-to-target' ? value : 'equal-turns'; }
+export function winRuleLabel(value) { return normalizeWinRule(value) === 'first-to-target' ? 'First to target' : 'Equal turns'; }
+
+export function matchProgress(points, target, events, finalTurnCount = null, winRule = 'equal-turns') {
     const turns = completedTurns(events, points.length);
+    if (normalizeWinRule(winRule) === 'first-to-target') {
+        const finished = points.some(score => score >= target);
+        return { turns, finalTurnCount: null, pendingTeams: [], finished, winners: finished ? scoreLeaders(points) : [] };
+    }
     // Once triggered, the final round remains sealed even if a Chaos steal lowers a score.
     if (!finalTurnCount && points.some(score => score >= target)) finalTurnCount = Math.max(1, ...turns);
     const pendingTeams = finalTurnCount ? turns.flatMap((count, index) => count < finalTurnCount ? [index] : []) : [];

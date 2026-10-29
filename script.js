@@ -1,8 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261030.1';
-import { OnlineClient } from './online/client.js?v=20261030.1';
-import * as Gameplay from './gameplay/rules.js?v=20261029.2';
+import * as OnlineState from './online/state.js?v=20261030.2';
+import { OnlineClient } from './online/client.js?v=20261030.2';
+import * as Gameplay from './gameplay/rules.js?v=20261030.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
 import * as AiPacks from './gameplay/ai-packs.js?v=20261029.5';
@@ -70,6 +70,7 @@ const ONLINE_SESSION_KEY = 'half_a_minute_online_session_v2';
 let isAiGame = false;
 let numTeams = 2;
 let pointsToWin = 20;
+let winRule = 'equal-turns';
 let numWords = 5;
 let numSeconds = 30;
 let difficulty = 'normal';
@@ -118,8 +119,9 @@ let isReturningToSetup = false;
 
 function modeSettingsPresentation(settings) {
     const mode = Modes.modeOf(settings), party = Modes.isParty(settings);
-    if (presentedMode === mode) return;
-    presentedMode = mode;
+    const presentationKey = `${mode}:${Gameplay.normalizeWinRule(settings.winRule)}`;
+    if (presentedMode === presentationKey) return;
+    presentedMode = presentationKey;
     document.getElementById('modeDescription').textContent = Modes.MODES[mode].description;
     document.getElementById('teamCountField').hidden = party;
     document.getElementById('quickLengthField').hidden = party;
@@ -132,6 +134,11 @@ function modeSettingsPresentation(settings) {
     document.getElementById('setupStarterNote').textContent = party ? 'Local play passes one device between named players. Online play gives each player their own private screen.'
         : 'The starting team is drawn at random. Rematches rotate the starter. Customize cards, packs, and timing in Settings.';
     document.getElementById('targetSetting').hidden = party;
+    document.getElementById('winRuleSetting').hidden = party;
+    document.getElementById('winRule').disabled = party;
+    document.getElementById('winRuleHint').textContent = settings.winRule === 'first-to-target'
+        ? 'The first team to reach the target wins after its turn, including any effects.'
+        : 'Finish the round so every team has the same number of turns. Highest score wins.';
     document.getElementById('timeSetting').hidden = document.getElementById('wordsSetting').hidden = mode === 'table';
     txtSeconds.disabled = txtWords.disabled = mode === 'table';
     document.getElementById('pointsToWin').disabled = txtTeams.disabled = party;
@@ -149,14 +156,18 @@ function modeSettingsPresentation(settings) {
         : Modes.isStakes(settings) ? 'Stakes has its own scoring. Chaos effects and rerolls do not apply. The risk target follows the actual eligible card size.' : '';
     document.getElementById('modeSettingsNote').textContent = message; document.getElementById('modeSettingsNote').hidden = !message;
     const rules = {
-        boost: 'Choose a normal turn or risk before the words appear. Get at least 60% correct (3 of 5) to add 2 to your clue points; miss and subtract 2, with a floor of zero. Bank 2 points first. After risking, complete one normal turn before risking again. Every team still gets equal turns at the finish.',
-        double: 'Once per team per match, risk before seeing the card. Meet the 60% target (3 of 5) to double your clue points. Miss and lose 3 banked points, earning no clue points. Bank 3 points first. The finish still gives teams equal turns.',
+        boost: 'Choose a normal turn or risk before the words appear. Get at least 60% correct (3 of 5) to add 2 to your clue points; miss and subtract 2, with a floor of zero. Bank 2 points first. After risking, complete one normal turn before risking again.',
+        double: 'Once per team per match, risk before seeing the card. Meet the 60% target (3 of 5) to double your clue points. Miss and lose 3 banked points, earning no clue points. Bank 3 points first.',
         table: 'One speaker sees one answer after Go. Everyone else asks questions and privately locks a guess or passes; there is no time limit. Guesses reveal together. Review correct wording together, then the speaker confirms. Each correct guess earns its author and the speaker 1 point. Everyone gets the chosen number of speaking turns. Late arrivals watch until rematch. On one device, hide the answer and pass to each guesser.',
         case: 'Everyone joins one crew. The speaker describes words while the crew guesses aloud; only the speaker sees live answers. Confirm correct words after each timed round. Each evidence threshold unlocks a fact, with spare progress carried forward. Inspect suspect profiles and discuss the clues. When all evidence is unlocked or the turn budget ends, agree on one suspect and confirm a final accusation (the host confirms online). Solve the case together.'
     };
     document.getElementById('modeHowToPlay').hidden = !rules[mode];
     document.getElementById('modeRulesTitle').textContent = Modes.MODES[mode].name;
-    document.getElementById('modeRulesText').textContent = rules[mode] || '';
+    const finishRule = settings.winRule === 'first-to-target'
+        ? 'The first team to reach the target wins after scoring and any effects; other teams do not get a reply turn.'
+        : 'Reaching the target starts the final round: every team gets the same number of turns, then the highest score wins. Equal highest scores are a draw.';
+    document.getElementById('modeRulesText').textContent = (rules[mode] || '') + (Modes.isStakes(settings) ? ' ' + finishRule : '');
+    document.getElementById('standardWinRule').textContent = 'Every correct guess earns one point. ' + finishRule;
     document.getElementById('standardRulesGoal').hidden = party || Modes.isStakes(settings);
     document.getElementById('standardRulesTurns').hidden = party;
     document.getElementById('chaosRulesSection').hidden = party || Modes.isStakes(settings);
@@ -710,7 +721,7 @@ function exportMatchSummary() {
     const data = isOnlineGame ? onlineClient?.snapshot : null;
     const events = data ? Object.values(data.auditEvents || {}) : localAudit;
     const summary = { version: 1, matchId: data?.matchId || localMatchId, starterTeam: data?.starterTeam ?? localStarter,
-        settings: { mode: activeMode, teams: teams.length, pointsToWin, numWords, numSeconds, difficulty, chaosMode: isChaosMode },
+        settings: { mode: activeMode, teams: teams.length, pointsToWin, winRule, numWords, numSeconds, difficulty, chaosMode: isChaosMode },
         scores: teams.map(team => team.points), turns: events.map(event => ({ team: event.teamIndex, earned: event.earned ?? event.correctAnswers?.length ?? 0,
             pointsBefore: event.pointsBefore, pointsAfter: event.pointsAfter, clueSeconds: event.clueSeconds,
             scoringSeconds: event.scoringSeconds, resolutionSeconds: event.resolutionSeconds, effect: event.chaosSummary || 'No effect', ...(event.stakes ? { stakes: event.stakes } : {}) })) };
@@ -774,7 +785,7 @@ function updateSetupSummary() {
     modeSettingsPresentation(settings);
     const pack = settings.selectedTheme !== 'None' ? settings.selectedTheme : settings.selectedCategories.join(', ') || 'All categories';
     const text = Modes.isParty(settings) ? `${Modes.MODES[settings.mode].name} · ${settings.mode === 'table' ? settings.tableCycles + ' speaking turns each · No timer' : settings.caseTurns + ' turns · ' + settings.numSeconds + 's · ' + settings.numWords + ' words'} · ${settings.difficulty} · ${pack}`
-        : `${Modes.MODES[settings.mode].name} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
+        : `${Modes.MODES[settings.mode].name} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${Gameplay.winRuleLabel(settings.winRule)} · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
     document.getElementById('setupSummary').textContent = text;
     document.getElementById('advancedSetupSummary').textContent = text;
     document.getElementById('quickMode').value = settings.mode;
@@ -886,7 +897,7 @@ function renderMatchResults(data = null, forced = false) {
     series.textContent = Experience.seriesLabel(data ? data.series : localSeries); series.hidden = !series.textContent;
     document.getElementById('resultsTitle').textContent = winners.length > 1 ? "It's a draw!"
         : winners.length === 1 ? `Team ${winners[0] + 1} wins!` : 'Match ended';
-    document.getElementById('resultsContext').textContent = `${Modes.MODES[isChaosMode ? 'chaos' : activeMode].name} · Target ${pointsToWin} · Equal turns`;
+    document.getElementById('resultsContext').textContent = `${Modes.MODES[isChaosMode ? 'chaos' : activeMode].name} · Target ${pointsToWin} · ${Gameplay.winRuleLabel(winRule)}`;
     document.getElementById('finalRoundNotice').hidden = true;
     const scores = document.getElementById('resultsScores'); scores.innerHTML = '';
     teams.map((team, index) => ({ team, index })).sort((a, b) => b.team.points - a.team.points || a.index - b.index).forEach(({ team, index }) => {
@@ -1181,6 +1192,7 @@ function getSanitizedSettingsFromInputs() {
         difficulty: ['easy', 'normal', 'hard'].includes(chosenDifficulty) ? chosenDifficulty : 'normal',
         numTeams: clampInt(txtTeams.value, 2, 2, 4),
         pointsToWin: clampInt(document.getElementById("pointsToWin").value, 20, 10, 60),
+        winRule: Gameplay.normalizeWinRule(document.getElementById('winRule').value),
         numWords: clampInt(txtWords.value, 5, 1, 15),
         numSeconds: clampInt(txtSeconds.value, 30, 5, 300),
         chaosMode: Boolean(chkChaos?.checked),
@@ -1202,6 +1214,7 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
             : "normal",
         numTeams: clampInt(settings.numTeams, teamsLength || 2, 2, 4),
         pointsToWin: clampInt(settings.pointsToWin, 20, 10, 60),
+        winRule: Gameplay.normalizeWinRule(settings.winRule),
         numWords: clampInt(settings.numWords, 5, 1, 15),
         numSeconds: clampInt(settings.numSeconds, 30, 5, 300),
         chaosMode: Boolean(settings.chaosMode),
@@ -2289,6 +2302,7 @@ async function startGame({ rematch = false } = {}) {
     teams = Array.from({ length: numTeams }, () => ({ points: 0 }));
 
     pointsToWin = sanitizedSettings.pointsToWin;
+    winRule = sanitizedSettings.winRule;
     numWords = sanitizedSettings.numWords;
     numSeconds = sanitizedSettings.numSeconds;
     isChaosMode = sanitizedSettings.chaosMode;
@@ -2298,6 +2312,7 @@ async function startGame({ rematch = false } = {}) {
 
     txtTeams.value = String(numTeams);
     document.getElementById("pointsToWin").value = String(pointsToWin);
+    document.getElementById('winRule').value = winRule;
     txtWords.value = String(numWords);
     txtSeconds.value = String(numSeconds);
     if (chkChaos) {
@@ -2581,7 +2596,7 @@ async function nextRound() {
             resolutionSeconds: Math.max(0, (Date.now() - submittedAt) / 1000) };
         if (stakeResult) completedEvent.stakes = stakeResult;
         localAudit.push(completedEvent);
-        const progress = Gameplay.matchProgress(teams.map(team => team.points), pointsToWin, localAudit, localFinalTurnCount);
+        const progress = Gameplay.matchProgress(teams.map(team => team.points), pointsToWin, localAudit, localFinalTurnCount, winRule);
         localFinalTurnCount = progress.finalTurnCount; localMatchFinished = progress.finished;
         renderFinalRoundNotice(progress);
         showRecap(text);
@@ -2595,7 +2610,7 @@ async function nextRound() {
         clearChaosPresentation();
         if (completedEvent && isChaosMode && !game.classList.contains('match-finished')) showChaosOutcome(completedEvent);
         isResolvingChaosMove = false; setNextRoundBusyState(false); updateMobileGameFocus();
-        renderFinalRoundNotice(Gameplay.matchProgress(teams.map(team => team.points), pointsToWin, localAudit, localFinalTurnCount));
+        renderFinalRoundNotice(Gameplay.matchProgress(teams.map(team => team.points), pointsToWin, localAudit, localFinalTurnCount, winRule));
         renderTurnExperience();
     }
 }
@@ -3402,6 +3417,7 @@ function updateLobbyPresentation(data = null, view = null) {
         text = `${roster.connectedPlayers} ${roster.connectedPlayers === 1 ? 'player' : 'players'} connected · ${roster.connectedTeams} of ${data.teams.length} teams online`;
         if (Modes.isParty(data.settings)) text = `${Modes.MODES[Modes.modeOf(data.settings)].name} · ${roster.connectedPlayers} players connected`;
         if (roster.reconnectingPlayers) text += ` · ${roster.reconnectingPlayers} reconnecting`;
+        if (!Modes.isParty(data.settings)) text += ` · ${Gameplay.winRuleLabel(data.settings.winRule)}`;
         if (data.wordPack) text += ` · Custom pack: ${data.wordPack.entries.length} ${data.wordPack.entries.length === 1 ? 'word' : 'words'}`;
     }
     if (summary.textContent !== text) summary.textContent = text;
@@ -3464,7 +3480,7 @@ function renderOnlineControls() {
     setRoundCountdown(onlineClient.connected && view.active ? view.countdownRemainingMs : 0);
     const active = view.active && onlineClient.connected && !onlineClient.suspended;
     renderFinalRoundNotice(Gameplay.matchProgress(data.teams.map(team => team.points), pointsToWin,
-        Object.values(data.auditEvents || {}), data.finalTurnCount));
+        Object.values(data.auditEvents || {}), data.finalTurnCount, data.settings.winRule));
     renderOnlineRoundReview(active && data.phase !== 'selecting' ? view.review : null);
     document.getElementById('currentTeamIndicator').hidden = data.phase === 'finished';
     isHost = active && view.host; isSpeaker = active && view.speaker;
@@ -3556,6 +3572,7 @@ function renderOnlineSnapshot(data) {
     activeMode = settings.mode;
     numTeams = settings.numTeams;
     pointsToWin = settings.pointsToWin;
+    winRule = settings.winRule;
     numWords = settings.numWords;
     numSeconds = settings.numSeconds;
     difficulty = settings.difficulty;
