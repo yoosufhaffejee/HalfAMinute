@@ -1,0 +1,789 @@
+{
+  "assumptions": "Equal teams, independent 60% success for each of five words, Classic only. No human behavior or Chaos/reroll model. 10,000 matches per configuration, starter mode and finish rule. A draw splits one unit of win credit among tied leaders.",
+  "conclusion": "Equal-turn matches stop only after every team has played the same number of turns. Compare turn-slot win credit with the legacy immediate-finish baseline; finite samples retain random variation.",
+  "cases": [
+    {
+      "teamCount": 2,
+      "target": 10,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            69.41,
+            30.59
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            69.41,
+            30.59
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            69.41,
+            30.59
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            49.85,
+            50.15
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            49.85,
+            50.15
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            69.41,
+            30.59
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            43.7,
+            44.84
+          ],
+          "drawPercent": 11.46,
+          "sharedWinCreditPercentByTeam": [
+            49.43,
+            50.57
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            49.43,
+            50.57
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            44.3,
+            44.24
+          ],
+          "drawPercent": 11.46,
+          "sharedWinCreditPercentByTeam": [
+            50.03,
+            49.97
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            49.43,
+            50.57
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 2,
+      "target": 20,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            64.97,
+            35.03
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            64.97,
+            35.03
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            64.97,
+            35.03
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            50.07,
+            49.93
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            50.07,
+            49.93
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            64.97,
+            35.03
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            46.3,
+            45.89
+          ],
+          "drawPercent": 7.81,
+          "sharedWinCreditPercentByTeam": [
+            50.2,
+            49.8
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            50.2,
+            49.8
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            46.77,
+            45.42
+          ],
+          "drawPercent": 7.81,
+          "sharedWinCreditPercentByTeam": [
+            50.68,
+            49.33
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            50.2,
+            49.8
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 2,
+      "target": 40,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            60.11,
+            39.89
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            60.11,
+            39.89
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            60.11,
+            39.89
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            50.43,
+            49.57
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            50.43,
+            49.57
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            60.11,
+            39.89
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            46.64,
+            47.69
+          ],
+          "drawPercent": 5.67,
+          "sharedWinCreditPercentByTeam": [
+            49.48,
+            50.52
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            49.48,
+            50.52
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            47.38,
+            46.95
+          ],
+          "drawPercent": 5.67,
+          "sharedWinCreditPercentByTeam": [
+            50.21,
+            49.79
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            49.48,
+            50.52
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 3,
+      "target": 10,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            58.28,
+            27.12,
+            14.6
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            58.28,
+            27.12,
+            14.6
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            58.28,
+            27.12,
+            14.6
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            33.76,
+            33.61,
+            32.63
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            33.76,
+            33.61,
+            32.63
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            58.28,
+            27.12,
+            14.6
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            28.58,
+            26.91,
+            26.57
+          ],
+          "drawPercent": 17.94,
+          "sharedWinCreditPercentByTeam": [
+            34.66,
+            32.69,
+            32.65
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            34.66,
+            32.69,
+            32.65
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            27.32,
+            27.9,
+            26.84
+          ],
+          "drawPercent": 17.94,
+          "sharedWinCreditPercentByTeam": [
+            33.34,
+            33.9,
+            32.76
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            34.66,
+            32.69,
+            32.65
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 3,
+      "target": 20,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            50.93,
+            29.53,
+            19.54
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            50.93,
+            29.53,
+            19.54
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            50.93,
+            29.53,
+            19.54
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            32.99,
+            33.69,
+            33.32
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            32.99,
+            33.69,
+            33.32
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            50.93,
+            29.53,
+            19.54
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            29.66,
+            28.98,
+            29.36
+          ],
+          "drawPercent": 12,
+          "sharedWinCreditPercentByTeam": [
+            33.74,
+            33.04,
+            33.22
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            33.74,
+            33.04,
+            33.22
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            29.11,
+            29.75,
+            29.14
+          ],
+          "drawPercent": 12,
+          "sharedWinCreditPercentByTeam": [
+            33.13,
+            33.75,
+            33.11
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            33.74,
+            33.04,
+            33.22
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 3,
+      "target": 40,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            45.34,
+            31.23,
+            23.43
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            45.34,
+            31.23,
+            23.43
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            45.34,
+            31.23,
+            23.43
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            33.08,
+            33.54,
+            33.38
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            33.08,
+            33.54,
+            33.38
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            45.34,
+            31.23,
+            23.43
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            30.54,
+            30.04,
+            30.85
+          ],
+          "drawPercent": 8.57,
+          "sharedWinCreditPercentByTeam": [
+            33.38,
+            32.93,
+            33.69
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            33.38,
+            32.93,
+            33.69
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            30.27,
+            30.8,
+            30.36
+          ],
+          "drawPercent": 8.57,
+          "sharedWinCreditPercentByTeam": [
+            33.1,
+            33.69,
+            33.22
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            33.38,
+            32.93,
+            33.69
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 4,
+      "target": 10,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            49.67,
+            26,
+            15.37,
+            8.96
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            49.67,
+            26,
+            15.37,
+            8.96
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            49.67,
+            26,
+            15.37,
+            8.96
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            25.53,
+            24.81,
+            24.56,
+            25.1
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            25.53,
+            24.81,
+            24.56,
+            25.1
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            49.67,
+            26,
+            15.37,
+            8.96
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            19.81,
+            18.83,
+            20.08,
+            19.84
+          ],
+          "drawPercent": 21.44,
+          "sharedWinCreditPercentByTeam": [
+            25.01,
+            24.38,
+            25.2,
+            25.42
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            25.01,
+            24.38,
+            25.2,
+            25.42
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            19.98,
+            19.7,
+            19.51,
+            19.37
+          ],
+          "drawPercent": 21.44,
+          "sharedWinCreditPercentByTeam": [
+            25.35,
+            25.08,
+            24.82,
+            24.75
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            25.01,
+            24.38,
+            25.2,
+            25.42
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 4,
+      "target": 20,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            42.35,
+            26.48,
+            18.34,
+            12.83
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            42.35,
+            26.48,
+            18.34,
+            12.83
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            42.35,
+            26.48,
+            18.34,
+            12.83
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            25.11,
+            25.14,
+            24.93,
+            24.82
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            25.11,
+            25.14,
+            24.93,
+            24.82
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            42.35,
+            26.48,
+            18.34,
+            12.83
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            21.62,
+            21.06,
+            20.87,
+            21.31
+          ],
+          "drawPercent": 15.14,
+          "sharedWinCreditPercentByTeam": [
+            25.23,
+            24.85,
+            24.61,
+            25.32
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            25.23,
+            24.85,
+            24.61,
+            25.32
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            21.5,
+            21.48,
+            20.93,
+            20.95
+          ],
+          "drawPercent": 15.14,
+          "sharedWinCreditPercentByTeam": [
+            25.21,
+            25.25,
+            24.77,
+            24.76
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            25.23,
+            24.85,
+            24.61,
+            25.32
+          ]
+        }
+      ]
+    },
+    {
+      "teamCount": 4,
+      "target": 40,
+      "samplesPerMode": 10000,
+      "results": [
+        {
+          "finish": "immediate",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            36.79,
+            26.11,
+            20.85,
+            16.25
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            36.79,
+            26.11,
+            20.85,
+            16.25
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            36.79,
+            26.11,
+            20.85,
+            16.25
+          ]
+        },
+        {
+          "finish": "immediate",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            25.33,
+            25.1,
+            25.24,
+            24.33
+          ],
+          "drawPercent": 0,
+          "sharedWinCreditPercentByTeam": [
+            25.33,
+            25.1,
+            25.24,
+            24.33
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            36.79,
+            26.11,
+            20.85,
+            16.25
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "fixed",
+          "outrightWinPercentByTeam": [
+            22.44,
+            22.23,
+            22.63,
+            22.27
+          ],
+          "drawPercent": 10.43,
+          "sharedWinCreditPercentByTeam": [
+            25.08,
+            24.9,
+            25.16,
+            24.86
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            25.08,
+            24.9,
+            25.16,
+            24.86
+          ]
+        },
+        {
+          "finish": "equal-turns",
+          "starter": "random",
+          "outrightWinPercentByTeam": [
+            22.23,
+            22.55,
+            22.75,
+            22.04
+          ],
+          "drawPercent": 10.43,
+          "sharedWinCreditPercentByTeam": [
+            24.86,
+            25.27,
+            25.29,
+            24.58
+          ],
+          "sharedWinCreditPercentByTurnSlot": [
+            25.08,
+            24.9,
+            25.16,
+            24.86
+          ]
+        }
+      ]
+    }
+  ]
+}

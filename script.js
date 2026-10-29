@@ -1,8 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261029.1';
-import { OnlineClient } from './online/client.js?v=20261029.1';
-import * as Gameplay from './gameplay/rules.js?v=20261026.3';
+import * as OnlineState from './online/state.js?v=20261029.2';
+import { OnlineClient } from './online/client.js?v=20261029.2';
+import * as Gameplay from './gameplay/rules.js?v=20261029.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261026.1';
 import * as AiPacks from './gameplay/ai-packs.js?v=20261026.1';
@@ -33,6 +33,8 @@ let easyWords = [];
 let hardWords = [];
 let currentTeam = 0;
 let currentRound = 0;
+let localFinalTurnCount = null;
+let localMatchFinished = false;
 let countdownTimer;
 let endRoundEarly = false;
 let selectedButtons = 0;
@@ -356,7 +358,7 @@ function showRecap(text) {
 }
 
 function renderMatchResults(data = null, forced = false) {
-    const finished = forced || (data ? data.phase === 'finished' : teams.some(team => team.points >= pointsToWin));
+    const finished = forced || (data ? data.phase === 'finished' : localMatchFinished);
     const card = document.getElementById('matchResults'); card.hidden = !finished;
     game.classList.toggle('match-finished', finished);
     if (!finished) return;
@@ -369,13 +371,16 @@ function renderMatchResults(data = null, forced = false) {
     document.getElementById('currentTeamIndicator').hidden = true;
     document.getElementById('roleInstruction').textContent = 'Match complete. Compare scores or play again.';
     const events = data ? Object.values(data.auditEvents || {}) : localAudit;
-    const winner = teams.findIndex(team => team.points >= pointsToWin);
-    document.getElementById('resultsTitle').textContent = winner >= 0 ? `Team ${winner + 1} wins!` : 'Match ended';
-    document.getElementById('resultsContext').textContent = `${isChaosMode ? 'Chaos' : 'Classic'} · First to ${pointsToWin}`;
+    const naturalFinish = data ? ['winner', 'draw'].includes(data.finishReason) : localMatchFinished && !forced;
+    const winners = naturalFinish ? Gameplay.scoreLeaders(teams.map(team => team.points)) : [];
+    document.getElementById('resultsTitle').textContent = winners.length > 1 ? "It's a draw!"
+        : winners.length === 1 ? `Team ${winners[0] + 1} wins!` : 'Match ended';
+    document.getElementById('resultsContext').textContent = `${isChaosMode ? 'Chaos' : 'Classic'} · Target ${pointsToWin} · Equal turns`;
+    document.getElementById('finalRoundNotice').hidden = true;
     const scores = document.getElementById('resultsScores'); scores.innerHTML = '';
     teams.map((team, index) => ({ team, index })).sort((a, b) => b.team.points - a.team.points || a.index - b.index).forEach(({ team, index }) => {
         const earned = events.filter(event => event.teamIndex === index).reduce((sum, event) => sum + (event.earned ?? event.correctAnswers?.length ?? 0), 0);
-        const row = document.createElement('li'); row.className = `result-score${index === winner ? ' is-winner' : ''}`;
+        const row = document.createElement('li'); row.className = `result-score${winners.includes(index) ? ' is-winner' : ''}`;
         const identity = document.createElement('div');
         const name = document.createElement('span'); name.className = 'result-team';
         const token = document.createElement('span'); token.className = 'team-token'; token.style.backgroundColor = getTeamColor(index);
@@ -1653,6 +1658,8 @@ async function startGame({ rematch = false } = {}) {
     clearInterval(countdownTimer); finishLocalRound = null;
     localMatchId++;
     localAudit = [];
+    localFinalTurnCount = null; localMatchFinished = false;
+    document.getElementById('finalRoundNotice').hidden = true;
     localRerollsUsed = [];
     onlineBoardSignature = '';
     if (!rematch) localDeck = {};
@@ -1824,7 +1831,7 @@ function loadWords(selectedTheme, selectedCategories, difficulty = "normal") {
 
 function startRound() {
     if (isOnlineGame) { void startOnlineRound(); return; }
-    if (isRoundActive || isResolvingChaosMove || teams.some(team => team.points >= pointsToWin)) return;
+    if (isRoundActive || isResolvingChaosMove || localMatchFinished) return;
     clearChaosPresentation();
     showRecap('');
     stopRoundSounds();
@@ -1931,7 +1938,8 @@ async function nextRound() {
     if (isOnlineGame) { await sendOnlineCommand({ type: 'submit-round' }); return; }
     if (isResolvingChaosMove || isRoundActive || btnNextRound.hidden) return;
     const correctAnswers = getSelectedCorrectAnswers();
-    const teamIndexForRound = getCurrentTeamIndex(currentTeam), roundNumberForRound = currentRound + 1;
+    const teamIndexForRound = getCurrentTeamIndex(currentTeam);
+    const roundNumberForRound = Gameplay.completedTurns(localAudit, teams.length)[teamIndexForRound] + 1;
     const before = teams[teamIndexForRound].points;
     const submittedAt = Date.now();
     let chaosSummary, chaosEffect, completedEvent;
@@ -1955,12 +1963,15 @@ async function nextRound() {
             scoringSeconds: Math.max(0, (submittedAt - localSelectingAt) / 1000),
             resolutionSeconds: Math.max(0, (Date.now() - submittedAt) / 1000) };
         localAudit.push(completedEvent);
+        const progress = Gameplay.matchProgress(teams.map(team => team.points), pointsToWin, localAudit, localFinalTurnCount);
+        localFinalTurnCount = progress.finalTurnCount; localMatchFinished = progress.finished;
+        renderFinalRoundNotice(progress);
         showRecap(text);
         createTeamAuditColumns(teamIndexForRound, roundNumberForRound);
         createTeamAuditRows(teamIndexForRound, roundNumberForRound, correctAnswers, { chaosSummary });
         advanceRoundPointers(); hideRoundInputUI();
         updateBoard(); updateCurrentTeamIndicator(); updateTeamScores();
-        if (teams.some(team => team.points >= pointsToWin)) { renderMatchResults(); return; }
+        if (localMatchFinished) { renderMatchResults(); return; }
         btnStartRound.hidden = false; btnEndGame.hidden = false;
     } finally {
         clearChaosPresentation();
@@ -2013,10 +2024,6 @@ function clearWords() {
 function updatePoints(points) {
     teams[getCurrentTeamIndex(currentTeam)].points += points;
     updateBoard();
-    if (teams[getCurrentTeamIndex(currentTeam)].points >= pointsToWin) {
-        document.getElementById("nextRoundButton").textContent = "EndGame";
-    }
-
     if (isOnlineGame && points == 0 && !isSpeaker) {
         hideElement(btnNextRound);
     }
@@ -2762,6 +2769,13 @@ function updateLobbyPresentation(data = null, view = null) {
     document.getElementById('onlineIntro').textContent = joined ? text : 'Bring your group together in one lobby.';
 }
 
+function renderFinalRoundNotice(progress) {
+    const node = document.getElementById('finalRoundNotice');
+    const text = Gameplay.finalRoundMessage(progress);
+    node.hidden = !text;
+    if (node.textContent !== text) node.textContent = text;
+}
+
 function renderOnlineRoundReview(review) {
     const section = document.getElementById('onlineRoundReview');
     const words = review?.words || [];
@@ -2804,6 +2818,8 @@ function renderOnlineControls() {
     updateLobbyPresentation(data, view);
     setRoundCountdown(onlineClient.connected && view.active ? view.countdownRemainingMs : 0);
     const active = view.active && onlineClient.connected && !onlineClient.suspended;
+    renderFinalRoundNotice(Gameplay.matchProgress(data.teams.map(team => team.points), pointsToWin,
+        Object.values(data.auditEvents || {}), data.finalTurnCount));
     renderOnlineRoundReview(active && data.phase !== 'selecting' ? view.review : null);
     document.getElementById('currentTeamIndicator').hidden = data.phase === 'finished';
     isHost = active && view.host; isSpeaker = active && view.speaker;
@@ -2955,7 +2971,7 @@ async function handleOnlineJoinError(error) {
     console.error('Unable to join lobby:', error);
     const messages = {
         'duplicate-player-name': 'Player name is already in use in this lobby.',
-        'incompatible-lobby': 'This lobby uses an older online version. Ask the host to create a new lobby.',
+        'incompatible-lobby': "This lobby uses a different online version. Reload every player's tab and create a new lobby.",
         'lobby-unavailable': 'This lobby is unavailable or has ended.'
     };
     if (messages[error.message]) saveOnlineSession(null);

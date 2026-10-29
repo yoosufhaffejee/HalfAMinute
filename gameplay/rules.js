@@ -67,6 +67,36 @@ export function startingTeam(seed, teamCount, previous = null) {
     return previous === null ? Math.floor(random(seed)() * teamCount) : (previous + 1) % teamCount;
 }
 
+export function completedTurns(events, teamCount) {
+    const counts = Array(teamCount).fill(0);
+    for (const event of events) if (Number.isInteger(event?.teamIndex) && event.teamIndex >= 0 && event.teamIndex < teamCount) counts[event.teamIndex]++;
+    return counts;
+}
+
+export function scoreLeaders(points) {
+    const highest = Math.max(...points);
+    return points.flatMap((score, index) => score === highest ? [index] : []);
+}
+
+export function matchProgress(points, target, events, finalTurnCount = null) {
+    const turns = completedTurns(events, points.length);
+    // Once triggered, the final round remains sealed even if a Chaos steal lowers a score.
+    if (!finalTurnCount && points.some(score => score >= target)) finalTurnCount = Math.max(1, ...turns);
+    const pendingTeams = finalTurnCount ? turns.flatMap((count, index) => count < finalTurnCount ? [index] : []) : [];
+    const finished = Boolean(finalTurnCount && !pendingTeams.length);
+    return { turns, finalTurnCount, pendingTeams, finished, winners: finished ? scoreLeaders(points) : [] };
+}
+
+export function finalRoundMessage(progress) {
+    if (!progress.finalTurnCount || progress.finished) return '';
+    if (progress.pendingTeams.length === 1) {
+        const index = progress.pendingTeams[0], remaining = progress.finalTurnCount - progress.turns[index];
+        return `Final round. Team ${index + 1} has ${remaining === 1 ? 'one turn' : remaining + ' turns'} left. Highest score wins.`;
+    }
+    const names = progress.pendingTeams.map(index => index + 1);
+    return `Final round. Teams ${names.slice(0, -1).join(', ')} and ${names.at(-1)} still have turns. Highest score wins.`;
+}
+
 export function resolutionTiming(hasEffect, won = false, moveCount = 5) {
     // Let the board settle, reveal its map, then keep the existing movement/effect pace.
     const boardMs = 350, revealMs = 450;

@@ -126,18 +126,20 @@ See [Firebase setup](https://firebase.google.com/docs/ai-logic/get-started?platf
 4. After timer/end-round, correct words are selected.
 5. Team gains one point per correct answer.
 6. Speaker rotates and next team/round continues.
-7. First team to `Points to Win` wins.
+7. Reaching `Points to Win` starts the final round. Teams still owed turns play until every team has the same number of completed turns. Highest final score wins; equal highest scores are a draw.
 
-The initial starter is randomized. Rematches keep the roster/settings and rotate the starter; immediate victory on reaching the target is unchanged. Scores and Chaos resources reset for the new match identity. Word exhaustion history carries across rematches for the same group.
+The initial starter is randomized. Rematches keep the roster/settings and rotate the starter. A final-round notice names the teams still owed turns. The final round remains active even if Chaos lowers a score below the target; compare the full final totals, including points beyond the board's finish. Completed-turn counts come from scored turn events, so cancelled turns do not consume a team's final opportunity. A missing team keeps its owed turns and the existing connection/roster requirements still apply. Scores, final-round state and Chaos resources reset for the new match identity. Word exhaustion history carries across rematches for the same group. This finish rule applies online and locally.
+
+Equal-turn matches use online protocol 5. Reload every player's tab and create a new lobby to use this rule; older clients/lobbies are incompatible, so an old client cannot end a new match early.
 
 Online answer review is shared by all connected players once a round ends, including small-game guessers and the speaker's teammates. Only the speaker can change selections or confirm. Confirmed options and checkmarks remain in a read-only review below the board through Chaos and between turns, including after refreshing or rejoining. The review clears when the next round's countdown starts and on rematch. Live-round answer visibility and team-size rules are unchanged.
 
 ## Chaos rules
 
-- The map changes each turn. Start, the tile before the finish, and a winning earned move have no effect. Resolve one landing effect, without chaining. A zero-correct turn can still land on an effect.
+- The map changes each turn. Start, the tile before the finish, and an earned move reaching the target have no effect. Resolve one landing effect, without chaining. A zero-correct turn can still land on an effect.
 - Boosts add 1 or 2; slips lose 1 or 2; bombs lose **up to 3 points**, with a floor of zero. Effect weights remain unchanged.
 - One shield blocks a landing penalty or incoming steal loss, then is consumed. Shields do not stack. A blocked steal still gives the stealing team its +1; the victim keeps their point. Steals target the leading opponent, with seeded random ties.
-- After confirmation, the board settles for 350 ms, then the power-ups pop in and remain visible for 450 ms before movement starts. Movement keeps its 360 ms per space (at least one second), followed by a 1.4-second landing reveal, a 1.4-second effect, and 2.4 seconds to read the result. A typical effect turn takes 7–8 seconds. Safe landings skip the effect stages and hold the result for 1.6 seconds; wins hold it for two seconds. The result card remains until the next round starts. Reduced motion shows the outcome immediately while the online authoritative deadline still applies.
+- After confirmation, the board settles for 350 ms, then the power-ups pop in and remain visible for 450 ms before movement starts. Movement keeps its 360 ms per space (at least one second), followed by a 1.4-second landing reveal, a 1.4-second effect, and 2.4 seconds to read the result. A typical effect turn takes 7–8 seconds. Safe landings skip the effect stages and hold the result for 1.6 seconds; moves reaching the target hold it for two seconds. The result card remains until the next round starts. Reduced motion shows the outcome immediately while the online authoritative deadline still applies.
 - The **optional reroll prototype**, off by default, offers one reroll per team per match after an eligible effect. The speaker chooses within five seconds, must accept the new result, and cannot reroll again that match. No choice defaults to keep; the current host recovers the timeout if the speaker disconnects/leaves.
 
 Word dealing tracks normalized answers and separate easy/hard exhaustion cycles. A difficulty reshuffles only after its own pool runs out; the other difficulty's deck history stays intact. No card repeats the same normalized answer. Narrow packs may repeat after exhaustion. The explicit match-summary download includes counts, scores, effects, and phase timings, with no player names or answer text. Online phase timings live in the normal shared match history; no separate analytics service is used.
@@ -153,7 +155,7 @@ node tools/analyze-starting-order.mjs
 node tools/analyze-chaos.cjs 5000
 ```
 
-The analysis scripts are isolated simulations and never connect to Firebase. They write `reports/starting-order-results.json` and `reports/chaos-current-results.json`. The earlier `chaos-balance-results.json` preserves the pre-change report baseline. Simulation is not a substitute for group playtesting.
+The analysis scripts are isolated simulations and never connect to Firebase. They write `reports/starting-order-equal-turns.json` (legacy immediate-finish versus equal-turn results) and `reports/chaos-current-results.json`. The earlier `starting-order-results.json` and `chaos-balance-results.json` preserve the pre-change report baselines. Simulation is not a substitute for group playtesting.
 
 ## Lobby Rules and Start Eligibility
 

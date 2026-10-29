@@ -79,6 +79,40 @@ test('random starters are distributed and rematches give every team the first tu
     }
 });
 
+test('equal-turn progress freezes the final cycle and compares full scores rather than board positions', () => {
+    let progress=Rules.matchProgress([21,19],20,[{teamIndex:0}],null);
+    assert.equal(progress.finalTurnCount,1);assert.equal(progress.finished,false);
+    assert.deepEqual(progress.pendingTeams,[1]);
+    assert.match(Rules.finalRoundMessage(progress),/Team 2 has one turn left/);
+    const events=[{teamIndex:0},{teamIndex:1}];
+    for(const [points,winners] of [[[21,22],[1]],[[21,21],[0,1]],[[19,19],[0,1]]]) {
+        progress=Rules.matchProgress(points,20,events,1);
+        assert.equal(progress.finished,true);assert.deepEqual(progress.winners,winners);
+        assert.equal(Rules.finalRoundMessage(progress),'');
+    }
+    const catchup=Rules.matchProgress([21,15,18],20,[{teamIndex:0},{teamIndex:0},{teamIndex:1}],null);
+    assert.equal(catchup.finalTurnCount,2);assert.deepEqual(catchup.pendingTeams,[1,2]);
+});
+
+test('equal-skill turns remove the starting-slot advantage across all deterministic scoring permutations', () => {
+    // Every permutation of the same performances must produce the same high-score result,
+    // with equal completed turns, regardless of the starting team.
+    for(const scores of [[3,1],[1,3],[3,3],[0,2,3],[3,0,2],[2,3,0],[2,2,2]]) {
+        for(let starter=0;starter<scores.length;starter++) {
+            const points=Array(scores.length).fill(0),events=[];
+            let progress,turn=0;
+            do {
+                const teamIndex=(starter+turn++)%scores.length;
+                points[teamIndex]+=scores[teamIndex];events.push({teamIndex});
+                progress=Rules.matchProgress(points,10,events,progress?.finalTurnCount);
+            }while(!progress.finished&&turn<100);
+            assert.equal(progress.finished,true);
+            assert.equal(new Set(progress.turns).size,1);
+            assert.deepEqual(progress.winners,Rules.scoreLeaders(scores));
+        }
+    }
+});
+
 const now = 1000000;
 const actor = name => ({ playerId: name, playerName: name, connectionId: `c-${name}` });
 const rules = {

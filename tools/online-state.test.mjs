@@ -404,6 +404,10 @@ test('winning seals scoring while keeping the roster connected for a new match',
     let game = selection(started()); game.teams[0].points = 19;
     game = act(game, 'A', 'toggle-answer', { index: 0 });
     game = act(game, 'A', 'submit-round');
+    assert.equal(game.phase,'idle');
+    assert.equal(game.finalTurnCount,1);
+    game = selection(game); // Team B gets its equally numbered turn, even scoring zero.
+    game = act(game,'B','submit-round');
     assert.equal(game.phase, 'finished');
     assert.equal(game.gameState, 'finished');
     assert.ok(game.settings);
@@ -412,12 +416,103 @@ test('winning seals scoring while keeping the roster connected for a new match',
     assert.equal(State.heartbeat(game, actor('A'), NOW).phase, 'finished');
 });
 
+test('the last team can lose, draw, or beat the first team after it reaches 21', () => {
+    for(const [correct,expected,reason] of [[0,[21,19],'winner'],[2,[21,21],'draw'],[3,[21,22],'winner']]) {
+        let game=started();game.teams.forEach(team=>team.points=19);
+        game=selection(game);
+        for(const index of [0,1])game=act(game,'A','toggle-answer',{index});
+        game=act(game,'A','submit-round');
+        assert.equal(game.phase,'idle');assert.equal(game.turn.teamIndex,1);
+        assert.equal(game.finalTurnCount,1);
+        const untouched=structuredClone(game);
+        game=selection(game);
+        for(let index=0;index<correct;index++)game=act(game,'B','toggle-answer',{index});
+        game=act(game,'B','submit-round');
+        assert.equal(game.phase,'finished');assert.equal(game.finishReason,reason);
+        assert.deepEqual(game.teams.map(team=>team.points),expected);
+        assert.equal(Object.values(game.auditEvents).filter(event=>event.teamIndex===0).length,1);
+        assert.equal(Object.values(game.auditEvents).filter(event=>event.teamIndex===1).length,1);
+        assert.equal(untouched.phase,'idle');
+    }
+});
+
+test('every starting slot gets equal completed turns with two, three, or four teams', () => {
+    for(const count of [2,3,4])for(let starter=0;starter<count;starter++) {
+        const names=Array.from({length:count===4?8:count},(_,i)=>String.fromCharCode(65+i));
+        let game=withPlayers(names,count);game.currentTeam=starter+1;
+        game=act(game,'A','start-game');game.teams.forEach(team=>team.points=19);
+        for(let slot=0;slot<count;slot++) {
+            const teamIndex=(starter+slot)%count;
+            assert.equal(game.turn.teamIndex,teamIndex);
+            assert.equal(game.turn.roundNumber,1); // Randomized starters do not shift history's round labels.
+            const speaker=State.members(game).find(player=>player.playerId===game.turn.speakerId);
+            game=selection(game);
+            game=act(game,speaker,'toggle-answer',{index:0});
+            game=act(game,speaker,'submit-round');
+            assert.equal(game.phase,slot===count-1?'finished':'idle');
+        }
+        assert.equal(game.finishReason,'draw');
+        for(let team=0;team<count;team++)assert.equal(Object.values(game.auditEvents).filter(event=>event.teamIndex===team).length,1);
+    }
+});
+
+test('a target reached by the last team ends that cycle without giving an extra turn', () => {
+    let game=started();game.teams[0].points=18;game.teams[1].points=19;
+    game=act(selection(game),'A','submit-round');
+    assert.equal(game.finalTurnCount,null);
+    game=act(selection(game),'B','toggle-answer',{index:0});
+    game=act(game,'B','submit-round');
+    assert.equal(game.phase,'finished');assert.equal(Object.keys(game.auditEvents).length,2);
+});
+
+test('an absent team keeps its final turn; completed teams cannot take it or churn waiting turn IDs', () => {
+    let game=selection(started());game.teams[0].points=19;
+    game=act(game,'A','toggle-answer',{index:0});game=act(game,'A','submit-round');
+    const time=NOW+LEAD_IN+1;
+    game=act(game,'B','start-round',{seed:2},time); // Leaving cancels this unscored turn, not the entitlement.
+    game=State.leave(game,actor('B'),time);
+    assert.equal(game.phase,'waiting');assert.equal(game.turn.teamIndex,1);
+    assert.equal(game.turn.speakerId,'');
+    const id=game.turn.id;
+    game=State.heartbeat(game,actor('A'),time+1);
+    assert.equal(game.turn.id,id);assert.equal(game.finalTurnCount,1);
+    assert.equal(State.view(game,actor('A'),time+1).canStartRound,false);
+    assert.equal(act(game,'A','start-round',{seed:1},time+1),undefined);
+    game=State.join(game,actor('C'),time+2);
+    assert.equal(game.turn.speakerId,'id-C');
+    game=act(selection(game),'C','submit-round');
+    assert.equal(game.phase,'finished');
+});
+
+test('Chaos final turns stay sealed through a steal, host departure, and scores dropping below target', () => {
+    let game=selection(started(['A','B'],2,{chaosMode:true}));
+    game.teams[0].points=19;game.teams[1].points=17;
+    game=act(game,'A','toggle-answer',{index:0});game=act(game,'A','submit-round');
+    game=act(game,'A','resolve-chaos',{hostEpoch:game.hostEpoch},game.turn.resolution.startedAt+3000);
+    assert.equal(game.phase,'idle');assert.equal(game.finalTurnCount,1);
+    game=act(selection(game),'B','toggle-answer',{index:0});
+    const time=game.turn.selectingAt;
+    game=State.act(game,actor('B'),{type:'submit-round',turnId:game.turn.id},time,{planChaos:()=>({
+        points:[19,19],basePoints:[20,18],shields:[0,0],powerups:{},durationMs:3000,
+        effect:{type:'steal1',actorDelta:1,victimTeamIndex:0,victimDelta:-1},summary:'Steal 1'})});
+    game=State.leave(game,actor('A'),time+1);
+    assert.equal(game.phase,'resolving');assert.equal(game.hostId,'id-B');
+    game=act(game,'B','resolve-chaos',{hostEpoch:game.hostEpoch},time+3000);
+    assert.equal(game.phase,'finished');assert.equal(game.finishReason,'draw');
+    assert.deepEqual(game.teams.map(team=>team.points),[19,19]);
+    const next=act(game,'B','rematch',{matchId:game.matchId},time+3001);
+    assert.equal(next.finalTurnCount,null);assert.deepEqual(next.auditEvents,{});
+});
+
 test('null snapshots and old protocol lobbies are never resurrected by a reducer', () => {
     assert.equal(State.join(null, actor('A'), NOW), undefined);
     assert.equal(State.act(null, actor('A'), { type: 'start-game' }, NOW), undefined);
     assert.equal(State.prune(null, actor('A'), NOW), undefined);
     const old = lobby(); delete old.protocolVersion;
     assert.equal(State.joinReason(old, actor('A')), 'incompatible-lobby');
+    old.protocolVersion=State.PROTOCOL_VERSION-1;
+    assert.equal(State.joinReason(old,actor('A')),'incompatible-lobby');
+    assert.equal(State.act(old,actor('A'),{type:'start-game'},NOW,rules),undefined);
 });
 
 test('transaction retries are deterministic and do not mutate their input', () => {

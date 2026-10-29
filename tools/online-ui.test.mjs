@@ -646,6 +646,9 @@ test('Classic and Chaos both explain the randomized first team', () => {
 test('a finished match renders results without closing the connection or reloading', () => {
     let data = act(act(game(), 'start-round', { seed: 3 }), 'end-round');
     data.teams[0].points = 19; data = act(data, 'toggle-answer', { index: 0 }); data = act(data, 'submit-round');
+    data=OnlineState.act(data,actor('B'),{type:'start-round',turnId:data.turn.id,seed:1},now+10000,rules);
+    data=OnlineState.act(data,actor('B'),{type:'end-round',turnId:data.turn.id},now+15000,rules);
+    data=OnlineState.act(data,actor('B'),{type:'submit-round',turnId:data.turn.id},now+15001,rules);
     const h = ui(); h.mount(data); h.apply(data);
     assert.equal(h.el('matchResults').hidden, false); assert.equal(h.el('resultsTitle').textContent, 'Team 1 wins!');
     assert.equal(h.el('game').classList.contains('match-finished'), true);
@@ -669,7 +672,55 @@ test('final scores rank teams by points and keep Chaos breakdowns secondary', ()
     assert.equal(rows[0].children[0].children[1].textContent, '6 from clues · +2 from Chaos');
     assert.equal(rows[2].children[0].children[1].textContent, '4 from clues · -1 from Chaos');
     assert.equal(h.el('resultsTitle').textContent, 'Match ended'); // stopping early does not invent a winner
-    assert.equal(h.el('resultsContext').textContent, 'Chaos · First to 20');
+    assert.equal(h.el('resultsContext').textContent, 'Chaos · Target 20 · Equal turns');
+    const stopped=ui();
+    stopped.run(`teams=[{points:21},{points:22}];pointsToWin=20;localFinalTurnCount=2;localMatchFinished=false;renderMatchResults(null,true)`);
+    assert.equal(stopped.el('resultsTitle').textContent,'Match ended');
+    assert.ok(stopped.el('resultsScores').children.every(row=>!row.className.includes('is-winner')));
+});
+
+test('a final-round banner keeps the owed speaker playable and results use the highest total or a draw', () => {
+    for(const [correct,title] of [[0,'Team 1 wins!'],[2,"It's a draw!"],[3,'Team 2 wins!']]) {
+        let data=act(act(game(['A','B']),'start-round',{seed:1}),'end-round');
+        data.teams.forEach(team=>team.points=19);
+        for(const index of [0,1])data=act(data,'toggle-answer',{index});
+        data=act(data,'submit-round');
+        const h=ui();h.mount(data,actor('B'));
+        assert.equal(h.el('matchResults').hidden,true);
+        assert.equal(h.el('startRoundButton').hidden,false);
+        assert.match(h.el('finalRoundNotice').textContent,/Team 2 has one turn left/);
+        assert.equal(h.el('onlineRoundReview').hidden,false);
+        data=OnlineState.act(data,actor('B'),{type:'start-round',turnId:data.turn.id,seed:2},now+10000,rules);
+        data=OnlineState.act(data,actor('B'),{type:'end-round',turnId:data.turn.id},now+15000,rules);
+        for(let index=0;index<correct;index++)data=OnlineState.act(data,actor('B'),{type:'toggle-answer',turnId:data.turn.id,index},now+15001,rules);
+        data=OnlineState.act(data,actor('B'),{type:'submit-round',turnId:data.turn.id},now+15002,rules);
+        h.apply(data);
+        assert.equal(h.el('matchResults').hidden,false);assert.equal(h.el('resultsTitle').textContent,title);
+        assert.equal(h.el('finalRoundNotice').hidden,true);
+        const leaderRows=h.el('resultsScores').children.filter(row=>row.className.includes('is-winner'));
+        assert.equal(leaderRows.length,correct===2?2:1);
+    }
+});
+
+test('local matches use the same equal-turn finish and can crown the replying team', async () => {
+    const h=ui();h.run(`teams=[{points:19},{points:19}];pointsToWin=20;currentTeam=1;numWords=3;
+        localAudit=[];localFinalTurnCount=null;localMatchFinished=false;btnNextRound.hidden=false;btnAnswers.hidden=false;
+        document.querySelectorAll('.scoreButton').slice(0,3).forEach((button,index)=>{button.hidden=false;button.textContent=['One','Two','Three'][index];setScoreButtonSelected(button,index<2)})`);
+    await h.run('nextRound()');
+    assert.equal(h.run('currentTeam'),2);assert.equal(h.run('localMatchFinished'),false);
+    assert.equal(h.el('matchResults').hidden,true);
+    assert.match(h.el('finalRoundNotice').textContent,/Team 2 has one turn left/);
+    h.run(`btnNextRound.hidden=false;btnAnswers.hidden=false;
+        document.querySelectorAll('.scoreButton').slice(0,3).forEach(button=>{button.hidden=false;setScoreButtonSelected(button,true)})`);
+    await h.run('nextRound()');
+    assert.equal(h.run('localMatchFinished'),true);
+    assert.equal(h.el('resultsTitle').textContent,'Team 2 wins!');
+});
+
+test('a local team can start its final turn even when another team has passed the target', () => {
+    const h=ui();h.run(`teams=[{points:21},{points:19}];currentTeam=2;pointsToWin=20;
+        localFinalTurnCount=1;localMatchFinished=false;currentGameWords=['One'];startRound()`);
+    assert.equal(h.run('isRoundActive'),true);assert.equal(h.el('roundCountdown').hidden,false);
 });
 
 test('Classic results omit repeated earned totals and empty best-round highlights', () => {

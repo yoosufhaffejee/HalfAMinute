@@ -1,8 +1,8 @@
 // All online mutations run against the transaction's current snapshot, never a
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
-import { startingTeam, recap, ROUND_COUNTDOWN_MS } from '../gameplay/rules.js?v=20261020.11';
+import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261029.2';
 
-export const PROTOCOL_VERSION = 4;
+export const PROTOCOL_VERSION = 5;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -42,8 +42,11 @@ export function rosterStatus(game, now) {
 function chooseSpeaker(game, preferred = game.currentTeam - 1) {
     for (const team of game.teams) for (const player of team.players || []) player.isSpeaker = false;
     const count = game.teams.length;
+    const pending = game.finalTurnCount ? matchProgress(game.teams.map(team => team.points), game.settings.pointsToWin,
+        Object.values(game.auditEvents || {}), game.finalTurnCount).pendingTeams : null;
     for (let offset = 0; offset < count; offset++) {
         const teamIndex = ((preferred + offset) % count + count) % count;
+        if (pending && !pending.includes(teamIndex)) continue;
         const team = game.teams[teamIndex];
         const players = team.players || [];
         if (!players.length) continue;
@@ -54,6 +57,7 @@ function chooseSpeaker(game, preferred = game.currentTeam - 1) {
         game.currentTeam = teamIndex + 1;
         return speaker;
     }
+    if (pending?.length) game.currentTeam = pending[0] + 1;
     return null;
 }
 
@@ -63,7 +67,7 @@ function newTurn(game, phase) {
         id: (Number(game.turn?.id) || 0) + 1,
         teamIndex: game.currentTeam - 1,
         speakerId: speaker?.playerId || '',
-        roundNumber: (Number(game.currentRound) || 0) + 1,
+        roundNumber: completedTurns(Object.values(game.auditEvents || {}), game.teams.length)[game.currentTeam - 1] + 1,
         words: [], selectedIndexes: []
     };
     game.phase = phase;
@@ -119,6 +123,14 @@ function reconcile(game, now) {
 
     const eligible = canPlay(game.teams.length, roster.length);
     const speaker = roster.find(player => player.playerId === game.turn?.speakerId);
+    if (game.finalTurnCount) {
+        const pending = matchProgress(game.teams.map(team => team.points), game.settings.pointsToWin,
+            Object.values(game.auditEvents || {}), game.finalTurnCount).pendingTeams;
+        if (pending.length && !pending.some(index => game.teams[index].players?.length)) {
+            if (game.phase !== 'waiting' || game.turn?.teamIndex !== pending[0] || game.turn?.speakerId) newTurn(game, 'waiting');
+            game.gameState = 'waiting'; return;
+        }
+    }
     if (!game.isGameStarted) {
         chooseSpeaker(game);
         game.phase = rosterStatus(game, now).eligible ? 'ready' : 'waiting';
@@ -239,9 +251,11 @@ function completeTurn(game, now, points, chaosSummary = null, effect = null) {
     const team = game.teams[turn.teamIndex];
     const index = (team.players || []).findIndex(player => player.playerId === turn.speakerId);
     if (index >= 0) team.nextSpeakerId = team.players[(index + 1) % team.players.length].playerId;
-    if (points.some(value => value >= game.settings.pointsToWin)) {
+    const progress = matchProgress(points, game.settings.pointsToWin, Object.values(game.auditEvents), game.finalTurnCount);
+    game.finalTurnCount = progress.finalTurnCount;
+    if (progress.finished) {
         game.phase = game.gameState = 'finished';
-        game.finishReason = 'winner';
+        game.finishReason = progress.winners.length > 1 ? 'draw' : 'winner';
         game.roundActive = false;
         game.endedAt = now;
         return;
@@ -279,13 +293,14 @@ export function act(gameData, actor, action, now, rules = {}) {
         game.teams.forEach(team => { team.points = 0; });
         game.auditEvents = {}; game.auditEvent = null; game.roundReview = null;
         game.chaos = { teamShields: game.teams.map(() => 0), rerollsUsed: game.teams.map(() => false) };
-        game.finishReason = null; game.endedAt = null;
+        game.finishReason = null; game.endedAt = null; game.finalTurnCount = null;
         newTurn(game, 'ready');
         reconcile(game, now);
     } else if (action.type === 'start-game') {
         if ((action.matchId ?? 1) !== (game.matchId ?? 1)) return;
         if (!host || !['ready', 'waiting'].includes(game.phase) || game.isGameStarted || !rosterStatus(game, now).eligible) return;
         game.isGameStarted = true;
+        game.finalTurnCount = null;
         game.matchId ||= 1;
         if (game.starterTeam === undefined) game.starterTeam = Number.isInteger(action.seed)
             ? startingTeam(action.seed, game.teams.length) : Math.max(0, game.currentTeam - 1);
