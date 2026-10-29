@@ -1,8 +1,9 @@
 // All online mutations run against the transaction's current snapshot, never a
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
 import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261029.2';
+import { normalizeOnlinePack } from '../gameplay/online-packs.js?v=20261029.3';
 
-export const PROTOCOL_VERSION = 5;
+export const PROTOCOL_VERSION = 6;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -145,9 +146,17 @@ function reconcile(game, now) {
         : game.phase === 'ready' ? 'ready' : 'resumed';
 }
 
+function usableWordPack(game) {
+    try {
+        const pack = normalizeOnlinePack(game.wordPack), difficulty = game.settings?.difficulty || 'normal';
+        return !pack || pack.entries.some(entry => difficulty === 'normal' || entry.difficulty === difficulty);
+    } catch { return false; }
+}
+
 export function joinReason(game, actor) {
     if (!game || game.phase === 'ended' || game.gameState === 'ended') return 'lobby-unavailable';
     if (game.protocolVersion !== PROTOCOL_VERSION) return 'incompatible-lobby';
+    if (!usableWordPack(game)) return 'invalid-word-pack';
     if (!actor.playerId || !actor.connectionId || !actor.playerName?.trim()) return 'invalid-player-name';
     if (members(game).some(player => player.playerId !== actor.playerId
         && player.playerName.trim().toLowerCase() === actor.playerName.trim().toLowerCase())) return 'duplicate-player-name';
@@ -277,6 +286,7 @@ function completeTurn(game, now, points, chaosSummary = null, effect = null) {
 // and deterministic because Firebase may rerun a transaction callback.
 export function act(gameData, actor, action, now, rules = {}) {
     if (!gameData || gameData.protocolVersion !== PROTOCOL_VERSION || gameData.phase === 'ended') return;
+    if (['start-game', 'start-round'].includes(action.type) && !usableWordPack(gameData)) return;
     const player = ownsSeat(gameData, actor);
     if (!player || !isConnected(gameData, player, now)) return;
     const game = structuredClone(gameData);

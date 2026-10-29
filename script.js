@@ -1,11 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261029.2';
-import { OnlineClient } from './online/client.js?v=20261029.2';
+import * as OnlineState from './online/state.js?v=20261029.3';
+import { OnlineClient } from './online/client.js?v=20261029.3';
 import * as Gameplay from './gameplay/rules.js?v=20261029.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261026.1';
 import * as AiPacks from './gameplay/ai-packs.js?v=20261026.1';
+import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -24,6 +25,7 @@ const db = getDatabase(app);
 // Firebase manages Gemini authorization; no Gemini credential is shipped to players.
 const model = createAiWordClient(app);
 let aiGeneratedEntries = [];
+let pendingOnlinePack = null;
 let aiGenerationHistory = AiPacks.readHistory({ getItem: key => localStorage.getItem(key) });
 
 // Game state variables
@@ -511,6 +513,10 @@ function initializeMenu() {
         if (event.key === 'Enter' && !document.getElementById('btnGenerate').disabled) { event.preventDefault(); generate(); }
     });
     document.getElementById('aiModal').addEventListener('show.bs.modal', syncAiPack);
+    document.getElementById('onlineModal').addEventListener('show.bs.modal', updateOnlinePackNotice);
+    document.getElementById('onlineModal').addEventListener('hidden.bs.modal', () => {
+        pendingOnlinePack = null; updateOnlinePackNotice();
+    });
     document.getElementById('difficulty').addEventListener('change', syncAiPack);
     syncAiPack();
 
@@ -560,6 +566,7 @@ function initializeMenu() {
     document.getElementById("endRoundButton").addEventListener("click", endRound);
     document.getElementById("btnGenerate").addEventListener("click", generate);
     document.getElementById("btnAiGame").addEventListener("click", startAIGame);
+    document.getElementById('btnAiOnline').addEventListener('click', hostAIWordsOnline);
     document.getElementById('leaveOnlineGame').addEventListener('click', leaveLobbyWithTransaction);
     document.getElementById('rejoinOnlineGame').addEventListener('click', () => {
         void onlineClient?.resume(true).catch(error => console.error('Unable to rejoin:', error));
@@ -1254,7 +1261,7 @@ function renderTrainingHints(words = []) {
         return;
     }
 
-    if (!isTrainingMode || isAiGame || !Array.isArray(words) || words.length === 0) {
+    if (!isTrainingMode || isAiGame || (isOnlineGame && onlineClient?.snapshot?.wordPack) || !Array.isArray(words) || words.length === 0) {
         clearTrainingHints();
         return;
     }
@@ -1363,7 +1370,14 @@ async function createGameLobby() {
         txtPlayerName.value = playerName;
         if (!playerName) { alert('Enter a valid player name!'); return; }
         const settings = getSanitizedSettingsFromInputs();
-        const pools = loadWords(settings.selectedTheme, settings.selectedCategories, settings.difficulty);
+        const wordPack = normalizeOnlinePack(pendingOnlinePack);
+        if (wordPack && !wordPack.entries.some(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty)) {
+            document.getElementById('onlineFormStatus').textContent = 'This pack has no words at the selected difficulty. Change difficulty in Settings or generate another pack.';
+            document.getElementById('onlineFormStatus').hidden = false; return;
+        }
+        const pools = wordPack ? wordPack.entries.map(entry => entry.word)
+            : loadWords(settings.selectedTheme, settings.selectedCategories, settings.difficulty);
+        if (wordPack) { settings.selectedTheme = 'None'; settings.selectedCategories = []; settings.trainingMode = false; }
         // .info values are local SDK metadata and must be listened to, not read
         // through get(), which may fall back to a REST path the server rejects.
         const serverOffset = await new Promise((resolve, reject) => {
@@ -1371,8 +1385,11 @@ async function createGameLobby() {
         });
         const initial = {
             protocolVersion: OnlineState.PROTOCOL_VERSION, dateCreated: serverTimestamp(), settings,
+            ...(wordPack ? { wordPack } : {}),
             teams: Array.from({ length: settings.numTeams }, (_, id) => ({ id, points: 0, players: [] })),
-            easyWords, hardWords, currentGameWords: pools, numPlayers: 0, currentTeam: 1, currentRound: 0,
+            easyWords: wordPack ? wordPack.entries.filter(entry => entry.difficulty === 'easy').map(entry => entry.word) : easyWords,
+            hardWords: wordPack ? wordPack.entries.filter(entry => entry.difficulty === 'hard').map(entry => entry.word) : hardWords,
+            currentGameWords: pools, numPlayers: 0, currentTeam: 1, currentRound: 0,
             isGameStarted: false, roundActive: false, phase: 'waiting', gameState: 'waiting', hostId: '', hostName: '', hostEpoch: 0,
             chaos: { teamShields: createInitialTeamShields(settings.numTeams), resolutionId: 0 }
         };
@@ -1553,6 +1570,7 @@ function syncAiPack() {
         ? `${count} ${count === 1 ? 'word' : 'words'}${eligible.length ? ' ready to play' : ''}.${detail}${eligible.length ? '' : ' No answers at the selected difficulty. Change difficulty or generate a new pack.'}`
         : 'No words yet. Generate a pack or paste your own.';
     document.getElementById('btnAiGame').disabled = document.getElementById('btnGenerate').disabled || !eligible.length;
+    document.getElementById('btnAiOnline').disabled = document.getElementById('btnAiGame').disabled;
 }
 
 function extractUniqueAiWordsFromText(rawText = '') {
@@ -1585,6 +1603,7 @@ async function run(topic) {
         setAiFeedback('Keep the topic to 240 characters or fewer.', true); return;
     }
     btnGenerate.disabled = true; btnAiGame.disabled = true; textArea.disabled = true;
+    document.getElementById('btnAiOnline').disabled = true;
     topicInput.disabled = true; strictToggle.disabled = true;
     btnGenerate.textContent = 'Generating…'; btnGenerate.setAttribute('aria-busy', 'true');
     setAiFeedback('Building your word pack…');
@@ -1619,6 +1638,35 @@ async function run(topic) {
         textArea.disabled = false; btnGenerate.textContent = 'Generate words'; btnGenerate.setAttribute('aria-busy', 'false');
         syncAiPack();
     }
+}
+
+function updateOnlinePackNotice() {
+    const notice = document.getElementById('onlinePackNotice'); notice.hidden = !pendingOnlinePack;
+    notice.textContent = pendingOnlinePack ? `Your ${pendingOnlinePack.entries.length}-word pack will be shared with this lobby. Friends just need the lobby code.` : '';
+    document.getElementById('joinLobbyChoice').hidden = Boolean(pendingOnlinePack);
+    document.getElementById('onlineChoices').classList.toggle('pack-hosting', Boolean(pendingOnlinePack));
+    document.getElementById('createLobbyButton').textContent = pendingOnlinePack ? 'Create lobby with this pack' : 'Create lobby';
+}
+
+function hostAIWordsOnline() {
+    if (isOnlineGame || document.getElementById('btnGenerate').disabled) return;
+    const settings = getSanitizedSettingsFromInputs();
+    try {
+        const pack = normalizeOnlinePack({ kind: 'custom', entries: getAiWordObjects(settings.difficulty) });
+        if (!pack.entries.some(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty)) {
+            setAiFeedback('This pack has no answers at the selected difficulty. Change difficulty in Settings or generate another pack.', true); return;
+        }
+        pendingOnlinePack = pack; updateOnlinePackNotice();
+    } catch (error) {
+        setAiFeedback(error.reason === 'count' ? 'Online packs support up to 150 answers. Shorten the list before hosting.'
+            : error.reason === 'entry' ? 'Each online answer needs to be a plain word or phrase of 80 characters or fewer.'
+            : 'Generate or paste words before hosting a game.', true); return;
+    }
+    const modal = document.getElementById('aiModal');
+    if (modal.classList.contains('show')) {
+        modal.addEventListener('hidden.bs.modal', () => getModalInstance('onlineModal')?.show(), { once: true });
+        hideModalById('aiModal');
+    } else getModalInstance('onlineModal')?.show();
 }
 
 function startAIGame() {
@@ -2594,8 +2642,9 @@ async function sendOnlineCommand(action) {
     }
 }
 
-function getOnlineWordObjects(settings) {
-    const objects = settings.selectedTheme !== 'None'
+function getOnlineWordObjects(settings, wordPack = null) {
+    const shared = normalizeOnlinePack(wordPack);
+    const objects = shared ? shared.entries : settings.selectedTheme !== 'None'
         ? (themes[settings.selectedTheme] || [])
         : (settings.selectedCategories.length ? settings.selectedCategories : Object.keys(categories))
             .flatMap(category => categories[category] || []);
@@ -2604,7 +2653,7 @@ function getOnlineWordObjects(settings) {
 
 function drawOnlineWords(gameData, seed) {
     const settings = sanitizeGameSettingsFromDb(gameData.settings, gameData.teams.length);
-    const draw = Gameplay.drawWords(getOnlineWordObjects(settings), gameData.deck || {}, settings.difficulty, settings.numWords, seed);
+    const draw = Gameplay.drawWords(getOnlineWordObjects(settings, gameData.wordPack), gameData.deck || {}, settings.difficulty, settings.numWords, seed);
     return { words: draw.words, pools: { deck: draw.deck, deckRecycled: draw.recycled,
         easyWords: [], hardWords: [], currentGameWords: [] } };
 }
@@ -2764,6 +2813,7 @@ function updateLobbyPresentation(data = null, view = null) {
         const roster = view.roster;
         text = `${roster.connectedPlayers} ${roster.connectedPlayers === 1 ? 'player' : 'players'} connected · ${roster.connectedTeams} of ${data.teams.length} teams online`;
         if (roster.reconnectingPlayers) text += ` · ${roster.reconnectingPlayers} reconnecting`;
+        if (data.wordPack) text += ` · Custom pack: ${data.wordPack.entries.length} ${data.wordPack.entries.length === 1 ? 'word' : 'words'}`;
     }
     if (summary.textContent !== text) summary.textContent = text;
     document.getElementById('onlineIntro').textContent = joined ? text : 'Bring your group together in one lobby.';
@@ -2972,6 +3022,7 @@ async function handleOnlineJoinError(error) {
     const messages = {
         'duplicate-player-name': 'Player name is already in use in this lobby.',
         'incompatible-lobby': "This lobby uses a different online version. Reload every player's tab and create a new lobby.",
+        'invalid-word-pack': 'This lobby has an invalid word pack. Ask the host to create a new lobby with a valid pack.',
         'lobby-unavailable': 'This lobby is unavailable or has ended.'
     };
     if (messages[error.message]) saveOnlineSession(null);

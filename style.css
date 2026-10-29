@@ -171,6 +171,9 @@ body.layout-game .app-actions { justify-content: flex-end; }
 .round-review h3 { margin: 0; font-size: 1rem; font-weight: 700; }
 .round-review > p { margin: 6px 0 12px; color: #475569; font-size: .9rem; }
 .round-review-answers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.app-modal .modal-footer.ai-pack-actions { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
+.app-modal .modal-footer.ai-pack-actions .btn { margin: 0; }
+.online-choices.pack-hosting { grid-template-columns: minmax(0, 1fr); }
 .review-answer { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 8px; background: #fff; overflow-wrap: anywhere; }
 .review-answer.is-correct { border-color: #a9d3b8; background: #eef8f1; }
 .review-answer-mark { flex-shrink: 0; color: #64748b; }

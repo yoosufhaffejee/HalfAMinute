@@ -7,7 +7,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 
 - Offline local play
 - Online multiplayer lobbies (host + join by code)
-- AI word generation mode (topic-based and strict-topic mode)
+- AI word packs for local and online play (adaptive topics and optional strict scope)
 - Training mode (shows clue-friendly description hints per active word)
 - Category and theme filtering
 - Difficulty selection (`easy`, `normal`, `hard`)
@@ -30,6 +30,7 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - `gameplay/rules.js`: deterministic word decks, presets, starting order, pacing, and recap helpers
 - `gameplay/ai-client.js`: lazy Firebase AI Logic client and App Check configuration
 - `gameplay/ai-packs.js`: game-specific system prompt, structured-pack validation, difficulty metadata and generation history
+- `gameplay/online-packs.js`: validation and snapshots of shared custom lobby packs
 - `gameplay/ai-errors.js`: safe, categorized generation feedback
 - `data.js`: categories, themes, word metadata
 - `style.css`: styling
@@ -80,12 +81,15 @@ Important:
 - Disconnected seats have a 90-second reconnect grace period. A server-connected tab is not removed solely for delayed heartbeats.
 - Refresh restores the same player, team, turn, and answer selection using per-tab session storage.
 - `Leave Lobby` explicitly releases a seat; `Rejoin Lobby` can restore a lost or superseded connection.
-- Online protocol version 4 requires a newly created lobby; old-version lobbies show a message asking the host to recreate them. The new version keeps all clients on the same scheduled countdown start.
+- Online protocol version 6 requires a newly created lobby; old-version lobbies show a message asking every player to reload and the host to recreate them. All clients share the scheduled countdown, equal-turn finish and lobby word source.
 - Each team rotates its own speaker queue. Empty teams are skipped safely without changing the player-count eligibility rules.
 
 ## AI Mode
 
 - Enter a topic and generate up to **150** fresh answers. Narrow or exhausted topics may produce smaller packs; quality and topic boundaries take priority over padding.
+- Choose **Play here** for one-device play, or **Host online** to create a lobby with the current pack. Enter your name, create the lobby, and share its code. Friends join through the normal online dialog; they do not need to generate or paste anything.
+- Hosting copies the reviewed pack into the lobby, including its difficulty labels. All clients draw from that snapshot through refreshes, host changes and rematches, using the shared exhaustion deck. Later editor changes do not change a running lobby. Cancel hosting to return to the normal built-in lobby flow.
+- Online packs use the configured team count, target, timing, card size and Chaos options. Built-in categories/themes and training hints do not apply to a custom pack. Shared packs support up to 150 distinct answers; invalid or difficulty-empty packs cannot start.
 - Broad topics adapt naturally: Movies includes mostly titles plus related people and ideas; Hollywood and South African general knowledge cover varied relevant subtopics. Specific requests such as football player names stay within that answer type.
 - Check **Keep to the exact topic** for direct examples only (Movies becomes titles only). Scope is independent of difficulty. Topics are plain text; punctuation has no special mode-switching meaning.
 - Requests separate the topic/exclusions from the game's permanent system instructions. The model builds named groups internally to budget variety across answer types, then the app interleaves them into a simple editable word list. Strict and specific topics keep all groups within the requested answer type.
@@ -130,7 +134,7 @@ See [Firebase setup](https://firebase.google.com/docs/ai-logic/get-started?platf
 
 The initial starter is randomized. Rematches keep the roster/settings and rotate the starter. A final-round notice names the teams still owed turns. The final round remains active even if Chaos lowers a score below the target; compare the full final totals, including points beyond the board's finish. Completed-turn counts come from scored turn events, so cancelled turns do not consume a team's final opportunity. A missing team keeps its owed turns and the existing connection/roster requirements still apply. Scores, final-round state and Chaos resources reset for the new match identity. Word exhaustion history carries across rematches for the same group. This finish rule applies online and locally.
 
-Equal-turn matches use online protocol 5. Reload every player's tab and create a new lobby to use this rule; older clients/lobbies are incompatible, so an old client cannot end a new match early.
+Current matches use online protocol 6, including the equal-turn finish introduced in protocol 5. Reload every player's tab and create a new lobby; older clients/lobbies are incompatible, so an old client cannot end a new match early or draw from a different word source.
 
 Online answer review is shared by all connected players once a round ends, including small-game guessers and the speaker's teammates. Only the speaker can change selections or confirm. Confirmed options and checkmarks remain in a read-only review below the board through Chaos and between turns, including after refreshing or rejoining. The review clears when the next round's countdown starts and on rematch. Live-round answer visibility and team-size rules are unchanged.
 
@@ -149,7 +153,7 @@ See [GAMEPLAY_CHANGES.md](GAMEPLAY_CHANGES.md) for the implementation and verifi
 ## Gameplay regression checks
 
 ```powershell
-node --test tools/ai-client.test.mjs tools/ai-packs.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
+node --test tools/ai-client.test.mjs tools/ai-packs.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-packs.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
 node tools/test-word-data.js
 node tools/analyze-starting-order.mjs
 node tools/analyze-chaos.cjs 5000

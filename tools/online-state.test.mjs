@@ -515,6 +515,32 @@ test('null snapshots and old protocol lobbies are never resurrected by a reducer
     assert.equal(State.act(old,actor('A'),{type:'start-game'},NOW,rules),undefined);
 });
 
+test('shared word packs are validated on join and start, including the selected difficulty', () => {
+    const base=started();
+    for(const pack of [{kind:'custom',entries:[]},{kind:'custom',entries:[{word:'Bad',canonical:'Bad',difficulty:'normal'}]}]) {
+        const game={...base,wordPack:pack};
+        assert.equal(State.joinReason(game,actor('C')),'invalid-word-pack');
+        assert.equal(act(game,'A','start-round',{seed:1}),undefined);
+        assert.ok(act(game,'A','end-game')); // A bad pack never prevents closing a lobby.
+    }
+    const hardOnly={...base,settings:{...base.settings,difficulty:'easy'},wordPack:{kind:'custom',entries:[{word:'Hard',canonical:'Hard',difficulty:'hard'}]}};
+    assert.equal(State.joinReason(hardOnly,actor('C')),'invalid-word-pack');
+});
+
+test('the lobby pack survives joins, host departure and rematch without depending on the creator', () => {
+    let game=started(['A','B','C','D']);
+    game.wordPack={kind:'custom',entries:[{word:'Custom',canonical:'Custom',difficulty:'easy'}]};
+    const saved=structuredClone(game.wordPack);
+    game=State.join(game,actor('E'),NOW+1);game=State.leave(game,actor('A'),NOW+2);
+    assert.deepEqual(game.wordPack,saved);assert.equal(game.hostId,'id-C');
+    game=State.act(game,actor('C'),{type:'start-round',turnId:game.turn.id,seed:1},NOW+3,
+        {drawWords:g=>({words:g.wordPack.entries.map(entry=>entry.word),pools:{}})});
+    assert.deepEqual(game.turn.words,['Custom']);
+    game=act(game,'C','end-game',{},NOW+4);
+    game=act(game,'C','rematch',{matchId:game.matchId},NOW+5);
+    assert.deepEqual(game.wordPack,saved);
+});
+
 test('transaction retries are deterministic and do not mutate their input', () => {
     const game = selection(started()); const original = structuredClone(game);
     assert.deepEqual(act(game, 'A', 'submit-round'), act(game, 'A', 'submit-round'));

@@ -8,6 +8,7 @@ import { OnlineClient } from '../online/client.js';
 import * as Gameplay from '../gameplay/rules.js';
 import * as AiErrors from '../gameplay/ai-errors.js';
 import * as AiPacks from '../gameplay/ai-packs.js';
+import { normalizeOnlinePack } from '../gameplay/online-packs.js';
 
 const source = fs.readFileSync(new URL('../script.js', import.meta.url), 'utf8').replace(/^import .*$/gm, '');
 const now = 1000000;
@@ -50,7 +51,7 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), createAiWordClient: () => ({}),
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
@@ -244,6 +245,84 @@ test('online word drawing is deterministic, consumes pools and never repeats wit
     assert.equal(new Set(result.words).size, 3);
     const remaining = [...result.pools.easyWords, ...result.pools.hardWords];
     assert.equal(remaining.some(word => result.words.includes(word)), false);
+});
+
+test('every client draws from the lobby pack with shared difficulty and exhaustion history, independent of its editor', () => {
+    const data=game(['A','B']);
+    data.wordPack=normalizeOnlinePack({kind:'custom',entries:[
+        ...['E1','E2','E3','E4'].map(word=>({word,canonical:word,difficulty:'easy'})),
+        ...['H1','H2'].map(word=>({word,canonical:word,difficulty:'hard'}))]});
+    const first=ui(),second=ui();first.mount(data);second.mount(data,actor('B'));
+    first.el('aiWords').value='Only in this browser';
+    const draw=first.run('drawOnlineWords(data,123)');
+    assert.deepEqual(JSON.parse(JSON.stringify(draw)),JSON.parse(second.run('JSON.stringify(drawOnlineWords(data,123))')));
+    assert.equal(draw.words.filter(word=>word.startsWith('E')).length,2);
+    assert.equal(draw.words.filter(word=>word.startsWith('H')).length,1);
+    data.deck=draw.pools.deck;second.apply(data);
+    const next=second.run('drawOnlineWords(data,456)');
+    assert.equal(next.words.some(word=>draw.words.includes(word)),false);
+    assert.ok([...draw.words,...next.words].every(word=>/^[EH]\d$/.test(word)));
+    data.wordPack={kind:'custom',entries:[]};second.apply(data);
+    assert.throws(()=>second.run('drawOnlineWords(data,1)'),/invalid-word-pack/);
+});
+
+test('AI host preparation snapshots the editor, waits for modal close, and cancellation restores normal online choices', () => {
+    const h=ui();h.run(`globalThis.HTMLElement=class{};initializeMenu();
+        getModalInstance=id=>({show:()=>{metrics.shown=id}});hideModalById=id=>{metrics.hidden=id};
+        document.getElementById('aiWords').value='Mars\\nVenus';`);
+    h.el('aiModal').classList.add('show');
+    h.run('hostAIWordsOnline()');
+    assert.equal(h.metrics.hidden,'aiModal');assert.equal(h.metrics.shown,undefined);
+    assert.equal(h.el('joinLobbyChoice').hidden,true);
+    assert.match(h.el('onlinePackNotice').textContent,/2-word pack/);
+    h.el('aiWords').value='Edited after preparing';
+    assert.equal(h.run('pendingOnlinePack.entries[0].word'),'Mars');
+    h.el('aiModal').emit('hidden.bs.modal');assert.equal(h.metrics.shown,'onlineModal');
+    h.el('onlineModal').emit('hidden.bs.modal');
+    assert.equal(h.run('pendingOnlinePack'),null);
+    assert.equal(h.el('joinLobbyChoice').hidden,false);
+    assert.equal(h.el('createLobbyButton').textContent,'Create lobby');
+});
+
+test('hosting a shared pack retains normal online team/target settings and never loads built-in pools', async () => {
+    const h=ui();
+    h.run(`pendingOnlinePack=normalizeOnlinePack({kind:'custom',entries:[
+            {word:'Custom easy',canonical:'Custom easy',difficulty:'easy'},
+            {word:'Custom hard',canonical:'Custom hard',difficulty:'hard'}]});
+        txtPlayerName.value='Pack Host';txtTeams.value='4';document.getElementById('pointsToWin').value='40';
+        document.getElementById('chkTraining').checked=true;
+        loadWords=()=>{throw new Error('Built-in words must not be loaded')};
+        ref=(db,path)=>({path});onValue=(ref,callback)=>callback({val:()=>0});get=async()=>({});
+        serverTimestamp=()=>123;generateGameCode=()=>'PACK';
+        runTransaction=async(ref,update)=>{metrics.initial=update(null);return {committed:true}};
+        onLobbyJoined=async actor=>{metrics.joined=actor;isOnlineGame=true};`);
+    await h.run('createGameLobby()');
+    const initial=h.metrics.initial;
+    assert.equal(initial.settings.numTeams,4);assert.equal(initial.settings.pointsToWin,40);
+    assert.equal(initial.settings.trainingMode,false);assert.equal(initial.settings.selectedTheme,'None');
+    assert.equal(initial.wordPack.entries.length,2);
+    assert.deepEqual([...initial.easyWords],['Custom easy']);assert.deepEqual([...initial.hardWords],['Custom hard']);
+    assert.equal(initial.protocolVersion,OnlineState.PROTOCOL_VERSION);
+    assert.equal(h.metrics.joined.playerName,'Pack Host');
+});
+
+test('online hosting rejects empty or overlarge packs without destroying the current editor', () => {
+    const h=ui();
+    h.run(`getModalInstance=()=>({show(){}});document.getElementById('aiWords').value='';hostAIWordsOnline()`);
+    assert.match(h.el('aiFeedback').textContent,/Generate or paste/);
+    h.el('aiWords').value=Array.from({length:151},(_,i)=>`Word ${i}`).join('\n');
+    h.run('hostAIWordsOnline()');
+    assert.match(h.el('aiFeedback').textContent,/up to 150/);
+    assert.equal(h.el('aiWords').value.split('\n').length,151);
+    assert.equal(h.run('pendingOnlinePack'),null);
+});
+
+test('online custom packs never borrow training descriptions from matching built-in words', () => {
+    const data=act(game(['A','B']),'start-round',{seed:1});data.settings.trainingMode=true;
+    data.wordPack={kind:'custom',entries:[{word:'One',canonical:'One',difficulty:'easy'}]};
+    const h=ui();h.mount(data);
+    assert.equal(h.el('currentWords').hidden,true);assert.equal(h.el('trainingHintsDrawer').hidden,true);
+    assert.match(h.el('lobbySummary').textContent,/Custom pack: 1 word\b/);
 });
 
 test('actual Chaos planner is deterministic and final resolution keeps joins and animation scores coherent', () => {
@@ -776,6 +855,7 @@ test('theme choices search, select one pack and clear conflicting categories', (
 test('AI pack editing counts unique entries, controls visibility and guards an empty start', () => {
     const h=ui();h.run('globalThis.HTMLElement=class{};initializeMenu()');
     assert.equal(h.el('btnAiGame').disabled,true);
+    assert.equal(h.el('btnAiOnline').disabled,true);
     h.el('showAIWords').checked=true;h.el('showAIWords').emit('change');
     assert.equal(h.el('aiWords').hidden,false);
     h.el('aiWords').value='One\nTwo\none';h.el('aiWords').emit('input');
@@ -793,12 +873,14 @@ test('AI generation shows inline feedback and restores editing and play controls
     h.run('globalThis.finishGeneration=null;model.generateContent=()=>new Promise(resolve=>finishGeneration=resolve)');
     const pending=h.run('run("Football players")');
     assert.equal(h.el('btnGenerate').disabled,true);assert.equal(h.el('aiWords').disabled,true);
+    assert.equal(h.el('btnAiOnline').disabled,true);
     assert.equal(h.el('topic').disabled,true);assert.equal(h.el('strictAiTopic').disabled,true);
     assert.equal(h.el('btnAiGame').disabled,true);
     h.run(`finishGeneration({response:{text:()=>JSON.stringify({groups:[{label:'Answers',entries:[
         {word:'One',canonical:'One',difficulty:'easy'}, {word:'Two',canonical:'Two',difficulty:'hard'},
         {word:'one',canonical:'One',difficulty:'easy'}]}]})}})`);await pending;
     assert.equal(h.el('btnGenerate').disabled,false);assert.equal(h.el('aiWords').disabled,false);
+    assert.equal(h.el('btnAiOnline').disabled,false);
     assert.equal(h.el('topic').disabled,false);assert.equal(h.el('strictAiTopic').disabled,false);
     assert.equal(h.el('btnAiGame').disabled,false);
     assert.match(h.el('aiPackStatus').textContent,/2 words ready to play.*1 easy.*1 hard/);
