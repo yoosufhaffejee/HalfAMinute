@@ -1,6 +1,7 @@
 import { answerKey } from './rules.js?v=20261020.11';
 
 export const PACK_SIZE = 150;
+export const TOPIC_LIMIT = 5;
 export const HISTORY_LIMIT = 450;
 export const HISTORY_STORAGE_KEY = 'halfAMinute.aiHistory.v1';
 
@@ -18,6 +19,7 @@ In strict scope, keep to direct examples of the requested topic and omit associa
 Create targetCount answers whenever the topic has enough suitable fresh answers. Broad topics such as Movies, Football or World Travel have large pools: return 150, not an arbitrarily shortened 50- or 80-item sample. Return fewer ONLY when scope, selected difficulty or recent exclusions genuinely limit the pool; do not stop early just to be concise. Relevance, real answers and strict scope still take priority over filling the count. targetMix is advisory for a full-size pack only. In Normal difficulty, a smaller pack may have any easy/hard mix; do not discard valid answers just because you cannot fill that mix. For example, a fresh strict pack of planets in our solar system should contain the eight planets, all easy, not 150 entries and not an empty list. Return zero only when no relevant fresh answer fits the selected difficulty. Never pad, invent or broaden strict scope. Count entries before responding and stop at targetCount.
 Use one entry per entity or concept. Alternative spellings, singular/plural forms, nicknames and full names are not separate answers. canonical is the established full answer name, not an opaque ID, in the same language as word (for example word 'Messi', canonical 'Lionel Messi'). Exclude every recent answer and its aliases. Prefer familiar English names; preserve established proper names. Do not assume a country or age group unless the topic specifies it.
 Build the response as named groups of answers, with targetCount entries TOTAL across all groups, not per group. For broad adaptive topics, use 3-6 genuinely different answer types. For Movies, use a movie titles group of about 90 entries, and split the remaining 60 between people, characters/objects and filmmaking concepts. For regional general knowledge, use the four balanced groups described above. For specific topics or strict scope, use one group or divide only within the requested answer type, such as player eras; never add unrelated types. Choose group sizes before writing any entries and honor those sizes. Spread easy and hard entries across groups to match targetMix overall. The challenging portion should be mostly moderate challenges with a few tougher picks.
+For multiple topics, topicBudgets divides targetCount TOTAL between the requested topics. Treat them as independent interests to mix, not an intersection: Minecraft plus airports does not mean Minecraft airports. Apply adaptive or strict scope separately to each topic. Return one group per requested topic, labelled with that topic, honoring its targetCount AND targetMix and varying relevant answer types within it. Do not default to a 50/50 difficulty split for each topic: use the explicit easy/hard counts in its budget. The single-topic examples above describe proportions: scale them to each topic's budget, never request 150 per topic. If a topic genuinely has fewer suitable fresh answers, it may contribute fewer; other topics may fill spare capacity without exceeding targetCount overall. Deduplicate overlapping answers across all topics and preserve the overall difficulty mix. Do not let a broad topic crowd out a narrow one.
 Before responding, count entries by group AND difficulty, check the topic boundaries, factual plausibility, useful legal clues and duplicates, and replace uncertain or ambiguous candidates. Return only the JSON object matching the response schema: groups have a label and entries, and each entry has word, canonical and difficulty. Do not return clues, explanations, markdown or extra fields.`;
 
 export const PACK_RESPONSE_SCHEMA = {
@@ -72,14 +74,37 @@ export function rememberPack(history, entries, storage) {
     return next;
 }
 
+export function normalizeTopics(value, { allowEmpty = false } = {}) {
+    const result = [], seen = new Set();
+    for (const raw of Array.isArray(value) ? value : [value]) {
+        if (typeof raw !== 'string') throw new Error('invalid-ai-topic');
+        const topic = raw.trim().replace(/\s+/g, ' ');
+        if (!topic) continue;
+        if (!/[\p{L}\p{N}]/u.test(topic) || topic.length > 240 || /[\p{Cc}<>]/u.test(topic)) throw new Error('invalid-ai-topic');
+        const key = topic.toLocaleLowerCase();
+        if (!seen.has(key)) { seen.add(key); result.push(topic); }
+    }
+    if (result.length > TOPIC_LIMIT) throw new Error('too-many-ai-topics');
+    if (!result.length && !allowEmpty) throw new Error('invalid-ai-topic');
+    return result;
+}
+
 export function buildPackRequest(topic, { strict = false, difficulty = 'normal', numWords = 5, history = [] } = {}) {
-    const subject = String(topic || '').trim();
-    if (!/[\p{L}\p{N}]/u.test(subject) || subject.length > 240) throw new Error('invalid-ai-topic');
+    const topics = normalizeTopics(topic);
     const selectedDifficulty = ['easy', 'normal', 'hard'].includes(difficulty) ? difficulty : 'normal';
     const cardSize = Math.max(1, Math.min(15, Math.round(Number(numWords) || 5)));
     const easy = selectedDifficulty === 'hard' ? 0 : selectedDifficulty === 'easy' ? PACK_SIZE
         : Math.round(PACK_SIZE * Math.ceil(cardSize / 2) / cardSize);
-    return JSON.stringify({ topic: subject, scope: strict ? 'strict' : 'adaptive', targetCount: PACK_SIZE,
+    let allocated = 0;
+    const topicBudgets = topics.map((topic, index) => {
+        const targetCount = Math.floor(PACK_SIZE / topics.length) + (index < PACK_SIZE % topics.length ? 1 : 0);
+        const topicEasy = Math.round(easy * (allocated + targetCount) / PACK_SIZE) - Math.round(easy * allocated / PACK_SIZE);
+        allocated += targetCount;
+        return { topic, targetCount, targetMix: { easy: topicEasy, hard: targetCount - topicEasy } };
+    });
+    return JSON.stringify({ ...(topics.length === 1 ? { topic: topics[0] } : {}), topics,
+        topicBudgets,
+        scope: strict ? 'strict' : 'adaptive', targetCount: PACK_SIZE,
         difficulty: selectedDifficulty, targetMix: { easy, hard: PACK_SIZE - easy },
         recentAnswers: sanitizeHistory(history) });
 }

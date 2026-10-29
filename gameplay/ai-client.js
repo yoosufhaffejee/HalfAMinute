@@ -1,4 +1,4 @@
-import { PACK_SYSTEM_INSTRUCTION, PACK_RESPONSE_SCHEMA } from './ai-packs.js?v=20261026.1';
+import { PACK_SYSTEM_INSTRUCTION, PACK_RESPONSE_SCHEMA } from './ai-packs.js?v=20261029.5';
 
 // Public client configuration only. Gemini authorization stays in Firebase AI Logic.
 export const AI_SETTINGS = Object.freeze({

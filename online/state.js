@@ -2,8 +2,9 @@
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
 import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261029.2';
 import { normalizeOnlinePack } from '../gameplay/online-packs.js?v=20261029.3';
+import { REACTIONS, REACTION_TTL_MS, rosterKey, freshSeries, recordSeries } from '../gameplay/experience.js?v=20261029.4';
 
-export const PROTOCOL_VERSION = 6;
+export const PROTOCOL_VERSION = 7;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -96,6 +97,9 @@ function removeMember(game, playerId) {
 
 function reconcile(game, now) {
     const roster = members(game);
+    if (game.settings?.trackSeries && game.series?.roster !== rosterKey(game.teams)) {
+        game.series = freshSeries(game.teams.length, rosterKey(game.teams));
+    }
     game.numPlayers = roster.length;
     game.teams.forEach(team => (team.players || []).forEach((player, index) => { player.id = index; }));
 
@@ -240,9 +244,10 @@ function completeTurn(game, now, points, chaosSummary = null, effect = null) {
         words: [...turn.words], selectedIndexes: [...(turn.selectedIndexes || [])] };
     const correctAnswers = (turn.selectedIndexes || []).map(index => turn.words[index]);
     const before = Number(game.teams[turn.teamIndex].points) || 0;
+    const pointsBeforeAll = game.teams.map(team => Number(team.points) || 0);
     game.teams.forEach((team, index) => { team.points = points[index]; });
     const event = { id: turn.id, teamIndex: turn.teamIndex, roundNumber: turn.roundNumber, correctAnswers,
-        earned: correctAnswers.length, recap: recap({ teamIndex: turn.teamIndex, earned: correctAnswers.length,
+        earned: correctAnswers.length, wordCount: turn.words.length, pointsBeforeAll, recap: recap({ teamIndex: turn.teamIndex, earned: correctAnswers.length,
             before, after: points[turn.teamIndex], effect: effect || chaosSummary }),
         pointsBefore: before, pointsAfter: points[turn.teamIndex],
         clueSeconds: Math.max(0, ((turn.selectingAt || now) - (turn.startedAt || now)) / 1000),
@@ -263,6 +268,7 @@ function completeTurn(game, now, points, chaosSummary = null, effect = null) {
     const progress = matchProgress(points, game.settings.pointsToWin, Object.values(game.auditEvents), game.finalTurnCount);
     game.finalTurnCount = progress.finalTurnCount;
     if (progress.finished) {
+        if (game.settings.trackSeries) game.series = recordSeries(game.series, game.matchId || 1, progress.winners);
         game.phase = game.gameState = 'finished';
         game.finishReason = progress.winners.length > 1 ? 'draw' : 'winner';
         game.roundActive = false;
@@ -293,7 +299,19 @@ export function act(gameData, actor, action, now, rules = {}) {
     const host = game.hostId === actor.playerId;
     const turn = game.turn;
     const speaker = turn?.speakerId === actor.playerId;
-    if (action.type === 'rematch') {
+    if (action.type === 'react') {
+        // Reactions are bounded decorations on a confirmed turn, never clues.
+        const review = ['resolving', 'chaos-choice'].includes(game.phase) ? turn : game.roundReview;
+        const reviewId = review?.turnId ?? review?.id;
+        if (action.matchId !== game.matchId || action.turnId !== turn?.id || !review || action.reviewId !== reviewId
+            || !['resolving', 'chaos-choice', 'idle', 'waiting', 'finished'].includes(game.phase)
+            || !Object.hasOwn(REACTIONS, action.reaction)) return;
+        const previous = game.reactions?.[actor.playerId];
+        if (previous && now - previous.at < 1800) return;
+        game.reactions = Object.fromEntries(Object.entries(game.reactions || {}).filter(([, item]) =>
+            item.reviewId === reviewId && now - item.at < REACTION_TTL_MS));
+        game.reactions[actor.playerId] = { reaction: action.reaction, at: now, reviewId };
+    } else if (action.type === 'rematch') {
         if (!host || game.phase !== 'finished' || action.matchId !== game.matchId) return;
         game.matchId = (Number(game.matchId) || 1) + 1;
         game.starterTeam = startingTeam(0, game.teams.length, Number(game.starterTeam) || 0);
@@ -302,6 +320,7 @@ export function act(gameData, actor, action, now, rules = {}) {
         game.isGameStarted = false;
         game.teams.forEach(team => { team.points = 0; });
         game.auditEvents = {}; game.auditEvent = null; game.roundReview = null;
+        game.reactions = null;
         game.chaos = { teamShields: game.teams.map(() => 0), rerollsUsed: game.teams.map(() => false) };
         game.finishReason = null; game.endedAt = null; game.finalTurnCount = null;
         newTurn(game, 'ready');
@@ -332,6 +351,7 @@ export function act(gameData, actor, action, now, rules = {}) {
             const draw = rules.drawWords?.(game, action.seed);
             if (!draw?.words?.length) return;
             game.roundReview = null;
+            game.reactions = null;
             turn.words = draw.words;
             turn.selectedIndexes = [];
             turn.seed = action.seed;

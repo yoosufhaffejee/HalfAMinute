@@ -21,6 +21,42 @@ const rules = {
     drawWords: () => ({ words: ['One', 'Two', 'Three'], pools: { easyWords: ['Four'], hardWords: ['Five'] } }),
     planChaos: (game, points) => ({ points, basePoints: points, shields: [1, 0], summary: 'shield gained', powerups: {}, durationMs: 3000 })
 };
+
+test('reactions require a current confirmed round, reject stale clients and are rate limited', () => {
+    let data = started();
+    assert.equal(act(data, 'B', 'react', { matchId: data.matchId, reviewId: 0, reaction: 'clap' }), undefined);
+    data = selection(data);
+    assert.equal(act(data, 'B', 'react', { matchId: data.matchId, reviewId: data.turn.id, reaction: 'clap' }), undefined);
+    const reviewId = data.turn.id;
+    data = act(data, 'A', 'submit-round');
+    const before = structuredClone(data.turn);
+    const time = NOW + 10000;
+    data = act(data, 'B', 'react', { matchId: data.matchId, reviewId, reaction: 'clap' }, time);
+    assert.deepEqual(data.turn, before); assert.equal(data.reactions['id-B'].reaction, 'clap');
+    assert.equal(act(data, 'B', 'react', { matchId: data.matchId, reviewId, reaction: 'fire' }, time + 100), undefined);
+    assert.equal(act(data, 'B', 'react', { matchId: data.matchId - 1, reviewId, reaction: 'fire' }, time + 2000), undefined);
+    assert.equal(act(data, 'B', 'react', { matchId: data.matchId, reviewId, reaction: 'custom text' }, time + 2000), undefined);
+    const disconnected = structuredClone(data); disconnected.presence['id-B'].connections['connection-B'].connected = false;
+    assert.equal(act(disconnected, 'B', 'react', { matchId: data.matchId, reviewId, reaction: 'fire' }, time + 2000), undefined);
+    data = act(data, 'B', 'start-round', { seed: 3 }, time + 2000);
+    assert.equal(data.reactions, null);
+    assert.equal(act(data, 'A', 'react', { matchId: data.matchId, reviewId, reaction: 'clap' }, time + 3000), undefined);
+});
+
+test('session tally survives rematches and reconnects, resets for a changed group, and omits stopped matches', () => {
+    let data = selection(started(['A', 'B'], 2, { trackSeries: true }));
+    data.teams[0].points = 19;
+    data = act(data, 'A', 'toggle-answer', { index: 0 }); data = act(data, 'A', 'submit-round');
+    assert.deepEqual(data.series.wins, [0, 0]); // Opponent still has an equal turn.
+    data = finish(data); assert.equal(data.phase, 'finished'); assert.deepEqual(data.series.wins, [1, 0]);
+    data = State.join(data, { ...actor('A'), connectionId: 'refreshed' }, NOW + 10000);
+    assert.deepEqual(data.series.wins, [1, 0]);
+    data = act(data, { ...actor('A'), connectionId: 'refreshed' }, 'rematch', { matchId: data.matchId }, NOW + 10000);
+    assert.deepEqual(data.series.wins, [1, 0]);
+    data = act(data, { ...actor('A'), connectionId: 'refreshed' }, 'end-game', { matchId: data.matchId }, NOW + 10000);
+    assert.deepEqual(data.series.wins, [1, 0]);
+    data = State.join(data, actor('C'), NOW + 10000); assert.deepEqual(data.series.wins, [0, 0]);
+});
 function act(game, name, type, extra = {}, now = Math.max(NOW, game.turn?.startedAt || 0, game.turn?.selectingAt || 0, game.turn?.submittedAt || 0)) {
     return State.act(game, typeof name === 'string' ? actor(name) : name,
         { type, turnId: game.turn?.id, ...extra }, now, rules);

@@ -9,6 +9,9 @@ import * as Gameplay from '../gameplay/rules.js';
 import * as AiErrors from '../gameplay/ai-errors.js';
 import * as AiPacks from '../gameplay/ai-packs.js';
 import { normalizeOnlinePack } from '../gameplay/online-packs.js';
+import * as Experience from '../gameplay/experience.js';
+import * as PackLibrary from '../gameplay/saved-packs.js';
+import { createScreenAwake } from '../gameplay/screen-awake.js';
 
 const source = fs.readFileSync(new URL('../script.js', import.meta.url), 'utf8').replace(/^import .*$/gm, '');
 const now = 1000000;
@@ -51,7 +54,7 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, Experience, PackLibrary, createScreenAwake, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), createAiWordClient: () => ({}),
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
@@ -887,7 +890,7 @@ test('AI generation shows inline feedback and restores editing and play controls
     assert.equal(h.el('aiFeedback').classList.contains('is-error'),false);
 });
 
-test('AI scope checkbox controls requests without rewriting the topic, including Enter submission', async () => {
+test('AI scope checkbox applies to the topic chips without punctuation shortcuts', async () => {
     const h=ui();h.run('globalThis.HTMLElement=class{};initializeMenu()');
     h.run(`model.generateContent=async prompt=>{
         metrics.request=JSON.parse(prompt);
@@ -900,8 +903,9 @@ test('AI scope checkbox controls requests without rewriting the topic, including
     assert.equal(h.metrics.request.topic,'Movies');
     h.el('strictAiTopic').checked=true;h.el('strictAiTopic').emit('change');
     assert.equal(h.el('aiFeedback').hidden,true);
-    assert.equal(h.el('topic').value,'Movies');
-    h.el('topic').emit('keydown',{key:'Enter',preventDefault(){}});
+    assert.equal(h.el('topic').value,'');
+    assert.equal(h.run('aiTopics[0]'),'Movies');
+    h.run('generate()');
     await new Promise(resolve=>setImmediate(resolve));
     assert.equal(h.metrics.request.scope,'strict');
     assert.equal(h.metrics.request.topic,'Movies');
@@ -909,6 +913,60 @@ test('AI scope checkbox controls requests without rewriting the topic, including
     await h.run('run("!Movies")');
     assert.equal(h.metrics.request.scope,'adaptive');
     assert.equal(h.metrics.request.topic,'!Movies');
+});
+
+test('Enter adds chips without generating, five-topic limit and removal are enforced, and Generate includes pending text', async () => {
+    const h=ui();h.run('globalThis.HTMLElement=class{};initializeMenu()');
+    h.el('topic').value='Minecraft';h.el('topic').emit('keydown',{key:'Enter',preventDefault(){}});
+    assert.equal(h.run('aiTopics.length'),1);assert.equal(h.el('topic').value,'');
+    h.el('topic').value='minecraft';h.run('addAiTopic()');
+    assert.equal(h.run('aiTopics.length'),1);assert.match(h.el('aiFeedback').textContent,/already/);
+    h.run("aiTopics=['Minecraft','Airports','Braais','Retro gadgets'];renderAiTopics()");
+    h.el('topic').value='School tuck shops';
+    h.run(`model.generateContent=async prompt=>{metrics.request=JSON.parse(prompt);return {response:{text:()=>JSON.stringify({entries:[{word:'Mars',canonical:'Mars',difficulty:'easy'}]})}}};generate()`);
+    await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(h.metrics.request.topics.length,5);assert.equal(h.metrics.request.targetCount,150);
+    assert.equal(h.el('topic').disabled,true);assert.equal(h.el('addAiTopic').disabled,true);
+    h.run("aiTopics.push('Sixth');document.getElementById('topic').value='';generate()");
+    assert.match(h.el('aiFeedback').textContent,/five/);
+    h.run("aiTopics=['Minecraft'];renderAiTopics()");
+    const chip=h.el('aiTopics').children.at(-1);chip.children[1].emit('click');
+    assert.equal(h.run('aiTopics.length'),0);assert.equal(h.el('topic').disabled,false);
+});
+
+test('replacement is atomic, shuffled once and undo restores raw edits, labels, topics and review state', async () => {
+    const h=ui();h.run(`document.getElementById('aiWords').value='- Existing\\nManual edit';
+        aiGeneratedEntries=[{word:'Existing',canonical:'Existing full',difficulty:'hard'}];
+        aiTopics=['Old topic'];document.getElementById('savedPackName').value='Favourite';
+        document.getElementById('showAIWords').checked=true;
+        shuffleArray=items=>[...items].reverse();
+        model.generateContent=async()=>({response:{text:()=>JSON.stringify({entries:[
+            {word:'First',canonical:'First',difficulty:'easy'}, {word:'Second',canonical:'Second',difficulty:'hard'}]})}})`);
+    await h.run("run(['New topic','Another topic'])");
+    assert.equal(h.el('aiWords').value,'Second\nFirst');
+    assert.equal(h.el('btnGenerate').textContent,'Replace words');assert.equal(h.el('undoAiPack').hidden,false);
+    h.run('undoAiReplacement()');
+    assert.equal(h.el('aiWords').value,'- Existing\nManual edit');
+    assert.equal(h.run('aiGeneratedEntries[0].difficulty'),'hard');assert.equal(h.run('aiTopics[0]'),'Old topic');
+    assert.equal(h.el('savedPackName').value,'Favourite');assert.equal(h.el('aiWords').hidden,false);
+    assert.equal(h.el('undoAiPack').hidden,true);
+});
+
+test('saved mixed packs restore metadata with answers hidden and can be hosted without generation', () => {
+    const h=ui();h.run(`getModalInstance=()=>({show(){}});
+        document.getElementById('aiWords').value='Earth\\nNeptune';
+        aiGeneratedEntries=[{word:'Earth',canonical:'Earth',difficulty:'easy'},{word:'Neptune',canonical:'Neptune',difficulty:'hard'}];
+        aiTopics=['Space','Retro gadgets'];document.getElementById('savedPackName').value='Mixed night';
+        document.getElementById('strictAiTopic').checked=true;saveCurrentPack();
+        aiGeneratedEntries=[];aiTopics=[];document.getElementById('aiWords').value='Another pack';renderSavedPacks()`);
+    const row=h.el('savedPacksList').children.at(-1);row.children[1].emit('click');
+    assert.equal(h.el('aiWords').value,'Earth\nNeptune');assert.equal(h.el('aiWords').hidden,true);
+    assert.equal(h.run('aiTopics.length'),2);assert.equal(h.el('strictAiTopic').checked,true);
+    assert.equal(h.run('getAiWordObjects()[1].difficulty'),'hard');assert.equal(h.el('undoAiPack').hidden,false);
+    h.run('hostAIWordsOnline()');
+    assert.equal(h.run('pendingOnlinePack.entries.length'),2);assert.equal(h.run('pendingOnlinePack.entries[1].difficulty'),'hard');
+    h.run("localStorage.setItem=()=>{throw new Error('quota')};saveCurrentPack()");
+    assert.match(h.el('packLibraryStatus').textContent,/Unable to save/);assert.equal(h.el('aiWords').value,'Earth\nNeptune');
 });
 
 test('a rejected AI credential preserves a ready pack and restores all generation controls', async () => {
@@ -1032,4 +1090,31 @@ test('legacy detailed audit recaps are presented as a simple player result', () 
     data.auditEvent.recap = 'Team 1: 1 correct · +1 earned · No effect · net +1 · 1 points';
     const h = ui(); h.mount(data);
     assert.equal(h.el('turnRecap').textContent, 'Team 1 scored 1 point.');
+});
+
+test('confirmed perfect rounds celebrate once and clear before the next synchronized countdown', () => {
+    let data = act(act(game(['A', 'B']), 'start-round', { seed: 1 }), 'end-round');
+    data.turn.selectedIndexes = [0, 1, 2];
+    const h = ui(); h.mount(data); assert.equal(h.el('roundHighlight').hidden, true);
+    data = act(data, 'submit-round'); h.apply(data);
+    assert.match(h.el('roundHighlight').textContent, /Perfect card! 3\/3/);
+    assert.equal(h.el('roundHighlight').classList.contains('celebrate'), true);
+    const restored = ui(); restored.mount(data); assert.equal(restored.el('roundHighlight').classList.contains('celebrate'), false);
+    h.run('onlineClient.connected=false;renderOnlineControls()'); h.run('onlineClient.connected=true;renderOnlineControls()');
+    assert.equal(h.el('roundHighlight').classList.contains('celebrate'), false);
+    data = OnlineState.act(data, actor('B'), { type: 'start-round', turnId: data.turn.id, seed: 1 }, now + 10000, rules);
+    h.now = now + 10000; h.apply(data);
+    assert.equal(h.el('roundHighlight').hidden, true); assert.equal(h.el('roundReactions').hidden, true);
+    assert.equal(h.el('scoreInput').hidden, true); assert.equal(h.el('roundCountdown').hidden, false);
+});
+
+test('online reactions expire, stay out of clues and do not replay after refreshing', () => {
+    let data = act(act(game(['A', 'B']), 'start-round', { seed: 1 }), 'end-round');
+    const h = ui(); h.mount(data); assert.equal(h.el('roundReactions').hidden, true);
+    data = act(data, 'submit-round'); h.apply(data); assert.equal(h.el('roundReactions').hidden, false);
+    data.reactions = { 'id-B': { reaction: 'clap', at: now + Gameplay.ROUND_COUNTDOWN_MS, reviewId: data.roundReview.turnId } };
+    h.apply(data); assert.match(h.el('reactionFeed').textContent, /👏 B/);
+    const restored = ui(); restored.mount(data); assert.equal(restored.el('reactionFeed').textContent, '');
+    h.now = now + Gameplay.ROUND_COUNTDOWN_MS + 4000; h.run('renderOnlineControls()');
+    assert.equal(h.el('reactionFeed').textContent, '');
 });

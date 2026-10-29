@@ -1,0 +1,818 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "promptHash": "bcc96bfe5ecaa76117516b23a993149c254f1d0f6c84cb482524dd31bc26b352",
+  "generatedAt": "2026-10-29T20:13:08.442Z",
+  "baselineCommit": "5f5b205",
+  "caveat": "Small live sample, not a controlled playtest. Labels and factual relevance require human review. No retries.",
+  "cases": [
+    {
+      "topic": [
+        "Minecraft survival",
+        "Airport chaos",
+        "South African tuck-shop snacks",
+        "Retro mobile phones and gadgets",
+        "Camping essentials"
+      ],
+      "version": "mixed",
+      "scope": "adaptive",
+      "durationMs": 7425,
+      "finishReason": "STOP",
+      "accepted": 150,
+      "rejected": {
+        "invalid": 0,
+        "duplicate": 0,
+        "recent": 0,
+        "difficulty": 0,
+        "excess": 0
+      },
+      "easy": 75,
+      "hard": 75,
+      "groups": [
+        {
+          "label": "Minecraft survival",
+          "count": 30
+        },
+        {
+          "label": "Airport chaos",
+          "count": 30
+        },
+        {
+          "label": "South African tuck-shop snacks",
+          "count": 30
+        },
+        {
+          "label": "Retro mobile phones and gadgets",
+          "count": 30
+        },
+        {
+          "label": "Camping essentials",
+          "count": 30
+        }
+      ],
+      "usage": {
+        "promptTokenCount": 1501,
+        "candidatesTokenCount": 2304,
+        "totalTokenCount": 3805,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1501
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "entries": [
+        {
+          "word": "Wooden Pickaxe",
+          "canonical": "Wooden Pickaxe",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Delayed Flight",
+          "canonical": "Flight Delay",
+          "difficulty": "easy"
+        },
+        {
+          "word": "NikNaks",
+          "canonical": "NikNaks",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Nokia 3310",
+          "canonical": "Nokia 3310",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tent",
+          "canonical": "Tent",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Crafting Table",
+          "canonical": "Crafting Table",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lost Luggage",
+          "canonical": "Lost Luggage",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ghost Pops",
+          "canonical": "Ghost Pops",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Snake Game",
+          "canonical": "Snake",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sleeping Bag",
+          "canonical": "Sleeping Bag",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Furnace",
+          "canonical": "Furnace",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Security Queue",
+          "canonical": "Security Queue",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Simba Chips",
+          "canonical": "Simba Chips",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Flip Phone",
+          "canonical": "Flip Phone",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Flashlight",
+          "canonical": "Flashlight",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bed",
+          "canonical": "Bed",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Canceled Flight",
+          "canonical": "Flight Cancellation",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tex Bar",
+          "canonical": "Tex Bar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pager",
+          "canonical": "Pager",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Camping Stove",
+          "canonical": "Camping Stove",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Torches",
+          "canonical": "Torch",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Overbooked Flight",
+          "canonical": "Overbooked Flight",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lunch Bar",
+          "canonical": "Lunch Bar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Discman",
+          "canonical": "Discman",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cooler Box",
+          "canonical": "Cooler Box",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stone Sword",
+          "canonical": "Stone Sword",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Boarding Pass",
+          "canonical": "Boarding Pass",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Peppermint Crisp",
+          "canonical": "Peppermint Crisp",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Walkman",
+          "canonical": "Sony Walkman",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Matches",
+          "canonical": "Matches",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Shield",
+          "canonical": "Shield",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Passport Control",
+          "canonical": "Passport Control",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chomp",
+          "canonical": "Chomp",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Game Boy",
+          "canonical": "Game Boy",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Pocket Knife",
+          "canonical": "Pocket Knife",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Iron Armor",
+          "canonical": "Iron Armor",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Customs",
+          "canonical": "Customs",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cremora",
+          "canonical": "Cremora",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tamagotchi",
+          "canonical": "Tamagotchi",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Backpack",
+          "canonical": "Backpack",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Bow and Arrow",
+          "canonical": "Bow and Arrow",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Gate Change",
+          "canonical": "Gate Change",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Tennis Biscuits",
+          "canonical": "Tennis Biscuits",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Polaroid Camera",
+          "canonical": "Polaroid Camera",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Water Bottle",
+          "canonical": "Water Bottle",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Water Bucket",
+          "canonical": "Water Bucket",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jet Lag",
+          "canonical": "Jet Lag",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Aromat",
+          "canonical": "Aromat",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Palm Pilot",
+          "canonical": "Palm Pilot",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Insect Repellent",
+          "canonical": "Insect Repellent",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Food Meter",
+          "canonical": "Hunger Bar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lost and Found",
+          "canonical": "Lost and Found",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Valpre",
+          "canonical": "Valpre",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Cassette Tape",
+          "canonical": "Cassette Tape",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sunscreen",
+          "canonical": "Sunscreen",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Health Bar",
+          "canonical": "Health Bar",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Terminal",
+          "canonical": "Terminal",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Stoney Ginger Beer",
+          "canonical": "Stoney Ginger Beer",
+          "difficulty": "easy"
+        },
+        {
+          "word": "VHS Tape",
+          "canonical": "VHS Tape",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Campfire",
+          "canonical": "Campfire",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Chest",
+          "canonical": "Chest",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Runway",
+          "canonical": "Runway",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Sparletta",
+          "canonical": "Sparletta",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Floppy Disk",
+          "canonical": "Floppy Disk",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Marshmallows",
+          "canonical": "Marshmallows",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Door",
+          "canonical": "Door",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Air Traffic Control",
+          "canonical": "Air Traffic Control",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Ceres Juice",
+          "canonical": "Ceres Juice",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Dial Up Internet",
+          "canonical": "Dial-up Internet",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Lantern",
+          "canonical": "Lantern",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Coal",
+          "canonical": "Coal",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Baggage Claim",
+          "canonical": "Baggage Claim",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Jive",
+          "canonical": "Jive",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Antenna",
+          "canonical": "Mobile Phone Antenna",
+          "difficulty": "easy"
+        },
+        {
+          "word": "First Aid Kit",
+          "canonical": "First Aid Kit",
+          "difficulty": "easy"
+        },
+        {
+          "word": "Raw Beef",
+          "canonical": "Raw Beef",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Missed Connection",
+          "canonical": "Missed Connection",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Beacon All Gold",
+          "canonical": "All Gold Tomato Sauce",
+          "difficulty": "hard"
+        },
+        {
+          "word": "BlackBerry",
+          "canonical": "BlackBerry",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Sleeping Pad",
+          "canonical": "Sleeping Pad",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Shears",
+          "canonical": "Shears",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tarmac Delay",
+          "canonical": "Tarmac Delay",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ouma Rusks",
+          "canonical": "Ouma Rusks",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Razr",
+          "canonical": "Motorola Razr",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hammock",
+          "canonical": "Hammock",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Fishing Rod",
+          "canonical": "Fishing Rod",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Weight Limit",
+          "canonical": "Baggage Weight Limit",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Biltong",
+          "canonical": "Biltong",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Brick Phone",
+          "canonical": "Brick Phone",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Tarps",
+          "canonical": "Tarp",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Flint and Steel",
+          "canonical": "Flint and Steel",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Priority Boarding",
+          "canonical": "Priority Boarding",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Droëwors",
+          "canonical": "Droëwors",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Polyphonic Ringtone",
+          "canonical": "Polyphonic Ringtone",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Paracord",
+          "canonical": "Paracord",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Anvil",
+          "canonical": "Anvil",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Connecting Flight",
+          "canonical": "Connecting Flight",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Milo",
+          "canonical": "Milo",
+          "difficulty": "hard"
+        },
+        {
+          "word": "T9 Predictive Text",
+          "canonical": "T9 Predictive Text",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Multi Tool",
+          "canonical": "Multi-tool",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Enchanting Table",
+          "canonical": "Enchanting Table",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Duty Free",
+          "canonical": "Duty Free Shopping",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ceres",
+          "canonical": "Ceres Fruit Juice",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Infrared Port",
+          "canonical": "Infrared Port",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Headlamp",
+          "canonical": "Headlamp",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Brewing Stand",
+          "canonical": "Brewing Stand",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Metal Detector",
+          "canonical": "Metal Detector",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Fizzy Pops",
+          "canonical": "Fizzy Pops",
+          "difficulty": "hard"
+        },
+        {
+          "word": "SIM Card",
+          "canonical": "SIM Card",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Camp Chair",
+          "canonical": "Camp Chair",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Nether Portal",
+          "canonical": "Nether Portal",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Body Scanner",
+          "canonical": "Body Scanner",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pineapple Pops",
+          "canonical": "Pineapple Pops",
+          "difficulty": "hard"
+        },
+        {
+          "word": "PDA",
+          "canonical": "Personal Digital Assistant",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Water Filter",
+          "canonical": "Water Filter",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Ender Pearl",
+          "canonical": "Ender Pearl",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Red Eye Flight",
+          "canonical": "Red Eye Flight",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Wicks Bubble Gum",
+          "canonical": "Wicks Bubble Gum",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Minidisc",
+          "canonical": "Minidisc",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Compass",
+          "canonical": "Compass",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Totem of Undying",
+          "canonical": "Totem of Undying",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Jet Bridge",
+          "canonical": "Jet Bridge",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Bazooka Bubble Gum",
+          "canonical": "Bazooka Bubble Gum",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Boombox",
+          "canonical": "Boombox",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Binoculars",
+          "canonical": "Binoculars",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Elytra",
+          "canonical": "Elytra",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Baggage Carousel",
+          "canonical": "Baggage Carousel",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Chappies",
+          "canonical": "Chappies Bubble Gum",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Projector",
+          "canonical": "Slide Projector",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Whistle",
+          "canonical": "Whistle",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Beacon",
+          "canonical": "Beacon",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Flight Attendant",
+          "canonical": "Flight Attendant",
+          "difficulty": "hard"
+        },
+        {
+          "word": "King Korn",
+          "canonical": "King Korn",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Typewriter",
+          "canonical": "Typewriter",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Hatchet",
+          "canonical": "Hatchet",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Golden Apple",
+          "canonical": "Golden Apple",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Pilot",
+          "canonical": "Airline Pilot",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mageu",
+          "canonical": "Mageu",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Polaroid",
+          "canonical": "Polaroid",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Mallet",
+          "canonical": "Tent Mallet",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Milk Bucket",
+          "canonical": "Milk Bucket",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Airfare",
+          "canonical": "Airfare",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Zoo Biscuits",
+          "canonical": "Zoo Biscuits",
+          "difficulty": "hard"
+        },
+        {
+          "word": "CRT TV",
+          "canonical": "CRT Television",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Dry Bag",
+          "canonical": "Dry Bag",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Respawn Anchor",
+          "canonical": "Respawn Anchor",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Boarding Group",
+          "canonical": "Boarding Group",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Romany Creams",
+          "canonical": "Romany Creams",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Rotary Phone",
+          "canonical": "Rotary Phone",
+          "difficulty": "hard"
+        },
+        {
+          "word": "Poncho",
+          "canonical": "Rain Poncho",
+          "difficulty": "hard"
+        }
+      ]
+    }
+  ]
+}

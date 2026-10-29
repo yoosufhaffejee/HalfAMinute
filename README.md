@@ -20,6 +20,10 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - Visible Chaos token movement, staged landing/effect reveals, and a reduced-motion alternative
 - Ranked final scores, a compact final board, relevant Chaos breakdowns, summary downloads, and rematches with rotating starters
 - Persistent mute, volume, and device/reduced/full motion preferences
+- Confirmed perfect-card and team-best feedback, settled lead changes, final-round score context, and personal speaker handoffs
+- Three quick online reactions between turns, with expiry, rate limiting and reconnect replay suppression
+- Optional session win/draw tallies across rematches; changing the roster or starting a new game resets the tally
+- Shareable PNG result cards, invitation links that prefill the lobby code, and best-effort screen wake lock during visible play
 
 ## Project Files
 
@@ -31,9 +35,12 @@ Play locally on one device, or run real-time online lobbies with host controls, 
 - `gameplay/ai-client.js`: lazy Firebase AI Logic client and App Check configuration
 - `gameplay/ai-packs.js`: game-specific system prompt, structured-pack validation, difficulty metadata and generation history
 - `gameplay/online-packs.js`: validation and snapshots of shared custom lobby packs
+- `gameplay/saved-packs.js`: bounded on-device pack library, including topics and difficulty metadata
 - `gameplay/ai-errors.js`: safe, categorized generation feedback
 - `data.js`: categories, themes, word metadata
 - `style.css`: styling
+- `gameplay/experience.js`: cosmetic round feedback, final-round context, session tallies and invitation helpers
+- `gameplay/screen-awake.js`: optional screen wake lock lifecycle
 - `tools/validate-data.js`: word-data validation and quality audit utility
 
 ## Quick Start
@@ -81,11 +88,14 @@ Important:
 - Disconnected seats have a 90-second reconnect grace period. A server-connected tab is not removed solely for delayed heartbeats.
 - Refresh restores the same player, team, turn, and answer selection using per-tab session storage.
 - `Leave Lobby` explicitly releases a seat; `Rejoin Lobby` can restore a lost or superseded connection.
-- Online protocol version 6 requires a newly created lobby; old-version lobbies show a message asking every player to reload and the host to recreate them. All clients share the scheduled countdown, equal-turn finish and lobby word source.
+- Online protocol version 7 requires a newly created lobby; old-version lobbies show a message asking every player to reload and the host to recreate them. All clients share the scheduled countdown, equal-turn finish, lobby word source, reactions and session tally.
 - Each team rotates its own speaker queue. Empty teams are skipped safely without changing the player-count eligibility rules.
 
 ## AI Mode
 
+- Add up to **five topics** with **+** or Enter; Generate includes any topic still typed. Topics stay independent interests, rather than an intersection. One request aims for 150 answers total with roughly equal topic shares and per-topic difficulty budgets, then shuffles the combined editor list. Narrow topics can contribute fewer. Scope applies separately to each topic.
+- With an existing pack, generation is labelled **Replace words**. A successful generation or saved-pack load offers **Undo replacement**, restoring the previous edits, difficulty metadata, topics and review visibility. Failed generation preserves the current pack and existing Undo. There is no append mode.
+- Name a pack and choose **Save pack**, then reopen it from the compact **Saved packs** library. Up to 12 packs are stored in this device/browser's local storage, including the actual answers, canonical names, difficulty labels, topics and strict-scope choice. Loading uses no AI request and keeps answers hidden. The library survives reloads; it does not sync across devices, and clearing browser data removes it. Saving with the same name updates that pack; a full library asks you to remove a pack rather than silently evicting one.
 - Enter a topic and generate up to **150** fresh answers. Narrow or exhausted topics may produce smaller packs; quality and topic boundaries take priority over padding.
 - Choose **Play here** for one-device play, or **Host online** to create a lobby with the current pack. Enter your name, create the lobby, and share its code. Friends join through the normal online dialog; they do not need to generate or paste anything.
 - Hosting copies the reviewed pack into the lobby, including its difficulty labels. All clients draw from that snapshot through refreshes, host changes and rematches, using the shared exhaustion deck. Later editor changes do not change a running lobby. Cancel hosting to return to the normal built-in lobby flow.
@@ -103,6 +113,8 @@ Important:
 Prompt samples and limitations are documented in [AI pack improvements](reports/ai-pack-improvements.md). Explicit live comparison: `node tools/evaluate-ai-packs.mjs --live` (requires authorized Google Cloud CLI access; uses a temporary App Check registration and deletes it afterward). This command makes real model requests; ordinary tests do not.
 
 Adaptive/strict scope samples and responsive dialog checks are documented in [AI topic scope](reports/ai-topic-scope.md). Run that live evaluation with `node tools/evaluate-ai-packs.mjs --live --scope`.
+
+Mixed-topic generation, save/load/Undo and mobile checks are documented in [Mixed AI packs](reports/ai-mixed-packs.md). Explicit live mixed-topic evaluation: `node tools/evaluate-ai-packs.mjs --live --mix`.
 
 ### Firebase AI setup
 
@@ -134,7 +146,7 @@ See [Firebase setup](https://firebase.google.com/docs/ai-logic/get-started?platf
 
 The initial starter is randomized. Rematches keep the roster/settings and rotate the starter. A final-round notice names the teams still owed turns. The final round remains active even if Chaos lowers a score below the target; compare the full final totals, including points beyond the board's finish. Completed-turn counts come from scored turn events, so cancelled turns do not consume a team's final opportunity. A missing team keeps its owed turns and the existing connection/roster requirements still apply. Scores, final-round state and Chaos resources reset for the new match identity. Word exhaustion history carries across rematches for the same group. This finish rule applies online and locally.
 
-Current matches use online protocol 6, including the equal-turn finish introduced in protocol 5. Reload every player's tab and create a new lobby; older clients/lobbies are incompatible, so an old client cannot end a new match early or draw from a different word source.
+Current matches use online protocol 7, including the equal-turn finish introduced in protocol 5. Reload every player's tab and create a new lobby; older clients/lobbies are incompatible, so an old client cannot end a new match early or draw from a different word source.
 
 Online answer review is shared by all connected players once a round ends, including small-game guessers and the speaker's teammates. Only the speaker can change selections or confirm. Confirmed options and checkmarks remain in a read-only review below the board through Chaos and between turns, including after refreshing or rejoining. The review clears when the next round's countdown starts and on rematch. Live-round answer visibility and team-size rules are unchanged.
 
@@ -153,7 +165,7 @@ See [GAMEPLAY_CHANGES.md](GAMEPLAY_CHANGES.md) for the implementation and verifi
 ## Gameplay regression checks
 
 ```powershell
-node --test tools/ai-client.test.mjs tools/ai-packs.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-packs.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
+node --test tools/ai-client.test.mjs tools/ai-packs.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-packs.test.mjs tools/saved-packs.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
 node tools/test-word-data.js
 node tools/analyze-starting-order.mjs
 node tools/analyze-chaos.cjs 5000

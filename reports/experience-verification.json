@@ -1,0 +1,29 @@
+{
+  "measurements": [
+    {
+      "width": 320,
+      "overflow": false,
+      "resultVisible": true
+    },
+    {
+      "width": 390,
+      "overflow": false,
+      "resultVisible": true
+    },
+    {
+      "width": 1100,
+      "overflow": false,
+      "resultVisible": true
+    }
+  ],
+  "errors": [],
+  "checks": [
+    "local countdown privacy",
+    "perfect five-word round",
+    "next countdown cleanup",
+    "stopped match and rematch",
+    "PNG result download",
+    "invitation prefill"
+  ],
+  "backend": "stubbed; no Firebase writes or AI requests"
+}

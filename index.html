@@ -43,7 +43,7 @@
     <meta name="theme-color" content="#ffffff">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=20261029.3">
+    <link rel="stylesheet" href="style.css?v=20261029.4">
 </head>
 
 <body>
@@ -125,6 +125,7 @@
                                 <label class="toggle-row" for="chkChaos"><span class="toggle-copy"><strong>Chaos mode</strong><small id="chaosModeHint">Landing effects add boosts, slips, shields and steals.</small></span><input type="checkbox" id="chkChaos" value="false"></label>
                                 <label class="toggle-row" for="chkReroll"><span class="toggle-copy"><strong>Team reroll <span class="feature-tag">Prototype</span></strong><small>In Chaos, each team can reroll one landing effect per match. Five seconds to choose.</small></span><input type="checkbox" id="chkReroll"></label>
                                 <label class="toggle-row" for="chkTraining"><span class="toggle-copy"><strong>Training hints</strong><small>Optional descriptions for built-in words. AI and pasted packs do not include hints.</small></span><input type="checkbox" id="chkTraining" value="false"></label>
+                                <label class="toggle-row" for="chkSeries"><span class="toggle-copy"><strong>Track rematches</strong><small>Keep a session win tally. A new game or a change of teams resets it.</small></span><input type="checkbox" id="chkSeries"></label>
                             </section>
                             <section class="dialog-section" aria-labelledby="wordPacksTitle">
                                 <h3 id="wordPacksTitle">Word packs</h3>
@@ -188,20 +189,30 @@
                     </div>
                     <div class="modal-body">
                         <section class="dialog-section" aria-labelledby="topicTitle">
-                            <h3 id="topicTitle">Choose a topic</h3>
-                            <div class="input-action-row"><div class="form-field"><label class="visually-hidden" for="topic">Topic</label><input type="text" id="topic" maxlength="240" placeholder="Movies, Hollywood, football player names…" aria-describedby="topicHint"></div><button type="button" id="btnGenerate" class="btn btn-outline-success">Generate words</button></div>
-                            <p id="topicHint" class="dialog-help">Get up to 150 clue-friendly answers, mostly familiar with a few challenges. Broad topics like Movies include related people and ideas; specific topics like football player names stay focused. Narrow topics may give fewer.</p>
-                            <label class="toggle-row border-0" for="strictAiTopic"><span class="toggle-copy"><strong>Keep to the exact topic</strong><small>Only direct examples. For Movies, get titles without actors or filmmaking terms.</small></span><input type="checkbox" id="strictAiTopic"></label>
+                            <h3 id="topicTitle">Choose your topics</h3>
+                            <div class="input-action-row ai-topic-entry"><div class="topic-input-row"><label class="visually-hidden" for="topic">Topic</label><input type="text" id="topic" maxlength="240" placeholder="e.g. Minecraft survival" aria-describedby="topicHint aiTopicCount"><button type="button" id="addAiTopic" class="btn btn-outline-success" aria-label="Add topic">+</button></div><button type="button" id="btnGenerate" class="btn btn-outline-success">Generate words</button></div>
+                            <ul id="aiTopics" class="ai-topics" aria-label="Topics in your mix" hidden></ul>
+                            <p id="aiTopicCount" class="dialog-help" role="status" aria-live="polite"></p>
+                            <p id="topicHint" class="dialog-help">Add up to five topics with + or Enter. We’ll include anything still typed and mix up to 150 answers. Narrow topics may give fewer.</p>
+                            <label class="toggle-row border-0" for="strictAiTopic"><span class="toggle-copy"><strong>Keep to the exact topic</strong><small>Only direct examples of each topic. For Movies, get titles without actors or filmmaking terms.</small></span><input type="checkbox" id="strictAiTopic"></label>
                             <p id="aiFeedback" class="dialog-feedback" role="status" aria-live="polite" hidden></p>
                         </section>
                         <section class="dialog-section" aria-labelledby="wordPackTitle">
                             <h3 id="wordPackTitle">Your word pack</h3>
                             <p id="aiPackStatus" class="dialog-help" role="status" aria-live="polite">No words yet. Generate a pack or paste your own.</p>
+                            <button type="button" id="undoAiPack" class="btn btn-link ai-undo" hidden>Undo replacement</button>
                             <label class="toggle-row" for="showAIWords"><span class="toggle-copy"><strong>Review or paste words</strong><small>Keep the pack hidden if you want to be surprised.</small></span><input type="checkbox" id="showAIWords" aria-controls="aiWords" aria-expanded="false"></label>
                             <label class="visually-hidden" for="aiWords">Word pack, one word or phrase per line</label>
                             <textarea id="aiWords" rows="7" placeholder="One word or phrase per line" aria-describedby="aiWordsHint" hidden></textarea>
                             <p id="aiWordsHint" class="dialog-help">Edit freely. Generated words keep their difficulty. New or pasted words use your selected difficulty (Easy in Normal). Duplicate entries count once.</p>
+                            <div class="save-pack-row"><label class="visually-hidden" for="savedPackName">Pack name</label><input id="savedPackName" maxlength="60" placeholder="Name this pack"><button id="savePackButton" type="button" class="btn btn-outline-success" disabled>Save pack</button></div>
+                            <p id="packLibraryStatus" class="dialog-feedback" role="status" aria-live="polite" hidden></p>
                         </section>
+                        <details class="dialog-section saved-pack-library">
+                            <summary>Saved packs <span id="savedPackCount">(0)</span></summary>
+                            <p class="dialog-help">Saved on this device and browser, up to 12 packs. Clearing browser data removes them. Loading keeps answers hidden; saving with the same name replaces that pack.</p>
+                            <div id="savedPacksList" class="saved-packs-list"></div>
+                        </details>
                     </div>
                     <div class="modal-footer ai-pack-actions"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Back</button><button type="button" id="btnAiGame" class="btn btn-outline-success" disabled>Play here</button><button type="button" id="btnAiOnline" class="btn btn-success" disabled>Host online</button></div>
                 </div>
@@ -284,6 +295,7 @@
             </details>
             <div id="currentTeamIndicator"></div>
             <p id="lobbySummary" class="lobby-summary" role="status" aria-live="polite" hidden></p>
+            <div id="lobbyInvite" class="lobby-invite" hidden><button id="shareLobbyButton" type="button" class="btn btn-link">Invite friends</button><span id="inviteStatus" role="status" aria-live="polite"></span><input id="inviteLinkField" readonly aria-label="Lobby invitation link" hidden></div>
             <p id="roleInstruction" role="status" aria-live="polite"></p>
             <p id="finalRoundNotice" class="final-round-notice" role="status" aria-live="polite" hidden></p>
             <section id="roundCountdown" class="round-countdown" aria-label="Round starts soon" hidden>
@@ -292,6 +304,8 @@
             <div id="timer"></div>
             <p id="progressSummary"></p>
             <p id="turnRecap" class="turn-recap" role="status" aria-live="polite" hidden></p>
+            <p id="roundHighlight" class="round-highlight" role="status" aria-live="polite" hidden></p>
+            <section id="roundReactions" class="round-reactions" aria-label="React to this round" hidden><div class="reaction-buttons"><button type="button" class="reaction-button" data-reaction="clap" aria-label="Applaud">👏</button><button type="button" class="reaction-button" data-reaction="fire" aria-label="Great round">🔥</button><button type="button" class="reaction-button" data-reaction="laugh" aria-label="Laugh">😂</button></div><p id="reactionFeed" role="status" aria-live="polite"></p></section>
             <section id="chaosChoice" class="choice-card" hidden aria-label="Chaos decision">
                 <p id="chaosChoiceText" role="status"></p>
                 <button id="keepChaosButton" class="btn btn-primary">Keep effect</button>
@@ -314,12 +328,15 @@
                 <p id="resultsContext" class="results-context"></p>
                 <ol id="resultsScores" aria-label="Final team scores"></ol>
                 <p id="resultsHighlights" class="results-highlight"></p>
+                <p id="seriesSummary" class="series-summary" hidden></p>
                 <div class="results-actions">
                     <button id="rematchButton" class="btn btn-success">Play again</button>
                     <button id="changeSettingsButton" class="btn btn-outline-secondary">New game</button>
                 </div>
                 <p id="rematchStatus" role="status"></p>
                 <button id="exportMatchButton" class="btn btn-link">Download summary</button>
+                <button id="shareResultButton" class="btn btn-link">Share result card</button>
+                <p id="shareResultStatus" class="dialog-help" role="status" aria-live="polite" hidden></p>
             </section>
             <h3 id="finalBoardLabel">Final board</h3>
             <div id="gameBoard" role="group" aria-label="Game board"></div>
@@ -385,6 +402,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261029.3" type="module"></script>
+    <script src="script.js?v=20261029.4" type="module"></script>
 </body>
 </html>

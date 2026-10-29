@@ -24,7 +24,8 @@ const appCheckRoot = `https://firebaseappcheck.googleapis.com/v1/projects/${proj
 const baseline = JSON.parse(readFileSync(new URL('./fixtures/ai-prompts-before.json', import.meta.url), 'utf8'));
 const promptHash = createHash('sha256').update(Packs.PACK_SYSTEM_INSTRUCTION).digest('hex');
 const scopeEvaluation = process.argv.includes('--scope');
-const reportUrl = new URL(scopeEvaluation ? '../reports/ai-scope-evaluation.json' : '../reports/ai-pack-evaluation.json', import.meta.url);
+const mixEvaluation = process.argv.includes('--mix');
+const reportUrl = new URL(mixEvaluation ? '../reports/ai-mix-evaluation.json' : scopeEvaluation ? '../reports/ai-scope-evaluation.json' : '../reports/ai-pack-evaluation.json', import.meta.url);
 const report = { model: AI_SETTINGS.model, promptHash, generatedAt: new Date().toISOString(), baselineCommit: baseline.sourceCommit,
     caveat: 'Small live sample, not a controlled playtest. Labels and factual relevance require human review. No retries.', cases: [] };
 if (process.argv.includes('--resume')) {
@@ -86,7 +87,10 @@ try {
             rejected: result.rejected, durationMs: result.durationMs }));
         return pack.entries;
     }
-    if (scopeEvaluation) {
+    if (mixEvaluation) {
+        await generate(['Minecraft survival', 'Airport chaos', 'South African tuck-shop snacks',
+            'Retro mobile phones and gadgets', 'Camping essentials'], 'mixed');
+    } else if (scopeEvaluation) {
         const selectedTopic = process.argv.find(arg => arg.startsWith('--topic='))?.slice('--topic='.length);
         const cases = [['Movies', false], ['Movies', true], ['football player names', false],
             ['Hollywood', false], ['South African general knowledge', false]];

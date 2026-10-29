@@ -1,0 +1,16 @@
+# Mixed AI topics and saved packs — 29 October 2026
+
+The existing AI dialog now accepts up to five removable topic chips. Enter and + add a topic; Generate includes any pending text. Topics remain independent interests, with one 150-answer request shared approximately evenly between them. Per-topic easy/hard budgets preserve the configured card difficulty mix. The combined accepted list is shuffled before entering the editor. Strict scope applies independently to each topic.
+
+Generation with an existing list is labelled **Replace words**. A successful replacement or saved-pack load offers one **Undo replacement**, including raw edits, generated metadata, topics, difficulty setting, pack name and review visibility. Failure leaves the current pack and previous Undo intact. Appending is intentionally deferred.
+
+The compact Saved packs drawer stores up to 12 named packs in localStorage. It preserves words, canonical identities, difficulty, topics and scope. Loading keeps answers hidden and uses no model call; either Play here or Host online works with the loaded editor data. The online flow still copies a frozen pack into the lobby. Same-name saves update explicitly; exceeding the library limit does not evict saved data. Invalid entries are skipped on read, older single-topic records migrate on read, and storage failures are reported without destroying the active pack. This is a device/browser library, with no cross-device sync or account storage.
+
+## Verification
+
+- Unit/UI regression coverage: topic deduplication and five-topic cap; literal punctuation; aggregate/per-topic budgets; pending typed topic inclusion; pending controls; shuffled replacement; exact Undo; failure preservation; saved metadata; reload-compatible serialization; legacy records; corrupt and unavailable storage; full-library behavior; and online hosting from a loaded pack without generation.
+- Browser checks: desktop and 320 px mobile, topic adding/removal, five-topic limit, manual editing, saving, reload, loading with answers hidden, and Undo. The UI regression harness also checked the existing Host online preparation dialog using a loaded pack. Modal content scrolls and action buttons remain accessible. Screenshots: [desktop](ai-mixed-packs-desktop.png), [mobile](ai-mixed-packs-mobile.png).
+- Two explicit live requests through the existing Firebase evaluation tool. The initial five-topic sample returned 150 answers, 30 per topic, but ignored the 90/60 difficulty target and split 75/75. Adding explicit per-topic difficulty budgets produced 150 candidates, 30 per topic; one duplicate was removed, leaving **149 accepted, 89 easy / 60 hard**, in about 12 seconds. Temporary test attestation registrations were removed after each request.
+- Raw samples: `ai-mix-evaluation-initial.json` and `ai-mix-evaluation.json`. This is a small sample, not a controlled quality study. The model can still miss counts or labels and factual/clue quality still benefits from review. No automatic retries or changes to domain restrictions, database rules, billing, online turn rules or clue visibility.
+
+The work builds on the saved-pack scaffolding started by the parallel experience-enhancements chat. Ownership was coordinated so the game has one pack library.

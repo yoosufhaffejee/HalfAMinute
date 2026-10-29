@@ -1,12 +1,15 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261029.3';
-import { OnlineClient } from './online/client.js?v=20261029.3';
+import * as OnlineState from './online/state.js?v=20261029.4';
+import { OnlineClient } from './online/client.js?v=20261029.4';
 import * as Gameplay from './gameplay/rules.js?v=20261029.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
-import { createAiWordClient } from './gameplay/ai-client.js?v=20261026.1';
-import * as AiPacks from './gameplay/ai-packs.js?v=20261026.1';
+import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
+import * as AiPacks from './gameplay/ai-packs.js?v=20261029.5';
 import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
+import * as Experience from './gameplay/experience.js?v=20261029.4';
+import * as PackLibrary from './gameplay/saved-packs.js?v=20261029.5';
+import { createScreenAwake } from './gameplay/screen-awake.js?v=20261029.4';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -25,6 +28,8 @@ const db = getDatabase(app);
 // Firebase manages Gemini authorization; no Gemini credential is shipped to players.
 const model = createAiWordClient(app);
 let aiGeneratedEntries = [];
+let aiTopics = [];
+let aiUndoPack = null;
 let pendingOnlinePack = null;
 let aiGenerationHistory = AiPacks.readHistory({ getItem: key => localStorage.getItem(key) });
 
@@ -92,6 +97,291 @@ let preferences = { muted: false, volume: 0.6, motion: 'system' };
 let lastOnlineCue = '';
 let localTurnStartedAt = 0;
 let localSelectingAt = 0;
+let localSeries = null;
+let screenAwake = null;
+let experienceContext = '';
+let experienceHydrated = false;
+const celebratedTurns = new Set();
+let reactionContext = '';
+const seenReactions = new Set();
+let resultShareBusy = false;
+
+function playCelebrationChime() {
+    if (preferences.muted || !preferences.volume) return;
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const context = new AudioContext(), gain = context.createGain();
+        gain.connect(context.destination);
+        gain.gain.setValueAtTime(preferences.volume * 0.08, context.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.35);
+        [660, 880].forEach((frequency, index) => {
+            const tone = context.createOscillator(); tone.frequency.value = frequency; tone.connect(gain);
+            tone.start(context.currentTime + index * 0.1); tone.stop(context.currentTime + 0.35);
+        });
+        setTimeout(() => { void context.close().catch(() => {}); }, 500);
+    } catch { /* Feedback never blocks progression. */ }
+}
+
+function renderRoundHighlight(event, events, points, context, animate = true) {
+    const node = document.getElementById('roundHighlight');
+    const headline = Experience.roundHighlight(event, events);
+    const lead = Experience.leadChange(event, points);
+    const text = [headline, lead].filter(Boolean).join(' · ');
+    if (experienceContext !== context) {
+        experienceContext = context; experienceHydrated = false; celebratedTurns.clear();
+    }
+    const key = event ? `${context}:${event.id}` : '';
+    const fresh = Boolean(text && !celebratedTurns.has(key));
+    if (fresh) celebratedTurns.add(key);
+    node.hidden = !text;
+    if (node.textContent !== text) node.textContent = text;
+    if (!text) node.classList.remove('celebrate');
+    if (fresh) {
+        node.classList.remove('celebrate');
+        if (experienceHydrated && animate) {
+            if (!reducedMotion()) { void node.offsetWidth; node.classList.add('celebrate'); }
+            playCelebrationChime();
+        }
+    }
+    experienceHydrated = true;
+}
+
+function renderTurnExperience(data = null, view = null) {
+    const active = data ? onlineClient.connected && view.active && !onlineClient.suspended : !game.hidden;
+    const idle = data ? data.phase === 'idle' && view.canStartRound : !isRoundActive && !isResolvingChaosMove && !btnStartRound.hidden;
+    const role = document.getElementById('roleInstruction');
+    role.classList.toggle('turn-handoff', Boolean(active && idle));
+    role.style.borderColor = getTeamColor(Math.max(0, currentTeam - 1));
+    btnStartRound.textContent = data ? 'Start your turn' : `Start Team ${currentTeam}'s turn`;
+    const playing = data ? data.isGameStarted && !['finished', 'ended'].includes(data.phase) : active && document.getElementById('matchResults').hidden;
+    screenAwake?.setActive(active && playing);
+    document.getElementById('lobbyInvite').hidden = !data || !active || ['describing', 'selecting'].includes(data.phase);
+    const events = data ? Object.values(data.auditEvents || {}) : localAudit;
+    let event = data ? data.auditEvent : events.at(-1);
+    if (data && ['resolving', 'chaos-choice'].includes(data.phase)) {
+        event = { id: data.turn.id, teamIndex: data.turn.teamIndex, earned: (data.turn.selectedIndexes || []).length, wordCount: data.turn.words.length };
+    }
+    if (!active || (data ? !['idle', 'waiting', 'resolving', 'chaos-choice'].includes(data.phase)
+        : isRoundActive || localMatchFinished || !btnAnswers.hidden)) event = null;
+    renderRoundHighlight(event, events, teams.map(team => team.points), data ? `${gameCode}:${data.matchId || 1}` : `local:${localMatchId}`, active);
+    renderReactions(data, view);
+}
+
+function renderReactions(data, view) {
+    const section = document.getElementById('roundReactions');
+    const active = data && onlineClient.connected && view.active && !onlineClient.suspended;
+    const review = data && (['resolving', 'chaos-choice'].includes(data.phase) ? data.turn : data.roundReview);
+    const allowed = active && review && ['idle', 'waiting', 'resolving', 'chaos-choice', 'finished'].includes(data.phase);
+    section.hidden = !allowed;
+    if (!allowed) { document.getElementById('reactionFeed').textContent = ''; return; }
+    const reviewId = review.turnId ?? review.id;
+    const context = `${gameCode}:${data.matchId}:${reviewId}:${onlineClient.actor.connectionId}`;
+    const initial = reactionContext !== context;
+    if (initial) { reactionContext = context; seenReactions.clear(); }
+    const now = onlineClient.serverNow();
+    const entries = Object.entries(data.reactions || {});
+    const feed = [];
+    for (const [playerId, reaction] of entries) {
+        const key = `${playerId}:${reaction.at}`;
+        if (initial) seenReactions.add(key); // Restoring a snapshot never replays reactions.
+        const member = OnlineState.members(data).find(player => player.playerId === playerId);
+        if (!seenReactions.has(key) && member && reaction.reviewId === reviewId && now >= reaction.at
+            && now - reaction.at < Experience.REACTION_TTL_MS && Object.hasOwn(Experience.REACTIONS, reaction.reaction)) {
+            feed.push(`${Experience.REACTIONS[reaction.reaction]} ${member.playerName}`);
+        }
+    }
+    const node = document.getElementById('reactionFeed');
+    const text = feed.slice(-4).join(' · '); if (node.textContent !== text) node.textContent = text;
+    const recent = data.reactions?.[onlineClient.actor.playerId];
+    document.querySelectorAll('[data-reaction]').forEach(button => {
+        button.disabled = onlineClient.busy || onlineClient.registering || Boolean(recent && now - recent.at < 1800);
+    });
+}
+
+function initializeExperience() {
+    screenAwake = createScreenAwake(globalThis.navigator, document);
+    document.getElementById('shareResultButton').addEventListener('click', () => { void shareResultCard(); });
+    document.getElementById('shareLobbyButton').addEventListener('click', () => { void shareLobbyInvite(); });
+    document.querySelectorAll('[data-reaction]').forEach(button => button.addEventListener('click', () => {
+        const data = onlineClient?.snapshot;
+        if (!data) return;
+        const review = ['resolving', 'chaos-choice'].includes(data.phase) ? data.turn : data.roundReview;
+        if (review) void sendOnlineCommand({ type: 'react', reviewId: review.turnId ?? review.id, reaction: button.dataset.reaction });
+    }));
+}
+
+function initializeAiPacks() {
+    document.getElementById('savePackButton').addEventListener('click', saveCurrentPack);
+    document.getElementById('addAiTopic').addEventListener('click', addAiTopic);
+    document.getElementById('undoAiPack').addEventListener('click', undoAiReplacement);
+    document.getElementById('aiModal').addEventListener('show.bs.modal', renderSavedPacks);
+    window.addEventListener('storage', event => { if (event.key === PackLibrary.SAVED_PACKS_KEY) renderSavedPacks(); });
+    renderSavedPacks(); renderAiTopics();
+}
+
+function readAiTopics() {
+    return AiPacks.normalizeTopics([...aiTopics, document.getElementById('topic').value], { allowEmpty: true });
+}
+
+function addAiTopic() {
+    if (document.getElementById('btnGenerate').disabled) return;
+    try {
+        const topics = readAiTopics();
+        if (!document.getElementById('topic').value.trim()) return;
+        if (topics.length === aiTopics.length) { setAiFeedback('That topic is already in your mix.', true); return; }
+        aiTopics = topics; document.getElementById('topic').value = '';
+        setAiFeedback(''); renderAiTopics(); document.getElementById('topic').focus?.();
+    } catch (error) { setAiFeedback(error.message === 'too-many-ai-topics' ? 'Use up to five topics. Remove one to add another.' : 'Use a topic of 240 characters or fewer.', true); }
+}
+
+function renderAiTopics() {
+    const list = document.getElementById('aiTopics'); list.innerHTML = '';
+    const busy = document.getElementById('btnGenerate').disabled;
+    aiTopics.forEach((topic, index) => {
+        const chip = document.createElement('li'), text = document.createElement('span'), remove = document.createElement('button');
+        text.textContent = topic; remove.type = 'button'; remove.textContent = '×'; remove.disabled = busy;
+        remove.setAttribute('aria-label', `Remove topic: ${topic}`);
+        remove.addEventListener('click', () => {
+            if (document.getElementById('btnGenerate').disabled) return;
+            aiTopics.splice(index, 1); renderAiTopics(); document.getElementById('topic').focus?.();
+        });
+        chip.appendChild(text); chip.appendChild(remove); list.appendChild(chip);
+    });
+    list.hidden = !aiTopics.length;
+    document.getElementById('topic').disabled = busy || aiTopics.length === AiPacks.TOPIC_LIMIT;
+    document.getElementById('addAiTopic').disabled = busy || aiTopics.length === AiPacks.TOPIC_LIMIT;
+    document.getElementById('aiTopicCount').textContent = aiTopics.length ? `${aiTopics.length} of 5 topics` : '';
+}
+
+function captureAiPack() {
+    return { text: document.getElementById('aiWords').value, entries: aiGeneratedEntries.map(entry => ({ ...entry })),
+        topics: [...aiTopics], input: document.getElementById('topic').value,
+        strict: Boolean(document.getElementById('strictAiTopic').checked), difficulty: getSanitizedSettingsFromInputs().difficulty,
+        name: document.getElementById('savedPackName').value, visible: Boolean(document.getElementById('showAIWords').checked) };
+}
+
+function rememberAiReplacement() {
+    const previous = captureAiPack(); aiUndoPack = AiPacks.parseManualWords(previous.text).length ? previous : null;
+}
+
+function undoAiReplacement() {
+    if (!aiUndoPack || document.getElementById('btnGenerate').disabled) return;
+    const pack = aiUndoPack; aiUndoPack = null;
+    aiGeneratedEntries = pack.entries; aiTopics = pack.topics;
+    document.getElementById('aiWords').value = pack.text;
+    document.getElementById('topic').value = pack.input;
+    document.getElementById('strictAiTopic').checked = pack.strict;
+    document.getElementById('difficulty').value = pack.difficulty;
+    document.getElementById('savedPackName').value = pack.name;
+    document.getElementById('showAIWords').checked = pack.visible;
+    document.getElementById('showAIWords').setAttribute('aria-expanded', String(pack.visible));
+    document.getElementById('aiWords').hidden = !pack.visible;
+    packLibraryMessage(''); setAiFeedback('Previous pack restored.'); syncAiPack(); updateSetupSummary();
+}
+
+function packLibraryMessage(text) {
+    const node = document.getElementById('packLibraryStatus'); node.textContent = text; node.hidden = !text;
+}
+
+function renderSavedPacks() {
+    const list = document.getElementById('savedPacksList'); list.innerHTML = '';
+    const packs = PackLibrary.readPacks({ getItem: key => localStorage.getItem(key) });
+    document.getElementById('savedPackCount').textContent = `(${packs.length})`;
+    if (!packs.length) { const empty = document.createElement('p'); empty.className = 'dialog-help'; empty.textContent = 'Save a favourite pack to find it here.'; list.appendChild(empty); }
+    for (const pack of packs) {
+        const row = document.createElement('div'); row.className = 'saved-pack';
+        const label = document.createElement('span'); label.textContent = `${pack.name} · ${pack.entries.length} words`;
+        const load = document.createElement('button'); load.type = 'button'; load.className = 'btn btn-outline-success'; load.textContent = 'Load';
+        load.disabled = document.getElementById('btnGenerate').disabled;
+        load.addEventListener('click', () => {
+            if (document.getElementById('btnGenerate').disabled) return;
+            rememberAiReplacement(); aiGeneratedEntries = pack.entries.map(entry => ({ ...entry }));
+            document.getElementById('aiWords').value = pack.entries.map(entry => entry.word).join('\n');
+            aiTopics = [...pack.topics]; document.getElementById('topic').value = '';
+            document.getElementById('strictAiTopic').checked = pack.strict;
+            document.getElementById('difficulty').value = pack.difficulty;
+            document.getElementById('savedPackName').value = pack.name;
+            document.getElementById('showAIWords').checked = false;
+            document.getElementById('showAIWords').setAttribute('aria-expanded', 'false');
+            document.getElementById('aiWords').hidden = true;
+            setAiFeedback(''); syncAiPack(); updateSetupSummary(); packLibraryMessage(`Loaded ${pack.name}. Answers stay hidden.`);
+        });
+        const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'btn btn-link'; remove.textContent = 'Delete';
+        remove.setAttribute('aria-label', `Delete ${pack.name}`);
+        remove.addEventListener('click', () => {
+            try { PackLibrary.deletePack(localStorage, pack.id); renderSavedPacks(); packLibraryMessage(`Deleted ${pack.name}.`); }
+            catch { packLibraryMessage('Unable to delete this pack. Browser storage is unavailable.'); }
+        });
+        row.appendChild(label); row.appendChild(load); row.appendChild(remove); list.appendChild(row);
+    }
+}
+
+function saveCurrentPack() {
+    if (document.getElementById('btnGenerate').disabled) return;
+    try {
+        PackLibrary.savePack(localStorage, { id: crypto.randomUUID(), name: document.getElementById('savedPackName').value,
+            topics: readAiTopics(), strict: Boolean(document.getElementById('strictAiTopic').checked),
+            difficulty: getSanitizedSettingsFromInputs().difficulty, entries: getAiWordObjects() });
+        renderSavedPacks(); packLibraryMessage('Pack saved on this browser.');
+    } catch (error) { packLibraryMessage(['Name this pack first.', 'Your library is full. Delete a saved pack before adding another.'].includes(error.message) ? error.message : 'Unable to save. Use up to five topics and 1–150 valid answers, and allow browser storage.'); }
+}
+
+function initializeInvitation() {
+    const code = Experience.inviteCode(globalThis.location?.href);
+    if (!code) return false;
+    txtGameCode.value = code;
+    const saved = readOnlineSession(); if (saved?.playerName) txtPlayerName.value = saved.playerName;
+    getModalInstance('onlineModal')?.show();
+    return true;
+}
+
+async function shareLobbyInvite() {
+    if (!isOnlineGame || !onlineClient?.connected) return;
+    const status = document.getElementById('inviteStatus'), field = document.getElementById('inviteLinkField');
+    try {
+        const url = Experience.inviteLink(location.href, gameCode);
+        field.value = url;
+        if (navigator.share) { await navigator.share({ title: 'Join Half A Minute', text: `Join our lobby: ${gameCode}`, url }); status.textContent = 'Invitation shared.'; }
+        else if (navigator.clipboard?.writeText) { await navigator.clipboard.writeText(url); status.textContent = 'Invite link copied.'; }
+        else { field.hidden = false; field.focus(); field.select(); status.textContent = 'Copy this invite link.'; }
+    } catch (error) {
+        if (error.name !== 'AbortError') { field.hidden = !field.value; field.focus?.(); field.select?.(); status.textContent = 'Copy the link below, or share the four-letter code.'; }
+    }
+}
+
+async function shareResultCard() {
+    if (resultShareBusy || document.getElementById('matchResults').hidden) return;
+    resultShareBusy = true;
+    const status = document.getElementById('shareResultStatus'); status.hidden = false; status.textContent = 'Preparing your result card…';
+    try {
+        const canvas = document.createElement('canvas'); canvas.width = 900; canvas.height = 460 + teams.length * 88;
+        const context = canvas.getContext('2d');
+        context.fillStyle = '#f3f5f8'; context.fillRect(0, 0, canvas.width, canvas.height);
+        context.fillStyle = '#ffffff'; context.fillRect(32, 32, 836, canvas.height - 64);
+        context.textAlign = 'center'; context.fillStyle = '#172033'; context.font = 'bold 38px Arial'; context.fillText('Half A Minute', 450, 102);
+        context.font = 'bold 46px Arial'; context.fillText(document.getElementById('resultsTitle').textContent, 450, 180);
+        context.font = '24px Arial'; context.fillStyle = '#64748b'; context.fillText(document.getElementById('resultsContext').textContent, 450, 228);
+        teams.map((team, index) => ({ ...team, index })).sort((a, b) => b.points - a.points || a.index - b.index).forEach((team, position) => {
+            const y = 300 + position * 88;
+            context.fillStyle = getTeamColor(team.index); context.beginPath(); context.arc(115, y - 10, 14, 0, Math.PI * 2); context.fill();
+            context.fillStyle = '#172033'; context.textAlign = 'left'; context.font = 'bold 30px Arial'; context.fillText(`Team ${team.index + 1}`, 150, y);
+            context.textAlign = 'right'; context.fillText(`${team.points} pts`, 790, y);
+        });
+        context.textAlign = 'center'; context.fillStyle = '#475569'; context.font = '23px Arial';
+        context.fillText(document.getElementById('resultsHighlights').textContent, 450, canvas.height - 124, 780);
+        context.font = '20px Arial'; context.fillText('Describe. Guess. Play again.', 450, canvas.height - 70);
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png')); if (!blob) throw new Error('image-unavailable');
+        const file = new File([blob], 'half-a-minute-result.png', { type: 'image/png' });
+        if (navigator.canShare?.({ files: [file] }) && navigator.share) {
+            try { await navigator.share({ title: 'Half A Minute results', files: [file] }); status.textContent = 'Result card shared.'; return; }
+            catch (error) { if (error.name === 'AbortError') { status.textContent = ''; return; } }
+        }
+        const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = file.name; link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000); status.textContent = 'Result card downloaded.';
+    } catch (error) { status.textContent = error.name === 'AbortError' ? '' : 'Unable to create the card. You can still download the match summary.'; }
+    finally { resultShareBusy = false; status.hidden = !status.textContent; }
+}
 
 const RECENT_WORDS_STORAGE_KEY = "half_a_minute_recent_words_v1";
 const MAX_RECENT_WORDS = 600;
@@ -364,17 +654,23 @@ function renderMatchResults(data = null, forced = false) {
     const card = document.getElementById('matchResults'); card.hidden = !finished;
     game.classList.toggle('match-finished', finished);
     if (!finished) return;
+    screenAwake?.setActive(false);
+    document.getElementById('roundHighlight').hidden = true;
     const active = !data || (onlineClient.connected && OnlineState.view(data, onlineClient.actor, onlineClient.serverNow()).active);
     const host = !data || data.hostId === onlineClient.actor.playerId;
     const signature = JSON.stringify([data?.matchId || localMatchId, data?.hostId, teams.map(team => team.points),
-        data?.auditEvents || localAudit, active, host, onlineClient?.connected, onlineClient?.busy, onlineClient?.actor?.connectionId]);
+        data?.auditEvents || localAudit, data?.series || localSeries, active, host, onlineClient?.connected, onlineClient?.busy, onlineClient?.actor?.connectionId]);
     if (card.dataset.signature === signature) return;
     card.dataset.signature = signature;
     document.getElementById('currentTeamIndicator').hidden = true;
+    document.getElementById('roleInstruction').classList.remove('turn-handoff');
     document.getElementById('roleInstruction').textContent = 'Match complete. Compare scores or play again.';
     const events = data ? Object.values(data.auditEvents || {}) : localAudit;
     const naturalFinish = data ? ['winner', 'draw'].includes(data.finishReason) : localMatchFinished && !forced;
     const winners = naturalFinish ? Gameplay.scoreLeaders(teams.map(team => team.points)) : [];
+    if (!data && localSeries && naturalFinish) localSeries = Experience.recordSeries(localSeries, localMatchId, winners);
+    const series = document.getElementById('seriesSummary');
+    series.textContent = Experience.seriesLabel(data ? data.series : localSeries); series.hidden = !series.textContent;
     document.getElementById('resultsTitle').textContent = winners.length > 1 ? "It's a draw!"
         : winners.length === 1 ? `Team ${winners[0] + 1} wins!` : 'Match ended';
     document.getElementById('resultsContext').textContent = `${isChaosMode ? 'Chaos' : 'Classic'} · Target ${pointsToWin} · Equal turns`;
@@ -421,6 +717,9 @@ async function returnToSetup() {
     showElement(txtLobbyMenu); hideElement(txtLobbyPlayers);
     isAiGame = false; localStarter = null; localDeck = {}; setLayoutMode('menu'); updateSetupSummary();
     updateLobbyPresentation();
+    screenAwake?.setActive(false); localSeries = null;
+    document.getElementById('roundHighlight').hidden = document.getElementById('roundReactions').hidden = document.getElementById('lobbyInvite').hidden = true;
+    document.getElementById('roleInstruction').classList.remove('turn-handoff');
 }
 
 function chooseChaos(reroll) {
@@ -454,6 +753,8 @@ function setLayoutMode(mode = "menu") {
 }
 
 function initializeMenu() {
+    initializeExperience();
+    initializeAiPacks();
     initializePlayPreferences();
     initializeQuickSetup();
     setLayoutMode("menu");
@@ -510,7 +811,7 @@ function initializeMenu() {
     document.getElementById('topic').addEventListener('input', () => { document.getElementById('aiFeedback').hidden = true; });
     document.getElementById('strictAiTopic').addEventListener('change', () => { document.getElementById('aiFeedback').hidden = true; });
     document.getElementById('topic').addEventListener('keydown', event => {
-        if (event.key === 'Enter' && !document.getElementById('btnGenerate').disabled) { event.preventDefault(); generate(); }
+        if (event.key === 'Enter' && !event.isComposing && !document.getElementById('btnGenerate').disabled) { event.preventDefault(); addAiTopic(); }
     });
     document.getElementById('aiModal').addEventListener('show.bs.modal', syncAiPack);
     document.getElementById('onlineModal').addEventListener('show.bs.modal', updateOnlinePackNotice);
@@ -579,7 +880,7 @@ function initializeMenu() {
     });
     document.getElementById('changeSettingsButton').addEventListener('click', returnToSetup);
     document.getElementById('exportMatchButton').addEventListener('click', exportMatchSummary);
-    void restoreOnlineSession();
+    if (!initializeInvitation()) void restoreOnlineSession();
 }
 
 function doesPlayerExist(teams, playerName) {
@@ -657,6 +958,7 @@ function getSanitizedSettingsFromInputs() {
         chaosMode: Boolean(chkChaos?.checked),
         chaosReroll: Boolean(document.getElementById('chkReroll')?.checked),
         trainingMode: Boolean(chkTraining?.checked),
+        trackSeries: Boolean(document.getElementById('chkSeries')?.checked),
         selectedTheme: sanitizeSelectedTheme(themesSelect.value),
         selectedCategories: sanitizeSelectedCategories(Array.from(categoriesSelect.selectedOptions).map(option => option.value))
     };
@@ -676,6 +978,7 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
         chaosMode: Boolean(settings.chaosMode),
         chaosReroll: Boolean(settings.chaosReroll),
         trainingMode: Boolean(settings.trainingMode),
+        trackSeries: Boolean(settings.trackSeries),
         selectedTheme,
         selectedCategories
     };
@@ -1315,6 +1618,9 @@ async function onLobbyJoined(actor = onlineIdentity(gameCode)) {
     isOnlineGame = true;
     onlineEndedHandled = false;
     isSpeaker = isHost = false;
+    document.getElementById('inviteStatus').textContent = '';
+    document.getElementById('inviteLinkField').value = '';
+    document.getElementById('inviteLinkField').hidden = true;
     clearInterval(countdownTimer);
     hideElement(menu);
     showElement(btnSettings);
@@ -1534,7 +1840,8 @@ function updatePlayerListUI(teamsData) {
 }
 
 function generate() {
-    void run(document.getElementById("topic").value);
+    try { void run(readAiTopics()); }
+    catch (error) { setAiFeedback(error.message === 'too-many-ai-topics' ? 'Use up to five topics.' : 'Use a topic of 240 characters or fewer.', true); }
 }
 
 function validateOnlineEntry(joining) {
@@ -1571,6 +1878,11 @@ function syncAiPack() {
         : 'No words yet. Generate a pack or paste your own.';
     document.getElementById('btnAiGame').disabled = document.getElementById('btnGenerate').disabled || !eligible.length;
     document.getElementById('btnAiOnline').disabled = document.getElementById('btnAiGame').disabled;
+    document.getElementById('savePackButton').disabled = document.getElementById('btnGenerate').disabled || !count;
+    document.getElementById('btnGenerate').textContent = document.getElementById('btnGenerate').disabled ? 'Generating…' : count ? 'Replace words' : 'Generate words';
+    document.getElementById('undoAiPack').hidden = !aiUndoPack;
+    document.getElementById('undoAiPack').disabled = document.getElementById('btnGenerate').disabled;
+    renderAiTopics();
 }
 
 function extractUniqueAiWordsFromText(rawText = '') {
@@ -1588,29 +1900,31 @@ function refreshAiGenerationHistory() {
 }
 
 async function run(topic) {
+    if (document.getElementById('btnGenerate').disabled) return;
     const btnGenerate = document.getElementById("btnGenerate");
     const btnAiGame = document.getElementById("btnAiGame");
     const textArea = document.getElementById("aiWords");
     const topicInput = document.getElementById('topic');
     const strictToggle = document.getElementById('strictAiTopic');
-    const cleanTopic = String(topic || "").trim();
-    if (!/[\p{L}\p{N}]/u.test(cleanTopic)) {
-        setAiFeedback('Enter a topic first, then generate words.', true);
-        syncAiPack();
-        return;
+    let cleanTopics;
+    try { cleanTopics = AiPacks.normalizeTopics(topic); }
+    catch (error) {
+        setAiFeedback(error.message === 'too-many-ai-topics' ? 'Use up to five topics.' : 'Enter a topic first, using 240 characters or fewer for each.', true); syncAiPack(); return;
     }
-    if (cleanTopic.length > 240) {
-        setAiFeedback('Keep the topic to 240 characters or fewer.', true); return;
-    }
+    const previous = captureAiPack();
     btnGenerate.disabled = true; btnAiGame.disabled = true; textArea.disabled = true;
+    document.getElementById('savePackButton').disabled = true;
+    renderSavedPacks();
     document.getElementById('btnAiOnline').disabled = true;
     topicInput.disabled = true; strictToggle.disabled = true;
     btnGenerate.textContent = 'Generating…'; btnGenerate.setAttribute('aria-busy', 'true');
     setAiFeedback('Building your word pack…');
+    document.getElementById('savedPackName').disabled = true;
+    syncAiPack();
 
     try {
         const settings = getSanitizedSettingsFromInputs();
-        const prompt = AiPacks.buildPackRequest(cleanTopic, { strict: Boolean(strictToggle.checked), difficulty: settings.difficulty,
+        const prompt = AiPacks.buildPackRequest(cleanTopics, { strict: Boolean(strictToggle.checked), difficulty: settings.difficulty,
             numWords: settings.numWords, history: refreshAiGenerationHistory() });
         const result = await model.generateContent(prompt);
         const response = await result.response;
@@ -1619,8 +1933,12 @@ async function run(topic) {
             difficulty: settings.difficulty
         });
         // Commit only a fully parsed, usable pack. A bad response never replaces edits.
-        aiGeneratedEntries = pack.entries;
-        const text = pack.entries.map(entry => entry.word).join('\n');
+        aiUndoPack = AiPacks.parseManualWords(previous.text).length ? previous : null;
+        aiTopics = cleanTopics; topicInput.value = '';
+        aiGeneratedEntries = shuffleArray(pack.entries);
+        document.getElementById('savedPackName').value = cleanTopics.join(' + ').slice(0, 60);
+        document.getElementById('packLibraryStatus').hidden = true;
+        const text = aiGeneratedEntries.map(entry => entry.word).join('\n');
         textArea.value = text; textArea.textContent = text;
         currentGameWords = shuffleArray(pack.entries.map(entry => entry.word));
         aiGenerationHistory = AiPacks.rememberPack(aiGenerationHistory, pack.entries,
@@ -1636,7 +1954,9 @@ async function run(topic) {
         btnGenerate.disabled = false;
         topicInput.disabled = false; strictToggle.disabled = false;
         textArea.disabled = false; btnGenerate.textContent = 'Generate words'; btnGenerate.setAttribute('aria-busy', 'false');
+        document.getElementById('savedPackName').disabled = false;
         syncAiPack();
+        renderSavedPacks();
     }
 }
 
@@ -1724,6 +2044,7 @@ async function startGame({ rematch = false } = {}) {
 
     // Read and sanitize game settings
     const sanitizedSettings = getSanitizedSettingsFromInputs();
+    if (!rematch) localSeries = sanitizedSettings.trackSeries ? Experience.freshSeries(isAiGame ? 2 : sanitizedSettings.numTeams) : null;
     difficulty = sanitizedSettings.difficulty;
     const selectedCategories = [...sanitizedSettings.selectedCategories];
     const selectedTheme = sanitizedSettings.selectedTheme;
@@ -1831,6 +2152,8 @@ async function startGame({ rematch = false } = {}) {
     updateSelectionSummary();
     clearChaosPresentation();
     showRecap(rematch ? `Team ${currentTeam} starts this rematch.` : `Team ${currentTeam} was drawn to start.`);
+    document.getElementById('shareResultStatus').hidden = true;
+    renderTurnExperience();
 }
 
 function getEasyWords(selectedObjects) {
@@ -1886,6 +2209,7 @@ function startRound() {
     btnStartRound.hidden = true;
     btnEndGame.hidden = true;
     isRoundActive = true;
+    renderTurnExperience();
     document.getElementById('roleInstruction').textContent = `Team ${currentTeam}: get ready to describe and guess.`;
     powerupRevealVisible = false;
     landedPowerupPreview = null;
@@ -1989,9 +2313,13 @@ async function nextRound() {
     const teamIndexForRound = getCurrentTeamIndex(currentTeam);
     const roundNumberForRound = Gameplay.completedTurns(localAudit, teams.length)[teamIndexForRound] + 1;
     const before = teams[teamIndexForRound].points;
+    const pointsBeforeAll = teams.map(team => team.points);
+    const wordCount = Array.from(document.querySelectorAll('.scoreButton')).filter(button => !button.hidden).length;
     const submittedAt = Date.now();
     let chaosSummary, chaosEffect, completedEvent;
     isResolvingChaosMove = true; setNextRoundBusyState(true);
+    renderRoundHighlight({ id: localAudit.length + 1, teamIndex: teamIndexForRound, earned: correctAnswers.length, wordCount },
+        localAudit, pointsBeforeAll, `local:${localMatchId}`);
     document.querySelectorAll('.scoreButton').forEach(button => { button.disabled = true; });
     btnEndGame.hidden = true;
     try {
@@ -2005,7 +2333,7 @@ async function nextRound() {
         } else teams[teamIndexForRound].points += correctAnswers.length;
         const text = Gameplay.recap({ teamIndex: teamIndexForRound, earned: correctAnswers.length, before,
             after: teams[teamIndexForRound].points, effect: chaosEffect });
-        completedEvent = { teamIndex: teamIndexForRound, roundNumber: roundNumberForRound, correctAnswers, earned: correctAnswers.length, recap: text,
+        completedEvent = { id: localAudit.length + 1, teamIndex: teamIndexForRound, roundNumber: roundNumberForRound, correctAnswers, earned: correctAnswers.length, wordCount, pointsBeforeAll, recap: text,
             chaosSummary, effect: chaosEffect, pointsBefore: before, pointsAfter: teams[teamIndexForRound].points,
             clueSeconds: Math.max(0, (localSelectingAt - localTurnStartedAt) / 1000),
             scoringSeconds: Math.max(0, (submittedAt - localSelectingAt) / 1000),
@@ -2025,6 +2353,8 @@ async function nextRound() {
         clearChaosPresentation();
         if (completedEvent && isChaosMode && !game.classList.contains('match-finished')) showChaosOutcome(completedEvent);
         isResolvingChaosMove = false; setNextRoundBusyState(false); updateMobileGameFocus();
+        renderFinalRoundNotice(Gameplay.matchProgress(teams.map(team => team.points), pointsToWin, localAudit, localFinalTurnCount));
+        renderTurnExperience();
     }
 }
 
@@ -2821,7 +3151,11 @@ function updateLobbyPresentation(data = null, view = null) {
 
 function renderFinalRoundNotice(progress) {
     const node = document.getElementById('finalRoundNotice');
-    const text = Gameplay.finalRoundMessage(progress);
+    const data = isOnlineGame ? onlineClient?.snapshot : null;
+    const pack = data?.wordPack?.entries || (!data ? localWordObjects : null);
+    const available = pack ? pack.filter(entry => difficulty === 'normal' || entry.difficulty === difficulty).length : numWords;
+    const context = Experience.finishContext(progress, teams.map(team => team.points), currentTeam - 1, isChaosMode, Math.min(numWords, available));
+    const text = [Gameplay.finalRoundMessage(progress), context].filter(Boolean).join(' ');
     node.hidden = !text;
     if (node.textContent !== text) node.textContent = text;
 }
@@ -2909,7 +3243,7 @@ function renderOnlineControls() {
         const opening = !Object.keys(data.auditEvents || {}).length;
         const starterTeam = data.starterTeam ?? data.turn.teamIndex;
         const starter = opening ? `Team ${starterTeam + 1} ${data.matchId > 1 ? 'starts this rematch' : 'was drawn to start'}. ` : '';
-        role = starter + (isSpeaker ? 'You are the next speaker. Start when everyone is ready.' : `${name} speaks next for Team ${data.turn.teamIndex + 1}.`);
+        role = starter + (isSpeaker ? `You're up next, ${name}. Start when everyone is ready.` : `${name} speaks next for Team ${data.turn.teamIndex + 1}.`);
     }
     if (data.phase === 'resolving') role = `Watch Team ${data.turn.teamIndex + 1} on the board.`;
     if (data.phase === 'ready') role = `${data.starterTeam === undefined ? 'The starting team is drawn on start.' : `Team ${data.starterTeam + 1} starts.`} ${isHost ? 'Start when everyone is ready.' : 'Waiting for the host to start.'}`;
@@ -2937,6 +3271,7 @@ function renderOnlineControls() {
     }
     updateSelectionSummary(); updateMobileGameFocus(); renderOnlineClock();
     renderMatchResults(data);
+    renderTurnExperience(data, view);
 }
 
 function renderOnlineSnapshot(data) {

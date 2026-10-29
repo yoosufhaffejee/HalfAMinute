@@ -33,6 +33,25 @@ test('scope is an explicit option; topic text is preserved without punctuation s
     for (const topic of ['', '   ', '!!!']) assert.throws(() => Packs.buildPackRequest(topic));
 });
 
+test('one to five topics share one total budget and preserve literal topic punctuation', () => {
+    const request = JSON.parse(Packs.buildPackRequest(['  Minecraft survival ', 'Airport chaos', 'minecraft survival', 'Football, 1990s'], { strict: true }));
+    assert.deepEqual(request.topics, ['Minecraft survival', 'Airport chaos', 'Football, 1990s']);
+    assert.equal(request.topic, undefined);
+    assert.equal(request.scope, 'strict'); assert.equal(request.targetCount, 150);
+    assert.deepEqual(request.topicBudgets.map(item => item.targetCount), [50, 50, 50]);
+    for (let count = 1; count <= 5; count++) {
+        const mixed = JSON.parse(Packs.buildPackRequest(Array.from({length: count}, (_, i) => `Topic ${i}`)));
+        assert.equal(mixed.topicBudgets.reduce((sum, item) => sum + item.targetCount, 0), 150);
+        assert.equal(mixed.topicBudgets.reduce((sum, item) => sum + item.targetMix.easy, 0), 90);
+        assert.equal(mixed.topicBudgets.reduce((sum, item) => sum + item.targetMix.hard, 0), 60);
+        assert.ok(Math.max(...mixed.topicBudgets.map(item => item.targetCount)) - Math.min(...mixed.topicBudgets.map(item => item.targetCount)) <= 1);
+    }
+    assert.throws(() => Packs.buildPackRequest(['A', 'B', 'C', 'D', 'E', 'F']), /too-many-ai-topics/);
+    for (const topics of [[], [null], ['!'], ['a'.repeat(241)], ['<script>']]) assert.throws(() => Packs.buildPackRequest(topics));
+    assert.deepEqual(Packs.normalizeTopics([], {allowEmpty: true}), []);
+    assert.match(Packs.PACK_SYSTEM_INSTRUCTION, /not an intersection/);
+});
+
 test('canonical identities remove nicknames, casing and accent duplicates within a pack', () => {
     const pack = Packs.parseGeneratedPack(json([
         entry('Messi', 'easy', 'Lionel Messi'), entry('Lionel Messi', 'hard'),
