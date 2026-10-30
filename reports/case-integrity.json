@@ -1,62 +1,110 @@
-[
-  {
-    "caseId": "bank",
-    "title": "The Midnight Transfer",
-    "suspects": 6,
-    "methods": 3,
-    "destinations": 3,
-    "evidenceFiles": 12,
-    "existingVocabulary": 48,
-    "minimumProof": 5,
-    "minimumReachableProof": 5,
-    "completeSolutions": 1
-  },
-  {
-    "caseId": "museum",
-    "title": "The Four-Minute Gallery",
-    "suspects": 6,
-    "methods": 3,
-    "destinations": 3,
-    "evidenceFiles": 12,
-    "existingVocabulary": 48,
-    "minimumProof": 5,
-    "minimumReachableProof": 5,
-    "completeSolutions": 1
-  },
-  {
-    "caseId": "train",
-    "title": "The Night Train Exchange",
-    "suspects": 6,
-    "methods": 3,
-    "destinations": 3,
-    "evidenceFiles": 12,
-    "existingVocabulary": 48,
-    "minimumProof": 5,
-    "minimumReachableProof": 5,
-    "completeSolutions": 1
-  },
-  {
-    "caseId": "observatory",
-    "title": "The False Signal",
-    "suspects": 6,
-    "methods": 3,
-    "destinations": 3,
-    "evidenceFiles": 12,
-    "existingVocabulary": 48,
-    "minimumProof": 5,
-    "minimumReachableProof": 5,
-    "completeSolutions": 1
-  },
-  {
-    "caseId": "encore",
-    "title": "The Silent Encore",
-    "suspects": 6,
-    "methods": 3,
-    "destinations": 3,
-    "evidenceFiles": 12,
-    "existingVocabulary": 48,
-    "minimumProof": 5,
-    "minimumReachableProof": 5,
-    "completeSolutions": 1
-  }
-]
+{
+  "version": "20261030.reconstruction1",
+  "scope": "Structural and author coherence checks. Not a human difficulty or win-rate measurement. Old 54-theory/minimum-clue metrics retired.",
+  "cases": [
+    {
+      "caseId": "bank",
+      "title": "The Midnight Transfer",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "a3",
+          "n2"
+        ],
+        [
+          "a4",
+          "n2"
+        ]
+      ],
+      "progressiveNudges": 3
+    },
+    {
+      "caseId": "museum",
+      "title": "The Four-Minute Gallery",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "x1",
+          "t4"
+        ],
+        [
+          "x2",
+          "t4"
+        ]
+      ],
+      "progressiveNudges": 3
+    },
+    {
+      "caseId": "train",
+      "title": "The Night Train Exchange",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "r1",
+          "r2"
+        ],
+        [
+          "r2",
+          "p4"
+        ]
+      ],
+      "progressiveNudges": 3
+    },
+    {
+      "caseId": "observatory",
+      "title": "The False Signal",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "i2",
+          "i3"
+        ],
+        [
+          "i2",
+          "i4"
+        ],
+        [
+          "i3",
+          "i4"
+        ]
+      ],
+      "progressiveNudges": 3
+    },
+    {
+      "caseId": "encore",
+      "title": "The Silent Encore",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "h3",
+          "a2"
+        ],
+        [
+          "h3",
+          "a4"
+        ]
+      ],
+      "progressiveNudges": 3
+    }
+  ]
+}

@@ -1,5 +1,5 @@
-import { MODES, modeOf } from './modes.js?v=20261030.cases1';
-import { CASES } from './cases.js?v=20261030.cases1';
+import { MODES, modeOf } from './modes.js?v=20261030.reconstruction1';
+import { CASES, caseSubmission } from './cases.js?v=20261030.reconstruction1';
 function download(blob, filename) {
     const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = filename; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -7,7 +7,8 @@ function download(blob, filename) {
 export function partySummary(game) {
     const value = { version: 3, mode: modeOf(game.settings), matchId: game.matchId, finishReason: game.finishReason,
         ...(modeOf(game.settings) === 'table' ? { scores: game.party.players.map(player => player.points) } : {}), turns: game.party.history.map(event => ({ correct: event.earned, cardSize: event.wordCount })),
-        ...(modeOf(game.settings) === 'case' ? { caseId: game.settings.caseId, evidence: game.party.found.length, correct: game.party.totalCorrect, investigations: game.party.history.length }
+        ...(modeOf(game.settings) === 'case' ? { caseId: game.settings.caseId, evidence: game.party.found.length, correct: game.party.totalCorrect, investigations: game.party.history.length,
+            reconstruction: caseSubmission(game), assessment: game.party.assessment || null, nudges: game.party.hintsUsed || 0 }
             : { format: game.party.format, timing: game.settings.tableTiming, scoring: game.settings.tableScoring, seconds: game.settings.tableSeconds, wordsPerCard: game.settings.numWords }) };
     download(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }), 'half-a-minute-summary.json');
 }
@@ -22,7 +23,7 @@ export async function sharePartyResult(game) {
     context.font = 'bold 38px Arial'; context.fillText(title, 400, 190);
     context.font = '24px Arial';
     if (table) game.party.players.forEach((player, index) => context.fillText(`Player ${index + 1} · ${player.points} points`, 400, 255 + index * 56));
-    else { context.fillText(CASES[game.settings.caseId].title, 400, 260, 720); context.fillText(`${game.party.found.length}/12 evidence · ${game.party.history.length} investigations`, 400, 305, 720); context.fillText('One crew. One mystery.', 400, 350); }
+    else { context.fillText(CASES[game.settings.caseId].title, 400, 260, 720); context.fillText(`${game.party.found.length}/12 evidence · ${game.party.history.length} investigations`, 400, 305, 720); context.fillText(game.finishReason==='solved'?'Explanation, timeline and evidence connected.':'One crew. One reconstruction.', 400, 350, 720); }
     context.fillStyle = '#64748b'; context.font = '20px Arial'; context.fillText('Describe. Guess. Play again.', 400, canvas.height - 42);
     const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png')); if (!blob) throw new Error('Unable to make the card');
     const file = new File([blob], 'half-a-minute-result.png', { type: 'image/png' });

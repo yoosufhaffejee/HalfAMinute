@@ -2,7 +2,7 @@
   "backend": "Live Firebase; temporary UI-created test lobbies, explicitly left afterward; no AI requests",
   "completed": true,
   "checks": [
-    "Authored Case Files: two online clients, role privacy, lead/evidence synchronization, scoring refresh, complete theory and next-case rematch"
+    "Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch"
   ],
   "layouts": [],
   "errors": [],

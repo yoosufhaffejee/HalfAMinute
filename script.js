@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261030.cases1';
-import { OnlineClient } from './online/client.js?v=20261030.cases1';
+import * as OnlineState from './online/state.js?v=20261030.reconstruction1';
+import { OnlineClient } from './online/client.js?v=20261030.reconstruction1';
 import * as Gameplay from './gameplay/rules.js?v=20261030.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
@@ -10,12 +10,12 @@ import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
 import * as Experience from './gameplay/experience.js?v=20261030.4';
 import * as PackLibrary from './gameplay/saved-packs.js?v=20261029.5';
 import { createScreenAwake } from './gameplay/screen-awake.js?v=20261029.4';
-import * as Modes from './gameplay/modes.js?v=20261030.cases3';
-import { createPartySurface } from './gameplay/party-ui.js?v=20261030.cases1';
-import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.cases1';
-import { partySnapshot } from './gameplay/party-state.js?v=20261030.cases1';
-import { CASES } from './gameplay/cases.js?v=20261030.cases1';
-import { caseWordObjects, drawCaseCard } from './gameplay/case-draw.js?v=20261030.cases1';
+import * as Modes from './gameplay/modes.js?v=20261030.reconstruction1';
+import { createPartySurface } from './gameplay/party-ui.js?v=20261030.reconstruction1';
+import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.reconstruction1';
+import { partySnapshot } from './gameplay/party-state.js?v=20261030.reconstruction1';
+import { CASES } from './gameplay/cases.js?v=20261030.reconstruction1';
+import { caseWordObjects, drawCaseCard } from './gameplay/case-draw.js?v=20261030.reconstruction1';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -175,7 +175,7 @@ function modeSettingsPresentation(settings) {
         boost: 'Choose a normal turn or risk before the words appear. Get at least 60% correct (3 of 5) to add 2 to your clue points; miss and subtract 2, with a floor of zero. Bank 2 points first. After risking, complete one normal turn before risking again.',
         double: 'Once per team per match, risk before seeing the card. Meet the 60% target (3 of 5) to double your clue points. Miss and lose 3 banked points, earning no clue points. Bank 3 points first.',
         table: `For 3–8 players. Only the speaker sees the numbered word card after Go. Local play and online voice-call play use spoken guesses. After the round, the speaker awards each word to the first correct guesser, or Nobody if skipped. Select every tied guesser for simultaneous correct answers; speaker credit stays 1 per solved word. ${settings.tableScoring === 'guesser' ? 'Only the first correct guesser earns 1 point; the speaker earns no points.' : 'The first correct guesser and speaker each earn 1 point per solved word.'} Timed rounds default to 60 seconds; Unlimited lets the speaker finish when ready. Words per card follows Settings. Online, the host chooses voice call or typed clues at match start. Typed play takes one word at a time: send clues, read guesses in arrival order, and award the first correct one. Everyone gets equal speaking turns; late arrivals watch until rematch.`,
-        case: 'One crew investigates an authored mystery. The current speaker chooses a lead before drawing its card. Words appear only after Go; everyone else guesses aloud. Confirm the correct words to uncover their matching evidence files. Related words may unlock the same file once, and missed files remain available through other words. Read the new evidence together, then pass to the next investigator. Use the case notebook to compare suspects, timing and routes. Agree on who, how and where, then the host reviews and submits one final theory. You can solve early or use the turn budget. A new case has a fixed authored solution; replaying it changes the words, not the answer. Case Files needs no AI requests and works locally with the loaded built-in data.'
+        case: 'One crew investigates an authored mystery. The rotating speaker chooses a lead, then describes its words after Go while everyone else guesses aloud. Confirm correct words to recover their documents; related words can open the same file once. Read logs, receipts and reference cards together. Their clocks, labels and observations need interpreting: documents do not eliminate suspects for you. Between rounds, anyone can arrange the shared four-event timeline and compare two recovered exhibits that support the case’s connection question. These are drafts, with no correctness feedback. The host records who, how and where and reviews the entire reconstruction before one final submission. Closing a case requires the explanation, timeline and supporting pair to fit. Three optional notebook nudges are available after two turns. Six investigations is the default; you can also submit early. All cases and words are prebuilt, with no AI judging. Replaying a case changes the words, not its solution. Local play works with the loaded built-in data; online play uses your usual voice call.'
     };
     document.getElementById('modeHowToPlay').hidden = !rules[mode];
     document.getElementById('modeRulesTitle').textContent = Modes.MODES[mode].name;

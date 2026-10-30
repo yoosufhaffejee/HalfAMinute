@@ -1,13 +1,13 @@
 import { answerKey } from './rules.js?v=20261029.2';
-import { CASE_IDS } from './cases.js?v=20261030.cases1';
-export const MODE_VERSION = '20261030.cases3';
+import { CASE_IDS } from './cases.js?v=20261030.reconstruction1';
+export const MODE_VERSION = '20261030.reconstruction1';
 export const MODES = {
     classic: { name: 'Classic', description: 'Describe, guess and race to the finish. One point per correct answer.' },
     chaos: { name: 'Chaos', description: 'The clue game with board effects, shields and unexpected turns.' },
     boost: { name: 'Boost Stakes', description: 'Keep your clue points. Risk a turn for +2 if you meet the target, or −2 if you miss. Play a normal turn before risking again.' },
     double: { name: 'Double Stakes', description: 'One risk per team: meet the target to double your clue points. Miss and lose 3 banked points, with no clue points.' },
     table: { name: 'Open Table', description: 'For 3–8 players. One speaker describes a numbered card. The first correct guesser wins each word; the speaker awards the points. Play timed or unlimited.' },
-    case: { name: 'Case Files', description: 'Five mysteries for one crew. Choose a lead, describe its words, connect the evidence, and solve who, how and where.' }
+    case: { name: 'Case Files', description: 'Five mysteries for one crew. Recover documents through word rounds, rebuild the timeline and support your explanation with evidence.' }
 };
 export function modeOf(settings = {}) { return Object.hasOwn(MODES, settings.mode) ? settings.mode : settings.chaosMode ? 'chaos' : 'classic'; }
 export function isParty(settings) { return ['table', 'case'].includes(modeOf(settings)); }

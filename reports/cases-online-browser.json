@@ -1,0 +1,10 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch"
+  ],
+  "layouts": [],
+  "errors": [],
+  "transactions": 73
+}

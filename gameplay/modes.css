@@ -92,6 +92,45 @@
 .case-meter span { display: grid; place-items: center; width: 42px; height: 42px; background: #e5dcc8; border: 1px dashed #b4a17c; border-radius: 50%; color: #77664b; font-weight: 700; }
 .case-meter .is-unlocked { background: #315c46; color: #fff; border-style: solid; }
 .case-evidence { padding: 12px 14px; margin: 10px 0; border-left: 4px solid #9c6c30; background: #fffef8; color: #51412e; font-size: .9rem; line-height: 1.5; }
+.case-scene { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; list-style: none; padding: 0; margin: 18px 0; text-align: left; }
+.case-scene li { display: flex; gap: 10px; align-items: center; padding: 12px; border: 1px solid #d9c9a5; border-radius: 10px; background: #fffdf8; min-width: 0; overflow-wrap: anywhere; }
+.case-scene li > span { flex: none; font-size: .75rem; color: #796447; font-variant-numeric: tabular-nums; }
+.case-scene strong { font-size: .85rem; line-height: 1.5; }
+.case-source { display: block; color: #796447; font-size: .75rem; line-height: 1.6; margin-bottom: 8px; overflow-wrap: anywhere; }
+.case-recovered-words { display: inline-block; color: #315c46; background: #eaf2eb; padding: 4px 8px; border-radius: 6px; font-size: .75rem; line-height: 1.5; margin: 0 0 10px; overflow-wrap: anywhere; }
+.case-records { margin: 14px 0 0; padding: 0; border: 1px solid #dfd5c1; border-radius: 9px; overflow: hidden; }
+.case-record { display: grid; grid-template-columns: minmax(90px,1fr) minmax(0,2fr); gap: 10px; padding: 12px; border-bottom: 1px solid #e8dfcd; font-size: .85rem; line-height: 1.6; }
+.case-record:last-child { border-bottom: 0; }.case-record:nth-child(odd) { background: #f7f3ea; }
+.case-record dt { margin: 0; color: #51412e; overflow-wrap: anywhere; }.case-record dd { margin: 0; color: #233548; overflow-wrap: anywhere; white-space: pre-line; }
+.case-source-group, .case-file { margin-top: 12px; }.case-source-group > summary, .case-file > summary { padding: 10px 0; line-height: 1.6; }
+.case-file { margin-left: 6px; border-top: 1px solid #dfd5c1; }.case-file > .case-evidence-card { margin-top: 0; }
+.case-reconstruction { margin: 18px 0; padding: 16px; border: 1px solid #c4d3cb; background: #f2f7f4; border-radius: 12px; text-align: left; min-width: 0; }
+.case-reconstruction > summary { font-weight: 700; color: #254d3c; line-height: 1.6; }.case-reconstruction h4 { margin: 22px 0 10px; font-size: 1.05rem; color: #233d32; }
+.case-draft-note, .case-empty { font-size: .85rem; line-height: 1.6; color: #52645b; margin: 12px 0; }
+.case-timeline { list-style: none; margin: 14px 0; padding: 0; display: grid; gap: 8px; }
+.case-timeline > li { display: grid; grid-template-columns: 28px minmax(0,1fr) auto; align-items: center; gap: 8px; padding: 10px; background: #fff; border: 1px solid #cad8cf; border-radius: 10px; min-width: 0; }
+.case-timeline strong { font-size: .9rem; line-height: 1.5; overflow-wrap: anywhere; }.case-event-number { border-radius: 50%; width: 28px; height: 28px; display: grid; place-items: center; background: #e5eee8; font-size: .8rem; color: #254d3c; }
+.case-event-controls { display: flex; gap: 4px; }.case-event-controls .btn { min-width: 44px; min-height: 44px; margin: 0; padding: 6px; color: #254d3c; background: #fff; border: 1px solid #cad8cf; font-size: 1.2rem; }
+.case-event-bank { display: flex; flex-wrap: wrap; gap: 8px; }.case-event-bank .btn { text-align: left; margin: 0; color: #254d3c; background: #fff; border: 1px dashed #8fae9a; font-size: .85rem; min-height: 44px; white-space: normal; overflow-wrap: anywhere; }
+.case-proof-fields, .case-comparison { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }.case-proof-fields .form-field { min-width: 0; }
+.case-proof-fields select { max-width: 100%; width: 100%; }.case-comparison > .case-evidence-card { min-width: 0; margin: 0; padding: 12px; }
+.case-comparison .case-record { grid-template-columns: minmax(0,1fr); gap: 3px; }.case-comparison { margin-top: 12px; }
+.case-compare-disclosure { margin-top: 12px; }.case-compare-disclosure > summary { padding: 10px 0; font-weight: 600; }
+.case-visual { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 16px 0; }
+.case-visual-panel { min-width: 0; }.case-visual-label { font-size: .8rem; margin-bottom: 8px; color: #51412e; }
+.case-pixel-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); padding: 8px; gap: 3px; background: #172e40; border-radius: 8px; }
+.case-pixel-grid span { display: grid; place-items: center; aspect-ratio: 1; background: #ffffff09; font-size: .8rem; color: #fae7af; }.case-pixel-grid .is-bright { background: #f8e6b42b; }
+.case-wave { height: 88px; display: flex; gap: 8px; justify-content: center; align-items: center; border-radius: 8px; background: linear-gradient(#eff4f0 49%,#a0b3a5 49%,#a0b3a5 51%,#eff4f0 51%); }
+.case-wave span { height: var(--level); width: 12px; background: #426e57; align-self: center; transform: translateY(-50%); border-radius: 3px 3px 0 0; }.case-wave .is-negative { transform: translateY(50%); border-radius: 0 0 3px 3px; }
+.case-verdict { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 12px 0 18px; }.case-verdict span { border-radius: 20px; padding: 6px 12px; font-size: .85rem; }
+.case-verdict .is-matched { background: #e1f2e8; color: #164b34; }.case-verdict .is-missed { background: #fcebe5; color: #813d28; }
+.case-debrief { margin: 20px 0; text-align: left; padding: 16px; border: 1px solid #d9c9a5; background: #fffdf8; border-radius: 12px; }.case-debrief h4 { font-size: 1.05rem; }.case-debrief li { padding: 4px 0; }
+@media (max-width: 600px) {
+    .case-proof-fields, .case-comparison { grid-template-columns: minmax(0,1fr); }
+    .case-record { grid-template-columns: minmax(0,1fr); gap: 4px; }
+    .case-reconstruction { padding: 14px 12px; }.case-timeline > li { grid-template-columns: 26px minmax(0,1fr); }
+    .case-event-controls { grid-column: 2; justify-content: flex-end; }.case-scene { grid-template-columns: minmax(0,1fr); }
+}
 .case-suspects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
 .case-suspect { --portrait: #7190a3; display: flex; flex-direction: column; align-items: center; min-width: 0; border: 2px solid transparent; border-radius: 12px; padding: 16px 10px; color: #172033; background: #fffdf7; box-shadow: 0 2px 5px #51412e0d; text-align: center; }
 .case-suspect:disabled { opacity: 1; cursor: default; }

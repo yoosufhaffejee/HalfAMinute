@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as State from '../online/state.js';
 import * as Modes from '../gameplay/modes.js';
-import { CASES, CASE_IDS, caseFacts, availableFacts, matchesRule, matchingTheories } from '../gameplay/cases.js';
+import { CASES, CASE_IDS, caseFacts, availableFacts, caseSubmission, caseAssessment } from '../gameplay/cases.js';
 import { caseWordObjects, drawCaseCard } from '../gameplay/case-draw.js';
 const context=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../data.js',import.meta.url),'utf8')+'\nthis.dictionary=Object.values(categories).flat();',context);
 const dictionary=JSON.parse(JSON.stringify(context.dictionary));
@@ -15,23 +15,23 @@ function act(g,type,extra={},who=g.turn?.speakerId||g.hostId){const copy=structu
 const started=(id,extra)=>act(lobby(id,undefined,extra),'start-game',{seed:0});
 function begin(g,lead){g=act(g,'choose-lead',{leadId:lead||availableFacts(g.settings.caseId,g.party.found)[0].leadId});g=act(g,'start-round',{seed:g.party.history.length+10});now+=4500;return g;}
 function score(g,indexes){g=act(g,'end-round');for(const index of indexes)g=act(g,'toggle-answer',{index});return act(g,'submit-round');}
-test('five authored cases use real built-in vocabulary, balanced word choices and explicit reliable evidence',()=>{
+test('five source-based cases use real vocabulary, balanced prompts and structured exhibits without named eliminations',()=>{
     assert.equal(CASE_IDS.length,5);
     for(const id of CASE_IDS){const s=CASES[id],facts=caseFacts(id),words=caseWordObjects(id,dictionary);assert.equal(s.people.length,6);assert.equal(s.methods.length,3);assert.equal(s.destinations.length,3);assert.equal(facts.length,12);assert.equal(words.length,48);
-        assert.equal(new Set(words.map(w=>w.word.toLowerCase())).size,48);assert.equal(s.reveal.length,3);assert.ok(s.hint&&s.intro.length>150);
-        for(const f of facts){assert.ok(f.text.length>60);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='easy').length,2,`${id}/${f.id} easy`);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='hard').length,2);for(const dep of f.requires)assert.ok(facts.some(x=>x.id===dep));}
+        assert.equal(new Set(words.map(w=>w.word.toLowerCase())).size,48);assert.equal(s.reveal.length,3);assert.equal(s.hints.length,3);assert.ok(s.groundRules&&s.intro.length>150);
+        for(const f of facts){assert.ok(f.text.length>60&&f.source);assert.ok(f.records.length>=2&&f.records.every(row=>row.length===2&&row.every(value=>typeof value==='string'&&value.length)));assert.doesNotMatch(f.text,/rules? out|remaining possibilities|only .+ had|leaving .+ suspects/i);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='easy').length,2,`${id}/${f.id} easy`);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='hard').length,2);for(const dep of f.requires)assert.ok(facts.some(x=>x.id===dep));}
     }
 });
-test('every complete mystery has one correct theory; no four clues can give away the whole case',()=>{
-    for(const id of CASE_IDS){const facts=caseFacts(id);assert.equal(matchingTheories(id).length,54);for(const f of facts)assert.equal(matchesRule(CASES[id].solution,f.rule),true,`${id}/${f.id}`);
-        assert.deepEqual(matchingTheories(id,facts.map(f=>f.id)),[CASES[id].solution]);let minimum=12;
-        for(let mask=1;mask<4096;mask++){const ids=facts.filter((_,i)=>mask&(1<<i)).map(f=>f.id);if(ids.length>minimum)continue;if(matchingTheories(id,ids).length===1)minimum=ids.length;}
-        assert.ok(minimum>=5,`${id}: minimum ${minimum}`);
+test('each chronology is uniquely ordered by authored times and each proof pair references distinct obtainable sources',()=>{
+    for(const id of CASE_IDS){const story=CASES[id],facts=caseFacts(id);assert.equal(story.chronology.events.length,4);assert.equal(new Set(story.chronology.events.map(e=>e.id)).size,4);assert.equal(new Set(story.chronology.events.map(e=>e.minute)).size,4);
+        assert.deepEqual([...story.chronology.events].sort((a,b)=>a.minute-b.minute).map(e=>e.id),story.chronology.order);
+        for(const pair of story.connection.pairs){assert.equal(pair.length,2);assert.notEqual(pair[0],pair[1]);assert.ok(pair.every(key=>facts.some(f=>f.id===key)));}
+        assert.equal(caseAssessment(id,{...story.solution,timeline:story.chronology.order,proof:story.connection.pairs[0]},facts.map(f=>f.id)).solved,true);
     }
 });
-test('every lead is reachable and losing any one evidence route leaves an alternative proof',()=>{
+test('every exhibit and every case-specific proof pair is reachable across leads',()=>{
     for(const id of CASE_IDS){const facts=caseFacts(id);let reached=[];for(let i=0;i<12;i++)reached=[...new Set([...reached,...availableFacts(id,reached).map(f=>f.id)])];assert.equal(reached.length,12);
-        for(const blocked of facts){let reached=[];for(let i=0;i<12;i++)reached=[...new Set([...reached,...availableFacts(id,reached).filter(f=>f.id!==blocked.id).map(f=>f.id)])];assert.deepEqual(matchingTheories(id,reached),[CASES[id].solution],`${id}: alternative to ${blocked.id}`);}
+        assert.ok(CASES[id].connection.pairs.every(pair=>pair.every(key=>reached.includes(key))));
     }
 });
 test('curated deals are deterministic, follow lead/difficulty, spread evidence and avoid duplicate words',()=>{
@@ -41,8 +41,10 @@ test('curated deals are deterministic, follow lead/difficulty, spread evidence a
 test('all five cases play through to a correct theory at easy, normal and hard without an AI request',()=>{
     for(const id of CASE_IDS)for(const difficulty of ['easy','normal','hard']){let g=started(id,{difficulty});let turns=0;while(g.phase!=='accusing'){g=begin(g);g=score(g,g.turn.words.map((_,i)=>i));assert.equal(g.phase,'evidence');g=act(g,'continue-case');assert.ok(++turns<=g.settings.caseTurns);}
         assert.equal(g.party.found.length,12);const before=structuredClone(g),who=g.hostId;for(const [field,index]of Object.entries(CASES[id].solution))g=act(g,'set-theory',{field,index},who);
-        assert.equal(act(g,'accuse',{theory:{...g.party.theory,suspect:(g.party.theory.suspect+1)%6}},who),undefined);
-        g=act(g,'accuse',{theory:{...g.party.theory}},who);assert.equal(g.finishReason,'solved');assert.equal(before.phase,'accusing');
+        for(const eventId of CASES[id].chronology.order)g=act(g,'place-event',{eventId},who);
+        for(const [index,factId]of CASES[id].connection.pairs[0].entries())g=act(g,'set-proof',{index,factId},who);
+        assert.equal(act(g,'accuse',{theory:{...caseSubmission(g),suspect:(g.party.theory.suspect+1)%6}},who),undefined);
+        g=act(g,'accuse',{theory:caseSubmission(g)},who);assert.equal(g.finishReason,'solved');assert.equal(before.phase,'accusing');
     }
 });
 test('only confirmed words unlock matching files; repeated words from one file count once',()=>{
@@ -53,11 +55,11 @@ test('only confirmed words unlock matching files; repeated words from one file c
 });
 test('missed evidence stays available; the budget ends cleanly and wrong complete theories fail',()=>{
     let g=started('train',{caseTurns:4});for(let i=0;i<4;i++){g=begin(g);g=score(g,[]);assert.equal(g.party.found.length,0);g=act(g,'continue-case');}assert.equal(g.phase,'accusing');assert.equal(act(g,'resume-case',{},g.hostId),undefined);
-    for(const field of ['suspect','method','destination'])g=act(g,'set-theory',{field,index:0},g.hostId);g=act(g,'accuse',{theory:{...g.party.theory}},g.hostId);assert.equal(g.finishReason,'unsolved');
+    for(const field of ['suspect','method','destination'])g=act(g,'set-theory',{field,index:0},g.hostId);for(const eventId of CASES.train.chronology.order)g=act(g,'place-event',{eventId},g.hostId);g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);assert.equal(g.finishReason,'unsolved');assert.equal(g.party.assessment.connection,false);
 });
-test('the crew can discuss evidence, solve early, resume safely, and take one optional hint',()=>{
+test('the crew can discuss evidence, solve early, resume safely, and take three progressive shared nudges',()=>{
     let g=started();g=begin(g);g=score(g,[0]);assert.equal(act(g,'open-theory',{},'B'),undefined);g=act(g,'open-theory',{},g.hostId);assert.equal(g.phase,'accusing');g=act(g,'resume-case',{},g.hostId);assert.equal(g.phase,'evidence');g=act(g,'continue-case');g=begin(g);g=score(g,[]);
-    g=act(g,'case-hint',{},g.hostId);assert.equal(g.party.hintUsed,true);assert.equal(act(g,'case-hint',{},g.hostId),undefined);
+    for(let i=1;i<=3;i++){g=act(g,'case-hint',{},g.hostId);assert.equal(g.party.hintsUsed,i);}assert.equal(g.party.hintUsed,true);assert.equal(act(g,'case-hint',{},g.hostId),undefined);
 });
 test('countdown, clock expiry and recovery preserve the current lead and committed evidence',()=>{
     let g=started();g=act(g,'choose-lead',{leadId:'network'});g=act(g,'start-round',{seed:1});assert.equal(State.view(g,actor('A'),now).showWords,false);assert.equal(act(g,'end-round'),undefined);
@@ -75,4 +77,56 @@ test('cooperative late arrivals join, unscored departures spend no turn, and nex
 test('Firebase missing empty collections cannot break a first deal or zero-discovery debrief',()=>{
     function firebase(value){if(value==null)return undefined;if(Array.isArray(value))return value.length?value.map(firebase):undefined;if(typeof value==='object'){const entries=Object.entries(value).map(([k,v])=>[k,firebase(v)]).filter(([,v])=>v!==undefined);return entries.length?Object.fromEntries(entries):undefined;}return value;}
     let g=firebase(started());g=firebase(begin(g));g=firebase(score(g,[]));assert.equal(g.phase,'evidence');g=firebase(act(g,'continue-case'));assert.equal(g.phase,'idle');
+});
+
+function completeDraft(g,{timeline=CASES[g.settings.caseId].chronology.order,proof=CASES[g.settings.caseId].connection.pairs[0]}={}){
+    const host=g.hostId;for(const [field,index]of Object.entries(CASES[g.settings.caseId].solution))g=act(g,'set-theory',{field,index},host);
+    for(const eventId of timeline)g=act(g,'place-event',{eventId},host);
+    for(const [index,factId]of proof.entries())g=act(g,'set-proof',{index,factId},host);return g;
+}
+function recoveredCase(id='bank'){
+    let g=started(id);while(g.phase!=='accusing'){g=begin(g);g=score(g,g.turn.words.map((_,i)=>i));g=act(g,'continue-case');}return g;
+}
+test('a correct three-choice answer cannot bypass the chronology or evidence connection in any case',()=>{
+    for(const id of CASE_IDS){const base=recoveredCase(id),story=CASES[id];
+        let g=completeDraft(base,{timeline:[...story.chronology.order].reverse()});g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);assert.equal(g.finishReason,'unsolved');assert.equal(g.party.assessment.suspect,true);assert.equal(g.party.assessment.timeline,false);
+        const wrongPair=caseFacts(id).map(f=>f.id).filter(key=>!story.connection.pairs.some(pair=>pair.includes(key))).slice(0,2);
+        g=completeDraft(base,{proof:wrongPair});g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);assert.equal(g.finishReason,'unsolved');assert.equal(g.party.assessment.timeline,true);assert.equal(g.party.assessment.connection,false);
+        g=completeDraft(base,{proof:[...story.connection.pairs[0]].reverse()});g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);assert.equal(g.finishReason,'solved');
+    }
+});
+test('shared drafts reject invalid, duplicate, unopened and private-phase actions; concurrent moves target event IDs',()=>{
+    let g=started(),guest=g.party.players.find(p=>p.id!==g.hostId).id;
+    assert.equal(act(g,'set-proof',{index:0,factId:'a3'},guest),undefined);assert.equal(act(g,'place-event',{eventId:'invented'},guest),undefined);
+    g=act(g,'place-event',{eventId:'portrait'},guest);assert.deepEqual(g.party.timeline,['portrait']);assert.equal(act(g,'place-event',{eventId:'portrait'},guest),undefined);
+    g=act(g,'place-event',{eventId:'export'},guest);assert.equal(act(g,'timeline-up',{index:1,eventId:'approval'},guest),undefined);
+    g=act(g,'timeline-up',{index:1,eventId:'export'},guest);assert.deepEqual(g.party.timeline,['export','portrait']);
+    assert.equal(act(g,'timeline-remove',{index:1,eventId:'missing'},guest),undefined);
+    g=act(g,'timeline-remove',{index:0,eventId:'portrait'},guest);assert.deepEqual(g.party.timeline,['export']);
+    g=begin(g);assert.equal(act(g,'place-event',{eventId:'portrait'},guest),undefined);g=act(g,'end-round');assert.equal(act(g,'place-event',{eventId:'portrait'},guest),undefined);
+    g=scoreFromReview(g);assert.equal(g.phase,'evidence');assert.equal(g.party.timeline[0],'export');
+    function scoreFromReview(value){value=act(value,'toggle-answer',{index:0});return act(value,'submit-round');}
+});
+test('another crew member changing a draft invalidates the host confirmation without leaking correctness',()=>{
+    let g=completeDraft(recoveredCase()),guest=g.party.players.find(p=>p.id!==g.hostId).id;
+    const cleared=act(g,'set-theory',{field:'suspect',index:-1},g.hostId);assert.equal(cleared.party.theory.suspect,-1);assert.equal(act(cleared,'accuse',{theory:caseSubmission(cleared)},g.hostId),undefined);
+    const confirmed=caseSubmission(g);g=act(g,'timeline-up',{index:3,eventId:'settled'},guest);
+    assert.equal(g.party.assessment,undefined);assert.equal(act(g,'accuse',{theory:confirmed},g.hostId),undefined);
+    assert.equal(act(g,'accuse',{theory:caseSubmission(g)},guest),undefined);
+    assert.equal(act(g,'set-proof',{index:1,factId:g.party.proof[0]},guest),undefined);
+    g=act(g,'set-proof',{index:1,factId:''},guest);assert.equal(g.party.proof[1],'');
+    const fresh=caseSubmission(g);g=act(g,'accuse',{theory:fresh},g.hostId);assert.equal(g.finishReason,'unsolved');
+});
+test('a zero-evidence forced ending remains submittable, and a rematch clears all reconstruction state',()=>{
+    let g=started('bank',{caseTurns:4});for(let i=0;i<4;i++){g=begin(g);g=score(g,[]);g=act(g,'continue-case');}
+    g=completeDraft(g,{proof:[]});g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);assert.equal(g.finishReason,'unsolved');assert.equal(g.party.assessment.connection,false);
+    g=act(g,'rematch',{seed:2},g.hostId);assert.deepEqual(g.party.timeline,[]);assert.deepEqual(g.party.proof,['','']);assert.equal(g.party.assessment,undefined);assert.equal(g.party.hintsUsed,0);
+});
+test('the audio cancellation and image transformation use the values actually shown to investigators',()=>{
+    const samples=caseFacts('encore').find(f=>f.id==='a1').visual.panels;
+    assert.ok(samples[0].samples.some(value=>value!==0));assert.deepEqual(samples[0].samples.map((value,i)=>(value-samples[1].samples[i])/2),[0,0,0,0]);
+    const patterns=caseFacts('observatory').find(f=>f.id==='i2').visual.panels;
+    const key=points=>points.map(p=>p.join(',')).sort().join('|');
+    assert.notEqual(key(patterns[0].points.map(([x,y])=>[6-x,y])),key(patterns[1].points));
+    assert.ok(patterns[0].points.every(p=>patterns[1].points.some(other=>other[0]===p[0]&&other[1]===p[1])));
 });

@@ -1,9 +1,9 @@
 import { ROUND_COUNTDOWN_MS, random, answerKey } from './rules.js?v=20261030.2';
-import { CASES, CASE_IDS, caseFacts, availableFacts } from './cases.js?v=20261030.cases1';
-import { normalizeModeSettings } from './modes.js?v=20261030.cases1';
+import { CASES, CASE_IDS, caseFacts, availableFacts, caseFields, caseSubmission, sameCaseSubmission, caseAssessment } from './cases.js?v=20261030.reconstruction1';
+import { normalizeModeSettings } from './modes.js?v=20261030.reconstruction1';
 
 export function caseSnapshot(data) {
-    return { ...data, ...(data.party ? { party: { ...data.party, players: data.party.players || [], history: data.party.history || [], found: data.party.found || [], discoveries: data.party.discoveries || [] } } : {}),
+    return { ...data, ...(data.party ? { party: { ...data.party, players: data.party.players || [], history: data.party.history || [], found: data.party.found || [], discoveries: data.party.discoveries || [], timeline: data.party.timeline || [], proof: [data.party.proof?.[0] || '', data.party.proof?.[1] || ''], hintsUsed: data.party.hintsUsed || 0 } } : {}),
         ...(data.turn ? { turn: { ...data.turn, words: data.turn.words || [], selectedIndexes: data.turn.selectedIndexes || [], caseFactIds: data.turn.caseFactIds || [] } } : {}) };
 }
 const participants = (g, people) => g.party.players.filter(p => !p.departed && people.some(member => member.playerId === p.id));
@@ -42,7 +42,7 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
         }
         const previous = roster.findIndex(p => p.playerId === g.party?.starterId), starter = previous >= 0 ? (previous + 1) % roster.length : Math.floor(random(action.seed)() * roster.length);
         g.matchId = action.type === 'rematch' ? (g.matchId || 1) + 1 : g.matchId || 1;
-        g.party = { starterId: roster[starter].playerId, players: roster.map(p => ({id:p.playerId,name:p.playerName,points:0,turns:0})), history: [], found: [], discoveries: [], totalCorrect: 0, hintUsed: false, theory: { suspect: -1, method: -1, destination: -1 } };
+        g.party = { starterId: roster[starter].playerId, players: roster.map(p => ({id:p.playerId,name:p.playerName,points:0,turns:0})), history: [], found: [], discoveries: [], totalCorrect: 0, hintUsed: false, hintsUsed: 0, timeline: [], proof: ['', ''], theory: { suspect: -1, method: -1, destination: -1 } };
         g.caseWordUses = {}; g.roundReview = null; g.reactions = null; g.finishReason = null; g.endedAt = null; g.auditEvents = {}; g.auditEvent = null;
         g.isGameStarted = true; nextTurn(g, starter);
     } else if (action.type === 'end-game') {
@@ -52,7 +52,9 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
         const party = g.party, turn = g.turn;
         if (!party || !turn || action.turnId !== turn.id) return;
         const speaker = actor.playerId === turn.speakerId, reviewer = connectedIds.includes(turn.speakerId) ? speaker : host;
-        const facts = caseFacts(g.settings.caseId), budgetOver = party.history.length >= g.settings.caseTurns || party.found.length === facts.length;
+        const story = CASES[g.settings.caseId], facts = caseFacts(g.settings.caseId), budgetOver = party.history.length >= g.settings.caseTurns || party.found.length === facts.length;
+        const canDraft = connectedIds.includes(actor.playerId) && party.players.some(p => p.id === actor.playerId && !p.departed)
+            && ['idle', 'waiting', 'evidence', 'accusing'].includes(g.phase);
         if (action.type === 'choose-lead') {
             if (!speaker || g.phase !== 'idle' || !availableFacts(g.settings.caseId, party.found, action.leadId).length || !CASES[g.settings.caseId].leads.some(l => l.id === action.leadId)) return;
             turn.leadId = action.leadId;
@@ -76,7 +78,7 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
             if (!reviewer || g.phase !== 'selecting') return;
             const discoveries = [...new Set(turn.selectedIndexes.map(i => turn.caseFactIds[i]))].filter(id => !party.found.includes(id));
             party.found.push(...discoveries); party.discoveries = discoveries; party.totalCorrect += turn.selectedIndexes.length; party.players[turn.speakerIndex].turns++;
-            party.history.push({ turnId:turn.id, speakerId:turn.speakerId, leadId:turn.leadId, words:[...turn.words], correct:[...turn.selectedIndexes], earned:turn.selectedIndexes.length, wordCount:turn.words.length, discoveries });
+            party.history.push({ turnId:turn.id, speakerId:turn.speakerId, leadId:turn.leadId, words:[...turn.words], caseFactIds:[...turn.caseFactIds], correct:[...turn.selectedIndexes], earned:turn.selectedIndexes.length, wordCount:turn.words.length, discoveries });
             g.roundReview = { turnId:turn.id, teamIndex:0, words:[...turn.words], selectedIndexes:[...turn.selectedIndexes] }; g.phase = 'evidence';
         } else if (action.type === 'continue-case') {
             if (!reviewer || g.phase !== 'evidence') return;
@@ -87,15 +89,33 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
         } else if (action.type === 'resume-case') {
             if (!host || g.phase !== 'accusing' || !party.returnPhase || budgetOver) return;
             g.phase = party.returnPhase; party.returnPhase = '';
+        } else if (action.type === 'place-event') {
+            if (!canDraft || !story.chronology.events.some(e => e.id === action.eventId) || party.timeline.includes(action.eventId)) return;
+            party.timeline.push(action.eventId);
+        } else if (action.type === 'timeline-up' || action.type === 'timeline-remove') {
+            // Resolve the stable event ID against the transaction's current order.
+            // Another crew member may have moved it since this client rendered.
+            const index = party.timeline.indexOf(action.eventId);
+            if (!canDraft || index < 0) return;
+            if (action.type === 'timeline-remove') party.timeline.splice(index, 1);
+            else { if (!index) return; [party.timeline[index - 1], party.timeline[index]] = [party.timeline[index], party.timeline[index - 1]]; }
+        } else if (action.type === 'set-proof') {
+            if (!canDraft || ![0,1].includes(action.index) || typeof action.factId !== 'string'
+                || action.factId && (!party.found.includes(action.factId) || party.proof[1-action.index] === action.factId)) return;
+            party.proof[action.index] = action.factId;
         } else if (action.type === 'case-hint') {
-            if (!host || !['idle','waiting','evidence','accusing'].includes(g.phase) || party.history.length < 2 || party.hintUsed) return;
-            party.hintUsed = true;
+            if (!host || !['idle','waiting','evidence','accusing'].includes(g.phase) || party.history.length < 2 || party.hintsUsed >= story.hints.length) return;
+            party.hintUsed = true; party.hintsUsed++;
         } else if (action.type === 'set-theory') {
-            if (!host || g.phase !== 'accusing' || !['suspect','method','destination'].includes(action.field) || !Number.isInteger(action.index) || action.index < 0 || action.index >= (action.field === 'suspect' ? 6 : 3)) return;
+            const field = caseFields(g.settings.caseId).find(([key]) => key === action.field);
+            if (!host || g.phase !== 'accusing' || !field || !Number.isInteger(action.index) || action.index < -1 || action.index >= field[2].length) return;
             party.theory[action.field] = action.index;
         } else if (action.type === 'accuse') {
-            if (!host || g.phase !== 'accusing' || !['suspect','method','destination'].every(f => party.theory[f] >= 0 && party.theory[f] === action.theory?.[f])) return;
-            g.phase = 'finished'; g.finishReason = ['suspect','method','destination'].every(f => party.theory[f] === CASES[g.settings.caseId].solution[f]) ? 'solved' : 'unsolved';
+            const submission = caseSubmission(g);
+            if (!host || g.phase !== 'accusing' || !caseFields(g.settings.caseId).every(([key,,options]) => Number.isInteger(submission[key]) && submission[key] >= 0 && submission[key] < options.length)
+                || submission.timeline.length !== story.chronology.events.length || !sameCaseSubmission(submission, action.theory)) return;
+            party.assessment = caseAssessment(g.settings.caseId, submission, party.found);
+            g.phase = 'finished'; g.finishReason = party.assessment.solved ? 'solved' : 'unsolved';
         } else return;
     }
     g.gameState = g.phase === 'finished' ? 'finished' : g.phase === 'waiting' ? 'waiting' : 'resumed';

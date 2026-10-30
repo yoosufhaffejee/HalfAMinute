@@ -2,12 +2,11 @@
   "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
   "completed": true,
   "checks": [
-    "bank: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset, offline with all network disabled",
-    "museum: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
-    "train: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
-    "observatory: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
-    "encore: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
-    "Authored Case Files: two online clients, role privacy, lead/evidence synchronization, scoring refresh, complete theory and next-case rematch"
+    "bank: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset, offline with all network disabled",
+    "museum: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset",
+    "train: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset",
+    "observatory: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset",
+    "encore: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset"
   ],
   "layouts": [
     {
@@ -31,26 +30,66 @@
       "overflow": false
     },
     {
-      "label": "Case theory",
+      "label": "Case reconstruction",
       "width": 320,
       "overflow": false
     },
     {
-      "label": "Case theory",
+      "label": "Case reconstruction",
       "width": 390,
       "overflow": false
     },
     {
-      "label": "Case theory",
+      "label": "Case reconstruction",
       "width": 1100,
       "overflow": false
     },
     {
-      "label": "Case theory large text",
+      "label": "Case reconstruction large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "observatory visual exhibit",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "observatory visual exhibit",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "observatory visual exhibit",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "observatory visual exhibit large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "encore visual exhibit",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "encore visual exhibit",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "encore visual exhibit",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "encore visual exhibit large text",
       "width": 320,
       "overflow": false
     }
   ],
   "errors": [],
-  "transactions": 64
+  "transactions": 0
 }
