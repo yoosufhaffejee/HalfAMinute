@@ -1,6 +1,6 @@
 import { answerKey } from './rules.js?v=20261029.2';
 import { CASE_IDS } from './cases.js?v=20261030.cases1';
-export const MODE_VERSION = '20261030.cases1';
+export const MODE_VERSION = '20261030.cases3';
 export const MODES = {
     classic: { name: 'Classic', description: 'Describe, guess and race to the finish. One point per correct answer.' },
     chaos: { name: 'Chaos', description: 'The clue game with board effects, shields and unexpected turns.' },
@@ -52,6 +52,6 @@ export function normalizeModeSettings(settings) {
         tableScoring: settings.tableScoring === 'guesser' ? 'guesser' : 'shared',
         tableSeconds: Math.max(15, Math.min(300, Math.round(Number(settings.tableSeconds) || 60))),
         tableCycles: Math.max(1, Math.min(3, Math.round(Number(settings.tableCycles) || 2))),
-        caseTurns: Math.max(4, Math.ceil(6 / Math.max(1, Number(settings.numWords) || 5)), Math.min(12, Math.round(Number(settings.caseTurns) || 8))),
+        caseTurns: Math.max(4, Math.ceil(6 / Math.max(1, Number(settings.numWords) || 5)), Math.min(12, Math.round(Number(settings.caseTurns) || 6))),
         caseId: CASE_IDS.includes(settings.caseId) ? settings.caseId : 'bank' };
 }

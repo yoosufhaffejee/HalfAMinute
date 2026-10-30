@@ -10,7 +10,7 @@ const context=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../d
 const dictionary=JSON.parse(JSON.stringify(context.dictionary));
 let now;const actor=id=>({playerId:id,playerName:id,connectionId:'c-'+id});
 const rules={drawWords:(g,seed)=>drawCaseCard(g,seed,caseWordObjects(g.settings.caseId,dictionary))};
-function lobby(id='bank',names=['A','B'],extra={}){now=1000000;let g={protocolVersion:State.PROTOCOL_VERSION,dateCreated:now,settings:Modes.normalizeModeSettings({mode:'case',caseId:id,numTeams:2,numWords:5,numSeconds:30,difficulty:'normal',caseTurns:8,...extra}),teams:[{points:0,players:[]},{points:0,players:[]}],hostId:'',phase:'waiting',currentTeam:1};for(const name of names)g=State.join(g,actor(name),now);return g;}
+function lobby(id='bank',names=['A','B'],extra={}){now=1000000;let g={protocolVersion:State.PROTOCOL_VERSION,dateCreated:now,settings:Modes.normalizeModeSettings({mode:'case',caseId:id,numTeams:2,numWords:5,numSeconds:30,difficulty:'normal',...extra}),teams:[{points:0,players:[]},{points:0,players:[]}],hostId:'',phase:'waiting',currentTeam:1};for(const name of names)g=State.join(g,actor(name),now);return g;}
 function act(g,type,extra={},who=g.turn?.speakerId||g.hostId){const copy=structuredClone(g);for(const p of Object.values(copy.presence))for(const c of Object.values(p.connections))if(c.connected)c.lastSeen=now;return State.act(copy,actor(who),{type,turnId:g.turn?.id,matchId:g.matchId||1,...extra},now,rules);}
 const started=(id,extra)=>act(lobby(id,undefined,extra),'start-game',{seed:0});
 function begin(g,lead){g=act(g,'choose-lead',{leadId:lead||availableFacts(g.settings.caseId,g.party.found)[0].leadId});g=act(g,'start-round',{seed:g.party.history.length+10});now+=4500;return g;}
@@ -39,7 +39,7 @@ test('curated deals are deterministic, follow lead/difficulty, spread evidence a
         if(difficulty!=='normal')assert.ok(a.words.every(word=>words.find(w=>w.word===word).difficulty===difficulty));}}
 });
 test('all five cases play through to a correct theory at easy, normal and hard without an AI request',()=>{
-    for(const id of CASE_IDS)for(const difficulty of ['easy','normal','hard']){let g=started(id,{difficulty});let turns=0;while(g.phase!=='accusing'){g=begin(g);g=score(g,g.turn.words.map((_,i)=>i));assert.equal(g.phase,'evidence');g=act(g,'continue-case');assert.ok(++turns<=8);}
+    for(const id of CASE_IDS)for(const difficulty of ['easy','normal','hard']){let g=started(id,{difficulty});let turns=0;while(g.phase!=='accusing'){g=begin(g);g=score(g,g.turn.words.map((_,i)=>i));assert.equal(g.phase,'evidence');g=act(g,'continue-case');assert.ok(++turns<=g.settings.caseTurns);}
         assert.equal(g.party.found.length,12);const before=structuredClone(g),who=g.hostId;for(const [field,index]of Object.entries(CASES[id].solution))g=act(g,'set-theory',{field,index},who);
         assert.equal(act(g,'accuse',{theory:{...g.party.theory,suspect:(g.party.theory.suspect+1)%6}},who),undefined);
         g=act(g,'accuse',{theory:{...g.party.theory}},who);assert.equal(g.finishReason,'solved');assert.equal(before.phase,'accusing');
