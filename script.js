@@ -166,7 +166,7 @@ function modeSettingsPresentation(settings) {
     document.getElementById('rerollOption').hidden = mode !== 'chaos';
     document.getElementById('trainingOption').hidden = party;
     document.getElementById('seriesOption').hidden = party;
-    document.getElementById('modePlayOptions').hidden = mode === 'table';
+    document.getElementById('modePlayOptions').hidden = party;
     const message = party ? mode === 'table' ? 'Open Table uses numbered word cards, individual scores and equal speaking turns. Choose speaking turns, timing and words per card here. Team targets, training hints, Chaos and team tallies do not apply.'
         : 'Case Files uses authored evidence and words curated from the built-in data. Category/theme packs, AI words, training hints and team score targets do not apply. Word difficulty, card size and round timing still apply.'
         : Modes.isStakes(settings) ? 'Stakes has its own scoring. Chaos effects and rerolls do not apply. The risk target follows the actual eligible card size.' : '';

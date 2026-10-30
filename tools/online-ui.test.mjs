@@ -1235,7 +1235,7 @@ test('Case Files uses authored data and hides incompatible packs while retaining
     const h=ui();h.run(`categories=caseDictionary;menu.hidden=false;document.getElementById('quickMode').value='case';document.getElementById('caseId').value='bank';
         document.getElementById('difficulty').value='normal';document.getElementById('aiWords').value='My saved edits';
         pendingOnlinePack={kind:'custom',entries:[{word:'Apple',canonical:'Apple',difficulty:'easy'}]};updateSetupSummary()`);
-    assert.equal(h.el('wordPacksSection').hidden,true);assert.equal(h.el('ai').hidden,true);assert.equal(h.run('pendingOnlinePack'),null);
+    assert.equal(h.el('wordPacksSection').hidden,true);assert.equal(h.el('modePlayOptions').hidden,true);assert.equal(h.el('ai').hidden,true);assert.equal(h.run('pendingOnlinePack'),null);
     assert.equal(h.run('getOnlineWordObjects(getSanitizedSettingsFromInputs()).length'),48);
     h.run('startAIGame();hostAIWordsOnline()');assert.equal(h.el('aiWords').value,'My saved edits');assert.match(h.el('aiFeedback').textContent,/authored built-in words/);
     h.run(`document.getElementById('quickMode').value='classic';updateSetupSummary()`);assert.equal(h.el('wordPacksSection').hidden,false);assert.equal(h.el('ai').hidden,false);
