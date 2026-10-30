@@ -1,5 +1,5 @@
 import { answerKey, random } from './rules.js?v=20261030.2';
-import { caseFacts, availableFacts } from './cases.js?v=20261030.eight1';
+import { caseFacts, availableFacts } from './cases.js?v=20261030.variants1';
 
 export function caseWordObjects(id, dictionary) {
     const registry = new Map();
@@ -11,7 +11,7 @@ export function caseWordObjects(id, dictionary) {
     }));
 }
 export function drawCaseCard(game, seed, words) {
-    const facts = availableFacts(game.settings.caseId, game.party.found, game.turn.leadId), ids = new Set(facts.map(f => f.id));
+    const facts = availableFacts(game, game.party.found, game.turn.leadId), ids = new Set(facts.map(f => f.id));
     const pool = words.filter(w => ids.has(w.caseFactId) && (game.settings.difficulty === 'normal' || w.difficulty === game.settings.difficulty));
     const rng = random(seed), uses = { ...(game.caseWordUses || {}) }, selected = [], selectedKeys = new Set(), perFact = {};
     for (let i = 0; i < game.settings.numWords; i++) {

@@ -1,6 +1,6 @@
 # Case Files: evidence and reconstruction
 
-The catalogue contains eight mysteries built around primary-source exhibits. Three accessible party mysteries join the five original reconstructions. Case pickers label and sort Easy, Medium and Hard independently of word difficulty. The [expansion plan and research](eight-cases-plan.md) records the new designs; the original reconstruction plan is in [case-reconstruction-design.md](case-reconstruction-design.md).
+The catalogue contains eight case files and 24 authored scenarios built around primary-source exhibits. Three accessible party mysteries join the five original reconstructions. Case pickers label and sort Easy, Medium and Hard independently of word difficulty. The [expansion plan and research](eight-cases-plan.md) records the new designs; the original reconstruction plan is in [case-reconstruction-design.md](case-reconstruction-design.md).
 
 ## What players do
 
@@ -8,9 +8,9 @@ Choose a lead, describe the familiar built-in words, and confirm the correctly g
 
 During discussion the crew drafts a four-event timeline and selects two recovered exhibits supporting the case's connection question. The notebook groups records by lead; selected documents can be expanded together for comparison. Structured receipts, coordinate diagrams and channel sample strips replace the old lists of conclusions. All specialist procedures needed to interpret them are included in the case.
 
-The host records who, how and where, then reviews the complete reconstruction. A correct name alone does not solve the case: all three answers, the chronology and a supported evidence pair must fit. There is no per-field correctness feedback before submitting an attempt. An unsuccessful attempt confirms only the parts the crew actually got right. Unresolved answers, their explanations and unopened exhibits stay hidden. The host can retry with the same notebook, answers and previously confirmed parts; an early attempt can also return to investigation while its original budget remains. Full explanations and missed exhibits appear only after the crew solves the entire case. Zero-evidence investigations can still submit an unsupported attempt.
+The host records who, how and where, then reviews the complete reconstruction. A correct name alone does not solve the case: all three answers, the chronology and a supported evidence pair must fit. There is no per-field correctness feedback before submitting an attempt. An unsuccessful attempt confirms only the parts the crew actually got right. Unresolved answers, their explanations and unopened exhibits stay hidden unless the host explicitly confirms a shared end-of-case reveal. The host can retry with the same notebook, answers and previously confirmed parts; an early attempt can also return to investigation while its original budget remains. Full explanations and missed exhibits appear after a complete solve or confirmed reveal of the current scenario. Reveal does not count as solving. Zero-evidence investigations can still submit an unsupported attempt.
 
-Six investigations remains the default. Existing 4–12 turn settings, word counts, difficulty and round timing remain available. Three optional progressive nudges unlock after two confirmed turns. Retrying revises the existing investigation; choosing the same case with “Start over” resets progress and word deals for its fixed mystery. There is no solution-reveal option. No AI service constructs cases, supplies words, or judges answers.
+Six investigations remains the default. Existing 4–12 turn settings, word counts, difficulty and round timing remain available. Three optional progressive nudges unlock after two confirmed turns. Retrying revises the existing investigation; choosing the same case with “Start over” resets progress and word deals for its fixed mystery. Finished cases offer confirmed reveal, fresh same-scenario replay and a guaranteed different scenario draw. No AI service constructs cases, supplies words, or judges answers.
 
 ## Author coherence review (contains solutions)
 
@@ -30,11 +30,11 @@ Local and online play use the same case reducer. Active crew members can change 
 
 Drafts survive refresh, temporary disconnection and host replacement. Firebase-omitted empty collections are normalized. Draft editing is blocked during countdown, description and answer selection. Rematches clear the reconstruction, assessment, hints and word history. Stopped games reveal no solution.
 
-The online protocol is now **14**, with versioned modules and CSS. Everyone must reload and create a new lobby. Retry commands increment the turn command ID without spending an investigation, rejecting stale submissions from the previous attempt. The existing client-trusted Firebase model and usual online voice-call assumption remain. Local gameplay works after the application has loaded; no first-visit offline service worker has been introduced.
+The online protocol is now **15**, with versioned modules and CSS. Everyone must reload and create a new lobby. Retry commands increment the turn command ID without spending an investigation, rejecting stale submissions from the previous attempt. The existing client-trusted Firebase model and usual online voice-call assumption remain. Local gameplay works after the application has loaded; no first-visit offline service worker has been introduced.
 
 ## Verification
 
-- **232 automated tests passed** across the existing baseline and all eight case rules, including tier ordering, partial-result privacy, preserved retry state, stale-attempt rejection, early retry/resume and fresh restart reset. New-case browser results are linked in the expansion plan.
+- **234 automated tests passed** across the existing baseline and all eight case rules, including tier ordering, partial-result privacy, preserved retry state, stale-attempt rejection, early retry/resume and fresh restart reset. New-case browser results are linked in the expansion plan.
 - The [focused retry browser checks](case-retry-browser.json) passed locally and with two clients: hidden unresolved answers and unopened exhibits, safe summary/share output, preserved correct answers, retry and fresh restart. Four responsive layout checks passed, including large text, with the [failure screen inspected](case-retry-mobile.png).
 - Every case completed independently at Easy, Normal and Hard. Tests cover wrong timelines with correct three-part answers, wrong and reversed evidence pairs, unavailable/duplicate exhibit IDs, shared edits, stale confirmations, private phases, progressive nudges, zero-evidence forced endings, rematches and Firebase-empty collections.
 - All five local browser cases completed, including private countdowns, timer expiry, source documents, timeline placement, proof selection, final review, debrief and next-case reset. Bank also completed with all network access disabled after load.
@@ -42,3 +42,5 @@ The online protocol is now **14**, with versioned modules and CSS. Everyone must
 - The two-client browser flow passed against both the [isolated backend](cases-online-browser.json) and [live Firebase](cases-live.json): shared guest edits, refresh persistence, changes invalidating host review, full submission and rematch. The temporary live lobby was closed through the UI and verified empty. [Local cases and layout results](cases-browser.json) are recorded separately.
 
 Automated and browser checks establish content consistency and lifecycle behavior. Fresh group play is still needed to judge the actual difficulty and enjoyment; clue counts are not used as a proxy.
+
+Scenario authoring and replay/reveal checks: see [editing-case-variations.md](editing-case-variations.md), which contains spoilers. Scenario IDs are shared match state and never rerolled by a reconnect or word round.

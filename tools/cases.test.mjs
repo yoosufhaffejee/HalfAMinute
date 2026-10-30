@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as State from '../online/state.js';
 import * as Modes from '../gameplay/modes.js';
-import { CASES, CASE_IDS, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseSubmission, caseAssessment, caseFeedback, confirmedCasePart } from '../gameplay/cases.js';
+import { CASES, CASE_IDS, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseSubmission, caseAssessment, caseFeedback, confirmedCasePart, caseStory, caseScenarioIds, chooseCaseScenario } from '../gameplay/cases.js';
 import { caseWordObjects, drawCaseCard } from '../gameplay/case-draw.js';
 const context=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../data.js',import.meta.url),'utf8')+'\nthis.dictionary=Object.values(categories).flat();',context);
 const dictionary=JSON.parse(JSON.stringify(context.dictionary));
@@ -15,6 +15,26 @@ function act(g,type,extra={},who=g.turn?.speakerId||g.hostId){const copy=structu
 const started=(id,extra)=>act(lobby(id,undefined,extra),'start-game',{seed:0});
 function begin(g,lead){g=act(g,'choose-lead',{leadId:lead||availableFacts(g.settings.caseId,g.party.found)[0].leadId});g=act(g,'start-round',{seed:g.party.history.length+10});now+=4500;return g;}
 function score(g,indexes){g=act(g,'end-round');for(const index of indexes)g=act(g,'toggle-answer',{index});return act(g,'submit-round');}
+function scenarioGame(id,seed){let g=act(lobby(id),'start-game',{seed});while(g.phase!=='accusing'){g=begin(g);g=score(g,g.turn.words.map((_,i)=>i));g=act(g,'continue-case');}return g;}
+function answerScenario(g){const story=caseStory(g);for(const[field,index]of Object.entries(story.solution))g=act(g,'set-theory',{field,index},g.hostId);for(const eventId of story.chronology.order)g=act(g,'place-event',{eventId},g.hostId);for(const[index,factId]of story.connection.pairs[0].entries())g=act(g,'set-proof',{index,factId},g.hostId);return g;}
+test('all 24 authored scenarios have three different culprits per case and independently solve with their own evidence',()=>{
+    for(const id of CASE_IDS){const culprits=new Set();for(let seed=0;seed<3;seed++){let g=scenarioGame(id,seed),story=caseStory(g);culprits.add(story.solution.suspect);
+        assert.equal(g.party.scenarioId,caseScenarioIds()[seed]);assert.equal(g.party.found.length,12);assert.equal(caseWordObjects(g,dictionary).length,48);
+        assert.deepEqual([...story.chronology.events].sort((a,b)=>a.minute-b.minute).map(e=>e.id),story.chronology.order);
+        assert.ok(story.leads.every(l=>l.facts.every(f=>f.records.length>=2&&f.requires.every(k=>caseFacts(g).some(other=>other.id===k)))));
+        g=answerScenario(g);const wrong=structuredClone(g);wrong.party.theory.suspect=(story.solution.suspect+1)%6;assert.equal(caseAssessment(wrong,caseSubmission(wrong),g.party.found).solved,false);
+        g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);assert.equal(g.finishReason,'solved',id+':'+seed);
+    }assert.equal(culprits.size,3,id);}
+});
+test('same-scenario replay resets progress, different-scenario draws exclude the current scenario and reveals are host-only',()=>{
+    for(const id of CASE_IDS){let g=scenarioGame(id,1),host=g.hostId,guest=g.party.players.find(p=>p.id!==host).id;
+        assert.equal(act(g,'reveal-case',{},host),undefined);g=act(g,'end-game',{},host);const before=structuredClone(g);
+        assert.equal(act(g,'reveal-case',{},guest),undefined);g=act(g,'reveal-case',{},host);assert.equal(g.party.revealed,true);assert.equal(g.finishReason,'stopped');assert.equal(act(g,'reveal-case',{},host),undefined);
+        const same=act(g,'rematch',{seed:0,caseId:id,scenarioMode:'same'},host);assert.equal(same.party.scenarioId,before.party.scenarioId);assert.deepEqual(same.party.found,[]);assert.equal(same.party.revealed,false);assert.equal(same.party.attempts,0);assert.deepEqual(caseStory(same),caseStory(before));
+        for(let seed=0;seed<6;seed++){const next=act(g,'rematch',{seed,caseId:id,scenarioMode:'new'},host);assert.notEqual(next.party.scenarioId,before.party.scenarioId);}
+        assert.equal(act(g,'rematch',{seed:1,caseId:id,scenarioMode:'invented'},host),undefined);
+    }
+});
 test('eight source-based cases use real vocabulary, balanced prompts and structured exhibits without named eliminations',()=>{
     assert.equal(CASE_IDS.length,8);
     for(const id of CASE_IDS){const s=CASES[id],facts=caseFacts(id),words=caseWordObjects(id,dictionary);assert.equal(s.people.length,6);assert.equal(s.methods.length,3);assert.equal(s.destinations.length,3);assert.equal(facts.length,12);assert.equal(words.length,48);

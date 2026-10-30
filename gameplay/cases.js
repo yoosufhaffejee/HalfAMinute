@@ -1,6 +1,7 @@
-import { CASE_CONTENT } from './case-content.js?v=20261030.eight1';
-import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261030.eight1';
-import { PARTY_CASES } from './case-party-content.js?v=20261030.eight1';
+import { CASE_CONTENT } from './case-content.js?v=20261030.variants1';
+import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261030.variants1';
+import { PARTY_CASES } from './case-party-content.js?v=20261030.variants1';
+import { SCENARIO_IDS, buildCaseVariant } from './case-variants.js?v=20261030.variants1';
 export const CASE_DIFFICULTIES = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
 const ratings = { museum: 'medium', train: 'medium', encore: 'hard', bank: 'hard', observatory: 'hard' };
 export const CASES = Object.fromEntries(Object.entries({ ...PARTY_CASES, ...CASE_CONTENT }).map(([id, story]) => [id, {
@@ -12,15 +13,29 @@ export const CASES = Object.fromEntries(Object.entries({ ...PARTY_CASES, ...CASE
 const rank = { easy: 0, medium: 1, hard: 2 };
 export const CASE_IDS = Object.keys(CASES).sort((a,b) => rank[CASES[a].difficulty] - rank[CASES[b].difficulty]);
 export function caseOptionLabel(id) { return `${CASE_DIFFICULTIES[CASES[id].difficulty]} · ${CASES[id].title}`; }
+const scenarios = new Map();
+export function caseStory(input, scenarioId) {
+    const id = typeof input === 'string' ? input : input.settings.caseId;
+    const variant = scenarioId || (typeof input === 'object' ? input.party?.scenarioId : '') || 'original';
+    if(!CASES[id] || !SCENARIO_IDS.includes(variant))throw new Error('Unknown case scenario');
+    const key=id+':'+variant;
+    if(!scenarios.has(key))scenarios.set(key,buildCaseVariant(CASES[id],id,variant));
+    return scenarios.get(key);
+}
+export function caseScenarioIds() { return [...SCENARIO_IDS]; }
+export function chooseCaseScenario(seed, previous) {
+    const choices=SCENARIO_IDS.filter(id=>id!==previous);
+    return choices[seed % choices.length];
+}
 export function caseFacts(id) {
-    return CASES[id].leads.flatMap(source => source.facts.map(item => ({ ...item, leadId: source.id })));
+    return caseStory(id).leads.flatMap(source => source.facts.map(item => ({ ...item, leadId: source.id })));
 }
 export function availableFacts(id, found = [], leadId) {
     return caseFacts(id).filter(item => (!leadId || item.leadId === leadId) && !found.includes(item.id)
         && item.requires.every(key => found.includes(key)));
 }
 export function caseFields(id) {
-    const story = CASES[id];
+    const story = caseStory(id);
     return [['suspect', 'Who was responsible?', story.people.map(p => `${p.name} · ${p.role}`)],
         ['method', story.methodQuestion, story.methods], ['destination', story.destinationQuestion, story.destinations]];
 }
@@ -37,7 +52,7 @@ export function sameCaseSubmission(left, right) {
             && left[key].every((value, index) => value === right[key][index]));
 }
 export function caseAssessment(id, submission, found = []) {
-    const story = CASES[id], result = {};
+    const story = caseStory(id), result = {};
     for (const field of ['suspect', 'method', 'destination']) result[field] = submission[field] === story.solution[field];
     result.timeline = Array.isArray(submission.timeline) && submission.timeline.length === story.chronology.order.length
         && story.chronology.order.every((key, index) => submission.timeline[index] === key);
@@ -49,7 +64,7 @@ export function caseAssessment(id, submission, found = []) {
 }
 // Failed results repeat only the player's confirmed answers, never authored solutions.
 export function caseFeedback(game) {
-    const id = game.settings.caseId, story = CASES[id], submission = caseSubmission(game), assessment = game.party.assessment || {};
+    const id = game, story = caseStory(game), submission = caseSubmission(game), assessment = game.party.assessment || {};
     const labels = { suspect: 'Who', method: 'How', destination: 'Where' };
     const parts = caseFields(id).map(([key,,options]) => ({ key, label: labels[key], correct: Boolean(assessment[key]),
         answer: assessment[key] ? options[submission[key]] : '' }));

@@ -1,6 +1,6 @@
 import { ROUND_COUNTDOWN_MS, random, answerKey } from './rules.js?v=20261030.2';
-import { CASES, CASE_IDS, caseFacts, availableFacts, caseFields, caseSubmission, sameCaseSubmission, caseAssessment } from './cases.js?v=20261030.eight1';
-import { normalizeModeSettings } from './modes.js?v=20261030.eight1';
+import { CASES, CASE_IDS, caseStory, chooseCaseScenario, caseFacts, availableFacts, caseFields, caseSubmission, sameCaseSubmission, caseAssessment } from './cases.js?v=20261030.variants1';
+import { normalizeModeSettings } from './modes.js?v=20261030.variants1';
 
 export function caseSnapshot(data) {
     return { ...data, ...(data.party ? { party: { ...data.party, players: data.party.players || [], history: data.party.history || [], found: data.party.found || [], discoveries: data.party.discoveries || [], timeline: data.party.timeline || [], proof: [data.party.proof?.[0] || '', data.party.proof?.[1] || ''], hintsUsed: data.party.hintsUsed || 0, attempts: data.party.attempts || 0, confirmedParts: data.party.confirmedParts || {} } } : {}),
@@ -35,15 +35,21 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
         if (action.type === 'rematch' ? g.phase !== 'finished' : g.isGameStarted || !['ready', 'waiting'].includes(g.phase)) return;
         const roster = people.filter(p => connectedIds.includes(p.playerId)).sort((a, b) => g.localPlayerOrder ? g.localPlayerOrder.indexOf(a.playerId) - g.localPlayerOrder.indexOf(b.playerId) : (a.joinedAt || 0) - (b.joinedAt || 0) || a.playerName.localeCompare(b.playerName));
         if (roster.length < 2 || roster.length > 12) return;
+        let scenarioId = chooseCaseScenario(action.seed);
         if (action.type === 'rematch') {
+            if(action.scenarioMode && !['same','new'].includes(action.scenarioMode))return;
+            const previousCase=g.settings.caseId,previousScenario=g.party.scenarioId||'original';
             const nextCase = action.caseId || CASE_IDS[(CASE_IDS.indexOf(g.settings.caseId) + 1) % CASE_IDS.length];
             if (!CASES[nextCase]) return;
+            if(action.scenarioMode==='same'&&nextCase!==previousCase)return;
+            scenarioId=action.scenarioMode==='same'?previousScenario:chooseCaseScenario(action.seed,nextCase===previousCase?previousScenario:undefined);
             g.settings.caseId = nextCase;
         }
         const previous = roster.findIndex(p => p.playerId === g.party?.starterId), starter = previous >= 0 ? (previous + 1) % roster.length : Math.floor(random(action.seed)() * roster.length);
         g.matchId = action.type === 'rematch' ? (g.matchId || 1) + 1 : g.matchId || 1;
         g.party = { starterId: roster[starter].playerId, players: roster.map(p => ({id:p.playerId,name:p.playerName,points:0,turns:0})), history: [], found: [], discoveries: [], totalCorrect: 0, hintUsed: false, hintsUsed: 0, attempts: 0, confirmedParts: {}, timeline: [], proof: ['', ''], theory: { suspect: -1, method: -1, destination: -1 } };
         g.caseWordUses = {}; g.roundReview = null; g.reactions = null; g.finishReason = null; g.endedAt = null; g.auditEvents = {}; g.auditEvent = null;
+        g.party.scenarioId=scenarioId;g.party.revealed=false;
         g.isGameStarted = true; nextTurn(g, starter);
     } else if (action.type === 'end-game') {
         if (!host || g.phase === 'finished') return;
@@ -52,16 +58,16 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
         const party = g.party, turn = g.turn;
         if (!party || !turn || action.turnId !== turn.id) return;
         const speaker = actor.playerId === turn.speakerId, reviewer = connectedIds.includes(turn.speakerId) ? speaker : host;
-        const story = CASES[g.settings.caseId], facts = caseFacts(g.settings.caseId), budgetOver = party.history.length >= g.settings.caseTurns || party.found.length === facts.length;
+        const story = caseStory(g), facts = caseFacts(g), budgetOver = party.history.length >= g.settings.caseTurns || party.found.length === facts.length;
         const canDraft = connectedIds.includes(actor.playerId) && party.players.some(p => p.id === actor.playerId && !p.departed)
             && ['idle', 'waiting', 'evidence', 'accusing'].includes(g.phase);
         if (action.type === 'choose-lead') {
-            if (!speaker || g.phase !== 'idle' || !availableFacts(g.settings.caseId, party.found, action.leadId).length || !CASES[g.settings.caseId].leads.some(l => l.id === action.leadId)) return;
+            if (!speaker || g.phase !== 'idle' || !availableFacts(g, party.found, action.leadId).length || !caseStory(g).leads.some(l => l.id === action.leadId)) return;
             turn.leadId = action.leadId;
         } else if (action.type === 'start-round') {
             if (!speaker || g.phase !== 'idle' || participants(g, people).filter(p => connectedIds.includes(p.id)).length < 2 || budgetOver
                 || !turn.leadId || !Number.isInteger(action.seed) || action.seed < 0 || action.seed > 0xFFFFFFFF) return;
-            const draw = rules.drawWords?.(g, action.seed), eligible = availableFacts(g.settings.caseId, party.found, turn.leadId);
+            const draw = rules.drawWords?.(g, action.seed), eligible = availableFacts(g, party.found, turn.leadId);
             if (!draw?.words?.length || draw.words.length > g.settings.numWords || draw.caseFactIds?.length !== draw.words.length || new Set(draw.words.map(answerKey)).size !== draw.words.length) return;
             if (!draw.words.every((word, i) => eligible.some(f => f.id === draw.caseFactIds[i] && f.words.some(w => answerKey(w) === answerKey(word))))) return;
             Object.assign(g, draw.pools); turn.words = draw.words; turn.caseFactIds = draw.caseFactIds; turn.selectedIndexes = [];
@@ -90,10 +96,13 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
             if (!host || g.phase !== 'accusing' || !party.returnPhase || budgetOver) return;
             g.phase = party.returnPhase; party.returnPhase = '';
         } else if (action.type === 'retry-case') {
-            if (!host || g.phase !== 'finished' || g.finishReason !== 'unsolved') return;
+            if (!host || g.phase !== 'finished' || g.finishReason !== 'unsolved' || party.revealed) return;
             // Retain the investigation; revoke commands and confirmations from its previous attempt.
             turn.id++; party.assessment = null; g.finishReason = null; g.endedAt = null;
             g.phase = 'accusing'; g.roundActive = false;
+        } else if (action.type === 'reveal-case') {
+            if(!host||g.phase!=='finished'||party.revealed||g.finishReason==='solved')return;
+            party.revealed=true;
         } else if (action.type === 'place-event') {
             if (!canDraft || !story.chronology.events.some(e => e.id === action.eventId) || party.timeline.includes(action.eventId)) return;
             party.timeline.push(action.eventId);
@@ -112,14 +121,14 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
             if (!host || !['idle','waiting','evidence','accusing'].includes(g.phase) || party.history.length < 2 || party.hintsUsed >= story.hints.length) return;
             party.hintUsed = true; party.hintsUsed++;
         } else if (action.type === 'set-theory') {
-            const field = caseFields(g.settings.caseId).find(([key]) => key === action.field);
+            const field = caseFields(g).find(([key]) => key === action.field);
             if (!host || g.phase !== 'accusing' || !field || !Number.isInteger(action.index) || action.index < -1 || action.index >= field[2].length) return;
             party.theory[action.field] = action.index;
         } else if (action.type === 'accuse') {
             const submission = caseSubmission(g);
-            if (!host || g.phase !== 'accusing' || !caseFields(g.settings.caseId).every(([key,,options]) => Number.isInteger(submission[key]) && submission[key] >= 0 && submission[key] < options.length)
+            if (!host || g.phase !== 'accusing' || !caseFields(g).every(([key,,options]) => Number.isInteger(submission[key]) && submission[key] >= 0 && submission[key] < options.length)
                 || submission.timeline.length !== story.chronology.events.length || !sameCaseSubmission(submission, action.theory)) return;
-            party.assessment = caseAssessment(g.settings.caseId, submission, party.found);
+            party.assessment = caseAssessment(g, submission, party.found);
             for (const key of ['suspect', 'method', 'destination']) if (party.assessment[key]) party.confirmedParts[key] = submission[key];
             if (party.assessment.timeline) party.confirmedParts.timeline = [...submission.timeline];
             if (party.assessment.connection) party.confirmedParts.connection = [...submission.proof];
@@ -138,7 +147,7 @@ export function caseView(data, actor, now, { player, active, people, connectedId
     const countdownRemainingMs = g.phase === 'describing' ? Math.max(0, turn.startedAt - now) : 0;
     const roster = {connectedPlayers:connectedIds.length,connectedTeams:0,reconnectingPlayers:people.length-connectedIds.length,eligible:g.isGameStarted ? participants(g,people).filter(p=>connectedIds.includes(p.id)).length>=2 : connectedIds.length>=2&&connectedIds.length<=12};
     return {player,active,host,speaker,reviewer,participant,roster,countdownRemainingMs,smallGame:false,
-        canStartGame:host&&!g.isGameStarted&&roster.eligible,canStartRound:speaker&&g.phase==='idle'&&roster.eligible&&Boolean(turn.leadId)&&availableFacts(g.settings.caseId,party.found,turn.leadId).length>0,
+        canStartGame:host&&!g.isGameStarted&&roster.eligible,canStartRound:speaker&&g.phase==='idle'&&roster.eligible&&Boolean(turn.leadId)&&availableFacts(g,party.found,turn.leadId).length>0,
         canSelect:reviewer&&g.phase==='selecting',canEndRound:reviewer&&g.phase==='describing'&&!countdownRemainingMs,
         showWords:active&&(g.phase==='selecting'||speaker&&g.phase==='describing'&&!countdownRemainingMs),
         remainingSeconds:g.phase==='describing'?Math.max(0,Math.ceil((turn.deadline-Math.max(now,turn.startedAt))/1000)):0};

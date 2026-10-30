@@ -59,6 +59,8 @@ async function pageFor(width = 390) {
         await page.route('**/firebase-database.js', route => route.fulfill({ contentType: 'application/javascript', body: sdk }));
     }
     await page.addInitScript(() => Object.defineProperty(navigator, 'canShare', { value: () => false }));
+    // Test-only observation hook; never included in the application files.
+    if(process.argv.includes('--variants-only'))await page.route('**/script.js*',route=>route.fulfill({contentType:'application/javascript',body:fs.readFileSync('script.js','utf8')+'\nwindow.caseTestState=()=>structuredClone(localPartyGame);'}));
     await page.goto(base, { waitUntil: 'domcontentloaded', timeout: 30000 }); await page.locator('#modeDescription').filter({ hasText: 'Describe' }).waitFor();
     return { page, context };
 }
@@ -162,13 +164,23 @@ async function localTableTimed(){
     assert.equal((await page.locator('.party-scores strong').allTextContents()).filter(x=>x==='1 pts').length,2);
     report.checks.push('Open Table local edge: 8 players, configured 10 words, full 60-second timer, guesser-only scoring, correction to skipped, small-screen review');await context.close();
 }
-async function reconstruct(page,id){
+async function reconstruct(page,id,story=caseContent.CASES[id]){
     const panel=page.locator('[data-case-disclosure="final-reconstruction"]');if(!await panel.evaluate(el=>el.open))await panel.locator('summary').first().click();
-    for(const eventId of caseContent.CASES[id].chronology.order)await page.locator(`[data-case-action="place-event"][data-event-id="${eventId}"]`).click();
-    for(const [index,factId]of caseContent.CASES[id].connection.pairs[0].entries())await page.locator('#case-proof-'+index).selectOption(factId);
+    for(const eventId of story.chronology.order)await page.locator(`[data-case-action="place-event"][data-event-id="${eventId}"]`).click();
+    for(const [index,factId]of story.connection.pairs[0].entries())await page.locator('#case-proof-'+index).selectOption(factId);
+}
+async function localVariations(){
+    const {page,context}=await pageFor();await page.clock.install();await page.evaluate(()=>{crypto.getRandomValues=a=>{a.fill(2);return a}});await page.locator('#quickMode').selectOption('case');await page.locator('#caseId').selectOption('bank');await page.locator('#caseTurns').fill('4');await page.locator('#localPlayerNames').fill('Alice\nBob');await settings(page,{txtSeconds:5});await page.locator('#startGameButton').click();
+    const initial=await page.evaluate(()=>window.caseTestState());assert.equal(initial.party.scenarioId,'alternate-b');const story=caseContent.caseStory(initial);
+    for(let i=0;i<4;i++){await gate(page);await page.locator('[data-case-action="choose-lead"]:enabled').first().click();await page.locator('[data-case-action="start-round"]').click();await page.clock.runFor(4800);await page.locator('[data-case-action="end-round"]').click();await page.locator('[data-case-action="submit-round"]').click();await page.locator('[data-case-action="continue-case"]').click();}
+    for(const eventId of story.chronology.order)await page.locator(`[data-case-action="place-event"][data-event-id="${eventId}"]`).click();for(const[field,index]of Object.entries(story.solution))await page.locator('#case-'+field).selectOption(String(index));await page.locator('[data-case-action="review-theory"]').click();await page.locator('[data-case-action="accuse"]').click();
+    assert.equal(await page.locator('.case-solution').count(),0);await page.locator('[data-case-action="request-reveal"]').click();assert.equal(await page.locator('.case-solution').count(),0);await page.locator('[data-case-action="cancel-reveal"]').click();assert.equal(await page.locator('.case-solution').count(),0);await page.locator('[data-case-action="request-reveal"]').click();await page.locator('[data-case-action="reveal-case"]').click();
+    assert.ok((await page.locator('.case-solution').innerText()).includes(story.people[story.solution.suspect].name));assert.equal((await page.evaluate(()=>window.caseTestState())).finishReason,'unsolved');assert.equal(await page.locator('[data-case-disclosure^="file:"]').count(),12);await layout(page,'Scenario reveal choices');await page.screenshot({path:'reports/case-variations-mobile.png',fullPage:true});
+    await page.locator('[data-case-action="replay-case"]').click();assert.equal((await page.evaluate(()=>window.caseTestState())).party.scenarioId,initial.party.scenarioId);assert.equal((await page.evaluate(()=>window.caseTestState())).party.found.length,0);await gate(page);await page.locator('[data-case-action="request-end"]').click();await page.locator('#confirmEndGameButton').click();await page.locator('[data-case-action="shuffle-case"]').click();const next=await page.evaluate(()=>window.caseTestState());assert.notEqual(next.party.scenarioId,initial.party.scenarioId);assert.equal(next.party.revealed,false);
+    report.checks.push('Local alternate scenario: correct current evidence/debrief, reveal confirmation/cancel, no false win, same replay, different draw, reveal reset, mobile layouts');await context.close();
 }
 async function localCase(id='bank') {
-    const {page,context}=await pageFor();await page.clock.install();await page.locator('#quickMode').selectOption('case');await page.locator('#caseId').selectOption(id);
+    const {page,context}=await pageFor();await page.clock.install();await page.evaluate(()=>{crypto.getRandomValues=a=>{a.fill(0);return a}});await page.locator('#quickMode').selectOption('case');await page.locator('#caseId').selectOption(id);
     assert.equal(await page.locator('#ai').isVisible(),false);await page.locator('#localPlayerNames').fill('Alice\nBob');await settings(page,{txtSeconds:5,txtWords:5});
     if(id==='bank'){await page.evaluate(()=>document.fonts.ready);await context.setOffline(true);}
     await page.locator('#startGameButton').click();let turns=0;
@@ -226,7 +238,7 @@ async function assertFailedCase(page,found){
     assert.ok(!(await page.locator('.party-stage').textContent()).includes(caseContent.CASES.bank.destinations[caseContent.CASES.bank.solution.destination]));
 }
 async function localCaseRetry(){
-    const {page,context}=await pageFor();await page.clock.install();await page.locator('#quickMode').selectOption('case');await page.locator('#caseId').selectOption('bank');await page.locator('#caseTurns').fill('4');await page.locator('#localPlayerNames').fill('Alice\nBob');await settings(page,{txtSeconds:5,txtWords:5});await page.locator('#startGameButton').click();
+    const {page,context}=await pageFor();await page.clock.install();await page.evaluate(()=>{crypto.getRandomValues=a=>{a.fill(0);return a}});await page.locator('#quickMode').selectOption('case');await page.locator('#caseId').selectOption('bank');await page.locator('#caseTurns').fill('4');await page.locator('#localPlayerNames').fill('Alice\nBob');await settings(page,{txtSeconds:5,txtWords:5});await page.locator('#startGameButton').click();
     for(let i=0;i<4;i++){await gate(page);await page.locator('[data-case-action="choose-lead"]:enabled').first().click();await page.locator('[data-case-action="start-round"]').click();await page.clock.runFor(4800);await page.locator('[data-case-action="end-round"]').click();await page.locator('[data-case-action="toggle-answer"]').first().click();await page.locator('[data-case-action="submit-round"]').click();await page.locator('[data-case-action="continue-case"]').click();}
     for(const eventId of [...caseContent.CASES.bank.chronology.order].reverse())await page.locator(`[data-case-action="place-event"][data-event-id="${eventId}"]`).click();
     for(const [field,index]of Object.entries(caseContent.CASES.bank.solution))await page.locator('#case-'+field).selectOption(String(field==='method'?index:(index+1)%(field==='suspect'?6:3)));
@@ -259,32 +271,40 @@ async function onlineCase(retry=false){
         await speaker.locator('[data-case-action="submit-round"]').click();await waitState(code,g=>g.phase==='evidence');await listener.locator('.case-evidence-card').first().waitFor();
         g=await gameState(code);await pageForId(g,g.turn.speakerId).locator('[data-case-action="continue-case"]').click();assert.ok(++turns<=8);
     }
-    let leader=pageForId(g,g.hostId),collaborator=leader===host.page?guest.page:host.page;await reconstruct(collaborator,id);
+    const story=caseContent.caseStory(g);
+    let leader=pageForId(g,g.hostId),collaborator=leader===host.page?guest.page:host.page;await reconstruct(collaborator,id,story);
     await waitState(code,g=>(g.party.timeline||[]).length===4&&(g.party.proof||[]).filter(Boolean).length===2);
     await collaborator.reload({waitUntil:'domcontentloaded'});await collaborator.locator('#case-suspect').waitFor();
-    assert.equal(await collaborator.locator('.case-timeline li').count(),4);assert.equal(await collaborator.locator('#case-proof-0').inputValue(),caseContent.CASES[id].connection.pairs[0][0]);
-    for(const[field,index]of Object.entries(caseContent.CASES[id].solution)){g=await gameState(code);leader=pageForId(g,g.hostId);await leader.locator('#case-'+field).selectOption(String(index));}
+    assert.equal(await collaborator.locator('.case-timeline li').count(),4);assert.equal(await collaborator.locator('#case-proof-0').inputValue(),story.connection.pairs[0][0]);
+    for(const[field,index]of Object.entries(story.solution)){g=await gameState(code);leader=pageForId(g,g.hostId);await leader.locator('#case-'+field).selectOption(String(index));}
     await leader.locator('[data-case-action="review-theory"]').click();
-    await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+caseContent.CASES[id].chronology.order[3]+'"]').click();await leader.locator('[data-case-action="review-theory"]').waitFor();
-    await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+caseContent.CASES[id].chronology.order[2]+'"]').click();
-    await waitState(code,g=>g.party.timeline.join(',')===caseContent.CASES[id].chronology.order.join(','));
-    const labels=caseContent.CASES[id].chronology.order.map(key=>caseContent.CASES[id].chronology.events.find(e=>e.id===key).label);
+    await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+story.chronology.order[3]+'"]').click();await leader.locator('[data-case-action="review-theory"]').waitFor();
+    await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+story.chronology.order[2]+'"]').click();
+    await waitState(code,g=>g.party.timeline.join(',')===story.chronology.order.join(','));
+    const labels=story.chronology.order.map(key=>story.chronology.events.find(e=>e.id===key).label);
     await leader.waitForFunction(labels=>[...document.querySelectorAll('.case-timeline li strong')].map(el=>el.textContent).join('|')===labels.join('|'),labels);
     if(retry){
-        for(const field of ['suspect','destination'])await leader.locator('#case-'+field).selectOption(String((caseContent.CASES[id].solution[field]+1)%(field==='suspect'?6:3)));
-        await collaborator.locator('#case-proof-0').selectOption('a1');await collaborator.locator('#case-proof-1').selectOption('a2');await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+caseContent.CASES[id].chronology.order[3]+'"]').click();
+        for(const field of ['suspect','destination'])await leader.locator('#case-'+field).selectOption(String((story.solution[field]+1)%(field==='suspect'?6:3)));
+        await collaborator.locator('#case-proof-0').selectOption('a1');await collaborator.locator('#case-proof-1').selectOption('a2');await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+story.chronology.order[3]+'"]').click();
         await leader.waitForFunction(()=>document.querySelectorAll('.case-timeline li strong')[2]?.textContent==='Funds leave the bank');
         await leader.locator('[data-case-action="review-theory"]').click();await leader.locator('[data-case-action="accuse"]').click();g=await waitState(code,g=>g.phase==='finished');const failedTurn=g.turn.id,foundCount=g.party.found.length;
         await assertFailedCase(leader,foundCount);await assertFailedCase(collaborator,foundCount);await collaborator.reload({waitUntil:'domcontentloaded'});await assertFailedCase(collaborator,foundCount);assert.equal(await collaborator.locator('[data-case-action="retry-case"]').count(),0);
-        await leader.locator('[data-case-action="retry-case"]').click();await waitState(code,g=>g.phase==='accusing'&&g.turn.id>failedTurn);await collaborator.reload({waitUntil:'domcontentloaded'});await collaborator.locator('#case-method').waitFor();assert.equal(await collaborator.locator('.case-confirmed').count(),1);assert.equal(await collaborator.locator('#case-method').inputValue(),String(caseContent.CASES[id].solution.method));
-        await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+caseContent.CASES[id].chronology.order[2]+'"]').click();for(const[index,factId]of caseContent.CASES[id].connection.pairs[0].entries())await collaborator.locator('#case-proof-'+index).selectOption(factId);
-        for(const[field,index]of Object.entries(caseContent.CASES[id].solution))await leader.locator('#case-'+field).selectOption(String(index));
+        await leader.locator('[data-case-action="retry-case"]').click();await waitState(code,g=>g.phase==='accusing'&&g.turn.id>failedTurn);await collaborator.reload({waitUntil:'domcontentloaded'});await collaborator.locator('#case-method').waitFor();assert.equal(await collaborator.locator('.case-confirmed').count(),1);assert.equal(await collaborator.locator('#case-method').inputValue(),String(story.solution.method));
+        await collaborator.locator('[data-case-action="timeline-up"][data-event-id="'+story.chronology.order[2]+'"]').click();for(const[index,factId]of story.connection.pairs[0].entries())await collaborator.locator('#case-proof-'+index).selectOption(factId);
+        for(const[field,index]of Object.entries(story.solution))await leader.locator('#case-'+field).selectOption(String(index));
         await leader.waitForFunction(labels=>[...document.querySelectorAll('.case-timeline li strong')].map(el=>el.textContent).join('|')===labels.join('|'),labels);
     }
-    await leader.waitForFunction(({labels,theory,proof})=>labels.join('|')===[...document.querySelectorAll('.case-timeline li strong')].map(el=>el.textContent).join('|')&&Object.entries(theory).every(([field,value])=>document.getElementById('case-'+field)?.value===String(value))&&proof.every((value,index)=>document.getElementById('case-proof-'+index)?.value===value),{labels,theory:caseContent.CASES[id].solution,proof:caseContent.CASES[id].connection.pairs[0]});
+    await leader.waitForFunction(({labels,theory,proof})=>labels.join('|')===[...document.querySelectorAll('.case-timeline li strong')].map(el=>el.textContent).join('|')&&Object.entries(theory).every(([field,value])=>document.getElementById('case-'+field)?.value===String(value))&&proof.every((value,index)=>document.getElementById('case-proof-'+index)?.value===value),{labels,theory:story.solution,proof:story.connection.pairs[0]});
     await leader.locator('[data-case-action="review-theory"]').click();await leader.locator('[data-case-action="accuse"]').click();g=await waitState(code,g=>g.phase==='finished');assert.equal(g.finishReason,'solved');
     if(retry)report.checks.push('Online failed case: both clients hide unsolved answers; only host retries; same notebook/answers and confirmed part survive refresh; corrected retry solves');
-    leader=pageForId(g,g.hostId);await leader.locator('[data-case-action="rematch"]').click();g=await waitState(code,g=>g.matchId===2);assert.equal(g.settings.caseId,caseContent.CASE_IDS[(caseContent.CASE_IDS.indexOf(id)+1)%caseContent.CASE_IDS.length]);assert.equal((g.party.found||[]).length,0);
+    leader=pageForId(g,g.hostId);
+    if(process.argv.includes('--variants-only')){
+        const originalScenario=g.party.scenarioId;await leader.locator('[data-case-action="replay-case"]').click();g=await waitState(code,g=>g.matchId===2);assert.equal(g.party.scenarioId,originalScenario);assert.equal((g.party.found||[]).length,0);
+        await leader.locator('[data-case-action="request-end"]').click();await leader.locator('#confirmEndGameButton').click();await leader.locator('[data-case-action="shuffle-case"]').click();g=await waitState(code,g=>g.matchId===3);assert.notEqual(g.party.scenarioId,originalScenario);assert.equal(g.party.revealed,false);
+        const nextStory=caseContent.caseStory(g);await leader.locator('[data-case-action="request-end"]').click();await leader.locator('#confirmEndGameButton').click();await leader.locator('[data-case-action="request-reveal"]').click();assert.equal(await collaborator.locator('[data-case-action="reveal-case"]').count(),0);await leader.locator('[data-case-action="reveal-case"]').click();g=await waitState(code,g=>g.party.revealed);assert.equal(g.finishReason,'stopped');
+        await collaborator.locator('.case-solution').waitFor();assert.ok((await collaborator.locator('.case-solution').innerText()).includes(nextStory.people[nextStory.solution.suspect].name));await collaborator.reload({waitUntil:'domcontentloaded'});await collaborator.locator('.case-solution').waitFor();assert.ok((await collaborator.locator('.case-solution').innerText()).includes(nextStory.people[nextStory.solution.suspect].name));
+        report.checks.push('Online scenario ID survives refresh; same replay retains ID; new draw excludes it; host-only reveal synchronizes the current variant and survives refresh without awarding a solve');
+    }else{await leader.locator('[data-case-action="rematch"]').click();g=await waitState(code,g=>g.matchId===2);assert.equal(g.settings.caseId,caseContent.CASE_IDS[(caseContent.CASE_IDS.indexOf(id)+1)%caseContent.CASE_IDS.length]);assert.equal((g.party.found||[]).length,0);}
     if(live)for(const page of [host.page,guest.page]){await page.locator('[data-case-action="exit"]').click();await page.locator('#menu').waitFor({state:'visible'});}
     report.checks.push('Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch');await host.context.close();await guest.context.close();
 }
@@ -383,7 +403,8 @@ async function onlinePair(mode, format = 'voice') {
     browser = await chromium.launch({ ...(process.platform === 'win32' ? { channel: 'msedge' } : {}), headless: true });
     try {
         caseContent=await import('../gameplay/cases.js');
-        if(process.argv.includes('--new-cases-only')){if(!process.argv.includes('--online-only'))for(const id of ['cake','duck','ghost'])await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
+        if(process.argv.includes('--variants-only')){if(!process.argv.includes('--online-only'))await localVariations();if(!process.argv.includes('--local-only'))await onlineCase();}
+        else if(process.argv.includes('--new-cases-only')){if(!process.argv.includes('--online-only'))for(const id of ['cake','duck','ghost'])await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
         else if(process.argv.includes('--case-retry-only')){if(!process.argv.includes('--online-only'))await localCaseRetry();if(!process.argv.includes('--local-only'))await onlineCase(true);}
         else if(process.argv.includes('--cases-only')) {if(!process.argv.includes('--online-only'))for(const id of caseContent.CASE_IDS)await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
         else if(process.argv.includes('--table-only')) {
@@ -402,6 +423,6 @@ async function onlinePair(mode, format = 'voice') {
             for(const code of liveCodes){const game=await gameState(code);if(!game||game.phase==='ended'&&!game.teams.some(t=>(t.players||[]).length))report.cleanup.closed++;else report.cleanup.remaining.push(code);}
             if(report.cleanup.remaining.length){report.completed=false;report.failure='Temporary test lobby cleanup incomplete';process.exitCode=1;}
         }
-        fs.writeFileSync(process.argv.includes('--new-cases-only')?(live?'reports/new-cases-live.json':'reports/new-cases-browser.json'):process.argv.includes('--case-retry-only')?(live?'reports/case-retry-live.json':'reports/case-retry-browser.json'):process.argv.includes('--cases-only')?(live?'reports/cases-live.json':process.argv.includes('--online-only')?'reports/cases-online-browser.json':'reports/cases-browser.json'):process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
+        fs.writeFileSync(process.argv.includes('--variants-only')?(live?'reports/case-variations-live.json':'reports/case-variations-browser.json'):process.argv.includes('--new-cases-only')?(live?'reports/new-cases-live.json':'reports/new-cases-browser.json'):process.argv.includes('--case-retry-only')?(live?'reports/case-retry-live.json':'reports/case-retry-browser.json'):process.argv.includes('--cases-only')?(live?'reports/cases-live.json':process.argv.includes('--online-only')?'reports/cases-online-browser.json':'reports/cases-browser.json'):process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
     }
 })().catch(error => { console.error(error); process.exitCode = 1; server.close(); });

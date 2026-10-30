@@ -1,0 +1,32 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "Local alternate scenario: correct current evidence/debrief, reveal confirmation/cancel, no false win, same replay, different draw, reveal reset, mobile layouts",
+    "Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch"
+  ],
+  "layouts": [
+    {
+      "label": "Scenario reveal choices",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Scenario reveal choices",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Scenario reveal choices",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Scenario reveal choices large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 73
+}

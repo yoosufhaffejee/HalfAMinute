@@ -1,0 +1,15 @@
+{
+  "backend": "Live Firebase; temporary UI-created test lobbies, explicitly left afterward; no AI requests",
+  "completed": true,
+  "checks": [
+    "Online scenario ID survives refresh; same replay retains ID; new draw excludes it; host-only reveal synchronizes the current variant and survives refresh without awarding a solve",
+    "Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch"
+  ],
+  "layouts": [],
+  "errors": [],
+  "cleanup": {
+    "created": 1,
+    "closed": 1,
+    "remaining": []
+  }
+}
