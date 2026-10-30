@@ -41,7 +41,8 @@ export function createCaseSurface(root, callbacks) {
         }parent.appendChild(figure);
     }
     function scene(parent,story){const n=h('ol','case-scene');n.setAttribute('aria-label','Case locations and record sources');story.scene.forEach((label,index)=>{const item=h('li');item.appendChild(h('span','',String(index+1).padStart(2,'0')));item.appendChild(h('strong','',label));n.appendChild(item)});parent.appendChild(n);}
-    function briefing(parent,story){const n=h('div','case-brief');n.appendChild(h('span','case-file-icon',story.icon));note(n,story.intro);scene(n,story);note(n,story.groundRules,'case-ground-rules');note(n,'This case has three scenarios. A new investigation draws one; use this game’s evidence to determine its answer.','case-ground-rules');note(n,'Recover documents through word rounds. Rebuild four events, connect two exhibits, then submit who, how and where. A correct name alone does not close the case.','case-ground-rules');parent.appendChild(n);}
+    function suspectCards(parent,story){const people=h('div','case-person-list');story.people.forEach((p,index)=>{const card=h('article','case-person');card.appendChild(h('span',`case-initial case-initial-${index%4}`,p.name.slice(0,1)));card.appendChild(h('h4','',p.name));card.appendChild(h('strong','',p.role));note(card,p.profile);people.appendChild(card)});parent.appendChild(people);}
+    function briefing(parent,story){const n=h('div','case-brief');n.appendChild(h('span','case-file-icon',story.icon));note(n,story.intro);n.appendChild(h('h3','case-suspects-heading','Meet the six suspects'));suspectCards(n,story);scene(n,story);note(n,story.groundRules,'case-ground-rules');note(n,'This case has three scenarios. A new investigation draws one; use this game’s evidence to determine its answer.','case-ground-rules');note(n,'Recover documents through word rounds. Rebuild four events, connect two exhibits, then submit who, how and where. A correct name alone does not close the case.','case-ground-rules');parent.appendChild(n);}
     function leads(parent,state){
         const {game,view,busy}=state,story=caseStory(game);const list=h('div','case-lead-list');
         story.leads.forEach(source=>{
@@ -54,8 +55,7 @@ export function createCaseSurface(root, callbacks) {
     function notebook(parent,state){
         const {game,view,busy}=state,story=caseStory(game),facts=caseFacts(game),final=game.phase==='finished'&&(game.finishReason==='solved'||game.party.revealed);
         const book=disclosure('notebook',`Case notebook · ${game.party.found.length}/${facts.length} evidence files`,game.phase==='accusing');book.className='case-notebook';
-        const profiles=disclosure('profiles','Meet the six suspects');profiles.className='case-profiles';const people=h('div','case-person-list');
-        story.people.forEach((p,index)=>{const card=h('article','case-person');card.appendChild(h('span',`case-initial case-initial-${index%4}`,p.name.slice(0,1)));card.appendChild(h('h4','',p.name));card.appendChild(h('strong','',p.role));note(card,p.profile);people.appendChild(card)});profiles.appendChild(people);book.appendChild(profiles);
+        const profiles=disclosure('profiles','Meet the six suspects');profiles.className='case-profiles';suspectCards(profiles,story);book.appendChild(profiles);
         const brief=disclosure('brief','Briefing & ground rules');note(brief,story.intro);scene(brief,story);note(brief,story.groundRules);book.appendChild(brief);
         const found=facts.filter(f=>final||game.party.found.includes(f.id));
         if(!found.length)note(book,'Evidence appears here after confirmed correct words. The speaker never sees a sealed fact just by receiving its word.');
