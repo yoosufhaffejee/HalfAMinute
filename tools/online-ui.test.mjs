@@ -1,3 +1,5 @@
+import { CASES } from '../gameplay/cases.js';
+import { caseWordObjects, drawCaseCard } from '../gameplay/case-draw.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -13,6 +15,9 @@ import * as Experience from '../gameplay/experience.js';
 import * as PackLibrary from '../gameplay/saved-packs.js';
 import { createScreenAwake } from '../gameplay/screen-awake.js';
 import * as Modes from '../gameplay/modes.js';
+
+const caseDataContext=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../data.js',import.meta.url),'utf8')+'\nthis.caseDictionary=categories;',caseDataContext);
+const caseDictionary=JSON.parse(JSON.stringify(caseDataContext.caseDictionary));
 
 const source = fs.readFileSync(new URL('../script.js', import.meta.url), 'utf8').replace(/^import .*$/gm, '');
 const now = 1000000;
@@ -55,7 +60,7 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, Experience, PackLibrary, createScreenAwake, Modes, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, Experience, PackLibrary, createScreenAwake, Modes, CASES, caseWordObjects, drawCaseCard, caseDictionary, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), createAiWordClient: () => ({}),
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },
@@ -1224,4 +1229,23 @@ test('an Open Table lobby renders before any turn exists and offers the host for
     for(const name of ['A','B','C'])data=OnlineState.join(data,actor(name),now);
     assert.equal(data.turn,undefined); h.mount(data);
     assert.equal(h.el('partyGame').hidden,false);assert.equal(h.metrics.partyStage.view.canStartGame,true);
+});
+
+test('Case Files uses authored data and hides incompatible packs while retaining the AI editor', () => {
+    const h=ui();h.run(`categories=caseDictionary;menu.hidden=false;document.getElementById('quickMode').value='case';document.getElementById('caseId').value='bank';
+        document.getElementById('difficulty').value='normal';document.getElementById('aiWords').value='My saved edits';
+        pendingOnlinePack={kind:'custom',entries:[{word:'Apple',canonical:'Apple',difficulty:'easy'}]};updateSetupSummary()`);
+    assert.equal(h.el('wordPacksSection').hidden,true);assert.equal(h.el('ai').hidden,true);assert.equal(h.run('pendingOnlinePack'),null);
+    assert.equal(h.run('getOnlineWordObjects(getSanitizedSettingsFromInputs()).length'),48);
+    h.run('startAIGame();hostAIWordsOnline()');assert.equal(h.el('aiWords').value,'My saved edits');assert.match(h.el('aiFeedback').textContent,/authored built-in words/);
+    h.run(`document.getElementById('quickMode').value='classic';updateSetupSummary()`);assert.equal(h.el('wordPacksSection').hidden,false);assert.equal(h.el('ai').hidden,false);
+});
+test('local Case Files ignores a previous AI pack and starts from the built-in evidence vocabulary', () => {
+    const h=ui();h.run(`categories=caseDictionary;menu.hidden=false;globalThis.partySnapshot=value=>value;globalThis.sharePartyResult=()=>{};globalThis.partySummary=()=>{};
+        globalThis.createPartySurface=()=>({render:state=>{metrics.partyStage=state},reset(){}});
+        document.getElementById('quickMode').value='case';document.getElementById('caseId').value='bank';document.getElementById('difficulty').value='normal';
+        document.getElementById('localPlayerNames').value='Alice\\nBob';isAiGame=true;document.getElementById('aiWords').value='Unrelated custom word';
+        startLocalParty(getSanitizedSettingsFromInputs())`);
+    assert.equal(h.run('localPartyGame.customWords'),false);assert.equal(h.run('Boolean(localPartyGame.wordPack)'),false);
+    assert.equal(h.run('localWordObjects.length'),48);assert.equal(h.metrics.partyStage.game.settings.caseId,'bank');assert.equal(h.el('aiWords').value,'Unrelated custom word');
 });

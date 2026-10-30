@@ -1,3 +1,4 @@
+import { caseFacts } from '../gameplay/cases.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { OnlineClient } from '../online/client.js';
@@ -128,9 +129,10 @@ test('Open Table client keeps unlimited typed turns and committed messages on re
 });
 
 test('Case Files expires on the shared clock and the replacement host recovers review without losing evidence', async t => {
-    const db = new Database(); db.game.settings = { ...db.game.settings, mode: 'case', caseTurns: 4, caseId: 'trophy' };
-    const a = makeClient(t, db, 'A'), b = makeClient(t, db, 'B'); await a.client.connect(); await b.client.connect();
+    const db = new Database(); db.game.settings = { ...db.game.settings, mode: 'case', caseTurns: 4, caseId: 'bank' };
+    const a = makeClient(t, db, 'A'), b = makeClient(t, db, 'B'); for(const entry of [a,b])entry.client.rules.drawWords=()=>({words:caseFacts('bank')[0].words.slice(0,3),caseFactIds:['a1','a1','a1'],pools:{}}); await a.client.connect(); await b.client.connect();
     await a.client.command({ type: 'start-game', seed: 0 }); await flush();
+    await a.client.command({type:'choose-lead',leadId:'access'});
     await a.client.command({ type: 'start-round', seed: 1 }); await flush();
     db.now = db.game.turn.deadline - 1; await b.client.tick(); assert.equal(db.game.phase, 'describing');
     db.now++; await b.client.tick(); await flush(); assert.equal(db.game.phase, 'selecting');

@@ -1,0 +1,62 @@
+[
+  {
+    "caseId": "bank",
+    "title": "The Midnight Transfer",
+    "suspects": 6,
+    "methods": 3,
+    "destinations": 3,
+    "evidenceFiles": 12,
+    "existingVocabulary": 48,
+    "minimumProof": 5,
+    "minimumReachableProof": 5,
+    "completeSolutions": 1
+  },
+  {
+    "caseId": "museum",
+    "title": "The Four-Minute Gallery",
+    "suspects": 6,
+    "methods": 3,
+    "destinations": 3,
+    "evidenceFiles": 12,
+    "existingVocabulary": 48,
+    "minimumProof": 5,
+    "minimumReachableProof": 5,
+    "completeSolutions": 1
+  },
+  {
+    "caseId": "train",
+    "title": "The Night Train Exchange",
+    "suspects": 6,
+    "methods": 3,
+    "destinations": 3,
+    "evidenceFiles": 12,
+    "existingVocabulary": 48,
+    "minimumProof": 5,
+    "minimumReachableProof": 5,
+    "completeSolutions": 1
+  },
+  {
+    "caseId": "observatory",
+    "title": "The False Signal",
+    "suspects": 6,
+    "methods": 3,
+    "destinations": 3,
+    "evidenceFiles": 12,
+    "existingVocabulary": 48,
+    "minimumProof": 5,
+    "minimumReachableProof": 5,
+    "completeSolutions": 1
+  },
+  {
+    "caseId": "encore",
+    "title": "The Silent Encore",
+    "suspects": 6,
+    "methods": 3,
+    "destinations": 3,
+    "evidenceFiles": 12,
+    "existingVocabulary": 48,
+    "minimumProof": 5,
+    "minimumReachableProof": 5,
+    "completeSolutions": 1
+  }
+]

@@ -83,7 +83,7 @@ The Game selector explains each mode and shows only the setup that applies. How 
 | Boost Stakes | Existing team rules; normal clue points plus 2 on success or minus 2 on failure, floor zero | Bank 2 points to risk; complete one normal team turn before risking again |
 | Double Stakes | Existing team rules; meet the target to double clue points, otherwise lose 3 banked points and earn no clue points | Bank 3 points; one risk per team per match |
 | Open Table | **3–8 individuals**; first correct guesser(s) +1, with optional speaker +1 per solved word (default) | Numbered cards follow Words per round; 60-second default or Unlimited; 1–3 speaking turns each; online voice call or typed clues |
-| Case Files | **2–12 players in one crew** | Three illustrated investigations; 4–12 timed turns; correct words unlock evidence and the host confirms a final accusation |
+| Case Files | **2–12 players in one crew** | Five authored cases, three investigation leads, word-linked evidence, and a final who/how/where theory; no AI generation |
 
 Both stakes modes lock the choice before the countdown and use a target of 60% of the actual distinct eligible card, rounded up (3 of 5). Risk resources are spent only when a turn is scored. Cancelled turns spend nothing. Their normal turns retain ordinary clue scoring, and both modes use the selected team win rule. They do not combine with Chaos.
 
@@ -93,11 +93,17 @@ Online Open Table asks the host to choose **Voice call** or **Typed clues** at m
 
 Everyone in the starting roster gets equal speaking opportunities. Late arrivals watch until rematch; departed players leave the ranking while their earned history remains. Removing a speaker cancels an unscored live turn. A temporary disconnect retains their seat and allows host recovery. New turns wait for three connected participants. Rematches can retain or switch the online format and reset scores/awards/messages while retaining deck exhaustion. Seven guarded between-turn reactions are available: applause, fire, laughter, shock, clever clue, close call and brutal miss.
 
-Case Files has one shared outcome, no individual score target, and no opposing viewers of live answers. Correct words accumulate toward evidence (3 per card for a five-word setup; short cards scale this threshold). Three facts identify one culprit, chosen from four suspects. Evidence completion or the turn budget opens the accusation screen. Three authored cases have illustrated profiles; no live model invents or judges the mystery. Late arrivals can join the cooperative crew. Local play passes the device to each speaker.
+Case Files has five fixed authored mysteries: **The Midnight Transfer**, **The Four-Minute Gallery**, **The Night Train Exchange**, **The False Signal**, and **The Silent Encore**. Each has six suspects, three possible methods, three destinations, three investigation leads and twelve verified evidence files. All 48 vocabulary prompts per case are references to existing `data.js` entries, with their actual easy/hard labels. There are no runtime AI calls, custom word packs or generated cases. Local play runs without a network connection after the app has loaded; online play uses Firebase and the group’s existing voice call.
 
-AI/custom word sources work in all modes; word scope and exhaustion behavior remain in use. Online shared packs retain their existing 150-answer limit. Local Open Table/Case Files can use larger manually pasted packs without sending them to Firebase. Training hints apply to built-in words in timed modes and are disabled in Open Table. Session team tallies apply only to team modes. Individual/crew modes have their own results, history, exports, result cards, invitations and between-turn reactions.
+The speaker chooses a lead before the countdown. After Go, only that speaker sees its card. Correct words reveal their mapped evidence files after confirmation; related words can open the same file once. Already discovered files leave the drawing pool. Follow-ups unlock as evidence from other leads supplies context, and missed files can be retried through related words. A nearly completed lead can have a shorter card rather than filler. Each confirmed turn spends one investigation turn; cancelling an unscored turn does not. A debrief pause lets the crew read discoveries before passing the device or role. The notebook contains profiles, reliable evidence, the briefing and an optional once-per-case reasoning hint after two turns. A complete solution needs at least five evidence files, with alternative proofs if one route is missed.
 
-See [Open Table rebuild and verification](reports/open-table-rebuild.md), [original design and lifecycle contract](reports/new-modes-design.md) and [implementation/verification report](reports/new-modes.md).
+Word difficulty, card size (1–15) and round timing still apply. The default investigation budget is eight turns (4–12 configurable); one-word cards require at least six turns. AI/custom source and training controls are hidden for this mode, with the underlying preferences retained for other games. Category/theme filters do not override authored case vocabulary. Case Files has one shared solved/unsolved outcome, no team target or individual points. The host reviews and submits one final theory covering culprit, method and destination; stale or partial confirmations are rejected. The crew can resume an early theory until the turn budget ends. All evidence and choices survive online refreshes; the host can recover review or a debrief if its speaker disconnects. Late arrivals can join the cooperative crew.
+
+Solutions are fixed: replay changes word order, not the truth. The result screen defaults to another case and clearly labels replays. Results explain all three answers and show previously missed evidence. Ending an investigation early keeps unrevealed facts sealed.
+
+AI/custom word sources remain available for Classic, Chaos, Stakes and Open Table; online shared packs retain the 150-answer limit. Local Open Table supports larger manually pasted packs. Session team tallies apply only to team modes.
+
+See [authored Case Files and verification](reports/authored-cases.md), [Open Table rebuild and verification](reports/open-table-rebuild.md), [original design and lifecycle contract](reports/new-modes-design.md) and [implementation/verification report](reports/new-modes.md).
 
 ## Offline Mode
 
@@ -117,7 +123,7 @@ See [Open Table rebuild and verification](reports/open-table-rebuild.md), [origi
 - Disconnected seats have a 90-second reconnect grace period. A server-connected tab is not removed solely for delayed heartbeats.
 - Refresh restores the same player, team, turn, and answer selection using per-tab session storage.
 - `Leave Lobby` explicitly releases a seat; `Rejoin Lobby` can restore a lost or superseded connection.
-- Online protocol version 10 requires a newly created lobby; old-version lobbies show a message asking every player to reload and the host to recreate them. All clients share the scheduled countdown, mode rules, lobby word source, reactions and applicable results.
+- Online protocol version 11 requires a newly created lobby; old-version lobbies show a message asking every player to reload and the host to recreate them. All clients share the scheduled countdown, mode rules, lobby word source, reactions and applicable results.
 - Each team rotates its own speaker queue. Empty teams are skipped safely without changing the player-count eligibility rules.
 
 ## AI Mode
@@ -196,7 +202,7 @@ See [GAMEPLAY_CHANGES.md](GAMEPLAY_CHANGES.md) for the implementation and verifi
 ## Gameplay regression checks
 
 ```powershell
-node --test tools/table.test.mjs tools/ai-client.test.mjs tools/ai-packs.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-packs.test.mjs tools/saved-packs.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
+node --test tools/cases.test.mjs tools/table.test.mjs tools/ai-client.test.mjs tools/ai-packs.test.mjs tools/ai-errors.test.mjs tools/gameplay.test.mjs tools/online-packs.test.mjs tools/saved-packs.test.mjs tools/online-state.test.mjs tools/online-client.test.mjs tools/online-ui.test.mjs
 node --test tools/modes.test.mjs tools/experience.test.mjs
 node tools/test-word-data.js
 node tools/analyze-starting-order.mjs
@@ -329,7 +335,7 @@ node --test tools/online-state.test.mjs tools/online-client.test.mjs tools/onlin
 
 These tests use an in-memory Firebase adapter and execute the UI functions with a stubbed DOM. They cover stale roster writes, transaction retries, simultaneous clients, reconnects and old sessions, host handover, uneven teams, round controls, scoring, Chaos recovery, game ending, and offline-play regression. They do not contact the production database. See `ONLINE_RELIABILITY_AUDIT.md` for the resolution record and remaining real-browser checks.
 
-The additional optional browser suite is `node tools/test-modes-browser.cjs` (requires Playwright; set `PLAYWRIGHT_MODULE` to its installed package path if it is not on Node's module path). It uses a temporary local Firebase-compatible adapter with transaction retries and Firebase empty-collection behavior. `--local-only` and `--online-only` select flows. `--table-only` runs the rebuilt Open Table local, eight-player/timer edge, custom-pack, online voice and online typed flows against the isolated backend. **Explicit live check:** `--online-only --live` creates temporary lobbies in the configured Firebase database and leaves them through the UI; it makes no AI requests. Ordinary tests never run that flag.
+The additional optional browser suite is `node tools/test-modes-browser.cjs` (requires Playwright; set `PLAYWRIGHT_MODULE` to its installed package path if it is not on Node's module path). It uses a temporary local Firebase-compatible adapter with transaction retries and Firebase empty-collection behavior. `--local-only` and `--online-only` select flows. `--cases-only` plays all five authored cases locally (including an offline run) and one complete two-client online case; `--cases-only --online-only --live` explicitly checks the live Firebase flow with a temporary lobby and no AI requests. `--table-only` runs the rebuilt Open Table local, eight-player/timer edge, custom-pack, online voice and online typed flows against the isolated backend. **Explicit live check:** `--online-only --live` creates temporary lobbies in the configured Firebase database and leaves them through the UI; it makes no AI requests. Ordinary tests never run that flag.
 
 ## Known Limitations
 

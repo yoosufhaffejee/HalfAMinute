@@ -1,6 +1,6 @@
 # Four new modes
 
-Open Table’s original design below was replaced by the [Open Table rebuild](open-table-rebuild.md) on 30 October 2026.
+The original Open Table and Case Files designs below were replaced by the [Open Table rebuild](open-table-rebuild.md) and [authored Case Files](authored-cases.md) on 30 October 2026.
 30 October 2026
 
 ## Behavior

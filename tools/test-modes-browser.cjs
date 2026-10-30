@@ -47,7 +47,7 @@ const server = http.createServer(async (req, res) => {
     try { res.setHeader('Content-Type', filename.endsWith('.js') ? 'application/javascript' : filename.endsWith('.css') ? 'text/css' : filename.endsWith('.html') ? 'text/html' : 'application/octet-stream'); res.end(fs.readFileSync(filename)); }
     catch { res.writeHead(404); res.end(); }
 });
-let browser, base;
+let browser, base, caseContent;
 const openedPages = [], liveCodes = [];
 async function pageFor(width = 390) {
     const context = await browser.newContext({ viewport: { width, height: 900 }, acceptDownloads: true, reducedMotion: 'reduce' });
@@ -114,7 +114,7 @@ async function localStakes(mode) {
     assert.match(await page.locator('#stakesAvailability').innerText(), /Bank/);
     report.checks.push(`${mode}: local bank/risk/preview/resource/rematch`); await context.close();
 }
-async function gate(page) { const ready = page.locator('[data-party-action="local-ready"], [data-table-action="local-ready"]'); await ready.waitFor(); await ready.click(); }
+async function gate(page) { const ready = page.locator('[data-case-action="local-ready"], [data-party-action="local-ready"], [data-table-action="local-ready"]'); await ready.waitFor(); await ready.click(); }
 async function localTable() {
     const { page, context } = await pageFor(); await page.clock.install();
     await page.locator('#quickMode').selectOption('table');
@@ -162,23 +162,27 @@ async function localTableTimed(){
     assert.equal((await page.locator('.party-scores strong').allTextContents()).filter(x=>x==='1 pts').length,2);
     report.checks.push('Open Table local edge: 8 players, configured 10 words, full 60-second timer, guesser-only scoring, correction to skipped, small-screen review');await context.close();
 }
-async function localCase() {
-    const { page, context } = await pageFor(); await page.clock.install();
-    await page.locator('#quickMode').selectOption('case'); await page.locator('#localPlayerNames').fill('Alice\nBob'); await settings(page, { txtWords: 2, txtSeconds: 5 }); await page.locator('#startGameButton').click();
-    for (let turn = 0; turn < 3; turn++) {
-        await gate(page); await page.locator('[data-party-action="start-round"]').click(); await page.clock.runFor(4800);
-        if (!turn) await page.clock.runFor(5100); else await page.locator('[data-party-action="end-round"]').click();
-        const words = page.locator('[data-party-action="toggle-answer"]'); for (let i = 0; i < 2; i++) await words.nth(i).click();
-        await page.locator('[data-party-action="submit-round"]').click();
+async function localCase(id='bank') {
+    const {page,context}=await pageFor();await page.clock.install();await page.locator('#quickMode').selectOption('case');await page.locator('#caseId').selectOption(id);
+    assert.equal(await page.locator('#ai').isVisible(),false);await page.locator('#localPlayerNames').fill('Alice\nBob');await settings(page,{txtSeconds:5,txtWords:5});
+    if(id==='bank'){await page.evaluate(()=>document.fonts.ready);await context.setOffline(true);}
+    await page.locator('#startGameButton').click();let turns=0;
+    while(!await page.locator('#case-suspect').count()){
+        await gate(page);await page.locator('[data-case-action="choose-lead"]:enabled').first().click();await page.locator('[data-case-action="start-round"]').click();
+        assert.equal(await page.locator('.table-word-card').count(),0);await page.clock.runFor(4800);await page.locator('.table-word-card li').first().waitFor();
+        if(!turns)await page.clock.runFor(5200);else await page.locator('[data-case-action="end-round"]').click();
+        const words=page.locator('[data-case-action="toggle-answer"]');const count=await words.count();for(let i=0;i<count;i++)await words.nth(i).click();
+        await page.locator('[data-case-action="submit-round"]').click();await page.locator('[data-case-action="continue-case"]').waitFor();
+        if(!turns&&id==='bank'){await layout(page,'Case evidence / offline');await page.screenshot({path:'reports/case-evidence-mobile.png',fullPage:true});}
+        await page.locator('[data-case-action="continue-case"]').click();assert.ok(++turns<=8);
     }
-    const facts = (await page.locator('.case-evidence').allTextContents()).map(text => text.replace('The culprit ', '').replace(/\.$/, '').toLowerCase());
-    const cards = page.locator('.case-suspect'); let culprit = -1;
-    for (let i = 0; i < 4; i++) { const text = (await cards.nth(i).innerText()).toLowerCase(); if (facts.every(fact => text.includes(fact))) culprit = i; }
-    assert.notEqual(culprit, -1); await cards.nth(culprit).click(); await layout(page, 'case accusation');
-    await page.screenshot({ path: 'reports/case-files-mobile.png', fullPage: true }); await page.locator('[data-party-action="accuse"]').click();
-    assert.match(await page.locator('.party-stage').innerText(), /Case solved/);
-    await page.locator('[data-party-action="rematch"]').click(); assert.match(await page.locator('.party-progress').first().innerText(), /0\/3 evidence/);
-    report.checks.push('case: local private handoff, actual timer expiry, cumulative evidence, solvable profiles, accusation and reset'); await context.close();
+    if(id==='museum'){await layout(page,'Case theory');await page.screenshot({path:'reports/case-theory-mobile.png',fullPage:true});}
+    const solution=caseContent.CASES[id].solution;for(const [field,index]of Object.entries(solution))await page.locator('#case-'+field).selectOption(String(index));
+    await page.locator('[data-case-action="review-theory"]').click();assert.match(await page.locator('.case-theory-confirm').innerText(),/Submitting ends/);await page.locator('[data-case-action="accuse"]').click();
+    assert.match(await page.locator('.party-stage h3').innerText(),/Case solved/);
+    if(id==='encore'){const download=page.waitForEvent('download');await page.locator('[data-case-action="share"]').click();assert.equal((await download).suggestedFilename(),'half-a-minute-result.png');}
+    await page.locator('[data-case-action="rematch"]').click();await gate(page);assert.equal(await page.locator('.case-lead').count(),3);assert.match(await page.locator('.party-progress').first().innerText(),/0\/12 evidence/);
+    report.checks.push(`${id}: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset${id==='bank'?', offline with all network disabled':''}`);await context.close();
 }
 async function localAiCompatibility() {
     const {page,context}=await pageFor();await page.clock.install();await page.locator('#quickMode').selectOption('table');await page.locator('#localPlayerNames').fill('Alice\nBob\nCara');
@@ -194,6 +198,28 @@ async function localAiCompatibility() {
 async function gameState(code) { return live ? (await fetch(`${firebaseURL}/games/${code}.json`)).json() : clone(read('games/' + code)); }
 async function waitState(code, predicate) {
     const until = Date.now() + 16000; while (Date.now() < until) { const value = await gameState(code); if (value && predicate(value)) return value; await new Promise(resolve => setTimeout(resolve, live ? 250 : 60)); } throw Error(`Shared state wait timed out: ${code}`);
+}
+async function onlineCase(){
+    console.log('Checking authored Case Files online');const host=await pageFor(),guest=await pageFor();await host.page.locator('#quickMode').selectOption('case');
+    await host.page.locator('#online').click();await host.page.locator('#playerName').fill('Host');await host.page.locator('#createLobbyButton').click();
+    await host.page.waitForFunction(()=>/\b[A-Z]{4}\b/.test(document.getElementById('lblGameCode').textContent));const code=(await host.page.locator('#lblGameCode').textContent()).match(/\b[A-Z]{4}\b/)[0];if(live)liveCodes.push(code);
+    await guest.page.locator('#online').click();await guest.page.locator('#playerName').fill('Guest');await guest.page.locator('#joinLobbyCode').fill(code);await guest.page.locator('#joinLobbyButton').click();await waitState(code,g=>g.numPlayers===2);
+    const pageForId=(g,id)=>g.teams.flatMap(t=>t.players||[]).find(p=>p.playerId===id).playerName==='Host'?host.page:guest.page;
+    let g=await gameState(code);await pageForId(g,g.hostId).locator('[data-case-action="start-game"]').click();let turns=0;
+    while(true){g=await waitState(code,g=>g.phase==='idle'||g.phase==='accusing');if(g.phase==='accusing')break;const speaker=pageForId(g,g.turn.speakerId),listener=speaker===host.page?guest.page:host.page;
+        await speaker.locator('[data-case-action="choose-lead"]:enabled').first().click();await speaker.locator('[data-case-action="start-round"]').click();assert.equal(await listener.locator('.table-word-card').count(),0);
+        await speaker.locator('.table-word-card li').first().waitFor();assert.equal(await listener.locator('.table-word-card').count(),0);await speaker.locator('[data-case-action="end-round"]').click();
+        const words=speaker.locator('[data-case-action="toggle-answer"]');await words.first().waitFor();const count=await words.count();for(let i=0;i<count;i++)await words.nth(i).click();
+        await waitState(code,g=>g.phase==='selecting'&&(g.turn.selectedIndexes||[]).length===count);
+        if(!turns){await listener.reload({waitUntil:'domcontentloaded'});try{await listener.locator('.party-review-answer.is-correct').first().waitFor();}catch(error){console.log('Restored case screen:',await listener.locator('#partyGame').innerText());console.log('Shared review:',await gameState(code));throw error;}}
+        await speaker.locator('[data-case-action="submit-round"]').click();await waitState(code,g=>g.phase==='evidence');await listener.locator('.case-evidence-card').first().waitFor();
+        g=await gameState(code);await pageForId(g,g.turn.speakerId).locator('[data-case-action="continue-case"]').click();assert.ok(++turns<=8);
+    }
+    let leader=pageForId(g,g.hostId);for(const[field,index]of Object.entries(caseContent.CASES.bank.solution)){g=await gameState(code);leader=pageForId(g,g.hostId);await leader.locator('#case-'+field).selectOption(String(index));}
+    await leader.locator('[data-case-action="review-theory"]').click();await leader.locator('[data-case-action="accuse"]').click();g=await waitState(code,g=>g.phase==='finished');assert.equal(g.finishReason,'solved');
+    leader=pageForId(g,g.hostId);await leader.locator('[data-case-action="rematch"]').click();g=await waitState(code,g=>g.matchId===2);assert.equal(g.settings.caseId,'museum');assert.equal((g.party.found||[]).length,0);
+    if(live)for(const page of [host.page,guest.page]){await page.locator('[data-case-action="exit"]').click();await page.locator('#menu').waitFor({state:'visible'});}
+    report.checks.push('Authored Case Files: two online clients, role privacy, lead/evidence synchronization, scoring refresh, complete theory and next-case rematch');await host.context.close();await guest.context.close();
 }
 async function onlinePair(mode, format = 'voice') {
     console.log(`Checking ${mode} online`);
@@ -289,22 +315,24 @@ async function onlinePair(mode, format = 'voice') {
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); base = `http://127.0.0.1:${server.address().port}/`;
     browser = await chromium.launch({ ...(process.platform === 'win32' ? { channel: 'msedge' } : {}), headless: true });
     try {
-        if(process.argv.includes('--table-only')) {
+        caseContent=await import('../gameplay/cases.js');
+        if(process.argv.includes('--cases-only')) {if(!process.argv.includes('--online-only'))for(const id of caseContent.CASE_IDS)await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
+        else if(process.argv.includes('--table-only')) {
             if(!process.argv.includes('--online-only')){await localTable();await localTableTimed();await localAiCompatibility();}
             if(!process.argv.includes('--local-only')){if(!process.argv.includes('--typed-only'))await onlinePair('table','voice');await onlinePair('table','text');}
         }
         else { if (!process.argv.includes('--online-only')) { if (!process.argv.includes('--party-only')) { await localStakes('boost'); await localStakes('double'); } await localTable(); await localCase(); await localAiCompatibility(); }
-        if (!process.argv.includes('--local-only')) for (const mode of process.argv.includes('--party-only') ? ['table', 'case'] : ['boost', 'double', 'table', 'case']) await onlinePair(mode); }
+        if (!process.argv.includes('--local-only')) for (const mode of process.argv.includes('--party-only') ? ['table', 'case'] : ['boost', 'double', 'table', 'case']) if(mode==='case')await onlineCase();else await onlinePair(mode); }
         if (!live) report.transactions = transactions;
         assert.deepEqual(report.errors, []); report.completed = true; console.log(JSON.stringify(report, null, 2));
     } catch (error) { report.failure = error.message; throw error;
     } finally {
         if(live){
-            for(const page of openedPages)if(!page.isClosed())try{const exit=page.locator('[data-table-action="exit"]:visible, [data-party-action="exit"]:visible, #changeSettingsButton:visible').first();if(await exit.count()){await exit.click({timeout:5000});await page.locator('#menu').waitFor({state:'visible',timeout:5000});}}catch(error){console.error('Test lobby exit:',error.message);}
+            for(const page of openedPages)if(!page.isClosed())try{const exit=page.locator('[data-case-action="exit"]:visible, [data-table-action="exit"]:visible, [data-party-action="exit"]:visible, #changeSettingsButton:visible').first();if(await exit.count()){await exit.click({timeout:5000});await page.locator('#menu').waitFor({state:'visible',timeout:5000});}}catch(error){console.error('Test lobby exit:',error.message);}
             report.cleanup = { created:liveCodes.length, closed:0, remaining:[] };
             for(const code of liveCodes){const game=await gameState(code);if(!game||game.phase==='ended'&&!game.teams.some(t=>(t.players||[]).length))report.cleanup.closed++;else report.cleanup.remaining.push(code);}
             if(report.cleanup.remaining.length){report.completed=false;report.failure='Temporary test lobby cleanup incomplete';process.exitCode=1;}
         }
-        fs.writeFileSync(process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
+        fs.writeFileSync(process.argv.includes('--cases-only')?(live?'reports/cases-live.json':'reports/cases-browser.json'):process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
     }
 })().catch(error => { console.error(error); process.exitCode = 1; server.close(); });

@@ -1,0 +1,14 @@
+{
+  "backend": "Live Firebase; temporary UI-created test lobbies, explicitly left afterward; no AI requests",
+  "completed": true,
+  "checks": [
+    "Authored Case Files: two online clients, role privacy, lead/evidence synchronization, scoring refresh, complete theory and next-case rematch"
+  ],
+  "layouts": [],
+  "errors": [],
+  "cleanup": {
+    "created": 1,
+    "closed": 1,
+    "remaining": []
+  }
+}

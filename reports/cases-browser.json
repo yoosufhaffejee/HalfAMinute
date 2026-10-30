@@ -1,0 +1,56 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "bank: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset, offline with all network disabled",
+    "museum: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
+    "train: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
+    "observatory: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
+    "encore: complete local case, private countdown, real expiry, lead choices, authored evidence, three-part theory, debrief, next-case reset",
+    "Authored Case Files: two online clients, role privacy, lead/evidence synchronization, scoring refresh, complete theory and next-case rematch"
+  ],
+  "layouts": [
+    {
+      "label": "Case evidence / offline",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Case evidence / offline",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Case evidence / offline",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Case evidence / offline large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Case theory",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Case theory",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Case theory",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Case theory large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 64
+}

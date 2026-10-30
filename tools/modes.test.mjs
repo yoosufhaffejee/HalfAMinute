@@ -2,11 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as State from '../online/state.js';
 import * as Modes from '../gameplay/modes.js';
-import { CASES, caseEvidence, consistentSuspects } from '../gameplay/cases.js';
+import { availableFacts } from '../gameplay/cases.js';
 
 let clock = 1000000;
 const actor = name => ({ playerId: name, playerName: name, connectionId: `connection-${name}` });
-const rules = { drawWords: game => ({ words: ['One', 'Two', 'Three', 'Four', 'Five'].slice(0, game.settings.numWords), aliases: ['Apple'], pools: {} }) };
+const rules = { drawWords: game => { if(game.settings.mode==='case'){const f=availableFacts(game.settings.caseId,game.party.found,game.turn.leadId);const words=f.flatMap(item=>item.words.map(word=>({word,id:item.id}))).slice(0,game.settings.numWords);return {words:words.map(w=>w.word),caseFactIds:words.map(w=>w.id),pools:{}};}return {words:['One','Two','Three','Four','Five'].slice(0,game.settings.numWords),pools:{}};} };
 function lobby(mode, names = ['A', 'B', 'C'], extra = {}) {
     clock = 1000000;
     const settings = Modes.normalizeModeSettings({ mode, numTeams: 2, numWords: 5, numSeconds: 30, pointsToWin: 10, difficulty: 'normal', caseId: 'trophy', caseTurns: 6, tableCycles: 1, ...extra });
@@ -20,7 +20,7 @@ function act(game, type, name = game.turn?.speakerId || game.hostId, extra = {})
     return State.act(current, actor(name), { type, matchId: game.matchId ?? 1, turnId: game.turn?.id, ...extra }, clock, rules);
 }
 function started(mode, names, extra) { return act(lobby(mode, names, extra), 'start-game', names?.[0] || 'A', { seed: 0, ...(mode === 'table' ? { format: 'voice' } : {}) }); }
-function clues(game, risky = false) { const next = act(game, 'start-round', undefined, { seed: 42, risky }); clock += 4500; return next; }
+function clues(game, risky = false) { if(game.settings.mode==='case')game=act(game,'choose-lead',undefined,{leadId:availableFacts(game.settings.caseId,game.party.found)[0].leadId}); const next = act(game, 'start-round', undefined, { seed: 42, risky }); clock += 4500; return next; }
 function score(game, earned = 0) {
     game = clues(game); game = act(game, 'end-round');
     for (let index = 0; index < earned; index++) game = act(game, 'toggle-answer', undefined, { index });
@@ -83,40 +83,11 @@ test('Double Stakes spends once only on scored turns, pays doubles and resets on
 
 
 
-test('every authored case has a unique culprit and every pair of evidence facts is sufficient', () => {
-    for (const id of Object.keys(CASES)) for (let culprit = 0; culprit < 4; culprit++) {
-        for (const facts of [[0, 1], [1, 2], [0, 2]]) assert.deepEqual(consistentSuspects(id, culprit, facts), [culprit]);
-        for (let i = 0; i < 3; i++) assert.match(caseEvidence(id, culprit, i), /^The culprit /);
-    }
-});
 
-test('Case Files carries evidence progress, keeps live answers speaker-only and confirms one final accusation', () => {
-    let game = started('case'); game = clues(game);
-    assert.equal(State.view(game, actor('B'), clock).showWords, false);
-    assert.equal(act(game, 'lock-guess', 'B', { text: 'One' }), undefined);
-    game = act(game, 'end-round'); game = act(game, 'toggle-answer', undefined, { index: 0 }); game = act(game, 'submit-round');
-    assert.equal(game.party.totalCorrect, 1); assert.equal(game.party.evidenceCount, 0);
-    game = score(game, 2); assert.equal(game.party.evidenceCount, 1);
-    game = score(game, 5); assert.equal(game.party.totalCorrect, 8); assert.equal(game.party.evidenceCount, 2);
-    game = score(game, 1); assert.equal(game.phase, 'accusing');
-    assert.equal(act(game, 'choose-suspect', 'B', { index: 0 }), undefined);
-    assert.equal(act(game, 'accuse', 'A'), undefined);
-    assert.equal(act(game, 'choose-suspect', 'A', { index: 4 }), undefined);
-    game = act(game, 'choose-suspect', 'A', { index: game.party.culprit });
-    assert.equal(act(game, 'accuse', 'A', { index: (game.party.accusation + 1) % 4 }), undefined);
-    game = act(game, 'accuse', 'A', { index: game.party.accusation });
-    assert.equal(game.finishReason, 'solved'); assert.equal(act(game, 'accuse', 'A'), undefined);
-    game = act(game, 'rematch', 'A', { seed: 2 }); assert.equal(game.party.evidenceCount, 0); assert.equal(game.party.totalCorrect, 0); assert.equal(game.party.accusation, -1);
-});
 
-test('Case Files enforces turn budgets, wrong accusations, host handover and stopped outcomes', () => {
-    let game = started('case', ['A', 'B'], { caseTurns: 4 });
-    for (let i = 0; i < 4; i++) game = score(game);
-    assert.equal(game.phase, 'accusing'); assert.equal(game.party.evidenceCount, 0);
-    game = State.leave(game, actor('A'), clock); assert.equal(game.hostId, 'B');
-    game = act(game, 'choose-suspect', 'B', { index: (game.party.culprit + 1) % 4 }); game = act(game, 'accuse', 'B', { index: game.party.accusation }); assert.equal(game.finishReason, 'unsolved');
-    const stopped = act(started('case'), 'end-game', 'A'); assert.equal(stopped.finishReason, 'stopped');
-});
+
+
+
 
 test('party reducer retries are deterministic, preserve the input and respect old connections', () => {
     const game = started('table'), copy = structuredClone(game), action = { type: 'start-round', seed: 17, turnId: game.turn.id, matchId: game.matchId };

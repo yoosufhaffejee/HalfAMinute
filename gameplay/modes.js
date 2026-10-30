@@ -1,12 +1,13 @@
 import { answerKey } from './rules.js?v=20261029.2';
-export const MODE_VERSION = '20261030.4';
+import { CASE_IDS } from './cases.js?v=20261030.cases1';
+export const MODE_VERSION = '20261030.cases1';
 export const MODES = {
     classic: { name: 'Classic', description: 'Describe, guess and race to the finish. One point per correct answer.' },
     chaos: { name: 'Chaos', description: 'The clue game with board effects, shields and unexpected turns.' },
     boost: { name: 'Boost Stakes', description: 'Keep your clue points. Risk a turn for +2 if you meet the target, or −2 if you miss. Play a normal turn before risking again.' },
     double: { name: 'Double Stakes', description: 'One risk per team: meet the target to double your clue points. Miss and lose 3 banked points, with no clue points.' },
     table: { name: 'Open Table', description: 'For 3–8 players. One speaker describes a numbered card. The first correct guesser wins each word; the speaker awards the points. Play timed or unlimited.' },
-    case: { name: 'Case Files', description: 'One crew, a rotating speaker and a mystery to solve. Correct answers unlock evidence. Discuss, then accuse together.' }
+    case: { name: 'Case Files', description: 'Five mysteries for one crew. Choose a lead, describe its words, connect the evidence, and solve who, how and where.' }
 };
 export function modeOf(settings = {}) { return Object.hasOwn(MODES, settings.mode) ? settings.mode : settings.chaosMode ? 'chaos' : 'classic'; }
 export function isParty(settings) { return ['table', 'case'].includes(modeOf(settings)); }
@@ -44,12 +45,13 @@ export function nextRiskResource(settings, risky, previous = {}) {
 export function normalizeModeSettings(settings) {
     const mode = modeOf(settings), party = isParty({ mode });
     return { ...settings, mode, chaosMode: mode === 'chaos', chaosReroll: mode === 'chaos' && Boolean(settings.chaosReroll),
-        trainingMode: mode !== 'table' && Boolean(settings.trainingMode), trackSeries: !party && Boolean(settings.trackSeries),
+        trainingMode: !party && Boolean(settings.trainingMode), trackSeries: !party && Boolean(settings.trackSeries),
+        selectedTheme: mode === 'case' ? 'None' : settings.selectedTheme, selectedCategories: mode === 'case' ? [] : settings.selectedCategories,
         numTeams: party ? 2 : settings.numTeams, numWords: settings.numWords,
         tableTiming: settings.tableTiming === 'unlimited' ? 'unlimited' : 'timed',
         tableScoring: settings.tableScoring === 'guesser' ? 'guesser' : 'shared',
         tableSeconds: Math.max(15, Math.min(300, Math.round(Number(settings.tableSeconds) || 60))),
         tableCycles: Math.max(1, Math.min(3, Math.round(Number(settings.tableCycles) || 2))),
-        caseTurns: Math.max(4, Math.min(12, Math.round(Number(settings.caseTurns) || 6))),
-        caseId: ['trophy', 'blackout', 'blueprint'].includes(settings.caseId) ? settings.caseId : 'trophy' };
+        caseTurns: Math.max(4, Math.ceil(6 / Math.max(1, Number(settings.numWords) || 5)), Math.min(12, Math.round(Number(settings.caseTurns) || 8))),
+        caseId: CASE_IDS.includes(settings.caseId) ? settings.caseId : 'bank' };
 }
