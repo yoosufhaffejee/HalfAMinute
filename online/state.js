@@ -2,11 +2,11 @@
 // client's rendered roster. Keep this module free of DOM and Firebase side effects.
 import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261030.2';
 import { normalizeOnlinePack } from '../gameplay/online-packs.js?v=20261029.3';
-import { REACTIONS, REACTION_TTL_MS, rosterKey, freshSeries, recordSeries } from '../gameplay/experience.js?v=20261029.4';
-import * as Modes from '../gameplay/modes.js?v=20261030.1';
-import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261030.1';
+import { REACTIONS, REACTION_TTL_MS, rosterKey, freshSeries, recordSeries } from '../gameplay/experience.js?v=20261030.4';
+import * as Modes from '../gameplay/modes.js?v=20261030.4';
+import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261030.4';
 
-export const PROTOCOL_VERSION = 9;
+export const PROTOCOL_VERSION = 10;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 
@@ -39,7 +39,7 @@ export function rosterStatus(game, now) {
     const connected = members(game).filter(player => isConnected(game, player, now));
     const connectedTeams = new Set(connected.map(player => player.teamIndex)).size;
     if (Modes.isParty(game.settings)) return { connectedPlayers: connected.length, connectedTeams, reconnectingPlayers: members(game).length - connected.length,
-        eligible: connected.length >= Modes.minimumPlayers(game.settings) && connected.length <= 12 };
+        eligible: connected.length >= Modes.minimumPlayers(game.settings) && connected.length <= Modes.maximumPlayers(game.settings) };
     return { connectedPlayers: connected.length, connectedTeams,
         reconnectingPlayers: members(game).length - connected.length,
         eligible: connectedTeams === game.teams.length && canPlay(game.teams.length, connected.length) };
@@ -173,7 +173,7 @@ export function joinReason(game, actor) {
     if (game.settings?.mode && !Object.hasOwn(Modes.MODES, game.settings.mode)) return 'invalid-game-mode';
     if (!usableWordPack(game)) return 'invalid-word-pack';
     if (!actor.playerId || !actor.connectionId || !actor.playerName?.trim()) return 'invalid-player-name';
-    if (Modes.isParty(game.settings) && members(game).length >= 12 && !members(game).some(player => player.playerId === actor.playerId)) return 'lobby-full';
+    if (Modes.isParty(game.settings) && members(game).length >= Modes.maximumPlayers(game.settings) && !members(game).some(player => player.playerId === actor.playerId)) return 'lobby-full';
     if (members(game).some(player => player.playerId !== actor.playerId
         && player.playerName.trim().toLowerCase() === actor.playerName.trim().toLowerCase())) return 'duplicate-player-name';
     return null;

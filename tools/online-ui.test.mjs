@@ -1163,7 +1163,7 @@ test('new mode setup disables incompatible options while retaining ordinary setu
     h.run(`initializeQuickSetup();document.getElementById('quickMode').value='table';chkChaos.checked=true;chkTraining.checked=true;
         document.getElementById('chkSeries').checked=true;txtWords.value='5';updateSetupSummary()`);
     const table = h.run('getSanitizedSettingsFromInputs()');
-    assert.equal(table.mode, 'table'); assert.equal(table.numWords, 1); assert.equal(table.chaosMode, false);
+    assert.equal(table.mode, 'table'); assert.equal(table.numWords, 5); assert.equal(table.chaosMode, false);
     assert.equal(table.trainingMode, false); assert.equal(table.trackSeries, false);
     assert.equal(h.el('txtSeconds').disabled, true); assert.equal(h.el('targetSetting').hidden, true);
     h.run(`document.getElementById('quickMode').value='classic';chkChaos.checked=false;updateSetupSummary()`);
@@ -1197,25 +1197,31 @@ test('a failed leave preserves the active game and releases the exit guard so th
     assert.match(h.metrics.alerts[0], /Unable to leave/);
 });
 
-test('Open Table alternates difficulty without resetting the other exhaustion deck', () => {
+test('Open Table deals the configured full card with the normal difficulty mix', () => {
     const h = ui();
-    h.run(`globalThis.tableGame={settings:{mode:'table',numWords:1,difficulty:'normal',selectedTheme:'None',selectedCategories:[]},teams:[{},{}],deck:{}};
-        globalThis.easySeed=Array.from({length:100},(_,i)=>i).find(seed=>Gameplay.random(seed)()<.6);
-        globalThis.hardSeed=Array.from({length:100},(_,i)=>i).find(seed=>Gameplay.random(seed)()>=.6);
-        globalThis.firstEasy=drawOnlineWords(tableGame,easySeed);tableGame.deck=firstEasy.pools.deck;
-        globalThis.firstHard=drawOnlineWords(tableGame,hardSeed);tableGame.deck=firstHard.pools.deck`);
-    assert.equal(h.run('tableGame.deck.easy.length'), 1); assert.equal(h.run('tableGame.deck.hard.length'), 1);
-    h.run('globalThis.secondEasy=drawOnlineWords(tableGame,easySeed)');
-    assert.notEqual(h.run('secondEasy.words[0]'), h.run('firstEasy.words[0]'));
-    assert.equal(h.run('secondEasy.pools.deck.hard.length'), 1);
+    h.run(`globalThis.tableGame={settings:{mode:'table',numWords:5,difficulty:'normal',selectedTheme:'None',selectedCategories:[]},teams:[{},{}],deck:{}};
+        getOnlineWordObjects=()=>[...Array.from({length:20},(_,i)=>({word:'Easy '+i,difficulty:'easy'})),...Array.from({length:20},(_,i)=>({word:'Hard '+i,difficulty:'hard'}))];
+        globalThis.first=drawOnlineWords(tableGame,1);tableGame.deck=first.pools.deck;globalThis.second=drawOnlineWords(tableGame,2)`);
+    assert.equal(h.run('first.words.length'), 5); assert.equal(h.run('second.words.length'), 5);
+    assert.equal(h.run('first.words.filter(word=>word.startsWith("Easy")).length'), 3);
+    assert.equal(h.run('first.words.filter(word=>word.startsWith("Hard")).length'), 2);
+    assert.equal(h.run('second.words.some(word=>first.words.includes(word))'), false);
 });
 
-test('a local Open Table validation failure keeps AI words accessible for editing', () => {
+test('Open Table timing and word settings preserve the Classic timing preference', () => {
+    const h=ui(); h.run(`initializeQuickSetup();txtSeconds.value='30';txtWords.value='10';document.getElementById('quickMode').value='table';
+        document.getElementById('tableTiming').value='unlimited';document.getElementById('tableSeconds').value='90';updateSetupSummary()`);
+    assert.equal(h.run('getSanitizedSettingsFromInputs().numWords'),10);
+    assert.equal(h.run('getSanitizedSettingsFromInputs().tableTiming'),'unlimited');
+    assert.equal(h.el('tableSecondsField').hidden,true); assert.equal(h.el('txtWords').disabled,false);
+    h.run(`document.getElementById('quickMode').value='classic';updateSetupSummary()`);
+    assert.equal(h.run('getSanitizedSettingsFromInputs().numSeconds'),30);
+});
+test('an Open Table lobby renders before any turn exists and offers the host format selection', () => {
     const h = ui();
-    h.run(`hideModalById=()=>{};menu.hidden=false;document.getElementById('quickMode').value='table';
-        document.getElementById('difficulty').value='normal';document.getElementById('localPlayerNames').value='Alice\\nBob\\nCara';
-        document.getElementById('aiWords').value='x'.repeat(81);startAIGame()`);
-    assert.equal(h.el('ai').hidden, false); assert.equal(h.el('menu').hidden, false);
-    assert.match(h.el('menuNotice').textContent, /80 characters/);
-    assert.equal(h.el('aiWords').value.length, 81);
+    h.run(`globalThis.partySnapshot=value=>value;globalThis.sharePartyResult=()=>{};globalThis.partySummary=()=>{};globalThis.createPartySurface=()=>({render:state=>{metrics.partyStage=state},reset(){}})`);
+    let data = { protocolVersion: OnlineState.PROTOCOL_VERSION, dateCreated: now, settings: Modes.normalizeModeSettings({mode:'table',numWords:5,numTeams:2}), teams:[{points:0,players:[]},{points:0,players:[]}], phase:'waiting', hostId:'', currentTeam:1 };
+    for(const name of ['A','B','C'])data=OnlineState.join(data,actor(name),now);
+    assert.equal(data.turn,undefined); h.mount(data);
+    assert.equal(h.el('partyGame').hidden,false);assert.equal(h.metrics.partyStage.view.canStartGame,true);
 });

@@ -1,10 +1,12 @@
 import { answerKey, ROUND_COUNTDOWN_MS, random } from './rules.js?v=20261029.2';
-import { modeOf, normalizeModeSettings, minimumPlayers } from './modes.js?v=20261030.1';
+import { modeOf, normalizeModeSettings, minimumPlayers } from './modes.js?v=20261030.4';
 import { caseSolution } from './cases.js?v=20261030.1';
+import { tableSnapshot, actTable, reconcileTable, tableView } from './table-state.js?v=20261030.4';
 
 // Realtime Database omits empty collections; views and commands must tolerate
 // their absence after every server round trip, not just after a fresh start.
 export function partySnapshot(game) {
+    if (modeOf(game.settings) === 'table') return tableSnapshot(game);
     return { ...game, ...(game.party ? { party: { ...game.party, history: game.party.history || [], players: game.party.players || [] } } : {}),
         ...(game.turn ? { turn: { ...game.turn, words: game.turn.words || [], selectedIndexes: game.turn.selectedIndexes || [],
             correctIds: game.turn.correctIds || [], guesses: game.turn.guesses || {}, guesserIds: game.turn.guesserIds || [] } } : {}) };
@@ -35,6 +37,7 @@ function revealGuesses(game, now) {
     game.phase = 'selecting'; game.roundActive = false;
 }
 export function reconcileParty(game, people, connectedIds, now) {
+    if (modeOf(game.settings) === 'table') { reconcileTable(game, people, connectedIds); return; }
     Object.assign(game, partySnapshot(game));
     if (!game.isGameStarted || !game.party) {
         game.phase = connectedIds.length >= minimumPlayers(game.settings) && connectedIds.length <= 12 ? 'ready' : 'waiting'; return;
@@ -67,6 +70,7 @@ export function reconcileParty(game, people, connectedIds, now) {
 
 // Receives identity/connection facts from the common lobby reducer; no browser or Firebase.
 export function actParty(gameData, actor, action, now, rules, { people, connectedIds }) {
+    if (modeOf(gameData.settings) === 'table') return actTable({ ...gameData, settings: normalizeModeSettings(gameData.settings) }, actor, action, now, rules, { people, connectedIds });
     const game = partySnapshot(structuredClone(gameData)), host = actor.playerId === game.hostId;
     const settings = normalizeModeSettings(game.settings); game.settings = settings;
     const table = modeOf(settings) === 'table';
@@ -160,6 +164,7 @@ export function actParty(gameData, actor, action, now, rules, { people, connecte
 }
 
 export function partyView(game, actor, now, { player, active, people, connectedIds }) {
+    if (modeOf(game.settings) === 'table') return tableView(game, actor, now, { player, active, people, connectedIds });
     game = partySnapshot(game);
     const party = game.party, turn = game.turn, table = modeOf(game.settings) === 'table';
     const participant = party?.players.find(member => member.id === actor.playerId && !member.departed);

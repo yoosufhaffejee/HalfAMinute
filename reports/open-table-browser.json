@@ -1,0 +1,75 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "Open Table local: 3-player spoken full cards, unlimited clock, per-word winners/skips, shared scoring, equal turns, PNG, rematch",
+    "Open Table local edge: 8 players, configured 10 words, full 60-second timer, guesser-only scoring, correction to skipped, small-screen review",
+    "Local 160-answer custom pack supplies full Open Table cards; returning to Classic retains the ordinary flow",
+    "table / voice: three real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch",
+    "table / text: three real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch"
+  ],
+  "layouts": [
+    {
+      "label": "Open Table voice review",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Open Table voice review",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Open Table voice review",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Open Table voice review large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "8 players / 10 words",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "8 players / 10 words",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "8 players / 10 words",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "8 players / 10 words large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Typed clues / speaker",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Typed clues / speaker",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Typed clues / speaker",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Typed clues / speaker large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 92
+}

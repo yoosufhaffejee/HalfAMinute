@@ -1,17 +1,18 @@
 import { answerKey } from './rules.js?v=20261029.2';
-export const MODE_VERSION = '20261030.1';
+export const MODE_VERSION = '20261030.4';
 export const MODES = {
     classic: { name: 'Classic', description: 'Describe, guess and race to the finish. One point per correct answer.' },
     chaos: { name: 'Chaos', description: 'The clue game with board effects, shields and unexpected turns.' },
     boost: { name: 'Boost Stakes', description: 'Keep your clue points. Risk a turn for +2 if you meet the target, or −2 if you miss. Play a normal turn before risking again.' },
     double: { name: 'Double Stakes', description: 'One risk per team: meet the target to double your clue points. Miss and lose 3 banked points, with no clue points.' },
-    table: { name: 'Open Table', description: 'For 3–12 players. Everyone guesses privately, without a timer. Each correct guess earns the guesser and speaker one point.' },
+    table: { name: 'Open Table', description: 'For 3–8 players. One speaker describes a numbered card. The first correct guesser wins each word; the speaker awards the points. Play timed or unlimited.' },
     case: { name: 'Case Files', description: 'One crew, a rotating speaker and a mystery to solve. Correct answers unlock evidence. Discuss, then accuse together.' }
 };
 export function modeOf(settings = {}) { return Object.hasOwn(MODES, settings.mode) ? settings.mode : settings.chaosMode ? 'chaos' : 'classic'; }
 export function isParty(settings) { return ['table', 'case'].includes(modeOf(settings)); }
 export function isStakes(settings) { return ['boost', 'double'].includes(modeOf(settings)); }
 export function minimumPlayers(settings) { return modeOf(settings) === 'table' ? 3 : 2; }
+export function maximumPlayers(settings) { return modeOf(settings) === 'table' ? 8 : 12; }
 export function riskTarget(cardSize) { return Math.max(1, Math.ceil(Math.max(1, cardSize) * 0.6)); }
 export function eligibleCardSize(entries, settings) {
     return Math.min(settings.numWords, new Set(entries.filter(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty)
@@ -44,7 +45,10 @@ export function normalizeModeSettings(settings) {
     const mode = modeOf(settings), party = isParty({ mode });
     return { ...settings, mode, chaosMode: mode === 'chaos', chaosReroll: mode === 'chaos' && Boolean(settings.chaosReroll),
         trainingMode: mode !== 'table' && Boolean(settings.trainingMode), trackSeries: !party && Boolean(settings.trackSeries),
-        numTeams: party ? 2 : settings.numTeams, numWords: mode === 'table' ? 1 : settings.numWords,
+        numTeams: party ? 2 : settings.numTeams, numWords: settings.numWords,
+        tableTiming: settings.tableTiming === 'unlimited' ? 'unlimited' : 'timed',
+        tableScoring: settings.tableScoring === 'guesser' ? 'guesser' : 'shared',
+        tableSeconds: Math.max(15, Math.min(300, Math.round(Number(settings.tableSeconds) || 60))),
         tableCycles: Math.max(1, Math.min(3, Math.round(Number(settings.tableCycles) || 2))),
         caseTurns: Math.max(4, Math.min(12, Math.round(Number(settings.caseTurns) || 6))),
         caseId: ['trophy', 'blackout', 'blueprint'].includes(settings.caseId) ? settings.caseId : 'trophy' };

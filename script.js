@@ -1,19 +1,19 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261030.2';
-import { OnlineClient } from './online/client.js?v=20261030.2';
+import * as OnlineState from './online/state.js?v=20261030.4';
+import { OnlineClient } from './online/client.js?v=20261030.4';
 import * as Gameplay from './gameplay/rules.js?v=20261030.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
 import * as AiPacks from './gameplay/ai-packs.js?v=20261029.5';
 import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
-import * as Experience from './gameplay/experience.js?v=20261029.4';
+import * as Experience from './gameplay/experience.js?v=20261030.4';
 import * as PackLibrary from './gameplay/saved-packs.js?v=20261029.5';
 import { createScreenAwake } from './gameplay/screen-awake.js?v=20261029.4';
-import * as Modes from './gameplay/modes.js?v=20261030.1';
-import { createPartySurface } from './gameplay/party-ui.js?v=20261030.1';
-import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.1';
-import { partySnapshot } from './gameplay/party-state.js?v=20261030.1';
+import * as Modes from './gameplay/modes.js?v=20261030.4';
+import { createPartySurface } from './gameplay/party-ui.js?v=20261030.4';
+import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.4';
+import { partySnapshot } from './gameplay/party-state.js?v=20261030.4';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -119,7 +119,7 @@ let isReturningToSetup = false;
 
 function modeSettingsPresentation(settings) {
     const mode = Modes.modeOf(settings), party = Modes.isParty(settings);
-    const presentationKey = `${mode}:${Gameplay.normalizeWinRule(settings.winRule)}`;
+    const presentationKey = `${mode}:${Gameplay.normalizeWinRule(settings.winRule)}:${settings.tableTiming}:${settings.tableScoring}`;
     if (presentedMode === presentationKey) return;
     presentedMode = presentationKey;
     document.getElementById('modeDescription').textContent = Modes.MODES[mode].description;
@@ -127,9 +127,13 @@ function modeSettingsPresentation(settings) {
     document.getElementById('quickLengthField').hidden = party;
     document.getElementById('quickSetup')?.classList.toggle('party-mode-setup', party);
     document.getElementById('partySetup').hidden = !party;
-    document.getElementById('localNamesHint').textContent = `For local play, enter ${mode === 'table' ? '3' : '2'}–12 different names. Online, each friend joins from their own device.${mode === 'table' ? ' Three players are needed so shared credit can produce different scores.' : ''}`;
+    document.getElementById('localNamesHint').textContent = `For local play, enter ${Modes.minimumPlayers(settings)}–${Modes.maximumPlayers(settings)} different names. Online, each friend joins from their own device.`;
     document.getElementById('localNamesError').hidden = true;
     document.getElementById('tableCyclesField').hidden = mode !== 'table';
+    document.getElementById('tableScoringField').hidden = mode !== 'table';
+    document.getElementById('tableTimingField').hidden = mode !== 'table';
+    document.getElementById('tableSecondsField').hidden = mode !== 'table' || settings.tableTiming === 'unlimited';
+    document.getElementById('tableSeconds').disabled = mode !== 'table' || settings.tableTiming === 'unlimited';
     document.getElementById('caseIdField').hidden = document.getElementById('caseTurnsField').hidden = mode !== 'case';
     document.getElementById('setupStarterNote').textContent = party ? 'Local play passes one device between named players. Online play gives each player their own private screen.'
         : 'The starting team is drawn at random. Rematches rotate the starter. Customize cards, packs, and timing in Settings.';
@@ -139,8 +143,9 @@ function modeSettingsPresentation(settings) {
     document.getElementById('winRuleHint').textContent = settings.winRule === 'first-to-target'
         ? 'The first team to reach the target wins after its turn, including any effects.'
         : 'Finish the round so every team has the same number of turns. Highest score wins.';
-    document.getElementById('timeSetting').hidden = document.getElementById('wordsSetting').hidden = mode === 'table';
-    txtSeconds.disabled = txtWords.disabled = mode === 'table';
+    document.getElementById('timeSetting').hidden = mode === 'table';
+    document.getElementById('wordsSetting').hidden = false;
+    txtSeconds.disabled = mode === 'table'; txtWords.disabled = false;
     document.getElementById('pointsToWin').disabled = txtTeams.disabled = party;
     chkChaos.disabled = mode !== 'classic' && mode !== 'chaos';
     document.getElementById('chkReroll').disabled = mode !== 'chaos';
@@ -150,15 +155,15 @@ function modeSettingsPresentation(settings) {
     document.getElementById('rerollOption').hidden = mode !== 'chaos';
     document.getElementById('trainingOption').hidden = mode === 'table';
     document.getElementById('seriesOption').hidden = party;
-    document.getElementById('modePlayOptions').hidden = mode === 'table';
-    const message = party ? mode === 'table' ? 'Open Table uses one untimed answer, individual scores and equal speaking turns. Team targets, training hints, Chaos and session team tallies do not apply.'
+    document.getElementById('modePlayOptions').hidden = false;
+    const message = party ? mode === 'table' ? 'Open Table uses numbered word cards, individual scores and equal speaking turns. Choose timing in setup and words per card here. Team targets, training hints, Chaos and team tallies do not apply.'
         : 'Case Files uses one crew and the investigation turn budget. Team score targets, Chaos and session team tallies do not apply.'
         : Modes.isStakes(settings) ? 'Stakes has its own scoring. Chaos effects and rerolls do not apply. The risk target follows the actual eligible card size.' : '';
     document.getElementById('modeSettingsNote').textContent = message; document.getElementById('modeSettingsNote').hidden = !message;
     const rules = {
         boost: 'Choose a normal turn or risk before the words appear. Get at least 60% correct (3 of 5) to add 2 to your clue points; miss and subtract 2, with a floor of zero. Bank 2 points first. After risking, complete one normal turn before risking again.',
         double: 'Once per team per match, risk before seeing the card. Meet the 60% target (3 of 5) to double your clue points. Miss and lose 3 banked points, earning no clue points. Bank 3 points first.',
-        table: 'One speaker sees one answer after Go. Everyone else asks questions and privately locks a guess or passes; there is no time limit. Guesses reveal together. Review correct wording together, then the speaker confirms. Each correct guess earns its author and the speaker 1 point. Everyone gets the chosen number of speaking turns. Late arrivals watch until rematch. On one device, hide the answer and pass to each guesser.',
+        table: `For 3–8 players. Only the speaker sees the numbered word card after Go. Local play and online voice-call play use spoken guesses. After the round, the speaker awards each word to the first correct guesser, or Nobody if skipped. Select every tied guesser for simultaneous correct answers; speaker credit stays 1 per solved word. ${settings.tableScoring === 'guesser' ? 'Only the first correct guesser earns 1 point; the speaker earns no points.' : 'The first correct guesser and speaker each earn 1 point per solved word.'} Timed rounds default to 60 seconds; Unlimited lets the speaker finish when ready. Words per card follows Settings. Online, the host chooses voice call or typed clues at match start. Typed play takes one word at a time: send clues, read guesses in arrival order, and award the first correct one. Everyone gets equal speaking turns; late arrivals watch until rematch.`,
         case: 'Everyone joins one crew. The speaker describes words while the crew guesses aloud; only the speaker sees live answers. Confirm correct words after each timed round. Each evidence threshold unlocks a fact, with spare progress carried forward. Inspect suspect profiles and discuss the clues. When all evidence is unlocked or the turn budget ends, agree on one suspect and confirm a final accusation (the host confirms online). Solve the case together.'
     };
     document.getElementById('modeHowToPlay').hidden = !rules[mode];
@@ -203,7 +208,7 @@ function renderStakesUi(data = null) {
 function ensurePartySurface() {
     if (partySurface) return;
     partySurface = createPartySurface(document.getElementById('partyGame'), {
-        send: action => { void partyCommand(action); }, exit: () => { void returnToSetup(); }, share: sharePartyResult, summary: partySummary,
+        send: action => partyCommand(action), exit: () => { void returnToSetup(); }, share: sharePartyResult, summary: partySummary,
         rejoin: () => { void onlineClient?.resume(true); },
         invite: async () => {
             const url = Experience.inviteLink(location.href, gameCode);
@@ -226,8 +231,7 @@ function renderPartyGame(data = localPartyGame) {
         if (localPartyTurnKey !== key) { localPartyTurnKey = key; localPartySeat = ''; localPartyPassed = false; }
         if (data.phase === 'selecting' || data.phase === 'accusing' || data.phase === 'finished') localPartySeat = data.phase === 'selecting' ? data.turn.speakerId : data.hostId;
         else {
-            const desired = Modes.modeOf(data.settings) === 'table' && localPartyPassed && data.phase === 'describing'
-                ? data.turn.guesserIds.find(id => !data.turn.guesses[id]) : data.turn.speakerId;
+            const desired = data.turn.speakerId;
             if (desired && localPartySeat !== desired) {
                 gateId = desired; gateName = data.party.players.find(player => player.id === desired)?.name || 'the next player';
             }
@@ -249,9 +253,9 @@ function renderPartyGame(data = localPartyGame) {
     }
     partyLastPhase = `${cue}:${data.phase}`;
     if (view.countdownRemainingMs && cue !== lastOnlineCue) { lastOnlineCue = cue; void playSound(countdownSound, () => false, 1, Math.max(0, (now - data.turn.countdownAt) / 1000)); }
-    if (connected && data.phase === 'describing' && Modes.modeOf(data.settings) === 'case' && !view.countdownRemainingMs
+    if (connected && data.phase === 'describing' && Number.isFinite(data.turn.deadline) && !view.countdownRemainingMs
         && view.remainingSeconds > 0 && view.remainingSeconds <= 5 && partyWarningCue !== cue) { partyWarningCue = cue; void playSound(warningSound, () => false); }
-    syncTickSound(view.remainingSeconds, Modes.modeOf(data.settings) === 'case' && data.phase === 'describing' && !view.countdownRemainingMs && connected);
+    syncTickSound(view.remainingSeconds, Number.isFinite(data.turn?.deadline) && data.phase === 'describing' && !view.countdownRemainingMs && connected);
     if (!partyTick) partyTick = setInterval(() => { const next = isOnlineGame ? onlineClient?.snapshot : localPartyGame; if (next && Modes.isParty(next.settings)) renderPartyGame(next); }, 200);
 }
 async function partyCommand(action) {
@@ -259,7 +263,8 @@ async function partyCommand(action) {
     if (action.type === 'pass-device') { localPartyPassed = true; localPartySeat = ''; renderPartyGame(); return; }
     if (action.type === 'request-end') { getModalInstance('endMatchModal')?.show(); return; }
     const request = ['start-game', 'start-round', 'rematch'].includes(action.type) ? { ...action, seed: randomSeed() } : action;
-    if (isOnlineGame) { await sendOnlineCommand(request); return; }
+    if (!isOnlineGame && Modes.modeOf(localPartyGame?.settings) === 'table' && ['start-game', 'rematch'].includes(action.type)) request.format = 'voice';
+    if (isOnlineGame) return await sendOnlineCommand(request);
     if (!localPartyGame) return;
     const now = Date.now();
     for (const record of Object.values(localPartyGame.presence)) for (const value of Object.values(record.connections)) value.lastSeen = now;
@@ -276,20 +281,17 @@ async function partyCommand(action) {
 }
 function startLocalParty(settings) {
     const names = document.getElementById('localPlayerNames').value.split('\n').map(name => sanitizePlayerName(name)).filter(Boolean);
-    const error = names.length < Modes.minimumPlayers(settings) || names.length > 12 ? `Enter ${Modes.minimumPlayers(settings)}–12 player names, one per line.` : new Set(names.map(name => name.toLowerCase())).size !== names.length ? 'Give every player a different name.' : '';
+    const error = names.length < Modes.minimumPlayers(settings) || names.length > Modes.maximumPlayers(settings) ? `Enter ${Modes.minimumPlayers(settings)}–${Modes.maximumPlayers(settings)} player names, one per line.` : new Set(names.map(name => name.toLowerCase())).size !== names.length ? 'Give every player a different name.' : '';
     const namesError = document.getElementById('localNamesError'); namesError.hidden = !error; namesError.textContent = error;
     document.getElementById('localPlayerNames').setAttribute('aria-invalid', String(Boolean(error)));
     if (error) { document.getElementById('localPlayerNames').focus(); return; }
     const localEntries = isAiGame ? getAiWordObjects(settings.difficulty) : null;
-    if (settings.mode === 'table' && localEntries?.some(entry => entry.word.length > 80)) {
-        const node = document.getElementById('menuNotice'); node.textContent = 'Open Table uses typed guesses. Keep each custom answer to 80 characters or fewer.'; node.hidden = false; return;
-    }
     localWordObjects = localEntries ? localEntries.filter(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty) : filterRecentlyUsedWords(getOnlineWordObjects(settings));
     setWordDescriptionsFromObjects(localEntries ? [] : localWordObjects);
     clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds();
     isRoundActive = false; isChaosMode = false; isResolvingChaosMove = false;
     numWords = settings.numWords; numSeconds = settings.numSeconds; difficulty = settings.difficulty;
-    let data = { protocolVersion: OnlineState.PROTOCOL_VERSION, settings, localEntries: localWordObjects, customWords: Boolean(localEntries), teams: [{ points: 0, players: [] }, { points: 0, players: [] }],
+    let data = { protocolVersion: OnlineState.PROTOCOL_VERSION, settings, localEntries: localWordObjects, localPlayerOrder: names.map((_, index) => `local-${index}`), customWords: Boolean(localEntries), teams: [{ points: 0, players: [] }, { points: 0, players: [] }],
         phase: 'waiting', currentTeam: 1, hostId: '', hostEpoch: 0, dateCreated: Date.now(), matchId: 1 };
     names.forEach((name, index) => { data = OnlineState.join(data, { playerId: `local-${index}`, connectionId: `local-connection-${index}`, playerName: name }, Date.now()); });
     localPartyGame = data; activeMode = settings.mode; localPartySeat = data.hostId; lastOnlineCue = ''; partyLastPhase = '';
@@ -764,7 +766,7 @@ function initializeQuickSetup() {
     const mode = document.getElementById('quickMode'), preset = document.getElementById('quickPreset');
     mode.addEventListener('change', () => { chkChaos.checked = mode.value === 'chaos'; updateSetupSummary(); });
     chkChaos.addEventListener('change', () => { mode.value = chkChaos.checked ? 'chaos' : 'classic'; updateSetupSummary(); });
-    ['tableCycles', 'caseId', 'caseTurns'].forEach(id => document.getElementById(id).addEventListener('change', updateSetupSummary));
+    ['tableCycles', 'tableTiming', 'tableSeconds', 'tableScoring', 'caseId', 'caseTurns'].forEach(id => document.getElementById(id).addEventListener('change', updateSetupSummary));
     document.getElementById('localPlayerNames').addEventListener('input', () => { document.getElementById('localNamesError').hidden = true; document.getElementById('localPlayerNames').setAttribute('aria-invalid', 'false'); });
     preset.addEventListener('change', () => {
         const values = Gameplay.PRESETS[preset.value];
@@ -784,7 +786,7 @@ function updateSetupSummary() {
     syncThemePicker();
     modeSettingsPresentation(settings);
     const pack = settings.selectedTheme !== 'None' ? settings.selectedTheme : settings.selectedCategories.join(', ') || 'All categories';
-    const text = Modes.isParty(settings) ? `${Modes.MODES[settings.mode].name} · ${settings.mode === 'table' ? settings.tableCycles + ' speaking turns each · No timer' : settings.caseTurns + ' turns · ' + settings.numSeconds + 's · ' + settings.numWords + ' words'} · ${settings.difficulty} · ${pack}`
+    const text = Modes.isParty(settings) ? `${Modes.MODES[settings.mode].name} · ${settings.mode === 'table' ? settings.tableCycles + ' speaking turns each · ' + (settings.tableTiming === 'unlimited' ? 'Unlimited' : settings.tableSeconds + 's') + ' · ' + settings.numWords + ' words' : settings.caseTurns + ' turns · ' + settings.numSeconds + 's · ' + settings.numWords + ' words'} · ${settings.difficulty} · ${pack}`
         : `${Modes.MODES[settings.mode].name} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${Gameplay.winRuleLabel(settings.winRule)} · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
     document.getElementById('setupSummary').textContent = text;
     document.getElementById('advancedSetupSummary').textContent = text;
@@ -1187,6 +1189,9 @@ function getSanitizedSettingsFromInputs() {
     return Modes.normalizeModeSettings({
         mode: ['boost', 'double', 'table', 'case'].includes(selectedMode) ? selectedMode : chkChaos?.checked ? 'chaos' : 'classic',
         tableCycles: document.getElementById('tableCycles').value,
+        tableTiming: document.getElementById('tableTiming').value,
+        tableScoring: document.getElementById('tableScoring').value,
+        tableSeconds: document.getElementById('tableSeconds').value,
         caseTurns: document.getElementById('caseTurns').value,
         caseId: document.getElementById('caseId').value,
         difficulty: ['easy', 'normal', 'hard'].includes(chosenDifficulty) ? chosenDifficulty : 'normal',
@@ -1208,7 +1213,7 @@ function sanitizeGameSettingsFromDb(settings = {}, teamsLength = 2) {
     const selectedTheme = sanitizeSelectedTheme(settings.selectedTheme || "None");
     const selectedCategories = sanitizeSelectedCategories(settings.selectedCategories);
     const sanitized = {
-        mode: Modes.modeOf(settings), tableCycles: settings.tableCycles, caseTurns: settings.caseTurns, caseId: settings.caseId,
+        mode: Modes.modeOf(settings), tableCycles: settings.tableCycles, tableTiming: settings.tableTiming, tableScoring: settings.tableScoring, tableSeconds: settings.tableSeconds, caseTurns: settings.caseTurns, caseId: settings.caseId,
         difficulty: ["easy", "normal", "hard"].includes((settings.difficulty || "").toLowerCase())
             ? settings.difficulty.toLowerCase()
             : "normal",
@@ -2169,7 +2174,7 @@ async function run(topic) {
     try {
         const settings = getSanitizedSettingsFromInputs();
         const prompt = AiPacks.buildPackRequest(cleanTopics, { strict: Boolean(strictToggle.checked), difficulty: settings.difficulty,
-            numWords: settings.mode === 'table' ? 5 : settings.numWords, history: refreshAiGenerationHistory() });
+            numWords: settings.numWords, history: refreshAiGenerationHistory() });
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const pack = AiPacks.parseGeneratedPack(String(response?.text?.() || ''), {
@@ -3246,16 +3251,7 @@ function getOnlineWordObjects(settings, wordPack = null) {
 function drawOnlineWords(gameData, seed) {
     const settings = sanitizeGameSettingsFromDb(gameData.settings, gameData.teams.length);
     const entries = !isOnlineGame && Array.isArray(gameData.localEntries) ? gameData.localEntries : getOnlineWordObjects(settings, gameData.wordPack);
-    let dealDifficulty = settings.difficulty;
-    if (settings.mode === 'table' && dealDifficulty === 'normal') {
-        const preferred = Gameplay.random(seed)() < .6 ? 'easy' : 'hard';
-        dealDifficulty = entries.some(entry => entry.difficulty === preferred) ? preferred : preferred === 'easy' ? 'hard' : 'easy';
-    }
-    const draw = Gameplay.drawWords(entries, gameData.deck || {}, dealDifficulty, settings.numWords, seed);
-    if (settings.mode === 'table') {
-        const other = dealDifficulty === 'easy' ? 'hard' : 'easy';
-        draw.deck[other] = [...(gameData.deck?.[other] || [])];
-    }
+    const draw = Gameplay.drawWords(entries, gameData.deck || {}, settings.difficulty, settings.numWords, seed);
     const aliases = draw.words.flatMap(word => { const entry = entries.find(item => Gameplay.answerKey(item.word) === Gameplay.answerKey(word)); return entry?.canonical ? [word, entry.canonical] : [word]; });
     return { words: draw.words, aliases, pools: { deck: draw.deck, deckRecycled: draw.recycled,
         easyWords: [], hardWords: [], currentGameWords: [] } };
@@ -3641,7 +3637,7 @@ async function handleOnlineJoinError(error) {
         'incompatible-lobby': "This lobby uses a different online version. Reload every player's tab and create a new lobby.",
         'invalid-word-pack': 'This lobby has an invalid word pack. Ask the host to create a new lobby with a valid pack.',
         'invalid-game-mode': 'This lobby uses an unknown game mode. Reload and create a new lobby.',
-        'lobby-full': 'This mode supports up to 12 players. Wait for a seat to be released, or create another lobby.',
+        'lobby-full': 'This lobby is full. Open Table supports 8 players; Case Files supports 12. Wait for a seat to be released, or create another lobby.',
         'lobby-unavailable': 'This lobby is unavailable or has ended.'
     };
     if (messages[error.message]) saveOnlineSession(null);

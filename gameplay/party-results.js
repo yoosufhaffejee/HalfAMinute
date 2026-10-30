@@ -1,12 +1,13 @@
-import { MODES, modeOf } from './modes.js?v=20261030.1';
+import { MODES, modeOf } from './modes.js?v=20261030.4';
 function download(blob, filename) {
     const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = filename; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 export function partySummary(game) {
-    const value = { version: 1, mode: modeOf(game.settings), matchId: game.matchId, finishReason: game.finishReason,
+    const value = { version: 2, mode: modeOf(game.settings), matchId: game.matchId, finishReason: game.finishReason,
         scores: game.party.players.map(player => player.points), turns: game.party.history.map(event => ({ correct: event.earned, cardSize: event.wordCount })),
-        ...(modeOf(game.settings) === 'case' ? { evidence: game.party.evidenceCount, correct: game.party.totalCorrect } : {}) };
+        ...(modeOf(game.settings) === 'case' ? { evidence: game.party.evidenceCount, correct: game.party.totalCorrect }
+            : { format: game.party.format, timing: game.settings.tableTiming, scoring: game.settings.tableScoring, seconds: game.settings.tableSeconds, wordsPerCard: game.settings.numWords }) };
     download(new Blob([JSON.stringify(value, null, 2)], { type: 'application/json' }), 'half-a-minute-summary.json');
 }
 export async function sharePartyResult(game) {

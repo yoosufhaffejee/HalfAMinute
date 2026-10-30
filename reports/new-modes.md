@@ -1,5 +1,6 @@
 # Four new modes
 
+Open Table’s original design below was replaced by the [Open Table rebuild](open-table-rebuild.md) on 30 October 2026.
 30 October 2026
 
 ## Behavior

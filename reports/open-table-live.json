@@ -1,0 +1,37 @@
+{
+  "backend": "Live Firebase; temporary UI-created test lobbies, explicitly left afterward; no AI requests",
+  "completed": true,
+  "checks": [
+    "table / voice: three real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch",
+    "table / text: three real browser clients, shared transactions, roles/word privacy, scoring, refresh and rematch"
+  ],
+  "layouts": [
+    {
+      "label": "Typed clues / speaker",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Typed clues / speaker",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Typed clues / speaker",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Typed clues / speaker large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "cleanup": {
+    "created": 2,
+    "closed": 2,
+    "remaining": [],
+    "verification": "All test players left through the UI; a separate read confirms ended lobbies with zero members/presence, as required by the existing lifecycle."
+  }
+}

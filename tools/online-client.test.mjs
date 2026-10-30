@@ -112,15 +112,15 @@ function makeClient(t, db, name, options = {}) {
     return { client, sdk, errors, snapshots };
 }
 
-test('Open Table client never expires an untimed answer and reconnect keeps sealed guesses', async t => {
-    const db = new Database(); db.game.settings = { ...db.game.settings, mode: 'table', tableCycles: 1 };
+test('Open Table client keeps unlimited typed turns and committed messages on reconnect', async t => {
+    const db = new Database(); db.game.settings = { ...db.game.settings, mode: 'table', tableCycles: 1, tableTiming: 'unlimited' };
     const a = makeClient(t, db, 'A'), b = makeClient(t, db, 'B'), c = makeClient(t, db, 'C');
     for (const entry of [a, b, c]) { entry.client.rules.drawWords = () => ({ words: ['Apple'], pools: {} }); await entry.client.connect(); }
-    await a.client.command({ type: 'start-game', seed: 0 }); await flush();
+    await a.client.command({ type: 'start-game', seed: 0, format: 'text' }); await flush();
     await a.client.command({ type: 'start-round', seed: 1 }); db.now += 5000; await flush();
-    await b.client.command({ type: 'lock-guess', text: 'Apple' }); await flush();
+    await b.client.command({ type: 'send-guess', text: 'Apple', index: 0, messageId: 'guess-b' }); await flush();
     await b.sdk.disconnect(); await b.sdk.reconnect(); await flush();
-    assert.equal(db.game.turn.guesses['id-B'].text, 'Apple'); assert.equal(db.game.phase, 'describing');
+    assert.equal(db.game.turn.messages[0].text, 'Apple'); assert.equal(db.game.phase, 'describing');
     const count = db.operations.filter(operation => operation.type === 'transaction').length;
     db.now += 300000; await a.client.tick();
     assert.equal(db.operations.filter(operation => operation.type === 'transaction').length, count);

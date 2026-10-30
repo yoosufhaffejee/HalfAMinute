@@ -1,7 +1,8 @@
-import { modeOf, MODES } from './modes.js?v=20261030.1';
+import { modeOf, MODES } from './modes.js?v=20261030.4';
 import { CASES, caseEvidence, suspectTraits } from './cases.js?v=20261030.1';
 import { countdownLabel } from './rules.js?v=20261029.2';
-import { REACTIONS, REACTION_TTL_MS } from './experience.js?v=20261029.4';
+import { REACTIONS, REACTION_LABELS, REACTION_TTL_MS } from './experience.js?v=20261030.4';
+import { createTableSurface } from './table-ui.js?v=20261030.4';
 
 const h = (tag, className = '', text = '') => { const node = document.createElement(tag); node.className = className; node.textContent = text; return node; };
 function button(text, action, disabled = false, payload = {}) {
@@ -19,6 +20,7 @@ function portrait(index) {
 }
 
 export function createPartySurface(root, { send, exit, invite, share, summary, rejoin }) {
+    const tableSurface = createTableSurface(root, { send, exit, invite, share, summary, rejoin });
     let current, signature = '', feedback = '', draftKey = '', draft = '', reactionContext = '', suppressed = new Set(), announcedPhase = '';
     root.addEventListener('click', event => {
         const target = event.target.closest('button[data-party-action]'); if (!target || target.disabled) return;
@@ -47,6 +49,7 @@ export function createPartySurface(root, { send, exit, invite, share, summary, r
 
     function render(state) {
         current = state;
+        if (modeOf(state.game.settings) === 'table') { tableSurface.render(state); return; }
         const { game, view, now, busy, local, gateName, gateId } = state;
         const mode = modeOf(game.settings), table = mode === 'table', story = CASES[game.settings.caseId] || CASES.trophy;
         const party = game.party, turn = game.turn, active = view.active && state.connected;
@@ -226,11 +229,11 @@ export function createPartySurface(root, { send, exit, invite, share, summary, r
         const row = h('div', 'party-reactions');
         const recent = state.game.reactions?.[state.actor.playerId];
         for (const [reaction, emoji] of Object.entries(REACTIONS)) {
-            const node = button(emoji, 'react', state.busy || Boolean(recent && state.now - recent.at < 1800), { reaction }); node.setAttribute('aria-label', reaction === 'clap' ? 'Applaud' : reaction === 'fire' ? 'Great round' : 'Laugh'); row.appendChild(node);
+            const node = button(emoji, 'react', state.busy || Boolean(recent && state.now - recent.at < 1800), { reaction }); node.setAttribute('aria-label', REACTION_LABELS[reaction]); node.title = REACTION_LABELS[reaction]; row.appendChild(node);
         }
         const text = Object.entries(state.game.reactions || {}).filter(([id, item]) => item.reviewId === reviewId && !suppressed.has(`${id}:${item.at}`) && state.now - item.at < REACTION_TTL_MS && state.now >= item.at)
             .map(([id, item]) => `${REACTIONS[item.reaction] || ''} ${state.game.party.players.find(player => player.id === id)?.name || ''}`).join(' · ');
         row.appendChild(h('span', '', text)); if (!state.local) parent.appendChild(row);
     }
-    return { render, reset() { signature = ''; feedback = ''; draft = ''; draftKey = ''; reactionContext = ''; announcedPhase = ''; suppressed.clear(); } };
+    return { render, reset() { tableSurface.reset(); signature = ''; feedback = ''; draft = ''; draftKey = ''; reactionContext = ''; announcedPhase = ''; suppressed.clear(); } };
 }

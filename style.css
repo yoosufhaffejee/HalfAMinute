@@ -177,7 +177,7 @@ body.layout-game .app-actions { justify-content: flex-end; }
 @keyframes round-celebration { from { transform: scale(.97); background: #b7e8ce; } to { transform: scale(1); background: #eaf7f0; } }
 #roleInstruction.turn-handoff { padding: 12px 14px; border-left: 4px solid; border-radius: 8px; background: #f8fafc; }
 .round-reactions { order: 7; display: grid; gap: 4px; margin: 4px 0; }
-.reaction-buttons { display: flex; justify-content: center; gap: 8px; }
+.reaction-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .reaction-button { min-width: 48px; min-height: 44px; border: 1px solid #d7e0ea; border-radius: 24px; background: #fff; font-size: 1.2rem; }
 .reaction-button:hover, .reaction-button:focus-visible { background: #eef6f1; border-color: #8dbfa3; }
 .reaction-button:disabled { opacity: .55; }

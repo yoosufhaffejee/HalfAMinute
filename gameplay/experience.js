@@ -1,5 +1,6 @@
 // Presentation helpers never advance a turn or change its score.
-export const REACTIONS = { clap: '👏', fire: '🔥', laugh: '😂' };
+export const REACTIONS = { clap: '👏', fire: '🔥', laugh: '😂', shock: '😱', clever: '🧠', close: '😅', ouch: '💀' };
+export const REACTION_LABELS = { clap: 'Applaud', fire: 'On fire', laugh: 'That was hilarious', shock: 'No way!', clever: 'Clever clue', close: 'That was close', ouch: 'Brutal!' };
 export const REACTION_TTL_MS = 3500;
 
 export function roundHighlight(event, previous = []) {
