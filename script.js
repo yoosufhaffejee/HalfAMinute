@@ -155,8 +155,8 @@ function modeSettingsPresentation(settings) {
     document.getElementById('rerollOption').hidden = mode !== 'chaos';
     document.getElementById('trainingOption').hidden = mode === 'table';
     document.getElementById('seriesOption').hidden = party;
-    document.getElementById('modePlayOptions').hidden = false;
-    const message = party ? mode === 'table' ? 'Open Table uses numbered word cards, individual scores and equal speaking turns. Choose timing in setup and words per card here. Team targets, training hints, Chaos and team tallies do not apply.'
+    document.getElementById('modePlayOptions').hidden = mode === 'table';
+    const message = party ? mode === 'table' ? 'Open Table uses numbered word cards, individual scores and equal speaking turns. Choose speaking turns, timing and words per card here. Team targets, training hints, Chaos and team tallies do not apply.'
         : 'Case Files uses one crew and the investigation turn budget. Team score targets, Chaos and session team tallies do not apply.'
         : Modes.isStakes(settings) ? 'Stakes has its own scoring. Chaos effects and rerolls do not apply. The risk target follows the actual eligible card size.' : '';
     document.getElementById('modeSettingsNote').textContent = message; document.getElementById('modeSettingsNote').hidden = !message;

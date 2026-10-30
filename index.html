@@ -89,9 +89,6 @@
                 <p id="modeDescription" class="mode-description"></p>
                 <small id="setupStarterNote">The starting team is drawn at random. Rematches rotate the starter. Customize cards, packs, and timing in Settings.</small>
                 <div id="partySetup" class="party-setup" hidden>
-                    <div class="form-field" id="tableCyclesField"><label for="tableCycles">Speaking turns per player</label><select id="tableCycles"><option value="1">1 · Icebreaker</option><option value="2" selected>2 · Around the table</option><option value="3">3 · Settle in</option></select></div>
-                    <div class="form-field" id="tableTimingField"><label for="tableTiming">Round timing</label><select id="tableTiming"><option value="timed" selected>Timed</option><option value="unlimited">Unlimited</option></select></div>
-                    <div class="form-field" id="tableSecondsField"><label for="tableSeconds">Seconds per round</label><input type="number" id="tableSeconds" min="15" max="300" value="60"></div>
                     <div class="form-field" id="caseIdField"><label for="caseId">Investigation</label><select id="caseId"><option value="trophy">The Missing Trophy</option><option value="blackout">Blackout at the Observatory</option><option value="blueprint">The Vanishing Blueprint</option></select></div>
                     <div class="form-field" id="caseTurnsField"><label for="caseTurns">Turns to investigate</label><input type="number" id="caseTurns" min="4" max="12" value="6"></div>
                     <div class="form-field"><label for="localPlayerNames">Players on this device</label><textarea id="localPlayerNames" rows="3" maxlength="320" placeholder="One name per line" aria-describedby="localNamesHint localNamesError"></textarea><small id="localNamesHint">For local play, enter 2–12 different names. Online, each friend joins from their own device.</small><p id="localNamesError" class="dialog-feedback is-error" role="alert" hidden></p></div>
@@ -130,6 +127,9 @@
                                     <div class="form-field" id="winRuleSetting"><label for="winRule">Win rule</label><select id="winRule" aria-describedby="winRuleHint"><option value="equal-turns" selected>Equal turns</option><option value="first-to-target">First to target</option></select><small id="winRuleHint" class="dialog-help">Finish the round so every team has the same number of turns. Highest score wins.</small></div>
                                     <div class="form-field" id="timeSetting"><label for="txtSeconds">Round time <span class="field-unit">(seconds)</span></label><input type="number" id="txtSeconds" min="5" max="300" value="30"></div>
                                     <div class="form-field" id="wordsSetting"><label for="txtWords">Words per round</label><input type="number" id="txtWords" min="1" max="15" value="5"></div>
+                                    <div class="form-field" id="tableCyclesField" hidden><label for="tableCycles">Speaking turns per player</label><select id="tableCycles"><option value="1">1 · Icebreaker</option><option value="2" selected>2 · Around the table</option><option value="3">3 · Settle in</option></select></div>
+                                    <div class="form-field" id="tableTimingField" hidden><label for="tableTiming">Round timing</label><select id="tableTiming"><option value="timed" selected>Timed</option><option value="unlimited">Unlimited</option></select></div>
+                                    <div class="form-field" id="tableSecondsField" hidden><label for="tableSeconds">Seconds per round</label><input type="number" id="tableSeconds" min="15" max="300" value="60"></div>
                                     <div class="form-field" id="tableScoringField" hidden><label for="tableScoring">Open Table scoring</label><select id="tableScoring"><option value="shared" selected>Guesser + speaker · 1 point each</option><option value="guesser">Guesser only · 1 point</option></select></div>
                                 </div>
                             </section>
@@ -420,6 +420,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script src="data.js"></script>
-    <script src="script.js?v=20261030.4" type="module"></script>
+    <script src="script.js?v=20261030.5" type="module"></script>
 </body>
 </html>

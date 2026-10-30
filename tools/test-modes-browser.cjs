@@ -117,9 +117,16 @@ async function localStakes(mode) {
 async function gate(page) { const ready = page.locator('[data-party-action="local-ready"], [data-table-action="local-ready"]'); await ready.waitFor(); await ready.click(); }
 async function localTable() {
     const { page, context } = await pageFor(); await page.clock.install();
-    await page.locator('#quickMode').selectOption('table'); await page.locator('#tableCycles').selectOption('1');
+    await page.locator('#quickMode').selectOption('table');
+    assert.equal(await page.locator('#partySetup select:visible, #partySetup input:visible').count(), 0);
+    await page.locator('#settings').click();
+    assert.equal(await page.locator('#modePlayOptions').isVisible(), false);
+    await page.locator('#tableCycles').selectOption('1');
     assert.equal(await page.locator('#tableSeconds').inputValue(),'60');
     await page.locator('#tableTiming').selectOption('unlimited');
+    assert.equal(await page.locator('#tableSecondsField').isVisible(), false);
+    await page.locator('#settingsModal .modal-footer button').click();
+    await page.locator('#settingsModal').waitFor({ state: 'hidden' });
     await page.locator('#startGameButton').click(); assert.match(await page.locator('#localNamesError').innerText(), /3–8/);
     await page.locator('#localPlayerNames').fill('Alice\nAlice\nCara'); await page.locator('#startGameButton').click(); assert.match(await page.locator('#localNamesError').innerText(), /different/);
     await page.locator('#localPlayerNames').fill('Alice\nBob\nCara'); await page.locator('#startGameButton').click();
@@ -192,7 +199,7 @@ async function onlinePair(mode, format = 'voice') {
     console.log(`Checking ${mode} online`);
     const host = await pageFor(), guest = await pageFor();
     await host.page.locator('#quickMode').selectOption(mode);
-    if (mode === 'table') { await host.page.locator('#tableCycles').selectOption('1'); if(format==='text')await host.page.locator('#tableTiming').selectOption('unlimited'); }
+    if (mode === 'table') await settings(host.page, { tableCycles: '1', ...(format === 'text' ? { tableTiming: 'unlimited' } : {}) });
     if (mode === 'case') await settings(host.page, { txtWords: 2, txtSeconds: 15 });
     else if (mode !== 'table') await settings(host.page, { pointsToWin: 30 });
     await host.page.locator('#online').click(); await host.page.locator('#playerName').fill('Host'); await host.page.locator('#createLobbyButton').click();
