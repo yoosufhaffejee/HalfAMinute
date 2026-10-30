@@ -1,12 +1,17 @@
-import { CASE_CONTENT } from './case-content.js?v=20261030.retry1';
-import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261030.retry1';
-export const CASES = Object.fromEntries(Object.entries(CASE_CONTENT).map(([id, story]) => [id, {
-    ...story,
+import { CASE_CONTENT } from './case-content.js?v=20261030.eight1';
+import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261030.eight1';
+import { PARTY_CASES } from './case-party-content.js?v=20261030.eight1';
+export const CASE_DIFFICULTIES = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
+const ratings = { museum: 'medium', train: 'medium', encore: 'hard', bank: 'hard', observatory: 'hard' };
+export const CASES = Object.fromEntries(Object.entries({ ...PARTY_CASES, ...CASE_CONTENT }).map(([id, story]) => [id, {
+    ...story, difficulty: story.difficulty || ratings[id],
     leads: story.leads.map(source => ({ ...source, facts: source.facts.map(item => ({
         ...item, code: item.id.toUpperCase(), ...CASE_VOCABULARY[id][item.id]
     })) }))
 }]));
-export const CASE_IDS = Object.keys(CASES);
+const rank = { easy: 0, medium: 1, hard: 2 };
+export const CASE_IDS = Object.keys(CASES).sort((a,b) => rank[CASES[a].difficulty] - rank[CASES[b].difficulty]);
+export function caseOptionLabel(id) { return `${CASE_DIFFICULTIES[CASES[id].difficulty]} · ${CASES[id].title}`; }
 export function caseFacts(id) {
     return CASES[id].leads.flatMap(source => source.facts.map(item => ({ ...item, leadId: source.id })));
 }

@@ -1,4 +1,4 @@
-import { CASES } from '../gameplay/cases.js';
+import { CASES, CASE_IDS, CASE_DIFFICULTIES, caseOptionLabel } from '../gameplay/cases.js';
 import { caseWordObjects, drawCaseCard } from '../gameplay/case-draw.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -46,6 +46,7 @@ function ui() {
             classList: { contains: c => classes.has(c), add: (...cs) => cs.forEach(c => classes.add(c)), remove: (...cs) => cs.forEach(c => classes.delete(c)), toggle: (c, on) => on ? classes.add(c) : classes.delete(c) },
             setAttribute(name, value) { this[name] = value; },
             appendChild(child) { this.children.push(child); if (['categoriesSelect', 'themesSelect', 'quickPreset'].includes(id)) this.options.push(child); }, prepend() {},
+            replaceChildren(...children) { this.children=children;this.options=children; },
             paused: true,
             play() { this.paused = false; metrics.audioPlays.push(id); return Promise.resolve(); },
             pause() { this.paused = true; },
@@ -60,7 +61,7 @@ function ui() {
     const el = id => { if (!nodes.has(id)) nodes.set(id, element(id)); return nodes.get(id); };
     const buttons = Array.from({ length: 16 }, () => element());
     const ctx = vm.createContext({
-        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, Experience, PackLibrary, createScreenAwake, Modes, CASES, caseWordObjects, drawCaseCard, caseDictionary, crypto: webcrypto,
+        OnlineState, OnlineClient, Gameplay, AiErrors, AiPacks, normalizeOnlinePack, Experience, PackLibrary, createScreenAwake, Modes, CASES, CASE_IDS, CASE_DIFFICULTIES, caseOptionLabel, caseWordObjects, drawCaseCard, caseDictionary, crypto: webcrypto,
         initializeApp: () => ({}), getDatabase: () => ({}), createAiWordClient: () => ({}),
         document: { readyState: 'loading', getElementById: el, querySelectorAll: selector => selector.includes('scoreButton') ? buttons : [],
             getElementsByClassName: name => name === 'scoreButton' ? buttons : [], body: element(), createElement: () => element(), addEventListener() {} },

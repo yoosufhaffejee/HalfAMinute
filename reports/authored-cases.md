@@ -1,6 +1,6 @@
 # Case Files: evidence and reconstruction
 
-The five mysteries have been reauthored around primary-source exhibits. The previous clues stated named exclusions and remaining answers; the replacement makes players interpret records, rebuild events and support a specific connection. The detailed pre-implementation plan and research are in [case-reconstruction-design.md](case-reconstruction-design.md).
+The catalogue contains eight mysteries built around primary-source exhibits. Three accessible party mysteries join the five original reconstructions. Case pickers label and sort Easy, Medium and Hard independently of word difficulty. The [expansion plan and research](eight-cases-plan.md) records the new designs; the original reconstruction plan is in [case-reconstruction-design.md](case-reconstruction-design.md).
 
 ## What players do
 
@@ -30,11 +30,11 @@ Local and online play use the same case reducer. Active crew members can change 
 
 Drafts survive refresh, temporary disconnection and host replacement. Firebase-omitted empty collections are normalized. Draft editing is blocked during countdown, description and answer selection. Rematches clear the reconstruction, assessment, hints and word history. Stopped games reveal no solution.
 
-The online protocol is now **13**, with versioned modules and CSS. Everyone must reload and create a new lobby. Retry commands increment the turn command ID without spending an investigation, rejecting stale submissions from the previous attempt. The existing client-trusted Firebase model and usual online voice-call assumption remain. Local gameplay works after the application has loaded; no first-visit offline service worker has been introduced.
+The online protocol is now **14**, with versioned modules and CSS. Everyone must reload and create a new lobby. Retry commands increment the turn command ID without spending an investigation, rejecting stale submissions from the previous attempt. The existing client-trusted Firebase model and usual online voice-call assumption remain. Local gameplay works after the application has loaded; no first-visit offline service worker has been introduced.
 
 ## Verification
 
-- **231 automated tests passed** across the existing baseline and case rules, including partial-result privacy, preserved retry state, stale-attempt rejection, early retry/resume and fresh restart reset.
+- **232 automated tests passed** across the existing baseline and all eight case rules, including tier ordering, partial-result privacy, preserved retry state, stale-attempt rejection, early retry/resume and fresh restart reset. New-case browser results are linked in the expansion plan.
 - The [focused retry browser checks](case-retry-browser.json) passed locally and with two clients: hidden unresolved answers and unopened exhibits, safe summary/share output, preserved correct answers, retry and fresh restart. Four responsive layout checks passed, including large text, with the [failure screen inspected](case-retry-mobile.png).
 - Every case completed independently at Easy, Normal and Hard. Tests cover wrong timelines with correct three-part answers, wrong and reversed evidence pairs, unavailable/duplicate exhibit IDs, shared edits, stale confirmations, private phases, progressive nudges, zero-evidence forced endings, rematches and Firebase-empty collections.
 - All five local browser cases completed, including private countdowns, timer expiry, source documents, timeline placement, proof selection, final review, debrief and next-case reset. Bank also completed with all network access disabled after load.

@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261030.retry1';
-import { OnlineClient } from './online/client.js?v=20261030.retry1';
+import * as OnlineState from './online/state.js?v=20261030.eight1';
+import { OnlineClient } from './online/client.js?v=20261030.eight1';
 import * as Gameplay from './gameplay/rules.js?v=20261030.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
@@ -10,12 +10,12 @@ import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
 import * as Experience from './gameplay/experience.js?v=20261030.4';
 import * as PackLibrary from './gameplay/saved-packs.js?v=20261029.5';
 import { createScreenAwake } from './gameplay/screen-awake.js?v=20261029.4';
-import * as Modes from './gameplay/modes.js?v=20261030.retry1';
-import { createPartySurface } from './gameplay/party-ui.js?v=20261030.retry1';
-import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.retry1';
-import { partySnapshot } from './gameplay/party-state.js?v=20261030.retry1';
-import { CASES } from './gameplay/cases.js?v=20261030.retry1';
-import { caseWordObjects, drawCaseCard } from './gameplay/case-draw.js?v=20261030.retry1';
+import * as Modes from './gameplay/modes.js?v=20261030.eight1';
+import { createPartySurface } from './gameplay/party-ui.js?v=20261030.eight1';
+import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.eight1';
+import { partySnapshot } from './gameplay/party-state.js?v=20261030.eight1';
+import { CASES, CASE_IDS, caseOptionLabel, CASE_DIFFICULTIES } from './gameplay/cases.js?v=20261030.eight1';
+import { caseWordObjects, drawCaseCard } from './gameplay/case-draw.js?v=20261030.eight1';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -140,7 +140,7 @@ function modeSettingsPresentation(settings) {
     document.getElementById('casePreview').hidden = mode !== 'case';
     if (mode === 'case') {
         pendingOnlinePack = null; updateOnlinePackNotice();
-        document.getElementById('casePreview').textContent = CASES[settings.caseId].focus;
+        document.getElementById('casePreview').textContent = `Case difficulty: ${CASE_DIFFICULTIES[CASES[settings.caseId].difficulty]} · ${CASES[settings.caseId].focus}. Word difficulty is set separately in Settings.`;
         document.getElementById('caseTurns').min = String(Math.max(4, Math.ceil(6 / settings.numWords)));
         document.getElementById('caseTurns').value = String(settings.caseTurns);
     }
@@ -998,6 +998,8 @@ function setLayoutMode(mode = "menu") {
 }
 
 function initializeMenu() {
+    const casePicker = document.getElementById('caseId');
+    casePicker.replaceChildren(...CASE_IDS.map(id => { const option = document.createElement('option'); option.value = id; option.textContent = caseOptionLabel(id); return option; }));
     initializeExperience();
     initializeAiPacks();
     initializePlayPreferences();

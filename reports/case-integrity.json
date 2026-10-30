@@ -1,10 +1,11 @@
 {
-  "version": "20261030.reconstruction1",
-  "scope": "Structural and author coherence checks. Not a human difficulty or win-rate measurement. Old 54-theory/minimum-clue metrics retired.",
+  "version": "20261030.eight1",
+  "scope": "Structural and author coherence checks. Difficulty tiers are editorial, not measured human solve rates.",
   "cases": [
     {
-      "caseId": "bank",
-      "title": "The Midnight Transfer",
+      "caseId": "cake",
+      "title": "The Great Cake Escape",
+      "difficulty": "easy",
       "evidenceFiles": 12,
       "wordReferences": 48,
       "reachableFiles": 12,
@@ -12,12 +13,54 @@
       "chronologyAgreesWithAuthoredTimes": true,
       "acceptedEvidencePairs": [
         [
-          "a3",
-          "n2"
+          "k1",
+          "k2"
         ],
         [
-          "a4",
-          "n2"
+          "k2",
+          "k4"
+        ]
+      ],
+      "progressiveNudges": 3
+    },
+    {
+      "caseId": "duck",
+      "title": "Who Kidnapped Captain Quack?",
+      "difficulty": "easy",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "q1",
+          "h2"
+        ],
+        [
+          "q4",
+          "h2"
+        ]
+      ],
+      "progressiveNudges": 3
+    },
+    {
+      "caseId": "ghost",
+      "title": "The Ghost Who Stole the Popcorn",
+      "difficulty": "easy",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "s1",
+          "s2"
+        ],
+        [
+          "s1",
+          "s4"
         ]
       ],
       "progressiveNudges": 3
@@ -25,6 +68,7 @@
     {
       "caseId": "museum",
       "title": "The Four-Minute Gallery",
+      "difficulty": "medium",
       "evidenceFiles": 12,
       "wordReferences": 48,
       "reachableFiles": 12,
@@ -45,6 +89,7 @@
     {
       "caseId": "train",
       "title": "The Night Train Exchange",
+      "difficulty": "medium",
       "evidenceFiles": 12,
       "wordReferences": 48,
       "reachableFiles": 12,
@@ -63,8 +108,30 @@
       "progressiveNudges": 3
     },
     {
+      "caseId": "bank",
+      "title": "The Midnight Transfer",
+      "difficulty": "hard",
+      "evidenceFiles": 12,
+      "wordReferences": 48,
+      "reachableFiles": 12,
+      "timelineEvents": 4,
+      "chronologyAgreesWithAuthoredTimes": true,
+      "acceptedEvidencePairs": [
+        [
+          "a3",
+          "n2"
+        ],
+        [
+          "a4",
+          "n2"
+        ]
+      ],
+      "progressiveNudges": 3
+    },
+    {
       "caseId": "observatory",
       "title": "The False Signal",
+      "difficulty": "hard",
       "evidenceFiles": 12,
       "wordReferences": 48,
       "reachableFiles": 12,
@@ -89,6 +156,7 @@
     {
       "caseId": "encore",
       "title": "The Silent Encore",
+      "difficulty": "hard",
       "evidenceFiles": 12,
       "wordReferences": 48,
       "reachableFiles": 12,

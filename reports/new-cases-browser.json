@@ -1,0 +1,74 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "cake: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset",
+    "duck: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset",
+    "ghost: complete local case, private countdown, real expiry, structured exhibits, four-event reconstruction, supported connection, final review, debrief, next-case reset",
+    "Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch"
+  ],
+  "layouts": [
+    {
+      "label": "New case cake",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "New case cake",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "New case cake",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "New case cake large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "New case duck",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "New case duck",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "New case duck",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "New case duck large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "New case ghost",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "New case ghost",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "New case ghost",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "New case ghost large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 86
+}

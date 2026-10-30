@@ -1,4 +1,4 @@
-import { CASES, CASE_IDS, caseFacts, availableFacts, caseFields, caseSubmission, caseFeedback, confirmedCasePart } from './cases.js?v=20261030.retry1';
+import { CASES, CASE_IDS, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseFields, caseSubmission, caseFeedback, confirmedCasePart } from './cases.js?v=20261030.eight1';
 import { countdownLabel } from './rules.js?v=20261030.2';
 import { REACTIONS, REACTION_LABELS, REACTION_TTL_MS } from './experience.js?v=20261030.4';
 const h = (tag, cls = '', text = '') => { const n = document.createElement(tag); n.className = cls; n.textContent = text; return n; };
@@ -69,7 +69,7 @@ export function createCaseSurface(root, callbacks) {
         note(panel,state.local?'Build this together between word rounds. Your draft is not checked until final submission.':'Anyone in the crew can edit this shared draft. The host submits the final theory. Drafts are not checked.','case-draft-note');
         panel.appendChild(h('h4','','1. Rebuild the timeline'));
         if(confirmedCasePart(game,'timeline'))note(panel,'✓ Timeline confirmed on an earlier attempt.','case-confirmed');
-        note(panel,'Place all four events from earliest to latest in real time. Compare clocks and distinguish an event from its later report.');
+        note(panel,story.difficulty==='easy'?'Place all four events from earliest to latest. All clocks agree; use the recorded times and what the pictures show.':'Place all four events from earliest to latest in real time. Compare clocks and distinguish an event from its later report.');
         const list=h('ol','case-timeline');list.setAttribute('aria-label','Your proposed order, earliest first');
         timeline.forEach((key,index)=>{const event=story.chronology.events.find(e=>e.id===key),row=h('li');row.appendChild(h('span','case-event-number',String(index+1)));row.appendChild(h('strong','',event?.label||key));const controls=h('div','case-event-controls');
             const up=button('↑','timeline-up',!editable||!index,{index,eventId:key});up.setAttribute('aria-label',`Move ${event?.label} earlier`);up.title='Move earlier';up.id='case-up-'+key;controls.appendChild(up);
@@ -127,7 +127,7 @@ export function createCaseSurface(root, callbacks) {
         if(next===signature)return;signature=next;
         const focused=document.activeElement?.id;const changed=phaseKey!==`${game.matchId}:${game.phase}:${turn?.id}:${gateName}:${Boolean(countdownRemainingMs)}`;phaseKey=`${game.matchId}:${game.phase}:${turn?.id}:${gateName}:${Boolean(countdownRemainingMs)}`;
         root.replaceChildren();root.className=`party-game party-case case-phase-${game.phase}`;
-        const header=h('div','party-heading');header.appendChild(h('span','party-eyebrow',`Case ${String(CASE_IDS.indexOf(game.settings.caseId)+1).padStart(2,'0')} · ${story.location}`));header.appendChild(h('h2','',story.title));
+        const header=h('div','party-heading');header.appendChild(h('span','party-eyebrow',`Case ${String(CASE_IDS.indexOf(game.settings.caseId)+1).padStart(2,'0')} · ${story.location} · ${CASE_DIFFICULTIES[story.difficulty]}`));header.appendChild(h('h2','',story.title));
         if(!local)note(header,`Lobby ${state.code} · Use your usual voice call`,'party-progress');
         if(party)note(header,`${party.history.length}/${game.settings.caseTurns} investigations · ${party.found.length}/12 evidence files`,'party-progress');root.appendChild(header);
         const body=h('section','party-stage');root.appendChild(body);const active=view.active&&state.connected;
@@ -148,7 +148,7 @@ export function createCaseSurface(root, callbacks) {
                 }
                 note(body,`${party.found.length}/12 evidence found · ${party.history.length} investigations${party.hintUsed?` · ${party.hintsUsed||1} nudges used`:''}`);}
             if(view.host||local){const field=h('div','form-field');const label=h('label','','Choose your next case');label.htmlFor='nextCase';field.appendChild(label);const select=h('select');select.id='nextCase';
-                for(const id of CASE_IDS){const option=h('option','',`${CASES[id].title}${id===game.settings.caseId?' · Start over':''}`);option.value=id;select.appendChild(option)}select.value=CASE_IDS[(CASE_IDS.indexOf(game.settings.caseId)+1)%CASE_IDS.length];field.appendChild(select);body.appendChild(field);body.appendChild(button('Open another case','rematch',busy));}
+                for(const id of CASE_IDS){const option=h('option','',`${caseOptionLabel(id)}${id===game.settings.caseId?' · Start over':''}`);option.value=id;select.appendChild(option)}select.value=CASE_IDS[(CASE_IDS.indexOf(game.settings.caseId)+1)%CASE_IDS.length];field.appendChild(select);body.appendChild(field);body.appendChild(button('Open another case','rematch',busy));}
             else note(body,'The host can choose another case.');body.appendChild(button('Share result card','share'));body.appendChild(button('Download summary','summary'));
         }else if(['idle','waiting'].includes(game.phase)){
             const speaker=party.players.find(p=>p.id===turn.speakerId);body.appendChild(h('h3','',view.speaker?'Which lead will you follow?':`${speaker?.name||'The next speaker'} chooses the lead`));

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as State from '../online/state.js';
 import * as Modes from '../gameplay/modes.js';
-import { CASES, CASE_IDS, caseFacts, availableFacts, caseSubmission, caseAssessment, caseFeedback, confirmedCasePart } from '../gameplay/cases.js';
+import { CASES, CASE_IDS, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseSubmission, caseAssessment, caseFeedback, confirmedCasePart } from '../gameplay/cases.js';
 import { caseWordObjects, drawCaseCard } from '../gameplay/case-draw.js';
 const context=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../data.js',import.meta.url),'utf8')+'\nthis.dictionary=Object.values(categories).flat();',context);
 const dictionary=JSON.parse(JSON.stringify(context.dictionary));
@@ -15,8 +15,8 @@ function act(g,type,extra={},who=g.turn?.speakerId||g.hostId){const copy=structu
 const started=(id,extra)=>act(lobby(id,undefined,extra),'start-game',{seed:0});
 function begin(g,lead){g=act(g,'choose-lead',{leadId:lead||availableFacts(g.settings.caseId,g.party.found)[0].leadId});g=act(g,'start-round',{seed:g.party.history.length+10});now+=4500;return g;}
 function score(g,indexes){g=act(g,'end-round');for(const index of indexes)g=act(g,'toggle-answer',{index});return act(g,'submit-round');}
-test('five source-based cases use real vocabulary, balanced prompts and structured exhibits without named eliminations',()=>{
-    assert.equal(CASE_IDS.length,5);
+test('eight source-based cases use real vocabulary, balanced prompts and structured exhibits without named eliminations',()=>{
+    assert.equal(CASE_IDS.length,8);
     for(const id of CASE_IDS){const s=CASES[id],facts=caseFacts(id),words=caseWordObjects(id,dictionary);assert.equal(s.people.length,6);assert.equal(s.methods.length,3);assert.equal(s.destinations.length,3);assert.equal(facts.length,12);assert.equal(words.length,48);
         assert.equal(new Set(words.map(w=>w.word.toLowerCase())).size,48);assert.equal(s.reveal.length,3);assert.equal(s.hints.length,3);assert.ok(s.groundRules&&s.intro.length>150);
         for(const f of facts){assert.ok(f.text.length>60&&f.source);assert.ok(f.records.length>=2&&f.records.every(row=>row.length===2&&row.every(value=>typeof value==='string'&&value.length)));assert.doesNotMatch(f.text,/rules? out|remaining possibilities|only .+ had|leaving .+ suspects/i);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='easy').length,2,`${id}/${f.id} easy`);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='hard').length,2);for(const dep of f.requires)assert.ok(facts.some(x=>x.id===dep));}
@@ -28,6 +28,13 @@ test('each chronology is uniquely ordered by authored times and each proof pair 
         for(const pair of story.connection.pairs){assert.equal(pair.length,2);assert.notEqual(pair[0],pair[1]);assert.ok(pair.every(key=>facts.some(f=>f.id===key)));}
         assert.equal(caseAssessment(id,{...story.solution,timeline:story.chronology.order,proof:story.connection.pairs[0]},facts.map(f=>f.id)).solved,true);
     }
+});
+test('case tiers have at least two cases each and every picker uses the ascending labelled catalogue',()=>{
+    const ranks={easy:0,medium:1,hard:2};const counts={easy:0,medium:0,hard:0};let previous=-1;
+    for(const id of CASE_IDS){const level=CASES[id].difficulty;assert.ok(Object.hasOwn(ranks,level));assert.ok(ranks[level]>=previous);previous=ranks[level];counts[level]++;assert.ok(caseOptionLabel(id).startsWith(CASE_DIFFICULTIES[level]+' · '));}
+    assert.deepEqual(counts,{easy:3,medium:2,hard:3});assert.equal(Modes.normalizeModeSettings({mode:'case',difficulty:'hard'}).caseId,CASE_IDS[0]);
+    for(const id of CASE_IDS)assert.equal(Modes.normalizeModeSettings({mode:'case',caseId:id,difficulty:'hard'}).difficulty,'hard');
+    const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8').match(/<select id="caseId">([\s\S]*?)<\/select>/)[1];assert.deepEqual([...html.matchAll(/value="([^"]+)"/g)].map(m=>m[1]),CASE_IDS);for(const id of CASE_IDS)assert.ok(html.includes(caseOptionLabel(id)));
 });
 test('every exhibit and every case-specific proof pair is reachable across leads',()=>{
     for(const id of CASE_IDS){const facts=caseFacts(id);let reached=[];for(let i=0;i<12;i++)reached=[...new Set([...reached,...availableFacts(id,reached).map(f=>f.id)])];assert.equal(reached.length,12);
@@ -72,7 +79,7 @@ test('case settings isolate custom sources and prevent a one-word card with an i
 });
 test('cooperative late arrivals join, unscored departures spend no turn, and next-case rematches reset everything',()=>{
     let g=begin(started());g=State.join(g,actor('C'),now);assert.equal(State.view(g,actor('C'),now).participant.name,'C');g=State.leave(g,actor(g.turn.speakerId),now);assert.equal(g.party.history.length,0);assert.equal(g.phase,'idle');
-    g=act(g,'end-game',{},g.hostId);g=act(g,'rematch',{seed:3},g.hostId);assert.equal(g.settings.caseId,'museum');assert.deepEqual(g.party.found,[]);assert.deepEqual(g.party.history,[]);assert.equal(g.party.hintUsed,false);assert.deepEqual(g.caseWordUses,{});
+    g=act(g,'end-game',{},g.hostId);g=act(g,'rematch',{seed:3},g.hostId);assert.equal(g.settings.caseId,CASE_IDS[(CASE_IDS.indexOf('bank')+1)%CASE_IDS.length]);assert.deepEqual(g.party.found,[]);assert.deepEqual(g.party.history,[]);assert.equal(g.party.hintUsed,false);assert.deepEqual(g.caseWordUses,{});
 });
 test('Firebase missing empty collections cannot break a first deal or zero-discovery debrief',()=>{
     function firebase(value){if(value==null)return undefined;if(Array.isArray(value))return value.length?value.map(firebase):undefined;if(typeof value==='object'){const entries=Object.entries(value).map(([k,v])=>[k,firebase(v)]).filter(([,v])=>v!==undefined);return entries.length?Object.fromEntries(entries):undefined;}return value;}
