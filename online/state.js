@@ -4,9 +4,9 @@ import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns 
 import { normalizeOnlinePack } from '../gameplay/online-packs.js?v=20261029.3';
 import { REACTIONS, REACTION_TTL_MS, rosterKey, freshSeries, recordSeries } from '../gameplay/experience.js?v=20261030.4';
 import * as Modes from '../gameplay/modes.js?v=20261030.casewords1';
-import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261030.casewords1';
+import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261030.speakers1';
 
-export const PROTOCOL_VERSION = 16;
+export const PROTOCOL_VERSION = 17;
 export const HOST_TIMEOUT_MS = 10000;
 export const PLAYER_TIMEOUT_MS = 90000;
 

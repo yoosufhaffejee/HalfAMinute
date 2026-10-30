@@ -17,6 +17,40 @@ function begin(g,lead){g=act(g,'choose-lead',{leadId:lead||availableFacts(g.sett
 function score(g,indexes){g=act(g,'end-round');for(const index of indexes)g=act(g,'toggle-answer',{index});return act(g,'submit-round');}
 function scenarioGame(id,seed){let g=act(lobby(id),'start-game',{seed});while(g.phase!=='accusing'){g=begin(g);g=score(g,g.turn.words.map((_,i)=>i));g=act(g,'continue-case');}return g;}
 function answerScenario(g){const story=caseStory(g);for(const[field,index]of Object.entries(story.solution))g=act(g,'set-theory',{field,index},g.hostId);for(const eventId of story.chronology.order)g=act(g,'place-event',{eventId},g.hostId);for(const[index,factId]of story.connection.pairs[0].entries())g=act(g,'set-proof',{index,factId},g.hostId);return g;}
+test('random Case Files speakers give everyone a turn before repeats in local and online games',()=>{
+    const orders=new Set();
+    for(const local of [false,true])for(const [players,turns]of [[2,12],[3,12],[12,4]])for(let seed=0;seed<6;seed++){
+        const names=Array.from({length:players},(_,i)=>'P'+i);let waiting=lobby('bank',names,{caseTurns:turns});
+        if(local)waiting.localPlayerOrder=names;
+        let g=act(waiting,'start-game',{seed}),order=[];
+        while(g.phase!=='accusing'){
+            const speaker=g.party.players.find(p=>p.id===g.turn.speakerId);
+            assert.equal(speaker.turns,Math.min(...g.party.players.map(p=>p.turns)));
+            order.push(speaker.id);g=score(begin(g),[]);
+            const copy=JSON.parse(JSON.stringify(g));
+            assert.deepEqual(act(copy,'continue-case'),act(g,'continue-case'),'shared state/retries preserve the draw');
+            g=act(g,'continue-case');
+        }
+        assert.equal(order.length,turns);
+        for(let i=0;i<turns;i+=players)assert.equal(new Set(order.slice(i,i+players)).size,Math.min(players,turns-i));
+        if(players===12&&!local)orders.add(order.join(','));
+        g=act(g,'end-game',{},g.hostId);g=act(g,'rematch',{seed},g.hostId);
+        assert.ok(g.party.players.every(p=>p.turns===0));
+    }
+    assert.ok(orders.size>1,'different seeds vary the speaker order');
+    assert.ok([...orders].some(order=>order.split(',').some((id,i,list)=>i&&id!=='P'+((Number(list[i-1].slice(1))+1)%12))), 'randomize subsequent speakers, not only the starter');
+});
+test('speaker fairness includes late arrivals and skips departed players without spending a turn',()=>{
+    let g=act(lobby('bank',['A','B','C'],{caseTurns:12}),'start-game',{seed:5});
+    g=score(begin(g),[]);g=act(g,'continue-case');
+    g=State.join(g,actor('D'),now);
+    const first=g.party.history[0].speakerId,departed=g.turn.speakerId;
+    g=State.leave(g,actor(departed),now);
+    assert.equal(g.party.history.length,1);assert.notEqual(g.turn.speakerId,departed);assert.notEqual(g.turn.speakerId,first);
+    const unseen=g.party.players.filter(p=>!p.departed&&!p.turns).map(p=>p.id),selected=[];
+    for(let i=0;i<unseen.length;i++){selected.push(g.turn.speakerId);g=score(begin(g),[]);g=act(g,'continue-case');}
+    assert.deepEqual(selected.sort(),unseen.sort());assert.ok(selected.includes('D'));
+});
 test('all 24 authored scenarios have three different culprits per case and independently solve with their own evidence',()=>{
     for(const id of CASE_IDS){const culprits=new Set();for(let seed=0;seed<3;seed++){let g=scenarioGame(id,seed),story=caseStory(g);culprits.add(story.solution.suspect);
         assert.equal(g.party.scenarioId,caseScenarioIds()[seed]);assert.equal(g.party.found.length,12);assert.equal(caseWordObjects(g,dictionary).length,48);

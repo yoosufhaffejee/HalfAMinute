@@ -7,10 +7,15 @@ export function caseSnapshot(data) {
         ...(data.turn ? { turn: { ...data.turn, words: data.turn.words || [], selectedIndexes: data.turn.selectedIndexes || [], caseFactIds: data.turn.caseFactIds || [] } } : {}) };
 }
 const participants = (g, people) => g.party.players.filter(p => !p.departed && people.some(member => member.playerId === p.id));
-function nextTurn(g, preferred) {
-    for (let offset = 0; offset < g.party.players.length; offset++) {
-        const index = (preferred + offset) % g.party.players.length, player = g.party.players[index];
-        if (player.departed) continue;
+function nextTurn(g) {
+    const active = g.party.players.map((player, index) => ({ player, index })).filter(({ player }) => !player.departed);
+    if (active.length) {
+        const fewest = Math.min(...active.map(({ player }) => player.turns || 0));
+        const eligible = active.filter(({ player }) => (player.turns || 0) === fewest);
+        // Persist the PRNG position so refreshes and transaction retries cannot redraw a speaker.
+        const seed = g.party.speakerSeed >>> 0;
+        const { player, index } = eligible[Math.floor(random(seed)() * eligible.length)];
+        g.party.speakerSeed = (seed + 0x6D2B79F5) >>> 0;
         g.turn = { id: (g.turn?.id || 0) + 1, speakerId: player.id, speakerIndex: index, leadId: '', words: [], selectedIndexes: [], caseFactIds: [] };
         g.phase = 'idle'; g.roundActive = false; return;
     }
@@ -23,7 +28,7 @@ export function reconcileCase(g, people, connectedIds) {
     for (const p of people) if (!g.party.players.some(member => member.id === p.playerId)) g.party.players.push({ id: p.playerId, name: p.playerName, points: 0, turns: 0 });
     for (const p of g.party.players) p.departed = !people.some(member => member.playerId === p.id);
     const speaker = g.party.players.find(p => p.id === g.turn.speakerId);
-    if (speaker?.departed && ['idle', 'waiting', 'describing'].includes(g.phase)) nextTurn(g, (g.turn.speakerIndex + 1) % g.party.players.length);
+    if (speaker?.departed && ['idle', 'waiting', 'describing'].includes(g.phase)) nextTurn(g);
     if (['idle', 'waiting'].includes(g.phase)) g.phase = participants(g, people).filter(p => connectedIds.includes(p.id)).length >= 2 && connectedIds.includes(g.turn.speakerId) ? 'idle' : 'waiting';
 }
 export function actCase(data, actor, action, now, rules, { people, connectedIds }) {
@@ -45,12 +50,11 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
             scenarioId=action.scenarioMode==='same'?previousScenario:chooseCaseScenario(action.seed,nextCase===previousCase?previousScenario:undefined);
             g.settings.caseId = nextCase;
         }
-        const previous = roster.findIndex(p => p.playerId === g.party?.starterId), starter = previous >= 0 ? (previous + 1) % roster.length : Math.floor(random(action.seed)() * roster.length);
         g.matchId = action.type === 'rematch' ? (g.matchId || 1) + 1 : g.matchId || 1;
-        g.party = { starterId: roster[starter].playerId, players: roster.map(p => ({id:p.playerId,name:p.playerName,points:0,turns:0})), history: [], found: [], discoveries: [], totalCorrect: 0, hintUsed: false, hintsUsed: 0, attempts: 0, confirmedParts: {}, timeline: [], proof: ['', ''], theory: { suspect: -1, method: -1, destination: -1 } };
+        g.party = { speakerSeed: action.seed, players: roster.map(p => ({id:p.playerId,name:p.playerName,points:0,turns:0})), history: [], found: [], discoveries: [], totalCorrect: 0, hintUsed: false, hintsUsed: 0, attempts: 0, confirmedParts: {}, timeline: [], proof: ['', ''], theory: { suspect: -1, method: -1, destination: -1 } };
         g.caseWordUses = {}; g.roundReview = null; g.reactions = null; g.finishReason = null; g.endedAt = null; g.auditEvents = {}; g.auditEvent = null;
         g.party.scenarioId=scenarioId;g.party.revealed=false;
-        g.isGameStarted = true; nextTurn(g, starter);
+        g.isGameStarted = true; nextTurn(g); g.party.starterId = g.turn.speakerId;
     } else if (action.type === 'end-game') {
         if (!host || g.phase === 'finished') return;
         g.phase = 'finished'; g.finishReason = 'stopped'; g.roundActive = false;
@@ -88,7 +92,7 @@ export function actCase(data, actor, action, now, rules, { people, connectedIds 
             g.roundReview = { turnId:turn.id, teamIndex:0, words:[...turn.words], selectedIndexes:[...turn.selectedIndexes] }; g.phase = 'evidence';
         } else if (action.type === 'continue-case') {
             if (!reviewer || g.phase !== 'evidence') return;
-            if (budgetOver) { party.returnPhase = ''; g.phase = 'accusing'; } else nextTurn(g, (turn.speakerIndex + 1) % party.players.length);
+            if (budgetOver) { party.returnPhase = ''; g.phase = 'accusing'; } else nextTurn(g);
         } else if (action.type === 'open-theory') {
             if (!host || !['idle', 'waiting', 'evidence'].includes(g.phase) || !party.history.length) return;
             party.returnPhase = budgetOver ? '' : g.phase; g.phase = 'accusing';
