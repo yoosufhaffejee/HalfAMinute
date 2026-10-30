@@ -124,6 +124,11 @@
 .case-wave span { height: var(--level); width: 12px; background: #426e57; align-self: center; transform: translateY(-50%); border-radius: 3px 3px 0 0; }.case-wave .is-negative { transform: translateY(50%); border-radius: 0 0 3px 3px; }
 .case-verdict { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 12px 0 18px; }.case-verdict span { border-radius: 20px; padding: 6px 12px; font-size: .85rem; }
 .case-verdict .is-matched { background: #e1f2e8; color: #164b34; }.case-verdict .is-missed { background: #fcebe5; color: #813d28; }
+.case-confirmed { margin: 8px 0; font-size: .85rem; color: #246241; font-weight: 600; }
+.case-result-parts { display: grid; gap: 10px; margin: 18px 0; text-align: left; }
+.case-result-parts > div { padding: 12px 14px; border: 1px solid #d7e0ea; border-radius: 10px; background: #fff; overflow-wrap: anywhere; }
+.case-result-parts .is-matched { background: #edf6f0; border-color: #b9d4c2; }.case-result-parts dt { font-size: .9rem; margin-bottom: 6px; }
+.case-result-parts dd { margin: 0; font-size: .9rem; line-height: 1.6; }.case-result-parts .is-unresolved dd { color: #596574; }
 .case-debrief { margin: 20px 0; text-align: left; padding: 16px; border: 1px solid #d9c9a5; background: #fffdf8; border-radius: 12px; }.case-debrief h4 { font-size: 1.05rem; }.case-debrief li { padding: 4px 0; }
 @media (max-width: 600px) {
     .case-proof-fields, .case-comparison { grid-template-columns: minmax(0,1fr); }

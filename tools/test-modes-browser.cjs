@@ -190,7 +190,7 @@ async function localCase(id='bank') {
         await layout(page,id+' visual exhibit');await file.screenshot({path:'reports/case-'+id+'-exhibit.png'});
     }
     const solution=caseContent.CASES[id].solution;for(const [field,index]of Object.entries(solution))await page.locator('#case-'+field).selectOption(String(index));
-    await page.locator('[data-case-action="review-theory"]').click();assert.match(await page.locator('.case-theory-confirm').innerText(),/Submitting ends/);await page.locator('[data-case-action="accuse"]').click();
+    await page.locator('[data-case-action="review-theory"]').click();assert.match(await page.locator('.case-theory-confirm').innerText(),/unresolved answers stay hidden/);await page.locator('[data-case-action="accuse"]').click();
     assert.match(await page.locator('.party-stage h3').innerText(),/Case solved/);
     if(id==='encore'){const download=page.waitForEvent('download');await page.locator('[data-case-action="share"]').click();assert.equal((await download).suggestedFilename(),'half-a-minute-result.png');}
     await page.locator('[data-case-action="rematch"]').click();await gate(page);assert.equal(await page.locator('.case-lead').count(),3);assert.match(await page.locator('.party-progress').first().innerText(),/0\/12 evidence/);
@@ -212,7 +212,36 @@ async function gameState(code) { return live ? (await fetch(`${firebaseURL}/game
 async function waitState(code, predicate) {
     const until = Date.now() + 16000; while (Date.now() < until) { const value = await gameState(code); if (value && predicate(value)) return value; await new Promise(resolve => setTimeout(resolve, live ? 250 : 60)); } throw Error(`Shared state wait timed out: ${code}`);
 }
-async function onlineCase(){
+async function assertFailedCase(page,found){
+    await page.getByRole('heading',{name:'The case is still open',exact:true}).waitFor();
+    assert.equal(await page.locator('.case-result-parts .is-matched').count(),1);
+    assert.match(await page.locator('[data-case-result="method"]').innerText(),/How · Correct/);
+    assert.ok((await page.locator('[data-case-result="method"]').innerText()).includes(caseContent.CASES.bank.methods[caseContent.CASES.bank.solution.method]));
+    assert.equal(await page.locator('.case-result-parts .is-unresolved').count(),4);
+    assert.equal(await page.locator('.case-solution,.case-debrief').count(),0);
+    assert.equal(await page.locator('[data-case-disclosure^="file:"]').count(),found);
+    const text=await page.locator('#partyGame').textContent();for(const explanation of [...caseContent.CASES.bank.reveal,caseContent.CASES.bank.chronology.explanation,caseContent.CASES.bank.connection.explanation])assert.ok(!text.includes(explanation));
+    assert.ok(!(await page.locator('.party-stage').textContent()).includes(caseContent.CASES.bank.people[caseContent.CASES.bank.solution.suspect].name));
+    assert.ok(!(await page.locator('.party-stage').textContent()).includes(caseContent.CASES.bank.destinations[caseContent.CASES.bank.solution.destination]));
+}
+async function localCaseRetry(){
+    const {page,context}=await pageFor();await page.clock.install();await page.locator('#quickMode').selectOption('case');await page.locator('#caseTurns').fill('4');await page.locator('#localPlayerNames').fill('Alice\nBob');await settings(page,{txtSeconds:5,txtWords:5});await page.locator('#startGameButton').click();
+    for(let i=0;i<4;i++){await gate(page);await page.locator('[data-case-action="choose-lead"]:enabled').first().click();await page.locator('[data-case-action="start-round"]').click();await page.clock.runFor(4800);await page.locator('[data-case-action="end-round"]').click();await page.locator('[data-case-action="toggle-answer"]').first().click();await page.locator('[data-case-action="submit-round"]').click();await page.locator('[data-case-action="continue-case"]').click();}
+    for(const eventId of [...caseContent.CASES.bank.chronology.order].reverse())await page.locator(`[data-case-action="place-event"][data-event-id="${eventId}"]`).click();
+    for(const [field,index]of Object.entries(caseContent.CASES.bank.solution))await page.locator('#case-'+field).selectOption(String(field==='method'?index:(index+1)%(field==='suspect'?6:3)));
+    await page.locator('[data-case-action="review-theory"]').click();await page.locator('[data-case-action="accuse"]').click();await assertFailedCase(page,4);
+    await layout(page,'Unsolved case without spoilers');await page.screenshot({path:'reports/case-retry-mobile.png',fullPage:true});
+    const downloaded=page.waitForEvent('download');await page.locator('[data-case-action="summary"]').click();const summary=JSON.parse(fs.readFileSync(await(await downloaded).path(),'utf8'));
+    assert.equal(summary.finishReason,'unsolved');assert.equal(summary.assessment.method,true);assert.equal(summary.reconstruction.suspect,(caseContent.CASES.bank.solution.suspect+1)%6);assert.equal(Object.hasOwn(summary,'solution'),false);assert.equal(Object.hasOwn(summary,'reveal'),false);
+    await page.evaluate(()=>{window.caseShareText=[];const original=CanvasRenderingContext2D.prototype.fillText;CanvasRenderingContext2D.prototype.fillText=function(text,...rest){window.caseShareText.push(text);return original.call(this,text,...rest)};});
+    const card=page.waitForEvent('download');await page.locator('[data-case-action="share"]').click();assert.equal((await card).suggestedFilename(),'half-a-minute-result.png');
+    assert.ok((await page.evaluate(()=>window.caseShareText)).includes('Case still open'));
+    await page.locator('[data-case-action="retry-case"]').click();await page.locator('#case-method').waitFor();assert.equal(await page.locator('#case-method').inputValue(),String(caseContent.CASES.bank.solution.method));assert.equal(await page.locator('.case-confirmed').count(),1);assert.equal(await page.locator('[data-case-action="accuse"]').count(),0);assert.equal(await page.locator('[data-case-disclosure^="file:"]').count(),4);
+    await page.locator('[data-case-action="review-theory"]').click();await page.locator('[data-case-action="accuse"]').click();await assertFailedCase(page,4);
+    await page.locator('#nextCase').selectOption('bank');await page.locator('[data-case-action="rematch"]').click();await gate(page);assert.match(await page.locator('.party-progress').first().innerText(),/0\/12 evidence/);assert.equal(await page.locator('.case-confirmed').count(),0);
+    report.checks.push('Local failed case: only How confirmed; wrong answers/explanations and eight unopened exhibits hidden; safe summary/PNG; repeat attempt keeps notebook and answers; fresh restart resets progress');await context.close();
+}
+async function onlineCase(retry=false){
     console.log('Checking authored Case Files online');const host=await pageFor(),guest=await pageFor();await host.page.locator('#quickMode').selectOption('case');
     await host.page.locator('#online').click();await host.page.locator('#playerName').fill('Host');await host.page.locator('#createLobbyButton').click();
     await host.page.waitForFunction(()=>/\b[A-Z]{4}\b/.test(document.getElementById('lblGameCode').textContent));const code=(await host.page.locator('#lblGameCode').textContent()).match(/\b[A-Z]{4}\b/)[0];if(live)liveCodes.push(code);
@@ -239,7 +268,20 @@ async function onlineCase(){
     await waitState(code,g=>g.party.timeline.join(',')===caseContent.CASES.bank.chronology.order.join(','));
     const labels=caseContent.CASES.bank.chronology.order.map(key=>caseContent.CASES.bank.chronology.events.find(e=>e.id===key).label);
     await leader.waitForFunction(labels=>[...document.querySelectorAll('.case-timeline li strong')].map(el=>el.textContent).join('|')===labels.join('|'),labels);
+    if(retry){
+        for(const field of ['suspect','destination'])await leader.locator('#case-'+field).selectOption(String((caseContent.CASES.bank.solution[field]+1)%(field==='suspect'?6:3)));
+        await collaborator.locator('#case-proof-0').selectOption('a1');await collaborator.locator('#case-proof-1').selectOption('a2');await collaborator.locator('[data-case-action="timeline-up"][data-event-id="settled"]').click();
+        await leader.waitForFunction(()=>document.querySelectorAll('.case-timeline li strong')[2]?.textContent==='Funds leave the bank');
+        await leader.locator('[data-case-action="review-theory"]').click();await leader.locator('[data-case-action="accuse"]').click();g=await waitState(code,g=>g.phase==='finished');const failedTurn=g.turn.id,foundCount=g.party.found.length;
+        await assertFailedCase(leader,foundCount);await assertFailedCase(collaborator,foundCount);await collaborator.reload({waitUntil:'domcontentloaded'});await assertFailedCase(collaborator,foundCount);assert.equal(await collaborator.locator('[data-case-action="retry-case"]').count(),0);
+        await leader.locator('[data-case-action="retry-case"]').click();await waitState(code,g=>g.phase==='accusing'&&g.turn.id>failedTurn);await collaborator.reload({waitUntil:'domcontentloaded'});await collaborator.locator('#case-method').waitFor();assert.equal(await collaborator.locator('.case-confirmed').count(),1);assert.equal(await collaborator.locator('#case-method').inputValue(),String(caseContent.CASES.bank.solution.method));
+        await collaborator.locator('[data-case-action="timeline-up"][data-event-id="approval"]').click();for(const[index,factId]of caseContent.CASES.bank.connection.pairs[0].entries())await collaborator.locator('#case-proof-'+index).selectOption(factId);
+        for(const[field,index]of Object.entries(caseContent.CASES.bank.solution))await leader.locator('#case-'+field).selectOption(String(index));
+        await leader.waitForFunction(labels=>[...document.querySelectorAll('.case-timeline li strong')].map(el=>el.textContent).join('|')===labels.join('|'),labels);
+    }
+    await leader.waitForFunction(({labels,theory,proof})=>labels.join('|')===[...document.querySelectorAll('.case-timeline li strong')].map(el=>el.textContent).join('|')&&Object.entries(theory).every(([field,value])=>document.getElementById('case-'+field)?.value===String(value))&&proof.every((value,index)=>document.getElementById('case-proof-'+index)?.value===value),{labels,theory:caseContent.CASES.bank.solution,proof:caseContent.CASES.bank.connection.pairs[0]});
     await leader.locator('[data-case-action="review-theory"]').click();await leader.locator('[data-case-action="accuse"]').click();g=await waitState(code,g=>g.phase==='finished');assert.equal(g.finishReason,'solved');
+    if(retry)report.checks.push('Online failed case: both clients hide unsolved answers; only host retries; same notebook/answers and confirmed part survive refresh; corrected retry solves');
     leader=pageForId(g,g.hostId);await leader.locator('[data-case-action="rematch"]').click();g=await waitState(code,g=>g.matchId===2);assert.equal(g.settings.caseId,'museum');assert.equal((g.party.found||[]).length,0);
     if(live)for(const page of [host.page,guest.page]){await page.locator('[data-case-action="exit"]').click();await page.locator('#menu').waitFor({state:'visible'});}
     report.checks.push('Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch');await host.context.close();await guest.context.close();
@@ -339,7 +381,8 @@ async function onlinePair(mode, format = 'voice') {
     browser = await chromium.launch({ ...(process.platform === 'win32' ? { channel: 'msedge' } : {}), headless: true });
     try {
         caseContent=await import('../gameplay/cases.js');
-        if(process.argv.includes('--cases-only')) {if(!process.argv.includes('--online-only'))for(const id of caseContent.CASE_IDS)await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
+        if(process.argv.includes('--case-retry-only')){if(!process.argv.includes('--online-only'))await localCaseRetry();if(!process.argv.includes('--local-only'))await onlineCase(true);}
+        else if(process.argv.includes('--cases-only')) {if(!process.argv.includes('--online-only'))for(const id of caseContent.CASE_IDS)await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
         else if(process.argv.includes('--table-only')) {
             if(!process.argv.includes('--online-only')){await localTable();await localTableTimed();await localAiCompatibility();}
             if(!process.argv.includes('--local-only')){if(!process.argv.includes('--typed-only'))await onlinePair('table','voice');await onlinePair('table','text');}
@@ -356,6 +399,6 @@ async function onlinePair(mode, format = 'voice') {
             for(const code of liveCodes){const game=await gameState(code);if(!game||game.phase==='ended'&&!game.teams.some(t=>(t.players||[]).length))report.cleanup.closed++;else report.cleanup.remaining.push(code);}
             if(report.cleanup.remaining.length){report.completed=false;report.failure='Temporary test lobby cleanup incomplete';process.exitCode=1;}
         }
-        fs.writeFileSync(process.argv.includes('--cases-only')?(live?'reports/cases-live.json':process.argv.includes('--online-only')?'reports/cases-online-browser.json':'reports/cases-browser.json'):process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
+        fs.writeFileSync(process.argv.includes('--case-retry-only')?(live?'reports/case-retry-live.json':'reports/case-retry-browser.json'):process.argv.includes('--cases-only')?(live?'reports/cases-live.json':process.argv.includes('--online-only')?'reports/cases-online-browser.json':'reports/cases-browser.json'):process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
     }
 })().catch(error => { console.error(error); process.exitCode = 1; server.close(); });

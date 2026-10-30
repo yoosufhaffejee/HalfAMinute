@@ -8,9 +8,9 @@ Choose a lead, describe the familiar built-in words, and confirm the correctly g
 
 During discussion the crew drafts a four-event timeline and selects two recovered exhibits supporting the case's connection question. The notebook groups records by lead; selected documents can be expanded together for comparison. Structured receipts, coordinate diagrams and channel sample strips replace the old lists of conclusions. All specialist procedures needed to interpret them are included in the case.
 
-The host records who, how and where, then reviews the complete reconstruction. A correct name alone does not solve the case: all three answers, the chronology and a supported evidence pair must fit. There is no per-field correctness feedback before final submission. Zero-evidence investigations can still end with an unsupported final attempt. The debrief explains each part and distinguishes matched and missed components.
+The host records who, how and where, then reviews the complete reconstruction. A correct name alone does not solve the case: all three answers, the chronology and a supported evidence pair must fit. There is no per-field correctness feedback before submitting an attempt. An unsuccessful attempt confirms only the parts the crew actually got right. Unresolved answers, their explanations and unopened exhibits stay hidden. The host can retry with the same notebook, answers and previously confirmed parts; an early attempt can also return to investigation while its original budget remains. Full explanations and missed exhibits appear only after the crew solves the entire case. Zero-evidence investigations can still submit an unsupported attempt.
 
-Six investigations remains the default. Existing 4–12 turn settings, word counts, difficulty and round timing remain available. Three optional progressive nudges unlock after two confirmed turns. Replays are labelled as the same authored solution. No AI service constructs cases, supplies words, or judges answers.
+Six investigations remains the default. Existing 4–12 turn settings, word counts, difficulty and round timing remain available. Three optional progressive nudges unlock after two confirmed turns. Retrying revises the existing investigation; choosing the same case with “Start over” resets progress and word deals for its fixed mystery. There is no solution-reveal option. No AI service constructs cases, supplies words, or judges answers.
 
 ## Author coherence review (contains solutions)
 
@@ -30,11 +30,12 @@ Local and online play use the same case reducer. Active crew members can change 
 
 Drafts survive refresh, temporary disconnection and host replacement. Firebase-omitted empty collections are normalized. Draft editing is blocked during countdown, description and answer selection. Rematches clear the reconstruction, assessment, hints and word history. Stopped games reveal no solution.
 
-The online protocol is now **12**, with versioned modules and CSS. Everyone must reload and create a new lobby. The existing client-trusted Firebase model and usual online voice-call assumption remain. Local gameplay works after the application has loaded; no first-visit offline service worker has been introduced.
+The online protocol is now **13**, with versioned modules and CSS. Everyone must reload and create a new lobby. Retry commands increment the turn command ID without spending an investigation, rejecting stale submissions from the previous attempt. The existing client-trusted Firebase model and usual online voice-call assumption remain. Local gameplay works after the application has loaded; no first-visit offline service worker has been introduced.
 
 ## Verification
 
-- **227 automated tests passed** across the existing baseline and the case rules. Focused case checks also pass after the concurrent-edit adjustment.
+- **231 automated tests passed** across the existing baseline and case rules, including partial-result privacy, preserved retry state, stale-attempt rejection, early retry/resume and fresh restart reset.
+- The [focused retry browser checks](case-retry-browser.json) passed locally and with two clients: hidden unresolved answers and unopened exhibits, safe summary/share output, preserved correct answers, retry and fresh restart. Four responsive layout checks passed, including large text, with the [failure screen inspected](case-retry-mobile.png).
 - Every case completed independently at Easy, Normal and Hard. Tests cover wrong timelines with correct three-part answers, wrong and reversed evidence pairs, unavailable/duplicate exhibit IDs, shared edits, stale confirmations, private phases, progressive nudges, zero-evidence forced endings, rematches and Firebase-empty collections.
 - All five local browser cases completed, including private countdowns, timer expiry, source documents, timeline placement, proof selection, final review, debrief and next-case reset. Bank also completed with all network access disabled after load.
 - Evidence, reconstruction and both visual exhibits passed layout checks at **320, 390 and 1100px**, plus 150% text at 320px. Screenshots were inspected. Source comparison is expandable to keep the final form compact.

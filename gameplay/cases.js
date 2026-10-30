@@ -1,5 +1,5 @@
-import { CASE_CONTENT } from './case-content.js?v=20261030.reconstruction1';
-import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261030.reconstruction1';
+import { CASE_CONTENT } from './case-content.js?v=20261030.retry1';
+import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261030.retry1';
 export const CASES = Object.fromEntries(Object.entries(CASE_CONTENT).map(([id, story]) => [id, {
     ...story,
     leads: story.leads.map(source => ({ ...source, facts: source.facts.map(item => ({
@@ -41,4 +41,24 @@ export function caseAssessment(id, submission, found = []) {
         && story.connection.pairs.some(accepted => accepted.every(key => pair.includes(key)));
     result.solved = Object.values(result).every(Boolean);
     return result;
+}
+// Failed results repeat only the player's confirmed answers, never authored solutions.
+export function caseFeedback(game) {
+    const id = game.settings.caseId, story = CASES[id], submission = caseSubmission(game), assessment = game.party.assessment || {};
+    const labels = { suspect: 'Who', method: 'How', destination: 'Where' };
+    const parts = caseFields(id).map(([key,,options]) => ({ key, label: labels[key], correct: Boolean(assessment[key]),
+        answer: assessment[key] ? options[submission[key]] : '' }));
+    parts.push({ key: 'timeline', label: 'Timeline', correct: Boolean(assessment.timeline),
+        answer: assessment.timeline ? submission.timeline.map(key => story.chronology.events.find(event => event.id === key)?.label).join(' → ') : '' });
+    parts.push({ key: 'connection', label: 'Evidence link', correct: Boolean(assessment.connection),
+        answer: assessment.connection ? submission.proof.map(key => caseFacts(id).find(fact => fact.id === key)?.title).join(' + ') : '' });
+    return parts;
+}
+export function confirmedCasePart(game, key) {
+    const known = game.party.confirmedParts || {}, submission = caseSubmission(game);
+    if (key === 'timeline') return Array.isArray(known.timeline) && known.timeline.length === submission.timeline.length
+        && known.timeline.every((value, index) => value === submission.timeline[index]);
+    if (key === 'connection') return Array.isArray(known.connection) && known.connection.length === 2
+        && known.connection.every(value => submission.proof.includes(value));
+    return Object.hasOwn(known, key) && known[key] === submission[key];
 }

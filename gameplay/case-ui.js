@@ -1,4 +1,4 @@
-import { CASES, CASE_IDS, caseFacts, availableFacts, caseFields, caseSubmission } from './cases.js?v=20261030.reconstruction1';
+import { CASES, CASE_IDS, caseFacts, availableFacts, caseFields, caseSubmission, caseFeedback, confirmedCasePart } from './cases.js?v=20261030.retry1';
 import { countdownLabel } from './rules.js?v=20261030.2';
 import { REACTIONS, REACTION_LABELS, REACTION_TTL_MS } from './experience.js?v=20261030.4';
 const h = (tag, cls = '', text = '') => { const n = document.createElement(tag); n.className = cls; n.textContent = text; return n; };
@@ -50,7 +50,7 @@ export function createCaseSurface(root, callbacks) {
         });parent.appendChild(list);
     }
     function notebook(parent,state){
-        const {game,view,busy}=state,story=CASES[game.settings.caseId],facts=caseFacts(game.settings.caseId),final=game.phase==='finished'&&game.finishReason!=='stopped';
+        const {game,view,busy}=state,story=CASES[game.settings.caseId],facts=caseFacts(game.settings.caseId),final=game.phase==='finished'&&game.finishReason==='solved';
         const book=disclosure('notebook',`Case notebook · ${game.party.found.length}/${facts.length} evidence files`,game.phase==='accusing');book.className='case-notebook';
         const profiles=disclosure('profiles','Meet the six suspects');profiles.className='case-profiles';const people=h('div','case-person-list');
         story.people.forEach((p,index)=>{const card=h('article','case-person');card.appendChild(h('span',`case-initial case-initial-${index%4}`,p.name.slice(0,1)));card.appendChild(h('h4','',p.name));card.appendChild(h('strong','',p.role));note(card,p.profile);people.appendChild(card)});profiles.appendChild(people);book.appendChild(profiles);
@@ -60,7 +60,7 @@ export function createCaseSurface(root, callbacks) {
         story.leads.forEach(source=>{const files=found.filter(f=>f.leadId===source.id);if(!files.length)return;const group=disclosure('source:'+source.id,`${source.icon} ${source.name} · ${files.length}/${source.facts.length}`,false);group.className='case-source-group';files.forEach(f=>{const file=disclosure('file:'+f.id,`${f.code} · ${f.title}${final&&!game.party.found.includes(f.id)?' · Missed during play':''}`);file.className='case-file';evidence(file,f);group.appendChild(file)});book.appendChild(group);});
         const used=game.party.hintsUsed||0;
         story.hints.slice(0,used).forEach((text,index)=>note(book,`Nudge ${index+1}: ${text}`,'case-investigation-hint'));
-        if(view.host&&game.party.history.length>=2&&!final&&used<story.hints.length)book.appendChild(button(used?`Reveal nudge ${used+1} of ${story.hints.length}`:'Need a nudge? (optional)', 'case-hint',busy));
+        if(view.host&&game.party.history.length>=2&&game.phase!=='finished'&&used<story.hints.length)book.appendChild(button(used?`Reveal nudge ${used+1} of ${story.hints.length}`:'Need a nudge? (optional)', 'case-hint',busy));
         parent.appendChild(book);
     }
     function reconstruction(parent,state,final=false){
@@ -68,6 +68,7 @@ export function createCaseSurface(root, callbacks) {
         const panel=disclosure(final?'final-reconstruction':'draft-reconstruction',`Reconstruction · ${timeline.length}/4 events · ${proof.filter(Boolean).length}/2 exhibits`,final);panel.className='case-reconstruction';
         note(panel,state.local?'Build this together between word rounds. Your draft is not checked until final submission.':'Anyone in the crew can edit this shared draft. The host submits the final theory. Drafts are not checked.','case-draft-note');
         panel.appendChild(h('h4','','1. Rebuild the timeline'));
+        if(confirmedCasePart(game,'timeline'))note(panel,'✓ Timeline confirmed on an earlier attempt.','case-confirmed');
         note(panel,'Place all four events from earliest to latest in real time. Compare clocks and distinguish an event from its later report.');
         const list=h('ol','case-timeline');list.setAttribute('aria-label','Your proposed order, earliest first');
         timeline.forEach((key,index)=>{const event=story.chronology.events.find(e=>e.id===key),row=h('li');row.appendChild(h('span','case-event-number',String(index+1)));row.appendChild(h('strong','',event?.label||key));const controls=h('div','case-event-controls');
@@ -76,6 +77,7 @@ export function createCaseSurface(root, callbacks) {
         if(!timeline.length)note(panel,'No events placed yet. Tap an event below to place it first.','case-empty');panel.appendChild(list);
         const bank=h('div','case-event-bank');story.chronology.events.filter(e=>!timeline.includes(e.id)).forEach(e=>{const n=button('+ '+e.label,'place-event',!editable,{eventId:e.id});n.id='case-place-'+e.id;bank.appendChild(n)});panel.appendChild(bank);
         panel.appendChild(h('h4','','2. Connect the evidence'));note(panel,story.connection.question,'case-connection-question');
+        if(confirmedCasePart(game,'connection'))note(panel,'✓ Evidence connection confirmed on an earlier attempt.','case-confirmed');
         const facts=caseFacts(game.settings.caseId).filter(f=>party.found.includes(f.id)),fields=h('div','case-proof-fields');
         for(let i=0;i<2;i++){const field=h('div','form-field'),label=h('label','',`Exhibit ${i+1}`);label.htmlFor='case-proof-'+i;field.appendChild(label);const select=h('select');select.id=label.htmlFor;select.dataset.caseProof=String(i);select.disabled=!editable;
             const empty=h('option','','Choose a recovered exhibit…');empty.value='';select.appendChild(empty);facts.forEach(f=>{const option=h('option','',`${f.code} · ${f.title}`);option.value=f.id;option.disabled=proof[1-i]===f.id;select.appendChild(option)});select.value=proof[i]||'';field.appendChild(select);fields.appendChild(field)}panel.appendChild(fields);
@@ -85,8 +87,9 @@ export function createCaseSurface(root, callbacks) {
     }
     function theory(parent,state){
         const {game,view,busy}=state,story=CASES[game.settings.caseId],value=game.party.theory;
-        parent.appendChild(h('h3','','Build your final theory'));
+        parent.appendChild(h('h3','','Build your theory'));
         note(parent,view.host?'A solved case needs the right explanation, event order and evidence connection. Review the complete reconstruction before submitting.':'Discuss and edit the shared reconstruction. The host records who, how and where, then submits for the crew.');
+        if(game.party.attempts)note(parent,'Your notebook and answers are kept. Revisit the parts that still need work.','case-draft-note');
         const fields=caseFields(game.settings.caseId);
         if(confirmed){
             const panel=h('div','case-theory-confirm');panel.appendChild(h('h4','','Confirm the crew’s final answer'));
@@ -94,13 +97,13 @@ export function createCaseSurface(root, callbacks) {
             note(panel,'Your timeline: '+confirmed.timeline.map(key=>story.chronology.events.find(e=>e.id===key)?.label).join(' → '));
             note(panel,'Your evidence connection: '+confirmed.proof.map(key=>caseFacts(game.settings.caseId).find(f=>f.id===key)?.title||'Missing exhibit').join(' + '));
             if(confirmed.proof.some(key=>!key))note(panel,'This theory has missing support. It can be submitted, but cannot close the case.','case-investigation-hint');
-            note(panel,'Submitting ends this investigation. The entire reconstruction is checked together.');
-            panel.appendChild(button('Submit final theory','accuse',busy||!view.host));panel.appendChild(button('Edit these answers','edit-theory',busy));parent.appendChild(panel);
+            note(panel,'Submitting checks this attempt. Correct parts are confirmed; unresolved answers stay hidden.');
+            panel.appendChild(button('Submit theory','accuse',busy||!view.host));panel.appendChild(button('Edit these answers','edit-theory',busy));parent.appendChild(panel);
         }else{
             reconstruction(parent,state,true);parent.appendChild(h('h4','','3. Explain the case'));
-            fields.forEach(([key,label,options])=>{const field=h('div','form-field');const l=h('label','',label);l.htmlFor='case-'+key;field.appendChild(l);const select=h('select');select.id='case-'+key;select.dataset.caseField=key;select.disabled=busy||!view.host;
+            fields.forEach(([key,label,options])=>{const field=h('div','form-field');const l=h('label','',label);l.htmlFor='case-'+key;field.appendChild(l);if(confirmedCasePart(game,key))note(field,'✓ Previously confirmed','case-confirmed');const select=h('select');select.id='case-'+key;select.dataset.caseField=key;select.disabled=busy||!view.host;
                 const empty=h('option','','Choose together…');empty.value='-1';select.appendChild(empty);options.forEach((text,index)=>{const option=h('option','',text);option.value=String(index);select.appendChild(option)});select.value=String(value[key]);field.appendChild(select);parent.appendChild(field)});
-            if(view.host)parent.appendChild(button('Review final theory','review-theory',busy||fields.some(([key])=>value[key]<0)||(game.party.timeline||[]).length!==4));
+            if(view.host)parent.appendChild(button('Review theory','review-theory',busy||fields.some(([key])=>value[key]<0)||(game.party.timeline||[]).length!==4));
             if(view.host&&game.party.returnPhase)parent.appendChild(button('Continue investigating','resume-case',busy));
         }
     }
@@ -116,7 +119,7 @@ export function createCaseSurface(root, callbacks) {
         if(state.local&&!state.view.host)state={...state,view:{...state.view,host:true}};
         current=state;const {game,view,local,now,busy,gateName,gateId}=state,story=CASES[game.settings.caseId],party=game.party,turn=game.turn;
         const dk=`${game.matchId}:${game.settings.caseId}`;if(disclosureKey!==dk){disclosureKey=dk;disclosures.clear();}
-        const ckey=JSON.stringify([game.matchId,game.settings.caseId,caseSubmission(game)]);if(confirmationKey!==ckey){confirmationKey=ckey;confirmed=null;}
+        const ckey=JSON.stringify([game.matchId,game.settings.caseId,game.phase,turn?.id,caseSubmission(game)]);if(confirmationKey!==ckey){confirmationKey=ckey;confirmed=null;}
         const {countdownRemainingMs,remainingSeconds,...stableView}=view;
         const live=Object.entries(game.reactions||{}).filter(([,r])=>now>=r.at&&now-r.at<REACTION_TTL_MS);
         const next=JSON.stringify([game.matchId,game.settings,game.phase,party,turn,stableView,Boolean(countdownRemainingMs),busy,state.connected,gateName,confirmed,feedback,live]);
@@ -133,13 +136,19 @@ export function createCaseSurface(root, callbacks) {
         else if(gateName&&game.phase!=='finished'){body.appendChild(h('h3','',`Pass the device to ${gateName}`));note(body,'The speaker holds the screen. Everyone else guesses aloud.');body.appendChild(button(`I’m ${gateName}`,'local-ready',false,{playerId:gateId}));}
         else if(!game.isGameStarted){briefing(body,story);note(body,`${view.roster.connectedPlayers} connected · 2–12 players. Choose leads, describe words, connect the evidence.`);if(view.host)body.appendChild(button('Open the case','start-game',busy||!view.canStartGame));else note(body,'The host opens the case when everyone is ready.');}
         else if(game.phase==='finished'){
-            const stopped=game.finishReason==='stopped';body.appendChild(h('h3','',stopped?'Investigation ended':game.finishReason==='solved'?'Case solved!':'The theory didn’t fit'));
-            if(!stopped){const answer=story.solution,assessment=party.assessment||{};const verdict=h('div','case-verdict');for(const [key,label]of [['suspect','Who'],['method','How'],['destination','Where'],['timeline','Timeline'],['connection','Evidence link']])verdict.appendChild(h('span',assessment[key]?'is-matched':'is-missed',`${assessment[key]?'✓':'×'} ${label}`));body.appendChild(verdict);
+            const stopped=game.finishReason==='stopped',solved=game.finishReason==='solved';body.appendChild(h('h3','',stopped?'Investigation ended':solved?'Case solved!':'The case is still open'));
+            if(!stopped){const answer=story.solution,assessment=party.assessment||{};const verdict=h('div','case-verdict');for(const [key,label]of [['suspect','Who'],['method','How'],['destination','Where'],['timeline','Timeline'],['connection','Evidence link']])verdict.appendChild(h('span',assessment[key]?'is-matched':'is-missed',`${assessment[key]?'✓':'×'} ${label}`));if(solved)body.appendChild(verdict);
+                if(solved){
                 note(body,`${story.people[answer.suspect].name} · ${story.methods[answer.method]} · ${story.destinations[answer.destination]}`,'case-solution');story.reveal.forEach(text=>note(body,text));
                 const debrief=h('div','case-debrief');debrief.appendChild(h('h4','','What actually happened'));const ordered=h('ol');story.chronology.order.forEach(key=>ordered.appendChild(h('li','',story.chronology.events.find(e=>e.id===key).label)));debrief.appendChild(ordered);note(debrief,story.chronology.explanation);debrief.appendChild(h('h4','','The evidence connection'));note(debrief,story.connection.explanation);body.appendChild(debrief);
+                }else{
+                    note(body,'The parts you got right are confirmed below. The other answers stay hidden so you can keep investigating.');
+                    const progress=h('dl','case-result-parts');for(const part of caseFeedback(game)){const row=h('div',part.correct?'is-matched':'is-unresolved');row.dataset.caseResult=part.key;row.appendChild(h('dt','',`${part.label} · ${part.correct?'Correct':'Needs another look'}`));if(part.correct)row.appendChild(h('dd','',part.answer));progress.appendChild(row);}body.appendChild(progress);
+                    if(view.host||local)body.appendChild(button('Try this case again','retry-case',busy));else note(body,'The host can reopen this theory. Your recovered evidence and answers are kept.');
+                }
                 note(body,`${party.found.length}/12 evidence found · ${party.history.length} investigations${party.hintUsed?` · ${party.hintsUsed||1} nudges used`:''}`);}
             if(view.host||local){const field=h('div','form-field');const label=h('label','','Choose your next case');label.htmlFor='nextCase';field.appendChild(label);const select=h('select');select.id='nextCase';
-                for(const id of CASE_IDS){const option=h('option','',`${CASES[id].title}${id===game.settings.caseId?' · Replay the same solution':''}`);option.value=id;select.appendChild(option)}select.value=CASE_IDS[(CASE_IDS.indexOf(game.settings.caseId)+1)%CASE_IDS.length];field.appendChild(select);body.appendChild(field);body.appendChild(button('Open another case','rematch',busy));}
+                for(const id of CASE_IDS){const option=h('option','',`${CASES[id].title}${id===game.settings.caseId?' · Start over':''}`);option.value=id;select.appendChild(option)}select.value=CASE_IDS[(CASE_IDS.indexOf(game.settings.caseId)+1)%CASE_IDS.length];field.appendChild(select);body.appendChild(field);body.appendChild(button('Open another case','rematch',busy));}
             else note(body,'The host can choose another case.');body.appendChild(button('Share result card','share'));body.appendChild(button('Download summary','summary'));
         }else if(['idle','waiting'].includes(game.phase)){
             const speaker=party.players.find(p=>p.id===turn.speakerId);body.appendChild(h('h3','',view.speaker?'Which lead will you follow?':`${speaker?.name||'The next speaker'} chooses the lead`));

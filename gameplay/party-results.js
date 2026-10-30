@@ -1,5 +1,5 @@
-import { MODES, modeOf } from './modes.js?v=20261030.reconstruction1';
-import { CASES, caseSubmission } from './cases.js?v=20261030.reconstruction1';
+import { MODES, modeOf } from './modes.js?v=20261030.retry1';
+import { CASES, caseSubmission } from './cases.js?v=20261030.retry1';
 function download(blob, filename) {
     const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = filename; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -19,7 +19,7 @@ export async function sharePartyResult(game) {
     context.textAlign = 'center'; context.fillStyle = '#172033'; context.font = 'bold 34px Arial'; context.fillText('Half A Minute', 400, 70);
     context.font = '26px Arial'; context.fillText(MODES[mode].name, 400, 120);
     const title = game.finishReason === 'stopped' ? 'Match ended' : table ? game.finishReason === 'draw' ? "It's a draw!" : 'A table well played'
-        : game.finishReason === 'solved' ? 'Case solved!' : 'The culprit got away';
+        : game.finishReason === 'solved' ? 'Case solved!' : 'Case still open';
     context.font = 'bold 38px Arial'; context.fillText(title, 400, 190);
     context.font = '24px Arial';
     if (table) game.party.players.forEach((player, index) => context.fillText(`Player ${index + 1} · ${player.points} points`, 400, 255 + index * 56));

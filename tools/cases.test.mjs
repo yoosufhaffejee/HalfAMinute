@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as State from '../online/state.js';
 import * as Modes from '../gameplay/modes.js';
-import { CASES, CASE_IDS, caseFacts, availableFacts, caseSubmission, caseAssessment } from '../gameplay/cases.js';
+import { CASES, CASE_IDS, caseFacts, availableFacts, caseSubmission, caseAssessment, caseFeedback, confirmedCasePart } from '../gameplay/cases.js';
 import { caseWordObjects, drawCaseCard } from '../gameplay/case-draw.js';
 const context=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../data.js',import.meta.url),'utf8')+'\nthis.dictionary=Object.values(categories).flat();',context);
 const dictionary=JSON.parse(JSON.stringify(context.dictionary));
@@ -129,4 +129,36 @@ test('the audio cancellation and image transformation use the values actually sh
     const key=points=>points.map(p=>p.join(',')).sort().join('|');
     assert.notEqual(key(patterns[0].points.map(([x,y])=>[6-x,y])),key(patterns[1].points));
     assert.ok(patterns[0].points.every(p=>patterns[1].points.some(other=>other[0]===p[0]&&other[1]===p[1])));
+});
+function failedAttempt(id='bank'){
+    let g=completeDraft(recoveredCase(id),{timeline:[...CASES[id].chronology.order].reverse(),proof:[]});
+    for(const field of ['suspect','destination'])g=act(g,'set-theory',{field,index:(CASES[id].solution[field]+1)%(field==='suspect'?6:3)},g.hostId);
+    return act(g,'accuse',{theory:caseSubmission(g)},g.hostId);
+}
+test('failed results disclose only the correctly submitted parts across every case',()=>{
+    for(const id of CASE_IDS){const g=failedAttempt(id),feedback=caseFeedback(g);assert.equal(g.finishReason,'unsolved');assert.equal(g.party.attempts,1);
+        assert.deepEqual(feedback.filter(part=>part.correct).map(part=>part.key),['method']);assert.equal(feedback.find(part=>part.key==='method').answer,CASES[id].methods[CASES[id].solution.method]);
+        assert.ok(feedback.filter(part=>!part.correct).every(part=>part.answer===''));assert.deepEqual(Object.keys(g.party.confirmedParts),['method']);
+    }
+});
+test('host retries preserve the investigation and confirmed answers but revoke every previous-attempt command',()=>{
+    let g=failedAttempt(),before=structuredClone(g),guest=g.party.players.find(p=>p.id!==g.hostId).id;
+    assert.equal(act(g,'retry-case',{},guest),undefined);g=act(g,'retry-case',{},g.hostId);assert.equal(g.phase,'accusing');assert.equal(g.finishReason,null);assert.equal(g.endedAt,null);
+    assert.equal(g.turn.id,before.turn.id+1);assert.equal(g.matchId,before.matchId);assert.deepEqual(g.party.found,before.party.found);assert.deepEqual(g.party.history,before.party.history);assert.deepEqual(g.caseWordUses,before.caseWordUses);assert.deepEqual(g.party.theory,before.party.theory);
+    assert.equal(g.party.attempts,1);assert.equal(confirmedCasePart(g,'method'),true);assert.equal(confirmedCasePart(g,'suspect'),false);assert.equal(act(g,'retry-case',{},g.hostId),undefined);
+    assert.equal(State.act(g,actor(g.hostId),{type:'accuse',turnId:before.turn.id,matchId:g.matchId,theory:caseSubmission(g)},now,rules),undefined);
+    assert.equal(State.act(g,actor(g.hostId),{type:'retry-case',turnId:before.turn.id,matchId:g.matchId},now,rules),undefined);
+    for(const eventId of [...g.party.timeline])g=act(g,'timeline-remove',{eventId},g.hostId);g=completeDraft(g);
+    g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);assert.equal(g.finishReason,'solved');assert.equal(g.party.attempts,2);assert.equal(act(g,'retry-case',{},g.hostId),undefined);
+    g=act(g,'rematch',{seed:3},g.hostId);assert.equal(g.party.attempts,0);assert.deepEqual(g.party.confirmedParts,{});
+});
+test('retry state survives omitted Firebase collections and stopped cases cannot retry',()=>{
+    let g=failedAttempt();delete g.party.discoveries;delete g.party.proof;g=act(g,'retry-case',{},g.hostId);assert.deepEqual(g.party.proof,['','']);assert.equal(confirmedCasePart(g,'method'),true);
+    g=act(g,'set-theory',{field:'method',index:(g.party.theory.method+1)%3},g.hostId);assert.equal(confirmedCasePart(g,'method'),false);
+    g=act(g,'end-game',{},g.hostId);assert.equal(act(g,'retry-case',{},g.hostId),undefined);
+});
+test('an early failed theory can reopen its original discussion and continue investigating within the budget',()=>{
+    let g=score(begin(started()),[0]);g=act(g,'open-theory',{},g.hostId);g=completeDraft(g,{proof:[]});g=act(g,'accuse',{theory:caseSubmission(g)},g.hostId);
+    assert.equal(g.finishReason,'unsolved');g=act(g,'retry-case',{},g.hostId);g=act(g,'resume-case',{},g.hostId);assert.equal(g.phase,'evidence');assert.equal(g.party.history.length,1);assert.equal(g.party.found.length,1);
+    g=act(g,'continue-case');assert.equal(g.phase,'idle');assert.equal(g.party.attempts,1);
 });

@@ -1,0 +1,33 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "Local failed case: only How confirmed; wrong answers/explanations and eight unopened exhibits hidden; safe summary/PNG; repeat attempt keeps notebook and answers; fresh restart resets progress",
+    "Online failed case: both clients hide unsolved answers; only host retries; same notebook/answers and confirmed part survive refresh; corrected retry solves",
+    "Reconstructed Case Files: two online clients, role privacy, shared guest edits, refresh persistence, stale host review invalidation, complete timeline/proof/theory, next-case rematch"
+  ],
+  "layouts": [
+    {
+      "label": "Unsolved case without spoilers",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Unsolved case without spoilers",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Unsolved case without spoilers",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Unsolved case without spoilers large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 87
+}
