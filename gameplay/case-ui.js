@@ -1,4 +1,4 @@
-import { CASES, CASE_IDS, caseStory, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseFields, caseSubmission, caseFeedback, confirmedCasePart } from './cases.js?v=20261030.variants1';
+import { CASES, CASE_IDS, caseStory, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseFields, caseSubmission, caseFeedback, confirmedCasePart } from './cases.js?v=20261030.casewords1';
 import { countdownLabel } from './rules.js?v=20261030.2';
 import { REACTIONS, REACTION_LABELS, REACTION_TTL_MS } from './experience.js?v=20261030.4';
 const h = (tag, cls = '', text = '') => { const n = document.createElement(tag); n.className = cls; n.textContent = text; return n; };
@@ -29,7 +29,7 @@ export function createCaseSurface(root, callbacks) {
     function evidence(parent,item,extra='') {
         const card=h('article','case-evidence-card');card.appendChild(h('span','case-source',`${item.code} · ${item.source}`));card.appendChild(h('h4','',`${extra}${item.title}`));
         const recovered=[...new Set((current?.game.party?.history||[]).flatMap(entry=>(entry.correct||[]).filter(index=>entry.caseFactIds?.[index]===item.id).map(index=>entry.words[index])))];
-        if(recovered.length)note(card,'Recovered through '+recovered.slice(0,2).join(' · '),'case-recovered-words');note(card,item.text);
+        if(recovered.length)note(card,'Words solved for this file: '+recovered.slice(0,2).join(' · '),'case-recovered-words');note(card,item.text);
         if(item.visual)visual(card,item.visual);
         const records=h('dl','case-records');for(const [label,value]of item.records){const row=h('div','case-record');row.appendChild(h('dt','',label));row.appendChild(h('dd','',value));records.appendChild(row);}card.appendChild(records);parent.appendChild(card);
     }

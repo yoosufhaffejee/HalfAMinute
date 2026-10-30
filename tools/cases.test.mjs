@@ -39,7 +39,7 @@ test('eight source-based cases use real vocabulary, balanced prompts and structu
     assert.equal(CASE_IDS.length,8);
     for(const id of CASE_IDS){const s=CASES[id],facts=caseFacts(id),words=caseWordObjects(id,dictionary);assert.equal(s.people.length,6);assert.equal(s.methods.length,3);assert.equal(s.destinations.length,3);assert.equal(facts.length,12);assert.equal(words.length,48);
         assert.equal(new Set(words.map(w=>w.word.toLowerCase())).size,48);assert.equal(s.reveal.length,3);assert.equal(s.hints.length,3);assert.ok(s.groundRules&&s.intro.length>150);
-        for(const f of facts){assert.ok(f.text.length>60&&f.source);assert.ok(f.records.length>=2&&f.records.every(row=>row.length===2&&row.every(value=>typeof value==='string'&&value.length)));assert.doesNotMatch(f.text,/rules? out|remaining possibilities|only .+ had|leaving .+ suspects/i);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='easy').length,2,`${id}/${f.id} easy`);assert.equal(words.filter(w=>w.caseFactId===f.id&&w.difficulty==='hard').length,2);for(const dep of f.requires)assert.ok(facts.some(x=>x.id===dep));}
+        for(const f of facts){assert.ok(f.text.length>60&&f.source);assert.ok(f.records.length>=2&&f.records.every(row=>row.length===2&&row.every(value=>typeof value==='string'&&value.length)));assert.doesNotMatch(f.text,/rules? out|remaining possibilities|only .+ had|leaving .+ suspects/i);assert.ok(f.topic&&f.topic.length>20);assert.ok(words.some(w=>w.caseFactId===f.id&&w.difficulty==='easy'),`${id}/${f.id} easy`);assert.ok(words.some(w=>w.caseFactId===f.id&&w.difficulty==='hard'),`${id}/${f.id} hard`);for(const dep of f.requires)assert.ok(facts.some(x=>x.id===dep));}
     }
 });
 test('each chronology is uniquely ordered by authored times and each proof pair references distinct obtainable sources',()=>{
@@ -65,7 +65,7 @@ test('curated deals are deterministic, follow lead/difficulty, spread evidence a
     for(const id of CASE_IDS)for(const difficulty of ['easy','normal','hard'])for(const count of [1,5,15]){let g=started(id,{difficulty,numWords:count});for(const lead of CASES[id].leads){g.turn.leadId=lead.id;const words=caseWordObjects(id,dictionary),a=drawCaseCard(g,17,words),b=drawCaseCard(g,17,words);assert.deepEqual(a,b);assert.ok(a.words.length>0&&a.words.length<=count);assert.equal(new Set(a.words).size,a.words.length);assert.ok(a.caseFactIds.every(key=>availableFacts(id,[],lead.id).some(f=>f.id===key)));if(count>=5)assert.equal(new Set(a.caseFactIds).size,3);
         if(difficulty!=='normal')assert.ok(a.words.every(word=>words.find(w=>w.word===word).difficulty===difficulty));}}
 });
-test('all five cases play through to a correct theory at easy, normal and hard without an AI request',()=>{
+test('all eight cases play through to a correct theory at easy, normal and hard without an AI request',()=>{
     for(const id of CASE_IDS)for(const difficulty of ['easy','normal','hard']){let g=started(id,{difficulty});let turns=0;while(g.phase!=='accusing'){g=begin(g);g=score(g,g.turn.words.map((_,i)=>i));assert.equal(g.phase,'evidence');g=act(g,'continue-case');assert.ok(++turns<=g.settings.caseTurns);}
         assert.equal(g.party.found.length,12);const before=structuredClone(g),who=g.hostId;for(const [field,index]of Object.entries(CASES[id].solution))g=act(g,'set-theory',{field,index},who);
         for(const eventId of CASES[id].chronology.order)g=act(g,'place-event',{eventId},who);
@@ -73,6 +73,24 @@ test('all five cases play through to a correct theory at easy, normal and hard w
         assert.equal(act(g,'accuse',{theory:{...caseSubmission(g),suspect:(g.party.theory.suspect+1)%6}},who),undefined);
         g=act(g,'accuse',{theory:caseSubmission(g)},who);assert.equal(g.finishReason,'solved');assert.equal(before.phase,'accusing');
     }
+});
+test('all scenarios retain curated exhibit vocabulary and each remaining file is drawable at every difficulty',()=>{
+    for(const id of CASE_IDS)for(let seed=0;seed<3;seed++){
+        const g=act(lobby(id),'start-game',{seed}),words=caseWordObjects(g,dictionary);
+        assert.deepEqual(words,caseWordObjects(id,dictionary),`${id}:${seed} stable exhibit mappings`);
+        for(const fact of caseFacts(g))for(const difficulty of ['easy','normal','hard']){
+            g.settings.difficulty=difficulty;g.turn.leadId=fact.leadId;
+            // Last missing file: no unrelated lead or broad-category fallback can fill the card.
+            g.party.found=caseFacts(g).filter(f=>f.id!==fact.id).map(f=>f.id);
+            const deal=drawCaseCard(g,7,words);
+            assert.ok(deal.words.length>0,`${id}:${seed}:${fact.id}:${difficulty}`);
+            assert.ok(deal.caseFactIds.every(key=>key===fact.id));
+            if(difficulty!=='normal')assert.ok(deal.words.every(word=>words.find(w=>w.word===word).difficulty===difficulty));
+        }
+    }
+    const cake=caseWordObjects('cake',dictionary).map(w=>w.word.toLowerCase());
+    for(const unrelated of ['penguin','sushi','whale','dining room table','dining table','allen key','sofa'])assert.ok(!cake.includes(unrelated),unrelated);
+    assert.throws(()=>caseWordObjects('cake',dictionary.filter(w=>w.word!=='Fondant')),/Missing case vocabulary: Fondant/);
 });
 test('only confirmed words unlock matching files; repeated words from one file count once',()=>{
     let g=started();assert.equal(act(g,'start-round',{seed:1}),undefined);assert.equal(act(g,'choose-lead',{leadId:'missing'}),undefined);

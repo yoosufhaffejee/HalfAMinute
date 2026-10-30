@@ -3252,6 +3252,251 @@ const categories = {
       "word": "Rubber Duck Debugging",
       "difficulty": "hard",
       "description": "Explaining your program to a bath toy to find mistakes."
+    },
+    {
+      "word": "Puncture Repair",
+      "difficulty": "hard",
+      "description": "Fixing a small hole that lets air escape from a tyre or similar item."
+    },
+    {
+      "word": "Access Control",
+      "difficulty": "hard",
+      "description": "Managing who or what is allowed to enter a place or use a resource."
+    },
+    {
+      "word": "Perimeter",
+      "difficulty": "hard",
+      "description": "The outer boundary around an area."
+    },
+    {
+      "word": "Textile",
+      "difficulty": "easy",
+      "description": "Material made by weaving, knitting or otherwise combining fibres."
+    },
+    {
+      "word": "Material Identification",
+      "difficulty": "hard",
+      "description": "Determining what substance or fabric an object is made from."
+    },
+    {
+      "word": "Deflation",
+      "difficulty": "hard",
+      "description": "Removing air or gas so an expanded object becomes smaller."
+    },
+    {
+      "word": "Air Pressure",
+      "difficulty": "hard",
+      "description": "The force exerted by gas against a surface."
+    },
+    {
+      "word": "Airflow",
+      "difficulty": "hard",
+      "description": "The movement of gas from one place to another."
+    },
+    {
+      "word": "Pressure Release",
+      "difficulty": "hard",
+      "description": "Allowing compressed air or another fluid to escape from an enclosed space."
+    },
+    {
+      "word": "Clearance",
+      "difficulty": "hard",
+      "description": "The space available for an object to pass without obstruction."
+    },
+    {
+      "word": "Dimension",
+      "difficulty": "hard",
+      "description": "A measurement such as length, width or height."
+    },
+    {
+      "word": "Magnification",
+      "difficulty": "easy",
+      "description": "Making an object or image appear larger than its actual size."
+    },
+    {
+      "word": "Clockwork",
+      "difficulty": "hard",
+      "description": "A mechanism powered by a wound spring and controlled by gears."
+    },
+    {
+      "word": "Token",
+      "difficulty": "hard",
+      "description": "A stored credential used to demonstrate permission to access a resource."
+    },
+    {
+      "word": "Login",
+      "difficulty": "easy",
+      "description": "The act of entering credentials to gain access to an account or system."
+    },
+    {
+      "word": "Remote Access",
+      "difficulty": "hard",
+      "description": "Using a system from a different physical location."
+    },
+    {
+      "word": "Interactive Session",
+      "difficulty": "hard",
+      "description": "A period of computer use involving responses from a person rather than only automatic work."
+    },
+    {
+      "word": "Clock Offset",
+      "difficulty": "hard",
+      "description": "The difference between a device's time and a reference time."
+    },
+    {
+      "word": "Timestamp",
+      "difficulty": "hard",
+      "description": "A recorded date or time attached to an event or item."
+    },
+    {
+      "word": "Incident Log",
+      "difficulty": "hard",
+      "description": "A dated record of events requiring attention or investigation."
+    },
+    {
+      "word": "Power Restoration",
+      "difficulty": "hard",
+      "description": "The return of the electrical supply after an outage."
+    },
+    {
+      "word": "Synchronisation",
+      "difficulty": "hard",
+      "description": "Bringing separate clocks, events or processes into agreement."
+    },
+    {
+      "word": "Weight",
+      "difficulty": "easy",
+      "description": "A measure of how heavy something is."
+    },
+    {
+      "word": "Mass",
+      "difficulty": "hard",
+      "description": "The amount of matter in an object."
+    },
+    {
+      "word": "Sensor",
+      "difficulty": "easy",
+      "description": "A device that detects and records a physical condition or change."
+    },
+    {
+      "word": "Calibration",
+      "difficulty": "hard",
+      "description": "Checking or adjusting an instrument against a known reference."
+    },
+    {
+      "word": "Delivery Delay",
+      "difficulty": "hard",
+      "description": "Extra time between an item or message being sent and received."
+    },
+    {
+      "word": "Message Queue",
+      "difficulty": "hard",
+      "description": "A collection of communications waiting to be processed or delivered."
+    },
+    {
+      "word": "Location Key",
+      "difficulty": "hard",
+      "description": "A guide explaining how place labels correspond to actual positions."
+    },
+    {
+      "word": "Grid Reference",
+      "difficulty": "hard",
+      "description": "A combination of coordinates used to identify a place on a mapped area."
+    },
+    {
+      "word": "Cross-section",
+      "difficulty": "hard",
+      "description": "A view showing the inside of an object as if it had been cut through."
+    },
+    {
+      "word": "Serial Number",
+      "difficulty": "hard",
+      "description": "An identifier distinguishing one manufactured item from others of its type."
+    },
+    {
+      "word": "Coordinate",
+      "difficulty": "easy",
+      "description": "A value used with others to specify a position."
+    },
+    {
+      "word": "Reference Frame",
+      "difficulty": "hard",
+      "description": "An agreed system relative to which positions and movements are described."
+    },
+    {
+      "word": "Transformation",
+      "difficulty": "hard",
+      "description": "A change in form, position or arrangement."
+    },
+    {
+      "word": "File",
+      "difficulty": "easy",
+      "description": "A stored collection of information treated as one item by a computer."
+    },
+    {
+      "word": "Checksum",
+      "difficulty": "hard",
+      "description": "A value calculated from data to help detect changes or errors."
+    },
+    {
+      "word": "Capture",
+      "difficulty": "easy",
+      "description": "Recording an image, sound or observation for later use."
+    },
+    {
+      "word": "Job Queue",
+      "difficulty": "hard",
+      "description": "A list of tasks waiting for a computer or device to process them."
+    },
+    {
+      "word": "Submission",
+      "difficulty": "hard",
+      "description": "Sending an item or request to be considered or processed."
+    },
+    {
+      "word": "Transfer Receipt",
+      "difficulty": "hard",
+      "description": "A record confirming that an item or data copy arrived at its destination."
+    },
+    {
+      "word": "Retention Policy",
+      "difficulty": "hard",
+      "description": "Rules specifying how long information or items must be kept."
+    },
+    {
+      "word": "Delete",
+      "difficulty": "easy",
+      "description": "To remove stored information or an item from a collection."
+    },
+    {
+      "word": "Copy",
+      "difficulty": "easy",
+      "description": "A reproduction of an original item or information."
+    },
+    {
+      "word": "Data Transfer",
+      "difficulty": "hard",
+      "description": "Moving digital information between devices or locations."
+    },
+    {
+      "word": "Verification",
+      "difficulty": "easy",
+      "description": "Checking evidence to establish that something is accurate or genuine."
+    },
+    {
+      "word": "Export",
+      "difficulty": "easy",
+      "description": "Saving or sending a computer item in a form usable elsewhere."
+    },
+    {
+      "word": "Content Hash",
+      "difficulty": "hard",
+      "description": "A value calculated from file contents for identification and change detection."
+    },
+    {
+      "word": "Version History",
+      "difficulty": "hard",
+      "description": "A record of previous forms of a file and the changes made to it."
     }
   ],
   "Literature": [
@@ -4806,6 +5051,156 @@ const categories = {
       "word": "Wabi-sabi",
       "difficulty": "hard",
       "description": "Japanese aesthetic appreciating impermanence and imperfection."
+    },
+    {
+      "word": "Viewfinder",
+      "difficulty": "hard",
+      "description": "Part of a camera used to frame the picture before taking it."
+    },
+    {
+      "word": "Perspective",
+      "difficulty": "hard",
+      "description": "The apparent arrangement and size of objects from a particular viewpoint."
+    },
+    {
+      "word": "Replica",
+      "difficulty": "easy",
+      "description": "A copy made to resemble an original object."
+    },
+    {
+      "word": "Low-angle Shot",
+      "difficulty": "hard",
+      "description": "A picture taken from below its subject, looking upwards."
+    },
+    {
+      "word": "Vantage Point",
+      "difficulty": "hard",
+      "description": "A position that gives a particular view of a scene."
+    },
+    {
+      "word": "Sketch",
+      "difficulty": "easy",
+      "description": "A quick drawing recording the main features of a subject."
+    },
+    {
+      "word": "Observational Drawing",
+      "difficulty": "hard",
+      "description": "An image made by looking closely at a real subject rather than inventing it."
+    },
+    {
+      "word": "Photograph",
+      "difficulty": "easy",
+      "description": "An image captured using a camera."
+    },
+    {
+      "word": "Candid Photography",
+      "difficulty": "hard",
+      "description": "Taking pictures of people acting naturally rather than posing."
+    },
+    {
+      "word": "Visual Identification",
+      "difficulty": "hard",
+      "description": "Recognising a person or object from what can be seen."
+    },
+    {
+      "word": "Decoration",
+      "difficulty": "easy",
+      "description": "An ornament or detail added to make something look attractive."
+    },
+    {
+      "word": "Reference Image",
+      "difficulty": "hard",
+      "description": "A picture used as a standard for checking details or making a comparison."
+    },
+    {
+      "word": "Scale",
+      "difficulty": "hard",
+      "description": "The relationship between the size shown in a representation and the actual size."
+    },
+    {
+      "word": "Shadow Puppetry",
+      "difficulty": "hard",
+      "description": "A performance using shapes between a light and screen to create moving silhouettes."
+    },
+    {
+      "word": "Silhouette",
+      "difficulty": "hard",
+      "description": "A dark outline of a shape against a lighter background."
+    },
+    {
+      "word": "Backstage",
+      "difficulty": "hard",
+      "description": "The area behind a performance space where preparations take place."
+    },
+    {
+      "word": "Costume",
+      "difficulty": "easy",
+      "description": "Clothing worn to portray a character or take part in a performance."
+    },
+    {
+      "word": "Costume Design",
+      "difficulty": "hard",
+      "description": "Planning the clothing and appearance used to portray characters in a performance."
+    },
+    {
+      "word": "Projection",
+      "difficulty": "easy",
+      "description": "Displaying an image or shape on another surface using light."
+    },
+    {
+      "word": "Cue Sheet",
+      "difficulty": "hard",
+      "description": "A written list showing when actions, lighting or sounds should occur in a performance."
+    },
+    {
+      "word": "Sound Effect",
+      "difficulty": "hard",
+      "description": "A deliberately produced noise used in a performance or recording."
+    },
+    {
+      "word": "Frame",
+      "difficulty": "easy",
+      "description": "A surrounding structure that supports or displays a picture."
+    },
+    {
+      "word": "Contact Sheet",
+      "difficulty": "hard",
+      "description": "A collection of small photographic images printed together for comparison or selection."
+    },
+    {
+      "word": "Painting",
+      "difficulty": "easy",
+      "description": "An artwork made by applying colour to a surface."
+    },
+    {
+      "word": "Border",
+      "difficulty": "easy",
+      "description": "A strip or edge surrounding the main part of something."
+    },
+    {
+      "word": "Conservation",
+      "difficulty": "hard",
+      "description": "Protecting and maintaining historic objects or works of art."
+    },
+    {
+      "word": "Dots",
+      "difficulty": "easy",
+      "description": "Small round marks on a surface."
+    },
+    {
+      "word": "Backing Board",
+      "difficulty": "easy",
+      "description": "A rigid sheet supporting the reverse of a picture or other item."
+    },
+    {
+      "word": "Image",
+      "difficulty": "easy",
+      "description": "A visual representation of a person, object or scene."
+    },
+    {
+      "word": "Image Comparison",
+      "difficulty": "easy",
+      "description": "Examining pictures together to identify similarities or changes."
     }
   ],
   "Music": [
@@ -5668,6 +6063,41 @@ const categories = {
       "word": "Concept Album",
       "difficulty": "hard",
       "description": "Record whose songs share an overarching theme or narrative."
+    },
+    {
+      "word": "Speaker",
+      "difficulty": "easy",
+      "description": "An audio device that converts an electrical signal into audible sound."
+    },
+    {
+      "word": "Stereo",
+      "difficulty": "easy",
+      "description": "Sound reproduced through separate left and right channels."
+    },
+    {
+      "word": "Polarity",
+      "difficulty": "hard",
+      "description": "The positive or negative direction of a signal or connection."
+    },
+    {
+      "word": "Mute",
+      "difficulty": "easy",
+      "description": "To silence an audio output without removing its source."
+    },
+    {
+      "word": "Downmix",
+      "difficulty": "hard",
+      "description": "Combining several audio channels into fewer channels."
+    },
+    {
+      "word": "Cancellation",
+      "difficulty": "hard",
+      "description": "Signals combining so that some or all of their output is removed."
+    },
+    {
+      "word": "Recording",
+      "difficulty": "easy",
+      "description": "Sound or images captured for playback later."
     }
   ],
   "Sports": [
@@ -8954,6 +9384,31 @@ const categories = {
       "word": "Irish Coffee",
       "difficulty": "hard",
       "description": "Hot drink combining whiskey, sweetened brew and cream."
+    },
+    {
+      "word": "Cherry",
+      "difficulty": "easy",
+      "description": "Small round fruit often placed on top of a decorated dessert."
+    },
+    {
+      "word": "Fondant",
+      "difficulty": "hard",
+      "description": "Smooth sugar paste rolled over a cake or shaped into edible decorations."
+    },
+    {
+      "word": "Confectionery",
+      "difficulty": "easy",
+      "description": "Sweets and other foods made mainly with sugar."
+    },
+    {
+      "word": "Icing",
+      "difficulty": "easy",
+      "description": "Sweet coating spread or piped onto cakes and biscuits."
+    },
+    {
+      "word": "Edible",
+      "difficulty": "easy",
+      "description": "Suitable and safe to eat."
     }
   ],
   "Nature and Wildlife": [
@@ -15732,6 +16187,26 @@ const categories = {
       "word": "Kingmaker",
       "difficulty": "hard",
       "description": "Player whose choice decides which opponent wins."
+    },
+    {
+      "word": "Party Bag",
+      "difficulty": "easy",
+      "description": "Small package of treats or gifts given to guests at a celebration."
+    },
+    {
+      "word": "Stickers",
+      "difficulty": "easy",
+      "description": "Small adhesive pictures or labels pressed onto a surface."
+    },
+    {
+      "word": "Prize",
+      "difficulty": "easy",
+      "description": "An item or reward given to the winner of a competition."
+    },
+    {
+      "word": "Inflatable",
+      "difficulty": "easy",
+      "description": "An object filled with air to give it its usable shape."
     }
   ],
   "Books and Authors": [
@@ -19457,6 +19932,86 @@ const categories = {
       "word": "Last Straw",
       "difficulty": "hard",
       "description": "Final small irritation that exhausts someone's patience."
+    },
+    {
+      "word": "Distinguishing Feature",
+      "difficulty": "hard",
+      "description": "A characteristic that allows something to be told apart from similar things."
+    },
+    {
+      "word": "Storage",
+      "difficulty": "easy",
+      "description": "Keeping items in a place until they are needed."
+    },
+    {
+      "word": "Cross-check",
+      "difficulty": "hard",
+      "description": "Comparing information with another source to see whether it agrees."
+    },
+    {
+      "word": "Observation",
+      "difficulty": "easy",
+      "description": "Information gained by watching or examining something."
+    },
+    {
+      "word": "Opening",
+      "difficulty": "easy",
+      "description": "A gap or entrance through which something can pass."
+    },
+    {
+      "word": "Partial View",
+      "difficulty": "hard",
+      "description": "A sight of only some of an object or scene."
+    },
+    {
+      "word": "Capacity",
+      "difficulty": "hard",
+      "description": "The amount or volume that something can hold."
+    },
+    {
+      "word": "Sequence",
+      "difficulty": "easy",
+      "description": "The order in which events or items follow one another."
+    },
+    {
+      "word": "Cleanup",
+      "difficulty": "easy",
+      "description": "The act of tidying a place and removing unwanted items."
+    },
+    {
+      "word": "Search",
+      "difficulty": "easy",
+      "description": "Looking carefully for something that is missing or hidden."
+    },
+    {
+      "word": "Index",
+      "difficulty": "easy",
+      "description": "An organised list used to locate information in another collection."
+    },
+    {
+      "word": "Message",
+      "difficulty": "easy",
+      "description": "Information sent from one person or system to another."
+    },
+    {
+      "word": "Weight Comparison",
+      "difficulty": "hard",
+      "description": "Examining how heavy two items are relative to one another."
+    },
+    {
+      "word": "Note",
+      "difficulty": "easy",
+      "description": "A short written reminder or record of information."
+    },
+    {
+      "word": "Task",
+      "difficulty": "easy",
+      "description": "A particular piece of work to be completed."
+    },
+    {
+      "word": "Record",
+      "difficulty": "easy",
+      "description": "Information kept as evidence or a reference for later use."
     }
   ],
   "Business, Brands, and Companies": [
@@ -20354,6 +20909,116 @@ const categories = {
       "word": "Hostile Takeover",
       "difficulty": "hard",
       "description": "Acquiring a company against its management's wishes."
+    },
+    {
+      "word": "Temporary Loan",
+      "difficulty": "hard",
+      "description": "An arrangement allowing someone to use an item for a limited period before returning it."
+    },
+    {
+      "word": "Sign-out Sheet",
+      "difficulty": "hard",
+      "description": "A record of who took an item or left a place and when."
+    },
+    {
+      "word": "Receipt",
+      "difficulty": "easy",
+      "description": "Written confirmation that an item or payment was received."
+    },
+    {
+      "word": "Payment",
+      "difficulty": "easy",
+      "description": "Money given to settle a purchase, debt or other obligation."
+    },
+    {
+      "word": "Authorisation",
+      "difficulty": "hard",
+      "description": "Permission given for a person or action to proceed."
+    },
+    {
+      "word": "Settlement",
+      "difficulty": "hard",
+      "description": "The stage of a financial transaction when the agreed funds are transferred."
+    },
+    {
+      "word": "Account",
+      "difficulty": "easy",
+      "description": "A record or arrangement associated with a particular banking customer or system user."
+    },
+    {
+      "word": "Audit Trail",
+      "difficulty": "hard",
+      "description": "A chronological record showing the actions taken on an item or transaction."
+    },
+    {
+      "word": "Money",
+      "difficulty": "easy",
+      "description": "Coins, notes or other accepted means of paying for goods and services."
+    },
+    {
+      "word": "Bank Transfer",
+      "difficulty": "easy",
+      "description": "Moving funds from one financial account to another."
+    },
+    {
+      "word": "Payee",
+      "difficulty": "hard",
+      "description": "The person or organisation receiving a payment."
+    },
+    {
+      "word": "Remittance",
+      "difficulty": "hard",
+      "description": "Money sent to another person or organisation as a payment."
+    },
+    {
+      "word": "Bank",
+      "difficulty": "easy",
+      "description": "An institution that holds deposits and provides financial services."
+    },
+    {
+      "word": "Routing Number",
+      "difficulty": "hard",
+      "description": "A numerical identifier used to direct a payment to a financial institution."
+    },
+    {
+      "word": "Account Number",
+      "difficulty": "hard",
+      "description": "An identifier assigned to a particular banking arrangement."
+    },
+    {
+      "word": "Ledger",
+      "difficulty": "easy",
+      "description": "A record in which financial transactions are entered and organised."
+    },
+    {
+      "word": "Supplier",
+      "difficulty": "easy",
+      "description": "A person or business providing goods or services to another."
+    },
+    {
+      "word": "Dormant Account",
+      "difficulty": "hard",
+      "description": "A banking arrangement that has had no customer activity for a substantial period."
+    },
+    {
+      "word": "Beneficiary",
+      "difficulty": "hard",
+      "description": "A person or organisation entitled to receive money or another benefit."
+    },
+    {
+      "word": "Confirmation",
+      "difficulty": "easy",
+      "description": "A statement or record establishing that something has been accepted or completed."
+    },
+    {
+      "word": "Acknowledgement",
+      "difficulty": "hard",
+      "description": "A response recognising that information or an item has been received."
+    },
+    {
+      "word": "Reconciliation",
+      "difficulty": "hard",
+      "description": "Comparing separate records and resolving differences between them."
     }
   ],
   "Politics and Government": [
@@ -22138,6 +22803,336 @@ const categories = {
       "word": "Carbon Monoxide Alarm",
       "difficulty": "hard",
       "description": "Device warning of an invisible poisonous combustion gas."
+    },
+    {
+      "word": "Doorway",
+      "difficulty": "easy",
+      "description": "An opening through which people enter or leave a room."
+    },
+    {
+      "word": "Ribbon",
+      "difficulty": "easy",
+      "description": "Narrow decorative strip of fabric used for wrapping or tying."
+    },
+    {
+      "word": "Tray",
+      "difficulty": "easy",
+      "description": "Flat object with a raised edge used to carry food or other items."
+    },
+    {
+      "word": "Tablecloth",
+      "difficulty": "easy",
+      "description": "Fabric spread over a dining or serving surface."
+    },
+    {
+      "word": "Trolley",
+      "difficulty": "easy",
+      "description": "Small wheeled cart pushed by hand to move goods."
+    },
+    {
+      "word": "Table Skirting",
+      "difficulty": "hard",
+      "description": "Fabric hanging around the sides of a serving table to hide the space underneath."
+    },
+    {
+      "word": "Handle",
+      "difficulty": "easy",
+      "description": "Part of an object intended to be held, pulled or carried."
+    },
+    {
+      "word": "Map",
+      "difficulty": "easy",
+      "description": "A drawing showing where places or features are located."
+    },
+    {
+      "word": "Floor Plan",
+      "difficulty": "hard",
+      "description": "A drawing showing the arrangement of rooms and spaces viewed from above."
+    },
+    {
+      "word": "Wayfinding",
+      "difficulty": "hard",
+      "description": "Using signs, landmarks or other information to navigate a place."
+    },
+    {
+      "word": "Container",
+      "difficulty": "easy",
+      "description": "An object used to hold, carry or store other things."
+    },
+    {
+      "word": "Patch",
+      "difficulty": "easy",
+      "description": "A piece of material used to cover a hole or damaged area."
+    },
+    {
+      "word": "Wall",
+      "difficulty": "easy",
+      "description": "An upright structure separating or enclosing spaces."
+    },
+    {
+      "word": "Towel",
+      "difficulty": "easy",
+      "description": "Absorbent fabric used to dry a person or surface."
+    },
+    {
+      "word": "Cotton",
+      "difficulty": "easy",
+      "description": "Soft natural fibre widely used to make clothes and absorbent fabrics."
+    },
+    {
+      "word": "Pool",
+      "difficulty": "easy",
+      "description": "A constructed area of water used for swimming or recreation."
+    },
+    {
+      "word": "Pump",
+      "difficulty": "easy",
+      "description": "A device that moves air or liquid into or out of something."
+    },
+    {
+      "word": "Hose",
+      "difficulty": "easy",
+      "description": "A flexible tube used to carry air or liquid."
+    },
+    {
+      "word": "Cap",
+      "difficulty": "easy",
+      "description": "A soft hat, usually with a peak at the front."
+    },
+    {
+      "word": "Hatch",
+      "difficulty": "easy",
+      "description": "A small opening with a cover used for access or passing objects through."
+    },
+    {
+      "word": "Hissing",
+      "difficulty": "easy",
+      "description": "A long soft sound like air escaping through a small opening."
+    },
+    {
+      "word": "Valve",
+      "difficulty": "easy",
+      "description": "A device that opens or closes to control the flow of air or liquid."
+    },
+    {
+      "word": "Fold",
+      "difficulty": "easy",
+      "description": "To bend one part of a flexible object over another."
+    },
+    {
+      "word": "Closure",
+      "difficulty": "easy",
+      "description": "A fastening or action that shuts an opening."
+    },
+    {
+      "word": "Bundle",
+      "difficulty": "easy",
+      "description": "Several items or layers gathered and held together as one package."
+    },
+    {
+      "word": "Bag",
+      "difficulty": "easy",
+      "description": "A flexible container used to hold or carry items."
+    },
+    {
+      "word": "Fabric",
+      "difficulty": "easy",
+      "description": "Flexible cloth made from fibres."
+    },
+    {
+      "word": "Light",
+      "difficulty": "easy",
+      "description": "Visible illumination that allows objects to be seen."
+    },
+    {
+      "word": "Shadow",
+      "difficulty": "easy",
+      "description": "A dark shape formed when an object blocks illumination."
+    },
+    {
+      "word": "Paper",
+      "difficulty": "easy",
+      "description": "Thin material commonly used for writing, printing and craft projects."
+    },
+    {
+      "word": "Badge",
+      "difficulty": "easy",
+      "description": "A small identifying emblem worn on clothing."
+    },
+    {
+      "word": "Curtain",
+      "difficulty": "easy",
+      "description": "A hanging piece of fabric that covers or separates an area."
+    },
+    {
+      "word": "Lamp",
+      "difficulty": "easy",
+      "description": "A device that provides illumination."
+    },
+    {
+      "word": "Screen",
+      "difficulty": "easy",
+      "description": "A surface on which an image or shadow is displayed."
+    },
+    {
+      "word": "Switch",
+      "difficulty": "easy",
+      "description": "A control used to turn a device or circuit on or off."
+    },
+    {
+      "word": "Clock",
+      "difficulty": "easy",
+      "description": "A device that shows the time."
+    },
+    {
+      "word": "Tin",
+      "difficulty": "easy",
+      "description": "A small metal container, often used for food."
+    },
+    {
+      "word": "Rattle",
+      "difficulty": "easy",
+      "description": "A repeated clattering sound or an object made to produce it."
+    },
+    {
+      "word": "Spring",
+      "difficulty": "easy",
+      "description": "A coiled or flexible piece that stores mechanical energy when deformed."
+    },
+    {
+      "word": "Queue",
+      "difficulty": "easy",
+      "description": "A line of people or items waiting to be served or processed."
+    },
+    {
+      "word": "Popcorn",
+      "difficulty": "easy",
+      "description": "A snack made by heating kernels until they burst open."
+    },
+    {
+      "word": "Token Replay",
+      "difficulty": "hard",
+      "description": "Reusing a previously issued access credential to authenticate another session."
+    },
+    {
+      "word": "Alarm",
+      "difficulty": "easy",
+      "description": "A signal intended to draw attention to danger or an event requiring action."
+    },
+    {
+      "word": "Blackout",
+      "difficulty": "easy",
+      "description": "A period during which the electrical supply or normal illumination fails."
+    },
+    {
+      "word": "Watch",
+      "difficulty": "easy",
+      "description": "A small timekeeping device worn or carried by a person."
+    },
+    {
+      "word": "Mounting",
+      "difficulty": "hard",
+      "description": "A fitting or arrangement that attaches or supports an object."
+    },
+    {
+      "word": "Sleeve",
+      "difficulty": "easy",
+      "description": "A protective cover into which an object slides."
+    },
+    {
+      "word": "Rail",
+      "difficulty": "easy",
+      "description": "A long support or track along which an object can move."
+    },
+    {
+      "word": "Impression",
+      "difficulty": "hard",
+      "description": "A shape or mark left by pressure against a surface."
+    },
+    {
+      "word": "Label",
+      "difficulty": "easy",
+      "description": "A small attachment carrying information about an item."
+    },
+    {
+      "word": "Crate",
+      "difficulty": "easy",
+      "description": "A strong container used for storing or transporting goods."
+    },
+    {
+      "word": "Signature",
+      "difficulty": "easy",
+      "description": "A person's written name or mark used to acknowledge a document."
+    },
+    {
+      "word": "Scales",
+      "difficulty": "easy",
+      "description": "A device used to measure weight or mass."
+    },
+    {
+      "word": "Key",
+      "difficulty": "easy",
+      "description": "A shaped object used to operate a lock."
+    },
+    {
+      "word": "Keyring",
+      "difficulty": "easy",
+      "description": "A loop or holder used to keep lock-opening tools together."
+    },
+    {
+      "word": "Wire",
+      "difficulty": "easy",
+      "description": "A thin strand of metal used for fastening or carrying electricity."
+    },
+    {
+      "word": "Locker",
+      "difficulty": "easy",
+      "description": "A small secure storage compartment, often with its own lock."
+    },
+    {
+      "word": "Door",
+      "difficulty": "easy",
+      "description": "A movable barrier that opens or closes an entrance."
+    },
+    {
+      "word": "Passage",
+      "difficulty": "easy",
+      "description": "A route or corridor connecting areas."
+    },
+    {
+      "word": "Cage",
+      "difficulty": "easy",
+      "description": "An enclosure made from bars, wire or mesh."
+    },
+    {
+      "word": "Wrapper",
+      "difficulty": "easy",
+      "description": "Material covering an item for protection or identification."
+    },
+    {
+      "word": "Calendar",
+      "difficulty": "easy",
+      "description": "A chart or system organising dates, days and appointments."
+    },
+    {
+      "word": "Console",
+      "difficulty": "easy",
+      "description": "A control station or interface used to operate equipment."
+    },
+    {
+      "word": "Lens",
+      "difficulty": "easy",
+      "description": "A shaped transparent component that bends light to form or alter an image."
+    },
+    {
+      "word": "Drum",
+      "difficulty": "easy",
+      "description": "A musical instrument played by striking a stretched surface."
+    },
+    {
+      "word": "Lid",
+      "difficulty": "easy",
+      "description": "Removable or hinged top used to close a container."
     }
   ],
   "Professions and Workplaces": [
@@ -23040,6 +24035,81 @@ const categories = {
       "word": "Technical Writer",
       "difficulty": "hard",
       "description": "Person explaining complex products through manuals and instructions."
+    },
+    {
+      "word": "Inventory",
+      "difficulty": "hard",
+      "description": "An itemised list of goods held in a particular place."
+    },
+    {
+      "word": "Release Form",
+      "difficulty": "hard",
+      "description": "A document recording permission to hand over or release something."
+    },
+    {
+      "word": "Porter",
+      "difficulty": "easy",
+      "description": "A worker who carries luggage or other loads for people."
+    },
+    {
+      "word": "Duty Roster",
+      "difficulty": "hard",
+      "description": "A schedule assigning people to work periods or tasks."
+    },
+    {
+      "word": "Allocation",
+      "difficulty": "hard",
+      "description": "The assignment of resources, tasks or spaces to particular users."
+    },
+    {
+      "word": "Booking Schedule",
+      "difficulty": "hard",
+      "description": "A record of reserved times for using a resource or attending an activity."
+    },
+    {
+      "word": "Exclusive Access",
+      "difficulty": "hard",
+      "description": "Permission for one user to control a resource without sharing it during a period."
+    },
+    {
+      "word": "Work Order",
+      "difficulty": "hard",
+      "description": "A document requesting or assigning a particular job."
+    },
+    {
+      "word": "Delegation",
+      "difficulty": "hard",
+      "description": "Entrusting a task or responsibility to another person."
+    },
+    {
+      "word": "Equipment Register",
+      "difficulty": "hard",
+      "description": "A record listing devices and the details used to identify them."
+    },
+    {
+      "word": "Handover",
+      "difficulty": "hard",
+      "description": "The transfer of an item, responsibility or control from one person to another."
+    },
+    {
+      "word": "Tour Manager",
+      "difficulty": "easy",
+      "description": "A person coordinating travel, schedules and practical arrangements for performers."
+    },
+    {
+      "word": "Asset Tag",
+      "difficulty": "hard",
+      "description": "An identifying label attached to a tracked item of equipment."
+    },
+    {
+      "word": "Counterfoil",
+      "difficulty": "hard",
+      "description": "The retained part of a ticket or form after the main section is removed."
+    },
+    {
+      "word": "Carbon Copy",
+      "difficulty": "hard",
+      "description": "A duplicate impression made while writing or printing an original document."
     }
   ],
   "Travel, Transport, and Aviation": [
@@ -23937,6 +25007,81 @@ const categories = {
       "word": "Stern",
       "difficulty": "hard",
       "description": "Rear end of a ship."
+    },
+    {
+      "word": "Delivery",
+      "difficulty": "easy",
+      "description": "Taking an item to its intended recipient or destination."
+    },
+    {
+      "word": "Consignment",
+      "difficulty": "hard",
+      "description": "A batch of goods entrusted to someone for transport or sale."
+    },
+    {
+      "word": "Dispatch",
+      "difficulty": "hard",
+      "description": "Sending goods or people to their intended destination."
+    },
+    {
+      "word": "Manifest",
+      "difficulty": "hard",
+      "description": "A detailed list of goods or people being carried."
+    },
+    {
+      "word": "Announcement",
+      "difficulty": "easy",
+      "description": "A public statement made to inform a group of people."
+    },
+    {
+      "word": "Train",
+      "difficulty": "easy",
+      "description": "A series of connected railway vehicles travelling together."
+    },
+    {
+      "word": "Station",
+      "difficulty": "easy",
+      "description": "A designated stopping place where railway passengers board or leave."
+    },
+    {
+      "word": "Timetable",
+      "difficulty": "hard",
+      "description": "A schedule listing planned arrival, departure or activity times."
+    },
+    {
+      "word": "Non-stop Service",
+      "difficulty": "hard",
+      "description": "A journey made without intermediate stops."
+    },
+    {
+      "word": "Parcel",
+      "difficulty": "easy",
+      "description": "A wrapped package prepared for transport."
+    },
+    {
+      "word": "Baggage Tag",
+      "difficulty": "hard",
+      "description": "An identifying label attached to luggage or a transported package."
+    },
+    {
+      "word": "Route Diagram",
+      "difficulty": "hard",
+      "description": "A drawing showing the paths connecting different places."
+    },
+    {
+      "word": "Packing Slip",
+      "difficulty": "hard",
+      "description": "A document listing the contents of a shipped package."
+    },
+    {
+      "word": "Loading Plan",
+      "difficulty": "hard",
+      "description": "A guide showing where items should be placed for transport."
+    },
+    {
+      "word": "Storage Bay",
+      "difficulty": "hard",
+      "description": "A designated compartment or area for keeping goods."
     }
   ],
   "Internet Culture and Social Media": [
@@ -25776,6 +26921,101 @@ const categories = {
       "word": "Amnesty",
       "difficulty": "hard",
       "description": "Official pardon covering a class of offences or people."
+    },
+    {
+      "word": "Eyewitness Account",
+      "difficulty": "hard",
+      "description": "Description of an event given by someone who saw it happen."
+    },
+    {
+      "word": "Line of Sight",
+      "difficulty": "hard",
+      "description": "An unobstructed visual path between an observer and an object."
+    },
+    {
+      "word": "Concealment",
+      "difficulty": "hard",
+      "description": "Keeping something out of view so it is not noticed."
+    },
+    {
+      "word": "Tamper-evident Seal",
+      "difficulty": "hard",
+      "description": "Closure designed to leave a visible sign if it has been opened."
+    },
+    {
+      "word": "Corroboration",
+      "difficulty": "hard",
+      "description": "Independent information that supports another statement or piece of evidence."
+    },
+    {
+      "word": "Physical Evidence",
+      "difficulty": "hard",
+      "description": "Tangible objects or traces used to establish facts about an event."
+    },
+    {
+      "word": "Evidence",
+      "difficulty": "easy",
+      "description": "Information or objects used to support a conclusion."
+    },
+    {
+      "word": "Inspection",
+      "difficulty": "easy",
+      "description": "Careful examination of something to check its condition or contents."
+    },
+    {
+      "word": "Identifying Mark",
+      "difficulty": "hard",
+      "description": "A visible feature used to recognise a particular person or object."
+    },
+    {
+      "word": "Independent Witness",
+      "difficulty": "hard",
+      "description": "An observer providing an account without relying on another person’s account."
+    },
+    {
+      "word": "Access Register",
+      "difficulty": "hard",
+      "description": "A record of permissions or entries associated with people or credentials."
+    },
+    {
+      "word": "Credential",
+      "difficulty": "hard",
+      "description": "Information or an object used to demonstrate identity or permission."
+    },
+    {
+      "word": "Authentication",
+      "difficulty": "hard",
+      "description": "Checking that a claimed identity or credential is genuine."
+    },
+    {
+      "word": "Trace Evidence",
+      "difficulty": "hard",
+      "description": "Small physical remnants that help connect an object or person to an event."
+    },
+    {
+      "word": "Access Log",
+      "difficulty": "hard",
+      "description": "A record showing entries into a place or use of a resource."
+    },
+    {
+      "word": "Entry Record",
+      "difficulty": "hard",
+      "description": "A dated note showing when someone or something entered a place."
+    },
+    {
+      "word": "Key Custody",
+      "difficulty": "hard",
+      "description": "Responsibility for possessing and controlling the means to open a lock."
+    },
+    {
+      "word": "Witness Statement",
+      "difficulty": "hard",
+      "description": "A formal account given by someone describing what they observed."
+    },
+    {
+      "word": "Seal Number",
+      "difficulty": "hard",
+      "description": "A unique identifier used to recognise a particular protective closure."
     }
   ],
   "Africa: People, Places, and Events": [

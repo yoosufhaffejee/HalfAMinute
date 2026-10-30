@@ -1,14 +1,17 @@
 import { answerKey, random } from './rules.js?v=20261030.2';
-import { caseFacts, availableFacts } from './cases.js?v=20261030.variants1';
+import { caseFacts, availableFacts } from './cases.js?v=20261030.casewords1';
 
 export function caseWordObjects(id, dictionary) {
     const registry = new Map();
     for (const entry of dictionary) if (!registry.has(answerKey(entry.word))) registry.set(answerKey(entry.word), entry);
-    return caseFacts(id).flatMap(fact => fact.words.map(word => {
-        const entry = registry.get(answerKey(word));
-        if (!entry) throw new Error(`Missing case vocabulary: ${word}`);
-        return { ...entry, caseFactId: fact.id };
-    }));
+    return caseFacts(id).flatMap(fact => {
+        if (!fact.topic?.trim()) throw new Error(`Missing curated topic for case exhibit: ${fact.id}`);
+        return fact.words.map(word => {
+            const entry = registry.get(answerKey(word));
+            if (!entry) throw new Error(`Missing case vocabulary: ${word}`);
+            return { ...entry, caseFactId: fact.id };
+        });
+    });
 }
 export function drawCaseCard(game, seed, words) {
     const facts = availableFacts(game, game.party.found, game.turn.leadId), ids = new Set(facts.map(f => f.id));

@@ -1,6 +1,6 @@
 import { answerKey } from './rules.js?v=20261029.2';
-import { CASE_IDS } from './cases.js?v=20261030.variants1';
-export const MODE_VERSION = '20261030.variants1';
+import { CASE_IDS } from './cases.js?v=20261030.casewords1';
+export const MODE_VERSION = '20261030.casewords1';
 export const MODES = {
     classic: { name: 'Classic', description: 'Describe, guess and race to the finish. One point per correct answer.' },
     chaos: { name: 'Chaos', description: 'The clue game with board effects, shields and unexpected turns.' },

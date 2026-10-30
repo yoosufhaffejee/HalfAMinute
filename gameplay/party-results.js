@@ -1,5 +1,5 @@
-import { MODES, modeOf } from './modes.js?v=20261030.variants1';
-import { CASES, caseSubmission } from './cases.js?v=20261030.variants1';
+import { MODES, modeOf } from './modes.js?v=20261030.casewords1';
+import { CASES, caseSubmission } from './cases.js?v=20261030.casewords1';
 function download(blob, filename) {
     const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = filename; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
