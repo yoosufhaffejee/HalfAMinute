@@ -3,9 +3,9 @@ import { actCase, caseSnapshot, reconcileCase, caseView } from './case-state.js?
 import { caseStory } from './cases.js?v=20261031.beta1';
 
 export const BETA_PUZZLES = [
-    { title: 'Under the party', cost: 2, icon: '🔎', hints: ['The skirt is made of fabric.', 'Look for furniture with four legs and a tablecloth.'] },
-    { title: 'A cake in both photos?', cost: 2, icon: '📷', hints: ['The decoration tells you which cake you are looking at.', 'Compare the ribbons. Blue is real; gold belongs to the foam display.'] },
-    { title: 'Recreate the escape', cost: 2, icon: '🛒', hints: ['The later photo must still show a cake. Leave the display behind.', 'Leave the foam display, lower the cloth, and use the trolley.'] }
+    { title: 'The folded note', cost: 2, icon: '✉', hints: ['The skirt is made of fabric.', 'Look for furniture with four legs and a tablecloth.'] },
+    { title: 'Dani’s photographs', cost: 2, icon: '📷', hints: ['The decoration tells you which cake you are looking at.', 'Compare the ribbons. Blue is real; gold belongs to the foam display.'] },
+    { title: 'The missing minutes', cost: 2, icon: '🕯', hints: ['The later photo must still show a cake. Leave the display behind.', 'Leave the foam display, lower the cloth, and use the trolley.'] }
 ];
 export function betaSnapshot(data) {
     const g = caseSnapshot(data);
@@ -31,10 +31,17 @@ export function actBeta(data, actor, action, now, rules, context) {
         if (!g) return;
         g.party.beta = { points: 0, opened: {}, solved: {}, hints: {}, revision: 0, feedback: '',
             experiment: { prop: 'real', transport: 'hand', cloth: 'up' }, theory: { suspect: -1, destination: -1 } };
-        return prepare(g);
+        g.phase = 'briefing';
+        return g;
     }
     const b = g.party?.beta, host = actor.playerId === g.hostId;
     if (!b) return;
+    if (action.type === 'beta-begin') {
+        if (!host || g.phase !== 'briefing' || action.revision !== b.revision) return;
+        b.revision++; g.phase = 'idle'; g.gameState = 'resumed';
+        reconcileBeta(g, context.people, context.connectedIds);
+        return prepare(g);
+    }
     const member = context.connectedIds.includes(actor.playerId) && g.party.players.some(p => p.id === actor.playerId && !p.departed);
     const board = member && ['idle','waiting','evidence','accusing'].includes(g.phase);
     if (action.type.startsWith('beta-')) {

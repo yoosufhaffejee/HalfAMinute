@@ -2,10 +2,30 @@
   "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
   "completed": true,
   "checks": [
-    "Beta local: private countdown, odd point carryover, wrong puzzle retry, hint purchase, visual comparison, experiment feedback, full solve, safe exports, same replay, reveal confirmation/cancel, new scenario reset",
-    "Beta online: two clients, guest investigation/experiment edits, shared points, speaker word privacy, refresh persistence, host-only accusation, shared solved ending and replay reset"
+    "Beta local: narrative/mission/suspects before play, no early puzzle spoilers, briefing on replay, private countdown, odd point carryover, wrong puzzle retry, hint purchase, visual comparison, experiment feedback, full solve, safe exports, same replay, reveal confirmation/cancel, new scenario reset",
+    "Beta online: shared narrative briefing survives refresh, host-only begin, two clients, guest investigation/experiment edits, shared points, speaker word privacy, refresh persistence, host-only accusation, shared solved ending and replay reset"
   ],
   "layouts": [
+    {
+      "label": "Beta narrative briefing",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta narrative briefing",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta narrative briefing",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta narrative briefing large text",
+      "width": 320,
+      "overflow": false
+    },
     {
       "label": "Beta opening and suspects",
       "width": 320,
@@ -88,5 +108,5 @@
     }
   ],
   "errors": [],
-  "transactions": 46
+  "transactions": 48
 }

@@ -6,6 +6,8 @@ Choose **Cake Escape Beta · Prototype** from the Game menu. It is a separate mo
 
 ## Complete loop
 
+The investigation opens with a shared, illustrated briefing before any word cards, speaker handoff or puzzles. It establishes the birthday party, empty cake stand, apparently contradictory photograph, anonymous note, six suspects and the crew's mission. The host explicitly begins; this phase survives refresh and is repeated on replay. A collapsed recap remains available between rounds. Unopened future leads and the first riddle's illustration no longer disclose the answer in advance.
+
 1. Guess cake-related built-in words in the existing private countdown/word/review flow. Each confirmed word banks one shared search point. No word opens a document.
 2. Spend two points to open the next discovery. Unspent points carry between rounds. Wrong puzzle attempts and experiment changes are free.
 3. Solve the table riddle; uncover wheel tracks and a patterned apron patch. Guests and their apron symbols are visible together.
@@ -26,10 +28,10 @@ Opening a puzzle or buying one of its two progressive hints costs two points. Sp
 
 ## Validation and next playtest
 
-245 automated tests pass, including all three beta outcomes at every word difficulty, economy and stale revisions, auth/privacy, scoring/expiry/departure recovery, zero-score loss, optional reveal, replay resets and Firebase serialization. The existing 237 checks still pass.
+246 automated tests pass, including enforced briefing/host acknowledgement, all three beta outcomes at every word difficulty, economy and stale revisions, auth/privacy, scoring/expiry/departure recovery, zero-score loss, optional reveal, replay resets and Firebase serialization. The existing 237 checks still pass.
 
-Browser checks complete local play and a two-client game using the Firebase-compatible local transaction adapter. Coverage includes word privacy, odd-point carryover, hints, wrong puzzle retries, all discoveries, final confirmation, summary/PNG, replay/reveal/shuffle, guest edits and refresh recovery. Sixteen layout checks pass at 320/390/1100px and 150% text. See `cake-beta-browser.json` and the three beta screenshots. This is software verification, not evidence of player enjoyment.
+Browser checks complete local play and a two-client game using the Firebase-compatible local transaction adapter. Coverage includes the briefing before play, all six suspects, no early puzzle spoilers, briefing persistence through refresh/replay, word privacy, odd-point carryover, hints, wrong puzzle retries, all discoveries, final confirmation, summary/PNG, replay/reveal/shuffle and guest edits. Twenty layout checks pass at 320/390/1100px and 150% text. See `cake-beta-browser.json` and the four beta screenshots. This is software verification, not evidence of player enjoyment.
 
 For the first blind playtest, watch whether the next action is clear, whether the images invite discussion and whether several players contribute. Ask which discovery felt satisfying and whether they want another case. Adjust the two-point cost and clue strength from those observations before extending the format to other cases.
 
-Online protocol is 18. Refresh all clients and create a new lobby after deployment.
+Online protocol is 19. Refresh all clients and create a new lobby after deployment.

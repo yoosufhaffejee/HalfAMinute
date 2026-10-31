@@ -11,7 +11,16 @@ const dictionary=JSON.parse(JSON.stringify(c.words)),rules={drawWords:(g,seed)=>
 let now=1000000;const actor=id=>({playerId:id,playerName:id,connectionId:'c-'+id});
 function lobby(extra={}){now=1000000;let g={protocolVersion:State.PROTOCOL_VERSION,dateCreated:now,settings:Modes.normalizeModeSettings({mode:'cakebeta',caseTurns:6,numWords:5,numSeconds:30,difficulty:'normal',...extra}),teams:[{points:0,players:[]},{points:0,players:[]}],hostId:'',phase:'waiting',currentTeam:1};for(const id of ['A','B','C'])g=State.join(g,actor(id),now);return g;}
 function act(g,type,extra={},id=g.turn?.speakerId||g.hostId){const copy=structuredClone(g);for(const p of Object.values(copy.presence))for(const v of Object.values(p.connections))if(v.connected)v.lastSeen=now;return State.act(copy,actor(id),{type,matchId:g.matchId||1,turnId:g.turn?.id,revision:g.party?.beta?.revision,...extra},now,rules);}
-const start=(seed=0,extra={})=>act(lobby(extra),'start-game',{seed});
+const start=(seed=0,extra={})=>{const g=act(lobby(extra),'start-game',{seed});return act(g,'beta-begin',{},g.hostId);};
+test('a shared opening briefing must be acknowledged before words or puzzles, including after reload and replay',()=>{
+    let g=act(lobby(),'start-game',{seed:0}),guest=g.party.players.find(p=>p.id!==g.hostId).id;
+    assert.equal(g.phase,'briefing');assert.equal(State.view(g,actor(g.hostId),now).canStartRound,false);
+    assert.equal(act(g,'start-round',{seed:2}),undefined);assert.equal(act(g,'beta-buy',{index:0}),undefined);
+    assert.equal(act(g,'beta-begin',{},guest),undefined);
+    const before=JSON.parse(JSON.stringify(g));g=act(before,'beta-begin',{},g.hostId);assert.equal(g.phase,'idle');assert.ok(g.turn.leadId);
+    assert.equal(act(g,'beta-begin',{},g.hostId),undefined);
+    g=act(g,'end-game',{},g.hostId);g=act(g,'rematch',{seed:1,scenarioMode:'same',caseId:'cake'},g.hostId);assert.equal(g.phase,'briefing');
+});
 function score(g,count){g=act(g,'start-round',{seed:(g.party.history?.length||0)+30});now+=4500;g=act(g,'end-round');for(let i=0;i<Math.min(count,g.turn.words.length);i++)g=act(g,'toggle-answer',{index:i});return act(g,'submit-round');}
 function solve(g,index){g=act(g,'beta-buy',{index});if(index<2)return act(g,'beta-answer',{index,answer:index===0?'table':'ribbon'});for(const[field,value]of [['prop','foam'],['transport','trolley'],['cloth','down']])g=act(g,'beta-experiment',{field,value});return act(g,'beta-test');}
 function accusation(g,wrong=false){g=act(g,'beta-review',{},g.hostId);const solution=caseStory(g).solution;for(const field of ['suspect','destination'])g=act(g,'beta-theory',{field,index:wrong&&field==='suspect'?(solution[field]+1)%6:solution[field]},g.hostId);return g;}
