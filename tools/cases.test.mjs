@@ -71,7 +71,7 @@ test('same-scenario replay resets progress, different-scenario draws exclude the
 });
 test('eight source-based cases use real vocabulary, balanced prompts and structured exhibits without named eliminations',()=>{
     assert.equal(CASE_IDS.length,8);
-    for(const id of CASE_IDS){const s=CASES[id],facts=caseFacts(id),words=caseWordObjects(id,dictionary);assert.equal(s.people.length,6);assert.equal(s.methods.length,3);assert.equal(s.destinations.length,3);assert.equal(facts.length,12);assert.equal(words.length,48);
+    for(const id of CASE_IDS){const s=CASES[id],facts=caseFacts(id),words=caseWordObjects(id,dictionary);assert.ok(s.people.length>=4);assert.ok(s.solution.suspect>=0&&s.solution.suspect<s.people.length);assert.equal(s.methods.length,3);assert.equal(s.destinations.length,3);assert.equal(facts.length,12);assert.equal(words.length,48);
         assert.equal(new Set(words.map(w=>w.word.toLowerCase())).size,48);assert.equal(s.reveal.length,3);assert.equal(s.hints.length,3);assert.ok(s.groundRules&&s.intro.length>150);
         for(const f of facts){assert.ok(f.text.length>60&&f.source);assert.ok(f.records.length>=2&&f.records.every(row=>row.length===2&&row.every(value=>typeof value==='string'&&value.length)));assert.doesNotMatch(f.text,/rules? out|remaining possibilities|only .+ had|leaving .+ suspects/i);assert.ok(f.topic&&f.topic.length>20);assert.ok(words.some(w=>w.caseFactId===f.id&&w.difficulty==='easy'),`${id}/${f.id} easy`);assert.ok(words.some(w=>w.caseFactId===f.id&&w.difficulty==='hard'),`${id}/${f.id} hard`);for(const dep of f.requires)assert.ok(facts.some(x=>x.id===dep));}
     }

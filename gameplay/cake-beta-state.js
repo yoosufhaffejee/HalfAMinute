@@ -1,18 +1,15 @@
 // A separate prototype. The original Case Files reducer/content is unchanged.
 import { actCase, caseSnapshot, reconcileCase, caseView } from './case-state.js?v=20261031.beta1';
 import { caseStory } from './cases.js?v=20261031.beta1';
-
-export const BETA_PUZZLES = [
-    { title: 'The folded note', cost: 2, icon: '✉', hints: ['The skirt is made of fabric.', 'Look for furniture with four legs and a tablecloth.'] },
-    { title: 'Dani’s photographs', cost: 2, icon: '📷', hints: ['The decoration tells you which cake you are looking at.', 'Compare the ribbons. Blue is real; gold belongs to the foam display.'] },
-    { title: 'The missing minutes', cost: 2, icon: '🕯', hints: ['The later photo must still show a cake. Leave the display behind.', 'Leave the foam display, lower the cloth, and use the trolley.'] }
-];
+import { BETA_PUZZLES, betaStory, acceptsRiddle } from './cake-beta-content.js?v=20261031.riddles1';
+export { BETA_PUZZLES } from './cake-beta-content.js?v=20261031.riddles1';
 export function betaSnapshot(data) {
     const g = caseSnapshot(data);
     if (g.party?.beta) {
         const b = g.party.beta;
         g.party.beta = { ...b, opened: b.opened || {}, solved: b.solved || {}, hints: b.hints || {},
-            experiment: b.experiment || { prop: 'real', transport: 'hand', cloth: 'up' },
+            riddles: {0:{misses:0,accepted:false,...b.riddles?.[0]},2:{misses:0,accepted:false,...b.riddles?.[2]}},
+            assisted: b.assisted || {},photo:b.photo || {pick:'',reason:''},orientation:b.orientation || 'reflected',
             theory: b.theory || { suspect: -1, destination: -1 } };
     }
     return g;
@@ -30,7 +27,7 @@ export function actBeta(data, actor, action, now, rules, context) {
         g = actCase(g, actor, { ...action, caseId: 'cake' }, now, rules, context);
         if (!g) return;
         g.party.beta = { points: 0, opened: {}, solved: {}, hints: {}, revision: 0, feedback: '',
-            experiment: { prop: 'real', transport: 'hand', cloth: 'up' }, theory: { suspect: -1, destination: -1 } };
+            riddles:{0:{misses:0,accepted:false},2:{misses:0,accepted:false}},assisted:{},photo:{pick:'',reason:''},orientation:'reflected',theory: { suspect: -1, destination: -1 } };
         g.phase = 'briefing';
         return g;
     }
@@ -57,25 +54,31 @@ export function actBeta(data, actor, action, now, rules, context) {
                 b.hints[i] = (b.hints[i] || 0) + 1; b.feedback = 'A new hint is ready.';
             }
             b.points -= 2;
-        } else if (action.type === 'beta-answer') {
-            if (![0,1].includes(i) || !b.opened[i] || b.solved[i] || typeof action.answer !== 'string') return;
-            const allowed = i === 0 ? ['table','door','garden','camera'] : ['ribbon','candles','stand'];
-            if (!allowed.includes(action.answer)) return;
-            if (action.answer === (i === 0 ? 'table' : 'ribbon')) {
-                b.solved[i] = true; b.feedback = i === 0 ? 'Found it! Wheel marks and a torn apron patch were under the table.' : 'A switch! The later picture shows the foam display, not the real cake.';
-            } else b.feedback = i === 0 ? 'That does not fit all three parts of the riddle. Try another spot.' : 'That detail stayed the same. Look for something that changed.';
-        } else if (action.type === 'beta-experiment') {
-            if (!b.opened[2] || b.solved[2] || !Object.hasOwn({ prop: ['real','foam'], transport: ['hand','trolley'], cloth: ['up','down'] }, action.field)) return;
-            const choices = { prop: ['real','foam'], transport: ['hand','trolley'], cloth: ['up','down'] };
-            if (!choices[action.field].includes(action.value)) return;
-            b.experiment[action.field] = action.value; b.feedback = '';
-        } else if (action.type === 'beta-test') {
-            if (!b.opened[2] || b.solved[2]) return;
-            const e = b.experiment;
-            if (e.prop !== 'foam') b.feedback = 'The real cake is still on the table. Try leaving the display there instead.';
-            else if (e.transport !== 'trolley') b.feedback = 'An uncovered cake carried through the door would have been seen. Try the lower route.';
-            else if (e.cloth !== 'down') b.feedback = 'The trolley is visible. What could hide it under the table?';
-            else { b.solved[2] = true; b.feedback = 'It works! The trolley rolls out under cover. Follow the icing trail to its last stop.'; }
+        } else if (action.type === 'beta-riddle' || action.type === 'beta-riddle-choice') {
+            if (!puzzle || puzzle.kind!=='riddle' || !b.opened[i] || b.riddles[i].accepted) return;
+            const r=b.riddles[i];let answer=action.answer;
+            if(action.type==='beta-riddle-choice'){
+                if(r.misses<3)return;const choice=puzzle.choices.find(([key])=>key===answer);if(!choice)return;
+                b.assisted[i]=true;
+            }else if(typeof answer!=='string'||answer.length>80||!answer.trim()||!/[a-z]/i.test(answer))return;
+            if(acceptsRiddle(i,answer)){
+                r.accepted=true;if(i===0)b.solved[0]=true;
+                b.feedback=i===0?'The serving trolley fits every line. Inspecting its handle reveals a sleeve fibre; its shelf has fresh icing.':'A mirror. The recovered photograph needs interpreting before you can trust its left and right.';
+            }else{r.misses++;b.feedback=r.misses>=3?'Not a match. Four related choices are available below.':'That does not fit every line. Discuss another answer, or use a hint.';}
+        } else if(action.type==='beta-photo'){
+            if(!b.opened[1]||b.solved[1]||!Object.hasOwn({pick:['','a','b'],reason:['','tray','ribbon','cherries']},action.field))return;
+            const choices={pick:['','a','b'],reason:['','tray','ribbon','cherries']};if(!choices[action.field].includes(action.value))return;
+            b.photo[action.field]=action.value;b.feedback='';
+        } else if(action.type==='beta-photo-check'){
+            if(!b.opened[1]||b.solved[1]||!b.photo.pick||!b.photo.reason)return;
+            if(b.photo.pick===betaStory(g).realPhoto&&b.photo.reason==='tray'){
+                b.solved[1]=true;b.feedback='The loaded tray bends; the display’s tray stays straight. The real cake left before the later photo was taken.';
+            }else b.feedback='That explanation does not fit both photographs and the tray reference. Compare them again.';
+        } else if(action.type==='beta-orient'){
+            if(!b.opened[2]||!b.riddles[2].accepted||!['reflected','flipped','rotated'].includes(action.value))return;
+            b.orientation=action.value;
+            if(action.value==='flipped'){b.solved[2]=true;b.feedback='The lettering now reads normally. Compare the wrist detail with the sleeve fibre, then use the room guide to locate the cake.';}
+            else b.feedback='Check whether the lettering and the room guide agree with this view.';
         } else if (action.type === 'beta-review') {
             if (!host || !g.party.history.length || ![0,1,2].every(k=>b.solved[k]) && g.party.history.length < g.settings.caseTurns) return;
             b.returnPhase = g.phase === 'accusing' ? 'evidence' : g.phase; g.phase = 'accusing';
@@ -84,15 +87,15 @@ export function actBeta(data, actor, action, now, rules, context) {
             g.phase = g.party.history.length >= g.settings.caseTurns ? 'evidence' : b.returnPhase || 'evidence';
         } else if (action.type === 'beta-theory') {
             if (!host || g.phase !== 'accusing' || !['suspect','destination'].includes(action.field) || !Number.isInteger(action.index)
-                || action.index < -1 || action.index >= (action.field === 'suspect' ? 6 : 3)) return;
+                || action.index < -1 || action.index >= (action.field === 'suspect' ? betaStory(g).people.length : betaStory(g).destinations.length)) return;
             b.theory[action.field] = action.index;
         } else if (action.type === 'beta-accuse') {
             const draft = action.theory;
             if (!host || g.phase !== 'accusing' || !g.party.history.length || !draft || draft.revision !== b.revision
                 || draft.suspect !== b.theory.suspect || draft.destination !== b.theory.destination
-                || !Number.isInteger(draft.suspect) || draft.suspect < 0 || draft.suspect > 5
-                || !Number.isInteger(draft.destination) || draft.destination < 0 || draft.destination > 2) return;
-            const solution = caseStory(g).solution;
+                || !Number.isInteger(draft.suspect) || draft.suspect < 0 || draft.suspect >= betaStory(g).people.length
+                || !Number.isInteger(draft.destination) || draft.destination < 0 || draft.destination >= betaStory(g).destinations.length) return;
+            const solution = betaStory(g).solution;
             b.assessment = { suspect: draft.suspect === solution.suspect, destination: draft.destination === solution.destination,
                 discoveries: [0,1,2].every(k=>b.solved[k]) };
             g.phase = 'finished'; g.roundActive = false; g.endedAt = now;

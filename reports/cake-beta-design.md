@@ -1,37 +1,43 @@
-# Cake Escape Beta — playable prototype
+# Cake Escape Beta — riddle and deduction revision
 
-## Scope
+## Scope and authoring rules
 
-Choose **Cake Escape Beta · Prototype** from the Game menu. It is a separate mode; the eight original Case Files, their notebook/reconstruction flow and the other game modes remain available. The beta reuses the three authored Cake Escape outcomes (Evie/chest, Ben/tent, Cleo/cupboard). The three puzzle mechanisms repeat across outcomes; it is a prototype for testing the investigation loop, not a claim of unlimited puzzle replayability.
+The beta remains a separate menu option. The eight original cases and their authored scenarios are preserved for comparison. Their shared suspect headings now use the actual cast size rather than hard-coded “six”.
 
-## Complete loop
+The new beta content lives in gameplay/cake-beta-content.js. Case difficulty and word-card difficulty are separate: this Easy case always has two riddles, including when Hard words are selected. The authoring limits are at most two riddles for an Easy case and three for a Hard case. An Easy case can use just one; do not turn every discovery into a riddle or force the same mix onto every case.
 
-The investigation opens with a shared, illustrated briefing before any word cards, speaker handoff or puzzles. It establishes the birthday party, empty cake stand, apparently contradictory photograph, anonymous note, six suspects and the crew's mission. The host explicitly begins; this phase survives refresh and is repeated on replay. A collapsed recap remains available between rounds. Unopened future leads and the first riddle's illustration no longer disclose the answer in advance.
+## Story and full loop
 
-1. Guess cake-related built-in words in the existing private countdown/word/review flow. Each confirmed word banks one shared search point. No word opens a document.
-2. Spend two points to open the next discovery. Unspent points carry between rounds. Wrong puzzle attempts and experiment changes are free.
-3. Solve the table riddle; uncover wheel tracks and a patterned apron patch. Guests and their apron symbols are visible together.
-4. Compare before/later cake pictures; identify the changed ribbon and the substitution.
-5. Recreate the escape with three controls: leave the foam display, move the real cake on the trolley, lower the cloth. Trying an inconsistent setup provides short feedback. The successful experiment unlocks a visual icing trail to the hiding place.
-6. The host reviews and submits the crew’s prankster/hiding-place accusation. All three discoveries and both selections must be correct to close the case. There is no timeline or evidence-pair form.
+The shared opening scene establishes the birthday party, missing cake, suspicious photograph, folded note, suspects and mission. The host acknowledges it before speaker handoff, words or puzzles. A briefing recap is available between rounds.
 
-Opening a puzzle or buying one of its two progressive hints costs two points. Spending points is a crew decision; a bad word round never corrupts clues or removes progress. Six shared word rounds is the default, with the existing 4–12 setting and feasibility minimum for one-word cards. Exhausting the budget still allows spending saved points and a final accusation; insufficient discoveries produce an unsuccessful ending. The crew can also end early, reveal optionally with confirmation, replay the same scenario or draw a different one. Exports report beta discoveries and search points rather than the original twelve-file metric.
+Correct words earn shared search points. Opening a discovery or buying a hint costs two; saved points carry forward. The three discoveries are:
 
-## Shared rules and integration
+1. **The folded note — riddle.** Players interpret the dinner/footprints riddle and type its answer. Trolley/cart/serving cart and common equivalents are accepted. Solving it leads to the actual carrier: icing on the shelf and a sleeve fibre at its handle. This colour matches multiple suspects.
+2. **Dani’s photographs — visual deduction.** Two identically decorated cakes sit on thin trays. Using the adjacent load reference, players select the real-cake photograph AND the physical evidence supporting it. The centre of one tray visibly bends. Ribbon and cherry details are plausible alternatives, but neither distinguishes these pictures. A wrong attempt gives the same neutral feedback for either error; it does not identify the field to change.
+3. **The second note — riddle plus image interpretation.** The mirror riddle unlocks a recovered reversed photograph. Players try orienting it, using the EXIT lettering. Its storage position must be compared with a left-to-right room guide. A cropped wrist supplies the second identity clue. The riddle answer alone does not complete this discovery.
 
-- `cake-beta-state.js` wraps the original Case Files round/roster reducer. It keeps the established random speaker fairness, private countdown, confirmed scoring, expiry and departure/reviewer recovery. It explicitly rejects original Case Files theory actions.
-- The beta auto-selects a different existing word lead each round; drawing remains deterministic and respects word count/difficulty. Existing curated Cake Escape words are used without AI, external packs or unrelated categories. Correct words become currency instead of opening their linked files.
-- All connected crew members can investigate between word rounds. Host-only final decisions and reveals remain explicit. Each puzzle command carries a shared revision; stale/repeated commands cannot spend points twice or submit an outdated accusation. Beta controls stay locked until the subscription renders the saved revision, including when a transaction acknowledgement arrives first.
-- Firebase-omitted empty arrays/maps are normalized. Refreshing restores the purchased puzzles, hints, experiment, points, scenario and final draft. Local play uses the same reducer and passes the phone privately for word cards.
-- SVG scenes and matching text descriptions fit the existing vanilla-JS stack. Nothing depends on a new image/CDN/AI service. Tap/select controls work without dragging or precise gestures.
-- New mode rules appear in How to play; incompatible pack/theme/training controls are hidden or normalized. Original investigation selection remains in Case Files; the beta has its own menu entry and fixed cake setting.
+The final accusation asks who and where. All three discoveries plus both answers must fit. Unsuccessful endings keep unconfirmed answers hidden; optional reveal has a confirmation step. Same/new-scenario replay, summaries and result cards remain available.
 
-## Validation and next playtest
+## Assistance and shared state
 
-246 automated tests pass, including enforced briefing/host acknowledgement, all three beta outcomes at every word difficulty, economy and stale revisions, auth/privacy, scoring/expiry/departure recovery, zero-score loss, optional reveal, replay resets and Firebase serialization. The existing 237 checks still pass.
+Each riddle begins with a text answer. Three valid but incorrect submissions unlock four related choices; blank, punctuation-only or overlong submissions are rejected without counting. The first choices are serving tray, trolley, waiter and wheelbarrow; the second are window, television, mirror and portrait. There are no unrelated joke distractors. Text entry remains available under an alternative-answer disclosure.
 
-Browser checks complete local play and a two-client game using the Firebase-compatible local transaction adapter. Coverage includes the briefing before play, all six suspects, no early puzzle spoilers, briefing persistence through refresh/replay, word privacy, odd-point carryover, hints, wrong puzzle retries, all discoveries, final confirmation, summary/PNG, replay/reveal/shuffle and guest edits. Twenty layout checks pass at 320/390/1100px and 150% text. See `cake-beta-browser.json` and the four beta screenshots. This is software verification, not evidence of player enjoyment.
+Attempts belong to the crew and the individual riddle, persist across turns and refresh, and reset on replay. Stale/repeated transaction requests cannot count a miss or spend points twice. Wrong guesses are free. Multiple-choice assistance is recorded for playtest summaries, without reducing rewards. Paid hints provide progressively more specific help.
 
-For the first blind playtest, watch whether the next action is clear, whether the images invite discussion and whether several players contribute. Ask which discovery felt satisfying and whether they want another case. Adjust the two-point cost and clue strength from those observations before extending the format to other cases.
+Local and online play use the same authoritative reducer, private countdown, confirmed word scoring, fair random speakers, turn budget and departure recovery. All connected players can investigate between rounds. Host-only beginning, accusation and reveal are retained. Controls wait for the subscribed revision after a commit, avoiding acknowledgement/update races. Empty Firebase maps and arrays are normalized. The schema now uses online protocol 20: refresh all clients and create a new lobby.
 
-Online protocol is 19. Refresh all clients and create a new lobby after deployment.
+## Suspects with overlapping traits
+
+The beta has five suspects in its original outcome, four in alternate A and five in alternate B. Profiles mix personality, role and ordinary clothing/accessories. There are no one-to-one apron symbols.
+
+Each sleeve colour matches at least two people. Each wrist style also matches at least two people. Only their intersection identifies one culprit. For example, in the original outcome several guests wear blue, and both Dani and Evie wear plain bangles. Neither fact alone identifies Evie. Different outcomes change the person, clue values, real photograph ordering and hiding place coherently.
+
+The photograph deliberately gives only a wrist close-up; the sleeve clue comes from the carrier. The unlabelled covered storage positions need the room guide after correcting the reflected view. All relevant descriptions and discoveries remain available, so the challenge is interpretation rather than remembering a long notebook.
+
+## Verification
+
+251 automated tests pass. New coverage includes synonyms, malformed answers, exactly-three-miss assistance, locked choice endpoints, shared/stale attempts, independent riddle counters, photo AND evidence validation, mirror-answer versus orientation gating, cast sizes and non-unique individual traits, dynamic suspect bounds, all three outcomes at Easy/Normal/Hard word difficulties, plus existing privacy/recovery/replay tests.
+
+Browser verification completes a local case and a two-client case with no production Firebase writes. It covers the opening, typed answers, delayed choices, persistence through refresh after two misses, guest photo/interpretation edits, scoring/privacy, hints, accusation, exports, reveal and replay. Twenty-four responsive checks pass at 320/390/1100px and 150% text. See cake-beta-browser.json and the briefing/riddle/photo/reflection screenshots.
+
+Software tests establish correctness and usability, not enjoyment. The next blind playtest should check whether players can explain why their answers fit, whether the fallback helps without trivialising the clue, and whether combining the two identity observations feels satisfying.

@@ -2,8 +2,8 @@
   "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
   "completed": true,
   "checks": [
-    "Beta local: narrative/mission/suspects before play, no early puzzle spoilers, briefing on replay, private countdown, odd point carryover, wrong puzzle retry, hint purchase, visual comparison, experiment feedback, full solve, safe exports, same replay, reveal confirmation/cancel, new scenario reset",
-    "Beta online: shared narrative briefing survives refresh, host-only begin, two clients, guest investigation/experiment edits, shared points, speaker word privacy, refresh persistence, host-only accusation, shared solved ending and replay reset"
+    "Beta local: narrative/mission/suspects before play, no early puzzle spoilers, briefing on replay, private countdown, odd point carryover, three-wrong-answer fallback, hint purchase, tray deduction, mirror riddle and photo interpretation, full solve, safe exports, same replay, reveal confirmation/cancel, new scenario reset",
+    "Beta online: shared narrative briefing survives refresh, host-only begin, two clients, shared riddle attempts/fallback after refresh, guest photo edits and mirror interpretation, shared points, speaker word privacy, refresh persistence, host-only accusation, shared solved ending and replay reset"
   ],
   "layouts": [
     {
@@ -47,6 +47,26 @@
       "overflow": false
     },
     {
+      "label": "Beta riddle assistance",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta riddle assistance",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta riddle assistance",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta riddle assistance large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
       "label": "Beta photo puzzle",
       "width": 320,
       "overflow": false
@@ -67,22 +87,22 @@
       "overflow": false
     },
     {
-      "label": "Beta experiment",
+      "label": "Beta reflected photograph",
       "width": 320,
       "overflow": false
     },
     {
-      "label": "Beta experiment",
+      "label": "Beta reflected photograph",
       "width": 390,
       "overflow": false
     },
     {
-      "label": "Beta experiment",
+      "label": "Beta reflected photograph",
       "width": 1100,
       "overflow": false
     },
     {
-      "label": "Beta experiment large text",
+      "label": "Beta reflected photograph large text",
       "width": 320,
       "overflow": false
     },
@@ -108,5 +128,5 @@
     }
   ],
   "errors": [],
-  "transactions": 48
+  "transactions": 54
 }

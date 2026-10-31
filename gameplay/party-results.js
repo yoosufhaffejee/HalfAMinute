@@ -1,5 +1,6 @@
 import { MODES, modeOf } from './modes.js?v=20261031.beta1';
 import { CASES, caseSubmission } from './cases.js?v=20261031.beta1';
+import { betaStory } from './cake-beta-content.js?v=20261031.riddles1';
 function download(blob, filename) {
     const url = URL.createObjectURL(blob), link = document.createElement('a'); link.href = url; link.download = filename; link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -7,10 +8,10 @@ function download(blob, filename) {
 export function partySummary(game) {
     if (modeOf(game.settings) === 'cakebeta') {
         const b = game.party.beta;
-        download(new Blob([JSON.stringify({ version: 1, mode: 'cakebeta', caseId: 'cake', scenarioId: game.party.scenarioId,
+        download(new Blob([JSON.stringify({ version: 2, mode: 'cakebeta', caseId: 'cake', scenarioId: game.party.scenarioId, suspectCount:betaStory(game).people.length,
             finishReason: game.finishReason, revealed: Boolean(game.party.revealed), wordRounds: game.party.history.length,
             correctWords: game.party.totalCorrect, searchPoints: b.points, discoveries: Object.keys(b.solved).length,
-            hints: b.hints, accusation: b.theory, assessment: b.assessment || null }, null, 2)], { type: 'application/json' }), 'cake-escape-beta-summary.json');
+            hints: b.hints, riddleMisses:Object.fromEntries(Object.entries(b.riddles).map(([key,value])=>[key,value.misses])),usedChoices:Object.keys(b.assisted),accusation: b.theory, assessment: b.assessment || null }, null, 2)], { type: 'application/json' }), 'cake-escape-beta-summary.json');
         return;
     }
     const value = { version: 3, mode: modeOf(game.settings), matchId: game.matchId, finishReason: game.finishReason,

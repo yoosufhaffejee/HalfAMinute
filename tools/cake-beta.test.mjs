@@ -4,7 +4,8 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as State from '../online/state.js';
 import * as Modes from '../gameplay/modes.js';
-import { caseStory, CASE_IDS } from '../gameplay/cases.js';
+import { CASE_IDS } from '../gameplay/cases.js';
+import { betaStory, BETA_PUZZLES, CASE_RIDDLE_LIMITS, acceptsRiddle } from '../gameplay/cake-beta-content.js';
 import { caseWordObjects, drawCaseCard } from '../gameplay/case-draw.js';
 const c=vm.createContext({});vm.runInContext(fs.readFileSync(new URL('../data.js',import.meta.url),'utf8')+';this.words=Object.values(categories).flat();',c);
 const dictionary=JSON.parse(JSON.stringify(c.words)),rules={drawWords:(g,seed)=>drawCaseCard(g,seed,caseWordObjects(g,dictionary))};
@@ -22,15 +23,15 @@ test('a shared opening briefing must be acknowledged before words or puzzles, in
     g=act(g,'end-game',{},g.hostId);g=act(g,'rematch',{seed:1,scenarioMode:'same',caseId:'cake'},g.hostId);assert.equal(g.phase,'briefing');
 });
 function score(g,count){g=act(g,'start-round',{seed:(g.party.history?.length||0)+30});now+=4500;g=act(g,'end-round');for(let i=0;i<Math.min(count,g.turn.words.length);i++)g=act(g,'toggle-answer',{index:i});return act(g,'submit-round');}
-function solve(g,index){g=act(g,'beta-buy',{index});if(index<2)return act(g,'beta-answer',{index,answer:index===0?'table':'ribbon'});for(const[field,value]of [['prop','foam'],['transport','trolley'],['cloth','down']])g=act(g,'beta-experiment',{field,value});return act(g,'beta-test');}
-function accusation(g,wrong=false){g=act(g,'beta-review',{},g.hostId);const solution=caseStory(g).solution;for(const field of ['suspect','destination'])g=act(g,'beta-theory',{field,index:wrong&&field==='suspect'?(solution[field]+1)%6:solution[field]},g.hostId);return g;}
+function solve(g,index){g=act(g,'beta-buy',{index});if(index===0)return act(g,'beta-riddle',{index,answer:'serving cart'});if(index===1){g=act(g,'beta-photo',{field:'pick',value:betaStory(g).realPhoto});g=act(g,'beta-photo',{field:'reason',value:'tray'});return act(g,'beta-photo-check');}g=act(g,'beta-riddle',{index,answer:'mirror'});return act(g,'beta-orient',{value:'flipped'});}
+function accusation(g,wrong=false){g=act(g,'beta-review',{},g.hostId);const solution=betaStory(g).solution;for(const field of ['suspect','destination'])g=act(g,'beta-theory',{field,index:wrong&&field==='suspect'?(solution[field]+1)%betaStory(g).people.length:solution[field]},g.hostId);return g;}
 test('beta is additive and isolates fixed words from custom packs and unrelated settings',()=>{
     assert.equal(CASE_IDS.length,8);assert.ok(Modes.isParty({mode:'cakebeta'}));
     const g=lobby({caseId:'bank',selectedCategories:['Wildlife'],selectedTheme:'Holiday Time',trainingMode:true});
     assert.equal(g.settings.caseId,'cake');assert.deepEqual(g.settings.selectedCategories,[]);assert.equal(g.settings.selectedTheme,'None');assert.equal(g.settings.trainingMode,false);
     g.wordPack={kind:'custom',entries:[{word:'Penguin',difficulty:'easy'}]};assert.equal(act(g,'start-game',{seed:0}),undefined);
 });
-test('all three beta scenarios solve with real word rounds, purchases, experiment and final confirmation',()=>{
+test('all three beta scenarios solve with word rounds, two riddles, physical deduction and final confirmation',()=>{
     for(let seed=0;seed<3;seed++)for(const difficulty of ['easy','normal','hard']){
         let g=start(seed,{difficulty});g=score(g,5);assert.equal(g.party.beta.points,5);g=solve(g,0);g=solve(g,1);assert.equal(g.party.beta.points,1);
         g=act(g,'continue-case');g=score(g,5);g=solve(g,2);assert.equal(g.party.beta.points,4);assert.deepEqual(g.party.found,[]);
@@ -43,7 +44,7 @@ test('search economy carries odd points, deduplicates purchases and serializes s
     g=act(g,'continue-case');g=score(g,3);const before=structuredClone(g);g=act(g,'beta-hint',{index:0},'B');assert.equal(g.party.beta.points,2);
     assert.equal(act(g,'beta-hint',{index:0,revision:before.party.beta.revision},'C'),undefined);
     assert.equal(act(g,'beta-answer',{index:0,answer:'ceiling'}),undefined);
-    const wrong=act(g,'beta-answer',{index:0,answer:'door'});assert.equal(wrong.party.beta.points,2);assert.equal(wrong.party.beta.solved[0],undefined);
+    const wrong=act(g,'beta-riddle',{index:0,answer:'door'});assert.equal(wrong.party.beta.points,2);assert.equal(wrong.party.beta.solved[0],undefined);
 });
 test('private countdown, expiry, departed-speaker recovery and fair random turns survive the beta wrapper',()=>{
     let g=start(),speaker=g.turn.speakerId,other=g.party.players.find(p=>p.id!==speaker).id;
@@ -63,7 +64,7 @@ test('guests cannot accuse, stale reviews fail and old Case Files actions cannot
     const guest=g.party.players.find(p=>p.id!==g.hostId).id,theory={...g.party.beta.theory,revision:g.party.beta.revision};
     const cleared=act(g,'beta-theory',{field:'suspect',index:-1},g.hostId);assert.equal(cleared.party.beta.theory.suspect,-1);
     assert.equal(act(g,'beta-accuse',{theory},guest),undefined);assert.equal(act(g,'accuse',{theory},g.hostId),undefined);
-    g=act(g,'beta-theory',{field:'suspect',index:(theory.suspect+1)%6},g.hostId);assert.equal(act(g,'beta-accuse',{theory},g.hostId),undefined);
+    g=act(g,'beta-theory',{field:'suspect',index:(theory.suspect+1)%betaStory(g).people.length},g.hostId);assert.equal(act(g,'beta-accuse',{theory},g.hostId),undefined);
     assert.equal(act(g,'set-theory',{field:'suspect',index:0},g.hostId),undefined);
 });
 test('wrong endings keep solutions hidden, reveals are host-only and same/new replays clear the prototype state',()=>{
@@ -76,4 +77,53 @@ test('wrong endings keep solutions hidden, reveals are host-only and same/new re
 test('Firebase empty collection removal cannot break a purchase, word deal or final theory',()=>{
     function clean(value){if(value==null)return undefined;if(Array.isArray(value))return value.length?value.map(clean):undefined;if(typeof value==='object'){const entries=Object.entries(value).map(([k,v])=>[k,clean(v)]).filter(([,v])=>v!==undefined);return entries.length?Object.fromEntries(entries):undefined;}return value;}
     let g=clean(start());g=clean(score(g,3));g=clean(solve(g,0));assert.equal(g.party.beta.points,1);g=clean(act(g,'continue-case'));g=clean(score(g,3));assert.equal(g.party.beta.points,4);
+});
+test('riddles accept common spellings, articles and synonyms without accepting unrelated guesses',()=>{
+    for(const answer of ['TROLLEY','cart','serving cart','The serving trolley.','it is a food trolley','a tea trolley'])assert.ok(acceptsRiddle(0,answer),answer);
+    for(const answer of ['mirror','A MIRROR!','looking-glass','the wall mirror','reflection'])assert.ok(acceptsRiddle(2,answer),answer);
+    for(const answer of ['baboon','tray','waiter','wheelbarrow','table'])assert.equal(acceptsRiddle(0,answer),false);
+    assert.equal(BETA_PUZZLES.filter(p=>p.kind==='riddle').length,2);assert.equal(CASE_RIDDLE_LIMITS.easy,2);assert.equal(CASE_RIDDLE_LIMITS.hard,3);
+});
+test('three wrong typed answers unlock four related choices; stale commands cannot double-count misses',()=>{
+    let g=act(score(start(),5),'beta-buy',{index:0});
+    for(const answer of ['','   ','...','x'.repeat(81)])assert.equal(act(g,'beta-riddle',{index:0,answer}),undefined);
+    for(const answer of ['chair','plate','waiter']){
+        assert.equal(act(g,'beta-riddle-choice',{index:0,answer:'trolley'}),undefined);
+        const revision=g.party.beta.revision;g=act(g,'beta-riddle',{index:0,answer},'B');
+        assert.equal(act(g,'beta-riddle',{index:0,answer,revision},'C'),undefined);
+    }
+    assert.equal(g.party.beta.riddles[0].misses,3);assert.equal(g.party.beta.points,3);assert.equal(BETA_PUZZLES[0].choices.length,4);
+    g=JSON.parse(JSON.stringify(g));g=act(g,'beta-riddle-choice',{index:0,answer:'wheelbarrow'},'C');assert.equal(g.party.beta.solved[0],undefined);
+    g=act(g,'beta-riddle-choice',{index:0,answer:'trolley'},'C');assert.equal(g.party.beta.solved[0],true);assert.equal(g.party.beta.assisted[0],true);
+    g=act(g,'end-game',{},g.hostId);g=act(g,'rematch',{seed:0,caseId:'cake',scenarioMode:'same'},g.hostId);assert.equal(g.party.beta.riddles[0].misses,0);assert.deepEqual(g.party.beta.assisted,{});
+});
+test('mirror riddle has its own assistance counter and requires interpreting the photograph afterward',()=>{
+    let g=score(start(),5);g=solve(solve(g,0),1);g=score(act(g,'continue-case'),5);g=act(g,'beta-buy',{index:2});
+    assert.equal(act(g,'beta-orient',{value:'flipped'}),undefined);
+    for(const answer of ['window','camera','portrait'])g=act(g,'beta-riddle',{index:2,answer});
+    assert.equal(g.party.beta.riddles[0].misses,0);assert.equal(g.party.beta.riddles[2].misses,3);
+    g=act(g,'beta-riddle-choice',{index:2,answer:'mirror'});assert.equal(g.party.beta.riddles[2].accepted,true);assert.equal(g.party.beta.solved[2],undefined);
+    g=act(g,'beta-orient',{value:'rotated'});assert.equal(g.party.beta.solved[2],undefined);
+    g=act(g,'beta-orient',{value:'flipped'});assert.equal(g.party.beta.solved[2],true);
+});
+test('photographic deduction needs a matching photograph and explanation, with no answer coaching on failure',()=>{
+    let g=solve(score(start(),5),0);g=act(g,'beta-buy',{index:1});
+    assert.equal(act(g,'beta-photo-check'),undefined);
+    g=act(g,'beta-photo',{field:'pick',value:betaStory(g).realPhoto});g=act(g,'beta-photo',{field:'reason',value:'ribbon'});g=act(g,'beta-photo-check');
+    const feedback=g.party.beta.feedback;assert.equal(g.party.beta.solved[1],undefined);assert.equal(g.party.beta.points,1);
+    g=act(g,'beta-photo',{field:'pick',value:betaStory(g).realPhoto==='a'?'b':'a'});g=act(g,'beta-photo',{field:'reason',value:'tray'});g=act(g,'beta-photo-check');assert.equal(g.party.beta.feedback,feedback);
+    g=act(g,'beta-photo',{field:'pick',value:betaStory(g).realPhoto});g=act(g,'beta-photo-check');assert.equal(g.party.beta.solved[1],true);
+});
+test('four/five-person casts use overlapping natural traits; neither identity clue singles out the culprit',()=>{
+    const sizes=new Set();
+    for(let seed=0;seed<3;seed++){
+        const g=start(seed),story=betaStory(g);sizes.add(story.people.length);
+        const sleeve=story.people.filter(p=>p.sleeve===story.sleeve),wrist=story.people.filter(p=>p.wrist===story.wrist);
+        assert.ok(sleeve.length>=2);assert.ok(wrist.length>=2);
+        assert.deepEqual(story.people.filter(p=>p.sleeve===story.sleeve&&p.wrist===story.wrist).map(p=>p.name),[story.people[story.solution.suspect].name]);
+        assert.ok(story.people.every(p=>p.profile.length>40&&!/apron|star|moon|flower/.test(p.profile)));
+        let final=score(g,0);for(let i=1;i<g.settings.caseTurns;i++)final=score(act(final,'continue-case'),0);final=act(final,'continue-case');
+        assert.equal(act(final,'beta-theory',{field:'suspect',index:story.people.length},final.hostId),undefined);
+    }
+    assert.deepEqual([...sizes].sort(),[4,5]);
 });
