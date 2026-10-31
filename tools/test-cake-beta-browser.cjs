@@ -15,6 +15,22 @@ module.exports=({pageFor,gate,settings,layout,report,gameState,waitState,live,li
     async function experiment(page){for(const[field,value]of [['prop','foam'],['transport','trolley'],['cloth','down']])await page.locator('#beta-'+field).selectOption(value);await btn(page,'beta-test').click();await page.locator('.beta-trail').waitFor();}
     async function accuse(page,story){await btn(page,'beta-review').click();await page.locator('#beta-suspect').selectOption(String(story.solution.suspect));await page.locator('#beta-destination').selectOption(String(story.solution.destination));await btn(page,'confirm').click();await btn(page,'beta-accuse').click();await page.getByRole('heading',{name:'Cake found. Case solved!',exact:true}).waitFor();}
     return {
+        async review(){
+            for(const words of [5,15]){
+                const {page,context}=await pageFor();await page.clock.install();await page.evaluate(()=>{crypto.getRandomValues=a=>{a.fill(0);return a}});
+                await page.locator('#quickMode').selectOption('cakebeta');await page.locator('#localPlayerNames').fill('Alice\nBob');await settings(page,{txtSeconds:5,txtWords:words});await page.locator('#startGameButton').click();await btn(page,'beta-begin').click();await gate(page);
+                await btn(page,'start-round').click();await page.clock.runFor(4800);await btn(page,'end-round').click();
+                const rows=page.locator('.beta-review-word'),count=await rows.count();assert.ok(count>=(words===5?5:6));
+                await rows.nth(0).click();await rows.nth(2).click();assert.equal(await rows.nth(0).getAttribute('aria-pressed'),'true');assert.match(await page.locator('.beta-review-summary').innerText(),/2 of/);
+                await rows.nth(0).click();assert.equal(await rows.nth(0).getAttribute('aria-pressed'),'false');assert.match(await btn(page,'submit-round').innerText(),/Bank 1 search point/);
+                const boxes=await rows.evaluateAll(nodes=>nodes.map(n=>{const b=n.getBoundingClientRect();return{x:b.x,width:b.width,height:b.height,font:parseFloat(getComputedStyle(n).fontSize)};}));
+                assert.ok(boxes.every(b=>Math.abs(b.x-boxes[0].x)<1&&Math.abs(b.width-boxes[0].width)<1&&b.height>=44&&b.font<=18));
+                assert.ok((await btn(page,'submit-round').boundingBox()).y>(await rows.last().boundingBox()).y);
+                await layout(page,`Beta answer review ${words}-word setting`);if(words===5)await page.screenshot({path:'reports/cake-beta-review-mobile.png',fullPage:true});
+                await btn(page,'submit-round').click();await btn(page,'beta-buy').waitFor();assert.match(await page.locator('.party-progress').innerText(),/1 search points/);
+                report.checks.push(`Beta review ${words}-word setting: aligned compact rows, readable text, selection/deselection, live point total, separate confirmation, preserved scoring`);await context.close();
+            }
+        },
         async local(){
             const{page,context}=await pageFor();await page.clock.install();await page.evaluate(()=>{crypto.getRandomValues=a=>{a.fill(0);return a}});
             await page.locator('#quickMode').selectOption('cakebeta');assert.equal(await page.locator('#caseIdField').isVisible(),false);assert.equal(await page.locator('#ai').isVisible(),false);

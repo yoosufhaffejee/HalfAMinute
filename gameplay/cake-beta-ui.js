@@ -70,6 +70,24 @@ export function createBetaSurface(root,callbacks){
         if(full){people(parent,story);note(parent,'Play word rounds to earn search points. Spend 2 points to follow a lead or ask for a hint. Investigate together; only the speaker sees the word card.','beta-how');}
     }
     function select(parent,label,field,choices,value,disabled){const wrap=h('div','form-field');const caption=h('label','',label);caption.htmlFor='beta-'+field;const input=h('select');input.id=caption.htmlFor;input.dataset.betaField=field;input.disabled=disabled;for(const[v,text]of choices){const option=h('option','',text);option.value=String(v);input.appendChild(option)}input.value=String(value);wrap.append(caption,input);parent.appendChild(wrap);}
+    function reviewWords(parent,{game,view,busy}){
+        const review=h('section','beta-review');
+        const heading=h('h3','','Which words were guessed?');heading.id='beta-review-title';review.appendChild(heading);
+        note(review,'Select the correct guesses. Each earns 1 search point.','beta-review-help');
+        const list=h('div','beta-review-list');list.setAttribute('role','group');list.setAttribute('aria-labelledby',heading.id);
+        game.turn.words.forEach((word,i)=>{
+            const selected=game.turn.selectedIndexes.includes(i),row=button('','toggle-answer',busy||!view.canSelect,{index:i});
+            row.className='beta-review-word'+(selected?' is-selected':'');row.setAttribute('aria-pressed',String(selected));
+            const number=h('span','beta-review-number',String(i+1));number.setAttribute('aria-hidden','true');
+            const check=h('span','beta-review-check',selected?'✓':'');check.setAttribute('aria-hidden','true');
+            row.append(number,h('span','beta-review-label',word),check);list.appendChild(row);
+        });review.appendChild(list);
+        const count=game.turn.selectedIndexes.length,actions=h('div','beta-review-actions'),summary=h('p','beta-review-summary');
+        summary.setAttribute('role','status');summary.append(h('span','',`${count} of ${game.turn.words.length} selected`),h('strong','',`+${count} ${count===1?'point':'points'}`));actions.appendChild(summary);
+        if(view.canSelect)actions.appendChild(button(count?`Bank ${count} search ${count===1?'point':'points'}`:'Confirm round','submit-round',busy));
+        else note(actions,'The speaker confirms the correct words.','beta-review-help');
+        review.appendChild(actions);parent.appendChild(review);
+    }
     function board(parent,state){
         const {game,view,busy,local}=state,b=game.party.beta,story=caseStory(game),locked=busy||!view.canExplore;
         const recap=h('details','beta-recap');recap.appendChild(h('summary','','What happened? Read the case briefing'));briefing(recap,story,false);parent.appendChild(recap);
@@ -110,7 +128,7 @@ export function createBetaSurface(root,callbacks){
         else if(game.phase==='briefing'){briefing(body,caseStory(game));if(host)body.appendChild(button('Begin investigation','beta-begin',busy));else note(body,'Read the scene together. The host begins the investigation when the crew is ready.');}
         else if(gateName&&game.phase!=='finished'){body.appendChild(h('h3','',`Pass the device to ${gateName}`));note(body,'Only the speaker sees the word card. Everyone guesses aloud.');body.appendChild(button(`I’m ${gateName}`,'local-ready',false,{playerId:gateId}));}
         else if(game.phase==='describing'){body.appendChild(h('h3','',view.countdownRemainingMs?'Get ready…':view.speaker?'Describe these words':'Guess aloud'));body.appendChild(h('strong','party-clock',view.countdownRemainingMs?countdownLabel(view.countdownRemainingMs):String(view.remainingSeconds))).id='partyClock';note(body,view.countdownRemainingMs?'Words stay hidden until Go.':'Every correct word earns one search point for the crew.');if(view.showWords){const list=h('ol','table-word-card');game.turn.words.forEach(word=>list.appendChild(h('li','party-word',word)));body.appendChild(list)}if(view.canEndRound)body.appendChild(button('End round','end-round',busy));}
-        else if(game.phase==='selecting'){body.appendChild(h('h3','','Which words were guessed?'));note(body,'Each correct word earns 1 shared search point. Your saved points carry over.');game.turn.words.forEach((word,i)=>{const n=button(`${game.turn.selectedIndexes.includes(i)?'✓ ':''}${word}`,'toggle-answer',busy||!view.canSelect,{index:i});n.className='party-answer'+(game.turn.selectedIndexes.includes(i)?' is-selected':'');n.setAttribute('aria-pressed',String(game.turn.selectedIndexes.includes(i)));body.appendChild(n)});if(view.canSelect)body.appendChild(button('Bank search points','submit-round',busy));else note(body,'The speaker confirms the correct words.');}
+        else if(game.phase==='selecting')reviewWords(body,{game,view,busy});
         else if(game.phase==='finished'){
             const solved=game.finishReason==='solved',shown=solved||game.party.revealed,story=caseStory(game);body.appendChild(h('h3','',solved?'Cake found. Case solved!':game.party.revealed?'The solution is revealed':'The cake got away this time'));
             if(shown){note(body,`${story.people[story.solution.suspect].name} moved the real cake on the covered trolley and hid it in ${story.destinations[story.solution.destination].replace(/^The /,'the ')}.`,'case-solution');note(body,'The apron patch identifies the prankster. The gold ribbon proves the later photo shows the foam display. The icing trail leads to the real cake.');}

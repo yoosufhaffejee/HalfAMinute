@@ -1,0 +1,52 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "Beta review 5-word setting: aligned compact rows, readable text, selection/deselection, live point total, separate confirmation, preserved scoring",
+    "Beta review 15-word setting: aligned compact rows, readable text, selection/deselection, live point total, separate confirmation, preserved scoring"
+  ],
+  "layouts": [
+    {
+      "label": "Beta answer review 5-word setting",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta answer review 5-word setting",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta answer review 5-word setting",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta answer review 5-word setting large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta answer review 15-word setting",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta answer review 15-word setting",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta answer review 15-word setting",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta answer review 15-word setting large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 0
+}

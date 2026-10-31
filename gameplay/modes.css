@@ -8,6 +8,24 @@
 .cake-beta .party-stage { background:#fffdf8; border-color:#d9d6c4; }
 .cake-beta svg { display:block; width:100%; max-width:340px; height:auto; margin:0 auto; border-radius:14px; background:linear-gradient(155deg,#f8f1e3,#eff5f0); }
 .cake-beta button { min-height:44px; white-space:normal; overflow-wrap:anywhere; }
+.beta-review { width:100%; max-width:520px; margin:0 auto; text-align:left; }
+.cake-beta .beta-review h3 { margin:0 0 6px; font-size:1.15rem; line-height:1.4; }
+.beta-review-help { margin:0 0 18px; color:#647068; font-size:.9rem; line-height:1.5; }
+.beta-review-list { display:grid; gap:8px; }
+.cake-beta .beta-review-word { display:grid; grid-template-columns:24px minmax(0,1fr) 22px; align-items:center; gap:10px; width:100%; min-width:0; min-height:48px; margin:0; padding:11px 12px; border:1px solid #d4d9d0; border-radius:10px; background:#fff; color:#30463d; font:inherit; font-size:1rem; font-weight:500; line-height:1.4; text-align:left; appearance:none; touch-action:manipulation; }
+.beta-review-number { color:#7c857d; font-size:.8rem; font-variant-numeric:tabular-nums; text-align:center; }
+.beta-review-label { min-width:0; overflow-wrap:anywhere; }
+.beta-review-check { display:grid; place-items:center; width:20px; height:20px; border:1px solid #b9c4b8; border-radius:6px; color:#fff; font-size:.8rem; }
+.cake-beta .beta-review-word.is-selected { background:#edf6ef; border-color:#6c9d7a; color:#214d35; }
+.beta-review-word.is-selected .beta-review-check { background:#28774c; border-color:#28774c; }
+.beta-review-word:focus-visible { outline:2px solid #28774c; outline-offset:2px; }
+.beta-review-word:disabled { opacity:1; cursor:default; }
+@media(hover:hover){.cake-beta .beta-review-word:hover:not(:disabled) { border-color:#7f9c87; background:#f4f8f2; }}
+.beta-review-actions { display:grid; gap:12px; margin-top:18px; padding-top:14px; border-top:1px solid #dce1d7; }
+.beta-review-summary { display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 14px; margin:0; color:#65736a; font-size:.85rem; line-height:1.5; }
+.beta-review-summary strong { color:#285e3e; font-weight:600; }
+.cake-beta .beta-review-actions>.btn { width:100%; margin:0; font-size:.95rem; }
+.beta-review-actions .beta-review-help { margin:0; }
 .beta-steps { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 16px; text-align:left; }
 .beta-steps span { flex:1 1 110px; padding:9px; border-radius:10px; background:#eef0ed; font-size:.8rem; color:#52605c; }
 .beta-steps .is-solved { color:#176449; background:#e4f2e8; }
