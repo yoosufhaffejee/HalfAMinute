@@ -1,4 +1,31 @@
 .mode-description, .party-setup { grid-column: 1 / -1; }
+.cake-beta { --beta-ink:#294b45; --beta-paper:#fffaf0; }
+.beta-badge { display:inline-block; padding:5px 12px; border-radius:20px; color:#765719; background:#fff0ca; font-size:.78rem; font-weight:700; letter-spacing:.05em; }
+.cake-beta .party-stage { background:#fffdf8; border-color:#d9d6c4; }
+.cake-beta svg { display:block; width:100%; max-width:340px; height:auto; margin:0 auto; border-radius:14px; background:linear-gradient(155deg,#f8f1e3,#eff5f0); }
+.cake-beta button { min-height:44px; white-space:normal; overflow-wrap:anywhere; }
+.beta-steps { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 16px; text-align:left; }
+.beta-steps span { flex:1 1 110px; padding:9px; border-radius:10px; background:#eef0ed; font-size:.8rem; color:#52605c; }
+.beta-steps .is-solved { color:#176449; background:#e4f2e8; }
+.beta-puzzle,.beta-final { border:1px solid #d8cfb4; border-radius:16px; padding:clamp(12px,3vw,24px); margin:16px 0; background:var(--beta-paper); }
+.beta-riddle { font-size:1.2rem; font-family:Georgia,serif; padding:14px 0; color:var(--beta-ink); }
+.beta-choices { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin:16px 0; }
+.beta-choices .btn { margin:0; padding:12px 8px; background:#fff; border-color:#a5b7a7; color:var(--beta-ink); }
+.beta-choices .btn:hover:not(:disabled) { background:#eaf5ed; }
+.beta-photos { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.beta-photos figure { margin:0; min-width:0; }.beta-photos figcaption { font-size:.8rem; margin-top:8px; }
+.beta-feedback { padding:14px; background:#e7f2ed; color:#245244; border-left:4px solid #558f77; border-radius:10px; text-align:left; }
+.beta-hint { border-left:3px solid #c9a556; background:#fff3d6; padding:12px; text-align:left; border-radius:6px; }
+.beta-discoveries { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:12px; text-align:left; }
+.beta-clue { padding:14px; border-radius:12px; background:#eef5ef; border:1px solid #c8dacb; min-width:0; }
+.beta-clue h4 { font-size:1rem; font-weight:700; margin:8px 0; }.beta-clue .party-note { font-size:.88rem; margin-bottom:0; }
+.beta-trail>div { margin:8px 0; padding:10px; border-radius:8px; background:#fff; font-size:.85rem; }
+.beta-trail .is-traced { border:2px dashed #3a7e5e; font-weight:700; }
+.beta-people { margin:20px 0; text-align:left; }.beta-people summary { cursor:pointer; font-weight:600; }
+.beta-suspects { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:12px; }
+.beta-suspect { display:grid; gap:5px; justify-items:center; text-align:center; padding:12px 5px; border:1px solid #d8dcca; border-radius:12px; background:#fff; }
+.beta-suspect strong { font-size:.9rem; }.beta-suspect small { font-size:.75rem; }.beta-apron { display:grid; place-items:center; background:#ece1c7; color:#5f513c; border-radius:8px 8px 14px 14px; width:38px; height:44px; font-size:1.7rem; }
+@media(max-width:380px){.beta-photos { grid-template-columns:1fr; }.beta-suspects { grid-template-columns:repeat(2,minmax(0,1fr)); }.beta-choices { grid-template-columns:1fr; }}
 .quick-setup.party-mode-setup { grid-template-columns: 1fr; }
 .mode-description { margin: 0; padding: 14px; border-radius: 10px; background: #eaf7f0; color: #164b34; line-height: 1.6; font-size: .95rem; }
 .party-setup { display: grid; gap: 14px; border-top: 1px solid #d7e0ea; padding-top: 16px; }

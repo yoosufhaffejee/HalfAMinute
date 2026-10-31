@@ -1,7 +1,7 @@
-import { CASE_CONTENT } from './case-content.js?v=20261030.casewords1';
-import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261030.casewords1';
-import { PARTY_CASES } from './case-party-content.js?v=20261030.casewords1';
-import { SCENARIO_IDS, buildCaseVariant } from './case-variants.js?v=20261030.casewords1';
+import { CASE_CONTENT } from './case-content.js?v=20261031.beta1';
+import { CASE_VOCABULARY } from './case-vocabulary.js?v=20261031.beta1';
+import { PARTY_CASES } from './case-party-content.js?v=20261031.beta1';
+import { SCENARIO_IDS, buildCaseVariant } from './case-variants.js?v=20261031.beta1';
 export const CASE_DIFFICULTIES = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
 const ratings = { museum: 'medium', train: 'medium', encore: 'hard', bank: 'hard', observatory: 'hard' };
 export const CASES = Object.fromEntries(Object.entries({ ...PARTY_CASES, ...CASE_CONTENT }).map(([id, story]) => [id, {

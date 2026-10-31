@@ -1,4 +1,4 @@
-import { CASES, CASE_IDS, caseStory, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseFields, caseSubmission, caseFeedback, confirmedCasePart } from './cases.js?v=20261030.casewords1';
+import { CASES, CASE_IDS, caseStory, CASE_DIFFICULTIES, caseOptionLabel, caseFacts, availableFacts, caseFields, caseSubmission, caseFeedback, confirmedCasePart } from './cases.js?v=20261031.beta1';
 import { countdownLabel } from './rules.js?v=20261030.2';
 import { REACTIONS, REACTION_LABELS, REACTION_TTL_MS } from './experience.js?v=20261030.4';
 const h = (tag, cls = '', text = '') => { const n = document.createElement(tag); n.className = cls; n.textContent = text; return n; };

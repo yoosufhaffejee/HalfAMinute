@@ -1,0 +1,92 @@
+{
+  "backend": "Local Firebase-compatible CAS/polling adapter; no production writes or AI requests",
+  "completed": true,
+  "checks": [
+    "Beta local: private countdown, odd point carryover, wrong puzzle retry, hint purchase, visual comparison, experiment feedback, full solve, safe exports, same replay, reveal confirmation/cancel, new scenario reset",
+    "Beta online: two clients, guest investigation/experiment edits, shared points, speaker word privacy, refresh persistence, host-only accusation, shared solved ending and replay reset"
+  ],
+  "layouts": [
+    {
+      "label": "Beta opening and suspects",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta opening and suspects",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta opening and suspects",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta opening and suspects large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta photo puzzle",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta photo puzzle",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta photo puzzle",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta photo puzzle large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta experiment",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta experiment",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta experiment",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta experiment large text",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta solved result",
+      "width": 320,
+      "overflow": false
+    },
+    {
+      "label": "Beta solved result",
+      "width": 390,
+      "overflow": false
+    },
+    {
+      "label": "Beta solved result",
+      "width": 1100,
+      "overflow": false
+    },
+    {
+      "label": "Beta solved result large text",
+      "width": 320,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "transactions": 46
+}

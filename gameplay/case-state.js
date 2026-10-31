@@ -1,6 +1,6 @@
 import { ROUND_COUNTDOWN_MS, random, answerKey } from './rules.js?v=20261030.2';
-import { CASES, CASE_IDS, caseStory, chooseCaseScenario, caseFacts, availableFacts, caseFields, caseSubmission, sameCaseSubmission, caseAssessment } from './cases.js?v=20261030.casewords1';
-import { normalizeModeSettings } from './modes.js?v=20261030.casewords1';
+import { CASES, CASE_IDS, caseStory, chooseCaseScenario, caseFacts, availableFacts, caseFields, caseSubmission, sameCaseSubmission, caseAssessment } from './cases.js?v=20261031.beta1';
+import { normalizeModeSettings } from './modes.js?v=20261031.beta1';
 
 export function caseSnapshot(data) {
     return { ...data, ...(data.party ? { party: { ...data.party, players: data.party.players || [], history: data.party.history || [], found: data.party.found || [], discoveries: data.party.discoveries || [], timeline: data.party.timeline || [], proof: [data.party.proof?.[0] || '', data.party.proof?.[1] || ''], hintsUsed: data.party.hintsUsed || 0, attempts: data.party.attempts || 0, confirmedParts: data.party.confirmedParts || {} } } : {}),

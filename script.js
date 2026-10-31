@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261030.speakers1';
-import { OnlineClient } from './online/client.js?v=20261030.speakers1';
+import * as OnlineState from './online/state.js?v=20261031.beta1';
+import { OnlineClient } from './online/client.js?v=20261031.beta1';
 import * as Gameplay from './gameplay/rules.js?v=20261030.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
@@ -10,12 +10,12 @@ import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
 import * as Experience from './gameplay/experience.js?v=20261030.4';
 import * as PackLibrary from './gameplay/saved-packs.js?v=20261029.5';
 import { createScreenAwake } from './gameplay/screen-awake.js?v=20261029.4';
-import * as Modes from './gameplay/modes.js?v=20261030.casewords1';
-import { createPartySurface } from './gameplay/party-ui.js?v=20261030.casewords1';
-import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261030.casewords1';
-import { partySnapshot } from './gameplay/party-state.js?v=20261030.speakers1';
-import { CASES, CASE_IDS, caseOptionLabel, CASE_DIFFICULTIES } from './gameplay/cases.js?v=20261030.casewords1';
-import { caseWordObjects, drawCaseCard } from './gameplay/case-draw.js?v=20261030.casewords1';
+import * as Modes from './gameplay/modes.js?v=20261031.beta1';
+import { createPartySurface } from './gameplay/party-ui.js?v=20261031.beta1';
+import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261031.beta1';
+import { partySnapshot } from './gameplay/party-state.js?v=20261031.beta1';
+import { CASES, CASE_IDS, caseOptionLabel, CASE_DIFFICULTIES } from './gameplay/cases.js?v=20261031.beta1';
+import { caseWordObjects, drawCaseCard } from './gameplay/case-draw.js?v=20261031.beta1';
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -136,17 +136,18 @@ function modeSettingsPresentation(settings) {
     document.getElementById('tableTimingField').hidden = mode !== 'table';
     document.getElementById('tableSecondsField').hidden = mode !== 'table' || settings.tableTiming === 'unlimited';
     document.getElementById('tableSeconds').disabled = mode !== 'table' || settings.tableTiming === 'unlimited';
-    document.getElementById('caseIdField').hidden = document.getElementById('caseTurnsField').hidden = mode !== 'case';
+    document.getElementById('caseIdField').hidden = mode !== 'case';
+    document.getElementById('caseTurnsField').hidden = !Modes.isInvestigation(settings);
     document.getElementById('casePreview').hidden = mode !== 'case';
-    if (mode === 'case') {
+    if (Modes.isInvestigation(settings)) {
         pendingOnlinePack = null; updateOnlinePackNotice();
         document.getElementById('casePreview').textContent = `Case difficulty: ${CASE_DIFFICULTIES[CASES[settings.caseId].difficulty]} · ${CASES[settings.caseId].focus}. Word difficulty is set separately in Settings.`;
         document.getElementById('caseTurns').min = String(Math.max(4, Math.ceil(6 / settings.numWords)));
         document.getElementById('caseTurns').value = String(settings.caseTurns);
     }
-    document.getElementById('wordPacksSection').hidden = mode === 'case';
-    btnAI.hidden = mode === 'case' || menu.hidden;
-    document.getElementById('setupStarterNote').textContent = mode === 'case' ? 'Speakers are drawn at random. Nobody repeats before everyone has spoken. Investigation turns are shared by the whole crew. Local play passes one device; online players use their own screens.' : party ? 'Local play passes one device between named players. Online play gives each player their own private screen.'
+    document.getElementById('wordPacksSection').hidden = Modes.isInvestigation(settings);
+    btnAI.hidden = Modes.isInvestigation(settings) || menu.hidden;
+    document.getElementById('setupStarterNote').textContent = Modes.isInvestigation(settings) ? 'Speakers are drawn at random. Nobody repeats before everyone has spoken. Investigation turns are shared by the whole crew. Local play passes one device; online players use their own screens.' : party ? 'Local play passes one device between named players. Online play gives each player their own private screen.'
         : 'The starting team is drawn at random. Rematches rotate the starter. Customize cards, packs, and timing in Settings.';
     document.getElementById('targetSetting').hidden = party;
     document.getElementById('winRuleSetting').hidden = party;
@@ -175,6 +176,7 @@ function modeSettingsPresentation(settings) {
         boost: 'Choose a normal turn or risk before the words appear. Get at least 60% correct (3 of 5) to add 2 to your clue points; miss and subtract 2, with a floor of zero. Bank 2 points first. After risking, complete one normal turn before risking again.',
         double: 'Once per team per match, risk before seeing the card. Meet the 60% target (3 of 5) to double your clue points. Miss and lose 3 banked points, earning no clue points. Bank 3 points first.',
         table: `For 3–8 players. Only the speaker sees the numbered word card after Go. Local play and online voice-call play use spoken guesses. After the round, the speaker awards each word to the first correct guesser, or Nobody if skipped. Select every tied guesser for simultaneous correct answers; speaker credit stays 1 per solved word. ${settings.tableScoring === 'guesser' ? 'Only the first correct guesser earns 1 point; the speaker earns no points.' : 'The first correct guesser and speaker each earn 1 point per solved word.'} Timed rounds default to 60 seconds; Unlimited lets the speaker finish when ready. Words per card follows Settings. Online, the host chooses voice call or typed clues at match start. Typed play takes one word at a time: send clues, read guesses in arrival order, and award the first correct one. Everyone gets equal speaking turns; late arrivals watch until rematch.`,
+        cakebeta: 'One crew solves a visual mystery. Each correct word earns one search point. Spend 2 points to open the next puzzle or get a hint; unspent points carry over. Solve the table riddle, compare two photos, then try the escape. Hints and evidence stay visible. Wrong puzzle attempts let you try again without a penalty. Only the speaker sees the words after Go. Speakers are drawn randomly without repeats until everyone has spoken. Word rounds are shared by the crew; everyone can investigate between rounds. After all three discoveries, or when the word-round budget ends, the host submits one final accusation: who and where. You need all three discoveries and both answers correct to win. An unsuccessful attempt keeps the answer hidden, with optional reveal, same-scenario replay or a new scenario. Local play uses one device. Online play uses your usual voice call. The beta uses built-in cake-related words; AI packs, themes and training mode do not apply.',
         case: 'One crew investigates an authored mystery. Each turn draws a random speaker. Nobody repeats before everyone has spoken. Investigation turns are shared by the whole crew, not per player. The speaker chooses a lead, then describes its words after Go while everyone else guesses aloud. Confirm correct words to recover their documents; related words can open the same file once. Read logs, receipts and reference cards together. Their clocks, labels and observations need interpreting: documents do not eliminate suspects for you. Between rounds, anyone can arrange the shared four-event timeline and compare two recovered exhibits that support the case’s connection question. These are drafts, with no correctness feedback. The host records who, how and where and reviews the entire reconstruction before submitting the attempt. Closing a case requires the explanation, timeline and supporting pair to fit. Three optional notebook nudges are available after two turns. Six investigations is the default; you can also submit early. An unsuccessful attempt confirms only the parts you got right, keeping other answers and unopened evidence hidden. Try again with your notebook and answers kept, or start the case over. The full explanation appears after a solve or an explicit end-of-game reveal. You can replay the same scenario or draw a different one. All cases and words are prebuilt, with no AI judging. Each case has three authored scenarios. A new investigation draws one; replaying the same scenario keeps its evidence and answer. Local play works with the loaded built-in data; online play uses your usual voice call.'
     };
     document.getElementById('modeHowToPlay').hidden = !rules[mode];
@@ -279,7 +281,7 @@ async function partyCommand(action) {
     if (!localPartyGame) return;
     const now = Date.now();
     for (const record of Object.values(localPartyGame.presence)) for (const value of Object.values(record.connections)) value.lastSeen = now;
-    const identity = ['rematch', 'end-game', 'accuse', 'set-theory', 'open-theory', 'resume-case', 'retry-case', 'reveal-case', 'case-hint'].includes(action.type) ? localPartyGame.hostId : localPartySeat || localPartyGame.turn.speakerId;
+    const identity = ['rematch', 'end-game', 'accuse', 'set-theory', 'open-theory', 'resume-case', 'retry-case', 'reveal-case', 'case-hint', 'beta-review', 'beta-back', 'beta-theory', 'beta-accuse'].includes(action.type) ? localPartyGame.hostId : localPartySeat || localPartyGame.turn.speakerId;
     const actor = partyPeople(localPartyGame).find(player => player.playerId === identity);
     const next = OnlineState.act(localPartyGame, actor, { ...request, turnId: localPartyGame.turn?.id, matchId: localPartyGame.matchId }, now,
         { drawWords: drawOnlineWords, planChaos: planOnlineChaos });
@@ -296,8 +298,8 @@ function startLocalParty(settings) {
     const namesError = document.getElementById('localNamesError'); namesError.hidden = !error; namesError.textContent = error;
     document.getElementById('localPlayerNames').setAttribute('aria-invalid', String(Boolean(error)));
     if (error) { document.getElementById('localPlayerNames').focus(); return; }
-    const localEntries = isAiGame && settings.mode !== 'case' ? getAiWordObjects(settings.difficulty) : null;
-    localWordObjects = settings.mode === 'case' ? getOnlineWordObjects(settings) : localEntries ? localEntries.filter(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty) : filterRecentlyUsedWords(getOnlineWordObjects(settings));
+    const localEntries = isAiGame && !Modes.isInvestigation(settings) ? getAiWordObjects(settings.difficulty) : null;
+    localWordObjects = Modes.isInvestigation(settings) ? getOnlineWordObjects(settings) : localEntries ? localEntries.filter(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty) : filterRecentlyUsedWords(getOnlineWordObjects(settings));
     setWordDescriptionsFromObjects(localEntries ? [] : localWordObjects);
     clearInterval(countdownTimer); finishLocalRound = null; stopRoundSounds();
     isRoundActive = false; isChaosMode = false; isResolvingChaosMove = false;
@@ -796,7 +798,7 @@ function updateSetupSummary() {
     const settings = getSanitizedSettingsFromInputs();
     syncThemePicker();
     modeSettingsPresentation(settings);
-    const pack = settings.mode === 'case' ? CASES[settings.caseId].title : settings.selectedTheme !== 'None' ? settings.selectedTheme : settings.selectedCategories.join(', ') || 'All categories';
+    const pack = Modes.isInvestigation(settings) ? CASES[settings.caseId].title : settings.selectedTheme !== 'None' ? settings.selectedTheme : settings.selectedCategories.join(', ') || 'All categories';
     const text = Modes.isParty(settings) ? `${Modes.MODES[settings.mode].name} · ${settings.mode === 'table' ? settings.tableCycles + ' speaking turns each · ' + (settings.tableTiming === 'unlimited' ? 'Unlimited' : settings.tableSeconds + 's') + ' · ' + settings.numWords + ' words' : settings.caseTurns + ' turns · ' + settings.numSeconds + 's · ' + settings.numWords + ' words'} · ${settings.difficulty} · ${pack}`
         : `${Modes.MODES[settings.mode].name} · ${settings.numTeams} teams · ${settings.pointsToWin} points · ${Gameplay.winRuleLabel(settings.winRule)} · ${settings.numSeconds}s · ${settings.numWords} words · ${settings.difficulty} · ${pack}${settings.trainingMode ? ' · Training hints' : ''}${settings.chaosMode && settings.chaosReroll ? ' · Team reroll' : ''}`;
     document.getElementById('setupSummary').textContent = text;
@@ -1200,7 +1202,7 @@ function getSanitizedSettingsFromInputs() {
     const chosenDifficulty = document.getElementById('difficulty').value.toLowerCase();
     const selectedMode = document.getElementById('quickMode').value;
     return Modes.normalizeModeSettings({
-        mode: ['boost', 'double', 'table', 'case'].includes(selectedMode) ? selectedMode : chkChaos?.checked ? 'chaos' : 'classic',
+        mode: ['boost', 'double', 'table', 'case', 'cakebeta'].includes(selectedMode) ? selectedMode : chkChaos?.checked ? 'chaos' : 'classic',
         tableCycles: document.getElementById('tableCycles').value,
         tableTiming: document.getElementById('tableTiming').value,
         tableScoring: document.getElementById('tableScoring').value,
@@ -1938,13 +1940,13 @@ async function createGameLobby() {
         txtPlayerName.value = playerName;
         if (!playerName) { alert('Enter a valid player name!'); return; }
         const settings = getSanitizedSettingsFromInputs();
-        const wordPack = settings.mode === 'case' ? null : normalizeOnlinePack(pendingOnlinePack);
+        const wordPack = Modes.isInvestigation(settings) ? null : normalizeOnlinePack(pendingOnlinePack);
         if (wordPack && !wordPack.entries.some(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty)) {
             document.getElementById('onlineFormStatus').textContent = 'This pack has no words at the selected difficulty. Change difficulty in Settings or generate another pack.';
             document.getElementById('onlineFormStatus').hidden = false; return;
         }
         const pools = wordPack ? wordPack.entries.map(entry => entry.word)
-            : settings.mode === 'case' ? getOnlineWordObjects(settings).map(entry => entry.word) : loadWords(settings.selectedTheme, settings.selectedCategories, settings.difficulty);
+            : Modes.isInvestigation(settings) ? getOnlineWordObjects(settings).map(entry => entry.word) : loadWords(settings.selectedTheme, settings.selectedCategories, settings.difficulty);
         if (wordPack) { settings.selectedTheme = 'None'; settings.selectedCategories = []; settings.trainingMode = false; }
         // .info values are local SDK metadata and must be listened to, not read
         // through get(), which may fall back to a REST path the server rejects.
@@ -2233,7 +2235,7 @@ function updateOnlinePackNotice() {
 function hostAIWordsOnline() {
     if (isOnlineGame || document.getElementById('btnGenerate').disabled) return;
     const settings = getSanitizedSettingsFromInputs();
-    if (settings.mode === 'case') { setAiFeedback('Case Files uses its authored built-in words. Choose another game to use this pack.', true); return; }
+    if (Modes.isInvestigation(settings)) { setAiFeedback('Case Files uses its authored built-in words. Choose another game to use this pack.', true); return; }
     try {
         const pack = normalizeOnlinePack({ kind: 'custom', entries: getAiWordObjects(settings.difficulty) });
         if (!pack.entries.some(entry => settings.difficulty === 'normal' || entry.difficulty === settings.difficulty)) {
@@ -2253,7 +2255,7 @@ function hostAIWordsOnline() {
 }
 
 function startAIGame() {
-    if (getSanitizedSettingsFromInputs().mode === 'case') { setAiFeedback('Case Files uses its authored built-in words. Choose another game to use this pack.', true); return; }
+    if (Modes.isInvestigation(getSanitizedSettingsFromInputs())) { setAiFeedback('Case Files uses its authored built-in words. Choose another game to use this pack.', true); return; }
     // Read user added words on start
     let textArea = document.getElementById('aiWords');
     const uniqueAiWords = extractUniqueAiWordsFromText(textArea?.value || "");
@@ -3253,7 +3255,7 @@ async function sendOnlineCommand(action) {
 }
 
 function getOnlineWordObjects(settings, wordPack = null) {
-    if (Modes.modeOf(settings) === 'case') return caseWordObjects(settings.caseId, Object.values(categories).flat());
+    if (Modes.isInvestigation(settings)) return caseWordObjects(settings.caseId, Object.values(categories).flat());
     const shared = normalizeOnlinePack(wordPack);
     const selectedCategories = Array.isArray(settings.selectedCategories) ? settings.selectedCategories : [];
     const selectedTheme = settings.selectedTheme || 'None';
@@ -3266,7 +3268,7 @@ function getOnlineWordObjects(settings, wordPack = null) {
 
 function drawOnlineWords(gameData, seed) {
     const settings = sanitizeGameSettingsFromDb(gameData.settings, gameData.teams.length);
-    if (settings.mode === 'case') return drawCaseCard({ ...gameData, settings }, seed, getOnlineWordObjects(settings));
+    if (Modes.isInvestigation(settings)) return drawCaseCard({ ...gameData, settings }, seed, getOnlineWordObjects(settings));
     const entries = !isOnlineGame && Array.isArray(gameData.localEntries) ? gameData.localEntries : getOnlineWordObjects(settings, gameData.wordPack);
     const draw = Gameplay.drawWords(entries, gameData.deck || {}, settings.difficulty, settings.numWords, seed);
     const aliases = draw.words.flatMap(word => { const entry = entries.find(item => Gameplay.answerKey(item.word) === Gameplay.answerKey(word)); return entry?.canonical ? [word, entry.canonical] : [word]; });

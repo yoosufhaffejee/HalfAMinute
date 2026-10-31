@@ -116,7 +116,7 @@ async function localStakes(mode) {
     assert.match(await page.locator('#stakesAvailability').innerText(), /Bank/);
     report.checks.push(`${mode}: local bank/risk/preview/resource/rematch`); await context.close();
 }
-async function gate(page) { const ready = page.locator('[data-case-action="local-ready"], [data-party-action="local-ready"], [data-table-action="local-ready"]'); await ready.waitFor(); await ready.click(); }
+async function gate(page) { const ready = page.locator('[data-case-action="local-ready"], [data-party-action="local-ready"], [data-table-action="local-ready"], [data-beta-action="local-ready"]'); await ready.waitFor(); await ready.click(); }
 async function localTable() {
     const { page, context } = await pageFor(); await page.clock.install();
     await page.locator('#quickMode').selectOption('table');
@@ -403,7 +403,8 @@ async function onlinePair(mode, format = 'voice') {
     browser = await chromium.launch({ ...(process.platform === 'win32' ? { channel: 'msedge' } : {}), headless: true });
     try {
         caseContent=await import('../gameplay/cases.js');
-        if(process.argv.includes('--variants-only')){if(!process.argv.includes('--online-only'))await localVariations();if(!process.argv.includes('--local-only'))await onlineCase();}
+        if(process.argv.includes('--beta-only')){const beta=require('./test-cake-beta-browser.cjs')({pageFor,gate,settings,layout,report,gameState,waitState,live,liveCodes,caseContent});if(!process.argv.includes('--online-only'))await beta.local();if(!process.argv.includes('--local-only'))await beta.online();}
+        else if(process.argv.includes('--variants-only')){if(!process.argv.includes('--online-only'))await localVariations();if(!process.argv.includes('--local-only'))await onlineCase();}
         else if(process.argv.includes('--new-cases-only')){if(!process.argv.includes('--online-only'))for(const id of ['cake','duck','ghost'])await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
         else if(process.argv.includes('--case-retry-only')){if(!process.argv.includes('--online-only'))await localCaseRetry();if(!process.argv.includes('--local-only'))await onlineCase(true);}
         else if(process.argv.includes('--cases-only')) {if(!process.argv.includes('--online-only'))for(const id of caseContent.CASE_IDS)await localCase(id);if(!process.argv.includes('--local-only'))await onlineCase();}
@@ -418,11 +419,11 @@ async function onlinePair(mode, format = 'voice') {
     } catch (error) { report.failure = error.message; throw error;
     } finally {
         if(live){
-            for(const page of openedPages)if(!page.isClosed())try{const exit=page.locator('[data-case-action="exit"]:visible, [data-table-action="exit"]:visible, [data-party-action="exit"]:visible, #changeSettingsButton:visible').first();if(await exit.count()){await exit.click({timeout:5000});await page.locator('#menu').waitFor({state:'visible',timeout:5000});}}catch(error){console.error('Test lobby exit:',error.message);}
+            for(const page of openedPages)if(!page.isClosed())try{const exit=page.locator('[data-beta-action="exit"]:visible, [data-case-action="exit"]:visible, [data-table-action="exit"]:visible, [data-party-action="exit"]:visible, #changeSettingsButton:visible').first();if(await exit.count()){await exit.click({timeout:5000});await page.locator('#menu').waitFor({state:'visible',timeout:5000});}}catch(error){console.error('Test lobby exit:',error.message);}
             report.cleanup = { created:liveCodes.length, closed:0, remaining:[] };
             for(const code of liveCodes){const game=await gameState(code);if(!game||game.phase==='ended'&&!game.teams.some(t=>(t.players||[]).length))report.cleanup.closed++;else report.cleanup.remaining.push(code);}
             if(report.cleanup.remaining.length){report.completed=false;report.failure='Temporary test lobby cleanup incomplete';process.exitCode=1;}
         }
-        fs.writeFileSync(process.argv.includes('--variants-only')?(live?'reports/case-variations-live.json':'reports/case-variations-browser.json'):process.argv.includes('--new-cases-only')?(live?'reports/new-cases-live.json':'reports/new-cases-browser.json'):process.argv.includes('--case-retry-only')?(live?'reports/case-retry-live.json':'reports/case-retry-browser.json'):process.argv.includes('--cases-only')?(live?'reports/cases-live.json':process.argv.includes('--online-only')?'reports/cases-online-browser.json':'reports/cases-browser.json'):process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
+        fs.writeFileSync(process.argv.includes('--beta-only')?(live?'reports/cake-beta-live.json':process.argv.includes('--local-only')?'reports/cake-beta-local-browser.json':process.argv.includes('--online-only')?'reports/cake-beta-online-browser.json':'reports/cake-beta-browser.json'):process.argv.includes('--variants-only')?(live?'reports/case-variations-live.json':'reports/case-variations-browser.json'):process.argv.includes('--new-cases-only')?(live?'reports/new-cases-live.json':'reports/new-cases-browser.json'):process.argv.includes('--case-retry-only')?(live?'reports/case-retry-live.json':'reports/case-retry-browser.json'):process.argv.includes('--cases-only')?(live?'reports/cases-live.json':process.argv.includes('--online-only')?'reports/cases-online-browser.json':'reports/cases-browser.json'):process.argv.includes('--table-only')?(live?'reports/open-table-live.json':'reports/open-table-browser.json'):live ? 'reports/new-modes-live.json' : process.argv.includes('--local-only') ? 'reports/new-modes-local-browser.json' : 'reports/new-modes-browser.json', JSON.stringify(report, null, 2)); await browser?.close(); server.close();
     }
 })().catch(error => { console.error(error); process.exitCode = 1; server.close(); });

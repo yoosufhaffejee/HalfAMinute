@@ -1,5 +1,5 @@
 import { answerKey, random } from './rules.js?v=20261030.2';
-import { caseFacts, availableFacts } from './cases.js?v=20261030.casewords1';
+import { caseFacts, availableFacts } from './cases.js?v=20261031.beta1';
 
 export function caseWordObjects(id, dictionary) {
     const registry = new Map();
