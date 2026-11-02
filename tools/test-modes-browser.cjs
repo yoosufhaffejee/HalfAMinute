@@ -25,7 +25,8 @@ export const initializeApp=()=>({}),getDatabase=()=>({}),ref=(_,path)=>path,serv
 async function request(path,body){const text=body?JSON.stringify(body):'';const r=await fetch('/__firebase?path='+encodeURIComponent(path),body?{method:'POST',headers:{'Content-Type':'application/json'},body:text,keepalive:text.length<50000}:{});return r.json()}
 export async function get(path){const data=await request(path);return {val:()=>data.value}}
 export function onValue(path,callback,onError,options){let closed=false,last='';async function poll(){try{let value=path==='.info/connected'?true:path==='.info/serverTimeOffset'?0:(await request(path)).value;const next=JSON.stringify(value);if(!closed&&next!==last){last=next;callback({val:()=>value});if(options?.onlyOnce)closed=true}}catch(error){if(!closed)onError?.(error)}}void poll();const timer=setInterval(()=>{if(!closed)void poll()},100);return ()=>{closed=true;clearInterval(timer)}}
-export async function runTransaction(path,reducer,options){for(let i=0;i<50;i++){const before=await request(path),next=reducer(before.value);if(next===undefined)return {committed:false};const result=await request(path,{revision:before.revision,value:next});if(result.committed)return {committed:true,snapshot:{val:()=>result.value}}}throw Error('transaction-contention')}
+function validateWrite(value,path='game'){if(value===undefined)throw Error(path+' contains undefined');if(value&&typeof value==='object')for(const [key,item] of Object.entries(value))validateWrite(item,path+'.'+key)}
+export async function runTransaction(path,reducer,options){for(let i=0;i<50;i++){const before=await request(path),next=reducer(before.value);if(next===undefined)return {committed:false};validateWrite(next);const result=await request(path,{revision:before.revision,value:next});if(result.committed)return {committed:true,snapshot:{val:()=>result.value}}}throw Error('transaction-contention')}
 export async function update(path,patch){return runTransaction(path,value=>({...value,...patch}),{applyLocally:false})}
 export function onDisconnect(){return {update:async()=>{},cancel:async()=>{}}}
 `;
@@ -318,7 +319,7 @@ async function onlinePair(mode, format = 'voice') {
     await host.page.locator('#online').click(); await host.page.locator('#playerName').fill('Host'); await host.page.locator('#createLobbyButton').click();
     await host.page.waitForFunction(() => /\b[A-Z]{4}\b/.test(document.getElementById('lblGameCode').textContent));
     const code = (await host.page.locator('#lblGameCode').textContent()).match(/\b[A-Z]{4}\b/)[0]; if(live)liveCodes.push(code); await waitState(code, game => game?.numPlayers === 1);
-    await guest.page.locator('#online').click(); await guest.page.locator('#playerName').fill('Guest'); await guest.page.locator('#joinLobbyCode').fill(code); await guest.page.locator('#joinLobbyButton').click();
+    await guest.page.locator('#online').click(); await guest.page.locator('#playerName').fill('Guest'); await guest.page.locator('#joinLobbyCode').fill(code); assert.equal(await guest.page.locator('#createLobbyButton').isDisabled(), true); await guest.page.locator('#joinLobbyCode').fill(''); assert.equal(await guest.page.locator('#createLobbyButton').isEnabled(), true); await guest.page.locator('#joinLobbyCode').fill(code); await guest.page.locator('#joinLobbyButton').click();
     await waitState(code, game => game.numPlayers === 2);
     let third = null;
     if (mode === 'table') {

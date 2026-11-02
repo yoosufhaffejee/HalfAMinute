@@ -48,7 +48,7 @@ export function normalizeModeSettings(settings) {
     const mode = modeOf(settings), party = isParty({ mode });
     return { ...settings, mode, chaosMode: mode === 'chaos', chaosReroll: mode === 'chaos' && Boolean(settings.chaosReroll),
         trainingMode: !party && Boolean(settings.trainingMode), trackSeries: !party && Boolean(settings.trackSeries),
-        selectedTheme: isInvestigation(settings) ? 'None' : settings.selectedTheme, selectedCategories: isInvestigation(settings) ? [] : settings.selectedCategories,
+        selectedTheme: isInvestigation(settings) ? 'None' : settings.selectedTheme || 'None', selectedCategories: isInvestigation(settings) || !Array.isArray(settings.selectedCategories) ? [] : settings.selectedCategories,
         numTeams: party ? 2 : settings.numTeams, numWords: settings.numWords,
         tableTiming: settings.tableTiming === 'unlimited' ? 'unlimited' : 'timed',
         tableScoring: settings.tableScoring === 'guesser' ? 'guesser' : 'shared',

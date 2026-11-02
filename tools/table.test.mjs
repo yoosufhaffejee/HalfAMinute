@@ -25,6 +25,20 @@ function firebase(value) {
     if (typeof value === 'object') { const entries = Object.entries(value).map(([k, v]) => [k, firebase(v)]).filter(([, v]) => v !== undefined); return entries.length ? Object.fromEntries(entries) : undefined; }
     return value;
 }
+
+test('three-player voice start after Firebase removes empty categories is writable', () => {
+    const g = firebase(lobby(undefined, { selectedTheme: 'None', selectedCategories: [] }));
+    assert.equal(g.settings.selectedCategories, undefined);
+    const started = act(g, 'start-game', { seed: 123, format: 'voice' });
+    assert.equal(started.isGameStarted, true);
+    assert.equal(started.party.format, 'voice');
+    function assertWritable(value, path = 'game') {
+        assert.notEqual(value, undefined, `${path} cannot be written to Firebase`);
+        if (value && typeof value === 'object') for (const [key, item] of Object.entries(value)) assertWritable(item, `${path}.${key}`);
+    }
+    assertWritable(started);
+    assert.equal(act(firebase(started), 'start-round', { seed: 7 }).turn.words.length, 5);
+});
 test('full cards follow word settings; sixty-second and unlimited clocks start only after Go', () => {
     for (const words of [1, 5, 10, 15]) {
         let g = start(undefined, { numWords: words }); assert.equal(g.turn.speakerId, 'A');

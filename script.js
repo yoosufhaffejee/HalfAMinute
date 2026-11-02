@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js";
 import { getDatabase, onValue, ref, get, update, runTransaction, onDisconnect, serverTimestamp } from "https://www.gstatic.com/firebasejs/13.0.0/firebase-database.js"
-import * as OnlineState from './online/state.js?v=20261031.riddles1';
-import { OnlineClient } from './online/client.js?v=20261031.riddles1';
+import * as OnlineState from './online/state.js?v=20261102.1';
+import { OnlineClient } from './online/client.js?v=20261102.1';
 import * as Gameplay from './gameplay/rules.js?v=20261030.2';
 import * as AiErrors from './gameplay/ai-errors.js?v=20261020.14';
 import { createAiWordClient } from './gameplay/ai-client.js?v=20261029.5';
@@ -10,10 +10,10 @@ import { normalizeOnlinePack } from './gameplay/online-packs.js?v=20261029.3';
 import * as Experience from './gameplay/experience.js?v=20261030.4';
 import * as PackLibrary from './gameplay/saved-packs.js?v=20261029.5';
 import { createScreenAwake } from './gameplay/screen-awake.js?v=20261029.4';
-import * as Modes from './gameplay/modes.js?v=20261031.beta1';
+import * as Modes from './gameplay/modes.js?v=20261102.1';
 import { createPartySurface } from './gameplay/party-ui.js?v=20261031.riddles1';
 import { partySummary, sharePartyResult } from './gameplay/party-results.js?v=20261031.riddles1';
-import { partySnapshot } from './gameplay/party-state.js?v=20261031.riddles1';
+import { partySnapshot } from './gameplay/party-state.js?v=20261102.1';
 import { CASES, CASE_IDS, caseOptionLabel, CASE_DIFFICULTIES } from './gameplay/cases.js?v=20261031.beta1';
 import { caseWordObjects, drawCaseCard } from './gameplay/case-draw.js?v=20261031.beta1';
 
@@ -559,6 +559,7 @@ function initializeInvitation() {
     const code = Experience.inviteCode(globalThis.location?.href);
     if (!code) return false;
     txtGameCode.value = code;
+    syncOnlineLobbyChoices();
     const saved = readOnlineSession(); if (saved?.playerName) txtPlayerName.value = saved.playerName;
     getModalInstance('onlineModal')?.show();
     return true;
@@ -1086,6 +1087,7 @@ function initializeMenu() {
     });
 
     document.getElementById("createLobbyButton").addEventListener("click", () => {
+        if (!pendingOnlinePack && txtGameCode.value.trim()) return;
         if (validateOnlineEntry(false)) void createGameLobby(db);
     });
 
@@ -1094,6 +1096,7 @@ function initializeMenu() {
     });
     [txtPlayerName, txtGameCode].forEach(input => input.addEventListener('input', () => {
         input.setAttribute('aria-invalid', 'false'); document.getElementById('onlineFormStatus').hidden = true;
+        if (input === txtGameCode) { txtGameCode.value = txtGameCode.value.toUpperCase(); syncOnlineLobbyChoices(); }
     }));
 
     btnSettings.addEventListener('click', () => {
@@ -2224,12 +2227,17 @@ async function run(topic) {
     }
 }
 
+function syncOnlineLobbyChoices() {
+    document.getElementById('createLobbyButton').disabled = !pendingOnlinePack && Boolean(txtGameCode.value.trim());
+}
+
 function updateOnlinePackNotice() {
     const notice = document.getElementById('onlinePackNotice'); notice.hidden = !pendingOnlinePack;
     notice.textContent = pendingOnlinePack ? `Your ${pendingOnlinePack.entries.length}-word pack will be shared with this lobby. Friends just need the lobby code.` : '';
     document.getElementById('joinLobbyChoice').hidden = Boolean(pendingOnlinePack);
     document.getElementById('onlineChoices').classList.toggle('pack-hosting', Boolean(pendingOnlinePack));
     document.getElementById('createLobbyButton').textContent = pendingOnlinePack ? 'Create lobby with this pack' : 'Create lobby';
+    syncOnlineLobbyChoices();
 }
 
 function hostAIWordsOnline() {
@@ -3241,6 +3249,7 @@ async function restoreOnlineSession() {
     if (!saved?.playerId || !/^[A-Z]{4}$/.test(saved.code || '') || !saved.playerName) return;
     txtPlayerName.value = saved.playerName;
     txtGameCode.value = saved.code;
+    syncOnlineLobbyChoices();
     await joinGameLobby();
 }
 

@@ -1092,6 +1092,21 @@ test('online dialog validates inline before joining and preserves the normalized
     assert.equal(h.el('onlineFormStatus').hidden,true);
 });
 
+test('entering a join code disables creating a lobby and clearing it enables hosting', () => {
+    const h = ui(); h.run('globalThis.HTMLElement=class{};initializeMenu();createGameLobby=async()=>{metrics.created=true}');
+    for (const code of ['a', 'abcd', '1234']) {
+        h.el('joinLobbyCode').value = code; h.el('joinLobbyCode').emit('input');
+        assert.equal(h.el('createLobbyButton').disabled, true);
+    }
+    h.el('playerName').value = 'Pat'; h.el('createLobbyButton').emit('click');
+    assert.equal(h.metrics.created, undefined);
+    h.el('joinLobbyCode').value = ''; h.el('joinLobbyCode').emit('input');
+    assert.equal(h.el('createLobbyButton').disabled, false);
+    h.el('createLobbyButton').emit('click'); assert.equal(h.metrics.created, true);
+    h.el('joinLobbyCode').value = 'ABCD'; h.el('onlineModal').emit('show.bs.modal');
+    assert.equal(h.el('createLobbyButton').disabled, true);
+});
+
 test('dialog Tab boundaries wrap in both directions and skip hidden or disabled controls', () => {
     const h=ui();
     h.run(`globalThis.modal=document.getElementById('testDialog');modal.classList.add('show');

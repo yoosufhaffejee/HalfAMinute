@@ -1,4 +1,4 @@
-import { modeOf, normalizeModeSettings } from './modes.js?v=20261031.beta1';
+import { modeOf, normalizeModeSettings } from './modes.js?v=20261102.1';
 import { tableSnapshot, actTable, reconcileTable, tableView } from './table-state.js?v=20261030.4';
 import { caseSnapshot, actCase, reconcileCase, caseView } from './case-state.js?v=20261031.beta1';
 import { betaSnapshot, actBeta, reconcileBeta, betaView } from './cake-beta-state.js?v=20261031.riddles1';

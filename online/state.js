@@ -3,8 +3,8 @@
 import { startingTeam, recap, ROUND_COUNTDOWN_MS, matchProgress, completedTurns } from '../gameplay/rules.js?v=20261030.2';
 import { normalizeOnlinePack } from '../gameplay/online-packs.js?v=20261029.3';
 import { REACTIONS, REACTION_TTL_MS, rosterKey, freshSeries, recordSeries } from '../gameplay/experience.js?v=20261030.4';
-import * as Modes from '../gameplay/modes.js?v=20261031.beta1';
-import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261031.riddles1';
+import * as Modes from '../gameplay/modes.js?v=20261102.1';
+import { actParty, reconcileParty, partyView } from '../gameplay/party-state.js?v=20261102.1';
 
 export const PROTOCOL_VERSION = 20;
 export const HOST_TIMEOUT_MS = 10000;
